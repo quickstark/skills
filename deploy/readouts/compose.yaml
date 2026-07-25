@@ -1,0 +1,58 @@
+name: quickstark-readouts
+
+services:
+  quickstark-readouts:
+    image: node:24-alpine
+    container_name: quickstark-readouts
+    hostname: quickstark-readouts
+    working_dir: /opt/quickstark
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      QS_READOUT_DIR: /docker/appdata/quickstark-readouts
+      QS_READOUT_PUBLICATION_MODE: hosted
+      QS_READOUT_ALLOWED_PROJECTS: github.com/quickstark/skills
+      QS_READOUT_CURRENT_PROJECT: github.com/quickstark/skills
+      QS_READOUT_TRUSTED_PROXY: "true"
+    command:
+      - node
+      - /opt/quickstark/scripts/qs-skill-readout.mjs
+      - serve
+      - --directory
+      - /docker/appdata/quickstark-readouts
+      - --host
+      - quickstark-readouts
+      - --port
+      - "4173"
+    volumes:
+      - /github/skills:/opt/quickstark:ro
+      - /docker/appdata/quickstark-readouts:/docker/appdata/quickstark-readouts:ro
+    networks:
+      - proxy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://quickstark-readouts:4173/__quickstark_health').then(r=>r.json()).then(j=>{if(j.service!=='quickstark-skill-readouts')process.exit(1)}).catch(()=>process.exit(1))"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.quickstark-readouts.rule=Host(`reports.quickstark.com`)
+      - traefik.http.routers.quickstark-readouts.entrypoints=https
+      - traefik.http.routers.quickstark-readouts.tls.certresolver=cloudflare
+      - traefik.http.routers.quickstark-readouts.middlewares=authelia@file
+      - traefik.http.services.quickstark-readouts.loadbalancer.server.port=4173
+
+networks:
+  proxy:
+    external: true

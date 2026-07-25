@@ -134,6 +134,59 @@ Then open `http://127.0.0.1:4173/` on your Mac. No report port is exposed to the
 
 To explicitly generate a local-only report without starting any viewer, use the renderer's `--no-serve` option. Existing viewers are reused only after their health endpoint confirms that they are the expected QuickStark report service.
 
+### Persistent, project-aware report library
+
+The default viewer now combines three production views: a project-first library, a searchable project explorer, and a newest-first cross-project activity timeline. It discovers the active repository from its verified Git origin and groups reports under canonical identities such as `github.com/quickstark/skills`. Actual skill runs and catalog previews are always distinguished; previews stay out of project counts and activity until you explicitly choose **Show catalog previews**.
+
+Temporary, flat report storage remains the backward-compatible default. To opt into durable, automatically project-organized reports on the dev box, configure a persistent report root:
+
+```bash
+export QS_READOUT_DIR=/docker/appdata/quickstark-readouts
+```
+
+New reports are then created under immutable paths such as:
+
+```text
+/docker/appdata/quickstark-readouts/
+  github.com/quickstark/skills/2026/07/
+    qs-code-build--2026-07-25T21-42-54-022Z--a417bd19.html
+```
+
+Existing flat reports remain available at their original addresses. Historical reports without verified project metadata appear as **Unassigned legacy reports**; their free-text headings are never represented as proof of repository ownership. Preview an explicit, non-mutating migration before applying it:
+
+```bash
+node scripts/qs-skill-readout.mjs migrate \
+  --directory /tmp/quickstark-readouts \
+  --target-directory /docker/appdata/quickstark-readouts \
+  --project github.com/quickstark/skills \
+  --json
+```
+
+The command makes no changes unless repeated with `--apply`. Migration preserves the original, writes an immutable verified copy, and can safely be repeated. Project-specific retention is also dry-run-first:
+
+```bash
+node scripts/qs-skill-readout.mjs prune \
+  --directory /docker/appdata/quickstark-readouts \
+  --project github.com/quickstark/skills \
+  --retention-days 90 \
+  --json
+```
+
+Inspect the selected reports before deliberately adding `--apply`. Neither command migrates, publishes, or deletes another project's reports.
+
+### Authenticated hosted access
+
+[`deploy/readouts/compose.yaml`](./deploy/readouts/compose.yaml) provides a dedicated persistent readout service for the existing Docker `proxy` network, Traefik HTTPS router, and Authelia authentication middleware. The running viewer publishes **only** explicitly allowlisted canonical project identities; `github.com/quickstark/skills` is the sole default. Unauthorized projects cannot appear in the library, project search, activity timeline, direct-report links, or error messages. The container has a read-only filesystem and report mount, drops Linux capabilities, exposes no host port, and serves no checkout files.
+
+Validate and start the dedicated stack only after approving the configured hostname and publication policy:
+
+```bash
+docker compose -f /docker/stacks/quickstark-readouts/compose.yaml config --quiet
+docker compose -f /docker/stacks/quickstark-readouts/compose.yaml up -d
+```
+
+The intended hostname is `reports.quickstark.com`. It is usable from a personal or managed laptop only after its real DNS record resolves, HTTPS works, Authelia rejects anonymous requests, and an approved user can retrieve an actual report. Do not treat a local reverse-proxy check as proof of remote reachability. No Tailscale, private-network client, or permanent SSH tunnel is required once those external prerequisites are explicitly configured and verified.
+
 ## Consistent skill output
 
 Every promoted skill also finishes with the same concise, human-readable summary:

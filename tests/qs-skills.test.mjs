@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, readdir, readFile, rm, stat, symlink } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, stat, symlink, writeFile } from "node:fs/promises";
 import { createServer as createPortBlocker } from "node:net";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
@@ -14,7 +14,9 @@ import {
   READOUT_VIEWER_STATE,
   discoverHomeNetworkAddress,
   ensureReadoutViewer,
+  migrateLegacyReadouts,
   normalizeSkillReadout,
+  pruneReadouts,
   readoutDirectoryIdentity,
   renderSkillReadout,
   resolveReadoutViewerHost,
@@ -87,6 +89,60 @@ async function temporaryGitProject(context, remote) {
   }
 
   return directory;
+}
+
+function explicitProject(repository) {
+  return {
+    host: "github.com",
+    owner: "quickstark",
+    repository,
+    key: `github.com/quickstark/${repository}`,
+    label: `quickstark/${repository}`,
+    source: "explicit",
+  };
+}
+
+async function temporaryProjectGallery(context, options = {}) {
+  const directory = await temporaryReadoutDirectory(context);
+  const entries = [
+    {
+      skill: "qs-plan-research",
+      outcome: "Research the skill-hosting architecture.",
+      generatedAt: "2026-07-24T10:00:00.000Z",
+      projectIdentity: explicitProject("skills"),
+    },
+    {
+      skill: "qs-code-build",
+      outcome: "Build the marketplace search experience.",
+      generatedAt: "2026-07-25T12:00:00.000Z",
+      projectIdentity: explicitProject("marketplace"),
+    },
+    {
+      skill: "qs-design-prototype",
+      status: "Preview",
+      skillsUsed: [],
+      outcome: "Catalog preview only; no actual design work occurred.",
+      generatedAt: "2026-07-25T13:00:00.000Z",
+      projectIdentity: explicitProject("skills"),
+    },
+  ];
+  const reports = [];
+
+  for (const entry of entries) {
+    reports.push(await writeSkillReadout(entry, { directory, layout: "project" }));
+  }
+
+  const viewer = await startReadoutServer({ directory, port: 0, ...options });
+
+  context.after(async () => {
+    if (!viewer.server.listening) return;
+
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  return { directory, viewer, reports };
 }
 
 test("the catalog preserves all 22 upstream skills and adds a real deployment skill", () => {
@@ -449,6 +505,455 @@ test("project-aware readouts honor an explicitly supplied canonical project iden
   assert.match(html, /<meta name="quickstark:project" content="github\.com\/quickstark\/other-project">/);
   assert.match(html, /<meta name="quickstark:project-source" content="explicit">/);
   assert.match(html, /Implementation · quickstark\/other-project/);
+});
+
+test("persistent project readouts survive viewer restarts with immutable nested report links", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const cwd = await temporaryGitProject(context, "https://github.com/quickstark/skills.git");
+  const reports = [];
+
+  for (const outcome of ["First durable project decision.", "Second durable project decision."]) {
+    reports.push(await writeSkillReadout({
+      skill: "qs-plan-research",
+      generatedAt: "2026-07-25T15:30:00.000Z",
+      outcome,
+    }, { directory, cwd, layout: "project" }));
+  }
+
+  assert.notEqual(reports[0].path, reports[1].path);
+
+  for (const report of reports) {
+    assert.match(
+      relative(directory, report.path),
+      /^github\.com\/quickstark\/skills\/2026\/07\/qs-plan-research--2026-07-25T15-30-00-000Z--[a-f0-9]{8}\.html$/,
+    );
+  }
+
+  let viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    if (!viewer.server.listening) return;
+
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  for (const report of reports) {
+    const response = await fetch(new URL(report.relativePath, viewer.url));
+
+    assert.equal(response.status, 200);
+    assert.match(await response.text(), /durable project decision/);
+  }
+
+  await new Promise((done, fail) => {
+    viewer.server.close((error) => error ? fail(error) : done());
+  });
+
+  viewer = await startReadoutServer({ directory, port: 0 });
+
+  for (const report of reports) {
+    const response = await fetch(new URL(report.relativePath, viewer.url));
+
+    assert.equal(response.status, 200);
+    assert.match(await response.text(), /durable project decision/);
+  }
+
+  const health = await fetch(new URL("__quickstark_health", viewer.url));
+
+  assert.equal(health.status, 200);
+  assert.equal((await health.json()).directory, readoutDirectoryIdentity(directory));
+});
+
+test("the production gallery groups actual reports into a project-first library", async (context) => {
+  const { viewer, reports } = await temporaryProjectGallery(context);
+  const response = await fetch(viewer.url);
+
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+
+  assert.match(html, /Project library/);
+  assert.match(html, /quickstark\/skills/);
+  assert.match(html, /quickstark\/marketplace/);
+  assert.match(html, /CURRENT PROJECT/i);
+  assert.match(html, /Research the skill-hosting architecture/);
+  assert.match(html, /Build the marketplace search experience/);
+  assert.doesNotMatch(html, /Catalog preview only; no actual design work occurred/);
+  assert.ok(html.indexOf("quickstark/marketplace") < html.indexOf("quickstark/skills"));
+
+  for (const report of reports.slice(0, 2)) {
+    assert.ok(html.includes(report.relativePath), `Gallery must link the actual ${report.filename}.`);
+  }
+});
+
+test("the production explorer isolates project reports and supports shareable outcome searches", async (context) => {
+  const { viewer, reports } = await temporaryProjectGallery(context);
+  const parameters = new URLSearchParams({
+    view: "explorer",
+    project: "github.com/quickstark/skills",
+    q: "hosting",
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+
+  assert.match(html, /Project explorer/);
+  assert.match(html, /quickstark\/skills/);
+  assert.match(html, /quickstark\/marketplace/);
+  assert.match(html, /Research the skill-hosting architecture/);
+  assert.ok(html.includes(reports[0].relativePath));
+  assert.doesNotMatch(html, /Build the marketplace search experience/);
+  assert.ok(!html.includes(reports[1].relativePath));
+  assert.match(response.headers.get("content-security-policy"), /form-action 'self'/);
+
+  const empty = await fetch(new URL(`?${new URLSearchParams({
+    view: "explorer",
+    project: "github.com/quickstark/skills",
+    q: "this outcome does not exist",
+  })}`, viewer.url));
+
+  assert.match(await empty.text(), /No reports match this search in the selected project/);
+});
+
+test("the activity timeline shows actual cross-project runs in newest-first order", async (context) => {
+  const { viewer, reports } = await temporaryProjectGallery(context);
+  const response = await fetch(new URL("?view=activity", viewer.url));
+
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+
+  assert.match(html, /Recent activity/);
+  assert.match(html, /quickstark\/marketplace/);
+  assert.match(html, /quickstark\/skills/);
+  assert.match(html, /Build the marketplace search experience/);
+  assert.match(html, /Research the skill-hosting architecture/);
+  assert.ok(html.indexOf("Build the marketplace search experience")
+    < html.indexOf("Research the skill-hosting architecture"));
+  assert.doesNotMatch(html, /Catalog preview only; no actual design work occurred/);
+
+  for (const report of reports.slice(0, 2)) {
+    assert.ok(html.includes(report.relativePath));
+  }
+
+  const previews = await fetch(new URL("?view=activity&previews=1", viewer.url));
+  const previewHtml = await previews.text();
+
+  assert.match(previewHtml, /Catalog preview only; no actual design work occurred/);
+  assert.match(previewHtml, />Preview</);
+  assert.ok(previewHtml.includes(reports[2].relativePath));
+  assert.match(previewHtml, /Hide catalog previews/);
+});
+
+test("legacy readouts remain accessible and are honestly marked as unassigned", async (context) => {
+  const { directory, viewer, reports } = await temporaryProjectGallery(context);
+  const filename = "qs-plan-research--2026-07-23T09-00-00-000Z--abcdef12.html";
+  const legacy = renderSkillReadout({
+    skill: "qs-plan-research",
+    project: "An unverified personal project heading",
+    generatedAt: "2026-07-23T09:00:00.000Z",
+    outcome: "A previously generated flat readout remains available.",
+  });
+
+  await writeFile(join(directory, filename), legacy, "utf8");
+
+  const index = await fetch(viewer.url);
+  const html = await index.text();
+
+  assert.match(html, /Unassigned legacy reports/);
+  assert.match(html, /Project identity not verified/);
+  assert.match(html, /previously generated flat readout remains available/);
+  assert.doesNotMatch(html, /An unverified personal project heading/);
+  assert.ok(html.includes(filename));
+  assert.ok(html.includes(reports[0].relativePath));
+
+  const direct = await fetch(new URL(filename, viewer.url));
+
+  assert.equal(direct.status, 200);
+  assert.match(await direct.text(), /An unverified personal project heading/);
+});
+
+test("legacy migration is explicit, dry-run first, immutable, and safe to repeat", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const filename = "qs-plan-research--2026-07-23T09-00-00-000Z--abcdef12.html";
+  const originalPath = join(directory, filename);
+  const original = renderSkillReadout({
+    skill: "qs-plan-research",
+    project: "An unverified personal project heading",
+    generatedAt: "2026-07-23T09:00:00.000Z",
+    outcome: "Migrate this historical report only when explicitly approved.",
+  });
+
+  await writeFile(originalPath, original, "utf8");
+
+  await assert.rejects(migrateLegacyReadouts({ directory }), /explicit target project/i);
+
+  const preview = await migrateLegacyReadouts({
+    directory,
+    project: explicitProject("skills"),
+  });
+
+  assert.equal(preview.dryRun, true);
+  assert.equal(preview.migrated, 0);
+  assert.equal(preview.candidates, 1);
+  assert.equal(await readFile(originalPath, "utf8"), original);
+  assert.equal(await exists(preview.reports[0].target), false);
+
+  const applied = await migrateLegacyReadouts({
+    directory,
+    project: explicitProject("skills"),
+    apply: true,
+  });
+
+  assert.equal(applied.dryRun, false);
+  assert.equal(applied.migrated, 1);
+  assert.equal(await readFile(originalPath, "utf8"), original);
+
+  const migrated = await readFile(applied.reports[0].target, "utf8");
+
+  assert.match(migrated, /<meta name="quickstark:project" content="github\.com\/quickstark\/skills">/);
+  assert.match(migrated, /<meta name="quickstark:project-source" content="explicit">/);
+  assert.match(migrated, /Migrate this historical report only when explicitly approved/);
+
+  const repeated = await migrateLegacyReadouts({
+    directory,
+    project: explicitProject("skills"),
+    apply: true,
+  });
+
+  assert.equal(repeated.migrated, 0);
+  assert.equal(repeated.skipped, 1);
+  assert.equal(await readFile(originalPath, "utf8"), original);
+});
+
+test("explicit legacy migration can preserve temporary originals in a durable report library", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const targetDirectory = await temporaryReadoutDirectory(context);
+  const filename = "qs-plan-research--2026-07-23T09-00-00-000Z--abcdef12.html";
+  const originalPath = join(directory, filename);
+  const original = renderSkillReadout({
+    skill: "qs-plan-research",
+    generatedAt: "2026-07-23T09:00:00.000Z",
+    outcome: "Preserve this explicitly verified temporary report in durable storage.",
+  });
+
+  await writeFile(originalPath, original, "utf8");
+
+  const preview = await migrateLegacyReadouts({
+    directory,
+    targetDirectory,
+    project: "github.com/quickstark/skills",
+  });
+
+  assert.equal(preview.dryRun, true);
+  assert.ok(preview.reports[0].target.startsWith(`${targetDirectory}/`));
+  assert.equal(await exists(preview.reports[0].target), false);
+
+  const applied = await migrateLegacyReadouts({
+    directory,
+    targetDirectory,
+    project: "github.com/quickstark/skills",
+    apply: true,
+  });
+
+  assert.equal(applied.migrated, 1);
+  assert.ok(applied.reports[0].target.startsWith(`${targetDirectory}/`));
+  assert.equal(await readFile(originalPath, "utf8"), original);
+  assert.match(await readFile(applied.reports[0].target, "utf8"), /quickstark:project/);
+});
+
+test("hosted publication fails closed and isolates all views and direct report links", async (context) => {
+  await assert.rejects(
+    startReadoutServer({
+      directory: await temporaryReadoutDirectory(context),
+      port: 0,
+      publicationMode: "hosted",
+    }),
+    /explicitly approved project/i,
+  );
+
+  const { viewer, reports } = await temporaryProjectGallery(context, {
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills"],
+  });
+
+  for (const route of ["./", "?view=explorer", "?view=activity"]) {
+    const response = await fetch(new URL(route, viewer.url));
+    const html = await response.text();
+
+    assert.equal(response.status, 200);
+    assert.match(html, /quickstark\/skills/);
+    assert.doesNotMatch(html, /marketplace/i);
+    assert.doesNotMatch(html, /Build the marketplace search experience/);
+  }
+
+  const approved = await fetch(new URL(reports[0].relativePath, viewer.url));
+  const denied = await fetch(new URL(reports[1].relativePath, viewer.url));
+
+  assert.equal(approved.status, 200);
+  assert.equal(denied.status, 404);
+  assert.doesNotMatch(await denied.text(), /marketplace/i);
+
+  const guessedProject = await fetch(new URL(`?${new URLSearchParams({
+    view: "explorer",
+    project: "github.com/quickstark/marketplace",
+    q: "marketplace",
+  })}`, viewer.url));
+
+  assert.doesNotMatch(await guessedProject.text(), /marketplace/i);
+});
+
+test("report retention previews deletion and cannot delete another project's history", async (context) => {
+  const { directory, reports } = await temporaryProjectGallery(context);
+
+  await assert.rejects(pruneReadouts({ directory, retentionDays: 1 }), /explicit target project/i);
+
+  const preview = await pruneReadouts({
+    directory,
+    project: "github.com/quickstark/skills",
+    retentionDays: 1,
+    now: "2026-08-01T00:00:00.000Z",
+  });
+
+  assert.equal(preview.dryRun, true);
+  assert.equal(preview.candidates, 2);
+  assert.equal(preview.deleted, 0);
+  assert.equal(await exists(reports[0].path), true);
+  assert.equal(await exists(reports[1].path), true);
+
+  const applied = await pruneReadouts({
+    directory,
+    project: "github.com/quickstark/skills",
+    retentionDays: 1,
+    now: "2026-08-01T00:00:00.000Z",
+    apply: true,
+  });
+
+  assert.equal(applied.deleted, 2);
+  assert.equal(await exists(reports[0].path), false);
+  assert.equal(await exists(reports[2].path), false);
+  assert.equal(await exists(reports[1].path), true);
+});
+
+test("migration and retention commands default to reviewable, non-mutating JSON previews", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const filename = "qs-plan-research--2026-07-23T09-00-00-000Z--abcdef12.html";
+  const originalPath = join(directory, filename);
+
+  await writeFile(originalPath, renderSkillReadout({
+    skill: "qs-plan-research",
+    generatedAt: "2026-07-23T09:00:00.000Z",
+    outcome: "Inspect the legacy migration before applying it.",
+  }), "utf8");
+
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const { stdout } = await execFileAsync(process.execPath, [
+    script,
+    "migrate",
+    "--directory", directory,
+    "--project", "github.com/quickstark/skills",
+    "--json",
+  ]);
+  const migration = JSON.parse(stdout);
+
+  assert.equal(migration.dryRun, true);
+  assert.equal(migration.candidates, 1);
+  assert.equal(await exists(originalPath), true);
+  assert.equal(await exists(migration.reports[0].target), false);
+
+  const retention = await execFileAsync(process.execPath, [
+    script,
+    "prune",
+    "--directory", directory,
+    "--project", "github.com/quickstark/skills",
+    "--retention-days", "30",
+    "--json",
+  ]);
+
+  assert.equal(JSON.parse(retention.stdout).dryRun, true);
+  assert.equal(await exists(originalPath), true);
+});
+
+test("trusted reverse-proxy mode is available only for an explicitly allowlisted hosted library", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+
+  await assert.rejects(
+    startReadoutServer({ directory, port: 0, trustedProxy: true }),
+    /trusted reverse proxy requires hosted publication/i,
+  );
+
+  await assert.rejects(
+    startReadoutServer({
+      directory,
+      port: 0,
+      publicationMode: "hosted",
+      trustedProxy: true,
+    }),
+    /explicitly approved project/i,
+  );
+
+  const { viewer, reports } = await temporaryProjectGallery(context, {
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills"],
+    trustedProxy: true,
+  });
+
+  assert.equal(viewer.accessToken, null);
+  assert.equal(viewer.publicationMode, "hosted");
+  assert.equal((await fetch(viewer.url)).status, 200);
+  assert.equal((await fetch(new URL(reports[1].relativePath, viewer.url))).status, 404);
+});
+
+test("a hosted container can explicitly and safely identify its verified current project", async (context) => {
+  const { viewer } = await temporaryProjectGallery(context, {
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills", "github.com/quickstark/marketplace"],
+    currentProject: "github.com/quickstark/marketplace",
+  });
+  const response = await fetch(viewer.url);
+  const html = await response.text();
+
+  assert.match(
+    html,
+    /<article class="project-card current" data-project="github\.com\/quickstark\/marketplace">/,
+  );
+  assert.doesNotMatch(
+    html,
+    /<article class="project-card current" data-project="github\.com\/quickstark\/skills">/,
+  );
+
+  await assert.rejects(
+    startReadoutServer({
+      directory: await temporaryReadoutDirectory(context),
+      port: 0,
+      publicationMode: "hosted",
+      allowedProjects: ["github.com/quickstark/skills"],
+      currentProject: "github.com/quickstark/marketplace",
+    }),
+    /current project must be explicitly approved/i,
+  );
+});
+
+test("the hosted deployment attaches Authelia and exposes no direct container or repository port", async () => {
+  const compose = await readFile(join(repositoryRoot, "deploy", "readouts", "compose.yaml"), "utf8");
+
+  assert.match(compose, /reports\.quickstark\.com/);
+  assert.match(compose, /traefik\.http\.routers\.quickstark-readouts\.middlewares=authelia@file/);
+  assert.match(compose, /traefik\.http\.services\.quickstark-readouts\.loadbalancer\.server\.port=4173/);
+  assert.match(compose, /QS_READOUT_PUBLICATION_MODE:\s*hosted/);
+  assert.match(compose, /QS_READOUT_ALLOWED_PROJECTS:\s*github\.com\/quickstark\/skills/);
+  assert.match(compose, /QS_READOUT_CURRENT_PROJECT:\s*github\.com\/quickstark\/skills/);
+  assert.match(compose, /QS_READOUT_TRUSTED_PROXY:\s*["']?true/);
+  assert.match(compose, /working_dir:\s*\/opt\/quickstark/);
+  assert.match(compose, /\/github\/skills:\/opt\/quickstark:ro/);
+  assert.match(compose, /QS_READOUT_DIR:\s*\/docker\/appdata\/quickstark-readouts/);
+  assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:ro/);
+  assert.match(compose, /read_only:\s*true/);
+  assert.doesNotMatch(compose, /^\s*ports:/m);
+  assert.doesNotMatch(compose, /0\.0\.0\.0/);
 });
 
 test("the preview gallery covers all 23 skills without inventing completed work", async (context) => {
