@@ -11,6 +11,7 @@ import { promisify } from "node:util";
 import {
   COLLECTION_NAME,
   NEXT_SKILLS_BY_NAME,
+  READOUT_PROFILES_BY_NAME,
   SKILLS,
   SKILLS_BY_NAME,
 } from "./qs-skill-catalog.mjs";
@@ -433,6 +434,15 @@ export function normalizeSkillReadout(input) {
     throw new Error("Report identifier must be a valid UUID.");
   }
 
+  const findings = normalizeItems(input.findings, "findings");
+  const decisions = normalizeItems(input.decisions, "decisions");
+  const outputs = normalizeItems(input.outputs, "outputs");
+  const checks = normalizeItems(input.checks, "checks", { checks: true });
+
+  if (status === "Preview" && (decisions.length > 0 || outputs.length > 0 || checks.length > 0)) {
+    throw new Error("A catalog preview cannot claim actual decisions, outputs, or validation results.");
+  }
+
   return {
     skill,
     status,
@@ -444,10 +454,10 @@ export function normalizeSkillReadout(input) {
     reportId,
     formatVersion: READOUT_FORMAT_VERSION,
     skillsUsed: used,
-    findings: normalizeItems(input.findings, "findings"),
-    decisions: normalizeItems(input.decisions, "decisions"),
-    outputs: normalizeItems(input.outputs, "outputs"),
-    checks: normalizeItems(input.checks, "checks", { checks: true }),
+    findings,
+    decisions,
+    outputs,
+    checks,
     nextSkills: normalizeRecommendations(skill, input.nextSkills),
     generatedAt,
   };
@@ -481,11 +491,169 @@ function renderSection(title, description, items, options = {}) {
   return `<section class="section"><div class="section-heading"><div><p class="eyebrow">${escapeHtml(description)}</p><h2>${escapeHtml(title)}</h2></div><span class="section-count">${items.length}</span></div><div class="detail-grid">${items.map((item) => renderItem(item, options)).join("")}</div></section>`;
 }
 
+const readoutSectionDescriptions = Object.freeze({
+  findings: "Only observations actually recorded",
+  decisions: "Only decisions actually made",
+  outputs: "Only artifacts actually produced",
+  checks: "Only validations actually performed",
+});
+
+const readoutSectionLabels = Object.freeze({
+  findings: "Findings",
+  decisions: "Decisions",
+  outputs: "Outputs",
+  checks: "Checks",
+});
+
+function compactLabel(value, limit = 29) {
+  const characters = Array.from(String(value));
+  return characters.length > limit
+    ? `${characters.slice(0, limit - 1).join("")}…`
+    : characters.join("");
+}
+
+function actualReportSignals(report, profile) {
+  return profile.sections
+    .filter((section) => report[section].length > 0)
+    .map((section) => ({
+      key: section,
+      label: profile.labels[section] ?? readoutSectionLabels[section],
+      count: report[section].length,
+      items: report[section],
+    }));
+}
+
+function renderSignalSvg(label, contents, height) {
+  return `<svg class="signal-svg" viewBox="0 0 760 ${height}" role="img" aria-label="${escapeHtml(label)}" preserveAspectRatio="xMidYMid meet">${contents}</svg>`;
+}
+
+function renderMapVisualization(report, profile, signals) {
+  const items = signals.flatMap((signal) => signal.items.map((item) => ({
+    title: item.title,
+    kind: signal.label,
+  }))).slice(0, 5);
+  const height = Math.max(110, items.length * 43 + 14);
+  const center = Math.round(height / 2);
+  const links = items.map((_, index) =>
+    `<path d="M222 ${center} C300 ${center},320 ${index * 43 + 29},378 ${index * 43 + 29}" fill="none" stroke="var(--accent)" stroke-opacity=".34" stroke-width="2"/>`).join("");
+  const nodes = items.map((item, index) => {
+    const y = index * 43 + 10;
+
+    return `<g><rect x="378" y="${y}" width="364" height="35" rx="10" fill="var(--card)" stroke="var(--line)"/><circle cx="393" cy="${y + 18}" r="4" fill="var(--accent)"/><text x="405" y="${y + 22}" fill="var(--ink)" font-size="12" font-weight="650">${escapeHtml(compactLabel(item.title, 35))}</text><text x="729" y="${y + 22}" fill="var(--muted)" font-size="10" text-anchor="end">${escapeHtml(compactLabel(item.kind, 17))}</text></g>`;
+  }).join("");
+  const root = `<rect x="12" y="${center - 22}" width="210" height="44" rx="12" fill="var(--soft)"/><text x="27" y="${center - 2}" fill="var(--accent)" font-size="11" font-weight="750">${escapeHtml(compactLabel(profile.title, 24))}</text><text x="27" y="${center + 13}" fill="var(--muted)" font-size="10">${items.length} recorded item${items.length === 1 ? "" : "s"}</text>`;
+
+  return renderSignalSvg(`${profile.title} domain concept map based on actual recorded results`, `${links}${root}${nodes}`, height);
+}
+
+function renderBarVisualization(profile, signals) {
+  const max = Math.max(...signals.map((signal) => signal.count));
+  const height = signals.length * 40 + 12;
+  const rows = signals.map((signal, index) => {
+    const y = index * 40 + 10;
+    const width = Math.round((signal.count / max) * 450);
+
+    return `<g><text x="8" y="${y + 16}" fill="var(--muted)" font-size="11">${escapeHtml(compactLabel(signal.label, 23))}</text><rect x="220" y="${y + 4}" width="470" height="15" rx="7" fill="var(--paper)"/><rect x="220" y="${y + 4}" width="${width}" height="15" rx="7" fill="var(--accent)"/><text x="710" y="${y + 16}" fill="var(--ink)" font-size="12" font-weight="700">${signal.count}</text></g>`;
+  }).join("");
+
+  return renderSignalSvg(`${profile.title} chart of actual recorded results`, rows, height);
+}
+
+function renderFlowVisualization(profile, signals) {
+  const gap = 14;
+  const width = Math.floor((746 - gap * (signals.length - 1)) / signals.length);
+  const nodes = signals.map((signal, index) => {
+    const x = 7 + index * (width + gap);
+    const connector = index < signals.length - 1
+      ? `<path d="M${x + width + 3} 43 l8 0 m-3 -3 l3 3 -3 3" fill="none" stroke="var(--muted)" stroke-width="1.5"/>`
+      : "";
+
+    return `<g><rect x="${x}" y="10" width="${width}" height="65" rx="13" fill="var(--card)" stroke="var(--line)"/><circle cx="${x + 15}" cy="28" r="4" fill="var(--accent)"/><text x="${x + 27}" y="32" fill="var(--muted)" font-size="10">${escapeHtml(compactLabel(signal.label, Math.max(9, Math.floor(width / 8))))}</text><text x="${x + 14}" y="58" fill="var(--ink)" font-size="18" font-weight="750">${signal.count}</text>${connector}</g>`;
+  }).join("");
+
+  return renderSignalSvg(`${profile.title} flow of actual recorded report results`, nodes, 85);
+}
+
+function renderChecksVisualization(report, profile) {
+  const descriptions = [
+    ["passed", "Passed"],
+    ["failed", "Failed"],
+    ["skipped", "Skipped"],
+    ["info", "Recorded"],
+  ];
+  const observed = descriptions.map(([status, label]) => ({
+    status,
+    label,
+    count: report.checks.filter((check) => check.status === status).length,
+  })).filter((entry) => entry.count > 0);
+
+  if (observed.length === 0) return "";
+
+  return `<div class="signal-checks" role="group" aria-label="${escapeHtml(profile.title)} based only on actual checks">${observed.map((entry) => `<div class="signal-check signal-check-${escapeHtml(entry.status)}"><span class="signal-dot" aria-hidden="true"></span><strong>${entry.count} ${escapeHtml(entry.label.toLowerCase())}</strong><span>${escapeHtml(entry.label)} checks</span></div>`).join("")}</div>`;
+}
+
+function renderMatrixVisualization(profile, signals) {
+  const rows = signals.flatMap((signal) => signal.items.slice(0, 3).map((item) => {
+    const status = signal.key === "checks"
+      ? `<span class="check-badge check-${escapeHtml(item.status)}">${escapeHtml(item.status)}</span>`
+      : `<span class="matrix-kind">${escapeHtml(signal.label)}</span>`;
+
+    return `<tr><th scope="row">${escapeHtml(item.title)}</th><td>${status}</td></tr>`;
+  })).slice(0, 6).join("");
+
+  if (!rows) return "";
+
+  return `<table class="signal-matrix"><caption>${escapeHtml(profile.title)} · actual recorded results</caption><thead><tr><th scope="col">Observed item</th><th scope="col">Signal</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function renderBriefVisualization(profile, signals) {
+  return `<div class="signal-brief" role="group" aria-label="${escapeHtml(profile.title)} actual result summary">${signals.map((signal) => `<div class="signal-brief-item"><span class="signal-dot" aria-hidden="true"></span><strong>${signal.count}</strong><span>${escapeHtml(signal.label)}</span></div>`).join("")}</div>`;
+}
+
+function renderReadoutVisualization(report, profile) {
+  if (report.status === "Preview") return "";
+
+  const signals = actualReportSignals(report, profile);
+
+  if (signals.length === 0) return "";
+
+  let visual;
+
+  switch (profile.visualization) {
+    case "map":
+      visual = renderMapVisualization(report, profile, signals);
+      break;
+    case "bars":
+      visual = renderBarVisualization(profile, signals);
+      break;
+    case "flow":
+      visual = renderFlowVisualization(profile, signals);
+      break;
+    case "matrix":
+      visual = renderMatrixVisualization(profile, signals);
+      break;
+    case "checks":
+      visual = renderChecksVisualization(report, profile);
+
+      if (!visual) visual = renderBriefVisualization(profile, signals);
+      break;
+    case "brief":
+      visual = renderBriefVisualization(profile, signals);
+      break;
+    default:
+      throw new Error(`Unsupported visual report profile for /${report.skill.name}.`);
+  }
+
+  return `<figure class="signal-panel"><figcaption><span class="eyebrow">Visual summary</span><span class="signal-caption">${escapeHtml(profile.signal)}</span></figcaption>${visual}</figure>`;
+}
+
 const reportStyles = `
   :root{color-scheme:light;--ink:#172033;--muted:#64748b;--paper:#f5f6fa;--card:#fff;--line:#e6e8ee;--accent:#2563eb;--soft:#dbeafe}
   *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}main{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:48px 0 72px}.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:750;letter-spacing:.02em}.brand-mark{display:grid;width:34px;height:34px;place-items:center;border-radius:11px;background:#172033;color:#fff;font-weight:850}.eyebrow{margin:0;color:var(--muted);font-size:11px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}.timestamp{color:var(--muted);font-size:12px}.hero{position:relative;overflow:hidden;padding:38px;border:1px solid var(--line);border-radius:24px;background:var(--card)}.hero::before{position:absolute;inset:0 0 auto;height:4px;background:var(--accent);content:""}.hero-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.hero h1{margin:12px 0 8px;font-size:clamp(32px,6vw,55px);font-weight:770;letter-spacing:-.07em;line-height:1.03}.skill-command{display:inline-block;margin-top:7px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.status{flex-shrink:0;border-radius:999px;padding:9px 13px;background:var(--soft);color:var(--accent);font-size:12px;font-weight:750}.status-blocked{background:#fee2e2;color:#b91c1c}.status-awaiting-input{background:#fef3c7;color:#a16207}.status-preview{background:#e9edf3;color:#475569}.outcome{max-width:72ch;margin:25px 0 0;color:#334155;font-size:17px;line-height:1.7}.preview-note{margin-top:18px;border:1px solid #dbe2eb;border-radius:13px;padding:12px 15px;background:#f8fafc;color:#475569;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:21px}.metric{border:1px solid var(--line);border-radius:15px;padding:15px;background:var(--card)}.metric-label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.metric-value{display:block;margin-top:9px;font-size:25px;font-weight:770;letter-spacing:-.04em}.section{margin-top:34px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section-heading h2{margin:6px 0 0;font-size:23px;font-weight:720;letter-spacing:-.04em}.section-count{display:grid;width:31px;height:31px;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;font-weight:700}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-card{min-width:0;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card)}.detail-heading{display:flex;align-items:center;gap:9px}.detail-heading h3{flex:1;min-width:0;margin:0;overflow-wrap:anywhere;font-size:14px;font-weight:700}.detail-card p{margin:10px 0 0;overflow-wrap:anywhere;color:#526077;font-size:13px;line-height:1.7;white-space:pre-wrap}.item-link{flex-shrink:0;color:var(--accent);font-size:12px;font-weight:700;text-decoration:none}.check-badge{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:750;text-transform:uppercase}.check-passed{background:#dcfce7;color:#15803d}.check-failed{background:#fee2e2;color:#b91c1c}.check-skipped{background:#f1f5f9;color:#475569}.check-info{background:#dbeafe;color:#1d4ed8}.skills-used{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.skill-chip{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}.next-card{display:block;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);text-decoration:none}.next-card:first-child{border-color:var(--accent)}.next-card .eyebrow{color:var(--accent)}.next-card h3{margin:10px 0 7px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}.next-card p:last-child{margin:0;color:#526077;font-size:13px;line-height:1.7}.empty-next{border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);color:#526077;font-size:13px}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:39px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.dashboard-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:22px}.dashboard-card{display:block;border:1px solid var(--line);border-radius:17px;padding:18px;background:var(--card);text-decoration:none}.dashboard-card:hover{border-color:var(--accent)}.dashboard-card h2{margin:10px 0 7px;font-size:17px;letter-spacing:-.03em}.dashboard-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.dashboard-card .status{display:inline-block;margin-top:12px}.empty-gallery{margin-top:22px;border:1px dashed var(--line);border-radius:16px;padding:22px;color:var(--muted);background:var(--card)}
+  .compact-readout{width:min(900px,calc(100% - 36px));padding:29px 0 43px}.compact-readout .topline{margin-bottom:16px}.compact-readout .hero{padding:23px 25px;border-radius:19px}.compact-readout .hero h1{margin:7px 0 3px;font-size:clamp(26px,5vw,39px);letter-spacing:-.055em}.compact-readout .outcome{margin:14px 0 0;font-size:14px;line-height:1.6}.compact-readout .skills-used{gap:6px;margin-top:10px}.compact-readout .skill-chip{padding:5px 8px;font-size:10px}.profile-title{margin:7px 0 0;color:var(--accent);font-size:12px;font-weight:730}.compact-readout .metrics{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:12px}.compact-readout .metric{border-radius:12px;padding:11px 12px}.compact-readout .metric-label{font-size:10px}.compact-readout .metric-value{margin-top:4px;font-size:19px}.compact-readout .section{margin-top:19px}.compact-readout .section-heading{margin-bottom:9px}.compact-readout .section-heading h2{margin-top:4px;font-size:18px}.compact-readout .section-count{width:26px;height:26px;border-radius:8px;font-size:11px}.compact-readout .detail-grid{gap:9px}.compact-readout .detail-card{border-radius:12px;padding:12px}.compact-readout .detail-card p{margin-top:6px;font-size:12px;line-height:1.55}.compact-readout .footer{margin-top:23px;padding-top:12px}.compact-readout .next-grid{gap:9px}.compact-readout .next-card{border-radius:12px;padding:12px}.compact-readout .next-card h3{margin:7px 0 5px;font-size:12px}.compact-readout .next-card p:last-child{font-size:12px}.signal-panel{margin:13px 0 0;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}.signal-panel figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.signal-caption{color:var(--muted);font-size:10px}.signal-svg{display:block;width:100%;max-width:760px;height:auto}.signal-checks,.signal-brief{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.signal-check,.signal-brief-item{display:grid;grid-template-columns:8px 1fr;align-items:center;column-gap:8px;row-gap:3px;min-height:46px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.signal-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.signal-check strong,.signal-brief-item strong{font-size:12px}.signal-check>span:last-child,.signal-brief-item>span:last-child{grid-column:2;color:var(--muted);font-size:10px}.signal-check-passed .signal-dot{background:#16a34a}.signal-check-failed .signal-dot{background:#dc2626}.signal-check-skipped .signal-dot{background:#94a3b8}.signal-matrix{width:100%;border-collapse:collapse;text-align:left;font-size:12px}.signal-matrix caption{margin-bottom:7px;color:var(--muted);text-align:left;font-size:10px}.signal-matrix th,.signal-matrix td{border-top:1px solid var(--line);padding:8px 7px}.signal-matrix thead th{border-top:0;color:var(--muted);font-size:10px;font-weight:700}.signal-matrix tbody th{font-weight:650}.matrix-kind{color:var(--muted);font-size:10px}
   .gallery-nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}.gallery-nav a,.preview-toggle{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--card);font-size:12px;font-weight:700;text-decoration:none}.gallery-nav a[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:15px}.project-card{min-width:0;border:1px solid var(--line);border-radius:19px;padding:20px;background:var(--card)}.project-card.current{border-color:var(--accent)}.project-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.project-title{display:block;margin:9px 0 5px;overflow-wrap:anywhere;font-size:19px;font-weight:750;letter-spacing:-.04em;text-decoration:none}.project-meta{color:var(--muted);font-size:12px}.current-project{border-radius:999px;padding:6px 9px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:800;white-space:nowrap}.report-list{display:grid;gap:10px;margin-top:15px}.report-row{display:block;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff;text-decoration:none}.report-row:hover,.project-title:hover{border-color:var(--accent);color:var(--accent)}.report-row-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.report-row-title{font-size:13px;font-weight:720}.report-row .status{padding:5px 8px;font-size:10px}.report-outcome{margin:8px 0 0;color:#526077;font-size:12px;line-height:1.6}.report-time{display:block;margin-top:7px;color:var(--muted);font-size:11px}.explorer{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:16px}.explorer-sidebar,.explorer-content{min-width:0;border:1px solid var(--line);border-radius:18px;padding:17px;background:var(--card)}.sidebar-list{display:grid;gap:7px;margin-top:12px}.sidebar-project{display:block;border:1px solid transparent;border-radius:11px;padding:11px;color:var(--muted);font-size:12px;font-weight:650;text-decoration:none;overflow-wrap:anywhere}.sidebar-project[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.search-form{display:flex;gap:8px;margin:15px 0}.search-input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font:inherit;font-size:13px}.search-submit{border:1px solid var(--accent);border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font:inherit;font-size:12px;font-weight:700}.timeline-day{margin-top:23px}.timeline-day h2{margin:0 0 12px;font-size:15px;letter-spacing:-.02em}.timeline-day .report-list{margin-top:0}.legacy-note{margin:15px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
-  @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.explorer{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.search-form{flex-wrap:wrap}}
+  .report-profile{display:inline-block;margin-top:6px;border-radius:999px;padding:3px 7px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:700}
+  @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.explorer{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
 `;
 
 function renderDocument({ title, body, theme, metadata = "" }) {
@@ -520,10 +688,15 @@ export function renderSkillReadout(input) {
 function renderNormalizedSkillReadout(report) {
   const family = report.skill.name.split("-")[1];
   const theme = themes[family] ?? themes.help;
+  const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+
+  if (!profile) throw new Error(`/${report.skill.name} does not have a cataloged report profile.`);
+
   const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
   const metadata = [
     `<meta name="quickstark:skill" content="${escapeHtml(report.skill.name)}">`,
     `<meta name="quickstark:skill-display-name" content="${escapeHtml(report.skill.displayName)}">`,
+    `<meta name="quickstark:report-profile" content="${escapeHtml(profile.title)}">`,
     `<meta name="quickstark:status" content="${escapeHtml(report.status)}">`,
     `<meta name="quickstark:generated-at" content="${escapeHtml(report.generatedAt.toISOString())}">`,
     `<meta name="quickstark:report-id" content="${escapeHtml(report.reportId)}">`,
@@ -543,25 +716,33 @@ function renderNormalizedSkillReadout(report) {
     ? '<p class="preview-note">Catalog preview only. No skill has been run, no checks have been performed, and no project files have been changed.</p>'
     : "";
 
-  const metrics = [
-    ["Findings", report.findings.length],
-    ["Decisions", report.decisions.length],
-    ["Checks", report.checks.length],
-    ["Next steps", report.nextSkills.length],
-  ].map(([label, value]) => `<div class="metric"><span class="metric-label">${label}</span><span class="metric-value">${value}</span></div>`).join("");
+  const signals = report.status === "Preview" ? [] : actualReportSignals(report, profile);
+  const metrics = signals.slice(0, 3).map((signal) =>
+    `<div class="metric"><span class="metric-label">${escapeHtml(signal.label)}</span><span class="metric-value">${signal.count}</span></div>`).join("");
+  const visualization = renderReadoutVisualization(report, profile);
+  const sections = report.status === "Preview"
+    ? renderSection(
+      "Catalog information",
+      "Purpose and invocation only; no skill has been run",
+      report.findings,
+    )
+    : profile.sections.map((section) => renderSection(
+      profile.labels[section] ?? readoutSectionLabels[section],
+      readoutSectionDescriptions[section],
+      report[section],
+      { checks: section === "checks" },
+    )).join("\n  ");
 
   const next = report.nextSkills.length
     ? `<div class="next-grid">${report.nextSkills.map((item, index) => `<article class="next-card"><p class="eyebrow">${index === 0 ? "Recommended next" : "Alternative"}</p><h3>/${escapeHtml(item.name)}</h3><p>${escapeHtml(item.reason)}</p></article>`).join("")}</div>`
     : '<div class="empty-next">None — the requested work is complete.</div>';
 
-  const body = `<main>
+  const body = `<main class="compact-readout">
   <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
-  <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}</header>
-  <div class="metrics">${metrics}</div>
-  ${renderSection("Findings", "What we learned", report.findings)}
-  ${renderSection("Decisions", "What was decided", report.decisions)}
-  ${renderSection("Outputs", "Files, reports, and deliverables", report.outputs)}
-  ${renderSection("Checks", "Only validations actually performed", report.checks, { checks: true })}
+  <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}</header>
+  ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
+  ${visualization}
+  ${sections}
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the work</p><h2>Next best skills</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
   <footer class="footer"><span>Generated by ${escapeHtml(COLLECTION_NAME)}</span><span>Self-contained HTML · no external scripts or styles</span></footer>
 </main>`;
@@ -741,6 +922,9 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
         skill,
         status,
         generatedAt,
+        profileTitle: decodeHtml(findMetadata(html, "report-profile"))
+          || READOUT_PROFILES_BY_NAME[skill.name]?.title
+          || "",
         outcome: decodeHtml(match?.[1] ?? ""),
         projectKey,
         projectLabel: decodeHtml(findMetadata(html, "project-label")),
@@ -933,7 +1117,11 @@ function renderGalleryReport(report, { showProject = false } = {}) {
     ? `${report.skill.displayName} · ${report.projectLabel}`
     : report.skill.displayName;
 
-  return `<a class="report-row" href="${reportHref(report)}"><div class="report-row-heading"><span class="report-row-title">${escapeHtml(label)}</span><span class="status status-${escapeHtml(statusClass)}">${escapeHtml(report.status)}</span></div><p class="report-outcome">${escapeHtml(report.outcome)}</p><time class="report-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
+  const profile = report.profileTitle
+    ? `<span class="report-profile">${escapeHtml(report.profileTitle)}</span>`
+    : "";
+
+  return `<a class="report-row" href="${reportHref(report)}"><div class="report-row-heading"><span class="report-row-title">${escapeHtml(label)}</span><span class="status status-${escapeHtml(statusClass)}">${escapeHtml(report.status)}</span></div>${profile}<p class="report-outcome">${escapeHtml(report.outcome)}</p><time class="report-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
 }
 
 function groupReadoutProjects(reports) {

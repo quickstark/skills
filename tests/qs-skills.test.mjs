@@ -33,6 +33,7 @@ import {
 import {
   COLLECTION_PREFIX,
   NEXT_SKILLS_BY_NAME,
+  READOUT_PROFILES_BY_NAME,
   SKILLS,
   SKILLS_BY_NAME,
   UPSTREAM_SKILLS,
@@ -211,6 +212,232 @@ test("every promoted skill has a distinct, self-contained architecture-quality H
     for (const next of NEXT_SKILLS_BY_NAME[skill.name]) {
       assert.ok(html.includes(`/${next.name}`), `${skill.name} omits /${next.name}`);
     }
+  }
+});
+
+test("every promoted skill has its own complete, purpose-specific visual report profile", () => {
+  const names = SKILLS.map((skill) => skill.name).sort();
+
+  assert.deepEqual(Object.keys(READOUT_PROFILES_BY_NAME).sort(), names);
+  assert.equal(
+    new Set(Object.values(READOUT_PROFILES_BY_NAME).map((profile) => profile.title)).size,
+    SKILLS.length,
+    "Every skill must communicate its own distinct report purpose.",
+  );
+
+  for (const skill of SKILLS) {
+    const profile = READOUT_PROFILES_BY_NAME[skill.name];
+
+    assert.ok(profile.title.length >= 8, `${skill.name} needs a meaningful report title.`);
+    assert.ok(profile.signal.length >= 8, `${skill.name} must identify its actual primary signal.`);
+    assert.ok(
+      ["map", "flow", "bars", "matrix", "checks", "brief"].includes(profile.visualization),
+      `${skill.name} needs a supported, self-contained visual cue.`,
+    );
+    assert.deepEqual(
+      [...profile.sections].sort(),
+      ["checks", "decisions", "findings", "outputs"],
+      `${skill.name} must retain every actual report field in a purpose-specific order.`,
+    );
+  }
+});
+
+test("domain-design reports visually map actual resolved concepts and shared vocabulary", () => {
+  const html = renderSkillReadout({
+    skill: "qs-design-domain",
+    outcome: "Defined the vocabulary for purpose-specific skill readouts.",
+    findings: [
+      { title: "Report profile", detail: "The purpose-specific presentation of one promoted skill." },
+      { title: "Primary signal", detail: "The real result that must be understood first." },
+    ],
+    decisions: [
+      { title: "A preview is not a skill run", detail: "Previews never claim observed work." },
+    ],
+  });
+
+  assert.match(html, /Domain model/);
+  assert.match(html, /Shared vocabulary/);
+  assert.match(html, /Report profile/);
+  assert.match(html, /Primary signal/);
+  assert.match(html, /A preview is not a skill run/);
+  assert.match(html, /<svg\b[^>]*role="img"/);
+  assert.match(html, /aria-label="[^"]*[Dd]omain/);
+  assert.match(html, /quickstark:report-profile/);
+  assert.doesNotMatch(html, /<script\b/i);
+});
+
+test("research reports foreground observed evidence and a truthful compact signal chart", () => {
+  const html = renderSkillReadout({
+    skill: "qs-plan-research",
+    outcome: "Compared authenticated hosting options against the existing infrastructure.",
+    findings: [
+      { title: "Cloudflare DNS", detail: "The proxied hostname resolves publicly." },
+      { title: "Traefik routing", detail: "The authenticated service is healthy." },
+    ],
+    decisions: [
+      { title: "Use the existing Authelia boundary", detail: "Reuse the verified browser sign-in." },
+    ],
+  });
+
+  assert.match(html, /Research brief/);
+  assert.match(html, /Evidence/);
+  assert.match(html, /Cloudflare DNS/);
+  assert.match(html, /Traefik routing/);
+  assert.match(html, /<svg\b[^>]*role="img"/);
+  assert.doesNotMatch(html.slice(html.indexOf("<body")), /100%|guaranteed|fabricated/i);
+});
+
+test("test-driven reports visualize only checks that actually ran", () => {
+  const html = renderSkillReadout({
+    skill: "qs-test-tdd",
+    outcome: "Verified the compact visual report behavior.",
+    checks: [
+      { title: "Purpose-specific domain report", status: "passed", detail: "The actual renderer returned an accessible concept map." },
+      { title: "Optional screenshot review", status: "skipped", detail: "A visual browser was unavailable." },
+    ],
+  });
+
+  assert.match(html, /Test results/);
+  assert.match(html, /Verification/);
+  assert.match(html, /Purpose-specific domain report/);
+  assert.match(html, /Optional screenshot review/);
+  assert.match(html, /1 passed/i);
+  assert.match(html, /1 skipped/i);
+  assert.doesNotMatch(html.slice(html.indexOf("<body")), /100%|all tests passed/i);
+});
+
+test("implementation and review reports expose different useful results", () => {
+  const build = renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Implemented purpose-specific readout profiles.",
+    outputs: [
+      { title: "Catalog profiles", detail: "Added a distinct purpose for every promoted skill." },
+    ],
+    checks: [
+      { title: "Profile coverage", status: "passed", detail: "All 23 real skills are represented." },
+    ],
+  });
+  const review = renderSkillReadout({
+    skill: "qs-review-code",
+    outcome: "Reviewed the skill-specific report implementation.",
+    findings: [
+      { title: "Standards", detail: "No security or code-standard findings." },
+      { title: "Specification", detail: "The implementation matches the requested compact report behavior." },
+    ],
+    checks: [
+      { title: "Independent review", status: "passed", detail: "Both review axes completed." },
+    ],
+  });
+
+  assert.match(build, /Delivery summary/);
+  assert.match(build, /Deliverables/);
+  assert.match(build, /Catalog profiles/);
+  assert.match(review, /Review findings/);
+  assert.match(review, /Review matrix/);
+  assert.match(review, /Standards/);
+  assert.match(review, /Specification/);
+  assert.notEqual(build, review);
+});
+
+test("roadmap and release reports prioritize actual decisions and observed release gates", () => {
+  const roadmap = renderSkillReadout({
+    skill: "qs-plan-roadmap",
+    outcome: "Ordered the independently recorded report design decisions.",
+    decisions: [
+      { title: "Model the domain vocabulary", detail: "Resolve purpose, primary signals, and preview semantics." },
+      { title: "Ship purpose-specific layouts", detail: "Implement and verify all real skill profiles." },
+    ],
+  });
+  const release = renderSkillReadout({
+    skill: "qs-deploy-release",
+    outcome: "Verified and redeployed the existing readout service.",
+    checks: [
+      { title: "Docker health", status: "passed", detail: "The approved deployed service is healthy." },
+      { title: "Authelia", status: "passed", detail: "Anonymous requests redirect to sign-in." },
+    ],
+  });
+
+  assert.match(roadmap, /Delivery roadmap/);
+  assert.match(roadmap, /Decision sequence/);
+  assert.match(roadmap, /Model the domain vocabulary/);
+  assert.match(roadmap, /<svg\b[^>]*role="img"/);
+  assert.match(release, /Release readiness/);
+  assert.match(release, /Release gates/);
+  assert.match(release, /2 passed/i);
+  assert.match(release, /Docker health/);
+  assert.match(release, /Authelia/);
+});
+
+test("skill-specific visualizations escape hostile chart and concept-map labels", () => {
+  const hostile = '<script>alert("unsafe")</script>';
+  const html = renderSkillReadout({
+    skill: "qs-design-domain",
+    outcome: "Escaped externally controlled domain terms.",
+    findings: [{ title: hostile, detail: hostile }],
+    decisions: [{ title: hostile, detail: hostile }],
+  });
+
+  assert.match(html, /<svg\b[^>]*role="img"/);
+  assert.match(html, /&lt;script&gt;alert\(&quot;unsafe&quot;\)&lt;\/script&gt;/);
+  assert.doesNotMatch(html, /<script\b/i);
+});
+
+test("reports without observed signals omit decorative charts and zero-value metric cards", () => {
+  const html = renderSkillReadout({
+    skill: "qs-design-domain",
+    outcome: "A domain question remains to be clarified.",
+    status: "Awaiting input",
+  });
+  const body = html.slice(html.indexOf("<body"));
+
+  assert.match(body, /Awaiting input/);
+  assert.match(body, /Domain model/);
+  assert.doesNotMatch(body, /<svg\b/i);
+  assert.doesNotMatch(body, /class="metrics"/);
+  assert.doesNotMatch(body, /class="signal-panel"/);
+});
+
+test("skill-specific preview layouts never invent activity, checks, or chart values", () => {
+  for (const skill of SKILLS) {
+    const html = renderSkillReadout({
+      skill: skill.name,
+      status: "Preview",
+      skillsUsed: [],
+      outcome: `Layout preview for ${skill.displayName}; no skill has been run.`,
+      findings: [
+        { title: "Purpose", detail: skill.shortDescription },
+        { title: "Invocation", detail: "Catalog information only; no skill was invoked." },
+      ],
+    });
+
+    assert.match(html, /Catalog preview only/i, `${skill.name} must identify a catalog preview.`);
+    assert.match(html, /No skill has been run/i, `${skill.name} cannot imply actual work.`);
+    const body = html.slice(html.indexOf("<body"));
+
+    assert.doesNotMatch(body, /class="skills-used"/, `${skill.name} cannot claim actual skill use.`);
+    assert.doesNotMatch(body, /class="[^"]*\bcheck-passed\b/, `${skill.name} cannot invent a passing check.`);
+    assert.doesNotMatch(body, /\b100%\b/, `${skill.name} cannot invent chart progress.`);
+    assert.doesNotMatch(body, /class="metrics"/, `${skill.name} cannot represent catalog copy as observed metrics.`);
+    assert.doesNotMatch(body, /class="signal-panel"/, `${skill.name} cannot chart catalog-only results.`);
+    assert.match(body, /Catalog information/, `${skill.name} should clearly label catalog-only descriptions.`);
+    assert.match(body, />Purpose</, `${skill.name} should preserve its actual catalog explanation.`);
+    assert.match(body, />Invocation</, `${skill.name} should preserve its actual invocation description.`);
+  }
+});
+
+test("catalog previews reject fabricated decisions, deliverables, and validation results", () => {
+  for (const [field, value] of [
+    ["decisions", [{ title: "Invented decision", detail: "No preview actually chose this." }]],
+    ["outputs", [{ title: "Invented artifact", detail: "No preview actually produced this." }]],
+    ["checks", [{ title: "Invented test", status: "passed", detail: "No preview actually ran this." }]],
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      skill: "qs-design-domain",
+      status: "Preview",
+      skillsUsed: [],
+      outcome: "Catalog preview only.",
+      [field]: value,
+    }), /preview cannot claim actual/i, `Preview ${field} must not claim actual work.`);
   }
 });
 
@@ -579,12 +806,80 @@ test("the production gallery groups actual reports into a project-first library"
   assert.match(html, /CURRENT PROJECT/i);
   assert.match(html, /Research the skill-hosting architecture/);
   assert.match(html, /Build the marketplace search experience/);
+  assert.match(html, /Research brief/);
+  assert.match(html, /Delivery summary/);
   assert.doesNotMatch(html, /Catalog preview only; no actual design work occurred/);
   assert.ok(html.indexOf("quickstark/marketplace") < html.indexOf("quickstark/skills"));
 
   for (const report of reports.slice(0, 2)) {
     assert.ok(html.includes(report.relativePath), `Gallery must link the actual ${report.filename}.`);
   }
+});
+
+test("the production viewer safely serves purpose-specific concept maps and labels", async (context) => {
+  const { directory, viewer } = await temporaryProjectGallery(context);
+  const domain = await writeSkillReadout({
+    skill: "qs-design-domain",
+    outcome: "Defined the skill-report profile and truthful visual-cue vocabulary.",
+    projectIdentity: explicitProject("skills"),
+    findings: [
+      { title: "Report profile", detail: "A purpose-specific presentation of actual results." },
+      { title: "Visual cue", detail: "An accessible display of recorded observations." },
+    ],
+    decisions: [
+      { title: "Catalog previews are not actual runs", detail: "No visualization may claim invented results." },
+    ],
+  }, { directory, layout: "project" });
+
+  const response = await fetch(new URL(domain.relativePath, viewer.url));
+
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
+
+  const html = await response.text();
+
+  assert.match(html, /Domain model/);
+  assert.match(html, /Shared vocabulary/);
+  assert.match(html, /<svg\b[^>]*role="img"/);
+  assert.match(html, /Report profile/);
+  assert.doesNotMatch(html, /<script\b/i);
+
+  const gallery = await fetch(viewer.url);
+
+  assert.match(await gallery.text(), /Domain model/);
+});
+
+test("the gallery truthfully labels earlier reports without changing immutable legacy HTML", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const filename = "qs-plan-research--2026-07-23T09-00-00-000Z--abcdef12.html";
+  const original = renderSkillReadout({
+    skill: "qs-plan-research",
+    generatedAt: "2026-07-23T09:00:00.000Z",
+    outcome: "Preserve the original report and identify its actual research skill.",
+  }).replace(/\s*<meta name="quickstark:report-profile" content="[^"]*">/, "");
+
+  await writeFile(join(directory, filename), original, "utf8");
+
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const response = await fetch(viewer.url);
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /Research brief/);
+  assert.ok(html.includes(filename));
+  assert.equal(await readFile(join(directory, filename), "utf8"), original);
+
+  const direct = await fetch(new URL(filename, viewer.url));
+
+  assert.equal(direct.status, 200);
+  assert.doesNotMatch(await direct.text(), /quickstark:report-profile/);
 });
 
 test("the production explorer isolates project reports and supports shareable outcome searches", async (context) => {
@@ -973,6 +1268,13 @@ test("the preview gallery covers all 23 skills without inventing completed work"
     assert.match(html, /Catalog preview only/);
     assert.match(html, /No skill has been run/);
     assert.doesNotMatch(html, /class="skills-used"/);
+
+    const body = html.slice(html.indexOf("<body"));
+
+    assert.match(body, /Catalog information/, `${preview.skill} must label its catalog-only descriptions.`);
+    assert.doesNotMatch(body, /class="metrics"/, `${preview.skill} must not count catalog copy as work.`);
+    assert.doesNotMatch(body, /class="signal-panel"/, `${preview.skill} must not visualize unobserved work.`);
+    assert.doesNotMatch(body, /class="[^"]*\bcheck-passed\b/, `${preview.skill} must not invent passing checks.`);
   }
 });
 
@@ -1711,6 +2013,8 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(contract, /QS_READOUT_DIR/);
     assert.match(contract, /project-organized/i);
     assert.match(contract, /temporary.*default/i);
+    assert.match(contract, /purpose-specific/i);
+    assert.match(contract, /actual (?:recorded )?(?:evidence|results|checks)/i);
     assert.match(contract, /QS_READOUT_ACCESS=ssh/);
     assert.match(contract, /Tailscale is not required/);
     assert.match(contract, /do not bind to every network interface/i);
@@ -1723,6 +2027,7 @@ test("the standard report distinguishes actual skills from suggested next steps"
 
     assert.match(documentation, /QS_READOUT_DIR/);
     assert.match(documentation, /project-organized/i);
+    assert.match(documentation, /purpose-specific/i);
   }
 });
 

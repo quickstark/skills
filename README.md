@@ -92,7 +92,19 @@ Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation onl
 
 ## Visual skill readouts
 
-Every promoted skill automatically produces the same architecture-quality, self-contained HTML readout and starts or reuses its lightweight report viewer. The report uses a clear skill-specific heading, an honest status, a concise outcome, actual findings, decisions, outputs, checks, and contextually appropriate next skills. It is responsive, has no external JavaScript or stylesheet dependency, and stays in the operating system's temporary `quickstark-readouts` directory rather than cluttering a project.
+Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 23 report profiles keep an honest status, concise outcome, actual findings, decisions, outputs, checks, and relevant next skills; each foregrounds the information that matters for that particular skill.
+
+| Skill purpose | Primary visual signal |
+| --- | --- |
+| Domain and architecture | Accessible maps of actual concepts, boundaries, and decisions. |
+| Research and exploration | Evidence and observed findings visualized as compact charts. |
+| Planning and implementation | Decision sequences, actual deliverables, and verified checks. |
+| Test-driven development | Only the tests that actually passed, failed, or were skipped. |
+| Code review and triage | Concise comparison of real findings, review axes, and outcomes. |
+| Deployment and setup | Actual release gates, validation results, and deployment artifacts. |
+| Guidance, handoff, and learning | Focused recommendations, current state, and real next steps. |
+
+Visualizations are accessible, responsive, and self-contained; they never invent activity, progress, test results, or report data. Reports have no external JavaScript or stylesheet dependency and use the operating system's temporary `quickstark-readouts` directory by default.
 
 Generate a clearly labeled preview for all 23 skills:
 
@@ -186,6 +198,15 @@ docker compose -f /docker/stacks/quickstark-readouts/compose.yaml up -d
 ```
 
 The intended hostname is `reports.quickstark.com`. It is usable from a personal or managed laptop only after its real DNS record resolves, HTTPS works, Authelia rejects anonymous requests, and an approved user can retrieve an actual report. Do not treat a local reverse-proxy check as proof of remote reachability. No Tailscale, private-network client, or permanent SSH tunnel is required once those external prerequisites are explicitly configured and verified.
+
+If a newly created hostname works through public DNS but still fails on the home network, compare the public resolver with the home router:
+
+```bash
+dig @1.1.1.1 reports.quickstark.com A
+dig @192.168.1.1 reports.quickstark.com A
+```
+
+An `NXDOMAIN` from the router while Cloudflare returns public addresses means the router is caching the hostname's previous nonexistence. Wait for the router's negative-cache TTL to expire or clear that router's DNS cache; flushing only the dev box cannot remove an upstream cached result.
 
 ## Consistent skill output
 
