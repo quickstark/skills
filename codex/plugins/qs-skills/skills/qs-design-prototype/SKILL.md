@@ -24,3 +24,26 @@ The two branches produce very different artifacts — getting this wrong wastes 
 4. **Skip the polish.** No tests, no error handling beyond what makes the prototype _runnable_, no abstractions. The point is to learn something fast.
 5. **Surface the state.** After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.
 6. **Capture it when done.** Fold any validated decision into the real code, then capture the prototype itself as a **primary source**: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too — the verdict and the question it settled — in the issue or a commit. The main branch keeps only the validated decision.
+
+## Completion report and next steps
+
+Finish with a concise, readable completion report. Plain text or restrained Markdown is sufficient; do not create a separate report or HTML file unless this skill's primary workflow requires one.
+
+```text
+Status: Completed | Awaiting input | Blocked
+Skills used: /qs-design-prototype; /another-skill only if actually used
+Outcome: What was completed, discovered, decided, or is blocking progress.
+Outputs: Real files, reports, decisions, or changes, when applicable.
+Checks: Only the tests, validations, or observations actually performed.
+Next best: /qs-skill-name — why it is the best next step.
+```
+
+Always include **Status**, **Skills used**, **Outcome**, and **Next best**. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, or result you did not verify.
+
+Select at most three genuinely relevant follow-ons from:
+
+- `/qs-design-modules` — Turn the validated prototype into a clean module or interface design.
+- `/qs-plan-clarify` — Confirm which prototype findings should shape the real solution.
+- `/qs-plan-spec` — Capture the selected prototype behavior before production implementation.
+
+Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

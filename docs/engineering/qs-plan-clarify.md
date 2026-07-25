@@ -36,6 +36,16 @@ What makes this variant its own skill is where the answers go. As the grill runs
 - It reaches into the codebase to answer its own questions where it can.
 - ADRs stay rare — you're not asked to rubber-stamp reversible choices.
 
+## Output and next steps
+
+`/qs-plan-clarify` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Record the agreed requirements as an actionable specification.
+- [`/qs-plan-research`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-research/SKILL.md) — Resolve an open question that needs external or primary-source evidence.
+- [`/qs-design-prototype`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-prototype/SKILL.md) — Test a design question that conversation alone cannot settle.
+
 ## Where it fits
 
 `qs-plan-clarify` is the opening step of the main build chain:

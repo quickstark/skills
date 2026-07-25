@@ -33,6 +33,16 @@ They run as parallel sub-agents so neither pollutes the other's context, and the
 - Standards and Spec findings arrive in two distinct blocks, each citing its source — a repo standard or baseline smell for one, a quoted spec line for the other.
 - When no spec can be found, the Spec axis reports "no spec available" instead of inventing requirements.
 
+## Output and next steps
+
+`/qs-review-code` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-code-build`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-build/SKILL.md) — Address actionable findings before the change is considered complete.
+- [`/qs-test-tdd`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-tdd/SKILL.md) — Add missing regression coverage revealed by the review.
+- [`/qs-deploy-release`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-deploy-release/SKILL.md) — Release an approved change after all required checks pass.
+
 ## Where it fits
 
 `qs-review-code` is the review step at the tail of the main build chain:

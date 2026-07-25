@@ -33,6 +33,16 @@ The output is a browser-ready HTML file written to your OS temp directory — no
 
 Then it stops and asks which one you want to explore. Pick one and it runs the [qs-plan-interview](https://aihero.dev/skills-grilling) loop over that design — constraints, what sits behind the seam, which tests survive — updating the domain model inline as decisions crystallise.
 
+## Output and next steps
+
+`/qs-design-architecture` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-design-modules`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-modules/SKILL.md) — Design the interface and seam for the selected architecture candidate.
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Confirm the refactor's scope, constraints, and expected outcome.
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Document a selected, nontrivial refactoring before implementation.
+
 ## Where it fits
 
 `qs-design-architecture` is **periodic maintenance** — run it every few days, not as a step in a chain. Its neighbours are [qs-design-modules](https://aihero.dev/skills-codebase-design), which owns the depth-and-seam vocabulary every candidate is written in, [qs-plan-interview](https://aihero.dev/skills-grilling), which walks the decision tree once you've chosen a candidate, and [qs-design-domain](https://aihero.dev/skills-domain-modeling), which keeps `CONTEXT.md` and the ADRs current as the redesign settles. When you're unsure which skill or flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

@@ -36,6 +36,16 @@ Every ticket is **HITL** (human in the loop — grilling, prototype) or **AFK** 
 - A session resolves **at most one ticket** (research tickets excepted), records the answer as a resolution comment, closes the ticket, and appends a one-line pointer to *Decisions so far*.
 - If the opening grill surfaces **no fog**, it stops and tells you the journey is small enough to skip the map.
 
+## Output and next steps
+
+`/qs-plan-roadmap` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-research`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-research/SKILL.md) — Answer a blocking research question identified by the roadmap.
+- [`/qs-design-prototype`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-prototype/SKILL.md) — Resolve a roadmap decision with a disposable prototype.
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Convert resolved roadmap decisions into an implementation specification.
+
 ## Where it fits
 
 `qs-plan-roadmap` is a big-idea **on-ramp**: an effort too large and foggy to spec in one sitting generates a cleared map of decisions, which then merges onto the main build flow. When the fog is pushed back and the way is clear, hand off to [qs-plan-spec](https://aihero.dev/skills-to-spec) to schedule the multi-session build (or, if the effort turned out small, implement directly). It leans on [qs-plan-interview](https://aihero.dev/skills-grilling) and [qs-design-domain](https://aihero.dev/skills-domain-modeling) to resolve individual tickets, and on [qs-design-prototype](https://aihero.dev/skills-prototype) and [qs-plan-research](https://aihero.dev/skills-research) for the ticket types that need them. When you're unsure which skill or flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

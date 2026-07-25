@@ -45,6 +45,16 @@ That matters for agentic development: a good interface gives tests something dur
 - It checks the seams with you before writing, and proposes as few as possible.
 - The spec comes back in your project's domain vocabulary, not generic boilerplate.
 
+## Output and next steps
+
+`/qs-plan-spec` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-tickets`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-tickets/SKILL.md) — Break a substantial specification into dependency-aware work.
+- [`/qs-code-build`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-build/SKILL.md) — Implement a small, sufficiently clear specification directly.
+- [`/qs-design-modules`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-modules/SKILL.md) — Resolve an important interface or module boundary before implementation.
+
 ## Where it fits
 
 `qs-plan-spec` is a step in the main build chain:

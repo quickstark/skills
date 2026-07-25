@@ -33,6 +33,16 @@ Refactoring only happens once the suite is green; never while red.
 - The tests name behaviours, not internals, and would survive an internal rename.
 - Expected values are literals from the spec, not figures derived the same way the code derives them.
 
+## Output and next steps
+
+`/qs-test-tdd` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-code-build`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-build/SKILL.md) — Implement the smallest change that makes the verified test pass.
+- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Review the completed behavior and the quality of its tests.
+- [`/qs-design-modules`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-modules/SKILL.md) — Improve an interface when the test exposes an unhealthy seam.
+
 ## Where it fits
 
 `qs-test-tdd` is the red-green loop the main build chain runs to write code:

@@ -34,6 +34,16 @@ A finished prototype leaves two things. The **answer** — the verdict plus the 
 
 The prototype doesn't belong in the main branch: no tests, no error handling, nothing to maintain. But that's not a reason to destroy it. Once the answer is captured, fold any validated decision into the real code, then capture the prototype on a throwaway branch — out of main, never merged — and leave a context pointer to it on the implementation issue. The main branch stays clean; the raw exploration stays one click away for anyone who wants to re-run it. A prototype left rotting in the main branch has outlived its purpose — a prototype captured as a primary source on a side branch hasn't.
 
+## Output and next steps
+
+`/qs-design-prototype` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-design-modules`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-modules/SKILL.md) — Turn the validated prototype into a clean module or interface design.
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Confirm which prototype findings should shape the real solution.
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Capture the selected prototype behavior before production implementation.
+
 ## Where it fits
 
 `qs-design-prototype` is a reach-for-it-anytime standalone: you drop into it to resolve a design question, then drop back out. Its answer often feeds the next step — a validated state model or UI direction becomes settled input for [qs-plan-spec](https://aihero.dev/skills-to-spec) to write up, or an architectural decision worth recording via [qs-design-domain](https://aihero.dev/skills-domain-modeling). When you're unsure which skill or flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

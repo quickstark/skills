@@ -37,6 +37,16 @@ The rest of the reference is the toolkit for spending those loads well:
 - **Pruning** — single source of truth, relevance, and the no-op test applied sentence by sentence, against **sediment** and **sprawl**.
 - **Failure modes** — **premature completion**, **duplication**, **sediment**, **sprawl**, **no-op** — to diagnose a skill that isn't behaving.
 
+## Output and next steps
+
+`/qs-skill-write` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-interview`](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-plan-interview/SKILL.md) — Clarify the skill's boundaries and expected behavior.
+- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Review skill scripts, examples, and implementation changes.
+- [`/qs-flow-handoff`](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-flow-handoff/SKILL.md) — Hand the completed skill and validation notes to another session.
+
 ## Where it fits
 
 This is a reach-for-it-anytime standalone reference — the meta-skill you consult while building the rest of the set, not a step in a chain. Its natural neighbour is any router you maintain, because a router is the direct cure for the cognitive load that user-invoked skills pile up; when you're unsure which skill or flow fits a task, [qs-help](https://aihero.dev/skills-ask-matt) routes you over the whole set.

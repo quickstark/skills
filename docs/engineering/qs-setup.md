@@ -35,6 +35,16 @@ The output is a set of files under `docs/agents/` — `issue-tracker.md`, `domai
 - The tracker it proposes matches your real `git remote`, and the labels match strings that already exist in your repo.
 - Afterwards, `qs-flow-triage` and `qs-plan-tickets` act on the right place with the right labels instead of asking or guessing.
 
+## Output and next steps
+
+`/qs-setup` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Start a new feature after configuring the project.
+- [`/qs-flow-triage`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-flow-triage/SKILL.md) — Sort incoming work using the newly configured tracker.
+- [`/qs-design-architecture`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-architecture/SKILL.md) — Inspect an existing project before starting a refactor.
+
 ## Where it fits
 
 `qs-setup` is a **run-once setup** — the foundation the whole engineering set stands on, not a step you repeat. Its neighbours are the skills that read what it writes: [qs-flow-triage](https://aihero.dev/skills-triage), because it applies the label vocabulary configured here, and [qs-plan-spec](https://aihero.dev/skills-to-spec) / [qs-plan-tickets](https://aihero.dev/skills-to-tickets), because they publish into the issue tracker configured here. Run it first; everything downstream assumes it has. When you're unsure which skill or flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

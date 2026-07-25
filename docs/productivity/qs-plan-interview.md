@@ -29,6 +29,16 @@ The mental model is a **decision tree**: every plan branches into decisions, and
 
 Keeping the technique in one place means you can also reach for it directly when you just want the interview — without the ADR-writing or ticket-shaping that its wrappers add on top.
 
+## Output and next steps
+
+`/qs-plan-interview` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Turn interview answers into documented project decisions.
+- [`/qs-design-domain`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-domain/SKILL.md) — Resolve terminology or domain concepts exposed by the interview.
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Write a specification once the outstanding decisions are settled.
+
 ## Where it fits
 
 `qs-plan-interview` is the interview **primitive** under the main build chain: [qs-plan-clarify](https://aihero.dev/skills-grill-with-docs) runs it to sharpen context before [qs-plan-spec](https://aihero.dev/skills-to-spec) writes the spec. When you're unsure which entry point fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

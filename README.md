@@ -70,6 +70,43 @@ Run `/qs-setup` once in a project to configure its issue tracker, domain documen
 
 Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use `/qs-flow-triage` when the work starts as an incoming issue, `/qs-code-debug` when something is broken, and `/qs-help` whenever you are unsure where to start.
 
+## The refactoring workflow
+
+```text
+/qs-design-architecture
+    ↓
+/qs-plan-clarify
+    ↓
+/qs-design-modules  →  /qs-design-domain
+    ↓
+/qs-test-tdd
+    ↓
+/qs-code-build
+    ↓
+/qs-review-code
+    ↓
+/qs-deploy-release  (only when requested and approved)
+```
+
+Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation only when the refactor is large enough to justify them. `/qs-help` explains both workflows, every skill's purpose, and the next best step for the actual situation.
+
+## Consistent skill output
+
+Every promoted skill finishes with the same concise, human-readable summary:
+
+```text
+Status: Completed
+Skills used: /qs-design-architecture; /qs-design-modules
+Outcome: Identified and prioritized the highest-value architectural refactor.
+Outputs: /absolute/path/to/architecture-review.html
+Checks: Confirmed the affected modules and existing test coverage.
+Next best: /qs-plan-clarify — agree on the chosen refactor's scope.
+```
+
+`Skills used` lists only skills that actually ran. `Outputs` and `Checks` appear only when real artifacts or validations exist. `Next best` explains one to three relevant follow-on skills; it says `None` when the requested work is already complete.
+
+Next-step recommendations are maintained in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs), not reinvented independently by each skill.
+
 ## Engineering
 
 ### User-invoked
@@ -124,7 +161,7 @@ npm run sync:codex
 npm test
 ```
 
-The tests verify that the Codex package contains exactly the promoted skills. Every packaged file is checked against its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
+`npm run sync:codex` first regenerates the standardized output and next-step guidance in every skill and documentation page, then packages exactly the promoted skills. The tests verify that every packaged file matches its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
 
 ## Keeping the upstream as a reference
 

@@ -102,3 +102,26 @@ The end-to-end behaviour this ticket makes work, from the user's perspective —
 </issue-template>
 
 In either form, avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+
+## Completion report and next steps
+
+Finish with a concise, readable completion report. Plain text or restrained Markdown is sufficient; do not create a separate report or HTML file unless this skill's primary workflow requires one.
+
+```text
+Status: Completed | Awaiting input | Blocked
+Skills used: /qs-plan-tickets; /another-skill only if actually used
+Outcome: What was completed, discovered, decided, or is blocking progress.
+Outputs: Real files, reports, decisions, or changes, when applicable.
+Checks: Only the tests, validations, or observations actually performed.
+Next best: /qs-skill-name — why it is the best next step.
+```
+
+Always include **Status**, **Skills used**, **Outcome**, and **Next best**. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, or result you did not verify.
+
+Select at most three genuinely relevant follow-ons from:
+
+- `/qs-code-build` — Implement the next unblocked ticket.
+- `/qs-test-tdd` — Establish the agreed test seam for a ticket before implementation.
+- `/qs-flow-handoff` — Transfer the next ticket and its context into a fresh session.
+
+Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

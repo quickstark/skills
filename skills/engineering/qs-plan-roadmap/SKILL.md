@@ -126,3 +126,26 @@ User invokes with a map (URL or number). A ticket is **optional** — without on
 5. Add newly-surfaced tickets (create-then-wire); graduate any fog the answer has made specifiable, clearing each graduated patch from **Not yet specified** so it lives only as its new ticket. If the answer reveals a ticket — this one or another — sits beyond the destination, **rule it out of scope** rather than resolving it on the route. If the decision invalidates other parts of the map, update or delete those tickets.
 
 The user may run unblocked tickets in parallel, so expect other sessions to be editing the tracker concurrently.
+
+## Completion report and next steps
+
+Finish with a concise, readable completion report. Plain text or restrained Markdown is sufficient; do not create a separate report or HTML file unless this skill's primary workflow requires one.
+
+```text
+Status: Completed | Awaiting input | Blocked
+Skills used: /qs-plan-roadmap; /another-skill only if actually used
+Outcome: What was completed, discovered, decided, or is blocking progress.
+Outputs: Real files, reports, decisions, or changes, when applicable.
+Checks: Only the tests, validations, or observations actually performed.
+Next best: /qs-skill-name — why it is the best next step.
+```
+
+Always include **Status**, **Skills used**, **Outcome**, and **Next best**. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, or result you did not verify.
+
+Select at most three genuinely relevant follow-ons from:
+
+- `/qs-plan-research` — Answer a blocking research question identified by the roadmap.
+- `/qs-design-prototype` — Resolve a roadmap decision with a disposable prototype.
+- `/qs-plan-spec` — Convert resolved roadmap decisions into an implementation specification.
+
+Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

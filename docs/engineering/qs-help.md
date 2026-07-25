@@ -5,24 +5,56 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/mattpocock/skills/tree/main/skills/engineering/ask-matt)
+[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-help/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/ask-matt)
 
 ## What it does
 
-`qs-help` is the router over the skills in this repo. You describe the situation you're in; it tells you which skill or flow fits and in what order to run them.
+`/qs-help` is the routing and order-of-operations guide for every QuickStark skill. Describe your situation and it identifies the correct starting skill, explains what that skill does, and recommends the shortest sensible path forward.
 
-It **does no work itself**. It doesn't grill, write a spec, or fix anything — it only orients. It exists for the **user-invoked** skills above all: nothing fires those for you, so *you* have to remember they exist, and `qs-help` is the memory you offload that to. It also points at the model-invoked skills you'd reach for by name — `/qs-test-tdd`, `/qs-code-debug`, `/qs-design-prototype`, `/qs-review-code`, and the two vocabulary references, `/qs-design-domain` and `/qs-design-modules`. It answers "which one, and when", then hands you off to the skill that actually does the job.
+It does not implement code, run a review, invoke a deployment, or suggest a long ceremonial workflow when a small change needs only a few steps.
 
 ## When to reach for it
 
-You invoke this by typing `/qs-help` — the agent won't reach for it on its own.
+Invoke `/qs-help` whenever you are starting a feature, assessing a refactor, diagnosing a bug, sorting incoming work, crossing sessions, or deciding whether something is ready to release.
 
-Reach for it whenever you're unsure which skill or flow a situation calls for: you have an idea and don't know where to start, a pile of bug reports and don't know if they're for `/qs-flow-triage`, or two skills that look interchangeable and you can't tell them apart. If you already know the skill you want, skip the router and invoke it directly.
+## Order of operations for new work
 
-## Flows, not just skills
+1. `/qs-setup` — configure the project when needed.
+2. `/qs-plan-clarify` — settle requirements; use `/qs-plan-explore` when no codebase exists.
+3. `/qs-plan-roadmap` — map a large or uncertain project when the work spans sessions.
+4. `/qs-plan-research` — investigate remaining evidence or technical unknowns.
+5. `/qs-design-domain` — settle important concepts and terminology.
+6. `/qs-design-prototype` — test a design decision when a concrete example is necessary.
+7. `/qs-plan-spec` — document the agreed behavior.
+8. `/qs-plan-tickets` — split substantial work into actionable, dependency-aware slices.
+9. `/qs-design-modules` — define a clean interface when a meaningful new boundary is involved.
+10. `/qs-code-build` and `/qs-test-tdd` — implement and verify the agreed behavior.
+11. `/qs-review-code` — review correctness, requirements, and standards.
+12. `/qs-deploy-release` — run an approved, documented deployment only when requested.
 
-The idea `qs-help` gives you to think with is the **flow** — a path *through* the skills rather than a single one. Most work runs along one **main flow** (idea → ship: grill → spec → tickets → implement → review), two **on-ramps** merge onto it (a triage lane for incoming bugs and requests; a codebase-health lane that generates ideas), and everything else is a **standalone** you reach for on its own. Ask a question and you get placed on the right flow, at the right step — not just handed a tool.
+## Order of operations for refactoring
+
+1. `/qs-design-architecture` — find and prioritize genuine architectural friction.
+2. `/qs-plan-clarify` — agree on scope, preserved behavior, and success.
+3. `/qs-design-modules` and `/qs-design-domain` — design the intended interface and vocabulary.
+4. `/qs-test-tdd` — protect existing behavior before the refactor.
+5. `/qs-plan-spec` and `/qs-plan-tickets` — document or split larger refactors only when useful.
+6. `/qs-code-build` — refactor in small, tested steps.
+7. `/qs-review-code` — verify architecture, behavior, tests, and standards.
+8. `/qs-deploy-release` — release only if the deployment was requested and approved.
+
+Use `/qs-code-debug` first if the real problem is a reproducible bug rather than a confirmed architectural issue. Use `/qs-flow-triage` for incoming requests, `/qs-git-merge` for actual Git conflicts, and `/qs-flow-handoff` when moving work to a fresh session.
+
+## Output and next steps
+
+`/qs-help` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-setup`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-setup/SKILL.md) — Configure a project that has not used the collection before.
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Clarify requirements and durable decisions for new work.
+- [`/qs-design-architecture`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-architecture/SKILL.md) — Identify and prioritize an existing codebase's refactoring opportunities.
 
 ## Where it fits
 
-`qs-help` is the **router** — the standalone map that sits over the whole set. It is the node every other docs page links back to as [qs-help](https://aihero.dev/skills-ask-matt), so it never sits *in* a chain; it points *into* every chain. From here you'll most often land on [qs-plan-clarify](https://aihero.dev/skills-grill-with-docs), the head of the main flow, or [qs-flow-triage](https://aihero.dev/skills-triage), the on-ramp for work you didn't create. When even the router's own picture is stale, its [Source](https://github.com/mattpocock/skills/tree/main/skills/engineering/ask-matt) is the map of record.
+`/qs-help` sits above the complete collection as its map and entry point. It covers planning, design, implementation, testing, review, deployment, Git, handoffs, learning, and skill authoring; its own response points to the most relevant next skill rather than claiming to have run it.

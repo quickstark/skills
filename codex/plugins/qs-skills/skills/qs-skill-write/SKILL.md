@@ -80,3 +80,26 @@ Use these to diagnose issues the user may be having with the skill.
 - **Sprawl** — a skill simply too long, even when every line is live and unique. Hurts readability and maintainability and wastes tokens. The cure is the ladder: disclose **reference** behind pointers, and split by **branch** or sequence so each path carries only what it needs.
 - **No-op** — a line the model already obeys by default, so you pay load to say nothing. The test: does it change behaviour versus the default? A weak leading word (_be thorough_ when the agent is already thorough-ish) is a no-op; the fix is a stronger word (_relentless_), not a different technique.
 - **Negation** — steering by prohibition backfires: _don't think of an elephant_ names the elephant and makes it more available, not less. Prompt the **positive** — state the target behaviour so the banned one is never spoken; keep a prohibition only as a hard guardrail you can't phrase positively, and even then pair it with what to do instead.
+
+## Completion report and next steps
+
+Finish with a concise, readable completion report. Plain text or restrained Markdown is sufficient; do not create a separate report or HTML file unless this skill's primary workflow requires one.
+
+```text
+Status: Completed | Awaiting input | Blocked
+Skills used: /qs-skill-write; /another-skill only if actually used
+Outcome: What was completed, discovered, decided, or is blocking progress.
+Outputs: Real files, reports, decisions, or changes, when applicable.
+Checks: Only the tests, validations, or observations actually performed.
+Next best: /qs-skill-name — why it is the best next step.
+```
+
+Always include **Status**, **Skills used**, **Outcome**, and **Next best**. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, or result you did not verify.
+
+Select at most three genuinely relevant follow-ons from:
+
+- `/qs-plan-interview` — Clarify the skill's boundaries and expected behavior.
+- `/qs-review-code` — Review skill scripts, examples, and implementation changes.
+- `/qs-flow-handoff` — Hand the completed skill and validation notes to another session.
+
+Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

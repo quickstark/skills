@@ -39,6 +39,16 @@ Every lesson hangs off the **mission**. Without it, knowledge has nothing to att
 
 The word to think with is **storage strength** — long-term retention — as opposed to **fluency**, the in-the-moment recall that feels like mastery but isn't. `qs-learn-teach` deliberately builds the former through desirable difficulty: retrieval practice, spacing, and interleaving. Knowledge is taught first (where difficulty is the enemy), then skills are drilled through a tight feedback loop (where difficulty is the tool).
 
+## Output and next steps
+
+`/qs-learn-teach` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-research`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-research/SKILL.md) — Find authoritative sources for the next learning objective.
+- [`/qs-design-prototype`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-prototype/SKILL.md) — Practice the new concept through a focused working example.
+- [`/qs-skill-write`](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-skill-write/SKILL.md) — Capture a repeatable learned workflow as an agent skill.
+
 ## Where it fits
 
 `qs-learn-teach` is a reach-for-it-anytime standalone — a long-running learning project you drive session by session, not a step in a build chain. It shares no workflow with the other productivity skills; it simply owns its workspace directory and lives there. When you're unsure which skill or flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

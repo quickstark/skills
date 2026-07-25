@@ -32,6 +32,16 @@ It gives you a ladder of ways to build that loop — failing test, curl script, 
 - Hypotheses arrive as a ranked, falsifiable list shown to you before any are tested.
 - Debug instrumentation is tagged (`[DEBUG-...]`) and grepped away before it declares done.
 
+## Output and next steps
+
+`/qs-code-debug` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-test-tdd`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-tdd/SKILL.md) — Lock the diagnosed failure down with a regression test.
+- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Review the fix for correctness and unintended regressions.
+- [`/qs-design-architecture`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-architecture/SKILL.md) — Investigate architectural friction that caused the recurring failure.
+
 ## Where it fits
 
 `qs-code-debug` is a reach-for-it-anytime standalone — you drop into it the moment something is broken, and drop out once the fix and its regression test are in. Its post-mortem hands off to [qs-design-architecture](https://aihero.dev/skills-improve-codebase-architecture) when the real finding is that there's no good seam to lock the bug down — the code, not the bug, is the problem. When you're unsure which skill fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

@@ -1,81 +1,113 @@
 ---
 name: qs-help
-description: Ask which skill or flow fits your situation. A router over the skills in this repo.
+description: Identify the right QuickStark skill, explain each skill's purpose, and route new features, refactors, bugs, and releases through the correct order of operations.
 ---
 
 # QS Help
 
-You don't remember every skill, so ask.
+Orient the user. Identify the actual situation, recommend the correct next step, and explain why it comes before the alternatives. Do not begin an implementation, review, deployment, or other skill's work merely because it appears in the map.
 
-A **flow** is a path through the skills. Most paths run along one **main flow**, and two **on-ramps** merge onto it. Everything else is standalone, or a vocabulary layer that runs underneath.
+## Choose the right starting point
 
-## The main flow: idea → ship
+- **New project or unconfigured repository:** start with `/qs-setup`.
+- **New feature in an existing codebase:** start with `/qs-plan-clarify`.
+- **Idea without a codebase:** start with `/qs-plan-explore`.
+- **Large, uncertain, multi-session effort:** start with `/qs-plan-roadmap`.
+- **Refactoring or structural friction:** start with `/qs-design-architecture`.
+- **Reproducible bug or regression:** start with `/qs-code-debug`.
+- **Incoming reports or requests:** start with `/qs-flow-triage`.
+- **In-progress Git conflict:** start with `/qs-git-merge`.
+- **Completed, reviewed change ready for a documented release:** start with `/qs-deploy-release`.
 
-The route most work travels. You have an idea and want it built.
+Recommend only the path that fits the situation. A tiny, already-understood change does not need a roadmap, a prototype, a specification, and tickets simply because those skills exist.
 
-1. **`/qs-plan-clarify`** — sharpen the idea by interview. Start here when you **have a codebase**: it's stateful, retaining what it learns in `CONTEXT.md` and ADRs. (No codebase? Use `/qs-plan-explore` — see Standalone. Both run the same `/qs-plan-interview` primitive; `qs-plan-clarify` is the one that leaves a paper trail.)
-2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by **`/qs-flow-handoff`** in both directions (see Crossing sessions):
-   - **`/qs-flow-handoff`** out, then open a fresh session against that file,
-   - **`/qs-design-prototype`** to answer the question with throwaway code,
-   - **`/qs-flow-handoff`** back what you learned, and reference it from the original idea thread.
-3. **Branch — is this a multi-session build?**
-   - **Yes** → **`/qs-plan-spec`** (turn the thread into a spec), then **`/qs-plan-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`/qs-code-build`** per ticket, **clearing context between each one**.
-   - **No** → **`/qs-code-build`** right here, in the same context window.
+## Order of operations: new work
 
-   Either way, **`/qs-code-build`** builds each issue by driving **`/qs-test-tdd`** internally — one red-green slice at a time — then closes out by running **`/qs-review-code`**, a two-axis review (Standards + Spec) of the diff, before committing. Reach for **`/qs-test-tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/qs-review-code`** on its own whenever you want to review a branch or PR against a fixed point.
+1. **Configure — `/qs-setup`.** Set up the project's tracker, triage vocabulary, and domain-document locations. Run this once per project; skip it when the configuration already exists.
+2. **Clarify — `/qs-plan-clarify` or `/qs-plan-explore`.** Use `/qs-plan-clarify` for a real codebase and durable decisions; use `/qs-plan-explore` for an early, stateless idea. `/qs-plan-interview` supplies the focused questioning discipline when needed.
+3. **Map large work — `/qs-plan-roadmap`.** Use this only when the work is too large or uncertain for one agent session. Resolve decisions before pretending the implementation is specified.
+4. **Research unknowns — `/qs-plan-research`.** Check primary sources when a technical, product, or operational question cannot be answered reliably from the current project.
+5. **Define the domain — `/qs-design-domain`.** Settle ambiguous concepts, project vocabulary, and architectural decisions before those ambiguities spread into code.
+6. **Prototype uncertainty — `/qs-design-prototype`.** Build disposable proof only when an interface, interaction, state model, or behavior needs a concrete answer.
+7. **Write the specification — `/qs-plan-spec`.** Capture already agreed requirements; do not reopen decisions or start another interview.
+8. **Split substantial work — `/qs-plan-tickets`.** Produce dependency-aware, independently actionable tickets when the specification is too large for one implementation. Skip tickets for a small change.
+9. **Design the seam — `/qs-design-modules`.** Define a small interface and deep implementation when a new module or significant boundary is involved.
+10. **Build and test — `/qs-code-build` with `/qs-test-tdd`.** Implement the next agreed change or unblocked ticket. Write behavior-focused tests at confirmed seams; run one ticket per fresh session when the work was split.
+11. **Review — `/qs-review-code`.** Check requirements, correctness, regressions, and repository standards. Address findings before release.
+12. **Release — `/qs-deploy-release`.** Use only the actual, documented deployment workflow. Verify prerequisites and obtain explicit approval before any production, publishing, infrastructure, migration, or other external change.
 
-4. **Review** → **`/qs-review-code`** when you want a separate, explicit review of the completed changes against project standards and agreed requirements.
-5. **Release** → **`/qs-deploy-release`** when the project is ready and has a documented release workflow. It identifies the real target, verifies prerequisites, and requires explicit approval before production or other external changes.
+For small changes, the effective route is often `/qs-plan-clarify` → `/qs-code-build` → `/qs-test-tdd` → `/qs-review-code`. Include `/qs-deploy-release` only when the user has actually requested deployment.
 
-### Context hygiene
+## Order of operations: refactoring
 
-Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `/qs-plan-tickets` — so the grilling, spec, and tickets all build on the same thinking. Each `/qs-code-build` then starts fresh, working from the ticket.
+1. **Configure if needed — `/qs-setup`.** Confirm tracker and documentation conventions before creating refactoring artifacts.
+2. **Find the real problem — `/qs-design-architecture`.** Inspect current architecture and recent change hotspots. Present ranked candidates, a visual report where useful, and one justified recommendation.
+3. **Choose one candidate.** Ask the user which refactor to pursue; do not silently redesign unrelated modules or start implementation.
+4. **Clarify boundaries — `/qs-plan-clarify`.** Agree on the behavior that must not change, the files in scope, constraints, and success criteria.
+5. **Design the target — `/qs-design-modules` and `/qs-design-domain`.** Define the improved seam, module interface, and correct domain vocabulary.
+6. **Protect existing behavior — `/qs-test-tdd`.** Establish characterization or regression coverage before changing production behavior.
+7. **Specify or slice when justified — `/qs-plan-spec` and `/qs-plan-tickets`.** Document meaningful, multi-session work. Skip both for a small, clear refactor.
+8. **Make the change — `/qs-code-build`.** Refactor in small, tested steps while preserving the agreed external behavior.
+9. **Review — `/qs-review-code`.** Verify the architectural improvement, unchanged behavior, test quality, and project standards.
+10. **Release only when requested — `/qs-deploy-release`.** Follow the existing release process and require explicit authorization for external changes.
 
-The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: the window (~120k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before `/qs-plan-tickets`, don't push on degraded — `/qs-flow-handoff` and continue in a fresh thread.
+When the starting point is an observed failure, use `/qs-code-debug` before an architectural review. Do not use a speculative refactor as a substitute for reproducing a bug.
 
-## On-ramps
+## Every skill and its purpose
 
-A starting situation that generates work, then merges onto the main flow.
+| Skill | Purpose |
+| --- | --- |
+| `/qs-help` | Choose the right workflow and explain the correct order of operations. |
+| `/qs-setup` | Configure the current project's issue tracker, labels, and documentation. |
+| `/qs-plan-clarify` | Resolve feature or refactoring requirements and record durable decisions. |
+| `/qs-plan-explore` | Explore an early idea that does not yet belong to a codebase. |
+| `/qs-plan-interview` | Ask focused questions that resolve a plan or decision. |
+| `/qs-plan-spec` | Turn an agreed conversation into an actionable specification. |
+| `/qs-plan-tickets` | Split a specification into small, dependency-aware tickets. |
+| `/qs-plan-roadmap` | Map a large, uncertain project into decision-sized work. |
+| `/qs-plan-research` | Research an unknown against reliable, primary sources. |
+| `/qs-design-prototype` | Build a disposable prototype to answer a specific design question. |
+| `/qs-design-domain` | Define project terminology, domain concepts, and durable decisions. |
+| `/qs-design-modules` | Design small interfaces, clean seams, and deep software modules. |
+| `/qs-design-architecture` | Find, visualize, and prioritize worthwhile architectural refactors. |
+| `/qs-code-build` | Implement a specification, ticket, or agreed small change. |
+| `/qs-code-debug` | Reproduce, diagnose, and fix a bug or regression. |
+| `/qs-test-tdd` | Write behavior-focused tests and drive a red-green implementation loop. |
+| `/qs-review-code` | Review a change against its requirements and coding standards. |
+| `/qs-git-merge` | Resolve an existing Git merge or rebase conflict safely. |
+| `/qs-flow-triage` | Turn incoming reports and requests into actionable work. |
+| `/qs-flow-handoff` | Preserve essential work and recommendations for the next session. |
+| `/qs-learn-teach` | Teach a subject through a stateful, guided learning workflow. |
+| `/qs-skill-write` | Create or improve a focused and reliable agent skill. |
+| `/qs-deploy-release` | Verify and run a documented release after explicit approval. |
 
-- **Bugs and requests piling up** → **`/qs-flow-triage`**. It moves issues through triage roles and produces agent-ready issues, which **`/qs-code-build`** later picks up.
+## Context and handoffs
 
-  Triage is only for issues **you didn't create** — bug reports, incoming feature requests, anything that arrives raw. Tickets that `/qs-plan-tickets` produced are already agent-ready, so **don't triage them**.
+Keep clarification, design, specifications, and ticket breakdown in one coherent session when practical. Once tickets are ready, implement each ticket in a fresh session.
 
-- **Something's broken** → **`/qs-code-debug`**. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a **tight feedback loop** — one command that already goes red on *this* bug — then fixes with a regression test. Its post-mortem hands off to **`/qs-design-architecture`** when the real finding is that there's no good seam to lock the bug down.
+Use `/qs-flow-handoff` before crossing sessions when the next agent needs decisions, artifact paths, open questions, or recommended skills. Do not copy secrets, entire transcripts, or content that already exists in a specification, ticket, ADR, commit, or report.
 
-- **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`/qs-plan-roadmap`**, the most cognitively demanding flow here. When the way from here to the destination isn't visible yet, it charts a **shared map** of **decision tickets** on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Where **`/qs-plan-clarify`** sharpens an idea you can hold in one session, `/qs-plan-roadmap` is for the idea you can't — and it's slower and denser, so save it for exactly that, never a well-scoped feature.
+Use `/compact` only when continuing the same conversation; use `/qs-flow-handoff` when a different session must continue the work.
 
-  When the map clears, **it hands off, it doesn't build**: merge onto the main flow at **`/qs-plan-spec`**, which collapses the map's linked decisions into a buildable plan, then `/qs-plan-tickets` and `/qs-code-build` as usual. Looping the map straight into `/qs-code-build` skips that collapse and throws the linked detail away — go straight to `/qs-code-build` only when the effort turned out genuinely small.
+## Completion report and next steps
 
-## Codebase health
+Finish with a concise, readable completion report. Plain text or restrained Markdown is sufficient; do not create a separate report or HTML file unless this skill's primary workflow requires one.
 
-Not feature work — upkeep.
+```text
+Status: Completed | Awaiting input | Blocked
+Skills used: /qs-help; /another-skill only if actually used
+Outcome: What was completed, discovered, decided, or is blocking progress.
+Outputs: Real files, reports, decisions, or changes, when applicable.
+Checks: Only the tests, validations, or observations actually performed.
+Next best: /qs-skill-name — why it is the best next step.
+```
 
-- **`/qs-design-architecture`** — run whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces **deepening opportunities**; picking one _generates an idea_ you can take into the main flow at `/qs-plan-clarify`. It's the survey that finds the candidates; **`/qs-design-modules`** (below) is the bench you design the chosen one on.
+Always include **Status**, **Skills used**, **Outcome**, and **Next best**. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, or result you did not verify.
 
-## Vocabulary underneath
+Select at most three genuinely relevant follow-ons from:
 
-Two model-invoked references that run *beneath* the other skills — each the single source of truth for its vocabulary. Reach for them directly when the **words**, not the process, are the problem; or let the skills above pull them in.
+- `/qs-setup` — Configure a project that has not used the collection before.
+- `/qs-plan-clarify` — Clarify requirements and durable decisions for new work.
+- `/qs-design-architecture` — Identify and prioritize an existing codebase's refactoring opportunities.
 
-- **`/qs-design-domain`** — sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline `/qs-plan-clarify` drives to keep `CONTEXT.md` a clean glossary.
-- **`/qs-design-modules`** — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `/qs-test-tdd` and `/qs-design-architecture` both speak it.
-
-## Crossing sessions
-
-- **`/qs-flow-handoff`** — when a thread is full or you need to branch off (e.g. into a `/qs-design-prototype` session), this compacts the conversation into a markdown file. You don't continue in place — you **open a new session and reference that file** to carry the context across. It's the bridge between context windows, in either direction. Use it when you want a **fresh session** but need the **current conversation preserved**.
-- **`/compact`** (built-in) — stay in the **same conversation**, letting the earlier turns be summarized. Use it at **intentional breaks between phases**, when you don't mind losing the verbatim history. Don't compact mid-phase — the agent can lose its way. `/qs-flow-handoff` forks; `/compact` continues.
-
-## Standalone
-
-Off the main flow entirely.
-
-- **`/qs-plan-explore`** — the same relentless interview as `/qs-plan-clarify`, but for when you have **no codebase**. Stateless: it saves nothing locally, builds no `CONTEXT.md`. Reach for it to sharpen any plan or design that doesn't live in a repo.
-- **`/qs-design-prototype`** — a small, throwaway program that answers one design question: does this state model feel right, or what should this UI look like. Throwaway from day one — keep the answer, delete the code. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.
-- **`/qs-plan-research`** — delegate reading legwork to a **background agent**: it investigates a question against **primary sources**, then leaves a cited Markdown file in the repo. Keep working while it reads. The file it produces is something to take *into* the main flow at `/qs-plan-clarify` — research feeds the thinking, it doesn't replace it.
-- **`/qs-git-merge`** — resolve an in-progress Git merge or rebase by preserving the intent and changes from both sides. Use it when Git reports an actual conflict; it is not a general release or deployment command.
-- **`/qs-learn-teach`** — learn a concept over multiple sessions, using the current directory as a stateful workspace.
-- **`/qs-skill-write`** — reference for writing and editing skills well.
-
-## Precondition
-
-**`/qs-setup`** — run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.
+Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

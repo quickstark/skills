@@ -25,6 +25,16 @@ The idea `qs-code-build` runs on is the **seam** — the stable interface a feat
 
 Around that core it keeps the loop tight — typecheck often, run single test files as it goes, run the whole suite once at the end — then closes out with a review pass and a commit to the current branch.
 
+## Output and next steps
+
+`/qs-code-build` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-test-tdd`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-tdd/SKILL.md) — Add or complete behavior-focused coverage for the implemented change.
+- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Review the implementation against its requirements and standards.
+- [`/qs-deploy-release`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-deploy-release/SKILL.md) — Release a reviewed change using the project's documented workflow.
+
 ## Where it fits
 
 `qs-code-build` is the build step near the end of the main chain, just before the review:

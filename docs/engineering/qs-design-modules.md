@@ -35,6 +35,16 @@ Callers and tests cross the same seam, so a well-placed interface gives tests so
 
 The point of keeping it standalone is that you can also reach for it on its own — as a **reference** for how to think about module design — without triggering the larger process any of those skills mandate. Fix the words once, in one place, and every design conversation inherits them.
 
+## Output and next steps
+
+`/qs-design-modules` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-test-tdd`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-tdd/SKILL.md) — Protect the selected module seam with a behavior-first test.
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Document a significant interface or refactoring decision.
+- [`/qs-code-build`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-build/SKILL.md) — Implement the agreed module design.
+
 ## Where it fits
 
 `qs-design-modules` is a **reach-for-it-anytime standalone** — the shared vocabulary layer under the engineering skills. Its closest neighbour is [qs-design-domain](https://aihero.dev/skills-domain-modeling), the parallel vocabulary skill for the problem domain rather than the module structure. When you're unsure which skill or flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

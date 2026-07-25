@@ -25,6 +25,16 @@ The session walks the plan as a tree of decisions, resolving dependencies betwee
 
 `qs-plan-explore` is **stateless**: it writes nothing and leaves no workspace behind. It runs anywhere, and the only artifact is the sharpened understanding in the conversation itself. That is the deliberate contrast with [qs-plan-clarify](https://aihero.dev/skills-grill-with-docs), which captures the same interview as durable ADRs and a glossary.
 
+## Output and next steps
+
+`/qs-plan-explore` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Ground the explored idea in an actual codebase and durable decisions.
+- [`/qs-plan-research`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-research/SKILL.md) — Investigate assumptions or unknowns exposed during exploration.
+- [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md) — Capture a sufficiently settled idea as a specification.
+
 ## Where it fits
 
 `qs-plan-explore` is a reach-for-it-anytime standalone — the pre-build stress test you run whenever a plan needs hardening. It is the stateless, user-invoked front door to the [qs-plan-interview](https://aihero.dev/skills-grilling) primitive; its closest neighbour is [qs-plan-clarify](https://aihero.dev/skills-grill-with-docs), the stateful sibling that runs the same interview but additionally records the decisions as ADRs and a glossary. If the outcome is a spec you want written down, hand off to [qs-plan-spec](https://aihero.dev/skills-to-spec), which synthesises the settled understanding into a spec without re-interviewing you. When you're unsure which flow fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

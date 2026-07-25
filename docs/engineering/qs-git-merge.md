@@ -32,6 +32,16 @@ That's why the primary sources matter. You can't preserve an intent you haven't 
 - The project's own checks — typecheck, tests, format — are found and run green before the commit.
 - The merge or rebase is carried all the way to a finished commit, never aborted.
 
+## Output and next steps
+
+`/qs-git-merge` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-test-tdd`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-tdd/SKILL.md) — Verify that resolving the conflict preserved observable behavior.
+- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Review the combined changes and the conflict resolution.
+- [`/qs-code-debug`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-debug/SKILL.md) — Investigate a behavior regression introduced by the merge.
+
 ## Where it fits
 
 A reach-for-it-anytime standalone: you invoke it at the moment a merge or rebase stalls, and it hands you back a clean, committed tree. Its natural neighbour is [qs-code-debug](https://aihero.dev/skills-diagnosing-bugs), because a merge that resolves cleanly but misbehaves afterwards is a diagnosis problem, not a conflict one. When you're unsure which skill fits, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

@@ -29,6 +29,16 @@ The project must document its deployment process or the user must identify the i
 - Production and other external changes wait for explicit approval.
 - The result is checked against an actual smoke test, health check, CI run, or release record.
 
+## Output and next steps
+
+`/qs-deploy-release` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Resolve a failed pre-deployment review or outstanding release concern.
+- [`/qs-code-debug`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-debug/SKILL.md) — Diagnose a failed deployment or smoke test.
+- [`/qs-flow-handoff`](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-flow-handoff/SKILL.md) — Hand release results and remaining follow-up to the next operator.
+
 ## Where it fits
 
 `/qs-deploy-release` is the final step after `/qs-code-build`, `/qs-test-tdd`, and `/qs-review-code`. Use `/qs-help` when you need the complete engineering workflow.

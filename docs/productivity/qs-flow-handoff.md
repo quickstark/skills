@@ -28,6 +28,16 @@ Reach for this when a conversation has gone long enough that its context is at r
 
 The idea to hold onto is **compaction**: a handoff is the conversation squeezed down to just its resumable core, so a fresh agent inherits the momentum, not the noise.
 
+## Output and next steps
+
+`/qs-flow-handoff` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+
+Depending on what actually happened, the next step may be:
+
+- [`/qs-help`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-help/SKILL.md) — Orient the receiving session around the next appropriate workflow.
+- [`/qs-code-build`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-build/SKILL.md) — Resume a clearly documented implementation or ticket.
+- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Resume an unresolved decision before continuing implementation.
+
 ## Where it fits
 
 `qs-flow-handoff` is a reach-for-it-anytime standalone — it sits at the seam between two sessions rather than inside a build chain. It pairs naturally with the artifact-producing skills whose output it points at: [qs-plan-spec](https://aihero.dev/skills-to-spec), because a finished spec is exactly the kind of settled detail a handoff references instead of repeating. When you're unsure which skill fits the moment, [qs-help](https://aihero.dev/skills-ask-matt) routes you.

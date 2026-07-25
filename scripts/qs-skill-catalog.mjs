@@ -1,5 +1,6 @@
 export const COLLECTION_PREFIX = "qs";
 export const COLLECTION_NAME = "QuickStark Skills";
+export const PERSONAL_REPOSITORY = "https://github.com/quickstark/skills";
 export const UPSTREAM_REPOSITORY = "https://github.com/mattpocock/skills";
 
 export const SKILLS = Object.freeze([
@@ -219,3 +220,328 @@ export const UPSTREAM_SKILLS = Object.freeze(
 export const SKILLS_BY_NAME = new Map(
   SKILLS.map((skill) => [skill.name, skill]),
 );
+
+export const NEXT_SKILLS_BY_NAME = Object.freeze({
+  "qs-help": [
+    {
+      name: "qs-setup",
+      reason: "Configure a project that has not used the collection before.",
+    },
+    {
+      name: "qs-plan-clarify",
+      reason: "Clarify requirements and durable decisions for new work.",
+    },
+    {
+      name: "qs-design-architecture",
+      reason: "Identify and prioritize an existing codebase's refactoring opportunities.",
+    },
+  ],
+  "qs-setup": [
+    {
+      name: "qs-plan-clarify",
+      reason: "Start a new feature after configuring the project.",
+    },
+    {
+      name: "qs-flow-triage",
+      reason: "Sort incoming work using the newly configured tracker.",
+    },
+    {
+      name: "qs-design-architecture",
+      reason: "Inspect an existing project before starting a refactor.",
+    },
+  ],
+  "qs-plan-clarify": [
+    {
+      name: "qs-plan-spec",
+      reason: "Record the agreed requirements as an actionable specification.",
+    },
+    {
+      name: "qs-plan-research",
+      reason: "Resolve an open question that needs external or primary-source evidence.",
+    },
+    {
+      name: "qs-design-prototype",
+      reason: "Test a design question that conversation alone cannot settle.",
+    },
+  ],
+  "qs-plan-explore": [
+    {
+      name: "qs-plan-clarify",
+      reason: "Ground the explored idea in an actual codebase and durable decisions.",
+    },
+    {
+      name: "qs-plan-research",
+      reason: "Investigate assumptions or unknowns exposed during exploration.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Capture a sufficiently settled idea as a specification.",
+    },
+  ],
+  "qs-plan-interview": [
+    {
+      name: "qs-plan-clarify",
+      reason: "Turn interview answers into documented project decisions.",
+    },
+    {
+      name: "qs-design-domain",
+      reason: "Resolve terminology or domain concepts exposed by the interview.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Write a specification once the outstanding decisions are settled.",
+    },
+  ],
+  "qs-plan-spec": [
+    {
+      name: "qs-plan-tickets",
+      reason: "Break a substantial specification into dependency-aware work.",
+    },
+    {
+      name: "qs-code-build",
+      reason: "Implement a small, sufficiently clear specification directly.",
+    },
+    {
+      name: "qs-design-modules",
+      reason: "Resolve an important interface or module boundary before implementation.",
+    },
+  ],
+  "qs-plan-tickets": [
+    {
+      name: "qs-code-build",
+      reason: "Implement the next unblocked ticket.",
+    },
+    {
+      name: "qs-test-tdd",
+      reason: "Establish the agreed test seam for a ticket before implementation.",
+    },
+    {
+      name: "qs-flow-handoff",
+      reason: "Transfer the next ticket and its context into a fresh session.",
+    },
+  ],
+  "qs-plan-roadmap": [
+    {
+      name: "qs-plan-research",
+      reason: "Answer a blocking research question identified by the roadmap.",
+    },
+    {
+      name: "qs-design-prototype",
+      reason: "Resolve a roadmap decision with a disposable prototype.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Convert resolved roadmap decisions into an implementation specification.",
+    },
+  ],
+  "qs-plan-research": [
+    {
+      name: "qs-plan-clarify",
+      reason: "Use the research findings to settle the remaining requirements.",
+    },
+    {
+      name: "qs-design-prototype",
+      reason: "Test a promising research finding with a focused prototype.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Incorporate verified findings into an actionable specification.",
+    },
+  ],
+  "qs-design-prototype": [
+    {
+      name: "qs-design-modules",
+      reason: "Turn the validated prototype into a clean module or interface design.",
+    },
+    {
+      name: "qs-plan-clarify",
+      reason: "Confirm which prototype findings should shape the real solution.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Capture the selected prototype behavior before production implementation.",
+    },
+  ],
+  "qs-design-domain": [
+    {
+      name: "qs-design-modules",
+      reason: "Design software boundaries using the clarified domain vocabulary.",
+    },
+    {
+      name: "qs-plan-clarify",
+      reason: "Use the domain model to settle feature or refactoring requirements.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Write the specification in the project's agreed domain language.",
+    },
+  ],
+  "qs-design-modules": [
+    {
+      name: "qs-test-tdd",
+      reason: "Protect the selected module seam with a behavior-first test.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Document a significant interface or refactoring decision.",
+    },
+    {
+      name: "qs-code-build",
+      reason: "Implement the agreed module design.",
+    },
+  ],
+  "qs-design-architecture": [
+    {
+      name: "qs-design-modules",
+      reason: "Design the interface and seam for the selected architecture candidate.",
+    },
+    {
+      name: "qs-plan-clarify",
+      reason: "Confirm the refactor's scope, constraints, and expected outcome.",
+    },
+    {
+      name: "qs-plan-spec",
+      reason: "Document a selected, nontrivial refactoring before implementation.",
+    },
+  ],
+  "qs-code-build": [
+    {
+      name: "qs-test-tdd",
+      reason: "Add or complete behavior-focused coverage for the implemented change.",
+    },
+    {
+      name: "qs-review-code",
+      reason: "Review the implementation against its requirements and standards.",
+    },
+    {
+      name: "qs-deploy-release",
+      reason: "Release a reviewed change using the project's documented workflow.",
+    },
+  ],
+  "qs-code-debug": [
+    {
+      name: "qs-test-tdd",
+      reason: "Lock the diagnosed failure down with a regression test.",
+    },
+    {
+      name: "qs-review-code",
+      reason: "Review the fix for correctness and unintended regressions.",
+    },
+    {
+      name: "qs-design-architecture",
+      reason: "Investigate architectural friction that caused the recurring failure.",
+    },
+  ],
+  "qs-test-tdd": [
+    {
+      name: "qs-code-build",
+      reason: "Implement the smallest change that makes the verified test pass.",
+    },
+    {
+      name: "qs-review-code",
+      reason: "Review the completed behavior and the quality of its tests.",
+    },
+    {
+      name: "qs-design-modules",
+      reason: "Improve an interface when the test exposes an unhealthy seam.",
+    },
+  ],
+  "qs-review-code": [
+    {
+      name: "qs-code-build",
+      reason: "Address actionable findings before the change is considered complete.",
+    },
+    {
+      name: "qs-test-tdd",
+      reason: "Add missing regression coverage revealed by the review.",
+    },
+    {
+      name: "qs-deploy-release",
+      reason: "Release an approved change after all required checks pass.",
+    },
+  ],
+  "qs-git-merge": [
+    {
+      name: "qs-test-tdd",
+      reason: "Verify that resolving the conflict preserved observable behavior.",
+    },
+    {
+      name: "qs-review-code",
+      reason: "Review the combined changes and the conflict resolution.",
+    },
+    {
+      name: "qs-code-debug",
+      reason: "Investigate a behavior regression introduced by the merge.",
+    },
+  ],
+  "qs-flow-triage": [
+    {
+      name: "qs-code-debug",
+      reason: "Reproduce and diagnose an incoming bug report.",
+    },
+    {
+      name: "qs-plan-roadmap",
+      reason: "Map a large or ambiguous incoming request before building it.",
+    },
+    {
+      name: "qs-code-build",
+      reason: "Implement an already clear, agent-ready issue.",
+    },
+  ],
+  "qs-flow-handoff": [
+    {
+      name: "qs-help",
+      reason: "Orient the receiving session around the next appropriate workflow.",
+    },
+    {
+      name: "qs-code-build",
+      reason: "Resume a clearly documented implementation or ticket.",
+    },
+    {
+      name: "qs-plan-clarify",
+      reason: "Resume an unresolved decision before continuing implementation.",
+    },
+  ],
+  "qs-learn-teach": [
+    {
+      name: "qs-plan-research",
+      reason: "Find authoritative sources for the next learning objective.",
+    },
+    {
+      name: "qs-design-prototype",
+      reason: "Practice the new concept through a focused working example.",
+    },
+    {
+      name: "qs-skill-write",
+      reason: "Capture a repeatable learned workflow as an agent skill.",
+    },
+  ],
+  "qs-skill-write": [
+    {
+      name: "qs-plan-interview",
+      reason: "Clarify the skill's boundaries and expected behavior.",
+    },
+    {
+      name: "qs-review-code",
+      reason: "Review skill scripts, examples, and implementation changes.",
+    },
+    {
+      name: "qs-flow-handoff",
+      reason: "Hand the completed skill and validation notes to another session.",
+    },
+  ],
+  "qs-deploy-release": [
+    {
+      name: "qs-review-code",
+      reason: "Resolve a failed pre-deployment review or outstanding release concern.",
+    },
+    {
+      name: "qs-code-debug",
+      reason: "Diagnose a failed deployment or smoke test.",
+    },
+    {
+      name: "qs-flow-handoff",
+      reason: "Hand release results and remaining follow-up to the next operator.",
+    },
+  ],
+});
