@@ -1,22 +1,23 @@
 {
-  "name": "mattpocock",
+  "name": "quickstark",
   "owner": {
-    "name": "Matt Pocock",
-    "url": "https://www.aihero.dev"
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
   },
-  "description": "Matt Pocock's skills for real engineering, as an installable Claude Code plugin.",
+  "description": "QuickStark's focused, namespaced engineering and productivity skills.",
   "plugins": [
     {
-      "name": "mattpocock-skills",
+      "name": "qs-skills",
       "source": "./",
-      "description": "Matt Pocock's agent skills for real engineering — grilling, spec/ticket flows, TDD, code review, domain modelling and more.",
+      "description": "Grouped planning, design, coding, testing, review, deployment, Git, and workflow skills.",
       "category": "engineering",
       "keywords": [
+        "quickstark",
         "engineering",
-        "skills",
-        "tdd",
-        "code-review",
-        "grilling"
+        "planning",
+        "coding",
+        "testing",
+        "deployment"
       ]
     }
   ]

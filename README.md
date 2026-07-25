@@ -1,213 +1,143 @@
-<p>
-  <a href="https://www.aihero.dev/s/skills-newsletter">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777382277/skills-repo-dark_2x.png">
-      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777382277/skill-repo-light_2x.png">
-      <img alt="Skills" src="https://res.cloudinary.com/total-typescript/image/upload/v1777382277/skill-repo-light_2x.png" width="369">
-    </picture>
-  </a>
-</p>
+# QuickStark Skills
 
-# Skills For Real Engineers
+A focused, personal collection of engineering and productivity skills for Codex and Claude Code. Every promoted skill starts with `qs-`, so entering `/qs-` shows the collection together, and continuing with `/qs-plan-`, `/qs-code-`, `/qs-test-`, or `/qs-deploy-` narrows it by intent.
 
-[![skills.sh](https://skills.sh/b/mattpocock/skills)](https://skills.sh/mattpocock/skills)
+The engineering disciplines are adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). The upstream repository, original MIT license, and original source links remain available for reference.
 
-My agent skills that I use every day to do real engineering - not vibe coding.
-
-Developing real applications is hard. Approaches like GSD, BMAD, and Spec-Kit try to help by owning the process. But while doing so, they take away your control and make bugs in the process hard to resolve.
-
-These skills are designed to be small, easy to adapt, and composable. They work with any model. They're based on decades of engineering experience. Hack around with them. Make them your own. Enjoy.
-
-If you want to keep up with changes to these skills, and any new ones I create, you can join ~60,000 other devs on my newsletter:
-
-[Sign Up To The Newsletter](https://www.aihero.dev/s/skills-newsletter)
-
-## Quickstart (30-second setup)
-
-1. Run the skills.sh installer:
+## Clone on another machine
 
 ```bash
-npx skills@latest add mattpocock/skills
+git clone https://github.com/quickstark/skills.git
+cd skills
 ```
 
-2. Pick the skills you want, and which coding agents you want to install them on. **Make sure you select `/setup-matt-pocock-skills`**.
+## Install in Codex
 
-3. Run `/setup-matt-pocock-skills` in your agent. It will:
-   - Ask you which issue tracker you want to use (GitHub, Linear, or local files)
-   - Ask you what labels you apply to tickets when you triage them (`/triage` uses labels)
-   - Ask you where you want to save any docs we create
-
-4. Bam - you're ready to go.
-
-## Install as a Claude Code plugin
-
-Prefer a plug-and-play install you don't maintain by hand? These skills also ship as a native [Claude Code plugin](https://code.claude.com/docs/en/plugins). Instead of copying editable files into your repo, the plugin installs the whole skill set as a managed bundle that updates when I ship a new version — you subscribe rather than fork.
-
-Inside Claude Code:
-
-```
-/plugin marketplace add mattpocock/skills
-/plugin install mattpocock-skills@mattpocock
-```
-
-Or from your shell:
+From the root of this repository:
 
 ```bash
-claude plugin marketplace add mattpocock/skills
-claude plugin install mattpocock-skills@mattpocock
+codex plugin marketplace add ./codex
+codex plugin add qs-skills@quickstark
 ```
 
-Then run `/setup-matt-pocock-skills` once per repo, exactly as in the quickstart above.
+Start a new Codex task after installing. Type `/qs-` to see the whole collection or `/qs-help` to find the right workflow.
 
-Two ways to install, two philosophies:
+The Codex plugin packages only the promoted skills. Draft, personal, miscellaneous, and deprecated upstream skills do not appear in the installed collection.
 
-- **[skills.sh](https://skills.sh/mattpocock/skills)** copies the skills into your project so you can hack on them and make them your own.
-- **The plugin** keeps them as a read-only, always-current bundle you don't edit — best when you just want my set to work and follow along as it evolves.
+## Install in Claude Code
 
-> Using Codex or another agent? The [skills.sh installer](https://skills.sh/mattpocock/skills) already installs these skills into Codex and other Agent-Skills-standard harnesses today. A native Codex plugin is on the roadmap — see [`.agents/adr/0002-ship-as-a-claude-code-plugin.md`](./.agents/adr/0002-ship-as-a-claude-code-plugin.md).
+From the root of this repository:
 
-## Why These Skills Exist
+```bash
+claude plugin marketplace add .
+claude plugin install qs-skills@quickstark
+```
 
-I built these skills as a way to fix common failure modes I see with Claude Code, Codex, and other coding agents.
+Run `/qs-setup` once in a project to configure its issue tracker, domain documentation, and triage conventions.
 
-### #1: The Agent Didn't Do What I Want
+## Browse by purpose
 
-> "No-one knows exactly what they want"
->
-> David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
+| Type | Commands | Purpose |
+| --- | --- | --- |
+| Help and setup | `/qs-help`, `/qs-setup` | Choose a workflow and configure a project. |
+| Planning | `/qs-plan-clarify`, `/qs-plan-explore`, `/qs-plan-interview`, `/qs-plan-spec`, `/qs-plan-tickets`, `/qs-plan-roadmap`, `/qs-plan-research` | Turn an idea into researched, actionable work. |
+| Design | `/qs-design-domain`, `/qs-design-modules`, `/qs-design-architecture`, `/qs-design-prototype` | Explore domain models, interfaces, architecture, and prototypes. |
+| Coding | `/qs-code-build`, `/qs-code-debug` | Build a change or diagnose a regression. |
+| Testing | `/qs-test-tdd` | Build behavior using a test-first feedback loop. |
+| Review | `/qs-review-code` | Review changes against code standards and requirements. |
+| Deployment | `/qs-deploy-release` | Verify and execute an existing, documented deployment safely. |
+| Git | `/qs-git-merge` | Resolve an in-progress merge or rebase. |
+| Workflow | `/qs-flow-triage`, `/qs-flow-handoff` | Organize incoming issues and hand work to another session. |
+| Learning and skill authoring | `/qs-learn-teach`, `/qs-skill-write` | Learn a subject or improve an agent skill. |
 
-**The Problem**. The most common failure mode in software development is misalignment. You think the dev knows what you want. Then you see what they've built - and you realize it didn't understand you at all.
+## The main engineering workflow
 
-This is just the same in the AI age. There is a communication gap between you and the agent. The fix for this is a **grilling session** - getting the agent to ask you detailed questions about what you're building.
+```text
+/qs-setup
+    ↓
+/qs-plan-clarify
+    ↓
+/qs-plan-spec
+    ↓
+/qs-plan-tickets
+    ↓
+/qs-code-build  →  /qs-test-tdd
+    ↓
+/qs-review-code
+    ↓
+/qs-deploy-release
+```
 
-**The Fix** is to use:
+Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use `/qs-flow-triage` when the work starts as an incoming issue, `/qs-code-debug` when something is broken, and `/qs-help` whenever you are unsure where to start.
 
-- [`/grill-me`](./skills/productivity/grill-me/SKILL.md) - for non-code uses
-- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) - same as [`/grill-me`](./skills/productivity/grill-me/SKILL.md), but adds more goodies (see below)
+## Engineering
 
-These are my most popular skills. They help you align with the agent before you get started, and think deeply about the change you're making. Use them _every_ time you want to make a change.
+### User-invoked
 
-### #2: The Agent Is Way Too Verbose
+These skills run only when explicitly requested.
 
-> With a ubiquitous language, conversations among developers and expressions of the code are all derived from the same domain model.
->
-> Eric Evans, [Domain-Driven-Design](https://www.amazon.co.uk/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
+- [qs-help](./skills/engineering/qs-help/SKILL.md) — Find the right skill and understand the end-to-end workflow.
+- [qs-setup](./skills/engineering/qs-setup/SKILL.md) — Configure a project's issue tracker, labels, and domain documentation.
+- [qs-plan-clarify](./skills/engineering/qs-plan-clarify/SKILL.md) — Clarify a project through questions and capture durable decisions.
+- [qs-plan-spec](./skills/engineering/qs-plan-spec/SKILL.md) — Turn agreed requirements into an actionable specification.
+- [qs-plan-tickets](./skills/engineering/qs-plan-tickets/SKILL.md) — Break a plan into small, dependency-aware implementation tickets.
+- [qs-plan-roadmap](./skills/engineering/qs-plan-roadmap/SKILL.md) — Map a large, ambiguous project into manageable decisions.
+- [qs-design-architecture](./skills/engineering/qs-design-architecture/SKILL.md) — Find and improve weak points in an existing architecture.
+- [qs-code-build](./skills/engineering/qs-code-build/SKILL.md) — Implement a specification or tracked ticket.
+- [qs-flow-triage](./skills/engineering/qs-flow-triage/SKILL.md) — Turn incoming issues into actionable work.
+- [qs-deploy-release](./skills/engineering/qs-deploy-release/SKILL.md) — Verify and run a documented deployment after the required confirmation.
 
-**The Problem**: At the start of a project, devs and the people they're building the software for (the domain experts) are usually speaking different languages.
+### Model-invoked
 
-I felt the same tension with my agents. Agents are usually dropped into a project and asked to figure out the jargon as they go. So they use 20 words where 1 will do.
+These skills can also be selected automatically when the task fits.
 
-**The Fix** for this is a shared language. It's a document that helps agents decode the jargon used in the project.
+- [qs-plan-research](./skills/engineering/qs-plan-research/SKILL.md) — Research a question against reliable primary sources.
+- [qs-design-prototype](./skills/engineering/qs-design-prototype/SKILL.md) — Build a focused prototype to answer a design question.
+- [qs-design-domain](./skills/engineering/qs-design-domain/SKILL.md) — Develop a clear domain model and shared project vocabulary.
+- [qs-design-modules](./skills/engineering/qs-design-modules/SKILL.md) — Design clean interfaces and deep, testable modules.
+- [qs-code-debug](./skills/engineering/qs-code-debug/SKILL.md) — Reproduce, diagnose, and regression-test a bug.
+- [qs-test-tdd](./skills/engineering/qs-test-tdd/SKILL.md) — Implement behavior using a red-green test-driven loop.
+- [qs-review-code](./skills/engineering/qs-review-code/SKILL.md) — Review code against its specification and project standards.
+- [qs-git-merge](./skills/engineering/qs-git-merge/SKILL.md) — Resolve Git merge and rebase conflicts without losing work.
 
-<details>
-<summary>
-Example
-</summary>
+## Productivity
 
-Here's an example [`CONTEXT.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/CONTEXT.md), from my `course-video-manager` repo. Which one is easier to read?
+### User-invoked
 
-- **BEFORE**: "There's a problem when a lesson inside a section of a course is made 'real' (i.e. given a spot in the file system)"
-- **AFTER**: "There's a problem with the materialization cascade"
+- [qs-plan-explore](./skills/productivity/qs-plan-explore/SKILL.md) — Explore and pressure-test an idea without requiring a codebase.
+- [qs-flow-handoff](./skills/productivity/qs-flow-handoff/SKILL.md) — Prepare a concise handoff for another agent or session.
+- [qs-learn-teach](./skills/productivity/qs-learn-teach/SKILL.md) — Learn a subject through a practical, guided study plan.
+- [qs-skill-write](./skills/productivity/qs-skill-write/SKILL.md) — Create or improve a focused, reliable agent skill.
 
-This concision pays off session after session.
+### Model-invoked
 
-</details>
+- [qs-plan-interview](./skills/productivity/qs-plan-interview/SKILL.md) — Resolve a plan or decision through one focused question at a time.
 
-This is built into [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md). It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
+## Updating the Codex plugin
 
-It's hard to explain how powerful this is. It might be the single coolest technique in this repo. Try it, and see.
+The canonical skill files live under `skills/engineering` and `skills/productivity`. The Codex plugin contains a generated, curated snapshot because Codex accepts one skill directory, not the two promoted buckets.
 
-> [!TIP]
-> A shared language has many other benefits than reducing verbosity:
->
-> - **Variables, functions and files are named consistently**, using the shared language
-> - As a result, the **codebase is easier to navigate** for the agent
-> - The agent also **spends fewer tokens on thinking**, because it has access to a more concise language
+After adding or changing a promoted skill:
 
-### #3: The Code Doesn't Work
+```bash
+npm run sync:codex
+npm test
+```
 
-> "Always take small, deliberate steps. The rate of feedback is your speed limit. Never take on a task that’s too big."
->
-> David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
+The tests verify that the Codex package contains exactly the promoted skills. Every packaged file is checked against its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
 
-**The Problem**: Let's say that you and the agent are aligned on what to build. What happens when the agent _still_ produces crap?
+## Keeping the upstream as a reference
 
-It's time to look at your feedback loops. Without feedback on how the code it produces actually runs, the agent will be flying blind.
+The `origin` remote is the [QuickStark fork](https://github.com/quickstark/skills). Matt's original repository remains available through the `upstream` remote:
 
-**The Fix**: You need the usual tranche of feedback loops: static types, browser access, and automated tests.
+```bash
+git fetch upstream
+git log HEAD..upstream/main --oneline
+git show upstream/main:skills/engineering/tdd/SKILL.md
+```
 
-For automated tests, a red-green-refactor loop is critical. This is where the agent writes a failing test first, then fixes the test. This helps give the agent a consistent level of feedback that results in far better code.
+Consult [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs) for the mapping from each original upstream name to its QuickStark command. Review useful upstream changes and adapt them to the namespaced skill rather than blindly overwriting the personalized collection.
 
-I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md) skill** you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
+## License and attribution
 
-For debugging, I've also built a **[`/diagnosing-bugs`](./skills/engineering/diagnosing-bugs/SKILL.md)** skill that wraps best debugging practices into a simple loop.
-
-### #4: We Built A Ball Of Mud
-
-> "Invest in the design of the system _every day_."
->
-> Kent Beck, [Extreme Programming Explained](https://www.amazon.co.uk/Extreme-Programming-Explained-Embrace-Change/dp/0321278658)
-
-> "The best modules are deep. They allow a lot of functionality to be accessed through a simple interface."
->
-> John Ousterhout, [A Philosophy Of Software Design](https://www.amazon.co.uk/Philosophy-Software-Design-2nd/dp/173210221X)
-
-**The Problem**: Most apps built with agents are complex and hard to change. Because agents can radically speed up coding, they also accelerate software entropy. Codebases get more complex at an unprecedented rate.
-
-**The Fix** for this is a radical new approach to AI-powered development: caring about the design of the code.
-
-This is built in to every layer of these skills:
-
-- [`/to-spec`](./skills/engineering/to-spec/SKILL.md) quizzes you about which modules you're touching before creating a spec
-
-And crucially, [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
-
-### Summary
-
-Software engineering fundamentals matter more than ever. These skills are my best effort at condensing these fundamentals into repeatable practices, to help you ship the best apps of your career. Enjoy.
-
-## Reference
-
-These split on one axis — who can invoke them. **User-invoked** skills are reachable only when you type them (e.g. `/grill-me`); their job is to orchestrate. **Model-invoked** skills can be invoked by you _or_ reached for automatically by the agent when the task fits; they hold the reusable discipline. A user-invoked skill may invoke model-invoked skills, but never another user-invoked one.
-
-### Engineering
-
-Skills I use daily for code work.
-
-**User-invoked**
-
-- **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
-- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
-- **[triage](./skills/engineering/triage/SKILL.md)** — Move issues through a state machine of triage roles.
-- **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-- **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)** — Configure this repo for the engineering skills (issue tracker, triage labels, domain doc layout). Run once per repo before using the other engineering skills.
-- **[to-spec](./skills/engineering/to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the issue tracker. No interview — just synthesizes what you've already discussed.
-- **[to-tickets](./skills/engineering/to-tickets/SKILL.md)** — Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges — written as text in a local file, or as native blocking links on a real tracker.
-- **[implement](./skills/engineering/implement/SKILL.md)** — Build the work described by a spec or set of tickets, driving `/tdd` at pre-agreed seams and closing out with `/code-review` before committing.
-- **[wayfinder](./skills/engineering/wayfinder/SKILL.md)** — Plan a huge chunk of work, more than one agent session can hold, as a shared map of investigation tickets on the issue tracker — resolve them one at a time until the way to the destination is clear.
-
-**Model-invoked**
-
-- **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to answer a design question — a runnable terminal app for state/logic questions, or several radically different UI variations toggleable from one route.
-- **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
-- **[research](./skills/engineering/research/SKILL.md)** — Investigate a question against high-trust primary sources and capture the findings as a cited Markdown file in the repo, run as a background agent.
-- **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — Actively build and sharpen a project's domain model — challenge terms against the glossary, stress-test with edge-case scenarios, and update `CONTEXT.md` and ADRs inline.
-- **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface.
-- **[code-review](./skills/engineering/code-review/SKILL.md)** — Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/PRD?), run as parallel sub-agents so neither pollutes the other.
-- **[resolving-merge-conflicts](./skills/engineering/resolving-merge-conflicts/SKILL.md)** — Work through an in-progress git merge or rebase conflict hunk by hunk, resolving by intent traced to each side's primary source, then finish the operation — never `--abort`.
-
-### Productivity
-
-General workflow tools, not code-specific.
-
-**User-invoked**
-
-- **[grill-me](./skills/productivity/grill-me/SKILL.md)** — Get relentlessly interviewed about a plan or design until every branch of the decision tree is resolved.
-- **[handoff](./skills/productivity/handoff/SKILL.md)** — Compact the current conversation into a handoff document so another agent can continue the work.
-- **[teach](./skills/productivity/teach/SKILL.md)** — Teach the user a new skill or concept over multiple sessions, using the current directory as a stateful teaching workspace.
-- **[writing-great-skills](./skills/productivity/writing-great-skills/SKILL.md)** — Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable.
-
-**Model-invoked**
-
-- **[grilling](./skills/productivity/grilling/SKILL.md)** — Interview the user relentlessly about a plan, decision, or idea until every branch of the decision tree is resolved. The reusable loop behind `grill-me` and `grill-with-docs`.
+The 22 adapted skills originate from [Matt Pocock's skills](https://github.com/mattpocock/skills) and remain covered by the original [MIT license](./LICENSE). `/qs-deploy-release`, the QuickStark naming system, the Codex packaging, and the repository validation are personal additions.

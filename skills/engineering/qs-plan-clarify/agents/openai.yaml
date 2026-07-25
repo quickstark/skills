@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Plan: Clarify"
+  short_description: "Clarify a plan and capture durable decisions"
+  default_prompt: "Use $qs-plan-clarify to clarify this project and document the resulting decisions."
+policy:
+  allow_implicit_invocation: false

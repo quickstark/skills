@@ -1,30 +1,25 @@
-# Matt Pocock Skills
+# QuickStark Skills
 
-A collection of agent skills (slash commands and behaviors) loaded by Claude Code. Skills are organized into buckets and consumed by per-repo configuration emitted by `/setup-matt-pocock-skills`.
+A personal collection of namespaced engineering and productivity skills for Codex and Claude Code, adapted from Matt Pocock's MIT-licensed upstream. Promoted commands share the `/qs-` prefix and are organized by purpose. `/qs-setup` emits per-project configuration; `/qs-help` explains the complete workflow.
 
 ## Language
 
-**Issue tracker**:
-The tool that hosts a repo's issues — GitHub Issues, Linear, a local `.scratch/` markdown convention, or similar. Skills like `to-tickets`, `to-spec`, `triage`, and `qa` read from and write to it.
-_Avoid_: backlog manager, backlog backend, issue host
+**Issue tracker**: The tool that hosts a project's issues: GitHub Issues, Linear, a local `.scratch/` Markdown convention, or another explicitly configured system. `/qs-plan-tickets`, `/qs-plan-spec`, and `/qs-flow-triage` read from or write to it.
 
-**Issue**:
-A single tracked unit of work inside an **Issue tracker** — a bug, task, spec, or slice produced by `to-tickets`.
-_Avoid_: ticket (use only when quoting external systems that call them tickets, or for a **Decision ticket** — see below)
+**Issue**: A tracked unit of work in the issue tracker, such as a bug, specification, request, or implementation slice.
 
-**Decision ticket**:
-A `wayfinder` unit — a child **Issue** of a `wayfinder:map` holding a *question* whose resolution is a decision, not a slice of a build to execute. The **decision** qualifier is what keeps it distinct from an implementation ticket; `wayfinder` introduces the term, then uses "ticket".
+**Decision ticket**: A `/qs-plan-roadmap` unit that records a question whose resolution is a decision rather than an implementation deliverable.
 
-**Triage role**:
-A canonical state-machine label applied to an **Issue** during triage (e.g. `needs-triage`, `ready-for-afk`). Each role maps to a real label string in the **Issue tracker** via `docs/agents/triage-labels.md`.
+**Triage role**: A state-machine label applied to an issue by `/qs-flow-triage`. Its actual label string is documented in `docs/agents/triage-labels.md` for the project using the skill.
+
+**Promoted skill**: A canonical skill in `skills/engineering/` or `skills/productivity/`, registered in the skill catalog and included in both plugin distributions.
+
+**Upstream skill**: Matt Pocock's original, unprefixed version. The original-to-personal name mapping is recorded in `scripts/qs-skill-catalog.mjs`.
 
 ## Relationships
 
-- An **Issue tracker** holds many **Issues**
-- An **Issue** carries one **Triage role** at a time
-- A **Decision ticket** is an **Issue** (a child of a `wayfinder:map`)
-
-## Flagged ambiguities
-
-- "backlog" was previously used to mean both the *tool* hosting issues and the *body of work* inside it — resolved: the tool is the **Issue tracker**; "backlog" is no longer used as a domain term.
-- "backlog backend" / "backlog manager" — resolved: collapsed into **Issue tracker**.
+- An issue tracker holds many issues.
+- An issue carries one triage role at a time.
+- A decision ticket is an issue used by the roadmap workflow.
+- A promoted skill is the source of truth for its generated Codex-plugin copy.
+- Each adapted promoted skill retains an identifiable upstream counterpart.

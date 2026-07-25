@@ -1,31 +1,31 @@
 # Engineering
 
-Skills I use daily for code work.
+Engineering workflows in the QuickStark skill collection. Type `/qs-` to browse the collection or use a purpose prefix such as `/qs-plan-`, `/qs-code-`, `/qs-test-`, or `/qs-deploy-`.
 
 ## User-invoked
 
-Reachable only when you type them (Claude Code: `disable-model-invocation: true`; Codex: `policy.allow_implicit_invocation: false` in `agents/openai.yaml`).
+These skills run only when explicitly requested.
 
-- **[ask-matt](./ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
-- **[grill-with-docs](./grill-with-docs/SKILL.md)** — Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
-- **[triage](./triage/SKILL.md)** — Move issues through a state machine of triage roles.
-- **[improve-codebase-architecture](./improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-- **[setup-matt-pocock-skills](./setup-matt-pocock-skills/SKILL.md)** — Configure this repo for the engineering skills (issue tracker, triage labels, domain doc layout). Run once per repo.
-- **[to-spec](./to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the issue tracker.
-- **[to-tickets](./to-tickets/SKILL.md)** — Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges — text in a local file, or native blocking links on a real tracker.
-- **[implement](./implement/SKILL.md)** — Build the work described by a spec or set of tickets, driving `/tdd` at pre-agreed seams and closing out with `/code-review` before committing.
-- **[wayfinder](./wayfinder/SKILL.md)** — Plan a huge chunk of work — more than one agent session can hold — as a shared map of decision tickets on the issue tracker, resolved one at a time until the way to the destination is clear.
+- [qs-help](./qs-help/SKILL.md) — Find the right skill or end-to-end workflow.
+- [qs-setup](./qs-setup/SKILL.md) — Configure the project's issue tracker, labels, and domain documentation.
+- [qs-plan-clarify](./qs-plan-clarify/SKILL.md) — Clarify a plan and capture durable project decisions.
+- [qs-plan-spec](./qs-plan-spec/SKILL.md) — Turn agreed requirements into an actionable specification.
+- [qs-plan-tickets](./qs-plan-tickets/SKILL.md) — Split a plan into dependency-aware implementation tickets.
+- [qs-plan-roadmap](./qs-plan-roadmap/SKILL.md) — Map a large project into manageable decisions.
+- [qs-design-architecture](./qs-design-architecture/SKILL.md) — Find and improve architecture weak points.
+- [qs-code-build](./qs-code-build/SKILL.md) — Implement a specification or tracked ticket.
+- [qs-flow-triage](./qs-flow-triage/SKILL.md) — Turn incoming issues into actionable engineering work.
+- [qs-deploy-release](./qs-deploy-release/SKILL.md) — Verify and run a documented deployment with the required confirmation.
 
 ## Model-invoked
 
-Model- or user-reachable (rich trigger phrasing so the model can reach for them).
+These skills are also available for automatic selection when their task fits.
 
-- **[prototype](./prototype/SKILL.md)** — Build a throwaway prototype to answer a design question: a runnable terminal app for state/logic, or several toggleable UI variations.
-
-- **[diagnosing-bugs](./diagnosing-bugs/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
-- **[research](./research/SKILL.md)** — Investigate a question against high-trust primary sources and capture the findings as a cited Markdown file in the repo, run as a background agent.
-- **[tdd](./tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[domain-modeling](./domain-modeling/SKILL.md)** — Actively build and sharpen a project's domain model — challenge terms, stress-test with scenarios, update `CONTEXT.md` and ADRs inline.
-- **[codebase-design](./codebase-design/SKILL.md)** — Shared discipline and vocabulary for designing deep modules: small interfaces, clean seams, testable through the interface.
-- **[code-review](./code-review/SKILL.md)** — Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/PRD?), run as parallel sub-agents.
-- **[resolving-merge-conflicts](./resolving-merge-conflicts/SKILL.md)** — Work through an in-progress git merge or rebase conflict hunk by hunk, resolving by intent traced to each side's primary source, then finish the operation — never `--abort`.
+- [qs-plan-research](./qs-plan-research/SKILL.md) — Investigate a question using reliable primary sources.
+- [qs-design-prototype](./qs-design-prototype/SKILL.md) — Prototype a design or interface decision.
+- [qs-design-domain](./qs-design-domain/SKILL.md) — Develop a shared project vocabulary and domain model.
+- [qs-design-modules](./qs-design-modules/SKILL.md) — Design clean, deep, and testable software modules.
+- [qs-code-debug](./qs-code-debug/SKILL.md) — Reproduce and diagnose a bug or regression.
+- [qs-test-tdd](./qs-test-tdd/SKILL.md) — Implement behavior using test-driven development.
+- [qs-review-code](./qs-review-code/SKILL.md) — Review code against standards and requirements.
+- [qs-git-merge](./qs-git-merge/SKILL.md) — Resolve an in-progress merge or rebase conflict.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Design: Architecture"
+  short_description: "Find and improve architecture weak points"
+  default_prompt: "Use $qs-design-architecture to find the highest-value architecture improvements in this codebase."
+policy:
+  allow_implicit_invocation: false

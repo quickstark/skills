@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Plan: Tickets"
+  short_description: "Break a plan into dependency-aware tickets"
+  default_prompt: "Use $qs-plan-tickets to break this plan into small, dependency-aware implementation tickets."
+policy:
+  allow_implicit_invocation: false
