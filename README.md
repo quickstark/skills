@@ -90,20 +90,59 @@ Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use 
 
 Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation only when the refactor is large enough to justify them. `/qs-help` explains both workflows, every skill's purpose, and the next best step for the actual situation.
 
+## Visual skill readouts
+
+Every promoted skill produces the same architecture-quality, self-contained HTML readout. The report uses a clear skill-specific heading, an honest status, a concise outcome, actual findings, decisions, outputs, checks, and contextually appropriate next skills. It is responsive, has no external JavaScript or stylesheet dependency, and stays in the operating system's temporary `quickstark-readouts` directory rather than cluttering a project.
+
+Generate a clearly labeled preview for all 23 skills:
+
+```bash
+npm run readouts:gallery
+```
+
+Previews explicitly say that no skill has run and claim no project changes or checks.
+
+Start the lightweight, dependency-free viewer:
+
+```bash
+npm run readouts:serve
+```
+
+Open `http://127.0.0.1:4173/` on the same machine. The viewer binds only to the local loopback interface by default and serves only generated QuickStark HTML files.
+
+### Viewing reports from a remote Codex machine
+
+For private remote access, leave the viewer bound to loopback. On your Mac, create an SSH tunnel to the remote machine:
+
+```bash
+ssh -N -L 4173:127.0.0.1:4173 your-user@your-codex-host
+```
+
+Then open `http://127.0.0.1:4173/` on your Mac. No report port is exposed to the local network or public internet.
+
+If both machines are already connected to the same trusted Tailscale network, explicitly bind the viewer to the remote machine's Tailscale IP:
+
+```bash
+npm run readouts:serve -- --host 100.x.y.z
+```
+
+Open `http://100.x.y.z:4173/` on your Mac. Set `QS_READOUT_BASE_URL` to that verified viewer URL if skill completion reports should include directly clickable HTTP links.
+
 ## Consistent skill output
 
-Every promoted skill finishes with the same concise, human-readable summary:
+Every promoted skill also finishes with the same concise, human-readable summary:
 
 ```text
 Status: Completed
 Skills used: /qs-design-architecture; /qs-design-modules
 Outcome: Identified and prioritized the highest-value architectural refactor.
+Readout: /tmp/quickstark-readouts/qs-design-architecture--2026-07-25T15-30-00-000Z--a1b2c3d4.html
 Outputs: /absolute/path/to/architecture-review.html
 Checks: Confirmed the affected modules and existing test coverage.
 Next best: /qs-plan-clarify — agree on the chosen refactor's scope.
 ```
 
-`Skills used` lists only skills that actually ran. `Outputs` and `Checks` appear only when real artifacts or validations exist. `Next best` explains one to three relevant follow-on skills; it says `None` when the requested work is already complete.
+`Skills used` lists only skills that actually ran. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs` and `Checks` appear only when real artifacts or validations exist. `Next best` explains one to three relevant follow-on skills; it says `None` when the requested work is already complete.
 
 Next-step recommendations are maintained in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs), not reinvented independently by each skill.
 
@@ -161,7 +200,7 @@ npm run sync:codex
 npm test
 ```
 
-`npm run sync:codex` first regenerates the standardized output and next-step guidance in every skill and documentation page, then packages exactly the promoted skills. The tests verify that every packaged file matches its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
+`npm run sync:codex` first regenerates the standardized HTML-readout contract, output, and next-step guidance in every skill and documentation page, then packages exactly the promoted skills and their shared readout helpers. The tests verify that every packaged file matches its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
 
 ## Keeping the upstream as a reference
 

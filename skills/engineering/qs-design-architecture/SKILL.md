@@ -36,7 +36,7 @@ Apply the **deletion test** to anything you suspect is shallow: would deleting i
 
 ### 2. Present candidates as an HTML report
 
-Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
+Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html` so each run gets a fresh file. Include the real absolute path in the shared QuickStark skill readout. Open the primary report only when a local graphical browser is actually available: `xdg-open <path>` on desktop Linux, `open <path>` on macOS, or `start <path>` on Windows. On a headless or remote machine, present the readout through the private QuickStark viewer or an SSH tunnel; never claim a remote desktop opener displayed anything on the user's Mac.
 
 The report uses **Tailwind via CDN** for layout and styling, and **Mermaid via CDN** for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals — use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a **before/after visualisation**. Be visual.
 
@@ -72,18 +72,27 @@ Side effects happen inline as decisions crystallize — run the `/qs-design-doma
 
 ## Completion report and next steps
 
-Finish with a concise, readable completion report. Plain text or restrained Markdown is sufficient; do not create a separate report or HTML file unless this skill's primary workflow requires one.
+Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
+
+Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and relevant next skills. Generate the readout with:
+
+```bash
+node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"
+```
+
+The generator writes a uniquely named, self-contained HTML file to the OS temporary `quickstark-readouts` directory. If `QS_READOUT_BASE_URL` points to an already running private viewer, report the returned HTTP(S) link; otherwise report the real absolute HTML path. Preserve and link the skill's primary artifact when it produces one. Record a missing runtime, denied file access, or unavailable viewer honestly; do not start a public server, claim a reachable URL, or pretend a readout exists.
 
 ```text
 Status: Completed | Awaiting input | Blocked
 Skills used: /qs-design-architecture; /another-skill only if actually used
 Outcome: What was completed, discovered, decided, or is blocking progress.
+Readout: Real absolute HTML path or verified private viewer URL.
 Outputs: Real files, reports, decisions, or changes, when applicable.
 Checks: Only the tests, validations, or observations actually performed.
 Next best: /qs-skill-name — why it is the best next step.
 ```
 
-Always include **Status**, **Skills used**, **Outcome**, and **Next best**. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, or result you did not verify.
+Always include **Status**, **Skills used**, **Outcome**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, URL, or result you did not verify.
 
 Select at most three genuinely relevant follow-ons from:
 

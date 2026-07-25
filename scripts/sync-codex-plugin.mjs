@@ -16,6 +16,11 @@ import { SKILLS } from "./qs-skill-catalog.mjs";
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pluginRoot = join(repositoryRoot, "codex", "plugins", "qs-skills");
 const generatedRoot = join(pluginRoot, "skills");
+const generatedSupportRoot = join(pluginRoot, "scripts");
+const sharedSupportFiles = Object.freeze([
+  "qs-skill-catalog.mjs",
+  "qs-skill-readout.mjs",
+]);
 const check = process.argv.includes("--check");
 
 if (check) {
@@ -52,12 +57,33 @@ async function fileList(root, current = root) {
 }
 
 async function sync() {
-  if (generatedRoot !== join(pluginRoot, "skills")) {
+  if (
+    generatedRoot !== join(pluginRoot, "skills")
+    || generatedSupportRoot !== join(pluginRoot, "scripts")
+  ) {
     throw new Error("Refusing to modify an unexpected generated skills directory.");
   }
 
   await rm(generatedRoot, { recursive: true, force: true });
-  await mkdir(generatedRoot, { recursive: true });
+  await rm(generatedSupportRoot, { recursive: true, force: true });
+  await Promise.all([
+    mkdir(generatedRoot, { recursive: true }),
+    mkdir(generatedSupportRoot, { recursive: true }),
+  ]);
+
+  for (const file of sharedSupportFiles) {
+    const source = join(repositoryRoot, "scripts", file);
+
+    if (!(await exists(source))) {
+      throw new Error(`Cannot package a missing shared QuickStark helper: ${file}`);
+    }
+
+    await cp(source, join(generatedSupportRoot, file), {
+      dereference: true,
+      errorOnExist: true,
+      force: false,
+    });
+  }
 
   for (const skill of SKILLS) {
     const source = join(repositoryRoot, "skills", skill.bucket, skill.name);
@@ -81,12 +107,35 @@ async function sync() {
     }
   }
 
-  console.log(`Packaged ${SKILLS.length} promoted QuickStark skills for Codex.`);
+  console.log(
+    `Packaged ${SKILLS.length} promoted QuickStark skills and ${sharedSupportFiles.length} shared readout helpers for Codex.`,
+  );
 }
 
 async function verify() {
   if (!(await exists(generatedRoot))) {
     throw new Error("Codex skill package is missing; run npm run sync:codex.");
+  }
+
+  if (!(await exists(generatedSupportRoot))) {
+    throw new Error("Codex readout helpers are missing; run npm run sync:codex.");
+  }
+
+  const packagedSupportFiles = await fileList(generatedSupportRoot);
+
+  if (JSON.stringify(packagedSupportFiles) !== JSON.stringify([...sharedSupportFiles].sort())) {
+    throw new Error("Codex package does not contain exactly the shared QuickStark readout helpers.");
+  }
+
+  for (const file of sharedSupportFiles) {
+    const [canonical, packaged] = await Promise.all([
+      readFile(join(repositoryRoot, "scripts", file)),
+      readFile(join(generatedSupportRoot, file)),
+    ]);
+
+    if (!canonical.equals(packaged)) {
+      throw new Error(`Codex shared readout helper is out of date: ${file}.`);
+    }
   }
 
   const expectedNames = SKILLS.map((skill) => skill.name).sort();
@@ -126,5 +175,7 @@ async function verify() {
     }
   }
 
-  console.log(`Verified all ${SKILLS.length} packaged skills match their canonical sources.`);
+  console.log(
+    `Verified all ${SKILLS.length} packaged skills and ${sharedSupportFiles.length} shared readout helpers match their canonical sources.`,
+  );
 }

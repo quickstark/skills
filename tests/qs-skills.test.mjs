@@ -1,10 +1,19 @@
 import assert from "node:assert/strict";
-import { readdir, readFile, stat } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, stat } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { formatSkillForCodex } from "../scripts/codex-skill-format.mjs";
+import {
+  DEFAULT_READOUT_HOST,
+  normalizeSkillReadout,
+  renderSkillReadout,
+  startReadoutServer,
+  writeSkillGallery,
+  writeSkillReadout,
+} from "../scripts/qs-skill-readout.mjs";
 import {
   DOCUMENTATION_OUTPUT_HEADING,
   SKILL_OUTPUT_HEADING,
@@ -47,6 +56,16 @@ async function listFiles(root, current = root) {
   }
 
   return files.sort();
+}
+
+async function temporaryReadoutDirectory(context) {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-readout-test-"));
+
+  context.after(async () => {
+    await rm(directory, { recursive: true, force: true });
+  });
+
+  return directory;
 }
 
 test("the catalog preserves all 22 upstream skills and adds a real deployment skill", () => {
@@ -92,6 +111,213 @@ test("every skill has valid, specific, non-circular next-step recommendations", 
       assert.ok(next.reason.trim().length >= 20, `${skill.name} has a vague next-step reason`);
     }
   }
+});
+
+test("every promoted skill has a distinct, self-contained architecture-quality HTML readout", () => {
+  for (const skill of SKILLS) {
+    const html = renderSkillReadout({
+      skill: skill.name,
+      status: "Completed",
+      outcome: `Completed the ${skill.displayName} workflow.`,
+      findings: [{ title: "Skill purpose", detail: skill.shortDescription }],
+    });
+
+    assert.match(html, /^<!doctype html>/i, `${skill.name} is not a browser-ready HTML document`);
+    assert.ok(html.includes(skill.displayName), `${skill.name} omits its readable display name`);
+    assert.ok(html.includes(`/${skill.name}`), `${skill.name} omits its actual command`);
+    assert.ok(html.includes('content="Completed"'), `${skill.name} omits the actual report status`);
+    assert.ok(html.includes("Next best skills"), `${skill.name} omits follow-on guidance`);
+    assert.ok(html.includes("Self-contained HTML"), `${skill.name} omits its offline guarantee`);
+    assert.doesNotMatch(html, /<script\b/i, `${skill.name} unexpectedly depends on executable scripts`);
+    assert.doesNotMatch(html, /<link\b[^>]+rel=["']stylesheet/i, `${skill.name} depends on external styles`);
+
+    for (const next of NEXT_SKILLS_BY_NAME[skill.name]) {
+      assert.ok(html.includes(`/${next.name}`), `${skill.name} omits /${next.name}`);
+    }
+  }
+});
+
+test("readouts escape user-controlled content and never activate unsafe artifact links", () => {
+  const hostile = '<script>alert("unsafe")</script>';
+  const html = renderSkillReadout({
+    skill: "qs-code-build",
+    status: "Completed",
+    outcome: hostile,
+    findings: [{ title: hostile, detail: hostile }],
+    outputs: [{ title: "Artifact", detail: hostile, href: "javascript:alert(1)" }],
+  });
+
+  assert.doesNotMatch(html, /<script\b/i);
+  assert.doesNotMatch(html, /href=["']javascript:/i);
+  assert.ok(html.includes("&lt;script&gt;alert(&quot;unsafe&quot;)&lt;/script&gt;"));
+});
+
+test("readouts distinguish actually employed skills from catalog recommendations", () => {
+  const report = normalizeSkillReadout({
+    skill: "qs-design-architecture",
+    outcome: "Selected the highest-value architectural improvement.",
+    skillsUsed: ["qs-design-architecture", "qs-design-modules"],
+  });
+
+  assert.deepEqual(report.skillsUsed, ["qs-design-architecture", "qs-design-modules"]);
+  assert.deepEqual(
+    report.nextSkills.map((next) => next.name),
+    NEXT_SKILLS_BY_NAME["qs-design-architecture"].map((next) => next.name),
+  );
+});
+
+test("completed readouts can honestly report that no further skill is required", () => {
+  const html = renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Completed the exact requested change.",
+    nextSkills: [],
+  });
+
+  assert.ok(html.includes("None — the requested work is complete."));
+});
+
+test("readouts reject unknown skills, fabricated skill usage, and irrelevant next steps", () => {
+  assert.throws(
+    () => normalizeSkillReadout({ skill: "qs-made-up", outcome: "No real skill." }),
+    /not a promoted QuickStark skill/,
+  );
+  assert.throws(
+    () => normalizeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "A build was performed.",
+      skillsUsed: ["qs-review-code"],
+    }),
+    /actual active skill/,
+  );
+  assert.throws(
+    () => normalizeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "A build was performed.",
+      nextSkills: ["qs-help"],
+    }),
+    /not an approved next step/,
+  );
+  assert.throws(
+    () => normalizeSkillReadout({
+      skill: "qs-code-build",
+      status: "Preview",
+      outcome: "This is only a preview.",
+      skillsUsed: ["qs-code-build"],
+    }),
+    /cannot claim that a skill has been used/,
+  );
+});
+
+test("readout check cards report only explicit, valid validation results", () => {
+  const html = renderSkillReadout({
+    skill: "qs-test-tdd",
+    outcome: "Completed the red-green test loop.",
+    checks: [
+      { title: "Regression suite", status: "passed", detail: "All observed tests passed." },
+      { title: "Optional browser test", status: "skipped", detail: "No browser change was in scope." },
+    ],
+  });
+
+  assert.ok(html.includes("check-passed"));
+  assert.ok(html.includes("check-skipped"));
+  assert.throws(
+    () => normalizeSkillReadout({
+      skill: "qs-test-tdd",
+      outcome: "Ran tests.",
+      checks: [{ title: "Imaginary check", status: "success-ish" }],
+    }),
+    /must be passed, failed, skipped, or info/,
+  );
+});
+
+test("readouts are written as unique, private, remotely linkable HTML files", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const input = {
+    skill: "qs-plan-clarify",
+    outcome: "Clarified the boundaries and success criteria.",
+  };
+
+  const first = await writeSkillReadout(input, {
+    directory,
+    baseUrl: "http://100.66.93.87:4173/",
+  });
+  const second = await writeSkillReadout(input, { directory });
+
+  assert.equal(first.directory, directory);
+  assert.match(first.filename, /^qs-plan-clarify--.*--[a-f0-9]{8}\.html$/);
+  assert.notEqual(first.filename, second.filename);
+  assert.equal(first.url, `http://100.66.93.87:4173/${first.filename}`);
+  assert.equal(second.url, null);
+  assert.match(await readFile(first.path, "utf8"), /Clarified the boundaries/);
+  assert.equal((await stat(first.path)).mode & 0o777, 0o600);
+});
+
+test("the preview gallery covers all 23 skills without inventing completed work", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const previews = await writeSkillGallery({ directory });
+
+  assert.equal(previews.length, SKILLS.length);
+  assert.deepEqual(
+    previews.map((preview) => preview.skill).sort(),
+    SKILLS.map((skill) => skill.name).sort(),
+  );
+
+  for (const preview of previews) {
+    const html = await readFile(preview.path, "utf8");
+
+    assert.equal(preview.status, "Preview");
+    assert.match(html, /Catalog preview only/);
+    assert.match(html, /No skill has been run/);
+    assert.doesNotMatch(html, /class="skills-used"/);
+  }
+});
+
+test("the readout viewer defaults to private loopback and serves the skill gallery", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const report = await writeSkillReadout({
+    skill: "qs-help",
+    outcome: "Selected the right engineering workflow.",
+  }, { directory });
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  assert.equal(viewer.host, DEFAULT_READOUT_HOST);
+  assert.match(viewer.url, /^http:\/\/127\.0\.0\.1:\d+\/$/);
+
+  const dashboard = await fetch(viewer.url);
+  assert.equal(dashboard.status, 200);
+  assert.match(await dashboard.text(), /QS Help/);
+  assert.match(dashboard.headers.get("content-security-policy"), /default-src 'none'/);
+
+  const page = await fetch(new URL(report.filename, viewer.url));
+  assert.equal(page.status, 200);
+  assert.match(await page.text(), /Selected the right engineering workflow/);
+});
+
+test("the viewer rejects repository files, encoded traversal, and unexpected HTTP methods", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const repositoryFile = await fetch(new URL("package.json", viewer.url));
+  assert.equal(repositoryFile.status, 404);
+
+  const traversal = await fetch(new URL("/%2e%2e%2fpackage.json", viewer.url));
+  assert.equal(traversal.status, 404);
+
+  const unexpectedMethod = await fetch(viewer.url, { method: "POST" });
+  assert.equal(unexpectedMethod.status, 405);
+  assert.equal(unexpectedMethod.headers.get("allow"), "GET, HEAD");
 });
 
 for (const skill of SKILLS) {
@@ -283,6 +509,42 @@ test("the Codex package is a curated, Codex-compatible snapshot of the canonical
   }
 });
 
+test("installed Codex skills receive the exact canonical catalog and HTML readout helper", async () => {
+  const packagedSupport = join(repositoryRoot, "codex", "plugins", "qs-skills", "scripts");
+  const expected = ["qs-skill-catalog.mjs", "qs-skill-readout.mjs"].sort();
+
+  assert.deepEqual(await listFiles(packagedSupport), expected);
+
+  for (const file of expected) {
+    const [canonical, packaged] = await Promise.all([
+      readFile(join(repositoryRoot, "scripts", file)),
+      readFile(join(packagedSupport, file)),
+    ]);
+
+    assert.ok(canonical.equals(packaged), `${file} is not synchronized into the Codex plugin`);
+  }
+});
+
+test("project, plugin, and lockfile versions stay synchronized", async () => {
+  const [project, lockfile, claudePlugin, codexPlugin] = await Promise.all([
+    readFile(join(repositoryRoot, "package.json"), "utf8").then(JSON.parse),
+    readFile(join(repositoryRoot, "package-lock.json"), "utf8").then(JSON.parse),
+    readFile(join(repositoryRoot, ".claude-plugin", "plugin.json"), "utf8").then(JSON.parse),
+    readFile(
+      join(repositoryRoot, "codex", "plugins", "qs-skills", ".codex-plugin", "plugin.json"),
+      "utf8",
+    ).then(JSON.parse),
+  ]);
+
+  assert.equal(project.version, "2.2.0");
+  assert.equal(lockfile.name, project.name);
+  assert.equal(lockfile.version, project.version);
+  assert.equal(lockfile.packages[""].name, project.name);
+  assert.equal(lockfile.packages[""].version, project.version);
+  assert.equal(claudePlugin.version, project.version);
+  assert.equal(codexPlugin.version, project.version);
+});
+
 test("the router describes the personalized end-to-end workflow", async () => {
   const router = await readFile(
     join(repositoryRoot, "skills", "engineering", "qs-help", "SKILL.md"),
@@ -406,10 +668,14 @@ test("the standard report distinguishes actual skills from suggested next steps"
   for (const skill of SKILLS) {
     const contract = renderSkillOutputContract(skill);
 
-    for (const field of ["Status:", "Skills used:", "Outcome:", "Outputs:", "Checks:", "Next best:"]) {
+    for (const field of ["Status:", "Skills used:", "Outcome:", "Readout:", "Outputs:", "Checks:", "Next best:"]) {
       assert.ok(contract.includes(field), `${skill.name} omits the ${field} field`);
     }
 
+    assert.match(contract, /architecture-quality, self-contained HTML readout/);
+    assert.match(contract, /scripts\/qs-skill-readout\.mjs/);
+    assert.match(contract, /QS_READOUT_BASE_URL/);
+    assert.match(contract, /do not start a public server/i);
     assert.match(contract, /only skills that actually ran/);
     assert.match(contract, /only the tests, validations, or observations actually performed/i);
     assert.match(contract, /Awaiting input/);

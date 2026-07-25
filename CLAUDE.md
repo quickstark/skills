@@ -16,7 +16,7 @@ Each promoted skill must have:
 - A documentation page under `docs/<bucket>/<skill-name>.md`.
 - An entry in `.claude-plugin/plugin.json`.
 - A source-synchronized Codex copy in `codex/plugins/qs-skills/skills/`.
-- A catalog-generated completion report and relevant next-skill recommendations.
+- A catalog-generated, architecture-quality HTML readout, completion report, and relevant next-skill recommendations.
 
 Preserve invocation mode in both harnesses. Explicitly invoked skills set `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked skills omit both restrictions.
 
@@ -24,7 +24,7 @@ Preserve invocation mode in both harnesses. Explicitly invoked skills set `disab
 
 The Claude marketplace is `.claude-plugin/marketplace.json`. Its plugin is `.claude-plugin/plugin.json` and must list exactly the promoted skills.
 
-The Codex marketplace is `codex/.agents/plugins/marketplace.json`. Its plugin is `codex/plugins/qs-skills/.codex-plugin/plugin.json`. Codex accepts one skill-directory path, so `codex/plugins/qs-skills/skills/` is a generated, promoted-only snapshot rather than a second independently edited source. The sync removes Claude-only `disable-model-invocation` frontmatter from generated Codex skills; `agents/openai.yaml` preserves the equivalent explicit-invocation policy.
+The Codex marketplace is `codex/.agents/plugins/marketplace.json`. Its plugin is `codex/plugins/qs-skills/.codex-plugin/plugin.json`. Codex accepts one skill-directory path, so `codex/plugins/qs-skills/skills/` is a generated, promoted-only snapshot rather than a second independently edited source. `codex/plugins/qs-skills/scripts/` is the generated snapshot of the shared skill catalog and HTML readout helper. The sync removes Claude-only `disable-model-invocation` frontmatter from generated Codex skills; `agents/openai.yaml` preserves the equivalent explicit-invocation policy.
 
 Keep `package.json`, the Claude plugin, and the Codex plugin on the same version. After changing a promoted skill or plugin, run:
 
@@ -41,7 +41,9 @@ When Claude Code is available, also run `claude plugin validate . --strict` afte
 
 Keep each promoted documentation page synchronized with its skill. Retain absolute links to the original upstream source when the skill was adapted from Matt Pocock. Never claim a personalized GitHub fork or published documentation URL exists before it has actually been created.
 
-Every skill ends with `## Completion report and next steps`. Its output reports **Status**, **Skills used**, **Outcome**, and **Next best**; **Outputs** and **Checks** are included only when applicable. List only skills actually used and recommend only contextually appropriate catalog entries. `scripts/sync-skill-output-contracts.mjs` generates and verifies this contract in both skill instructions and documentation.
+Every skill ends with `## Completion report and next steps`. Each run generates a self-contained HTML readout through `scripts/qs-skill-readout.mjs`. Its in-chat output reports **Status**, **Skills used**, **Outcome**, **Readout**, and **Next best**; **Outputs** and **Checks** are included only when applicable. List only skills actually used and recommend only contextually appropriate catalog entries. `scripts/sync-skill-output-contracts.mjs` generates and verifies this contract in both skill instructions and documentation.
+
+Readouts live in the OS temporary `quickstark-readouts` directory. `npm run readouts:serve` binds to `127.0.0.1` by default and serves only generated QuickStark HTML. Use an SSH tunnel for remote access, or explicitly bind to a trusted private Tailscale address. Never start a publicly reachable viewer automatically or present an unverified report URL as accessible.
 
 ## Upstream
 

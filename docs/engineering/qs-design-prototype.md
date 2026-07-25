@@ -36,7 +36,7 @@ The prototype doesn't belong in the main branch: no tests, no error handling, no
 
 ## Output and next steps
 
-`/qs-design-prototype` closes with the same concise report used across the collection: status, skills actually used, outcome, real outputs or checks where applicable, and the best next step. It does not claim that a suggested skill has already run.
+`/qs-design-prototype` produces an architecture-quality, self-contained HTML readout and closes with the same concise report used across the collection: status, skills actually used, outcome, the real readout path or private viewer link, real outputs or checks where applicable, and the best next step. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator, stays in the OS temporary `quickstark-readouts` directory, and does not claim that a suggested skill has already run.
 
 Depending on what actually happened, the next step may be:
 

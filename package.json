@@ -1,6 +1,6 @@
 {
   "name": "qs-skills",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "description": "QuickStark's grouped engineering, productivity, and deployment skills",
   "repository": {
@@ -15,6 +15,8 @@
     "check:outputs": "node scripts/sync-skill-output-contracts.mjs --check",
     "sync:codex": "node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs",
     "check:codex": "node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check",
+    "readouts:gallery": "node scripts/qs-skill-readout.mjs gallery",
+    "readouts:serve": "node scripts/qs-skill-readout.mjs serve",
     "test": "node --test tests/qs-skills.test.mjs"
   },
   "devDependencies": {
