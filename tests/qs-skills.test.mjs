@@ -1708,6 +1708,9 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(contract, /architecture-quality, self-contained HTML readout/);
     assert.match(contract, /scripts\/qs-skill-readout\.mjs/);
     assert.match(contract, /automatically starts or reuses a verified readout viewer/i);
+    assert.match(contract, /QS_READOUT_DIR/);
+    assert.match(contract, /project-organized/i);
+    assert.match(contract, /temporary.*default/i);
     assert.match(contract, /QS_READOUT_ACCESS=ssh/);
     assert.match(contract, /Tailscale is not required/);
     assert.match(contract, /do not bind to every network interface/i);
@@ -1715,6 +1718,11 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(contract, /only the tests, validations, or observations actually performed/i);
     assert.match(contract, /Awaiting input/);
     assert.match(contract, /the requested work is complete/);
+
+    const documentation = renderDocumentationOutputContract(skill);
+
+    assert.match(documentation, /QS_READOUT_DIR/);
+    assert.match(documentation, /project-organized/i);
   }
 });
 
