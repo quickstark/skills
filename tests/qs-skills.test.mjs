@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, readdir, readFile, rm, stat } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, stat, symlink } from "node:fs/promises";
 import { createServer as createPortBlocker } from "node:net";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
@@ -73,6 +73,18 @@ async function temporaryReadoutDirectory(context) {
   context.after(async () => {
     await rm(directory, { recursive: true, force: true });
   });
+
+  return directory;
+}
+
+async function temporaryGitProject(context, remote) {
+  const directory = await temporaryReadoutDirectory(context);
+
+  await execFileAsync("git", ["init", "--quiet", directory]);
+
+  if (remote !== undefined) {
+    await execFileAsync("git", ["-C", directory, "remote", "add", "origin", remote]);
+  }
 
   return directory;
 }
@@ -262,6 +274,181 @@ test("readouts are written as unique, private, remotely linkable HTML files", as
   assert.equal(second.url, null);
   assert.match(await readFile(first.path, "utf8"), /Clarified the boundaries/);
   assert.equal((await stat(first.path)).mode & 0o777, 0o600);
+});
+
+test("skill readouts identify equivalent HTTPS and SSH Git origins as the same canonical project", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const remotes = [
+    "https://github.com/quickstark/skills.git",
+    "https://github.com:443/quickstark/skills.git",
+    "git@github.com:quickstark/skills.git",
+    "deployment-user@github.com:quickstark/skills.git",
+    "ssh://git@github.com/quickstark/skills.git",
+    "ssh://git@github.com:22/quickstark/skills.git",
+    "ssh://deployment-user@github.com/quickstark/skills.git",
+  ];
+
+  for (const remote of remotes) {
+    const cwd = await temporaryGitProject(context, remote);
+    const report = await writeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "Rendered a project-aware skill readout.",
+    }, { directory, cwd });
+    const html = await readFile(report.path, "utf8");
+
+    assert.match(html, /<meta name="quickstark:project" content="github\.com\/quickstark\/skills">/);
+    assert.match(html, /<meta name="quickstark:project-label" content="quickstark\/skills">/);
+    assert.match(html, /<meta name="quickstark:project-source" content="git-origin">/);
+    assert.doesNotMatch(html, /git@github\.com/);
+    assert.doesNotMatch(html, /quickstark-readout-test-/);
+  }
+});
+
+test("project-aware readouts refuse credential-bearing and unsafe Git origins", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const unsafeRemotes = [
+    "https://secret-token@github.com/quickstark/skills.git",
+    "https://developer:private-token@github.com/quickstark/skills.git",
+    "https://github.com/quickstark/skills.git?token=private",
+    "ssh://deployment-user:private-token@github.com/quickstark/skills.git",
+    "git@github.com:quickstark/%2e%2e/private.git",
+    "https://github.com/quickstark/../private/skills.git",
+    "https://github.com/quickstark/%2e%2e/private/skills.git",
+    "ssh://git@github.com/quickstark/../private/skills.git",
+    "ssh://git@github.com/quickstark/%2e%2e/private/skills.git",
+  ];
+
+  for (const remote of unsafeRemotes) {
+    const cwd = await temporaryGitProject(context, remote);
+
+    await assert.rejects(
+      writeSkillReadout({
+        skill: "qs-code-build",
+        outcome: "Unsafe repository origins must not be published.",
+      }, { directory, cwd }),
+      /credentials|query parameters|unsafe repository path/i,
+    );
+  }
+
+  assert.deepEqual(await readdir(directory), []);
+});
+
+test("project-aware readouts distinguish Git services running on different non-default ports", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const remotes = [
+    ["ssh://git@git.example.com:2222/team/project.git", "git.example.com~2222/team/project"],
+    ["ssh://git@git.example.com:2223/team/project.git", "git.example.com~2223/team/project"],
+    ["https://git.example.com:8443/team/project.git", "git.example.com~8443/team/project"],
+    ["https://git.example.com:9443/team/project.git", "git.example.com~9443/team/project"],
+  ];
+
+  for (const [remote, identity] of remotes) {
+    const cwd = await temporaryGitProject(context, remote);
+    const report = await writeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "Kept distinct self-hosted Git instances isolated.",
+    }, { directory, cwd });
+    const html = await readFile(report.path, "utf8");
+
+    assert.ok(
+      html.includes(`<meta name="quickstark:project" content="${identity}">`),
+      `Remote ${remote} must produce the independently known canonical identity ${identity}.`,
+    );
+  }
+});
+
+test("project-aware readouts safely identify repositories without an origin and non-Git workspaces", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const gitProject = await temporaryGitProject(context);
+  const workspace = await temporaryReadoutDirectory(context);
+
+  for (const [cwd, source] of [[gitProject, "git-root"], [workspace, "workspace"]]) {
+    const report = await writeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "Rendered a safely identified local project.",
+    }, { directory, cwd });
+    const html = await readFile(report.path, "utf8");
+
+    assert.match(html, new RegExp(`<meta name="quickstark:project" content="local/${source}/[a-zA-Z0-9._-]+-[a-f0-9]{12}">`));
+    assert.match(html, new RegExp(`<meta name="quickstark:project-source" content="${source}">`));
+    assert.doesNotMatch(html, /\/tmp\/quickstark-readout-test-/);
+  }
+});
+
+test("symlinked checkouts preserve the same canonical Git project identity", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const project = await temporaryGitProject(context, "https://github.com/quickstark/skills.git");
+  const aliasRoot = await temporaryReadoutDirectory(context);
+  const alias = join(aliasRoot, "checkout-alias");
+
+  await symlink(project, alias, "dir");
+
+  for (const cwd of [project, alias]) {
+    const report = await writeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "Resolved the same repository through alternate checkout paths.",
+    }, { directory, cwd });
+    const html = await readFile(report.path, "utf8");
+
+    assert.match(html, /<meta name="quickstark:project" content="github\.com\/quickstark\/skills">/);
+    assert.doesNotMatch(html, /checkout-alias/);
+  }
+});
+
+test("project-aware readouts publish immutable run and format metadata without changing report URLs", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const cwd = await temporaryGitProject(context, "https://github.com/quickstark/skills.git");
+  const reportId = "a1b2c3d4-1111-4222-8333-123456789abc";
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Generated an immutable project-aware report.",
+    generatedAt: "2026-07-25T15:30:00.000Z",
+    reportId,
+  }, { directory, cwd });
+
+  assert.equal(report.filename, "qs-code-build--2026-07-25T15-30-00-000Z--a1b2c3d4.html");
+
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const response = await fetch(new URL(report.filename, viewer.url));
+
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+
+  assert.match(html, /<meta name="quickstark:project" content="github\.com\/quickstark\/skills">/);
+  assert.match(html, /<meta name="quickstark:skill-display-name" content="QS Code: Build">/);
+  assert.match(html, new RegExp(`<meta name="quickstark:report-id" content="${reportId}">`));
+  assert.match(html, /<meta name="quickstark:format-version" content="1">/);
+  assert.match(html, /Implementation · quickstark\/skills/);
+  assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
+});
+
+test("project-aware readouts honor an explicitly supplied canonical project identity", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Rendered a deliberately supplied project identity.",
+    projectIdentity: {
+      host: "github.com",
+      owner: "quickstark",
+      repository: "other-project",
+      key: "github.com/quickstark/other-project",
+      label: "quickstark/other-project",
+      source: "explicit",
+    },
+  }, { directory });
+  const html = await readFile(report.path, "utf8");
+
+  assert.match(html, /<meta name="quickstark:project" content="github\.com\/quickstark\/other-project">/);
+  assert.match(html, /<meta name="quickstark:project-source" content="explicit">/);
+  assert.match(html, /Implementation · quickstark\/other-project/);
 });
 
 test("the preview gallery covers all 23 skills without inventing completed work", async (context) => {

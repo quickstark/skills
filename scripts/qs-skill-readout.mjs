@@ -1,7 +1,7 @@
 import { execFile, spawn } from "node:child_process";
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
-import { lstat, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { lstat, mkdir, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { createServer as createPortProbe } from "node:net";
 import { networkInterfaces, platform, tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
@@ -19,6 +19,7 @@ export const DEFAULT_READOUT_DIRECTORY = join(tmpdir(), "quickstark-readouts");
 export const DEFAULT_READOUT_HOST = "127.0.0.1";
 export const DEFAULT_READOUT_PORT = 4173;
 export const READOUT_VIEWER_STATE = ".quickstark-readout-viewer.json";
+export const READOUT_FORMAT_VERSION = 1;
 
 const statuses = new Set(["Completed", "Awaiting input", "Blocked", "Preview"]);
 const checkStatuses = new Set(["passed", "failed", "skipped", "info"]);
@@ -26,7 +27,181 @@ const reportFilename = /^qs-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--[a-f0-9]{8}\.
 const viewerToken = /^[a-f0-9]{48}$/;
 const loopbackHosts = new Set(["127.0.0.1", "::1", "localhost"]);
 const accessModes = new Set(["auto", "local", "lan", "ssh"]);
+const projectSources = new Set(["git-origin", "git-root", "workspace", "explicit"]);
+const projectSegment = /^[a-z0-9._-]+$/i;
+const reportIdentifier = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const execFileAsync = promisify(execFile);
+
+export function normalizeReadoutProject(remote) {
+  const value = requireText(remote, "Git origin");
+  let host;
+  let pathname;
+
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(value)) {
+    const rawPath = value.match(/^[a-z][a-z0-9+.-]*:\/\/[^/]*(\/[^?#]*)/i)?.[1] ?? "";
+
+    for (const segment of rawPath.split("/")) {
+      let decoded;
+
+      try {
+        decoded = decodeURIComponent(segment);
+      } catch {
+        throw new Error("Git origin contains an unsafe repository path.");
+      }
+
+      if (decoded === "." || decoded === ".." || decoded.includes("/") || decoded.includes("\\")) {
+        throw new Error("Git origin contains an unsafe repository path.");
+      }
+    }
+
+    let url;
+
+    try {
+      url = new URL(value);
+    } catch {
+      throw new Error("Git origin must be a valid SSH or HTTPS repository URL.");
+    }
+
+    if (!new Set(["https:", "http:", "ssh:"]).has(url.protocol)) {
+      throw new Error("Git origin must use SSH, HTTP, or HTTPS.");
+    }
+
+    if (
+      url.password
+      || (url.protocol !== "ssh:" && url.username)
+      || (url.protocol === "ssh:" && url.username && !projectSegment.test(url.username))
+      || url.search
+      || url.hash
+    ) {
+      throw new Error("Git origin must not contain credentials, query parameters, or fragments.");
+    }
+
+    host = url.hostname.toLowerCase();
+
+    const defaultPort = url.protocol === "https:"
+      ? "443"
+      : url.protocol === "http:"
+        ? "80"
+        : "22";
+
+    if (url.port && url.port !== defaultPort) host = `${host}~${url.port}`;
+
+    pathname = url.pathname;
+  } else {
+    const match = value.match(/^(?:[a-z0-9._-]+@)?([a-z0-9.-]+):([^?\s#]+)$/i);
+
+    if (!match) {
+      throw new Error("Git origin must be a valid SSH or HTTPS repository URL.");
+    }
+
+    [, host, pathname] = match;
+    host = host.toLowerCase();
+  }
+
+  const segments = pathname.replace(/\.git$/i, "").split("/").filter(Boolean);
+
+  if (!/^[a-z0-9.-]+(?:~\d{1,5})?$/i.test(host) || segments.length < 2) {
+    throw new Error("Git origin must identify a safe repository host, owner, and name.");
+  }
+
+  if (segments.some((segment) => !projectSegment.test(segment) || segment === "." || segment === "..")) {
+    throw new Error("Git origin contains an unsafe repository path.");
+  }
+
+  const owner = segments.slice(0, -1).join("/");
+  const repository = segments.at(-1);
+
+  return {
+    host,
+    owner,
+    repository,
+    key: `${host}/${owner}/${repository}`,
+    label: `${owner}/${repository}`,
+    source: "git-origin",
+  };
+}
+
+function normalizeProjectIdentity(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("Project identity must be a JSON object.");
+  }
+
+  const host = requireText(value.host, "Project host").toLowerCase();
+  const owner = requireText(value.owner, "Project owner");
+  const repository = requireText(value.repository, "Project repository");
+  const source = requireText(value.source, "Project identity source");
+
+  if (
+    !/^[a-z0-9.-]+(?:~\d{1,5})?$/i.test(host)
+    || owner.split("/").some((segment) => !projectSegment.test(segment) || segment === "." || segment === "..")
+    || !projectSegment.test(repository)
+    || repository === "."
+    || repository === ".."
+    || !projectSources.has(source)
+  ) {
+    throw new Error("Project identity contains an unsafe host, owner, repository, or source.");
+  }
+
+  const key = `${host}/${owner}/${repository}`;
+
+  if (value.key !== undefined && value.key !== key) {
+    throw new Error("Project identity key must match its canonical host, owner, and repository.");
+  }
+
+  return {
+    host,
+    owner,
+    repository,
+    key,
+    label: value.label === undefined
+      ? `${owner}/${repository}`
+      : requireText(value.label, "Project label"),
+    source,
+  };
+}
+
+function localProjectIdentity(root, source) {
+  const fingerprint = createHash("sha256").update(root).digest("hex").slice(0, 12);
+  const label = basename(root) || "workspace";
+  const slug = label.replace(/[^a-z0-9._-]/gi, "-").replace(/^-+|-+$/g, "") || "workspace";
+
+  return normalizeProjectIdentity({
+    host: "local",
+    owner: source,
+    repository: `${slug}-${fingerprint}`,
+    label: `${label} [${fingerprint}]`,
+    source,
+  });
+}
+
+export async function discoverReadoutProject(options = {}) {
+  const cwd = resolve(options.cwd ?? process.cwd());
+  let remote;
+
+  try {
+    remote = (await execFileAsync("git", ["-C", cwd, "config", "--get", "remote.origin.url"], {
+      timeout: 5_000,
+      windowsHide: true,
+    })).stdout.trim();
+  } catch (error) {
+    if (error.code !== 1 && error.code !== 128 && error.code !== "ENOENT") throw error;
+  }
+
+  if (remote) return normalizeReadoutProject(remote);
+
+  try {
+    const root = (await execFileAsync("git", ["-C", cwd, "rev-parse", "--show-toplevel"], {
+      timeout: 5_000,
+      windowsHide: true,
+    })).stdout.trim();
+
+    return localProjectIdentity(await realpath(root), "git-root");
+  } catch (error) {
+    if (error.code !== 128 && error.code !== "ENOENT") throw error;
+  }
+
+  return localProjectIdentity(await realpath(cwd), "workspace");
+}
 
 function isPrivateIpv4(address) {
   const parts = address.split(".").map(Number);
@@ -246,11 +421,27 @@ export function normalizeSkillReadout(input) {
 
   if (Number.isNaN(generatedAt.getTime())) throw new Error("generatedAt must be a valid date.");
 
+  const projectIdentity = input.projectIdentity === undefined
+    ? null
+    : normalizeProjectIdentity(input.projectIdentity);
+  const reportId = input.reportId === undefined
+    ? randomUUID()
+    : requireText(input.reportId, "Report identifier");
+
+  if (!reportIdentifier.test(reportId)) {
+    throw new Error("Report identifier must be a valid UUID.");
+  }
+
   return {
     skill,
     status,
     outcome: requireText(input.outcome, "outcome"),
-    project: input.project === undefined ? "" : requireText(input.project, "project"),
+    project: input.project === undefined
+      ? projectIdentity?.label ?? ""
+      : requireText(input.project, "project"),
+    projectIdentity,
+    reportId,
+    formatVersion: READOUT_FORMAT_VERSION,
     skillsUsed: used,
     findings: normalizeItems(input.findings, "findings"),
     decisions: normalizeItems(input.decisions, "decisions"),
@@ -330,8 +521,16 @@ function renderNormalizedSkillReadout(report) {
   const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
   const metadata = [
     `<meta name="quickstark:skill" content="${escapeHtml(report.skill.name)}">`,
+    `<meta name="quickstark:skill-display-name" content="${escapeHtml(report.skill.displayName)}">`,
     `<meta name="quickstark:status" content="${escapeHtml(report.status)}">`,
     `<meta name="quickstark:generated-at" content="${escapeHtml(report.generatedAt.toISOString())}">`,
+    `<meta name="quickstark:report-id" content="${escapeHtml(report.reportId)}">`,
+    `<meta name="quickstark:format-version" content="${report.formatVersion}">`,
+    ...(report.projectIdentity ? [
+      `<meta name="quickstark:project" content="${escapeHtml(report.projectIdentity.key)}">`,
+      `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
+      `<meta name="quickstark:project-source" content="${escapeHtml(report.projectIdentity.source)}">`,
+    ] : []),
   ].join("\n  ");
 
   const used = report.skillsUsed.length
@@ -393,10 +592,17 @@ function normalizeBaseUrl(value) {
 }
 
 export async function writeSkillReadout(input, options = {}) {
-  const report = normalizeSkillReadout(input);
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    throw new Error("A skill readout requires a JSON object.");
+  }
+
+  const projectIdentity = input.projectIdentity === undefined
+    ? await discoverReadoutProject({ cwd: options.cwd })
+    : input.projectIdentity;
+  const report = normalizeSkillReadout({ ...input, projectIdentity });
   const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
   const timestamp = report.generatedAt.toISOString().replaceAll(":", "-").replaceAll(".", "-");
-  const filename = `${report.skill.name}--${timestamp}--${randomUUID().slice(0, 8)}.html`;
+  const filename = `${report.skill.name}--${timestamp}--${report.reportId.slice(0, 8)}.html`;
   const path = join(directory, filename);
   const base = normalizeBaseUrl(options.baseUrl ?? process.env.QS_READOUT_BASE_URL);
 
