@@ -1,15 +1,23 @@
 import assert from "node:assert/strict";
+import { execFile } from "node:child_process";
 import { mkdtemp, readdir, readFile, rm, stat } from "node:fs/promises";
+import { createServer as createPortBlocker } from "node:net";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 
 import { formatSkillForCodex } from "../scripts/codex-skill-format.mjs";
 import {
   DEFAULT_READOUT_HOST,
+  READOUT_VIEWER_STATE,
+  discoverHomeNetworkAddress,
+  ensureReadoutViewer,
   normalizeSkillReadout,
+  readoutDirectoryIdentity,
   renderSkillReadout,
+  resolveReadoutViewerHost,
   startReadoutServer,
   writeSkillGallery,
   writeSkillReadout,
@@ -30,6 +38,7 @@ import {
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const personalRepository = "https://github.com/quickstark/skills";
+const execFileAsync = promisify(execFile);
 
 async function exists(path) {
   try {
@@ -239,14 +248,17 @@ test("readouts are written as unique, private, remotely linkable HTML files", as
 
   const first = await writeSkillReadout(input, {
     directory,
-    baseUrl: "http://100.66.93.87:4173/",
+    baseUrl: "http://192.168.1.200:4173/r/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/",
   });
   const second = await writeSkillReadout(input, { directory });
 
   assert.equal(first.directory, directory);
   assert.match(first.filename, /^qs-plan-clarify--.*--[a-f0-9]{8}\.html$/);
   assert.notEqual(first.filename, second.filename);
-  assert.equal(first.url, `http://100.66.93.87:4173/${first.filename}`);
+  assert.equal(
+    first.url,
+    `http://192.168.1.200:4173/r/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/${first.filename}`,
+  );
   assert.equal(second.url, null);
   assert.match(await readFile(first.path, "utf8"), /Clarified the boundaries/);
   assert.equal((await stat(first.path)).mode & 0o777, 0o600);
@@ -270,6 +282,69 @@ test("the preview gallery covers all 23 skills without inventing completed work"
     assert.match(html, /No skill has been run/);
     assert.doesNotMatch(html, /class="skills-used"/);
   }
+});
+
+test("home-network discovery chooses physical private interfaces over Docker and Tailscale", () => {
+  const interfaces = {
+    docker0: [{ address: "172.17.0.1", family: "IPv4", internal: false }],
+    tailscale0: [{ address: "100.66.93.87", family: "IPv4", internal: false }],
+    wlp3s0: [{ address: "192.168.1.28", family: "IPv4", internal: false }],
+    enp1s0: [{ address: "192.168.1.200", family: "IPv4", internal: false }],
+  };
+
+  assert.equal(discoverHomeNetworkAddress(interfaces), "192.168.1.200");
+});
+
+test("automatic Mac readouts stay on localhost", () => {
+  const host = resolveReadoutViewerHost({
+    runtimePlatform: "darwin",
+    environment: {},
+    interfaces: {
+      en0: [{ address: "192.168.1.42", family: "IPv4", internal: false }],
+    },
+  });
+
+  assert.equal(host, DEFAULT_READOUT_HOST);
+});
+
+test("SSH-connected Linux readouts automatically select the private home-network IP", () => {
+  const host = resolveReadoutViewerHost({
+    runtimePlatform: "linux",
+    environment: { SSH_CONNECTION: "private-ssh-session" },
+    interfaces: {
+      enp1s0: [{ address: "192.168.1.200", family: "IPv4", internal: false }],
+      tailscale0: [{ address: "100.66.93.87", family: "IPv4", internal: false }],
+    },
+  });
+
+  assert.equal(host, "192.168.1.200");
+});
+
+test("SSH-only and local-only access explicitly remain on loopback", () => {
+  const options = {
+    runtimePlatform: "linux",
+    environment: { SSH_CONNECTION: "private-ssh-session" },
+    interfaces: {
+      enp1s0: [{ address: "192.168.1.200", family: "IPv4", internal: false }],
+    },
+  };
+
+  assert.equal(resolveReadoutViewerHost({ ...options, access: "ssh" }), DEFAULT_READOUT_HOST);
+  assert.equal(resolveReadoutViewerHost({ ...options, access: "local" }), DEFAULT_READOUT_HOST);
+  assert.equal(resolveReadoutViewerHost({ ...options, access: "lan" }), "192.168.1.200");
+});
+
+test("readout discovery refuses an unavailable private LAN instead of inventing a URL", () => {
+  assert.throws(
+    () => resolveReadoutViewerHost({
+      access: "lan",
+      interfaces: {
+        tailscale0: [{ address: "100.66.93.87", family: "IPv4", internal: false }],
+        docker0: [{ address: "172.17.0.1", family: "IPv4", internal: false }],
+      },
+    }),
+    /No trusted private home-network address/,
+  );
 });
 
 test("the readout viewer defaults to private loopback and serves the skill gallery", async (context) => {
@@ -318,6 +393,272 @@ test("the viewer rejects repository files, encoded traversal, and unexpected HTT
   const unexpectedMethod = await fetch(viewer.url, { method: "POST" });
   assert.equal(unexpectedMethod.status, 405);
   assert.equal(unexpectedMethod.headers.get("allow"), "GET, HEAD");
+});
+
+test("network-accessible viewers require an unguessable capability URL", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const accessToken = "a".repeat(48);
+  const report = await writeSkillReadout({
+    skill: "qs-help",
+    outcome: "Selected the right engineering workflow.",
+  }, { directory });
+  const viewer = await startReadoutServer({
+    directory,
+    host: DEFAULT_READOUT_HOST,
+    port: 0,
+    accessToken,
+  });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  assert.match(viewer.url, new RegExp(`/r/${accessToken}/$`));
+
+  const unprotectedRoot = await fetch(`http://127.0.0.1:${viewer.port}/`);
+  assert.equal(unprotectedRoot.status, 404);
+
+  const guessedRoot = await fetch(
+    `http://127.0.0.1:${viewer.port}/r/${"b".repeat(48)}/`,
+  );
+  assert.equal(guessedRoot.status, 404);
+
+  const dashboard = await fetch(viewer.url);
+  assert.equal(dashboard.status, 200);
+  assert.match(await dashboard.text(), /QS Help/);
+
+  const reportPage = await fetch(new URL(report.filename, viewer.url));
+  assert.equal(reportPage.status, 200);
+  assert.match(await reportPage.text(), /Selected the right engineering workflow/);
+});
+
+test("automatic viewer startup verifies and reuses an existing QuickStark service", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const reused = await ensureReadoutViewer({
+    directory,
+    baseUrl: viewer.url,
+  });
+
+  assert.equal(reused.url, viewer.url);
+  assert.equal(reused.reused, true);
+
+  const health = await fetch(new URL("__quickstark_health", reused.url));
+  assert.equal(health.status, 200);
+  assert.deepEqual(await health.json(), {
+    service: "quickstark-skill-readouts",
+    version: 1,
+    directory: readoutDirectoryIdentity(directory),
+  });
+});
+
+test("automatic readouts refuse a healthy viewer serving another report directory", async (context) => {
+  const viewerDirectory = await temporaryReadoutDirectory(context);
+  const requestedDirectory = await temporaryReadoutDirectory(context);
+  const viewer = await startReadoutServer({ directory: viewerDirectory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  await assert.rejects(
+    ensureReadoutViewer({
+      directory: requestedDirectory,
+      baseUrl: viewer.url,
+    }),
+    /serves a different report directory/,
+  );
+});
+
+test("a readout starts its local background viewer once and reuses it", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const portProbe = await startReadoutServer({ directory, port: 0 });
+  const port = portProbe.port;
+
+  await new Promise((done, fail) => {
+    portProbe.server.close((error) => error ? fail(error) : done());
+  });
+
+  const first = await ensureReadoutViewer({
+    directory,
+    host: DEFAULT_READOUT_HOST,
+    port,
+  });
+
+  context.after(() => {
+    try {
+      process.kill(first.pid, "SIGTERM");
+    } catch (error) {
+      if (error.code !== "ESRCH") throw error;
+    }
+  });
+
+  assert.equal(first.reused, false);
+  assert.ok(Number.isInteger(first.pid));
+
+  const second = await ensureReadoutViewer({
+    directory,
+    host: DEFAULT_READOUT_HOST,
+    port,
+  });
+
+  assert.equal(second.reused, true);
+  assert.equal(second.pid, first.pid);
+  assert.equal(second.url, first.url);
+
+  const statePath = join(directory, READOUT_VIEWER_STATE);
+  const state = JSON.parse(await readFile(statePath, "utf8"));
+
+  assert.equal(state.url, first.url);
+  assert.equal(state.pid, first.pid);
+  assert.equal((await stat(statePath)).mode & 0o777, 0o600);
+});
+
+test("automatic readouts select another port when a development server already occupies the default", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const blocker = createPortBlocker();
+
+  await new Promise((done, fail) => {
+    blocker.once("error", fail);
+    blocker.listen(0, DEFAULT_READOUT_HOST, done);
+  });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      blocker.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const blockedPort = blocker.address().port;
+  const viewer = await ensureReadoutViewer({
+    directory,
+    host: DEFAULT_READOUT_HOST,
+    defaultPort: blockedPort,
+  });
+
+  context.after(() => {
+    try {
+      process.kill(viewer.pid, "SIGTERM");
+    } catch (error) {
+      if (error.code !== "ESRCH") throw error;
+    }
+  });
+
+  assert.notEqual(viewer.port, blockedPort);
+  assert.ok(viewer.port > blockedPort);
+
+  const health = await fetch(new URL("__quickstark_health", viewer.url));
+  assert.equal(health.status, 200);
+
+  const reused = await ensureReadoutViewer({
+    directory,
+    host: DEFAULT_READOUT_HOST,
+    defaultPort: blockedPort,
+  });
+
+  assert.equal(reused.reused, true);
+  assert.equal(reused.port, viewer.port);
+});
+
+test("explicitly requested readout ports fail clearly when already occupied", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const blocker = createPortBlocker();
+
+  await new Promise((done, fail) => {
+    blocker.once("error", fail);
+    blocker.listen(0, DEFAULT_READOUT_HOST, done);
+  });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      blocker.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  await assert.rejects(
+    ensureReadoutViewer({
+      directory,
+      host: DEFAULT_READOUT_HOST,
+      port: blocker.address().port,
+    }),
+    /explicitly requested readout port .* is already in use/,
+  );
+});
+
+test("the skill-facing renderer automatically returns a verified, reusable report URL", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const portProbe = await startReadoutServer({ directory, port: 0 });
+  const port = portProbe.port;
+
+  await new Promise((done, fail) => {
+    portProbe.server.close((error) => error ? fail(error) : done());
+  });
+
+  const command = [
+    join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+    "render",
+    "--data", JSON.stringify({
+      skill: "qs-help",
+      outcome: "Verified automatic report delivery for the actual skill-facing command.",
+    }),
+    "--directory", directory,
+    "--access", "local",
+    "--port", String(port),
+    "--json",
+  ];
+
+  const first = JSON.parse((await execFileAsync(process.execPath, command, {
+    timeout: 10_000,
+    windowsHide: true,
+  })).stdout);
+
+  const state = JSON.parse(await readFile(join(directory, READOUT_VIEWER_STATE), "utf8"));
+
+  context.after(() => {
+    try {
+      process.kill(state.pid, "SIGTERM");
+    } catch (error) {
+      if (error.code !== "ESRCH") throw error;
+    }
+  });
+
+  assert.equal(first.viewerReused, false);
+  assert.match(first.url, new RegExp(`^http://127\\.0\\.0\\.1:${port}/`));
+
+  const page = await fetch(first.url);
+  assert.equal(page.status, 200);
+  assert.match(await page.text(), /Verified automatic report delivery/);
+
+  const second = JSON.parse((await execFileAsync(process.execPath, command, {
+    timeout: 10_000,
+    windowsHide: true,
+  })).stdout);
+
+  assert.equal(second.viewerReused, true);
+  assert.equal(new URL(second.url).origin, new URL(first.url).origin);
+});
+
+test("the viewer never binds to every network interface", async () => {
+  await assert.rejects(
+    startReadoutServer({ host: "0.0.0.0" }),
+    /specific trusted home-network address/,
+  );
+
+  await assert.rejects(
+    startReadoutServer({ host: "::" }),
+    /specific trusted home-network address/,
+  );
 });
 
 for (const skill of SKILLS) {
@@ -536,7 +877,7 @@ test("project, plugin, and lockfile versions stay synchronized", async () => {
     ).then(JSON.parse),
   ]);
 
-  assert.equal(project.version, "2.2.0");
+  assert.equal(project.version, "2.3.0");
   assert.equal(lockfile.name, project.name);
   assert.equal(lockfile.version, project.version);
   assert.equal(lockfile.packages[""].name, project.name);
@@ -674,8 +1015,10 @@ test("the standard report distinguishes actual skills from suggested next steps"
 
     assert.match(contract, /architecture-quality, self-contained HTML readout/);
     assert.match(contract, /scripts\/qs-skill-readout\.mjs/);
-    assert.match(contract, /QS_READOUT_BASE_URL/);
-    assert.match(contract, /do not start a public server/i);
+    assert.match(contract, /automatically starts or reuses a verified readout viewer/i);
+    assert.match(contract, /QS_READOUT_ACCESS=ssh/);
+    assert.match(contract, /Tailscale is not required/);
+    assert.match(contract, /do not bind to every network interface/i);
     assert.match(contract, /only skills that actually ran/);
     assert.match(contract, /only the tests, validations, or observations actually performed/i);
     assert.match(contract, /Awaiting input/);

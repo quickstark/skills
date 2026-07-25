@@ -1,9 +1,12 @@
-import { randomUUID } from "node:crypto";
+import { execFile, spawn } from "node:child_process";
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
 import { lstat, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { createServer as createPortProbe } from "node:net";
+import { networkInterfaces, platform, tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { promisify } from "node:util";
 
 import {
   COLLECTION_NAME,
@@ -15,10 +18,85 @@ import {
 export const DEFAULT_READOUT_DIRECTORY = join(tmpdir(), "quickstark-readouts");
 export const DEFAULT_READOUT_HOST = "127.0.0.1";
 export const DEFAULT_READOUT_PORT = 4173;
+export const READOUT_VIEWER_STATE = ".quickstark-readout-viewer.json";
 
 const statuses = new Set(["Completed", "Awaiting input", "Blocked", "Preview"]);
 const checkStatuses = new Set(["passed", "failed", "skipped", "info"]);
 const reportFilename = /^qs-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--[a-f0-9]{8}\.html$/;
+const viewerToken = /^[a-f0-9]{48}$/;
+const loopbackHosts = new Set(["127.0.0.1", "::1", "localhost"]);
+const accessModes = new Set(["auto", "local", "lan", "ssh"]);
+const execFileAsync = promisify(execFile);
+
+function isPrivateIpv4(address) {
+  const parts = address.split(".").map(Number);
+
+  if (parts.length !== 4 || parts.some((part) => !Number.isInteger(part) || part < 0 || part > 255)) {
+    return false;
+  }
+
+  return parts[0] === 10
+    || (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31)
+    || (parts[0] === 192 && parts[1] === 168);
+}
+
+export function discoverHomeNetworkAddress(interfaces = networkInterfaces()) {
+  const candidates = [];
+
+  for (const [name, addresses] of Object.entries(interfaces)) {
+    if (/^(?:lo|docker|br-|veth|virbr|tailscale|tun|tap|zt|cali)/i.test(name)) {
+      continue;
+    }
+
+    for (const address of addresses ?? []) {
+      if (
+        (address.family !== "IPv4" && address.family !== 4)
+        || address.internal
+        || !isPrivateIpv4(address.address)
+      ) {
+        continue;
+      }
+
+      candidates.push({
+        address: address.address,
+        priority: /^(?:en|eth)/i.test(name) ? 0 : 1,
+        name,
+      });
+    }
+  }
+
+  candidates.sort((left, right) => left.priority - right.priority || left.name.localeCompare(right.name));
+  return candidates[0]?.address ?? null;
+}
+
+export function resolveReadoutViewerHost(options = {}) {
+  if (options.host !== undefined) return requireText(options.host, "Readout host");
+
+  const access = options.access ?? process.env.QS_READOUT_ACCESS ?? "auto";
+
+  if (!accessModes.has(access)) {
+    throw new Error("Readout access must be auto, local, lan, or ssh.");
+  }
+
+  if (access === "local" || access === "ssh") return DEFAULT_READOUT_HOST;
+
+  const interfaces = options.interfaces ?? networkInterfaces();
+  const homeAddress = discoverHomeNetworkAddress(interfaces);
+
+  if (access === "lan") {
+    if (!homeAddress) throw new Error("No trusted private home-network address is available.");
+    return homeAddress;
+  }
+
+  const runtimePlatform = options.runtimePlatform ?? platform();
+  const environment = options.environment ?? process.env;
+  const remoteLinux = runtimePlatform === "linux" && (
+    Boolean(environment.SSH_CONNECTION || environment.SSH_CLIENT || environment.SSH_TTY)
+    || !Boolean(environment.DISPLAY || environment.WAYLAND_DISPLAY)
+  );
+
+  return remoteLinux && homeAddress ? homeAddress : DEFAULT_READOUT_HOST;
+}
 
 const themes = Object.freeze({
   help: { accent: "#2563eb", soft: "#dbeafe", label: "Guidance" },
@@ -384,7 +462,7 @@ async function renderReadoutIndex(directory) {
     .map((report) => {
       const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
 
-      return `<a class="dashboard-card" href="/${encodeURIComponent(report.filename)}"><p class="eyebrow">${escapeHtml(themes[report.skill.name.split("-")[1]]?.label ?? "QuickStark")}</p><h2>${escapeHtml(report.skill.displayName)}</h2><p>/${escapeHtml(report.skill.name)}</p><span class="status status-${escapeHtml(statusClass)}">${escapeHtml(report.status)}</span></a>`;
+      return `<a class="dashboard-card" href="${encodeURIComponent(report.filename)}"><p class="eyebrow">${escapeHtml(themes[report.skill.name.split("-")[1]]?.label ?? "QuickStark")}</p><h2>${escapeHtml(report.skill.displayName)}</h2><p>/${escapeHtml(report.skill.name)}</p><span class="status status-${escapeHtml(statusClass)}">${escapeHtml(report.status)}</span></a>`;
     }).join("");
 
   const body = `<main><div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">Private report viewer</span></div><header class="hero"><p class="eyebrow">Skill readouts</p><h1>QuickStark readouts</h1><p class="outcome">Browse polished reports and honest skill previews generated on this machine. Only QuickStark HTML readouts in the configured temporary directory are served.</p></header>${cards ? `<div class="dashboard-list">${cards}</div>` : '<p class="empty-gallery">No readouts yet. Run a QuickStark skill, or use <code>npm run readouts:gallery</code> to generate clearly labeled previews.</p>'}<footer class="footer"><span>${files.length} QuickStark readout${files.length === 1 ? "" : "s"}</span><span>Self-contained HTML · no external scripts or styles</span></footer></main>`;
@@ -406,7 +484,37 @@ function sendHtml(response, status, content, { head = false } = {}) {
   response.end(head ? undefined : content);
 }
 
-async function handleReadoutRequest(request, response, directory) {
+export function readoutDirectoryIdentity(directory) {
+  return createHash("sha256")
+    .update(resolve(directory))
+    .digest("hex");
+}
+
+function sendViewerHealth(response, directory, { head = false } = {}) {
+  const body = JSON.stringify({
+    service: "quickstark-skill-readouts",
+    version: 1,
+    directory: readoutDirectoryIdentity(directory),
+  });
+
+  response.writeHead(200, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Length": Buffer.byteLength(body),
+    "Cache-Control": "no-store",
+    "Referrer-Policy": "no-referrer",
+    "X-Content-Type-Options": "nosniff",
+  });
+
+  response.end(head ? undefined : body);
+}
+
+function tokenMatches(actual, expected) {
+  if (!viewerToken.test(actual)) return false;
+
+  return timingSafeEqual(Buffer.from(actual, "hex"), Buffer.from(expected, "hex"));
+}
+
+async function handleReadoutRequest(request, response, directory, accessToken) {
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.writeHead(405, { Allow: "GET, HEAD" });
     response.end("Method not allowed");
@@ -420,6 +528,23 @@ async function handleReadoutRequest(request, response, directory) {
   } catch {
     response.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
     response.end("Invalid readout path");
+    return;
+  }
+
+  if (accessToken) {
+    const segments = pathname.split("/");
+
+    if (segments[1] !== "r" || !tokenMatches(segments[2] ?? "", accessToken)) {
+      response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+      response.end("Readout not found");
+      return;
+    }
+
+    pathname = `/${segments.slice(3).join("/")}`;
+  }
+
+  if (pathname === "/__quickstark_health") {
+    sendViewerHealth(response, directory, { head: request.method === "HEAD" });
     return;
   }
 
@@ -463,14 +588,26 @@ export async function startReadoutServer(options = {}) {
     throw new Error("Readout host must be a non-empty hostname or IP address.");
   }
 
+  if (host === "0.0.0.0" || host === "::") {
+    throw new Error("Bind the viewer to a specific trusted home-network address, not every interface.");
+  }
+
   if (!Number.isInteger(port) || port < 0 || port > 65_535) {
     throw new Error("Readout port must be an integer between 0 and 65535.");
+  }
+
+  const accessToken = options.accessToken
+    ?? process.env.QS_READOUT_VIEWER_TOKEN
+    ?? (loopbackHosts.has(host) ? null : randomBytes(24).toString("hex"));
+
+  if (accessToken !== null && !viewerToken.test(accessToken)) {
+    throw new Error("Readout viewer token must contain 48 lowercase hexadecimal characters.");
   }
 
   await mkdir(directory, { recursive: true, mode: 0o700 });
 
   const server = createServer((request, response) => {
-    handleReadoutRequest(request, response, directory).catch(() => {
+    handleReadoutRequest(request, response, directory, accessToken).catch(() => {
       if (!response.headersSent) {
         response.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
       }
@@ -488,16 +625,292 @@ export async function startReadoutServer(options = {}) {
   });
 
   const address = server.address();
-  const displayHost = host === "0.0.0.0" ? "127.0.0.1" : host;
-  const bracketedHost = displayHost.includes(":") ? `[${displayHost}]` : displayHost;
+  const bracketedHost = host.includes(":") ? `[${host}]` : host;
+  const accessPath = accessToken ? `/r/${accessToken}/` : "/";
 
   return {
     server,
     host,
     port: address.port,
     directory,
-    url: `http://${bracketedHost}:${address.port}/`,
+    accessToken,
+    url: `http://${bracketedHost}:${address.port}${accessPath}`,
   };
+}
+
+async function verifyReadoutViewer(baseUrl, { directory } = {}) {
+  try {
+    const base = normalizeBaseUrl(baseUrl);
+
+    if (!base) return false;
+
+    const response = await fetch(new URL("__quickstark_health", base), {
+      signal: AbortSignal.timeout(1000),
+      headers: { Accept: "application/json" },
+    });
+
+    if (!response.ok) return false;
+
+    const payload = await response.json();
+
+    return payload.service === "quickstark-skill-readouts"
+      && payload.version === 1
+      && (directory === undefined || payload.directory === readoutDirectoryIdentity(directory));
+  } catch {
+    return false;
+  }
+}
+
+async function readViewerState(directory) {
+  const path = join(directory, READOUT_VIEWER_STATE);
+
+  try {
+    const metadata = await lstat(path);
+
+    if (!metadata.isFile()) return null;
+
+    const state = JSON.parse(await readFile(path, "utf8"));
+
+    if (!state || typeof state !== "object" || typeof state.url !== "string") {
+      return null;
+    }
+
+    return state;
+  } catch (error) {
+    if (error.code === "ENOENT" || error instanceof SyntaxError) return null;
+    throw error;
+  }
+}
+
+async function readoutPortAvailable(host, port) {
+  return new Promise((done, fail) => {
+    const probe = createPortProbe();
+
+    probe.once("error", (error) => {
+      if (error.code === "EADDRINUSE" || error.code === "EACCES") {
+        done(false);
+        return;
+      }
+
+      fail(error);
+    });
+
+    probe.listen(port, host, () => {
+      probe.close((error) => error ? fail(error) : done(true));
+    });
+  });
+}
+
+async function selectReadoutPort(host, first, { explicit }) {
+  if (explicit) {
+    if (!(await readoutPortAvailable(host, first))) {
+      throw new Error(`The explicitly requested readout port ${first} is already in use.`);
+    }
+
+    return first;
+  }
+
+  for (let offset = 0; offset < 20; offset += 1) {
+    const candidate = first + offset;
+
+    if (candidate > 65_535) break;
+    if (await readoutPortAvailable(host, candidate)) return candidate;
+  }
+
+  throw new Error(`No available QuickStark readout port was found starting at ${first}.`);
+}
+
+export async function ensureReadoutViewer(options = {}) {
+  const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
+  const host = resolveReadoutViewerHost(options);
+  const explicitPort = options.port !== undefined;
+  const requestedPort = explicitPort
+    ? Number(options.port)
+    : Number(options.defaultPort ?? DEFAULT_READOUT_PORT);
+
+  if (!Number.isInteger(requestedPort) || requestedPort <= 0 || requestedPort > 65_535) {
+    throw new Error("An automatic readout viewer requires a port between 1 and 65535.");
+  }
+
+  const configuredBase = options.baseUrl ?? process.env.QS_READOUT_BASE_URL;
+
+  if (configuredBase) {
+    const base = normalizeBaseUrl(configuredBase);
+
+    if (!(await verifyReadoutViewer(base.href, { directory }))) {
+      throw new Error(
+        "The configured QuickStark readout viewer is unreachable or serves a different report directory.",
+      );
+    }
+
+    return {
+      directory,
+      host: base.hostname,
+      port: Number(base.port) || (base.protocol === "https:" ? 443 : 80),
+      url: base.href,
+      reused: true,
+    };
+  }
+
+  await mkdir(directory, { recursive: true, mode: 0o700 });
+
+  const existing = await readViewerState(directory);
+
+  if (
+    existing
+    && existing.host === host
+    && (!explicitPort || existing.port === requestedPort)
+    && await verifyReadoutViewer(existing.url, { directory })
+  ) {
+    return { ...existing, directory, reused: true };
+  }
+
+  if (
+    existing
+    && existing.host === host
+    && (!explicitPort || existing.port === requestedPort)
+    && existing.launcher === "systemd-transient"
+    && typeof existing.unit === "string"
+    && /^quickstark-readouts-[a-f0-9]{16}$/.test(existing.unit)
+    && await verifyReadoutViewer(existing.url)
+  ) {
+    try {
+      await execFileAsync("systemctl", ["--user", "stop", existing.unit], {
+        timeout: 5000,
+        windowsHide: true,
+        maxBuffer: 64 * 1024,
+      });
+    } catch (error) {
+      throw new Error(
+        `The outdated QuickStark readout viewer could not be refreshed safely: ${error.message}`,
+        { cause: error },
+      );
+    }
+  }
+
+  const port = await selectReadoutPort(host, requestedPort, {
+    explicit: explicitPort,
+  });
+
+  const accessToken = loopbackHosts.has(host) ? null : randomBytes(24).toString("hex");
+  const bracketedHost = host.includes(":") ? `[${host}]` : host;
+  const accessPath = accessToken ? `/r/${accessToken}/` : "/";
+  const url = `http://${bracketedHost}:${port}${accessPath}`;
+  const arguments_ = [
+    fileURLToPath(import.meta.url),
+    "serve",
+    "--host", host,
+    "--port", String(port),
+    "--directory", directory,
+  ];
+  const environment = { ...process.env };
+
+  if (accessToken) {
+    environment.QS_READOUT_VIEWER_TOKEN = accessToken;
+  } else {
+    delete environment.QS_READOUT_VIEWER_TOKEN;
+  }
+
+  const selectedAccess = options.access ?? process.env.QS_READOUT_ACCESS ?? "auto";
+  const useManagedService = options.useManagedService
+    ?? (platform() === "linux" && (!loopbackHosts.has(host) || selectedAccess === "ssh"));
+  let child;
+  let unit;
+
+  if (useManagedService) {
+    const fingerprint = createHash("sha256")
+      .update(`${directory}\u0000${host}\u0000${port}`)
+      .digest("hex")
+      .slice(0, 16);
+
+    unit = `quickstark-readouts-${fingerprint}`;
+
+    const serviceArguments = [
+      "--user",
+      "--quiet",
+      "--collect",
+      `--unit=${unit}`,
+      "--description=QuickStark on-demand skill readouts",
+    ];
+
+    if (accessToken) {
+      serviceArguments.push(`--setenv=QS_READOUT_VIEWER_TOKEN=${accessToken}`);
+    }
+
+    serviceArguments.push(process.execPath, ...arguments_);
+
+    try {
+      await execFileAsync("systemd-run", serviceArguments, {
+        timeout: 5000,
+        windowsHide: true,
+        maxBuffer: 64 * 1024,
+      });
+    } catch (error) {
+      throw new Error(
+        `The home-network readout viewer could not start as a transient user service: ${error.message}`,
+        { cause: error },
+      );
+    }
+  } else {
+    child = spawn(process.execPath, arguments_, {
+      detached: platform() !== "win32",
+      stdio: "ignore",
+      windowsHide: true,
+      env: environment,
+    });
+
+    await new Promise((done, fail) => {
+      child.once("error", fail);
+      child.once("spawn", done);
+    });
+
+    child.unref();
+  }
+
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    if (await verifyReadoutViewer(url, { directory })) {
+      const state = {
+        service: "quickstark-skill-readouts",
+        host,
+        port,
+        url,
+        pid: child?.pid ?? null,
+        unit: unit ?? null,
+        launcher: unit ? "systemd-transient" : "detached",
+      };
+
+      await writeFile(join(directory, READOUT_VIEWER_STATE), `${JSON.stringify(state, null, 2)}\n`, {
+        encoding: "utf8",
+        mode: 0o600,
+      });
+
+      return { ...state, directory, reused: false };
+    }
+
+    await new Promise((done) => setTimeout(done, 75));
+  }
+
+  throw new Error(`The automatic QuickStark readout viewer did not become ready at ${url}.`);
+}
+
+async function verifyReportedReadout(result) {
+  if (!result.url) return;
+
+  try {
+    const response = await fetch(result.url, {
+      method: "HEAD",
+      signal: AbortSignal.timeout(1000),
+    });
+
+    if (!response.ok || !response.headers.get("content-type")?.startsWith("text/html")) {
+      throw new Error(`the viewer returned HTTP ${response.status}`);
+    }
+  } catch (error) {
+    throw new Error(
+      `The generated QuickStark readout could not be verified at its actual URL: ${error.message}`,
+      { cause: error },
+    );
+  }
 }
 
 function parseOptions(arguments_) {
@@ -506,12 +919,15 @@ function parseOptions(arguments_) {
   for (let index = 0; index < arguments_.length; index += 1) {
     const argument = arguments_[index];
 
-    if (argument === "--json") {
-      parsed.json = true;
+    if (argument === "--json" || argument === "--no-serve") {
+      const key = argument === "--json" ? "json" : "noServe";
+
+      if (parsed[key]) throw new Error(`${argument} was specified more than once.`);
+      parsed[key] = true;
       continue;
     }
 
-    if (!["--input", "--data", "--directory", "--base-url", "--host", "--port"].includes(argument)) {
+    if (!["--input", "--data", "--directory", "--base-url", "--host", "--port", "--access"].includes(argument)) {
       throw new Error(`Unknown readout option: ${argument}`);
     }
 
@@ -542,16 +958,24 @@ Usage:
 
 Options:
   --directory PATH  Store or serve reports from a specific directory.
-  --base-url URL    Include an existing HTTP(S) report-viewer URL.
+  --access MODE     Select auto, local, lan, or ssh access.
+  --base-url URL    Reuse and verify an existing HTTP(S) report viewer.
+  --no-serve        Generate the HTML file without starting a viewer.
   --json            Print machine-readable render or gallery results.
 
 Environment:
   QS_READOUT_DIR       Report directory; defaults to the OS temporary directory.
-  QS_READOUT_BASE_URL  Existing private viewer URL for generated report links.
+  QS_READOUT_ACCESS    auto, local, lan, or ssh; defaults to auto.
+  QS_READOUT_BASE_URL  Existing verified viewer URL for generated report links.
+
+Automatic behavior:
+  On a Mac or graphical desktop, reports use a private localhost viewer.
+  On a headless or SSH-connected Linux host, reports use its private home-network
+  IP and an unguessable report URL. No Tailscale or always-on service is needed.
 
 Privacy:
-  The viewer binds to 127.0.0.1 by default. Use an SSH tunnel for remote access,
-  or explicitly bind to your private Tailscale IP when sharing across your tailnet.`);
+  Use --access ssh to keep a remote viewer on localhost for SSH port forwarding.
+  Home-network viewers bind to one private IP, never every network interface.`);
 }
 
 export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
@@ -570,29 +994,43 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
     }
 
     const raw = options.input ? await readFile(resolve(options.input), "utf8") : options.data;
-    const result = await writeSkillReadout(JSON.parse(raw), options);
+    const viewer = options.noServe ? null : await ensureReadoutViewer(options);
+    const result = await writeSkillReadout(JSON.parse(raw), {
+      ...options,
+      baseUrl: viewer?.url ?? options.baseUrl,
+    });
+
+    if (viewer) await verifyReportedReadout(result);
 
     if (options.json) {
-      console.log(JSON.stringify(result));
+      console.log(JSON.stringify({
+        ...result,
+        viewerReused: viewer?.reused ?? null,
+      }));
     } else {
       console.log(`QuickStark readout: ${result.path}`);
-      if (result.url) console.log(`Remote readout: ${result.url}`);
+      if (result.url) console.log(`Verified readout: ${result.url}`);
+      if (viewer) console.log(`Readout gallery: ${viewer.url}`);
     }
 
     return;
   }
 
   if (command === "gallery") {
-    const results = await writeSkillGallery(options);
+    const viewer = options.noServe ? null : await ensureReadoutViewer(options);
+    const results = await writeSkillGallery({
+      ...options,
+      baseUrl: viewer?.url ?? options.baseUrl,
+    });
+
+    if (viewer) await Promise.all(results.map(verifyReportedReadout));
 
     if (options.json) {
       console.log(JSON.stringify(results));
     } else {
       console.log(`Generated ${results.length} clearly labeled QuickStark skill previews.`);
       console.log(`Readout directory: ${results[0].directory}`);
-      if (options.baseUrl ?? process.env.QS_READOUT_BASE_URL) {
-        console.log(`Viewer: ${normalizeBaseUrl(options.baseUrl ?? process.env.QS_READOUT_BASE_URL).href}`);
-      }
+      if (viewer) console.log(`Verified readout gallery: ${viewer.url}`);
     }
 
     return;
@@ -602,15 +1040,15 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
     const port = options.port === undefined ? DEFAULT_READOUT_PORT : Number(options.port);
     const viewer = await startReadoutServer({
       directory: options.directory,
-      host: options.host ?? DEFAULT_READOUT_HOST,
+      host: options.host ?? (options.access ? resolveReadoutViewerHost(options) : DEFAULT_READOUT_HOST),
       port,
     });
 
     console.log(`QuickStark readout viewer: ${viewer.url}`);
     console.log(`Readout directory: ${viewer.directory}`);
 
-    if (!["127.0.0.1", "::1", "localhost"].includes(viewer.host)) {
-      console.log("Network access is enabled. Share this address only on a trusted private network.");
+    if (!loopbackHosts.has(viewer.host)) {
+      console.log("Home-network access is protected by an unguessable, report-only URL.");
     }
 
     return;

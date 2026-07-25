@@ -43,7 +43,7 @@ Keep each promoted documentation page synchronized with its skill. Retain absolu
 
 Every skill ends with `## Completion report and next steps`. Each run generates a self-contained HTML readout through `scripts/qs-skill-readout.mjs`. Its in-chat output reports **Status**, **Skills used**, **Outcome**, **Readout**, and **Next best**; **Outputs** and **Checks** are included only when applicable. List only skills actually used and recommend only contextually appropriate catalog entries. `scripts/sync-skill-output-contracts.mjs` generates and verifies this contract in both skill instructions and documentation.
 
-Readouts live in the OS temporary `quickstark-readouts` directory. `npm run readouts:serve` binds to `127.0.0.1` by default and serves only generated QuickStark HTML. Use an SSH tunnel for remote access, or explicitly bind to a trusted private Tailscale address. Never start a publicly reachable viewer automatically or present an unverified report URL as accessible.
+Readouts live in the OS temporary `quickstark-readouts` directory. Rendering automatically starts or reuses a health-checked viewer: localhost on a Mac or graphical desktop, and one capability-protected private home-network address on a headless or SSH-connected Linux dev box. Linux remote viewers run as temporary user-managed services so they survive isolated Codex commands without permanent setup. `QS_READOUT_ACCESS=ssh` forces localhost for SSH forwarding. Never bind to every network interface, expose the repository, require Tailscale, or present an unverified report URL as accessible.
 
 ## Upstream
 

@@ -92,7 +92,7 @@ Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation onl
 
 ## Visual skill readouts
 
-Every promoted skill produces the same architecture-quality, self-contained HTML readout. The report uses a clear skill-specific heading, an honest status, a concise outcome, actual findings, decisions, outputs, checks, and contextually appropriate next skills. It is responsive, has no external JavaScript or stylesheet dependency, and stays in the operating system's temporary `quickstark-readouts` directory rather than cluttering a project.
+Every promoted skill automatically produces the same architecture-quality, self-contained HTML readout and starts or reuses its lightweight report viewer. The report uses a clear skill-specific heading, an honest status, a concise outcome, actual findings, decisions, outputs, checks, and contextually appropriate next skills. It is responsive, has no external JavaScript or stylesheet dependency, and stays in the operating system's temporary `quickstark-readouts` directory rather than cluttering a project.
 
 Generate a clearly labeled preview for all 23 skills:
 
@@ -100,33 +100,39 @@ Generate a clearly labeled preview for all 23 skills:
 npm run readouts:gallery
 ```
 
-Previews explicitly say that no skill has run and claim no project changes or checks.
+Previews explicitly say that no skill has run and claim no project changes or checks. The gallery command starts its viewer automatically, verifies that it responds, and prints the clickable gallery URL.
 
-Start the lightweight, dependency-free viewer:
+When a skill runs on a Mac or graphical desktop, its viewer uses local loopback:
 
-```bash
-npm run readouts:serve
+```text
+http://127.0.0.1:4173/
 ```
 
-Open `http://127.0.0.1:4173/` on the same machine. The viewer binds only to the local loopback interface by default and serves only generated QuickStark HTML files.
+When a skill runs on a headless or SSH-connected Linux dev box, it automatically detects the private home-network address and starts a capability-protected viewer:
+
+```text
+http://192.168.1.200:4173/r/<unguessable-access-token>/
+```
+
+Open the exact link returned by the skill on a laptop connected to the same home network. No Tailscale account, manual server startup, public listener, or always-on service is required. If port `4173` is already used by a web preview or another development tool, the viewer automatically chooses the next available port. On Linux, a temporary user-managed service keeps the viewer available after the Codex command finishes without installing a permanent startup service. The server binds to one private IP, serves only generated QuickStark HTML, and returns `404` without the access token.
 
 ### Viewing reports from a remote Codex machine
 
-For private remote access, leave the viewer bound to loopback. On your Mac, create an SSH tunnel to the remote machine:
+Home-network links work directly when the laptop can reach the dev box. For a stricter SSH-only setup, generate the gallery in SSH mode:
+
+```bash
+npm run readouts:gallery -- --access ssh
+```
+
+On your Mac, create an SSH tunnel to the remote machine:
 
 ```bash
 ssh -N -L 4173:127.0.0.1:4173 your-user@your-codex-host
 ```
 
-Then open `http://127.0.0.1:4173/` on your Mac. No report port is exposed to the local network or public internet.
+Then open `http://127.0.0.1:4173/` on your Mac. No report port is exposed to the home network. Set `QS_READOUT_ACCESS=ssh` for subsequent skill runs when SSH-only access should remain the default.
 
-If both machines are already connected to the same trusted Tailscale network, explicitly bind the viewer to the remote machine's Tailscale IP:
-
-```bash
-npm run readouts:serve -- --host 100.x.y.z
-```
-
-Open `http://100.x.y.z:4173/` on your Mac. Set `QS_READOUT_BASE_URL` to that verified viewer URL if skill completion reports should include directly clickable HTTP links.
+To explicitly generate a local-only report without starting any viewer, use the renderer's `--no-serve` option. Existing viewers are reused only after their health endpoint confirms that they are the expected QuickStark report service.
 
 ## Consistent skill output
 
