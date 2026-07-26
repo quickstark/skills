@@ -32,6 +32,13 @@ const observationSources = new Set([
   "user-reported",
 ]);
 const observationScopes = new Set(["skill-run", "thread-turn", "thread-cumulative"]);
+const observationQualitySources = new Set([
+  "observed-checks",
+  "user-feedback",
+  "review-rubric",
+  "human-calibrated-evaluation",
+]);
+const observationFeedback = new Set(["accepted", "needs-revision", "rejected"]);
 const observationReasoningEfforts = new Set([
   "none",
   "minimal",
@@ -864,7 +871,7 @@ function normalizeObservationCount(value, label) {
   return value;
 }
 
-function normalizeSkillObservation(value, status) {
+function normalizeSkillObservation(value, status, checks = []) {
   if (value === undefined) return null;
 
   if (status === "Preview") {
@@ -882,6 +889,7 @@ function normalizeSkillObservation(value, status) {
       "inference",
       "tokens",
       "timing",
+      "quality",
     ]),
   );
 
@@ -1032,6 +1040,72 @@ function normalizeSkillObservation(value, status) {
     normalized.timing = normalizedTiming;
   }
 
+  if (observation.quality !== undefined) {
+    const quality = validateObservationObject(
+      observation.quality,
+      "Observation quality",
+      new Set(["source", "passedChecks", "failedChecks", "feedback"]),
+    );
+
+    if (!observationQualitySources.has(quality.source)) {
+      throw new Error("Observation quality source must identify independent observed evidence.");
+    }
+
+    const normalizedQuality = { source: quality.source };
+    const observedPassed = checks.filter((check) => check.status === "passed").length;
+    const observedFailed = checks.filter((check) => check.status === "failed").length;
+
+    for (const [field, observed] of [
+      ["passedChecks", observedPassed],
+      ["failedChecks", observedFailed],
+    ]) {
+      if (quality[field] === undefined) continue;
+
+      const count = normalizeObservationCount(quality[field], `Observation quality.${field}`);
+
+      if (count > 100 || count !== observed) {
+        throw new Error(`Observation quality.${field} must match independently observed check results.`);
+      }
+
+      normalizedQuality[field] = count;
+    }
+
+    if (quality.feedback !== undefined) {
+      if (!observationFeedback.has(quality.feedback)) {
+        throw new Error("Observation quality feedback must be accepted, needs-revision, or rejected.");
+      }
+
+      if (quality.source === "observed-checks") {
+        throw new Error("Observed check evidence cannot claim independently sourced user feedback.");
+      }
+
+      normalizedQuality.feedback = quality.feedback;
+    }
+
+    if (
+      quality.source === "observed-checks"
+      && (observedPassed + observedFailed === 0
+        || (quality.passedChecks === undefined && quality.failedChecks === undefined))
+    ) {
+      throw new Error("Observed quality checks require independently recorded passed or failed checks.");
+    }
+
+    if (quality.source === "user-feedback" && quality.feedback === undefined) {
+      throw new Error("User-feedback quality evidence requires an explicit observed feedback outcome.");
+    }
+
+    if (
+      quality.source !== "observed-checks"
+      && quality.feedback === undefined
+      && quality.passedChecks === undefined
+      && quality.failedChecks === undefined
+    ) {
+      throw new Error("Observation quality requires independently observed checks or explicit feedback.");
+    }
+
+    normalized.quality = normalizedQuality;
+  }
+
   return normalized;
 }
 
@@ -1140,7 +1214,7 @@ export function normalizeSkillReadout(input) {
   }
 
   const execution = normalizeExecutionContext(input.execution, status);
-  const observation = normalizeSkillObservation(input.observation, status);
+  const observation = normalizeSkillObservation(input.observation, status, checks);
   const producer = normalizeReadoutProducer(input.ingestion);
   const provenance = normalizeDeliveryProvenance(input.provenance, projectIdentity);
   const relationships = normalizeReportRelationships(input.relationships, [
@@ -1259,6 +1333,22 @@ function renderObservedRun(observation) {
   );
 }
 
+function renderIndependentQuality(observation) {
+  const quality = observation?.quality;
+  const captured = (value) => value === undefined ? "Not captured" : String(value);
+
+  return renderSection(
+    "Independent quality evidence",
+    "Only actual check outcomes or explicitly sourced independent feedback",
+    [
+      { title: "Quality evidence source", detail: captured(quality?.source) },
+      { title: "Passed checks", detail: captured(quality?.passedChecks) },
+      { title: "Failed checks", detail: captured(quality?.failedChecks) },
+      { title: "Explicit feedback", detail: captured(quality?.feedback) },
+    ],
+  );
+}
+
 function renderObservationMetadata(observation) {
   if (!observation) return [];
 
@@ -1268,24 +1358,34 @@ function renderObservationMetadata(observation) {
     ["observation-captured-at", observation.capturedAt],
   ];
 
-  if (observation.attributionScope === "skill-run") {
-    const inference = observation.inference ?? {};
-    const tokens = observation.tokens ?? {};
-    const timing = observation.timing ?? {};
+  const prefix = observation.attributionScope === "skill-run"
+    ? ""
+    : `${observation.attributionScope}-`;
+  const inference = observation.inference ?? {};
+  const tokens = observation.tokens ?? {};
+  const timing = observation.timing ?? {};
 
+  metadata.push(
+    [`${prefix}provider`, inference.provider],
+    [`${prefix}model`, inference.model],
+    [`${prefix}reasoning-effort`, inference.reasoningEffort],
+    [`${prefix}input-tokens`, tokens.input],
+    [`${prefix}cached-input-tokens`, tokens.cachedInput],
+    [`${prefix}cache-write-tokens`, tokens.cacheWrite],
+    [`${prefix}output-tokens`, tokens.output],
+    [`${prefix}reasoning-output-tokens`, tokens.reasoningOutput],
+    [`${prefix}total-tokens`, tokens.total],
+    [`${prefix}started-at`, timing.startedAt],
+    [`${prefix}finished-at`, timing.finishedAt],
+    [`${prefix}active-duration-ms`, timing.activeDurationMs],
+  );
+
+  if (observation.quality) {
     metadata.push(
-      ["provider", inference.provider],
-      ["model", inference.model],
-      ["reasoning-effort", inference.reasoningEffort],
-      ["input-tokens", tokens.input],
-      ["cached-input-tokens", tokens.cachedInput],
-      ["cache-write-tokens", tokens.cacheWrite],
-      ["output-tokens", tokens.output],
-      ["reasoning-output-tokens", tokens.reasoningOutput],
-      ["total-tokens", tokens.total],
-      ["started-at", timing.startedAt],
-      ["finished-at", timing.finishedAt],
-      ["active-duration-ms", timing.activeDurationMs],
+      ["quality-source", observation.quality.source],
+      ["quality-passed-checks", observation.quality.passedChecks],
+      ["quality-failed-checks", observation.quality.failedChecks],
+      ["quality-feedback", observation.quality.feedback],
     );
   }
 
@@ -1611,6 +1711,7 @@ const reportStyles = `
   .workbench-shell{display:grid;min-height:490px;grid-template-columns:minmax(185px,230px) minmax(280px,1fr) minmax(260px,335px);overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--card)}.workbench-sidebar{min-width:0;border-right:1px solid var(--line);padding:17px 10px}.workbench-rail-heading{margin:0 0 10px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.workbench-projects{display:grid;align-content:start;gap:5px}.workbench-project{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 7px;border:1px solid transparent;border-radius:9px;padding:9px;text-decoration:none}.workbench-project:hover,.workbench-project.is-selected{border-color:var(--line);background:var(--soft)}.workbench-project-title{overflow-wrap:anywhere;font-size:11px;font-weight:690}.workbench-project-count{color:var(--muted);font-size:11px}.workbench-current{grid-column:1/-1;color:var(--accent);font-size:9px;font-weight:750;text-transform:uppercase}.workbench-project-outcome,.workbench-project-profile{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
   .workbench-workspace{min-width:0;padding:18px 16px}.workbench-workspace-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.workbench-workspace-heading h1{margin:2px 0 4px;font-size:25px;font-weight:750;letter-spacing:-.06em}.workbench-scope{margin:0;color:var(--muted);font-size:11px}.workbench-run-count{flex-shrink:0;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--muted);font-size:10px}.workbench-runs{display:grid;align-content:start}.workbench-run{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 9px;border-bottom:1px solid var(--line);padding:11px 9px;text-decoration:none}.workbench-run:hover,.workbench-run.is-selected{background:var(--soft)}.workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-run-title{display:grid;min-width:0;gap:3px}.workbench-run-title strong{overflow:hidden;font-size:11px;font-weight:730;text-overflow:ellipsis;white-space:nowrap}.workbench-run-title>span,.workbench-run-time{color:var(--muted);font-size:10px}.workbench-run-outcome{grid-column:1/-1;overflow:hidden;color:#465366;font-size:11px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}.workbench-run-time{grid-column:1/-1}.workbench-status{display:inline-flex;align-items:center;gap:5px;align-self:start;color:#15803d;font-size:10px;font-weight:670}.workbench-status-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.workbench-status-blocked{color:#b91c1c}.workbench-status-awaiting-input{color:#a16207}.workbench-status-preview{color:#64748b}
   .workbench-detail{min-width:0;border-left:1px solid var(--line);padding:17px 14px}.workbench-detail-top{display:flex;align-items:center;justify-content:space-between;gap:9px}.workbench-readonly{color:var(--muted);font-size:10px}.workbench-detail-title{margin:16px 0 4px;overflow-wrap:anywhere;font-size:20px;font-weight:740;letter-spacing:-.055em}.workbench-detail-profile{margin:0;color:var(--muted);font-size:11px}.workbench-open-report{display:inline-flex;align-items:center;gap:5px;margin-top:13px;color:var(--accent);font-size:11px;font-weight:690;text-decoration:none}.workbench-detail-section{margin-top:19px;border-top:1px solid var(--line);padding-top:12px}.workbench-detail-section h3{margin:0;font-size:12px;font-weight:710}.workbench-detail-section>p{margin:9px 0 0;overflow-wrap:anywhere;color:#465366;font-size:12px;line-height:1.7}.workbench-evidence{display:grid;grid-template-columns:minmax(86px,1fr) minmax(95px,1fr);gap:0;margin:10px 0 0}.workbench-evidence dt,.workbench-evidence dd{min-width:0;margin:0;border-bottom:1px solid var(--line);padding:8px 0;font-size:10px}.workbench-evidence dt{color:var(--muted)}.workbench-evidence dd{overflow-wrap:anywhere;font-weight:600}.workbench-empty-note,.workbench-detail-empty{color:var(--muted);font-size:11px;line-height:1.65}.workbench-detail-empty h2{color:var(--ink);font-size:15px}.workbench-footer{display:flex;justify-content:space-between;gap:12px;margin-top:15px;color:var(--muted);font-size:10px}
+  .workbench-run-observation{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}
   .workbench-projects .project-card{min-width:0;border:0;border-radius:0;padding:0;background:transparent}
   @media(max-width:980px){.workbench-shell{grid-template-columns:minmax(170px,205px) minmax(0,1fr)}.workbench-detail{grid-column:1/-1;border-top:1px solid var(--line);border-left:0}.workbench-workspace{padding:15px 12px}}
   @media(max-width:620px){.workbench-page{width:calc(100% - 24px);padding-top:12px}.workbench-masthead{flex-wrap:wrap}.workbench-shell{grid-template-columns:1fr}.workbench-sidebar{border-right:0;border-bottom:1px solid var(--line)}.workbench-projects{display:flex;overflow-x:auto}.workbench-project{min-width:175px}.workbench-workspace-heading{flex-wrap:wrap}.workbench-footer{flex-direction:column}}
@@ -1741,6 +1842,7 @@ function renderNormalizedSkillReadout(report) {
   <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}</header>
   ${execution}
   ${renderObservedRun(report.observation)}
+  ${report.status === "Preview" ? "" : renderIndependentQuality(report.observation)}
   ${evidence}
   ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
   ${visualization}
@@ -1875,6 +1977,7 @@ export function normalizeExternalSkillReadout(input) {
   const decisions = normalizeItems(input.decisions, "decisions");
   const outputs = normalizeItems(input.outputs, "outputs");
   const checks = normalizeItems(input.checks, "checks", { checks: true });
+  const observation = normalizeSkillObservation(input.observation, status, checks);
   const relationships = normalizeReportRelationships(input.relationships, [
     findings,
     decisions,
@@ -1938,6 +2041,7 @@ export function normalizeExternalSkillReadout(input) {
     decisions,
     outputs,
     checks,
+    observation,
     relationships,
     nextSkills,
     generatedAt,
@@ -1955,6 +2059,7 @@ export function renderExternalSkillReadout(input) {
     `<meta name="quickstark:generated-at" content="${escapeHtml(report.generatedAt.toISOString())}">`,
     `<meta name="quickstark:report-id" content="${escapeHtml(report.reportId)}">`,
     `<meta name="quickstark:format-version" content="${report.formatVersion}">`,
+    ...renderObservationMetadata(report.observation),
     `<meta name="quickstark:project" content="${escapeHtml(report.projectIdentity.key)}">`,
     `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
     `<meta name="quickstark:project-source" content="${escapeHtml(report.projectIdentity.source)}">`,
@@ -1978,6 +2083,8 @@ export function renderExternalSkillReadout(input) {
   const body = `<main class="compact-readout">
   <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
   <header class="hero"><div class="hero-heading"><div><p class="eyebrow">External skill · ${escapeHtml(report.projectIdentity.label)}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">External skill readout</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p></header>
+  ${renderObservedRun(report.observation)}
+  ${renderIndependentQuality(report.observation)}
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Verified submission identity</p><h2>Producer and harness</h2></div></div><div class="detail-grid"><article class="detail-card"><div class="detail-heading"><h3>Producer</h3></div><p>${escapeHtml(report.producer.producer)}</p></article><article class="detail-card"><div class="detail-heading"><h3>Harness</h3></div><p>${escapeHtml(report.producer.harness.name)}${report.producer.harness.version ? ` · ${escapeHtml(report.producer.harness.version)}` : ""}</p></article><article class="detail-card"><div class="detail-heading"><h3>Skill collection</h3></div><p>${escapeHtml(report.producer.collection)}</p></article></div></section>
   ${sections}
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the work</p><h2>Producer-reported next skills</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
@@ -2061,6 +2168,95 @@ function decodeHtml(value) {
   })[entity]);
 }
 
+function discoverStoredObservation(html) {
+  const measurementSource = decodeHtml(findMetadata(html, "observation-source"));
+
+  if (!measurementSource) return null;
+
+  try {
+    const attributionScope = decodeHtml(findMetadata(html, "observation-scope"));
+    const prefix = attributionScope === "skill-run" ? "" : `${attributionScope}-`;
+    const observation = {
+      version: 1,
+      measurementSource,
+      attributionScope,
+      capturedAt: decodeHtml(findMetadata(html, "observation-captured-at")),
+    };
+    const metadataValue = (name) => {
+      const value = findMetadata(html, name);
+      return value === "" ? undefined : decodeHtml(value);
+    };
+    const metadataCount = (name) => {
+      const value = metadataValue(name);
+
+      if (value === undefined) return undefined;
+
+      if (!/^(?:0|[1-9]\d*)$/.test(value)) {
+        throw new Error("Stored observation requires a nonnegative safe integer.");
+      }
+
+      return normalizeObservationCount(Number(value), `Stored observation ${name}`);
+    };
+    const inference = {
+      provider: metadataValue(`${prefix}provider`),
+      model: metadataValue(`${prefix}model`),
+      reasoningEffort: metadataValue(`${prefix}reasoning-effort`),
+    };
+    const tokens = {
+      input: metadataCount(`${prefix}input-tokens`),
+      cachedInput: metadataCount(`${prefix}cached-input-tokens`),
+      cacheWrite: metadataCount(`${prefix}cache-write-tokens`),
+      output: metadataCount(`${prefix}output-tokens`),
+      reasoningOutput: metadataCount(`${prefix}reasoning-output-tokens`),
+      total: metadataCount(`${prefix}total-tokens`),
+    };
+    const timing = {
+      startedAt: metadataValue(`${prefix}started-at`),
+      finishedAt: metadataValue(`${prefix}finished-at`),
+      activeDurationMs: metadataCount(`${prefix}active-duration-ms`),
+    };
+
+    for (const [name, values] of [["inference", inference], ["tokens", tokens], ["timing", timing]]) {
+      const captured = Object.fromEntries(Object.entries(values).filter(([, value]) => value !== undefined));
+
+      if (Object.keys(captured).length > 0) observation[name] = captured;
+    }
+
+    const qualitySource = metadataValue("quality-source");
+    const checks = Array.from(
+      html.matchAll(/<span class="check-badge check-(passed|failed)">/g),
+      (match) => ({ status: match[1] }),
+    );
+
+    if (checks.length > 100) {
+      throw new Error("Stored observation contains an excessive independent quality check count.");
+    }
+
+    if (qualitySource !== undefined) {
+      const quality = {
+        source: qualitySource,
+        passedChecks: metadataCount("quality-passed-checks"),
+        failedChecks: metadataCount("quality-failed-checks"),
+        feedback: metadataValue("quality-feedback"),
+      };
+      const passed = quality.passedChecks ?? 0;
+      const failed = quality.failedChecks ?? 0;
+
+      if (passed > 100 || failed > 100 || passed + failed > 100) {
+        throw new Error("Stored observation contains an excessive independent quality check count.");
+      }
+
+      observation.quality = Object.fromEntries(
+        Object.entries(quality).filter(([, value]) => value !== undefined),
+      );
+    }
+
+    return normalizeSkillObservation(observation, "Completed", checks);
+  } catch {
+    return null;
+  }
+}
+
 function normalizePublishedProjects(value) {
   if (value === undefined || value === null || value === "") return new Set();
 
@@ -2141,6 +2337,7 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
         projectKey,
         projectLabel: decodeHtml(findMetadata(html, "project-label")),
         projectSource: findMetadata(html, "project-source"),
+        observation: discoverStoredObservation(html),
       });
     }
   }
@@ -2365,6 +2562,84 @@ function renderWorkbenchStatus(status) {
   return `<span class="workbench-status workbench-status-${escapeHtml(modifier)}"><span class="workbench-status-dot" aria-hidden="true"></span>${escapeHtml(status)}</span>`;
 }
 
+function formatWorkbenchObservation(value, { numeric = false, suffix = "" } = {}) {
+  if (value === undefined) return "Not captured";
+
+  const captured = numeric ? new Intl.NumberFormat("en-US").format(value) : String(value);
+
+  return escapeHtml(`${captured}${suffix}`);
+}
+
+function renderWorkbenchObservationSummary(report) {
+  const observation = report.observation;
+
+  if (!observation) {
+    return '<span class="workbench-run-observation" aria-label="Observed run measurements">Not captured</span>';
+  }
+
+  const scope = observation.attributionScope === "skill-run"
+    ? "Skill-run"
+    : observation.attributionScope === "thread-turn"
+      ? "Thread-turn"
+      : "Thread-cumulative";
+  const inference = observation.inference ?? {};
+  const tokens = observation.tokens ?? {};
+  const timing = observation.timing ?? {};
+  const values = [
+    scope,
+    formatWorkbenchObservation(inference.model),
+    formatWorkbenchObservation(inference.reasoningEffort),
+    formatWorkbenchObservation(tokens.total, { numeric: true, suffix: " tokens" }),
+    formatWorkbenchObservation(timing.activeDurationMs, { numeric: true, suffix: " ms" }),
+  ];
+
+  return `<span class="workbench-run-observation" aria-label="Observed ${escapeHtml(scope.toLowerCase())} measurements">${values.join(" · ")}</span>`;
+}
+
+function renderWorkbenchObservationDetail(report) {
+  const observation = report.observation;
+  const scope = observation?.attributionScope === "thread-turn"
+    ? "Thread-turn"
+    : observation?.attributionScope === "thread-cumulative"
+      ? "Thread-cumulative"
+      : "Skill-run";
+  const inference = observation?.inference ?? {};
+  const tokens = observation?.tokens ?? {};
+  const timing = observation?.timing ?? {};
+  const quality = observation?.quality ?? {};
+  const title = observation
+    ? `Observed ${scope.toLowerCase()} measurements`
+    : "Observed run measurements";
+  const measurement = [
+    ["Measurement source", formatWorkbenchObservation(observation?.measurementSource)],
+    ["Attribution scope", formatWorkbenchObservation(observation?.attributionScope)],
+    [`${scope} provider`, formatWorkbenchObservation(inference.provider)],
+    [`${scope} model`, formatWorkbenchObservation(inference.model)],
+    [`${scope} reasoning effort`, formatWorkbenchObservation(inference.reasoningEffort)],
+    [`${scope} input tokens`, formatWorkbenchObservation(tokens.input, { numeric: true })],
+    [`${scope} cached input tokens`, formatWorkbenchObservation(tokens.cachedInput, { numeric: true })],
+    [`${scope} cache write tokens`, formatWorkbenchObservation(tokens.cacheWrite, { numeric: true })],
+    [`${scope} output tokens`, formatWorkbenchObservation(tokens.output, { numeric: true })],
+    [`${scope} reasoning output tokens`, formatWorkbenchObservation(tokens.reasoningOutput, { numeric: true })],
+    [`${scope} total tokens`, formatWorkbenchObservation(tokens.total, { numeric: true })],
+    [`${scope} started`, formatWorkbenchObservation(timing.startedAt)],
+    [`${scope} finished`, formatWorkbenchObservation(timing.finishedAt)],
+    [`${scope} active duration`, formatWorkbenchObservation(timing.activeDurationMs, { numeric: true, suffix: " ms" })],
+    ["Observation captured", formatWorkbenchObservation(observation?.capturedAt)],
+  ];
+  const evidence = [
+    ["Quality evidence source", formatWorkbenchObservation(quality.source)],
+    ["Passed checks", formatWorkbenchObservation(quality.passedChecks, { numeric: true })],
+    ["Failed checks", formatWorkbenchObservation(quality.failedChecks, { numeric: true })],
+    ["Explicit feedback", formatWorkbenchObservation(quality.feedback)],
+  ];
+  const renderValues = (entries) => entries
+    .map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${value}</dd>`)
+    .join("");
+
+  return `<section class="workbench-detail-section" aria-label="${escapeHtml(title)}"><h3>${escapeHtml(title)}</h3><dl class="workbench-evidence">${renderValues(measurement)}</dl></section><section class="workbench-detail-section" aria-label="Independent quality evidence"><h3>Independent quality evidence</h3><dl class="workbench-evidence">${renderValues(evidence)}</dl></section>`;
+}
+
 function renderWorkbenchProjects(projects, { activeProject, selectedProject, previews }) {
   if (projects.length === 0) {
     return '<p class="workbench-empty-note">No verified project reports are available.</p>';
@@ -2397,7 +2672,7 @@ function renderWorkbenchRuns(project, selectedReport, { previews }) {
       ? ""
       : `<span class="workbench-run-outcome">${escapeHtml(report.outcome)}</span>`;
 
-    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${galleryHref("projects", { project: project.key, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
+    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${galleryHref("projects", { project: project.key, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${renderWorkbenchObservationSummary(report)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
   }).join("");
 }
 
@@ -2406,7 +2681,7 @@ function renderWorkbenchDetail(report) {
     return '<div class="workbench-detail-empty"><h2>Select a skill readout</h2><p>Choose an actual skill run to inspect its verified project and immutable outcome.</p></div>';
   }
 
-  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p><a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>`;
+  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p><a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>${renderWorkbenchObservationDetail(report)}`;
 }
 
 function renderProjectWorkbench(projects, reports, {
@@ -3093,6 +3368,7 @@ async function acceptReadoutSubmission(envelope, {
     decisions: envelope.decisions,
     outputs: envelope.outputs,
     checks: envelope.checks,
+    observation: envelope.observation,
     relationships: envelope.relationships,
     nextSkills: envelope.nextSkills,
   };
@@ -3123,6 +3399,7 @@ async function acceptReadoutSubmission(envelope, {
       decisions: normalized.decisions,
       outputs: normalized.outputs,
       checks: normalized.checks,
+      ...(normalized.observation ? { observation: normalized.observation } : {}),
       relationships: normalized.relationships,
       nextSkills: normalized.nextSkills,
     })))
@@ -4206,6 +4483,7 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
         decisions: input.decisions,
         outputs: input.outputs,
         checks: input.checks,
+        observation: input.observation,
         relationships: input.relationships,
         nextSkills: input.nextSkills,
       })
