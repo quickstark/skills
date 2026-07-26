@@ -915,7 +915,9 @@ test("the hosted reporting stack isolates authenticated ingestion from its read-
   assert.match(compose, /traefik\.http\.services\.quickstark-readout-ingestion\.loadbalancer\.server\.port=4174/);
   assert.match(compose, /quickstark-readout-ingestion:4174\/__quickstark_ingestion_health/);
   assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:rw/);
-  assert.match(compose, /readout-producers\.json:\/run\/quickstark\/readout-producers\.json:ro/);
+  assert.match(compose, /\/docker\/appdata\/quickstark-readouts-config:\/run\/quickstark:ro/);
+  assert.doesNotMatch(compose, /readout-producers\.json:\/run\/quickstark\/readout-producers\.json:ro/);
+  assert.doesNotMatch(compose, /quickstark-readouts-credentials/);
   assert.match(compose, /traefik\.http\.routers\.quickstark-readouts\.middlewares=authelia@file/);
   assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:ro/);
   assert.doesNotMatch(compose, /^\s*ports:/m);

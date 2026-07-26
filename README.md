@@ -226,7 +226,7 @@ Production ingestion starts only when an operator has explicitly configured hash
 }
 ```
 
-Keep the actual bearer token only in the approved producer's private environment; never commit it, insert it into a URL, store it in the report library, or pass it as a command-line argument. The producer's project grant and the hosted publication allowlist must both approve the canonical project.
+The ingestion container mounts `/docker/appdata/quickstark-readouts-config/` read-only, so atomic producer-grant replacements become visible immediately and credentials can be rotated or revoked without restarting the service. Keep actual bearer tokens outside that mounted directory: the approved laptop credential is stored with `0600` permissions in `/docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token`, which is never mounted into either container. Supply a producer token only through its private environment; never commit it, insert it into a URL, store it in the report library, or pass it as a command-line argument. The producer's project grant and the hosted publication allowlist must both approve the canonical project.
 
 Configure an explicitly authorized laptop or harness:
 

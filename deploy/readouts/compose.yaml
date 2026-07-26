@@ -83,7 +83,7 @@ services:
     volumes:
       - /github/skills:/opt/quickstark:ro
       - /docker/appdata/quickstark-readouts:/docker/appdata/quickstark-readouts:rw
-      - /docker/appdata/quickstark-readouts-config/readout-producers.json:/run/quickstark/readout-producers.json:ro
+      - /docker/appdata/quickstark-readouts-config:/run/quickstark:ro
     networks:
       - proxy
     healthcheck:
