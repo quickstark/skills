@@ -3720,7 +3720,7 @@ test("project, plugin, and lockfile versions stay synchronized", async () => {
     ).then(JSON.parse),
   ]);
 
-  assert.equal(project.version, "2.3.0");
+  assert.equal(project.version, "2.4.0");
   assert.equal(lockfile.name, project.name);
   assert.equal(lockfile.version, project.version);
   assert.equal(lockfile.packages[""].name, project.name);
