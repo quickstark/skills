@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { mkdtemp, readdir, readFile, rm, stat, symlink, writeFile } from "node:fs/promises";
 import { createServer as createPortBlocker } from "node:net";
-import { tmpdir } from "node:os";
+import { hostname, platform, tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -103,6 +103,37 @@ function explicitProject(repository) {
   };
 }
 
+function verifiedGithubProvenance() {
+  return {
+    pullRequests: [
+      {
+        number: 42,
+        title: "Publish verified skill readouts",
+        state: "merged",
+        url: "https://github.com/quickstark/skills/pull/42",
+      },
+    ],
+    closedIssues: [
+      {
+        number: 17,
+        title: "Make release evidence visible",
+        state: "closed",
+        closedByRelease: true,
+        url: "https://github.com/quickstark/skills/issues/17",
+      },
+    ],
+    release: {
+      version: "v2.3.1",
+      url: "https://github.com/quickstark/skills/releases/tag/v2.3.1",
+    },
+    commit: {
+      sha: "0123456789abcdef0123456789abcdef01234567",
+      published: true,
+      url: "https://github.com/quickstark/skills/commit/0123456789abcdef0123456789abcdef01234567",
+    },
+  };
+}
+
 async function temporaryProjectGallery(context, options = {}) {
   const directory = await temporaryReadoutDirectory(context);
   const entries = [
@@ -146,11 +177,12 @@ async function temporaryProjectGallery(context, options = {}) {
   return { directory, viewer, reports };
 }
 
-test("the catalog preserves all 22 upstream skills and adds a real deployment skill", () => {
+test("the catalog preserves all 22 upstream skills and adds dedicated deployment and documentation skills", () => {
   assert.equal(UPSTREAM_SKILLS.length, 22);
-  assert.equal(SKILLS.length, 23);
-  assert.equal(SKILLS.filter((skill) => skill.upstreamName === null).length, 1);
+  assert.equal(SKILLS.length, 24);
+  assert.equal(SKILLS.filter((skill) => skill.upstreamName === null).length, 2);
   assert.ok(SKILLS.some((skill) => skill.name === "qs-deploy-release"));
+  assert.ok(SKILLS.some((skill) => skill.name === "qs-code-document"));
 });
 
 test("skill names are unique, discoverable, and organized by purpose", () => {
@@ -242,6 +274,583 @@ test("every promoted skill has its own complete, purpose-specific visual report 
   }
 });
 
+test("actual skill reports automatically identify the actual execution machine near the top", () => {
+  for (const skill of SKILLS) {
+    const input = {
+      skill: skill.name,
+      outcome: `Verified the actual ${skill.displayName} execution machine.`,
+    };
+    const report = normalizeSkillReadout(input);
+    const html = renderSkillReadout(input);
+
+    assert.equal(report.execution.machine.hostname, hostname(), skill.name);
+    assert.equal(report.execution.machine.platform, platform(), skill.name);
+    assert.match(html, /Execution context/);
+    assert.ok(html.includes(hostname()), `${skill.name} omits its actual execution machine`);
+    assert.ok(html.includes(`<meta name="quickstark:machine" content="${hostname()}">`));
+    assert.ok(
+      html.indexOf("Execution context") < html.indexOf("Next best skills"),
+      `${skill.name} hides the execution machine below the completion summary`,
+    );
+  }
+});
+
+test("deployment reports prominently identify only verified deployment environments and URLs", () => {
+  const url = "https://reports.quickstark.com/";
+  const html = renderSkillReadout({
+    skill: "qs-deploy-release",
+    outcome: "Verified the authenticated report deployment.",
+    execution: {
+      deployments: [
+        {
+          environment: "production",
+          status: "verified",
+          url,
+          summary: "Authelia protects the production report viewer.",
+        },
+      ],
+    },
+  });
+
+  assert.match(html, /Execution context/);
+  assert.match(html, /Verified deployment · production/);
+  assert.ok(html.includes(url));
+  assert.match(html, /Authelia protects the production report viewer/);
+  assert.match(html, /<meta name="quickstark:deployment-url"/);
+  assert.ok(html.indexOf("Verified deployment · production") < html.indexOf("Next best skills"));
+});
+
+test("architecture, module, implementation, and documentation reports foreground actual changed files", () => {
+  for (const skill of [
+    "qs-design-architecture",
+    "qs-design-modules",
+    "qs-code-build",
+    "qs-code-document",
+  ]) {
+    const html = renderSkillReadout({
+      skill,
+      outcome: "Recorded only files actually modified by this skill run.",
+      execution: {
+        files: [
+          {
+            path: "scripts/qs-skill-readout.mjs",
+            change: "modified",
+            summary: "Display verified run context near the report heading.",
+          },
+          {
+            path: "docs/engineering/qs-code-document.md",
+            change: "added",
+            summary: "Describe the new documentation workflow.",
+          },
+        ],
+      },
+    });
+
+    assert.match(html, /Execution context/);
+    assert.match(html, /Modified file/);
+    assert.match(html, /Added file/);
+    assert.match(html, /scripts\/qs-skill-readout\.mjs/);
+    assert.match(html, /docs\/engineering\/qs-code-document\.md/);
+    assert.match(html, /quickstark:changed-file/);
+  }
+});
+
+test("execution context rejects fabricated machines, unsafe deployment URLs, and unsafe file paths", () => {
+  const base = {
+    skill: "qs-code-build",
+    outcome: "Validate actual execution evidence.",
+  };
+
+  for (const [label, execution, expected] of [
+    [
+      "different execution machine",
+      { machine: { hostname: "invented-remote-host", platform: platform() } },
+      /actual execution machine/i,
+    ],
+    [
+      "different execution platform",
+      { machine: { hostname: hostname(), platform: "invented-os" } },
+      /actual execution platform/i,
+    ],
+    [
+      "unsafe deployment protocol",
+      { deployments: [{ environment: "production", status: "verified", url: "javascript:alert(1)" }] },
+      /HTTP or HTTPS deployment URL/i,
+    ],
+    [
+      "credential-bearing deployment URL",
+      { deployments: [{ environment: "production", status: "verified", url: "https://token@reports.quickstark.com/" }] },
+      /credentials/i,
+    ],
+    [
+      "query-bearing deployment URL",
+      { deployments: [{ environment: "production", status: "verified", url: "https://reports.quickstark.com/?token=secret" }] },
+      /query parameters/i,
+    ],
+    [
+      "invented deployment status",
+      { deployments: [{ environment: "production", status: "probably", url: "https://reports.quickstark.com/" }] },
+      /actual deployment status/i,
+    ],
+    [
+      "absolute machine path",
+      { files: [{ path: "/home/private/secrets.txt", change: "modified" }] },
+      /relative project file/i,
+    ],
+    [
+      "traversal path",
+      { files: [{ path: "../../private.txt", change: "modified" }] },
+      /relative project file/i,
+    ],
+    [
+      "secret environment file",
+      { files: [{ path: ".env.production", change: "modified" }] },
+      /sensitive/i,
+    ],
+    [
+      "invented file change",
+      { files: [{ path: "README.md", change: "imagined" }] },
+      /actual file change/i,
+    ],
+  ]) {
+    assert.throws(() => normalizeSkillReadout({ ...base, execution }), expected, label);
+  }
+});
+
+test("changed-file metadata rejects Git, cloud, package-manager, and private-key credential paths", () => {
+  for (const path of [
+    ".git/config",
+    ".git-credentials",
+    ".npmrc",
+    ".pypirc",
+    ".netrc",
+    ".envrc",
+    ".aws/credentials",
+    ".ssh/id_rsa",
+    ".ssh/id_ed25519",
+    ".docker/config.json",
+    ".kube/config",
+    "credentials.json",
+    "secrets.yaml",
+    "private.key",
+    "config/service-account.json",
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      skill: "qs-code-build",
+      outcome: "Validate safe changed-file evidence.",
+      execution: {
+        files: [{ path, change: "modified" }],
+      },
+    }), /sensitive/i, path);
+  }
+});
+
+test("execution context escapes observed summaries and never attributes unrelated dirty files", () => {
+  const hostile = '<script>alert("unsafe")</script>';
+  const html = renderSkillReadout({
+    skill: "qs-code-document",
+    outcome: "Recorded only the documentation file changed by this run.",
+    execution: {
+      files: [{
+        path: "docs/engineering/qs-code-document.md",
+        change: "added",
+        summary: hostile,
+      }],
+    },
+  });
+
+  assert.match(html, /docs\/engineering\/qs-code-document\.md/);
+  assert.match(html, /&lt;script&gt;alert\(&quot;unsafe&quot;\)&lt;\/script&gt;/);
+  assert.doesNotMatch(html, /<script\b/i);
+  assert.doesNotMatch(html, /package\.json/, "Unrelated dirty files must not be attributed to this skill run.");
+
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-code-document",
+    outcome: "Validate the actual documentation change.",
+    execution: {
+      files: [
+        { path: "docs/engineering/qs-code-document.md", change: "added" },
+        { path: "docs/engineering/qs-code-document.md", change: "modified" },
+      ],
+    },
+  }), /must not repeat/i);
+});
+
+test("catalog previews neither expose the execution machine nor claim deployments or changed files", () => {
+  const input = {
+    skill: "qs-code-document",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "Catalog preview only.",
+  };
+  const html = renderSkillReadout(input);
+
+  assert.doesNotMatch(html, /Execution context/);
+  assert.doesNotMatch(html, /quickstark:machine|quickstark:deployment-url|quickstark:changed-file/);
+
+  assert.throws(() => normalizeSkillReadout({
+    ...input,
+    execution: {
+      deployments: [{
+        environment: "production",
+        status: "verified",
+        url: "https://reports.quickstark.com/",
+      }],
+    },
+  }), /preview cannot claim actual execution/i);
+
+  assert.throws(() => normalizeSkillReadout({
+    ...input,
+    execution: { files: [{ path: "README.md", change: "modified" }] },
+  }), /preview cannot claim actual execution/i);
+});
+
+test("the documentation skill has a distinct, evidence-led documentation coverage report", () => {
+  const profile = READOUT_PROFILES_BY_NAME["qs-code-document"];
+
+  assert.equal(profile.title, "Documentation coverage");
+  assert.equal(profile.visualization, "checks");
+
+  const html = renderSkillReadout({
+    skill: "qs-code-document",
+    outcome: "Documented the verified report contract and deployment behavior.",
+    execution: {
+      files: [{
+        path: "docs/skill-report-assessment.md",
+        change: "modified",
+        summary: "Document machine, deployment, and changed-file reporting.",
+      }],
+    },
+    outputs: [{
+      title: "Report evidence documentation",
+      detail: "Documented only observed behavior and supported report fields.",
+    }],
+    checks: [{
+      title: "Documentation examples agree with implementation",
+      status: "passed",
+      detail: "Verified each reported field against the actual renderer.",
+    }],
+  });
+
+  assert.match(html, /Documentation coverage/);
+  assert.match(html, /Documented artifacts/);
+  assert.match(html, /Documentation validation/);
+  assert.match(html, /docs\/skill-report-assessment\.md/);
+  assert.match(html, /1 passed/i);
+});
+
+test("GitHub-facing reports prominently preserve verified release, issue, PR, and commit evidence", () => {
+  const provenance = verifiedGithubProvenance();
+  const input = {
+    skill: "qs-git-merge",
+    outcome: "Merged and verified the observed release changes.",
+    projectIdentity: explicitProject("skills"),
+    provenance,
+  };
+  const report = normalizeSkillReadout(input);
+  const html = renderSkillReadout(input);
+
+  assert.equal(report.provenance.pullRequests[0].number, 42);
+  assert.equal(report.provenance.pullRequests[0].state, "merged");
+  assert.equal(report.provenance.closedIssues[0].closedByRelease, true);
+  assert.equal(report.provenance.release.version, "v2.3.1");
+  assert.equal(report.provenance.commit.published, true);
+  assert.match(html, /Verified delivery evidence/);
+  assert.match(html, /Merged pull request/);
+  assert.match(html, /#42/);
+  assert.match(html, /Issues verified as closed by this release/);
+  assert.match(html, /#17/);
+  assert.match(html, /Released version/);
+  assert.match(html, /v2\.3\.1/);
+  assert.match(html, /Published commit/);
+  assert.match(html, /0123456789abcdef0123456789abcdef01234567/);
+  assert.match(html, /https:\/\/github\.com\/quickstark\/skills\/pull\/42/);
+  assert.match(html, /quickstark:release-version/);
+  assert.match(html, /quickstark:commit-sha/);
+  assert.ok(
+    html.indexOf("Verified delivery evidence") < html.indexOf("Next best skills"),
+    "Verified delivery evidence should appear before follow-on recommendations.",
+  );
+});
+
+test("partial delivery evidence distinguishes a verified local commit from a published release", () => {
+  const sha = "70ac659d11111111111111111111111111111111";
+  const html = renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Recorded a locally committed implementation.",
+    provenance: { commit: { sha, published: false } },
+  });
+
+  assert.match(html, /Verified delivery evidence/);
+  assert.match(html, /Local commit/);
+  assert.match(html, new RegExp(sha));
+  assert.doesNotMatch(html, /Published commit|Merged pull request|Released version|Closed issues/);
+});
+
+test("reports omit delivery provenance completely when no GitHub evidence was observed", () => {
+  for (const skill of SKILLS) {
+    const html = renderSkillReadout({
+      skill: skill.name,
+      outcome: `Completed the actual ${skill.displayName} workflow.`,
+    });
+
+    assert.doesNotMatch(html, /Verified delivery evidence/, skill.name);
+    assert.doesNotMatch(html, /quickstark:release-version|quickstark:commit-sha/, skill.name);
+  }
+});
+
+test("GitHub provenance rejects unsafe, mismatched, unverified, and cross-project records", () => {
+  const base = {
+    skill: "qs-deploy-release",
+    outcome: "Validate release evidence.",
+    projectIdentity: explicitProject("skills"),
+  };
+
+  for (const [label, provenance, expected] of [
+    [
+      "unsafe pull request protocol",
+      { pullRequests: [{ number: 42, url: "javascript:alert(1)" }] },
+      /HTTPS GitHub URL/i,
+    ],
+    [
+      "credential-bearing pull request URL",
+      { pullRequests: [{ number: 42, url: "https://token@github.com/quickstark/skills/pull/42" }] },
+      /credentials/i,
+    ],
+    [
+      "different repository",
+      { pullRequests: [{ number: 42, url: "https://github.com/other/project/pull/42" }] },
+      /verified project/i,
+    ],
+    [
+      "different pull request number",
+      { pullRequests: [{ number: 42, url: "https://github.com/quickstark/skills/pull/43" }] },
+      /pull request number/i,
+    ],
+    [
+      "open issue presented as closed",
+      { closedIssues: [{ number: 17, state: "open", url: "https://github.com/quickstark/skills/issues/17" }] },
+      /actually closed/i,
+    ],
+    [
+      "closure attributed to a nonexistent release",
+      { closedIssues: [{ number: 17, state: "closed", closedByRelease: true, url: "https://github.com/quickstark/skills/issues/17" }] },
+      /verified release/i,
+    ],
+    [
+      "invalid Git hash",
+      { commit: { sha: "not-a-commit" } },
+      /Git commit hash/i,
+    ],
+    [
+      "abbreviated Git hash",
+      { commit: { sha: "70ac659" } },
+      /complete.*Git commit hash/i,
+    ],
+    [
+      "unpublished commit presented as a remote link",
+      {
+        commit: {
+          sha: "0123456789abcdef0123456789abcdef01234567",
+          published: false,
+          url: "https://github.com/quickstark/skills/commit/0123456789abcdef0123456789abcdef01234567",
+        },
+      },
+      /published commit/i,
+    ],
+    [
+      "release tag mismatch",
+      { release: { version: "v2.3.1", url: "https://github.com/quickstark/skills/releases/tag/v9.9.9" } },
+      /release version/i,
+    ],
+  ]) {
+    assert.throws(() => normalizeSkillReadout({ ...base, provenance }), expected, label);
+  }
+});
+
+test("GitHub delivery evidence cannot be attached to a verified non-GitHub project", () => {
+  for (const projectIdentity of [
+    {
+      host: "gitlab.com",
+      owner: "acme",
+      repository: "private",
+      key: "gitlab.com/acme/private",
+      label: "acme/private",
+      source: "git-origin",
+    },
+    {
+      host: "local",
+      owner: "workspace",
+      repository: "private-0123456789ab",
+      key: "local/workspace/private-0123456789ab",
+      label: "Private local workspace",
+      source: "workspace",
+    },
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      skill: "qs-git-merge",
+      outcome: "Verify repository isolation.",
+      projectIdentity,
+      provenance: {
+        pullRequests: [{
+          number: 42,
+          url: "https://github.com/quickstark/skills/pull/42",
+        }],
+      },
+    }), /verified project/i, projectIdentity.key);
+  }
+});
+
+test("delivery evidence escapes externally controlled GitHub record titles", () => {
+  const hostile = '<script>alert("unsafe")</script>';
+  const provenance = verifiedGithubProvenance();
+
+  provenance.pullRequests[0].title = hostile;
+  provenance.closedIssues[0].title = hostile;
+
+  const html = renderSkillReadout({
+    skill: "qs-git-merge",
+    outcome: "Rendered independently verified GitHub records safely.",
+    projectIdentity: explicitProject("skills"),
+    provenance,
+  });
+
+  assert.match(html, /Verified delivery evidence/);
+  assert.match(html, /&lt;script&gt;alert\(&quot;unsafe&quot;\)&lt;\/script&gt;/);
+  assert.doesNotMatch(html, /<script\b/i);
+});
+
+test("catalog previews reject all claimed GitHub and release provenance", () => {
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-deploy-release",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "Catalog preview only.",
+    provenance: verifiedGithubProvenance(),
+  }), /preview cannot claim actual.*provenance/i);
+});
+
+test("review reports preserve independent Standards and Specification priorities", () => {
+  const html = renderSkillReadout({
+    skill: "qs-review-code",
+    outcome: "Reviewed standards and specification requirements independently.",
+    findings: [
+      {
+        title: "Verify repository-matched pull request URLs",
+        detail: "scripts/qs-skill-readout.mjs:350",
+        axis: "standards",
+        priority: "P1",
+      },
+      {
+        title: "Preserve actual released issue closures",
+        detail: "docs/specs/project-aware-skill-readout-gallery.md:106",
+        axis: "specification",
+        priority: "P2",
+      },
+    ],
+  });
+
+  assert.match(html, /Standards findings/);
+  assert.match(html, /Specification findings/);
+  assert.match(html, /Verify repository-matched pull request URLs/);
+  assert.match(html, /Preserve actual released issue closures/);
+  assert.match(html, /\bP1\b/);
+  assert.match(html, /\bP2\b/);
+  assert.ok(
+    html.indexOf("Standards findings") < html.indexOf("Specification findings"),
+    "Standards and specification findings must remain independently readable.",
+  );
+});
+
+test("review findings reject invented priority and assessment axes", () => {
+  for (const finding of [
+    { title: "Unknown priority", priority: "urgent" },
+    { title: "Unknown axis", axis: "vibes" },
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      skill: "qs-review-code",
+      outcome: "Validate a real review finding.",
+      findings: [finding],
+    }), /priority|review axis/i);
+  }
+});
+
+test("visual flows draw arrows only for explicitly recorded item relationships", () => {
+  const input = {
+    skill: "qs-plan-tickets",
+    outcome: "Recorded two independently observed implementation tickets.",
+    outputs: [
+      { title: "Create the report contract", detail: "The contract is available." },
+      { title: "Verify the hosted readout", detail: "The behavior is verified." },
+    ],
+    decisions: [{ title: "Preserve backward compatibility" }],
+  };
+  const independent = renderSkillReadout(input);
+
+  assert.match(independent, /Implementation ticket board/);
+  assert.doesNotMatch(independent, /<path\b/, "Independent observations must not be joined by invented arrows.");
+
+  const related = renderSkillReadout({
+    ...input,
+    relationships: [
+      {
+        from: "Create the report contract",
+        to: "Preserve backward compatibility",
+        label: "verified constraint",
+      },
+    ],
+  });
+
+  assert.match(related, /<path\b/);
+  assert.match(related, /1 verified relationship/i);
+});
+
+test("visual relationships must connect actual recorded results", () => {
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-design-domain",
+    outcome: "Validate observed domain relationships.",
+    findings: [{ title: "Verified concept" }],
+    relationships: [{ from: "Verified concept", to: "Invented concept" }],
+  }), /actual recorded/i);
+
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-design-domain",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "Catalog preview only.",
+    findings: [{ title: "Catalog purpose" }],
+    relationships: [{ from: "Catalog purpose", to: "Catalog purpose" }],
+  }), /preview cannot claim actual.*relationships/i);
+});
+
+test("domain maps render only explicitly verified concept relationships", () => {
+  const input = {
+    skill: "qs-design-domain",
+    outcome: "Recorded an independently verified domain relationship.",
+    findings: [
+      { title: "Delivery provenance" },
+      { title: "Published commit" },
+    ],
+  };
+
+  assert.doesNotMatch(renderSkillReadout(input), /<path\b/);
+
+  const html = renderSkillReadout({
+    ...input,
+    relationships: [
+      {
+        from: "Delivery provenance",
+        to: "Published commit",
+        label: "includes verified commit",
+      },
+    ],
+  });
+
+  assert.match(html, /1 verified relationship/i);
+  assert.match(html, /includes verified commit/);
+  assert.match(html, /<svg\b[^>]*role="img"/);
+});
+
 test("domain-design reports visually map actual resolved concepts and shared vocabulary", () => {
   const html = renderSkillReadout({
     skill: "qs-design-domain",
@@ -314,7 +923,7 @@ test("implementation and review reports expose different useful results", () => 
       { title: "Catalog profiles", detail: "Added a distinct purpose for every promoted skill." },
     ],
     checks: [
-      { title: "Profile coverage", status: "passed", detail: "All 23 real skills are represented." },
+      { title: "Profile coverage", status: "passed", detail: "All 24 real skills are represented." },
     ],
   });
   const review = renderSkillReadout({
@@ -711,6 +1320,82 @@ test("project-aware readouts publish immutable run and format metadata without c
   assert.match(html, /<meta name="quickstark:format-version" content="1">/);
   assert.match(html, /Implementation · quickstark\/skills/);
   assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
+});
+
+test("the project-aware HTTP viewer serves only verified delivery evidence and stable provenance metadata", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const report = await writeSkillReadout({
+    skill: "qs-deploy-release",
+    outcome: "Served the actually verified release receipt.",
+    projectIdentity: explicitProject("skills"),
+    provenance: verifiedGithubProvenance(),
+  }, { directory, layout: "project" });
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const response = await fetch(new URL(report.relativePath, viewer.url));
+
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+
+  assert.match(html, /Verified delivery evidence/);
+  assert.match(html, /Merged pull request #42/);
+  assert.match(html, /Issues verified as closed by this release · #17/);
+  assert.match(html, /<meta name="quickstark:release-version" content="v2\.3\.1">/);
+  assert.match(html, /<meta name="quickstark:pull-request" content="42">/);
+  assert.match(html, /<meta name="quickstark:closed-issue" content="17">/);
+  assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
+  assert.doesNotMatch(html, /<script\b/i);
+});
+
+test("the HTTP viewer serves the actual execution machine, verified deployment, and run-owned files", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const report = await writeSkillReadout({
+    skill: "qs-code-document",
+    outcome: "Documented the verified hosted report deployment.",
+    projectIdentity: explicitProject("skills"),
+    execution: {
+      deployments: [{
+        environment: "production",
+        status: "verified",
+        url: "https://reports.quickstark.com/",
+        summary: "Verified the authenticated report endpoint.",
+      }],
+      files: [{
+        path: "docs/engineering/qs-code-document.md",
+        change: "added",
+        summary: "Documented the actual project workflow.",
+      }],
+    },
+  }, { directory, layout: "project" });
+  const viewer = await startReadoutServer({ directory, port: 0 });
+
+  context.after(async () => {
+    await new Promise((done, fail) => {
+      viewer.server.close((error) => error ? fail(error) : done());
+    });
+  });
+
+  const response = await fetch(new URL(report.relativePath, viewer.url));
+
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+
+  assert.ok(html.includes(`<meta name="quickstark:machine" content="${hostname()}">`));
+  assert.match(html, /<meta name="quickstark:deployment-url" content="https:\/\/reports\.quickstark\.com\/">/);
+  assert.match(html, /<meta name="quickstark:changed-file" content="docs\/engineering\/qs-code-document\.md">/);
+  assert.match(html, /Execution context/);
+  assert.match(html, /Verified deployment · production/);
+  assert.match(html, /Documented the actual project workflow/);
+  assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
+  assert.doesNotMatch(html, /<script\b/i);
 });
 
 test("project-aware readouts honor an explicitly supplied canonical project identity", async (context) => {
@@ -1251,7 +1936,7 @@ test("the hosted deployment attaches Authelia and exposes no direct container or
   assert.doesNotMatch(compose, /0\.0\.0\.0/);
 });
 
-test("the preview gallery covers all 23 skills without inventing completed work", async (context) => {
+test("the preview gallery covers all 24 skills without inventing completed work", async (context) => {
   const directory = await temporaryReadoutDirectory(context);
   const previews = await writeSkillGallery({ directory });
 
@@ -2003,7 +2688,7 @@ test("the standard report distinguishes actual skills from suggested next steps"
   for (const skill of SKILLS) {
     const contract = renderSkillOutputContract(skill);
 
-    for (const field of ["Status:", "Skills used:", "Outcome:", "Readout:", "Outputs:", "Checks:", "Next best:"]) {
+    for (const field of ["Status:", "Skills used:", "Outcome:", "Execution:", "Readout:", "Outputs:", "Checks:", "Delivery:", "Next best:"]) {
       assert.ok(contract.includes(field), `${skill.name} omits the ${field} field`);
     }
 
@@ -2015,6 +2700,15 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(contract, /temporary.*default/i);
     assert.match(contract, /purpose-specific/i);
     assert.match(contract, /actual (?:recorded )?(?:evidence|results|checks)/i);
+    assert.match(contract, /provenance/);
+    assert.match(contract, /actual execution machine/i);
+    assert.match(contract, /execution\.deployments/);
+    assert.match(contract, /execution\.files/);
+    assert.match(contract, /unrelated existing work/i);
+    assert.match(contract, /closedByRelease/);
+    assert.match(contract, /commit\.published/);
+    assert.match(contract, /standards.*specification/i);
+    assert.match(contract, /relationships/);
     assert.match(contract, /QS_READOUT_ACCESS=ssh/);
     assert.match(contract, /Tailscale is not required/);
     assert.match(contract, /do not bind to every network interface/i);
@@ -2028,6 +2722,10 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(documentation, /QS_READOUT_DIR/);
     assert.match(documentation, /project-organized/i);
     assert.match(documentation, /purpose-specific/i);
+    assert.match(documentation, /actual execution machine/i);
+    assert.match(documentation, /verified deployment/i);
+    assert.match(documentation, /verified GitHub pull requests/i);
+    assert.match(documentation, /released versions/i);
   }
 });
 

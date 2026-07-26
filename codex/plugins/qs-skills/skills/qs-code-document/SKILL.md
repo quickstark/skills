@@ -1,45 +1,45 @@
 ---
-name: qs-deploy-release
-description: Verify a project's documented release or deployment workflow, report the exact target and commands, run its prerequisite checks, and deploy only after the user authorizes the specific environment.
+name: qs-code-document
+description: Document verified project behavior, code changes, architecture, deployment, runbooks, README files, or release notes. Use when documentation must be created, refreshed, or checked against the actual implementation.
 ---
 
-# QS Deploy: Release
+# QS Code: Document
 
-Release or deploy the current project using its existing, documented workflow. Never invent a deployment target, production credential, CI pipeline, release command, or hosting provider.
+Write documentation that reflects the project as it actually exists. Treat implementation, tests, configuration, verified deployment evidence, and existing project conventions as the authoritative sources.
 
-## 1. Discover the real workflow
+## 1. Identify the documentation audience and scope
 
-Read the project's active instructions, README, package or build scripts, CI workflows, infrastructure configuration, and existing release documentation. Check the current branch, working-tree status, deployment target, and any documented rollback or smoke-test procedure.
+Determine whether the user needs a project README, setup guide, API reference, architectural decision, module description, operational runbook, deployment guide, migration note, release note, or another explicitly requested document.
 
-Identify:
+Read the relevant `AGENTS.md`, project documentation, existing README, implementation, tests, and actual configuration. Identify the audience, canonical document location, affected code, and facts that can be independently verified.
 
-- The environment: local, preview, staging, or production.
-- The exact existing command, CI job, tag, or release process.
-- Required tests, type checks, builds, and environment prerequisites.
-- Whether the action creates a release, changes external state, or deploys publicly.
-- The verification and rollback steps the project already documents.
+Done when the intended document, audience, source material, and in-scope files are known.
 
-If the repository does not identify a deployment workflow, stop and ask for the intended provider or documented process. Do not construct a speculative deployment.
+## 2. Establish verified facts
 
-## 2. Explain the release
+Trace commands, configuration, interfaces, module relationships, changed files, and deployment behavior to actual project sources. Run existing read-only discovery or approved documentation checks when needed.
 
-Present a concise release preview containing the project, branch or commit, target environment, commands, expected external changes, prerequisite checks, and rollback route when one exists.
+Distinguish local changes from published commits. Include a deployed URL, environment, release version, pull request, or closed issue only when its actual state has been verified. Record unknown configuration, missing prerequisites, and remaining decisions as unresolved.
 
-Run read-only discovery and explicitly authorized local checks without additional ceremony. Never print credentials or secret environment values.
+Done when every material statement and example has an identified project source.
 
-## 3. Confirm side effects
+## 3. Update the authoritative document
 
-Obtain explicit confirmation before publishing, tagging, pushing, triggering CI, changing infrastructure, running database migrations, or deploying to staging or production. Identify the exact environment and command in the confirmation.
+Prefer updating the document the project already uses. Create a new document only when its audience or purpose has no existing home.
 
-If approval is unavailable, a credential is missing, or a permission boundary blocks the action, stop and report what the user must authorize. Never extract, reuse, or search for unrelated credentials.
+Lead with what the reader needs to do or understand. Keep instructions concise, use the project's actual vocabulary and repository-relative file paths, and include only working commands, real links, observed architecture, and verified examples.
 
-## 4. Execute and verify
+Keep credentials, secret environment values, internal absolute paths, speculative infrastructure, fabricated release notes, and entire execution logs out of the document.
 
-Run only the confirmed, project-documented command. Report its actual result; do not claim success from a submitted job alone.
+Done when the document accurately answers the user's request and each changed file is accounted for.
 
-Perform the documented health check, smoke test, release-state check, or CI verification. If deployment fails, report the failure and the existing rollback procedure. Ask before running a rollback that modifies external state.
+## 4. Verify and report
 
-Finish with the deployed environment, verified version or commit, checks performed, and any remaining follow-up. When a GitHub release actually exists, record its verified version and URL, the actual merged pull request, the published commit hash, and only issues independently confirmed as closed by that exact release. Distinguish a deployed local commit from a published release; a version in `package.json`, a local tag, or `Closes #123` in a commit does not establish GitHub publication or issue closure.
+Run available documentation validation, relevant tests, link checks, or repository synchronization. Verify that documented commands, code paths, deployment URLs, version numbers, and changed-file descriptions agree with actual observed behavior.
+
+Report the real execution machine, documentation files actually created or modified, validations performed, relevant deployment evidence, and remaining unknowns. Record GitHub and release provenance only when independently verified.
+
+Done when the documentation, changed-file list, and reported checks are independently verifiable.
 
 ## Completion report and next steps
 
@@ -61,7 +61,7 @@ Report the verified HTTP(S) readout URL and preserve the real HTML path. Preserv
 
 ```text
 Status: Completed | Awaiting input | Blocked
-Skills used: /qs-deploy-release; /another-skill only if actually used
+Skills used: /qs-code-document; /another-skill only if actually used
 Outcome: What was completed, discovered, decided, or is blocking progress.
 Execution: Actual machine, with verified deployment and changed files when applicable.
 Readout: Real absolute HTML path or verified private viewer URL.
@@ -75,8 +75,8 @@ Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readou
 
 Select at most three genuinely relevant follow-ons from:
 
-- `/qs-review-code` — Resolve a failed pre-deployment review or outstanding release concern.
-- `/qs-code-debug` — Diagnose a failed deployment or smoke test.
-- `/qs-flow-handoff` — Hand release results and remaining follow-up to the next operator.
+- `/qs-review-code` — Verify that the documentation accurately reflects the actual implementation.
+- `/qs-flow-handoff` — Hand documented operational knowledge and remaining work to the next session.
+- `/qs-deploy-release` — Use the verified deployment documentation when a release is explicitly approved.
 
 Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

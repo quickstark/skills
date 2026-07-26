@@ -15,6 +15,7 @@ Orient the user. Identify the actual situation, recommend the correct next step,
 - **Large, uncertain, multi-session effort:** start with `/qs-plan-roadmap`.
 - **Refactoring or structural friction:** start with `/qs-design-architecture`.
 - **Reproducible bug or regression:** start with `/qs-code-debug`.
+- **Missing, outdated, or unverified project documentation:** start with `/qs-code-document`.
 - **Incoming reports or requests:** start with `/qs-flow-triage`.
 - **In-progress Git conflict:** start with `/qs-git-merge`.
 - **Completed, reviewed change ready for a documented release:** start with `/qs-deploy-release`.
@@ -33,8 +34,9 @@ Recommend only the path that fits the situation. A tiny, already-understood chan
 8. **Split substantial work — `/qs-plan-tickets`.** Produce dependency-aware, independently actionable tickets when the specification is too large for one implementation. Skip tickets for a small change.
 9. **Design the seam — `/qs-design-modules`.** Define a small interface and deep implementation when a new module or significant boundary is involved.
 10. **Build and test — `/qs-code-build` with `/qs-test-tdd`.** Implement the next agreed change or unblocked ticket. Write behavior-focused tests at confirmed seams; run one ticket per fresh session when the work was split.
-11. **Review — `/qs-review-code`.** Check requirements, correctness, regressions, and repository standards. Address findings before release.
-12. **Release — `/qs-deploy-release`.** Use only the actual, documented deployment workflow. Verify prerequisites and obtain explicit approval before any production, publishing, infrastructure, migration, or other external change.
+11. **Document verified behavior — `/qs-code-document`.** Update the actual README, module documentation, runbook, architecture note, or release documentation when the completed change requires it.
+12. **Review — `/qs-review-code`.** Check requirements, correctness, regressions, documentation, and repository standards. Address findings before release.
+13. **Release — `/qs-deploy-release`.** Use only the actual, documented deployment workflow. Verify prerequisites and obtain explicit approval before any production, publishing, infrastructure, migration, or other external change.
 
 For small changes, the effective route is often `/qs-plan-clarify` → `/qs-code-build` → `/qs-test-tdd` → `/qs-review-code`. Include `/qs-deploy-release` only when the user has actually requested deployment.
 
@@ -48,8 +50,9 @@ For small changes, the effective route is often `/qs-plan-clarify` → `/qs-code
 6. **Protect existing behavior — `/qs-test-tdd`.** Establish characterization or regression coverage before changing production behavior.
 7. **Specify or slice when justified — `/qs-plan-spec` and `/qs-plan-tickets`.** Document meaningful, multi-session work. Skip both for a small, clear refactor.
 8. **Make the change — `/qs-code-build`.** Refactor in small, tested steps while preserving the agreed external behavior.
-9. **Review — `/qs-review-code`.** Verify the architectural improvement, unchanged behavior, test quality, and project standards.
-10. **Release only when requested — `/qs-deploy-release`.** Follow the existing release process and require explicit authorization for external changes.
+9. **Document changed architecture — `/qs-code-document`.** Update verified module boundaries, interfaces, architecture records, and any affected operational guidance.
+10. **Review — `/qs-review-code`.** Verify the architectural improvement, unchanged behavior, documentation, test quality, and project standards.
+11. **Release only when requested — `/qs-deploy-release`.** Follow the existing release process and require explicit authorization for external changes.
 
 When the starting point is an observed failure, use `/qs-code-debug` before an architectural review. Do not use a speculative refactor as a substitute for reproducing a bug.
 
@@ -71,6 +74,7 @@ When the starting point is an observed failure, use `/qs-code-debug` before an a
 | `/qs-design-modules` | Design small interfaces, clean seams, and deep software modules. |
 | `/qs-design-architecture` | Find, visualize, and prioritize worthwhile architectural refactors. |
 | `/qs-code-build` | Implement a specification, ticket, or agreed small change. |
+| `/qs-code-document` | Write accurate project documentation from verified code and operational behavior. |
 | `/qs-code-debug` | Reproduce, diagnose, and fix a bug or regression. |
 | `/qs-test-tdd` | Write behavior-focused tests and drive a red-green implementation loop. |
 | `/qs-review-code` | Review a change against its requirements and coding standards. |
@@ -93,7 +97,7 @@ Use `/compact` only when continuing the same conversation; use `/qs-flow-handoff
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
 
-Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and relevant next skills. Generate the readout with:
+Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, relevant next skills, and only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
 
 ```bash
 node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"
@@ -101,19 +105,25 @@ node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-
 
 The render command automatically starts or reuses a verified readout viewer, selects an available port, and writes a uniquely named, self-contained HTML file. Every promoted skill selects its own compact, purpose-specific report profile; accessible concept maps, evidence charts, review matrices, and check summaries visualize only actual recorded results. OS temporary `quickstark-readouts` storage remains the default. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into the durable, project-organized report library; verified Git identities automatically group immutable reports by project, year, and month. Its gallery provides a project library, searchable project explorer, and actual recent-activity timeline. On macOS or a graphical desktop the private viewer uses localhost. On a headless or SSH-connected Linux dev box it detects the private home-network IP, binds only to that address, protects the viewer with an unguessable URL, and returns a clickable report for a laptop on the same home network. Tailscale is not required. Set `QS_READOUT_ACCESS=ssh` to keep a remote viewer on localhost for explicit SSH forwarding, or `QS_READOUT_ACCESS=local` for local-only access.
 
+The renderer automatically captures the actual execution machine and platform for every real skill run. Add `execution.deployments` only for directly observed environments, deployment states, and safe verified HTTP(S) URLs. Add `execution.files` only for repository-relative files this skill actually added, modified, deleted, or renamed, with a concise accurate change summary. Preserve unrelated existing work; never infer run-owned files from an already dirty worktree or expose secrets, `.env` files, credentials, absolute machine paths, or unverified deployment targets. Previews never claim an execution machine, deployment, or changed file.
+
+When this run actually touches GitHub, a merge, or a release, add an optional `provenance` object containing only observed `pullRequests`, `closedIssues`, `release`, and `commit`. Verify GitHub numbers, record state, HTTPS links, repository ownership, release version, and complete Git hash. Set `commit.published` only after confirming remote publication; set `closedByRelease` only after independently confirming that exact release closed the issue. Omit missing evidence entirely. Record `relationships` only between observed findings, decisions, outputs, or checks; review findings may carry their actual `standards` or `specification` axis and `P0`–`P3` priority. Previews never contain delivery provenance or observed relationships.
+
 Report the verified HTTP(S) readout URL and preserve the real HTML path. Preserve and link the skill's primary artifact when it produces one. Record a missing runtime, denied file access, unavailable home-network route, or failed viewer health check honestly; do not bind to every network interface, claim an unreachable URL, or pretend a readout exists.
 
 ```text
 Status: Completed | Awaiting input | Blocked
 Skills used: /qs-help; /another-skill only if actually used
 Outcome: What was completed, discovered, decided, or is blocking progress.
+Execution: Actual machine, with verified deployment and changed files when applicable.
 Readout: Real absolute HTML path or verified private viewer URL.
 Outputs: Real files, reports, decisions, or changes, when applicable.
 Checks: Only the tests, validations, or observations actually performed.
+Delivery: Verified PRs, closed issues, release, or commit, only when applicable.
 Next best: /qs-skill-name — why it is the best next step.
 ```
 
-Always include **Status**, **Skills used**, **Outcome**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit **Outputs** or **Checks** when none exist. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a check, artifact, URL, or result you did not verify.
+Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
 
 Select at most three genuinely relevant follow-ons from:
 

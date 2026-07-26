@@ -22,6 +22,15 @@ _Avoid_: Suggested skill, simulated run, example execution.
 **Skill readout**: The concise, self-contained record of an individual skill run or explicitly labeled preview. Its status, findings, decisions, outputs, and checks describe only what actually occurred.
 _Avoid_: Dashboard, generated work, completion claim.
 
+**Execution context**: The automatically observed machine and platform that actually generated a skill readout, plus any independently verified deployments and repository-relative files modified by that specific run.
+_Avoid_: Guessed host, full machine path, dirty-worktree snapshot, unrelated change.
+
+**Observed deployment**: An independently verified deployment environment, status, and optional safe HTTP or HTTPS service URL. A configured target is not a completed or healthy deployment.
+_Avoid_: Assumed production, guessed service URL, unverified health, embedded credentials.
+
+**Changed project file**: A safe repository-relative file path and explicit added, modified, deleted, or renamed state observed for the current skill run.
+_Avoid_: Pre-existing user edit, absolute machine path, secret file, invented diff.
+
 **Report profile**: The purpose-specific presentation of a promoted skill's readout. It determines which real results are most useful to understand first.
 _Avoid_: Universal template, interchangeable skill layout.
 
@@ -30,6 +39,18 @@ _Avoid_: Decoration, invented metric, placeholder outcome.
 
 **Visual cue**: A compact, accessible presentation that makes an actual status, grouping, count, sequence, or comparison easier to understand at a glance.
 _Avoid_: Decorative chart, fabricated progress, simulated activity.
+
+**Delivery provenance**: Independently verified evidence linking a skill run to actual GitHub pull requests, actually closed issues, a confirmed release version, or a real Git commit. A locally observed commit is not a published commit, and a closed issue is not closed by a release unless that release relationship was separately verified.
+_Avoid_: Guessed PR, fabricated release, inferred issue closure, implied push.
+
+**Observed relationship**: An explicitly recorded connection between two actual report findings, decisions, outputs, or checks. A visual graph or arrow represents only such a recorded connection.
+_Avoid_: Invented dependency, decorative connector, inferred sequence.
+
+**Review axis**: One independent code-review perspective, either repository standards or specification requirements. Findings remain grouped by their actual axis instead of being combined into an undifferentiated verdict.
+_Avoid_: Blended review, flattened finding, overall winner.
+
+**Finding priority**: An observed review finding's explicit `P0`, `P1`, `P2`, or `P3` urgency. Omit the priority when it was not actually assessed.
+_Avoid_: Invented severity, unlabeled criticality, decorative warning.
 
 **Catalog preview**: A clearly labeled demonstration of a report profile that does not claim a skill ran, a check passed, a decision was made, or project files changed.
 _Avoid_: Completed run, sample results, test evidence.
@@ -54,6 +75,11 @@ _Avoid_: Publish everything, inferred authorization.
 - A promoted skill is the source of truth for its generated Codex-plugin copy.
 - Each adapted promoted skill retains an identifiable upstream counterpart.
 - A skill run produces one immutable skill readout.
+- Every actual skill readout records its real execution machine; previews do not describe a run.
+- An execution context contains only deployments and project files actually verified for that run.
+- A GitHub-facing skill run can record optional delivery provenance only from independently verified records.
+- An observed relationship connects two results that the same readout actually recorded.
+- A code-review finding belongs to one independently assessed review axis and can have an observed finding priority.
 - Each promoted skill has one purpose-specific report profile and primary signal.
 - A visual cue represents observed readout information; a catalog preview never represents an actual skill run.
 - A project library groups immutable readouts by verified project.

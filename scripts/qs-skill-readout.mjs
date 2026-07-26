@@ -3,7 +3,7 @@ import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypt
 import { createServer } from "node:http";
 import { lstat, mkdir, readFile, readdir, realpath, unlink, writeFile } from "node:fs/promises";
 import { createServer as createPortProbe } from "node:net";
-import { networkInterfaces, platform, tmpdir } from "node:os";
+import { hostname, networkInterfaces, platform, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
@@ -24,6 +24,11 @@ export const READOUT_FORMAT_VERSION = 1;
 
 const statuses = new Set(["Completed", "Awaiting input", "Blocked", "Preview"]);
 const checkStatuses = new Set(["passed", "failed", "skipped", "info"]);
+const reviewAxes = new Set(["standards", "specification"]);
+const findingPriorities = new Set(["P0", "P1", "P2", "P3"]);
+const pullRequestStates = new Set(["open", "merged", "closed"]);
+const deploymentStatuses = new Set(["verified", "deployed", "failed", "pending"]);
+const fileChangeTypes = new Set(["added", "modified", "deleted", "renamed"]);
 const reportFilename = /^qs-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--[a-f0-9]{8}\.html$/;
 const viewerToken = /^[a-f0-9]{48}$/;
 const loopbackHosts = new Set(["127.0.0.1", "::1", "localhost"]);
@@ -308,6 +313,355 @@ function requireText(value, label) {
   return value.trim();
 }
 
+function normalizeGithubUrl(value, label, expectedSegments, projectIdentity, repositories) {
+  let candidate;
+
+  try {
+    candidate = new URL(requireText(value, label));
+  } catch {
+    throw new Error(`${label} must be a valid HTTPS GitHub URL.`);
+  }
+
+  if (candidate.protocol !== "https:" || candidate.hostname !== "github.com" || candidate.port) {
+    throw new Error(`${label} must be a valid HTTPS GitHub URL.`);
+  }
+
+  if (candidate.username || candidate.password) {
+    throw new Error(`${label} must not contain credentials.`);
+  }
+
+  if (candidate.search || candidate.hash) {
+    throw new Error(`${label} must not contain query parameters or fragments.`);
+  }
+
+  const segments = candidate.pathname.split("/").filter(Boolean);
+
+  if (
+    segments.length !== expectedSegments.length + 2
+    || !projectSegment.test(segments[0])
+    || !projectSegment.test(segments[1])
+    || expectedSegments.some((segment, index) => segment !== segments[index + 2])
+  ) {
+    throw new Error(`${label} does not match the expected GitHub record.`);
+  }
+
+  const repository = `github.com/${segments[0]}/${segments[1]}`;
+
+  if (
+    (projectIdentity && (projectIdentity.host !== "github.com" || projectIdentity.key !== repository))
+    || (repositories.size > 0 && !repositories.has(repository))
+  ) {
+    throw new Error(`${label} must belong to the verified project.`);
+  }
+
+  repositories.add(repository);
+
+  return candidate.href;
+}
+
+function normalizeGithubNumber(value, label) {
+  if (!Number.isSafeInteger(value) || value <= 0) {
+    throw new Error(`${label} must be a positive GitHub record number.`);
+  }
+
+  return value;
+}
+
+function normalizeDeliveryProvenance(value, projectIdentity) {
+  if (value === undefined || value === null) return null;
+
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("Delivery provenance must be a verified GitHub evidence object.");
+  }
+
+  const repositories = new Set();
+
+  if (value.pullRequests !== undefined && !Array.isArray(value.pullRequests)) {
+    throw new Error("Delivery pull requests must be an array.");
+  }
+
+  const pullRequests = (value.pullRequests ?? []).map((item, index) => {
+    const label = `provenance.pullRequests[${index}]`;
+
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error(`${label} must be a verified pull request.`);
+    }
+
+    const number = normalizeGithubNumber(item.number, `${label}.number`);
+    const url = normalizeGithubUrl(
+      item.url,
+      `${label} pull request number ${number}`,
+      ["pull", String(number)],
+      projectIdentity,
+      repositories,
+    );
+
+    if (item.state !== undefined && !pullRequestStates.has(item.state)) {
+      throw new Error(`${label}.state must be open, merged, or closed.`);
+    }
+
+    return {
+      number,
+      ...(item.title === undefined ? {} : { title: requireText(item.title, `${label}.title`) }),
+      ...(item.state === undefined ? {} : { state: item.state }),
+      url,
+    };
+  });
+
+  if (value.closedIssues !== undefined && !Array.isArray(value.closedIssues)) {
+    throw new Error("Closed GitHub issues must be an array.");
+  }
+
+  const closedIssues = (value.closedIssues ?? []).map((item, index) => {
+    const label = `provenance.closedIssues[${index}]`;
+
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error(`${label} must be an actually closed GitHub issue.`);
+    }
+
+    if (item.state !== "closed") {
+      throw new Error(`${label} must identify an actually closed GitHub issue.`);
+    }
+
+    if (item.closedByRelease !== undefined && typeof item.closedByRelease !== "boolean") {
+      throw new Error(`${label}.closedByRelease must be an explicitly verified boolean.`);
+    }
+
+    const number = normalizeGithubNumber(item.number, `${label}.number`);
+
+    return {
+      number,
+      ...(item.title === undefined ? {} : { title: requireText(item.title, `${label}.title`) }),
+      state: "closed",
+      closedByRelease: item.closedByRelease === true,
+      url: normalizeGithubUrl(
+        item.url,
+        `${label} issue number ${number}`,
+        ["issues", String(number)],
+        projectIdentity,
+        repositories,
+      ),
+    };
+  });
+
+  let release = null;
+
+  if (value.release !== undefined && value.release !== null) {
+    if (typeof value.release !== "object" || Array.isArray(value.release)) {
+      throw new Error("Delivery release must be an actually verified release.");
+    }
+
+    const version = requireText(value.release.version, "provenance.release.version");
+
+    if (!/^[a-z0-9][a-z0-9._+-]{0,127}$/i.test(version)) {
+      throw new Error("Delivery release version must be a safe verified tag.");
+    }
+
+    release = {
+      version,
+      ...(value.release.url === undefined ? {} : {
+        url: normalizeGithubUrl(
+          value.release.url,
+          `provenance.release release version ${version}`,
+          ["releases", "tag", version],
+          projectIdentity,
+          repositories,
+        ),
+      }),
+    };
+  }
+
+  if (closedIssues.some((issue) => issue.closedByRelease) && !release) {
+    throw new Error("An issue closed by a release requires an actually verified release.");
+  }
+
+  let commit = null;
+
+  if (value.commit !== undefined && value.commit !== null) {
+    if (typeof value.commit !== "object" || Array.isArray(value.commit)) {
+      throw new Error("Delivery commit must be a verified Git commit.");
+    }
+
+    const sha = requireText(value.commit.sha, "provenance.commit.sha");
+
+    if (!/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/i.test(sha)) {
+      throw new Error("Delivery commit must contain a complete SHA-1 or SHA-256 Git commit hash.");
+    }
+
+    if (value.commit.published !== undefined && typeof value.commit.published !== "boolean") {
+      throw new Error("Commit publication must be an explicitly verified boolean.");
+    }
+
+    const published = value.commit.published === true;
+
+    if (value.commit.url !== undefined && !published) {
+      throw new Error("A GitHub commit URL requires a verified published commit.");
+    }
+
+    commit = {
+      sha,
+      published,
+      ...(value.commit.url === undefined ? {} : {
+        url: normalizeGithubUrl(
+          value.commit.url,
+          `provenance.commit Git commit hash ${sha}`,
+          ["commit", sha],
+          projectIdentity,
+          repositories,
+        ),
+      }),
+    };
+  }
+
+  if (pullRequests.length === 0 && closedIssues.length === 0 && !release && !commit) {
+    throw new Error("Delivery provenance must contain actual observed evidence.");
+  }
+
+  return { pullRequests, closedIssues, release, commit };
+}
+
+function normalizeDeploymentUrl(value, label) {
+  let candidate;
+
+  try {
+    candidate = new URL(requireText(value, label));
+  } catch {
+    throw new Error(`${label} must be a valid HTTP or HTTPS deployment URL.`);
+  }
+
+  if (candidate.protocol !== "http:" && candidate.protocol !== "https:") {
+    throw new Error(`${label} must be a valid HTTP or HTTPS deployment URL.`);
+  }
+
+  if (candidate.username || candidate.password) {
+    throw new Error(`${label} must not contain credentials.`);
+  }
+
+  if (candidate.search || candidate.hash) {
+    throw new Error(`${label} must not contain query parameters or fragments.`);
+  }
+
+  return candidate.href;
+}
+
+function normalizeChangedFile(item, index) {
+  const label = `execution.files[${index}]`;
+
+  if (!item || typeof item !== "object" || Array.isArray(item)) {
+    throw new Error(`${label} must describe an actual changed project file.`);
+  }
+
+  const path = requireText(item.path, `${label}.path`);
+  const segments = path.split("/");
+
+  if (
+    isAbsolute(path)
+    || /^[a-z]:/i.test(path)
+    || path.includes("\\")
+    || /[\u0000-\u001f\u007f]/.test(path)
+    || segments.some((segment) => segment === "" || segment === "." || segment === "..")
+  ) {
+    throw new Error(`${label}.path must be a safe relative project file.`);
+  }
+
+  const sensitiveDirectory = new Set([".git", ".ssh", ".aws", ".docker", ".gnupg", ".kube"]);
+
+  if (segments.some((segment) => {
+    const lower = segment.toLowerCase();
+
+    return sensitiveDirectory.has(lower)
+      || /^\.env(?:\.|$)/i.test(segment)
+      || /^\.(?:envrc|git-credentials|npmrc|pypirc|netrc)$/i.test(segment)
+      || /^(?:id_(?:rsa|dsa|ecdsa|ed25519)|application_default_credentials|service-account)(?:\.[a-z0-9_-]+)?$/i.test(segment)
+      || /^(?:credentials?|secrets?|tokens?|private[_-]?keys?)(?:\.(?:json|ya?ml|toml|ini|txt|env))?$/i.test(segment)
+      || /\.(?:pem|key|p12|pfx|jks|keystore)$/i.test(segment);
+  })) {
+    throw new Error(`${label}.path must not disclose sensitive environment or credential files.`);
+  }
+
+  if (!fileChangeTypes.has(item.change)) {
+    throw new Error(`${label}.change must describe an actual file change.`);
+  }
+
+  return {
+    path,
+    change: item.change,
+    ...(item.summary === undefined ? {} : { summary: requireText(item.summary, `${label}.summary`) }),
+  };
+}
+
+function normalizeExecutionContext(value, status) {
+  if (status === "Preview") {
+    if (value !== undefined && value !== null) {
+      throw new Error("A catalog preview cannot claim actual execution context.");
+    }
+
+    return null;
+  }
+
+  if (value !== undefined && (!value || typeof value !== "object" || Array.isArray(value))) {
+    throw new Error("Execution context must describe the actual runtime.");
+  }
+
+  const supplied = value ?? {};
+  const actualMachine = { hostname: hostname(), platform: platform() };
+
+  if (supplied.machine !== undefined) {
+    if (!supplied.machine || typeof supplied.machine !== "object" || Array.isArray(supplied.machine)) {
+      throw new Error("Execution context must describe the actual execution machine.");
+    }
+
+    if (requireText(supplied.machine.hostname, "execution.machine.hostname") !== actualMachine.hostname) {
+      throw new Error("Execution context must identify the actual execution machine.");
+    }
+
+    if (requireText(supplied.machine.platform, "execution.machine.platform") !== actualMachine.platform) {
+      throw new Error("Execution context must identify the actual execution platform.");
+    }
+  }
+
+  if (supplied.deployments !== undefined && !Array.isArray(supplied.deployments)) {
+    throw new Error("Execution deployments must be an array of verified observations.");
+  }
+
+  const deployments = (supplied.deployments ?? []).map((item, index) => {
+    const label = `execution.deployments[${index}]`;
+
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error(`${label} must describe an actual deployment.`);
+    }
+
+    const environment = requireText(item.environment, `${label}.environment`);
+
+    if (!/^[a-z0-9][a-z0-9 ._-]{0,63}$/i.test(environment)) {
+      throw new Error(`${label}.environment must be a safe deployment name.`);
+    }
+
+    if (!deploymentStatuses.has(item.status)) {
+      throw new Error(`${label}.status must describe an actual deployment status.`);
+    }
+
+    return {
+      environment,
+      status: item.status,
+      ...(item.url === undefined ? {} : { url: normalizeDeploymentUrl(item.url, `${label}.url`) }),
+      ...(item.summary === undefined ? {} : { summary: requireText(item.summary, `${label}.summary`) }),
+    };
+  });
+
+  if (supplied.files !== undefined && !Array.isArray(supplied.files)) {
+    throw new Error("Execution files must be an array of actual changed project files.");
+  }
+
+  const files = (supplied.files ?? []).map(normalizeChangedFile);
+
+  if (new Set(files.map((file) => file.path)).size !== files.length) {
+    throw new Error("Execution files must not repeat an observed project path.");
+  }
+
+  return { machine: actualMachine, deployments, files };
+}
+
 function normalizeItems(items, label, { checks = false } = {}) {
   if (items === undefined) return [];
   if (!Array.isArray(items)) throw new Error(`${label} must be an array.`);
@@ -331,6 +685,22 @@ function normalizeItems(items, label, { checks = false } = {}) {
       normalized.href = requireText(normalized.href, `${label}[${index}].href`);
     }
 
+    if (item.axis !== undefined) {
+      if (label !== "findings" || !reviewAxes.has(item.axis)) {
+        throw new Error(`${label}[${index}].axis must be a standards or specification review axis.`);
+      }
+
+      normalized.axis = item.axis;
+    }
+
+    if (item.priority !== undefined) {
+      if (label !== "findings" || !findingPriorities.has(item.priority)) {
+        throw new Error(`${label}[${index}].priority must be P0, P1, P2, or P3.`);
+      }
+
+      normalized.priority = item.priority;
+    }
+
     if (checks) {
       normalized.status = item.status ?? "info";
 
@@ -340,6 +710,34 @@ function normalizeItems(items, label, { checks = false } = {}) {
     }
 
     return normalized;
+  });
+}
+
+function normalizeReportRelationships(value, items) {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) throw new Error("Report relationships must be an array.");
+
+  const observed = new Set(items.flat().map((item) => item.title));
+
+  return value.map((item, index) => {
+    const label = `relationships[${index}]`;
+
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error(`${label} must connect actual recorded report results.`);
+    }
+
+    const from = requireText(item.from, `${label}.from`);
+    const to = requireText(item.to, `${label}.to`);
+
+    if (!observed.has(from) || !observed.has(to)) {
+      throw new Error(`${label} must connect actual recorded report results.`);
+    }
+
+    return {
+      from,
+      to,
+      ...(item.label === undefined ? {} : { label: requireText(item.label, `${label}.label`) }),
+    };
   });
 }
 
@@ -439,6 +837,23 @@ export function normalizeSkillReadout(input) {
   const outputs = normalizeItems(input.outputs, "outputs");
   const checks = normalizeItems(input.checks, "checks", { checks: true });
 
+  if (status === "Preview" && input.provenance !== undefined && input.provenance !== null) {
+    throw new Error("A catalog preview cannot claim actual GitHub or release provenance.");
+  }
+
+  if (status === "Preview" && input.relationships !== undefined && input.relationships.length !== 0) {
+    throw new Error("A catalog preview cannot claim actual recorded relationships.");
+  }
+
+  const execution = normalizeExecutionContext(input.execution, status);
+  const provenance = normalizeDeliveryProvenance(input.provenance, projectIdentity);
+  const relationships = normalizeReportRelationships(input.relationships, [
+    findings,
+    decisions,
+    outputs,
+    checks,
+  ]);
+
   if (status === "Preview" && (decisions.length > 0 || outputs.length > 0 || checks.length > 0)) {
     throw new Error("A catalog preview cannot claim actual decisions, outputs, or validation results.");
   }
@@ -458,6 +873,9 @@ export function normalizeSkillReadout(input) {
     decisions,
     outputs,
     checks,
+    execution,
+    provenance,
+    relationships,
     nextSkills: normalizeRecommendations(skill, input.nextSkills),
     generatedAt,
   };
@@ -480,7 +898,9 @@ function renderItem(item, { checks = false } = {}) {
 
   const badge = checks
     ? `<span class="check-badge check-${escapeHtml(item.status)}">${escapeHtml(item.status)}</span>`
-    : "";
+    : item.priority
+      ? `<span class="priority-badge priority-${escapeHtml(item.priority.toLowerCase())}">${escapeHtml(item.priority)}</span>`
+      : "";
 
   return `<article class="detail-card"><div class="detail-heading"><h3>${escapeHtml(item.title)}</h3>${badge}${link}</div>${item.detail ? `<p>${escapeHtml(item.detail)}</p>` : ""}</article>`;
 }
@@ -534,8 +954,16 @@ function renderMapVisualization(report, profile, signals) {
   }))).slice(0, 5);
   const height = Math.max(110, items.length * 43 + 14);
   const center = Math.round(height / 2);
-  const links = items.map((_, index) =>
-    `<path d="M222 ${center} C300 ${center},320 ${index * 43 + 29},378 ${index * 43 + 29}" fill="none" stroke="var(--accent)" stroke-opacity=".34" stroke-width="2"/>`).join("");
+  const displayed = new Map(items.map((item, index) => [item.title, index]));
+  const verified = report.relationships.filter((relationship) =>
+    displayed.has(relationship.from) && displayed.has(relationship.to));
+  const links = verified.map((relationship) => {
+    const from = displayed.get(relationship.from) * 43 + 28;
+    const to = displayed.get(relationship.to) * 43 + 28;
+    const description = relationship.label ?? `${relationship.from} to ${relationship.to}`;
+
+    return `<path d="M377 ${from} C315 ${from},315 ${to},377 ${to}" fill="none" stroke="var(--accent)" stroke-opacity=".48" stroke-width="2"><title>${escapeHtml(description)}</title></path>`;
+  }).join("");
   const nodes = items.map((item, index) => {
     const y = index * 43 + 10;
 
@@ -543,7 +971,15 @@ function renderMapVisualization(report, profile, signals) {
   }).join("");
   const root = `<rect x="12" y="${center - 22}" width="210" height="44" rx="12" fill="var(--soft)"/><text x="27" y="${center - 2}" fill="var(--accent)" font-size="11" font-weight="750">${escapeHtml(compactLabel(profile.title, 24))}</text><text x="27" y="${center + 13}" fill="var(--muted)" font-size="10">${items.length} recorded item${items.length === 1 ? "" : "s"}</text>`;
 
-  return renderSignalSvg(`${profile.title} domain concept map based on actual recorded results`, `${links}${root}${nodes}`, height);
+  const relationLabel = verified.length
+    ? ` and ${verified.length} verified relationship${verified.length === 1 ? "" : "s"}`
+    : "";
+
+  return renderSignalSvg(
+    `${profile.title} domain concept map based on actual recorded results${relationLabel}`,
+    `${links}${root}${nodes}`,
+    height,
+  );
 }
 
 function renderBarVisualization(profile, signals) {
@@ -559,19 +995,30 @@ function renderBarVisualization(profile, signals) {
   return renderSignalSvg(`${profile.title} chart of actual recorded results`, rows, height);
 }
 
-function renderFlowVisualization(profile, signals) {
+function renderFlowVisualization(report, profile, signals) {
   const gap = 14;
   const width = Math.floor((746 - gap * (signals.length - 1)) / signals.length);
+  const signalIndexes = new Map(signals.flatMap((signal, index) =>
+    signal.items.map((item) => [item.title, index])));
+  const verified = report.relationships.filter((relationship) =>
+    signalIndexes.has(relationship.from) && signalIndexes.has(relationship.to));
   const nodes = signals.map((signal, index) => {
     const x = 7 + index * (width + gap);
-    const connector = index < signals.length - 1
+    const observedConnection = verified.some((relationship) =>
+      signalIndexes.get(relationship.from) === index
+      && signalIndexes.get(relationship.to) === index + 1);
+    const connector = index < signals.length - 1 && observedConnection
       ? `<path d="M${x + width + 3} 43 l8 0 m-3 -3 l3 3 -3 3" fill="none" stroke="var(--muted)" stroke-width="1.5"/>`
       : "";
 
     return `<g><rect x="${x}" y="10" width="${width}" height="65" rx="13" fill="var(--card)" stroke="var(--line)"/><circle cx="${x + 15}" cy="28" r="4" fill="var(--accent)"/><text x="${x + 27}" y="32" fill="var(--muted)" font-size="10">${escapeHtml(compactLabel(signal.label, Math.max(9, Math.floor(width / 8))))}</text><text x="${x + 14}" y="58" fill="var(--ink)" font-size="18" font-weight="750">${signal.count}</text>${connector}</g>`;
   }).join("");
 
-  return renderSignalSvg(`${profile.title} flow of actual recorded report results`, nodes, 85);
+  const relationLabel = verified.length
+    ? ` with ${verified.length} verified relationship${verified.length === 1 ? "" : "s"}`
+    : "";
+
+  return renderSignalSvg(`${profile.title} actual recorded report results${relationLabel}`, nodes, 85);
 }
 
 function renderChecksVisualization(report, profile) {
@@ -593,8 +1040,36 @@ function renderChecksVisualization(report, profile) {
 }
 
 function renderMatrixVisualization(profile, signals) {
+  if (profile.title === "Review findings") {
+    const observedFindings = signals.find((signal) => signal.key === "findings")?.items ?? [];
+    const axes = [
+      ["standards", "Standards findings"],
+      ["specification", "Specification findings"],
+    ];
+
+    if (observedFindings.some((finding) => finding.axis)) {
+      return axes.map(([axis, heading]) => {
+        const findings = observedFindings.filter((finding) => finding.axis === axis);
+
+        if (findings.length === 0) return "";
+
+        const rows = findings.map((finding) => {
+          const priority = finding.priority
+            ? `<span class="priority-badge priority-${escapeHtml(finding.priority.toLowerCase())}">${escapeHtml(finding.priority)}</span>`
+            : '<span class="matrix-kind">Recorded</span>';
+
+          return `<tr><th scope="row">${escapeHtml(finding.title)}${finding.detail ? `<span class="matrix-evidence">${escapeHtml(finding.detail)}</span>` : ""}</th><td>${priority}</td></tr>`;
+        }).join("");
+
+        return `<table class="signal-matrix"><caption>${escapeHtml(heading)} · independently assessed evidence</caption><thead><tr><th scope="col">Observed finding and evidence</th><th scope="col">Priority</th></tr></thead><tbody>${rows}</tbody></table>`;
+      }).join("");
+    }
+  }
+
   const rows = signals.flatMap((signal) => signal.items.slice(0, 3).map((item) => {
-    const status = signal.key === "checks"
+    const status = item.priority
+      ? `<span class="priority-badge priority-${escapeHtml(item.priority.toLowerCase())}">${escapeHtml(item.priority)}</span>`
+      : signal.key === "checks"
       ? `<span class="check-badge check-${escapeHtml(item.status)}">${escapeHtml(item.status)}</span>`
       : `<span class="matrix-kind">${escapeHtml(signal.label)}</span>`;
 
@@ -627,7 +1102,7 @@ function renderReadoutVisualization(report, profile) {
       visual = renderBarVisualization(profile, signals);
       break;
     case "flow":
-      visual = renderFlowVisualization(profile, signals);
+      visual = renderFlowVisualization(report, profile, signals);
       break;
     case "matrix":
       visual = renderMatrixVisualization(profile, signals);
@@ -647,12 +1122,109 @@ function renderReadoutVisualization(report, profile) {
   return `<figure class="signal-panel"><figcaption><span class="eyebrow">Visual summary</span><span class="signal-caption">${escapeHtml(profile.signal)}</span></figcaption>${visual}</figure>`;
 }
 
+function renderExecutionContext(report) {
+  if (!report.execution) return "";
+
+  const { machine, deployments, files } = report.execution;
+  const evidence = [
+    {
+      title: "Execution machine",
+      detail: `${machine.hostname} · ${machine.platform}`,
+    },
+  ];
+
+  for (const deployment of deployments) {
+    const state = deployment.status === "verified"
+      ? "Verified deployment"
+      : deployment.status === "deployed"
+        ? "Completed deployment"
+        : deployment.status === "failed"
+          ? "Failed deployment"
+          : "Pending deployment";
+
+    evidence.push({
+      title: `${state} · ${deployment.environment}`,
+      detail: deployment.summary ?? "Directly observed deployment state.",
+      ...(deployment.url ? { href: deployment.url } : {}),
+    });
+  }
+
+  for (const file of files) {
+    const state = `${file.change[0].toUpperCase()}${file.change.slice(1)}`;
+
+    evidence.push({
+      title: `${state} file`,
+      detail: file.summary ? `${file.path}\n${file.summary}` : file.path,
+    });
+  }
+
+  return renderSection(
+    "Execution context",
+    "Actual machine, verified deployments, and files changed by this run",
+    evidence,
+  );
+}
+
+function renderDeliveryEvidence(report) {
+  if (!report.provenance) return "";
+
+  const { commit, pullRequests, release, closedIssues } = report.provenance;
+  const evidence = [];
+
+  if (commit) {
+    evidence.push({
+      title: commit.published ? "Published commit" : "Local commit",
+      detail: commit.sha,
+      ...(commit.url ? { href: commit.url } : {}),
+    });
+  }
+
+  for (const pullRequest of pullRequests) {
+    const state = pullRequest.state === "merged"
+      ? "Merged pull request"
+      : pullRequest.state === "closed"
+        ? "Closed pull request"
+        : pullRequest.state === "open"
+          ? "Open pull request"
+          : "Verified pull request";
+
+    evidence.push({
+      title: `${state} #${pullRequest.number}`,
+      detail: pullRequest.title ?? "Independently verified GitHub pull request.",
+      href: pullRequest.url,
+    });
+  }
+
+  if (release) {
+    evidence.push({
+      title: "Released version",
+      detail: release.version,
+      ...(release.url ? { href: release.url } : {}),
+    });
+  }
+
+  for (const issue of closedIssues) {
+    evidence.push({
+      title: `${issue.closedByRelease ? "Issues verified as closed by this release" : "Verified closed issue"} · #${issue.number}`,
+      detail: issue.title ?? "Independently verified GitHub issue.",
+      href: issue.url,
+    });
+  }
+
+  return renderSection(
+    "Verified delivery evidence",
+    "Only independently verified GitHub and release records",
+    evidence,
+  );
+}
+
 const reportStyles = `
   :root{color-scheme:light;--ink:#172033;--muted:#64748b;--paper:#f5f6fa;--card:#fff;--line:#e6e8ee;--accent:#2563eb;--soft:#dbeafe}
   *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}main{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:48px 0 72px}.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:750;letter-spacing:.02em}.brand-mark{display:grid;width:34px;height:34px;place-items:center;border-radius:11px;background:#172033;color:#fff;font-weight:850}.eyebrow{margin:0;color:var(--muted);font-size:11px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}.timestamp{color:var(--muted);font-size:12px}.hero{position:relative;overflow:hidden;padding:38px;border:1px solid var(--line);border-radius:24px;background:var(--card)}.hero::before{position:absolute;inset:0 0 auto;height:4px;background:var(--accent);content:""}.hero-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.hero h1{margin:12px 0 8px;font-size:clamp(32px,6vw,55px);font-weight:770;letter-spacing:-.07em;line-height:1.03}.skill-command{display:inline-block;margin-top:7px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.status{flex-shrink:0;border-radius:999px;padding:9px 13px;background:var(--soft);color:var(--accent);font-size:12px;font-weight:750}.status-blocked{background:#fee2e2;color:#b91c1c}.status-awaiting-input{background:#fef3c7;color:#a16207}.status-preview{background:#e9edf3;color:#475569}.outcome{max-width:72ch;margin:25px 0 0;color:#334155;font-size:17px;line-height:1.7}.preview-note{margin-top:18px;border:1px solid #dbe2eb;border-radius:13px;padding:12px 15px;background:#f8fafc;color:#475569;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:21px}.metric{border:1px solid var(--line);border-radius:15px;padding:15px;background:var(--card)}.metric-label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.metric-value{display:block;margin-top:9px;font-size:25px;font-weight:770;letter-spacing:-.04em}.section{margin-top:34px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section-heading h2{margin:6px 0 0;font-size:23px;font-weight:720;letter-spacing:-.04em}.section-count{display:grid;width:31px;height:31px;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;font-weight:700}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-card{min-width:0;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card)}.detail-heading{display:flex;align-items:center;gap:9px}.detail-heading h3{flex:1;min-width:0;margin:0;overflow-wrap:anywhere;font-size:14px;font-weight:700}.detail-card p{margin:10px 0 0;overflow-wrap:anywhere;color:#526077;font-size:13px;line-height:1.7;white-space:pre-wrap}.item-link{flex-shrink:0;color:var(--accent);font-size:12px;font-weight:700;text-decoration:none}.check-badge{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:750;text-transform:uppercase}.check-passed{background:#dcfce7;color:#15803d}.check-failed{background:#fee2e2;color:#b91c1c}.check-skipped{background:#f1f5f9;color:#475569}.check-info{background:#dbeafe;color:#1d4ed8}.skills-used{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.skill-chip{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}.next-card{display:block;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);text-decoration:none}.next-card:first-child{border-color:var(--accent)}.next-card .eyebrow{color:var(--accent)}.next-card h3{margin:10px 0 7px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}.next-card p:last-child{margin:0;color:#526077;font-size:13px;line-height:1.7}.empty-next{border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);color:#526077;font-size:13px}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:39px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.dashboard-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:22px}.dashboard-card{display:block;border:1px solid var(--line);border-radius:17px;padding:18px;background:var(--card);text-decoration:none}.dashboard-card:hover{border-color:var(--accent)}.dashboard-card h2{margin:10px 0 7px;font-size:17px;letter-spacing:-.03em}.dashboard-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.dashboard-card .status{display:inline-block;margin-top:12px}.empty-gallery{margin-top:22px;border:1px dashed var(--line);border-radius:16px;padding:22px;color:var(--muted);background:var(--card)}
   .compact-readout{width:min(900px,calc(100% - 36px));padding:29px 0 43px}.compact-readout .topline{margin-bottom:16px}.compact-readout .hero{padding:23px 25px;border-radius:19px}.compact-readout .hero h1{margin:7px 0 3px;font-size:clamp(26px,5vw,39px);letter-spacing:-.055em}.compact-readout .outcome{margin:14px 0 0;font-size:14px;line-height:1.6}.compact-readout .skills-used{gap:6px;margin-top:10px}.compact-readout .skill-chip{padding:5px 8px;font-size:10px}.profile-title{margin:7px 0 0;color:var(--accent);font-size:12px;font-weight:730}.compact-readout .metrics{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:12px}.compact-readout .metric{border-radius:12px;padding:11px 12px}.compact-readout .metric-label{font-size:10px}.compact-readout .metric-value{margin-top:4px;font-size:19px}.compact-readout .section{margin-top:19px}.compact-readout .section-heading{margin-bottom:9px}.compact-readout .section-heading h2{margin-top:4px;font-size:18px}.compact-readout .section-count{width:26px;height:26px;border-radius:8px;font-size:11px}.compact-readout .detail-grid{gap:9px}.compact-readout .detail-card{border-radius:12px;padding:12px}.compact-readout .detail-card p{margin-top:6px;font-size:12px;line-height:1.55}.compact-readout .footer{margin-top:23px;padding-top:12px}.compact-readout .next-grid{gap:9px}.compact-readout .next-card{border-radius:12px;padding:12px}.compact-readout .next-card h3{margin:7px 0 5px;font-size:12px}.compact-readout .next-card p:last-child{font-size:12px}.signal-panel{margin:13px 0 0;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}.signal-panel figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.signal-caption{color:var(--muted);font-size:10px}.signal-svg{display:block;width:100%;max-width:760px;height:auto}.signal-checks,.signal-brief{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.signal-check,.signal-brief-item{display:grid;grid-template-columns:8px 1fr;align-items:center;column-gap:8px;row-gap:3px;min-height:46px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.signal-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.signal-check strong,.signal-brief-item strong{font-size:12px}.signal-check>span:last-child,.signal-brief-item>span:last-child{grid-column:2;color:var(--muted);font-size:10px}.signal-check-passed .signal-dot{background:#16a34a}.signal-check-failed .signal-dot{background:#dc2626}.signal-check-skipped .signal-dot{background:#94a3b8}.signal-matrix{width:100%;border-collapse:collapse;text-align:left;font-size:12px}.signal-matrix caption{margin-bottom:7px;color:var(--muted);text-align:left;font-size:10px}.signal-matrix th,.signal-matrix td{border-top:1px solid var(--line);padding:8px 7px}.signal-matrix thead th{border-top:0;color:var(--muted);font-size:10px;font-weight:700}.signal-matrix tbody th{font-weight:650}.matrix-kind{color:var(--muted);font-size:10px}
   .gallery-nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}.gallery-nav a,.preview-toggle{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--card);font-size:12px;font-weight:700;text-decoration:none}.gallery-nav a[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:15px}.project-card{min-width:0;border:1px solid var(--line);border-radius:19px;padding:20px;background:var(--card)}.project-card.current{border-color:var(--accent)}.project-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.project-title{display:block;margin:9px 0 5px;overflow-wrap:anywhere;font-size:19px;font-weight:750;letter-spacing:-.04em;text-decoration:none}.project-meta{color:var(--muted);font-size:12px}.current-project{border-radius:999px;padding:6px 9px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:800;white-space:nowrap}.report-list{display:grid;gap:10px;margin-top:15px}.report-row{display:block;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff;text-decoration:none}.report-row:hover,.project-title:hover{border-color:var(--accent);color:var(--accent)}.report-row-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.report-row-title{font-size:13px;font-weight:720}.report-row .status{padding:5px 8px;font-size:10px}.report-outcome{margin:8px 0 0;color:#526077;font-size:12px;line-height:1.6}.report-time{display:block;margin-top:7px;color:var(--muted);font-size:11px}.explorer{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:16px}.explorer-sidebar,.explorer-content{min-width:0;border:1px solid var(--line);border-radius:18px;padding:17px;background:var(--card)}.sidebar-list{display:grid;gap:7px;margin-top:12px}.sidebar-project{display:block;border:1px solid transparent;border-radius:11px;padding:11px;color:var(--muted);font-size:12px;font-weight:650;text-decoration:none;overflow-wrap:anywhere}.sidebar-project[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.search-form{display:flex;gap:8px;margin:15px 0}.search-input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font:inherit;font-size:13px}.search-submit{border:1px solid var(--accent);border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font:inherit;font-size:12px;font-weight:700}.timeline-day{margin-top:23px}.timeline-day h2{margin:0 0 12px;font-size:15px;letter-spacing:-.02em}.timeline-day .report-list{margin-top:0}.legacy-note{margin:15px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
   .report-profile{display:inline-block;margin-top:6px;border-radius:999px;padding:3px 7px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:700}
+  .priority-badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:780}.priority-p0,.priority-p1{background:#fee2e2;color:#b91c1c}.priority-p2{background:#fef3c7;color:#a16207}.priority-p3{background:#dbeafe;color:#1d4ed8}.matrix-evidence{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:450;overflow-wrap:anywhere}.signal-matrix+.signal-matrix{margin-top:13px}
   @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.explorer{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
 `;
 
@@ -706,6 +1278,32 @@ function renderNormalizedSkillReadout(report) {
       `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
       `<meta name="quickstark:project-source" content="${escapeHtml(report.projectIdentity.source)}">`,
     ] : []),
+    ...(report.execution ? [
+      `<meta name="quickstark:machine" content="${escapeHtml(report.execution.machine.hostname)}">`,
+      `<meta name="quickstark:platform" content="${escapeHtml(report.execution.machine.platform)}">`,
+    ] : []),
+    ...(report.execution?.deployments ?? []).flatMap((deployment) => [
+      `<meta name="quickstark:deployment-environment" content="${escapeHtml(deployment.environment)}">`,
+      `<meta name="quickstark:deployment-status" content="${escapeHtml(deployment.status)}">`,
+      ...(deployment.url ? [
+        `<meta name="quickstark:deployment-url" content="${escapeHtml(deployment.url)}">`,
+      ] : []),
+    ]),
+    ...(report.execution?.files ?? []).flatMap((file) => [
+      `<meta name="quickstark:changed-file" content="${escapeHtml(file.path)}">`,
+      `<meta name="quickstark:file-change" content="${escapeHtml(file.change)}">`,
+    ]),
+    ...(report.provenance?.commit ? [
+      `<meta name="quickstark:commit-sha" content="${escapeHtml(report.provenance.commit.sha)}">`,
+      `<meta name="quickstark:commit-published" content="${report.provenance.commit.published}">`,
+    ] : []),
+    ...(report.provenance?.release ? [
+      `<meta name="quickstark:release-version" content="${escapeHtml(report.provenance.release.version)}">`,
+    ] : []),
+    ...(report.provenance?.pullRequests ?? []).map((pullRequest) =>
+      `<meta name="quickstark:pull-request" content="${pullRequest.number}">`),
+    ...(report.provenance?.closedIssues ?? []).map((issue) =>
+      `<meta name="quickstark:closed-issue" content="${issue.number}">`),
   ].join("\n  ");
 
   const used = report.skillsUsed.length
@@ -719,6 +1317,8 @@ function renderNormalizedSkillReadout(report) {
   const signals = report.status === "Preview" ? [] : actualReportSignals(report, profile);
   const metrics = signals.slice(0, 3).map((signal) =>
     `<div class="metric"><span class="metric-label">${escapeHtml(signal.label)}</span><span class="metric-value">${signal.count}</span></div>`).join("");
+  const execution = renderExecutionContext(report);
+  const evidence = renderDeliveryEvidence(report);
   const visualization = renderReadoutVisualization(report, profile);
   const sections = report.status === "Preview"
     ? renderSection(
@@ -740,6 +1340,8 @@ function renderNormalizedSkillReadout(report) {
   const body = `<main class="compact-readout">
   <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
   <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}</header>
+  ${execution}
+  ${evidence}
   ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
   ${visualization}
   ${sections}

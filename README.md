@@ -42,7 +42,7 @@ Run `/qs-setup` once in a project to configure its issue tracker, domain documen
 | Help and setup | `/qs-help`, `/qs-setup` | Choose a workflow and configure a project. |
 | Planning | `/qs-plan-clarify`, `/qs-plan-explore`, `/qs-plan-interview`, `/qs-plan-spec`, `/qs-plan-tickets`, `/qs-plan-roadmap`, `/qs-plan-research` | Turn an idea into researched, actionable work. |
 | Design | `/qs-design-domain`, `/qs-design-modules`, `/qs-design-architecture`, `/qs-design-prototype` | Explore domain models, interfaces, architecture, and prototypes. |
-| Coding | `/qs-code-build`, `/qs-code-debug` | Build a change or diagnose a regression. |
+| Coding and documentation | `/qs-code-build`, `/qs-code-debug`, `/qs-code-document` | Build, diagnose, and accurately document verified project behavior. |
 | Testing | `/qs-test-tdd` | Build behavior using a test-first feedback loop. |
 | Review | `/qs-review-code` | Review changes against code standards and requirements. |
 | Deployment | `/qs-deploy-release` | Verify and execute an existing, documented deployment safely. |
@@ -62,6 +62,8 @@ Run `/qs-setup` once in a project to configure its issue tracker, domain documen
 /qs-plan-tickets
     ↓
 /qs-code-build  →  /qs-test-tdd
+    ↓
+/qs-code-document  (when documentation needs updating)
     ↓
 /qs-review-code
     ↓
@@ -92,7 +94,7 @@ Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation onl
 
 ## Visual skill readouts
 
-Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 23 report profiles keep an honest status, concise outcome, actual findings, decisions, outputs, checks, and relevant next skills; each foregrounds the information that matters for that particular skill.
+Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 24 report profiles keep an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and relevant next skills; each foregrounds the information that matters for that particular skill.
 
 | Skill purpose | Primary visual signal |
 | --- | --- |
@@ -106,7 +108,7 @@ Every promoted skill automatically produces a compact, purpose-specific, self-co
 
 Visualizations are accessible, responsive, and self-contained; they never invent activity, progress, test results, or report data. Reports have no external JavaScript or stylesheet dependency and use the operating system's temporary `quickstark-readouts` directory by default.
 
-Generate a clearly labeled preview for all 23 skills:
+Generate a clearly labeled preview for all 24 skills:
 
 ```bash
 npm run readouts:gallery
@@ -216,13 +218,14 @@ Every promoted skill also finishes with the same concise, human-readable summary
 Status: Completed
 Skills used: /qs-design-architecture; /qs-design-modules
 Outcome: Identified and prioritized the highest-value architectural refactor.
+Execution: Actual development machine; only files changed by this skill run.
 Readout: /tmp/quickstark-readouts/qs-design-architecture--2026-07-25T15-30-00-000Z--a1b2c3d4.html
 Outputs: /absolute/path/to/architecture-review.html
 Checks: Confirmed the affected modules and existing test coverage.
 Next best: /qs-plan-clarify — agree on the chosen refactor's scope.
 ```
 
-`Skills used` lists only skills that actually ran. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs` and `Checks` appear only when real artifacts or validations exist. `Next best` explains one to three relevant follow-on skills; it says `None` when the requested work is already complete.
+`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs`, `Checks`, and delivery evidence appear only when real artifacts, validations, or GitHub records exist. `Next best` explains one to three relevant follow-on skills; it says `None` when the requested work is already complete.
 
 Next-step recommendations are maintained in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs), not reinvented independently by each skill.
 
@@ -252,6 +255,7 @@ These skills can also be selected automatically when the task fits.
 - [qs-design-domain](./skills/engineering/qs-design-domain/SKILL.md) — Develop a clear domain model and shared project vocabulary.
 - [qs-design-modules](./skills/engineering/qs-design-modules/SKILL.md) — Design clean interfaces and deep, testable modules.
 - [qs-code-debug](./skills/engineering/qs-code-debug/SKILL.md) — Reproduce, diagnose, and regression-test a bug.
+- [qs-code-document](./skills/engineering/qs-code-document/SKILL.md) — Write accurate documentation from verified project behavior.
 - [qs-test-tdd](./skills/engineering/qs-test-tdd/SKILL.md) — Implement behavior using a red-green test-driven loop.
 - [qs-review-code](./skills/engineering/qs-review-code/SKILL.md) — Review code against its specification and project standards.
 - [qs-git-merge](./skills/engineering/qs-git-merge/SKILL.md) — Resolve Git merge and rebase conflicts without losing work.
@@ -296,4 +300,4 @@ Consult [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs) for the
 
 ## License and attribution
 
-The 22 adapted skills originate from [Matt Pocock's skills](https://github.com/mattpocock/skills) and remain covered by the original [MIT license](./LICENSE). `/qs-deploy-release`, the QuickStark naming system, the Codex packaging, and the repository validation are personal additions.
+The 22 adapted skills originate from [Matt Pocock's skills](https://github.com/mattpocock/skills) and remain covered by the original [MIT license](./LICENSE). `/qs-deploy-release`, `/qs-code-document`, the QuickStark naming system, the Codex packaging, and the repository validation are personal additions.

@@ -132,6 +132,15 @@ export const SKILLS = Object.freeze([
   },
   {
     bucket: "engineering",
+    upstreamName: null,
+    name: "qs-code-document",
+    displayName: "QS Code: Document",
+    shortDescription: "Write accurate, verified project documentation",
+    prompt: "write or update accurate documentation for the actual project and its verified behavior",
+    userInvoked: false,
+  },
+  {
+    bucket: "engineering",
     upstreamName: "diagnosing-bugs",
     name: "qs-code-debug",
     displayName: "QS Code: Debug",
@@ -321,6 +330,18 @@ export const READOUT_PROFILES_BY_NAME = Object.freeze({
     "flow",
     ["outputs", "checks", "decisions", "findings"],
     { outputs: "Deliverables", checks: "Verification", decisions: "Implementation decisions" },
+  ),
+  "qs-code-document": defineReadoutProfile(
+    "Documentation coverage",
+    "Show verified documentation changes and accuracy checks",
+    "checks",
+    ["outputs", "checks", "findings", "decisions"],
+    {
+      outputs: "Documented artifacts",
+      checks: "Documentation validation",
+      findings: "Documentation coverage",
+      decisions: "Documentation decisions",
+    },
   ),
   "qs-code-debug": defineReadoutProfile(
     "Diagnosis trace",
@@ -588,8 +609,22 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
       reason: "Review the implementation against its requirements and standards.",
     },
     {
+      name: "qs-code-document",
+      reason: "Document the verified implementation, changed files, and operational behavior.",
+    },
+  ],
+  "qs-code-document": [
+    {
+      name: "qs-review-code",
+      reason: "Verify that the documentation accurately reflects the actual implementation.",
+    },
+    {
+      name: "qs-flow-handoff",
+      reason: "Hand documented operational knowledge and remaining work to the next session.",
+    },
+    {
       name: "qs-deploy-release",
-      reason: "Release a reviewed change using the project's documented workflow.",
+      reason: "Use the verified deployment documentation when a release is explicitly approved.",
     },
   ],
   "qs-code-debug": [
@@ -700,8 +735,8 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
       reason: "Review skill scripts, examples, and implementation changes.",
     },
     {
-      name: "qs-flow-handoff",
-      reason: "Hand the completed skill and validation notes to another session.",
+      name: "qs-code-document",
+      reason: "Document the verified skill behavior, actual files, and installation workflow.",
     },
   ],
   "qs-deploy-release": [
