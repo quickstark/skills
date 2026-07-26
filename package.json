@@ -17,7 +17,7 @@
     "check:codex": "node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check",
     "readouts:gallery": "node scripts/qs-skill-readout.mjs gallery",
     "readouts:serve": "node scripts/qs-skill-readout.mjs serve",
-    "test": "node --test tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs"
+    "test": "node --test tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs tests/qs-readout-observation.test.mjs"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",

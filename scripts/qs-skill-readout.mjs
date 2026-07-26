@@ -25,6 +25,31 @@ export const READOUT_VIEWER_STATE = ".quickstark-readout-viewer.json";
 export const READOUT_FORMAT_VERSION = 1;
 
 const statuses = new Set(["Completed", "Awaiting input", "Blocked", "Preview"]);
+const observationSources = new Set([
+  "provider-response",
+  "codex-opentelemetry",
+  "verified-harness",
+  "user-reported",
+]);
+const observationScopes = new Set(["skill-run", "thread-turn", "thread-cumulative"]);
+const observationReasoningEfforts = new Set([
+  "none",
+  "minimal",
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max",
+  "ultra",
+]);
+const observationTokenFields = new Set([
+  "input",
+  "cachedInput",
+  "cacheWrite",
+  "output",
+  "reasoningOutput",
+  "total",
+]);
 const checkStatuses = new Set(["passed", "failed", "skipped", "info"]);
 const reviewAxes = new Set(["standards", "specification"]);
 const findingPriorities = new Set(["P0", "P1", "P2", "P3"]);
@@ -795,6 +820,221 @@ function normalizeReadoutProducer(value) {
   };
 }
 
+function validateObservationObject(value, label, allowed) {
+  if (
+    !value
+    || typeof value !== "object"
+    || Array.isArray(value)
+    || ![Object.prototype, null].includes(Object.getPrototypeOf(value))
+  ) {
+    throw new Error(`${label} must be a plain observation object.`);
+  }
+
+  for (const field of Object.keys(value)) {
+    if (!allowed.has(field)) {
+      throw new Error(`${label} contains an unsupported observation field: ${field}.`);
+    }
+  }
+
+  return value;
+}
+
+function normalizeObservationTimestamp(value, label) {
+  if (typeof value !== "string" || !observedUtcTimestamp.test(value)) {
+    throw new Error(`${label} must be an observed UTC timestamp.`);
+  }
+
+  const timestamp = new Date(value);
+
+  if (
+    Number.isNaN(timestamp.getTime())
+    || timestamp.toISOString().slice(0, 19) !== value.slice(0, 19)
+  ) {
+    throw new Error(`${label} must be a valid observed UTC timestamp.`);
+  }
+
+  return value;
+}
+
+function normalizeObservationCount(value, label) {
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw new Error(`${label} must be a nonnegative safe integer.`);
+  }
+
+  return value;
+}
+
+function normalizeSkillObservation(value, status) {
+  if (value === undefined) return null;
+
+  if (status === "Preview") {
+    throw new Error("A catalog preview cannot claim an actual skill-run observation.");
+  }
+
+  const observation = validateObservationObject(
+    value,
+    "Skill observation",
+    new Set([
+      "version",
+      "measurementSource",
+      "attributionScope",
+      "capturedAt",
+      "inference",
+      "tokens",
+      "timing",
+    ]),
+  );
+
+  if (observation.version !== 1) {
+    throw new Error("Skill observation version must be 1.");
+  }
+
+  if (!observationSources.has(observation.measurementSource)) {
+    throw new Error("Skill observation measurement source must be a supported observed source.");
+  }
+
+  if (!observationScopes.has(observation.attributionScope)) {
+    throw new Error("Skill observation attribution scope must be skill-run, thread-turn, or thread-cumulative.");
+  }
+
+  const normalized = {
+    version: 1,
+    measurementSource: observation.measurementSource,
+    attributionScope: observation.attributionScope,
+    capturedAt: normalizeObservationTimestamp(observation.capturedAt, "Observation capturedAt"),
+  };
+
+  if (observation.inference !== undefined) {
+    const inference = validateObservationObject(
+      observation.inference,
+      "Observation inference",
+      new Set(["provider", "model", "reasoningEffort"]),
+    );
+    const normalizedInference = {};
+
+    if (inference.provider !== undefined) {
+      if (typeof inference.provider !== "string" || !/^[a-z][a-z0-9._-]{0,62}$/.test(inference.provider)) {
+        throw new Error("Observation provider must be a safe provider identifier.");
+      }
+
+      normalizedInference.provider = inference.provider;
+    }
+
+    if (inference.model !== undefined) {
+      if (
+        typeof inference.model !== "string"
+        || !/^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,126}$/.test(inference.model)
+      ) {
+        throw new Error("Observation model must be a safe model identifier.");
+      }
+
+      normalizedInference.model = inference.model;
+    }
+
+    if (inference.reasoningEffort !== undefined) {
+      if (!observationReasoningEfforts.has(inference.reasoningEffort)) {
+        throw new Error("Observation reasoning effort must be a supported observed effort.");
+      }
+
+      normalizedInference.reasoningEffort = inference.reasoningEffort;
+    }
+
+    normalized.inference = normalizedInference;
+  }
+
+  if (observation.tokens !== undefined) {
+    const tokens = validateObservationObject(
+      observation.tokens,
+      "Observation tokens",
+      observationTokenFields,
+    );
+    const normalizedTokens = {};
+
+    for (const field of observationTokenFields) {
+      if (tokens[field] !== undefined) {
+        normalizedTokens[field] = normalizeObservationCount(tokens[field], `Observation tokens.${field}`);
+      }
+    }
+
+    if (normalizedTokens.input !== undefined && normalizedTokens.output !== undefined) {
+      const responseTotal = normalizedTokens.input + normalizedTokens.output;
+
+      if (!Number.isSafeInteger(responseTotal)) {
+        throw new Error("Observation response token total must be a nonnegative safe integer.");
+      }
+
+      if (normalizedTokens.total !== undefined && normalizedTokens.total !== responseTotal) {
+        throw new Error("Observation token total must equal the final input and output token counts.");
+      }
+    }
+
+    if (normalizedTokens.total !== undefined) {
+      for (const field of ["input", "cachedInput", "cacheWrite", "output", "reasoningOutput"]) {
+        if (normalizedTokens[field] !== undefined && normalizedTokens[field] > normalizedTokens.total) {
+          throw new Error(`Observation ${field} tokens cannot exceed the final response token total.`);
+        }
+      }
+    }
+
+    if (
+      normalizedTokens.input !== undefined
+      && normalizedTokens.cachedInput !== undefined
+      && normalizedTokens.cachedInput > normalizedTokens.input
+    ) {
+      throw new Error("Observation cached input tokens cannot exceed input tokens.");
+    }
+
+    if (
+      normalizedTokens.output !== undefined
+      && normalizedTokens.reasoningOutput !== undefined
+      && normalizedTokens.reasoningOutput > normalizedTokens.output
+    ) {
+      throw new Error("Observation reasoning output tokens cannot exceed output tokens.");
+    }
+
+    normalized.tokens = normalizedTokens;
+  }
+
+  if (observation.timing !== undefined) {
+    const timing = validateObservationObject(
+      observation.timing,
+      "Observation timing",
+      new Set(["startedAt", "finishedAt", "activeDurationMs"]),
+    );
+    const normalizedTiming = {};
+
+    for (const field of ["startedAt", "finishedAt"]) {
+      if (timing[field] !== undefined) {
+        normalizedTiming[field] = normalizeObservationTimestamp(timing[field], `Observation timing.${field}`);
+      }
+    }
+
+    if (timing.activeDurationMs !== undefined) {
+      normalizedTiming.activeDurationMs = normalizeObservationCount(
+        timing.activeDurationMs,
+        "Observation timing.activeDurationMs",
+      );
+    }
+
+    if (normalizedTiming.startedAt !== undefined && normalizedTiming.finishedAt !== undefined) {
+      const elapsed = new Date(normalizedTiming.finishedAt).getTime()
+        - new Date(normalizedTiming.startedAt).getTime();
+
+      if (elapsed < 0) {
+        throw new Error("Observation timing cannot finish before the observed start.");
+      }
+
+      if (normalizedTiming.activeDurationMs !== undefined && normalizedTiming.activeDurationMs > elapsed) {
+        throw new Error("Observation active duration cannot exceed the observed elapsed time.");
+      }
+    }
+
+    normalized.timing = normalizedTiming;
+  }
+
+  return normalized;
+}
+
 function normalizeRecommendations(skill, recommendations) {
   const allowed = NEXT_SKILLS_BY_NAME[skill.name];
   const selected = recommendations === undefined ? allowed : recommendations;
@@ -900,6 +1140,7 @@ export function normalizeSkillReadout(input) {
   }
 
   const execution = normalizeExecutionContext(input.execution, status);
+  const observation = normalizeSkillObservation(input.observation, status);
   const producer = normalizeReadoutProducer(input.ingestion);
   const provenance = normalizeDeliveryProvenance(input.provenance, projectIdentity);
   const relationships = normalizeReportRelationships(input.relationships, [
@@ -929,6 +1170,7 @@ export function normalizeSkillReadout(input) {
     outputs,
     checks,
     execution,
+    observation,
     producer,
     provenance,
     relationships,
@@ -965,6 +1207,91 @@ function renderSection(title, description, items, options = {}) {
   if (items.length === 0) return "";
 
   return `<section class="section"><div class="section-heading"><div><p class="eyebrow">${escapeHtml(description)}</p><h2>${escapeHtml(title)}</h2></div><span class="section-count">${items.length}</span></div><div class="detail-grid">${items.map((item) => renderItem(item, options)).join("")}</div></section>`;
+}
+
+function renderObservedRun(observation) {
+  if (!observation) return "";
+
+  const scope = observation.attributionScope === "skill-run"
+    ? "Skill-run"
+    : observation.attributionScope === "thread-turn"
+      ? "Thread-turn"
+      : "Thread-cumulative";
+  const captured = (value) => value === undefined ? "Not captured" : String(value);
+  const count = (value) => value === undefined
+    ? "Not captured"
+    : new Intl.NumberFormat("en-US").format(value);
+  const inference = observation.inference ?? {};
+  const tokens = observation.tokens ?? {};
+  const timing = observation.timing ?? {};
+  const items = [
+    { title: "Measurement source", detail: observation.measurementSource },
+    { title: "Attribution scope", detail: observation.attributionScope },
+    { title: `${scope} provider`, detail: captured(inference.provider) },
+    { title: `${scope} model`, detail: captured(inference.model) },
+    { title: `${scope} reasoning effort`, detail: captured(inference.reasoningEffort) },
+    {
+      title: `${scope} final response tokens`,
+      detail: [
+        `Input: ${count(tokens.input)}`,
+        `Cached input: ${count(tokens.cachedInput)}`,
+        `Cache write: ${count(tokens.cacheWrite)}`,
+        `Output: ${count(tokens.output)}`,
+        `Reasoning output: ${count(tokens.reasoningOutput)}`,
+        `Total: ${count(tokens.total)}`,
+      ].join("\n"),
+    },
+    {
+      title: `${scope} active timing`,
+      detail: [
+        `Started: ${captured(timing.startedAt)}`,
+        `Finished: ${captured(timing.finishedAt)}`,
+        `Active duration: ${timing.activeDurationMs === undefined ? "Not captured" : `${count(timing.activeDurationMs)} ms`}`,
+      ].join("\n"),
+    },
+    { title: "Observation captured at", detail: observation.capturedAt },
+  ];
+
+  return renderSection(
+    scope === "Skill-run" ? "Observed skill run" : `Observed ${scope.toLowerCase()} context`,
+    "Only explicitly observed measurements at their actual attribution scope",
+    items,
+  );
+}
+
+function renderObservationMetadata(observation) {
+  if (!observation) return [];
+
+  const metadata = [
+    ["observation-source", observation.measurementSource],
+    ["observation-scope", observation.attributionScope],
+    ["observation-captured-at", observation.capturedAt],
+  ];
+
+  if (observation.attributionScope === "skill-run") {
+    const inference = observation.inference ?? {};
+    const tokens = observation.tokens ?? {};
+    const timing = observation.timing ?? {};
+
+    metadata.push(
+      ["provider", inference.provider],
+      ["model", inference.model],
+      ["reasoning-effort", inference.reasoningEffort],
+      ["input-tokens", tokens.input],
+      ["cached-input-tokens", tokens.cachedInput],
+      ["cache-write-tokens", tokens.cacheWrite],
+      ["output-tokens", tokens.output],
+      ["reasoning-output-tokens", tokens.reasoningOutput],
+      ["total-tokens", tokens.total],
+      ["started-at", timing.startedAt],
+      ["finished-at", timing.finishedAt],
+      ["active-duration-ms", timing.activeDurationMs],
+    );
+  }
+
+  return metadata
+    .filter(([, value]) => value !== undefined)
+    .map(([name, value]) => `<meta name="quickstark:${name}" content="${escapeHtml(value)}">`);
 }
 
 const readoutSectionDescriptions = Object.freeze({
@@ -1336,6 +1663,7 @@ function renderNormalizedSkillReadout(report) {
     `<meta name="quickstark:generated-at" content="${escapeHtml(report.generatedAt.toISOString())}">`,
     `<meta name="quickstark:report-id" content="${escapeHtml(report.reportId)}">`,
     `<meta name="quickstark:format-version" content="${report.formatVersion}">`,
+    ...renderObservationMetadata(report.observation),
     ...(report.projectIdentity ? [
       `<meta name="quickstark:project" content="${escapeHtml(report.projectIdentity.key)}">`,
       `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
@@ -1412,6 +1740,7 @@ function renderNormalizedSkillReadout(report) {
   <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
   <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}</header>
   ${execution}
+  ${renderObservedRun(report.observation)}
   ${evidence}
   ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
   ${visualization}
