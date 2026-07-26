@@ -1280,6 +1280,13 @@ const reportStyles = `
   .compact-readout{width:min(900px,calc(100% - 36px));padding:29px 0 43px}.compact-readout .topline{margin-bottom:16px}.compact-readout .hero{padding:23px 25px;border-radius:19px}.compact-readout .hero h1{margin:7px 0 3px;font-size:clamp(26px,5vw,39px);letter-spacing:-.055em}.compact-readout .outcome{margin:14px 0 0;font-size:14px;line-height:1.6}.compact-readout .skills-used{gap:6px;margin-top:10px}.compact-readout .skill-chip{padding:5px 8px;font-size:10px}.profile-title{margin:7px 0 0;color:var(--accent);font-size:12px;font-weight:730}.compact-readout .metrics{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:12px}.compact-readout .metric{border-radius:12px;padding:11px 12px}.compact-readout .metric-label{font-size:10px}.compact-readout .metric-value{margin-top:4px;font-size:19px}.compact-readout .section{margin-top:19px}.compact-readout .section-heading{margin-bottom:9px}.compact-readout .section-heading h2{margin-top:4px;font-size:18px}.compact-readout .section-count{width:26px;height:26px;border-radius:8px;font-size:11px}.compact-readout .detail-grid{gap:9px}.compact-readout .detail-card{border-radius:12px;padding:12px}.compact-readout .detail-card p{margin-top:6px;font-size:12px;line-height:1.55}.compact-readout .footer{margin-top:23px;padding-top:12px}.compact-readout .next-grid{gap:9px}.compact-readout .next-card{border-radius:12px;padding:12px}.compact-readout .next-card h3{margin:7px 0 5px;font-size:12px}.compact-readout .next-card p:last-child{font-size:12px}.signal-panel{margin:13px 0 0;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}.signal-panel figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.signal-caption{color:var(--muted);font-size:10px}.signal-svg{display:block;width:100%;max-width:760px;height:auto}.signal-checks,.signal-brief{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.signal-check,.signal-brief-item{display:grid;grid-template-columns:8px 1fr;align-items:center;column-gap:8px;row-gap:3px;min-height:46px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.signal-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.signal-check strong,.signal-brief-item strong{font-size:12px}.signal-check>span:last-child,.signal-brief-item>span:last-child{grid-column:2;color:var(--muted);font-size:10px}.signal-check-passed .signal-dot{background:#16a34a}.signal-check-failed .signal-dot{background:#dc2626}.signal-check-skipped .signal-dot{background:#94a3b8}.signal-matrix{width:100%;border-collapse:collapse;text-align:left;font-size:12px}.signal-matrix caption{margin-bottom:7px;color:var(--muted);text-align:left;font-size:10px}.signal-matrix th,.signal-matrix td{border-top:1px solid var(--line);padding:8px 7px}.signal-matrix thead th{border-top:0;color:var(--muted);font-size:10px;font-weight:700}.signal-matrix tbody th{font-weight:650}.matrix-kind{color:var(--muted);font-size:10px}
   .gallery-nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}.gallery-nav a,.preview-toggle{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--card);font-size:12px;font-weight:700;text-decoration:none}.gallery-nav a[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:15px}.project-card{min-width:0;border:1px solid var(--line);border-radius:19px;padding:20px;background:var(--card)}.project-card.current{border-color:var(--accent)}.project-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.project-title{display:block;margin:9px 0 5px;overflow-wrap:anywhere;font-size:19px;font-weight:750;letter-spacing:-.04em;text-decoration:none}.project-meta{color:var(--muted);font-size:12px}.current-project{border-radius:999px;padding:6px 9px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:800;white-space:nowrap}.report-list{display:grid;gap:10px;margin-top:15px}.report-row{display:block;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff;text-decoration:none}.report-row:hover,.project-title:hover{border-color:var(--accent);color:var(--accent)}.report-row-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.report-row-title{font-size:13px;font-weight:720}.report-row .status{padding:5px 8px;font-size:10px}.report-outcome{margin:8px 0 0;color:#526077;font-size:12px;line-height:1.6}.report-time{display:block;margin-top:7px;color:var(--muted);font-size:11px}.explorer{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:16px}.explorer-sidebar,.explorer-content{min-width:0;border:1px solid var(--line);border-radius:18px;padding:17px;background:var(--card)}.sidebar-list{display:grid;gap:7px;margin-top:12px}.sidebar-project{display:block;border:1px solid transparent;border-radius:11px;padding:11px;color:var(--muted);font-size:12px;font-weight:650;text-decoration:none;overflow-wrap:anywhere}.sidebar-project[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.search-form{display:flex;gap:8px;margin:15px 0}.search-input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font:inherit;font-size:13px}.search-submit{border:1px solid var(--accent);border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font:inherit;font-size:12px;font-weight:700}.timeline-day{margin-top:23px}.timeline-day h2{margin:0 0 12px;font-size:15px;letter-spacing:-.02em}.timeline-day .report-list{margin-top:0}.legacy-note{margin:15px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
   .report-profile{display:inline-block;margin-top:6px;border-radius:999px;padding:3px 7px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:700}
+  .workbench-page{width:min(1480px,calc(100% - 40px));padding:20px 0 30px}.workbench-masthead{display:flex;min-height:48px;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:13px}.workbench-brand{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:760;text-decoration:none}.workbench-brand>span:last-child>span,.workbench-private{color:var(--muted);font-size:11px;font-weight:550}.workbench-brand-mark{display:grid;width:29px;height:29px;place-items:center;border-radius:8px;background:#163a2a;color:#fff;font-weight:850}.workbench-page .gallery-nav{margin:13px 0}.workbench-page .gallery-nav a,.workbench-page .preview-toggle{padding:6px 10px;font-size:11px}
+  .workbench-shell{display:grid;min-height:490px;grid-template-columns:minmax(185px,230px) minmax(280px,1fr) minmax(260px,335px);overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--card)}.workbench-sidebar{min-width:0;border-right:1px solid var(--line);padding:17px 10px}.workbench-rail-heading{margin:0 0 10px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.workbench-projects{display:grid;align-content:start;gap:5px}.workbench-project{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 7px;border:1px solid transparent;border-radius:9px;padding:9px;text-decoration:none}.workbench-project:hover,.workbench-project.is-selected{border-color:var(--line);background:var(--soft)}.workbench-project-title{overflow-wrap:anywhere;font-size:11px;font-weight:690}.workbench-project-count{color:var(--muted);font-size:11px}.workbench-current{grid-column:1/-1;color:var(--accent);font-size:9px;font-weight:750;text-transform:uppercase}.workbench-project-outcome,.workbench-project-profile{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
+  .workbench-workspace{min-width:0;padding:18px 16px}.workbench-workspace-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.workbench-workspace-heading h1{margin:2px 0 4px;font-size:25px;font-weight:750;letter-spacing:-.06em}.workbench-scope{margin:0;color:var(--muted);font-size:11px}.workbench-run-count{flex-shrink:0;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--muted);font-size:10px}.workbench-runs{display:grid;align-content:start}.workbench-run{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 9px;border-bottom:1px solid var(--line);padding:11px 9px;text-decoration:none}.workbench-run:hover,.workbench-run.is-selected{background:var(--soft)}.workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-run-title{display:grid;min-width:0;gap:3px}.workbench-run-title strong{overflow:hidden;font-size:11px;font-weight:730;text-overflow:ellipsis;white-space:nowrap}.workbench-run-title>span,.workbench-run-time{color:var(--muted);font-size:10px}.workbench-run-outcome{grid-column:1/-1;overflow:hidden;color:#465366;font-size:11px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}.workbench-run-time{grid-column:1/-1}.workbench-status{display:inline-flex;align-items:center;gap:5px;align-self:start;color:#15803d;font-size:10px;font-weight:670}.workbench-status-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.workbench-status-blocked{color:#b91c1c}.workbench-status-awaiting-input{color:#a16207}.workbench-status-preview{color:#64748b}
+  .workbench-detail{min-width:0;border-left:1px solid var(--line);padding:17px 14px}.workbench-detail-top{display:flex;align-items:center;justify-content:space-between;gap:9px}.workbench-readonly{color:var(--muted);font-size:10px}.workbench-detail-title{margin:16px 0 4px;overflow-wrap:anywhere;font-size:20px;font-weight:740;letter-spacing:-.055em}.workbench-detail-profile{margin:0;color:var(--muted);font-size:11px}.workbench-open-report{display:inline-flex;align-items:center;gap:5px;margin-top:13px;color:var(--accent);font-size:11px;font-weight:690;text-decoration:none}.workbench-detail-section{margin-top:19px;border-top:1px solid var(--line);padding-top:12px}.workbench-detail-section h3{margin:0;font-size:12px;font-weight:710}.workbench-detail-section>p{margin:9px 0 0;overflow-wrap:anywhere;color:#465366;font-size:12px;line-height:1.7}.workbench-evidence{display:grid;grid-template-columns:minmax(86px,1fr) minmax(95px,1fr);gap:0;margin:10px 0 0}.workbench-evidence dt,.workbench-evidence dd{min-width:0;margin:0;border-bottom:1px solid var(--line);padding:8px 0;font-size:10px}.workbench-evidence dt{color:var(--muted)}.workbench-evidence dd{overflow-wrap:anywhere;font-weight:600}.workbench-empty-note,.workbench-detail-empty{color:var(--muted);font-size:11px;line-height:1.65}.workbench-detail-empty h2{color:var(--ink);font-size:15px}.workbench-footer{display:flex;justify-content:space-between;gap:12px;margin-top:15px;color:var(--muted);font-size:10px}
+  .workbench-projects .project-card{min-width:0;border:0;border-radius:0;padding:0;background:transparent}
+  @media(max-width:980px){.workbench-shell{grid-template-columns:minmax(170px,205px) minmax(0,1fr)}.workbench-detail{grid-column:1/-1;border-top:1px solid var(--line);border-left:0}.workbench-workspace{padding:15px 12px}}
+  @media(max-width:620px){.workbench-page{width:calc(100% - 24px);padding-top:12px}.workbench-masthead{flex-wrap:wrap}.workbench-shell{grid-template-columns:1fr}.workbench-sidebar{border-right:0;border-bottom:1px solid var(--line)}.workbench-projects{display:flex;overflow-x:auto}.workbench-project{min-width:175px}.workbench-workspace-heading{flex-wrap:wrap}.workbench-footer{flex-direction:column}}
   .priority-badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:780}.priority-p0,.priority-p1{background:#fee2e2;color:#b91c1c}.priority-p2{background:#fef3c7;color:#a16207}.priority-p3{background:#dbeafe;color:#1d4ed8}.matrix-evidence{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:450;overflow-wrap:anywhere}.signal-matrix+.signal-matrix{margin-top:13px}
   @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.explorer{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
 `;
@@ -1971,13 +1978,14 @@ export async function pruneReadouts(options = {}) {
   };
 }
 
-function galleryHref(view, { project, query, previews } = {}) {
+function galleryHref(view, { project, query, previews, report } = {}) {
   const parameters = new URLSearchParams();
 
   if (view !== "projects") parameters.set("view", view);
   if (project) parameters.set("project", project);
   if (query) parameters.set("q", query);
   if (previews) parameters.set("previews", "1");
+  if (report) parameters.set("report", report);
 
   const encoded = parameters.toString();
   return encoded ? `?${escapeHtml(encoded)}` : "./";
@@ -2020,6 +2028,78 @@ function groupReadoutProjects(reports) {
   return [...grouped.values()].sort((left, right) =>
     right.reports[0].generatedAt.localeCompare(left.reports[0].generatedAt)
     || left.key.localeCompare(right.key));
+}
+
+function renderWorkbenchStatus(status) {
+  const modifier = status.toLowerCase().replaceAll(" ", "-");
+
+  return `<span class="workbench-status workbench-status-${escapeHtml(modifier)}"><span class="workbench-status-dot" aria-hidden="true"></span>${escapeHtml(status)}</span>`;
+}
+
+function renderWorkbenchProjects(projects, { activeProject, selectedProject, previews }) {
+  if (projects.length === 0) {
+    return '<p class="workbench-empty-note">No verified project reports are available.</p>';
+  }
+
+  return projects.map((project) => {
+    const selected = project.key === selectedProject;
+    const actualCount = project.reports.filter((report) => report.status !== "Preview").length;
+    const latest = project.reports[0];
+    const current = project.key === activeProject;
+    const currentBadge = current
+      ? '<span class="workbench-current">Current project</span>'
+      : "";
+    const latestOutcome = selected
+      ? ""
+      : `<span class="workbench-project-outcome">${escapeHtml(latest.outcome)}</span>`;
+
+    return `<article class="project-card${current ? " current" : ""}" data-project="${escapeHtml(project.key)}"><a class="workbench-project${selected ? " is-selected" : ""}"${selected ? ' aria-current="page"' : ""} data-latest-report="${escapeHtml(latest.relativePath)}" href="${galleryHref("projects", { project: project.key, previews })}"><span class="workbench-project-title">${escapeHtml(project.label)}</span><span class="workbench-project-count">${actualCount}</span>${currentBadge}${latestOutcome}${latest.profileTitle ? `<span class="workbench-project-profile">${escapeHtml(latest.profileTitle)}</span>` : ""}</a></article>`;
+  }).join("");
+}
+
+function renderWorkbenchRuns(project, selectedReport, { previews }) {
+  if (!project || project.reports.length === 0) {
+    return '<p class="workbench-empty-note">No actual skill readouts are available for this verified project.</p>';
+  }
+
+  return project.reports.map((report) => {
+    const selected = report.relativePath === selectedReport?.relativePath;
+    const outcome = selected
+      ? ""
+      : `<span class="workbench-run-outcome">${escapeHtml(report.outcome)}</span>`;
+
+    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${galleryHref("projects", { project: project.key, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
+  }).join("");
+}
+
+function renderWorkbenchDetail(report) {
+  if (!report) {
+    return '<div class="workbench-detail-empty"><h2>Select a skill readout</h2><p>Choose an actual skill run to inspect its verified project and immutable outcome.</p></div>';
+  }
+
+  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p><a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>`;
+}
+
+function renderProjectWorkbench(projects, reports, {
+  activeProject,
+  selectedProject,
+  requestedReport,
+  previews,
+  navigation,
+  actualCount,
+} = {}) {
+  const project = projects.find((entry) => entry.key === selectedProject) ?? null;
+  const selectedReport = project?.reports.find((report) => report.relativePath === requestedReport)
+    ?? project?.reports[0]
+    ?? null;
+  const projectActualCount = project?.reports.filter((report) => report.status !== "Preview").length
+    ?? 0;
+  const legacyReports = reports.filter((report) => !report.projectKey);
+  const legacy = legacyReports.length > 0
+    ? renderProjectLibrary([], legacyReports, { activeProject, previews })
+    : "";
+
+  return `<main class="workbench-page"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><span class="workbench-private">Authenticated, read-only project library</span></header>${navigation}<div class="workbench-shell"><aside class="workbench-sidebar"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, previews })}</nav></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${project ? `<span class="workbench-run-count">${projectActualCount} actual skill run${projectActualCount === 1 ? "" : "s"}</span>` : ""}</header><nav class="workbench-runs" aria-label="Recorded skill runs">${renderWorkbenchRuns(project, selectedReport, { previews })}</nav></section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside></div>${legacy}<footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
 }
 
 function renderProjectLibrary(projects, reports, { activeProject, previews } = {}) {
@@ -2101,13 +2181,6 @@ async function renderReadoutIndex(directory, {
   const projects = groupReadoutProjects(reports);
   const requestedView = searchParams.get("view") ?? "projects";
   const view = ["projects", "explorer", "activity"].includes(requestedView) ? requestedView : "projects";
-  const requestedProject = searchParams.get("project");
-  const projectIsVisible = requestedProject === null
-    || projects.some((project) => project.key === requestedProject);
-  const selectedProject = projectIsVisible && requestedProject
-    ? requestedProject
-    : projects[0]?.key ?? "";
-  const query = projectIsVisible ? (searchParams.get("q") ?? "").slice(0, 200) : "";
   let activeProject = currentProject ?? "";
 
   if (!activeProject) {
@@ -2118,20 +2191,37 @@ async function renderReadoutIndex(directory, {
     }
   }
 
-  const title = view === "activity" ? "Recent activity" : view === "explorer" ? "Project explorer" : "Project library";
-  const content = view === "activity"
-    ? renderActivityTimeline(reports)
+  const requestedProject = searchParams.get("project");
+  const projectIsVisible = requestedProject === null
+    || projects.some((project) => project.key === requestedProject);
+  const selectedProject = projectIsVisible && requestedProject
+    ? requestedProject
+    : projects.find((project) => project.key === activeProject)?.key
+      ?? projects[0]?.key
+      ?? "";
+  const query = projectIsVisible ? (searchParams.get("q") ?? "").slice(0, 200) : "";
+  const title = view === "activity"
+    ? "Recent activity"
     : view === "explorer"
-      ? renderProjectExplorer(projects, { selectedProject, query, previews })
-      : renderProjectLibrary(projects, reports, { activeProject, previews });
+      ? "Project explorer"
+      : "Project Workbench";
   const actualCount = discovered.filter((report) => report.status !== "Preview").length;
   const previewLink = previews
     ? `<a class="preview-toggle" href="${galleryHref(view, { project: view === "explorer" ? selectedProject : undefined, query })}">Hide catalog previews</a>`
     : `<a class="preview-toggle" href="${galleryHref(view, { project: view === "explorer" ? selectedProject : undefined, query, previews: true })}">Show catalog previews</a>`;
   const navigation = `<nav class="gallery-nav" aria-label="Readout views"><a href="${galleryHref("projects", { previews })}"${view === "projects" ? ' aria-current="page"' : ""}>Project library</a><a href="${galleryHref("explorer", { project: selectedProject, previews })}"${view === "explorer" ? ' aria-current="page"' : ""}>Project explorer</a><a href="${galleryHref("activity", { previews })}"${view === "activity" ? ' aria-current="page"' : ""}>Recent activity</a>${previewLink}</nav>`;
-  const body = `<main><div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">Private report library</span></div><header class="hero"><p class="eyebrow">Project-aware skill readouts</p><h1>${escapeHtml(title)}</h1><p class="outcome">Browse verified project reports, explore a selected repository, and follow actual skill activity. Catalog previews remain clearly labeled and hidden until requested.</p></header>${navigation}${content}<footer class="footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Self-contained HTML · no external scripts or styles</span></footer></main>`;
+  const body = view === "projects"
+    ? renderProjectWorkbench(projects, reports, {
+      activeProject,
+      selectedProject,
+      requestedReport: searchParams.get("report"),
+      previews,
+      navigation,
+      actualCount,
+    })
+    : `<main><div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">Private report library</span></div><header class="hero"><p class="eyebrow">Project-aware skill readouts</p><h1>${escapeHtml(title)}</h1><p class="outcome">Browse verified project reports, explore a selected repository, and follow actual skill activity. Catalog previews remain clearly labeled and hidden until requested.</p></header>${navigation}${view === "activity" ? renderActivityTimeline(reports) : renderProjectExplorer(projects, { selectedProject, query, previews })}<footer class="footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Self-contained HTML · no external scripts or styles</span></footer></main>`;
 
-  return renderDocument({ title, body, theme: themes.help });
+  return renderDocument({ title, body, theme: view === "projects" ? themes.code : themes.help });
 }
 
 function sendHtml(response, status, content, { head = false, allowForms = false } = {}) {
