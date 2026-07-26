@@ -2934,21 +2934,43 @@ const safeStoredReadoutRoots = new Map([
 
 function allowedStoredReadoutSections(report) {
   const headings = new Set([
-    "Execution context",
-    "Observed skill run",
-    "Observed thread-turn context",
-    "Observed thread-cumulative context",
-    "Independent quality evidence",
-    "Verified delivery evidence",
-    "Catalog information",
     "Top next prompts",
     "Next best skills",
   ]);
   const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+  const capturedProfile = findMetadata(report.document, "report-profile");
+
+  if (report.status !== "Preview") headings.add("Independent quality evidence");
+
+  if (
+    findMetadata(report.document, "machine")
+    && findMetadata(report.document, "platform")
+  ) headings.add("Execution context");
+
+  if (report.observation?.attributionScope === "skill-run") {
+    headings.add("Observed skill run");
+  } else if (report.observation?.attributionScope === "thread-turn") {
+    headings.add("Observed thread-turn context");
+  } else if (report.observation?.attributionScope === "thread-cumulative") {
+    headings.add("Observed thread-cumulative context");
+  }
+
+  if (report.status === "Preview") headings.add("Catalog information");
+
+  if (
+    /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/i.test(findMetadata(report.document, "commit-sha"))
+    || /^[a-z0-9][a-z0-9._+-]{0,127}$/i.test(findMetadata(report.document, "release-version"))
+    || /^[1-9][0-9]{0,9}$/.test(findMetadata(report.document, "pull-request"))
+    || /^[1-9][0-9]{0,9}$/.test(findMetadata(report.document, "closed-issue"))
+  ) headings.add("Verified delivery evidence");
 
   if (profile) {
-    for (const section of profile.sections) {
-      headings.add(profile.labels[section] ?? readoutSectionLabels[section]);
+    if (capturedProfile) {
+      for (const section of profile.sections) {
+        headings.add(profile.labels[section] ?? readoutSectionLabels[section]);
+      }
+    } else {
+      for (const title of Object.values(readoutSectionLabels)) headings.add(title);
     }
   } else {
     for (const heading of [
@@ -2963,6 +2985,66 @@ function allowedStoredReadoutSections(report) {
   }
 
   return headings;
+}
+
+function storedReadoutEvidenceSection(report, title) {
+  const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+
+  if (profile) {
+    if (findMetadata(report.document, "report-profile")) {
+      return profile.sections.find((section) => (
+        (profile.labels[section] ?? readoutSectionLabels[section]) === title
+      )) ?? null;
+    }
+
+    return Object.entries(readoutSectionLabels).find(([, label]) => label === title)?.[0] ?? null;
+  }
+
+  return {
+    "Observed findings": "findings",
+    "Recorded decisions": "decisions",
+    "Actual outputs": "outputs",
+    "Observed checks": "checks",
+  }[title] ?? null;
+}
+
+function isGeneratedStoredReadoutEvidence(markup, report, section, title) {
+  const generated = markup.match(
+    /^<section class="section"><div class="section-heading"><div><p class="eyebrow">([^<]*)<\/p><h2>([^<]*)<\/h2><\/div><span class="section-count">([1-9][0-9]*)<\/span><\/div><div class="detail-grid">([\s\S]*)<\/div><\/section>$/,
+  );
+  const descriptions = new Set([readoutSectionDescriptions[section]]);
+
+  if (!findMetadata(report.document, "report-profile")) {
+    const legacyDescription = {
+      findings: "What we learned",
+      decisions: "What was decided",
+      outputs: "Files, reports, and deliverables",
+      checks: "Only validations actually performed",
+    }[section];
+
+    if (legacyDescription) descriptions.add(legacyDescription);
+  }
+
+  if (
+    !generated
+    || !descriptions.has(decodeHtml(generated[1]))
+    || decodeHtml(generated[2]) !== title
+  ) return false;
+
+  const count = Number(generated[3]);
+
+  if (!Number.isSafeInteger(count)) return false;
+
+  const cards = /<article class="detail-card"><div class="detail-heading"><h3>[^<]*<\/h3>(?:<span class="(?:check-badge check-[a-z-]+|priority-badge priority-[a-z0-9-]+)">[^<]*<\/span>)?(?:<a class="item-link" href="[^"]*" rel="noreferrer">Open ↗<\/a>)?<\/div>(?:<p>[^<]*<\/p>)?<\/article>/gy;
+  let observed = 0;
+
+  while (cards.lastIndex < generated[4].length) {
+    if (!cards.exec(generated[4])) return false;
+
+    observed += 1;
+  }
+
+  return observed === count;
 }
 
 function decodeStoredReadoutAttribute(value) {
@@ -3008,8 +3090,18 @@ function renderSafeStoredReadoutMarkup(content, report) {
         const rendered = fragments.slice(rootStart).join("");
         const heading = rendered.match(/<h2\b[^>]*>([^<]*)<\/h2>/i);
         const title = heading ? decodeHtml(heading[1]) : "";
+        const evidenceSection = storedReadoutEvidenceSection(report, title);
 
-        if (!allowedSections.has(title) || observedSections.has(title)) return null;
+        if (
+          !allowedSections.has(title)
+          || observedSections.has(title)
+          || (evidenceSection && !isGeneratedStoredReadoutEvidence(
+            rendered,
+            report,
+            evidenceSection,
+            title,
+          ))
+        ) return null;
 
         observedSections.add(title);
       }

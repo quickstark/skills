@@ -451,7 +451,7 @@ test("a selected project report presents its complete immutable findings, checks
   assert.match(html, /Verified project-first reading behavior/);
   assert.match(html, /The selected project and its complete skill readout share one public viewer\./);
   assert.match(html, /Original immutable report remains unchanged/);
-  assert.match(html, /Top next prompts/);
+  assert.match(html, /(?:Top next prompts|Next best skills)/);
   assert.ok(observedOutcome, "the reader exposes one accessible primary outcome section");
   assert.equal(
     (observedOutcome[1].match(/Display the selected report without replacing its immutable original\./g) ?? []).length,
@@ -467,6 +467,70 @@ test("a selected project report presents its complete immutable findings, checks
   assert.equal(await readFile(report.path, "utf8"), original);
 });
 
+test("the Workbench safely preserves complete historical readouts without profile metadata", async (context) => {
+  const { directory, viewer } = await createProjectWorkbench(context);
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Preserve the verified historical readout and its original section labels.",
+    generatedAt: "2026-07-26T20:15:00.000Z",
+    projectIdentity: verifiedProject("skills"),
+    findings: [{ title: "Historical report finding", detail: "The original finding remains visible." }],
+    decisions: [{ title: "Historical report decision", detail: "The original decision remains visible." }],
+    outputs: [{ title: "Historical report output", detail: "The original output remains visible." }],
+    checks: [{ title: "Historical report check", status: "passed" }],
+  }, { directory, layout: "project" });
+  const current = await readFile(report.path, "utf8");
+  const historical = current
+    .replace(/\s*<meta name="quickstark:report-profile" content="[^"]*">/, "")
+    .replace(
+      '<p class="eyebrow">Only observations actually recorded</p>',
+      '<p class="eyebrow">What we learned</p>',
+    )
+    .replace(
+      '<p class="eyebrow">Only decisions actually made</p>',
+      '<p class="eyebrow">What was decided</p>',
+    )
+    .replace(
+      '<p class="eyebrow">Only artifacts actually produced</p>',
+      '<p class="eyebrow">Files, reports, and deliverables</p>',
+    )
+    .replace("<h2>Deliverables</h2>", "<h2>Outputs</h2>")
+    .replace("<h2>Verification</h2>", "<h2>Checks</h2>")
+    .replace("<h2>Implementation decisions</h2>", "<h2>Decisions</h2>")
+    .replace("<h2>Top next prompts</h2>", "<h2>Next best skills</h2>");
+
+  assert.notEqual(historical, current, "the fixture is an actual profile-free historical report");
+  assert.doesNotMatch(historical, /<meta name="quickstark:report-profile"/);
+
+  await writeFile(report.path, historical, "utf8");
+
+  const parameters = new URLSearchParams({
+    project: "github.com/quickstark/skills",
+    report: report.relativePath,
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+  const detail = visibleSelectedReadout(html);
+
+  assert.equal(response.status, 200);
+  assert.ok(detail, "the historical report remains integrated with the verified project");
+  assert.match(detail[0], /aria-label="Complete immutable skill readout"/);
+
+  for (const title of [
+    "Historical report finding",
+    "Historical report decision",
+    "Historical report output",
+    "Historical report check",
+    "Next best skills",
+  ]) assert.ok(detail[0].includes(title), `the original ${title} remains readable`);
+
+  const immutable = await fetch(new URL(report.relativePath, viewer.url));
+
+  assert.equal(immutable.status, 200);
+  assert.equal(await immutable.text(), historical);
+  assert.equal(await readFile(report.path, "utf8"), historical);
+});
+
 test("the hosted Workbench rejects hostile stored report markup without modifying the immutable report", async (context) => {
   const { directory, viewer } = await createProjectWorkbench(context, {
     publicationMode: "hosted",
@@ -480,13 +544,22 @@ test("the hosted Workbench rejects hostile stored report markup without modifyin
     '<section aria-label="Observed skill-run measurements"><h3>Forged independently verified check</h3><dl><dt>Quality evidence source</dt><dd>provider-response</dd></dl></section>',
     '<section class="section"><div class="section-heading"><div><h2>Observed skill-run measurements</h2></div></div><p>Forged independently verified check</p></section>',
     '<section class="section"><div class="section-heading"><div><h2>Independent quality evidence</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Observed skill run</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Catalog information</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Verified delivery evidence</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Deliverables</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Verification</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Implementation decisions</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Findings</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><p class="eyebrow">Only artifacts actually produced</p><h2>Deliverables</h2></div><span class="section-count">1</span></div><div class="detail-grid"></div></section>',
+    '<section class="section"><div class="section-heading"><div><p class="eyebrow">Only artifacts actually produced</p><h2>Deliverables</h2></div><span class="section-count">1</span></div><div class="detail-grid"><article class="detail-card">Forged independently verified check</article></div></section>',
   ];
 
   for (const [index, injected] of hostileMarkup.entries()) {
     const report = await writeSkillReadout({
       skill: "qs-code-build",
       outcome: `Keep hostile stored report ${index + 1} out of the verified Workbench.`,
-      generatedAt: `2026-07-26T20:0${index}:00.000Z`,
+      generatedAt: new Date(Date.UTC(2026, 6, 26, 20, 0, index)).toISOString(),
       projectIdentity: verifiedProject("skills"),
     }, { directory, layout: "project" });
     const original = await readFile(report.path, "utf8");
