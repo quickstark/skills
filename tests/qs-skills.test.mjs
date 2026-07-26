@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
-import { execFile } from "node:child_process";
-import { mkdtemp, readdir, readFile, rm, stat, symlink, writeFile } from "node:fs/promises";
+import { execFile, spawn } from "node:child_process";
+import { createHash } from "node:crypto";
+import { mkdtemp, readdir, readFile, rm, stat, symlink, unlink, writeFile } from "node:fs/promises";
+import { createServer as createHttpServer } from "node:http";
 import { createServer as createPortBlocker } from "node:net";
 import { hostname, platform, tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
@@ -16,10 +18,12 @@ import {
   ensureReadoutViewer,
   migrateLegacyReadouts,
   normalizeSkillReadout,
+  publishSkillReadout,
   pruneReadouts,
   readoutDirectoryIdentity,
   renderSkillReadout,
   resolveReadoutViewerHost,
+  startReadoutIngestionServer,
   startReadoutServer,
   writeSkillGallery,
   writeSkillReadout,
@@ -176,6 +180,1164 @@ async function temporaryProjectGallery(context, options = {}) {
 
   return { directory, viewer, reports };
 }
+
+function nativeIngestionEnvelope(overrides = {}) {
+  return {
+    version: 1,
+    producer: "codex-laptop",
+    harness: { name: "codex", version: "1.0.0" },
+    collection: "quickstark/qs-skills",
+    project: "https://github.com/quickstark/skills.git",
+    runId: "a6ba1c2b-d2a5-4962-b591-7d2bec883021",
+    generatedAt: "2026-07-26T12:00:00.000Z",
+    skill: "qs-code-build",
+    status: "Completed",
+    outcome: "Publish an authenticated native skill readout.",
+    findings: [{ title: "Authenticated ingestion", detail: "The real report is available." }],
+    nextSkills: [],
+    ...overrides,
+  };
+}
+
+async function temporaryReadoutIngestion(context, options = {}) {
+  const directory = await temporaryReadoutDirectory(context);
+  const viewer = await startReadoutServer({
+    directory,
+    port: 0,
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills"],
+    ...options.viewer,
+  });
+  const ingestion = await startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: viewer.url,
+    allowedProjects: ["github.com/quickstark/skills"],
+    producers: [{
+      id: "codex-laptop",
+      token: "test-only-codex-laptop-credential-1234567890",
+      projects: ["github.com/quickstark/skills"],
+    }],
+    ...options.ingestion,
+  });
+
+  for (const running of [ingestion, viewer]) {
+    context.after(async () => {
+      if (!running.server.listening) return;
+
+      await new Promise((done, fail) => {
+        running.server.close((error) => error ? fail(error) : done());
+      });
+    });
+  }
+
+  return { directory, viewer, ingestion };
+}
+
+function submitIngestion(ingestion, envelope, {
+  token = "test-only-codex-laptop-credential-1234567890",
+  headers = {},
+  method = "POST",
+  path = "api/v1/readouts",
+  body,
+} = {}) {
+  return fetch(new URL(path, ingestion.url), {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token === null ? {} : { Authorization: `Bearer ${token}` }),
+      ...headers,
+    },
+    ...(method === "GET" || method === "HEAD" ? {} : {
+      body: body === undefined ? JSON.stringify(envelope) : body,
+    }),
+  });
+}
+
+test("an authenticated producer can ingest and retrieve an immutable native skill readout", async (context) => {
+  const { viewer, ingestion } = await temporaryReadoutIngestion(context);
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope());
+
+  assert.equal(response.status, 201);
+
+  const accepted = await response.json();
+  assert.equal(accepted.status, "created");
+  assert.equal(accepted.project, "github.com/quickstark/skills");
+  assert.equal(accepted.skill, "qs-code-build");
+  assert.equal(accepted.reportId, "a6ba1c2b-d2a5-4962-b591-7d2bec883021");
+  assert.ok(accepted.url.startsWith(viewer.url));
+
+  const report = await fetch(accepted.url);
+  assert.equal(report.status, 200);
+
+  const html = await report.text();
+  assert.match(html, /Publish an authenticated native skill readout/);
+  assert.match(html, /Authenticated ingestion/);
+
+  const gallery = await fetch(viewer.url);
+  assert.equal(gallery.status, 200);
+  assert.match(await gallery.text(), /Publish an authenticated native skill readout/);
+
+  const viewerPost = await fetch(viewer.url, { method: "POST" });
+  assert.equal(viewerPost.status, 405);
+  assert.equal(viewerPost.headers.get("allow"), "GET, HEAD");
+});
+
+test("identical skill-readout submissions return the existing immutable report", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const envelope = nativeIngestionEnvelope();
+  const first = await submitIngestion(ingestion, envelope);
+  const initial = await first.json();
+  const second = await submitIngestion(ingestion, envelope);
+
+  assert.equal(first.status, 201);
+  assert.equal(second.status, 200);
+
+  const retry = await second.json();
+  assert.equal(retry.status, "existing");
+  assert.equal(retry.url, initial.url);
+  assert.equal(retry.reportId, initial.reportId);
+
+  const report = await fetch(initial.url);
+  assert.equal(report.status, 200);
+  assert.match(await report.text(), /Publish an authenticated native skill readout/);
+});
+
+test("a conflicting skill-readout retry never replaces the original report", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const original = await submitIngestion(ingestion, nativeIngestionEnvelope());
+  const accepted = await original.json();
+  const changed = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    outcome: "Attempt to replace the original immutable skill report.",
+  }));
+
+  assert.equal(original.status, 201);
+  assert.equal(changed.status, 409);
+  assert.deepEqual(await changed.json(), { error: "run_conflict" });
+
+  const html = await (await fetch(accepted.url)).text();
+  assert.match(html, /Publish an authenticated native skill readout/);
+  assert.doesNotMatch(html, /Attempt to replace/);
+});
+
+test("concurrent identical skill-readout submissions create only one report", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const envelope = nativeIngestionEnvelope();
+  const responses = await Promise.all(Array.from({ length: 6 }, () => submitIngestion(ingestion, envelope)));
+  const results = await Promise.all(responses.map((response) => response.json()));
+
+  assert.equal(responses.filter((response) => response.status === 201).length, 1);
+  assert.equal(responses.filter((response) => response.status === 200).length, 5);
+  assert.equal(new Set(results.map((result) => result.url)).size, 1);
+
+  const html = await (await fetch(viewer.url)).text();
+  assert.equal((html.match(/Publish an authenticated native skill readout/g) ?? []).length, 1);
+});
+
+test("readout ingestion rejects missing, invalid, and mismatched producer credentials", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+
+  for (const options of [
+    { token: null },
+    { token: "an-invalid-producer-credential-1234567890" },
+  ]) {
+    const denied = await submitIngestion(ingestion, nativeIngestionEnvelope(), options);
+    assert.equal(denied.status, 401);
+    assert.deepEqual(await denied.json(), { error: "unauthorized" });
+  }
+
+  const mismatched = await submitIngestion(ingestion, nativeIngestionEnvelope({ producer: "different-laptop" }));
+  assert.equal(mismatched.status, 403);
+  assert.deepEqual(await mismatched.json(), { error: "publication_not_authorized" });
+
+  const gallery = await fetch(viewer.url);
+  assert.doesNotMatch(await gallery.text(), /Publish an authenticated native skill readout/);
+});
+
+test("an authenticated readout producer cannot publish an unapproved project", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const denied = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    project: "https://github.com/quickstark/marketplace.git",
+  }));
+
+  assert.equal(denied.status, 403);
+  const body = await denied.text();
+  assert.doesNotMatch(body, /marketplace/);
+  assert.deepEqual(JSON.parse(body), { error: "publication_not_authorized" });
+  assert.doesNotMatch(await (await fetch(viewer.url)).text(), /marketplace/);
+});
+
+test("readout ingestion normalizes equivalent safe SSH and HTTPS project origins", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const accepted = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    project: "git@github.com:quickstark/skills.git",
+    runId: "d06c43ab-f919-48ad-8d4c-7a4a56d92c15",
+    outcome: "Submit an authorized skill using its SSH Git origin.",
+  }));
+
+  assert.equal(accepted.status, 201);
+  assert.equal((await accepted.json()).project, "github.com/quickstark/skills");
+  assert.match(await (await fetch(viewer.url)).text(), /Submit an authorized skill using its SSH Git origin/);
+});
+
+test("readout ingestion rejects unsafe origins without disclosing credentials", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const project of [
+    "https://token@github.com/quickstark/skills.git",
+    "https://github.com/quickstark/../skills.git",
+    "/tmp/private-checkout",
+    "https://github.com/quickstark/skills.git?token=private",
+  ]) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope({ project }));
+    const body = await response.text();
+    assert.equal(response.status, 422, project);
+    assert.doesNotMatch(body, /token|private|checkout/i);
+    assert.deepEqual(JSON.parse(body), { error: "invalid_project" });
+  }
+});
+
+test("readout ingestion permits only its exact authenticated producer route", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const method of ["GET", "PUT", "PATCH", "DELETE"]) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope(), { method });
+    assert.equal(response.status, 405, method);
+    assert.equal(response.headers.get("allow"), "POST");
+  }
+
+  const other = await submitIngestion(ingestion, nativeIngestionEnvelope(), { path: "api/v1/readouts/extra" });
+  assert.equal(other.status, 404);
+
+  const health = await fetch(new URL("__quickstark_ingestion_health", ingestion.url));
+  assert.equal(health.status, 200);
+  const metadata = await health.json();
+  assert.equal(metadata.service, "quickstark-skill-readout-ingestion");
+  assert.equal(typeof metadata.directory, "string");
+});
+
+test("readout ingestion rejects malformed, unsupported, and oversized submissions", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    ingestion: { maxBytes: 2048 },
+  });
+
+  const malformed = await submitIngestion(ingestion, nativeIngestionEnvelope(), { body: "{" });
+  assert.equal(malformed.status, 400);
+  assert.deepEqual(await malformed.json(), { error: "invalid_json" });
+
+  const wrongType = await submitIngestion(ingestion, nativeIngestionEnvelope(), {
+    headers: { "Content-Type": "text/html" },
+  });
+  assert.equal(wrongType.status, 415);
+
+  const unsupported = await submitIngestion(ingestion, nativeIngestionEnvelope({ version: 72 }));
+  assert.equal(unsupported.status, 422);
+  assert.deepEqual(await unsupported.json(), { error: "unsupported_readout_version" });
+
+  const oversized = await submitIngestion(ingestion, nativeIngestionEnvelope({ outcome: "x".repeat(4096) }));
+  assert.equal(oversized.status, 413);
+  assert.deepEqual(await oversized.json(), { error: "payload_too_large" });
+
+  const invalidRun = await submitIngestion(ingestion, nativeIngestionEnvelope({ runId: "../../unsafe" }));
+  assert.equal(invalidRun.status, 422);
+});
+
+test("readout ingestion requires actual UTC run timestamps and observed completion status", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const invalid of [
+    { generatedAt: undefined },
+    { generatedAt: null },
+    { generatedAt: "2026-07-26" },
+    { generatedAt: "2026-07-26T12:00:00+00:00" },
+    { generatedAt: "2026-02-30T12:00:00.000Z" },
+    { generatedAt: "not-an-observed-timestamp" },
+    { status: undefined },
+    { status: null },
+    { status: "Preview" },
+    { status: "Invented completion" },
+  ]) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope(invalid));
+
+    assert.equal(response.status, 422, JSON.stringify(invalid));
+    assert.deepEqual(await response.json(), { error: "invalid_readout" });
+  }
+});
+
+test("readout ingestion fails closed without explicit producer and project grants", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+
+  await assert.rejects(startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: "http://127.0.0.1:4173/",
+    allowedProjects: ["github.com/quickstark/skills"],
+    producers: [],
+  }), /explicitly authorized producer/i);
+
+  await assert.rejects(startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: "http://127.0.0.1:4173/",
+    allowedProjects: [],
+    producers: [{
+      id: "codex-laptop",
+      token: "test-only-codex-laptop-credential-1234567890",
+      projects: ["github.com/quickstark/skills"],
+    }],
+  }), /explicitly approved published project/i);
+
+  await assert.rejects(startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: "http://127.0.0.1:4173/",
+    allowedProjects: ["github.com/quickstark/skills"],
+    producers: [{ id: "codex-laptop", token: "short", projects: [] }],
+  }), /at least 24 characters/i);
+});
+
+test("readout ingestion safely renders untrusted producer findings", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const accepted = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    findings: [{
+      title: '<script>alert("unsafe")</script>',
+      detail: '<img src=x onerror="alert(1)">',
+    }],
+  }));
+
+  assert.equal(accepted.status, 201);
+
+  const report = await fetch((await accepted.json()).url);
+  const html = await report.text();
+  assert.doesNotMatch(html, /<script>|<img src=x/i);
+  assert.match(html, /&lt;script&gt;/);
+  assert.match(html, /&lt;img src=x/);
+  assert.match(report.headers.get("content-security-policy"), /default-src 'none'/);
+  assert.equal(accepted.headers.get("access-control-allow-origin"), null);
+});
+
+test("an authorized external skill appears truthfully throughout the project gallery", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const envelope = nativeIngestionEnvelope({
+    harness: { name: "claude-code", version: "1.0.0" },
+    collection: "independent/engineering-skills",
+    skill: "investigate-architecture",
+    runId: "12b45dc1-d41e-44aa-b792-6e7dc3c43f10",
+    outcome: "Trace a genuine independently maintained architecture skill.",
+    findings: [{ title: "Independent architecture observation", detail: "Observed at the external seam." }],
+  });
+  const response = await submitIngestion(ingestion, envelope);
+
+  assert.equal(response.status, 201);
+
+  const accepted = await response.json();
+  assert.equal(accepted.skill, "investigate-architecture");
+
+  const report = await fetch(accepted.url);
+  assert.equal(report.status, 200);
+
+  const html = await report.text();
+  assert.match(html, /investigate-architecture/);
+  assert.match(html, /claude-code/);
+  assert.match(html, /independent\/engineering-skills/);
+  assert.match(html, /Independent architecture observation/);
+  assert.doesNotMatch(html, /promoted QuickStark skill/i);
+
+  for (const suffix of ["", "?view=explorer", "?view=activity"]) {
+    const page = await fetch(new URL(suffix || ".", viewer.url));
+    assert.equal(page.status, 200);
+    assert.match(await page.text(), /investigate-architecture|Trace a genuine independently maintained architecture skill/);
+  }
+
+  assert.throws(
+    () => normalizeSkillReadout({ skill: "investigate-architecture", outcome: "Do not bypass the native catalog." }),
+    /not a promoted QuickStark skill/,
+  );
+});
+
+test("an authorized plugin-namespaced external skill remains visible throughout the project library", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    harness: { name: "codex-desktop", version: "1.0.0" },
+    collection: "compound-engineering/skills",
+    skill: "compound-engineering:ce-code-review",
+    runId: "ef26ecf9-1d2f-426b-a04f-605a83d40af1",
+    outcome: "Record an actual namespaced skill from an independent Codex plugin.",
+    nextSkills: [{ name: "compound-engineering:ce-work", reason: "Apply the verified review." }],
+  }));
+
+  assert.equal(response.status, 201);
+
+  const accepted = await response.json();
+  assert.equal(accepted.skill, "compound-engineering:ce-code-review");
+  assert.match(accepted.url, /qs-external-compound-engineering-ce-code-review--/);
+
+  const html = await (await fetch(accepted.url)).text();
+  assert.match(html, /compound-engineering:ce-code-review/);
+  assert.match(html, /compound-engineering:ce-work/);
+  assert.match(html, /codex-desktop/);
+
+  for (const suffix of ["", "?view=explorer", "?view=activity"]) {
+    const page = await fetch(new URL(suffix || ".", viewer.url));
+    assert.equal(page.status, 200);
+    assert.match(await page.text(), /compound-engineering:ce-code-review/);
+  }
+});
+
+test("a portable publisher sends a local native readout to the approved hosted project", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const result = await publishSkillReadout(nativeIngestionEnvelope(), {
+    endpoint: new URL("api/v1/readouts", ingestion.url).href,
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: ["github.com/quickstark/skills"],
+  });
+
+  assert.equal(result.status, "published");
+  assert.equal(result.created, true);
+  assert.equal(result.project, "github.com/quickstark/skills");
+  assert.ok(result.url.startsWith(viewer.url));
+  assert.match(await (await fetch(result.url)).text(), /Publish an authenticated native skill readout/);
+});
+
+test("a portable publisher safely retries the same immutable skill run", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const options = {
+    endpoint: new URL("api/v1/readouts", ingestion.url).href,
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: ["github.com/quickstark/skills"],
+  };
+  const first = await publishSkillReadout(nativeIngestionEnvelope(), options);
+  const retry = await publishSkillReadout(nativeIngestionEnvelope(), options);
+
+  assert.equal(first.created, true);
+  assert.equal(retry.created, false);
+  assert.equal(retry.url, first.url);
+});
+
+test("portable publication stays disabled without an explicit endpoint and project opt-in", async () => {
+  const disabled = await publishSkillReadout(nativeIngestionEnvelope(), {
+    token: "test-only-codex-laptop-credential-1234567890",
+  });
+
+  assert.deepEqual(disabled, { status: "local-only", reason: "publication_not_configured" });
+
+  const unapproved = await publishSkillReadout(nativeIngestionEnvelope(), {
+    endpoint: "https://reports.quickstark.com/api/v1/readouts",
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: [],
+  });
+
+  assert.deepEqual(unapproved, { status: "local-only", reason: "project_not_authorized" });
+});
+
+test("a portable publisher preserves local-only reporting when hosted ingestion is unavailable", async () => {
+  const result = await publishSkillReadout(nativeIngestionEnvelope(), {
+    endpoint: "http://127.0.0.1:1/api/v1/readouts",
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: ["github.com/quickstark/skills"],
+    timeout: 250,
+  });
+
+  assert.deepEqual(result, { status: "local-only", reason: "publication_unavailable" });
+});
+
+test("the portable publisher supports independently named cross-harness skills", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const result = await publishSkillReadout(nativeIngestionEnvelope({
+    harness: { name: "claude-code", version: "1.0.0" },
+    collection: "independent/engineering-skills",
+    skill: "review-deployment",
+    runId: "c123de17-445f-4581-a4bf-8eef204d6543",
+    outcome: "Publish an independently maintained skill from another harness.",
+  }), {
+    endpoint: new URL("api/v1/readouts", ingestion.url).href,
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: ["github.com/quickstark/skills"],
+  });
+
+  assert.equal(result.status, "published");
+  const html = await (await fetch(result.url)).text();
+  assert.match(html, /review-deployment/);
+  assert.match(html, /claude-code/);
+  assert.match(html, /independent\/engineering-skills/);
+});
+
+test("independent report producers cannot use each other's project grants", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["github.com/quickstark/skills", "github.com/quickstark/marketplace"] },
+    ingestion: {
+      allowedProjects: ["github.com/quickstark/skills", "github.com/quickstark/marketplace"],
+      producers: [
+        {
+          id: "codex-laptop",
+          token: "test-only-codex-laptop-credential-1234567890",
+          projects: ["github.com/quickstark/skills"],
+        },
+        {
+          id: "marketplace-laptop",
+          token: "test-only-marketplace-producer-credential-4567890",
+          projects: ["github.com/quickstark/marketplace"],
+        },
+      ],
+    },
+  });
+
+  const forbidden = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    project: "https://github.com/quickstark/marketplace.git",
+  }));
+
+  assert.equal(forbidden.status, 403);
+
+  const approved = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    producer: "marketplace-laptop",
+    project: "https://github.com/quickstark/marketplace.git",
+    runId: "b142743b-2038-4f95-a156-0cd73c055533",
+    outcome: "Publish only the explicitly granted marketplace report.",
+  }), {
+    token: "test-only-marketplace-producer-credential-4567890",
+  });
+
+  assert.equal(approved.status, 201);
+  assert.equal((await approved.json()).project, "github.com/quickstark/marketplace");
+  assert.match(await (await fetch(viewer.url)).text(), /Publish only the explicitly granted marketplace report/);
+});
+
+test("readout ingestion enforces a bounded per-producer submission rate", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    ingestion: { maxRequestsPerMinute: 2 },
+  });
+  const runs = [
+    "ef26ecf9-1d2f-426b-a04f-605a83d40ac1",
+    "ef26ecf9-1d2f-426b-a04f-605a83d40ac2",
+    "ef26ecf9-1d2f-426b-a04f-605a83d40ac3",
+  ];
+
+  const responses = [];
+
+  for (const runId of runs) {
+    responses.push(await submitIngestion(ingestion, nativeIngestionEnvelope({ runId })));
+  }
+
+  assert.deepEqual(responses.map((response) => response.status), [201, 201, 429]);
+  assert.deepEqual(await responses[2].json(), { error: "rate_limited" });
+  assert.ok(Number(responses[2].headers.get("retry-after")) > 0);
+});
+
+test("readout ingestion bounds result arrays and never accepts a catalog preview", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const excessive = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    findings: Array.from({ length: 101 }, (_, index) => ({ title: `Observation ${index}` })),
+  }));
+
+  assert.equal(excessive.status, 422);
+
+  const preview = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    status: "Preview",
+    runId: "ef26ecf9-1d2f-426b-a04f-605a83d40ad1",
+    findings: [],
+  }));
+
+  assert.equal(preview.status, 422);
+});
+
+test("external producer claims cannot create fabricated verified release evidence", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    collection: "independent/engineering-skills",
+    skill: "review-release",
+    runId: "ef26ecf9-1d2f-426b-a04f-605a83d40ad2",
+    provenance: verifiedGithubProvenance(),
+  }));
+
+  assert.equal(response.status, 422);
+  assert.deepEqual(await response.json(), { error: "unverified_provenance" });
+});
+
+test("an authenticated native producer cannot fabricate independently verified delivery provenance", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    provenance: verifiedGithubProvenance(),
+  }));
+
+  assert.equal(response.status, 422);
+  assert.deepEqual(await response.json(), { error: "unverified_provenance" });
+  assert.doesNotMatch(await (await fetch(viewer.url)).text(), /Publish verified skill readouts/);
+});
+
+test("ingestion loads hashed producer grants without storing bearer credentials", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const configPath = join(directory, "producer-grants.json");
+  const credential = "test-only-file-configured-producer-secret-1234567890";
+
+  await writeFile(configPath, JSON.stringify({
+    version: 1,
+    producers: [{
+      id: "codex-laptop",
+      tokenSha256: createHash("sha256").update(credential).digest("hex"),
+      projects: ["github.com/quickstark/skills"],
+    }],
+  }), { encoding: "utf8", mode: 0o600 });
+
+  const viewer = await startReadoutServer({
+    directory,
+    port: 0,
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills"],
+  });
+
+  context.after(async () => {
+    if (!viewer.server.listening) return;
+    await new Promise((done, fail) => viewer.server.close((error) => error ? fail(error) : done()));
+  });
+
+  const ingestion = await startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: viewer.url,
+    allowedProjects: ["github.com/quickstark/skills"],
+    producersFile: configPath,
+  });
+
+  context.after(async () => {
+    if (!ingestion.server.listening) return;
+    await new Promise((done, fail) => ingestion.server.close((error) => error ? fail(error) : done()));
+  });
+
+  const accepted = await submitIngestion(ingestion, nativeIngestionEnvelope(), { token: credential });
+  assert.equal(accepted.status, 201);
+  assert.doesNotMatch(await readFile(configPath, "utf8"), new RegExp(credential));
+  assert.doesNotMatch(await (await fetch((await accepted.json()).url)).text(), new RegExp(credential));
+});
+
+test("the portable publisher refuses untrusted remote or malformed ingestion endpoints", async () => {
+  for (const endpoint of [
+    "http://reports.quickstark.com/api/v1/readouts",
+    "https://reports.quickstark.com/api/v1/readouts/extra",
+    "https://token@reports.quickstark.com/api/v1/readouts",
+    "https://reports.quickstark.com/api/v1/readouts?token=secret",
+  ]) {
+    await assert.rejects(publishSkillReadout(nativeIngestionEnvelope(), {
+      endpoint,
+      token: "test-only-codex-laptop-credential-1234567890",
+      allowedProjects: ["github.com/quickstark/skills"],
+    }), /trusted HTTPS producer route/i);
+  }
+});
+
+test("the readout command documents portable publishing and isolated ingestion", async () => {
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const { stdout } = await execFileAsync(process.execPath, [script, "--help"]);
+
+  assert.match(stdout, /\bingest\b/);
+  assert.match(stdout, /\bpublish\b/);
+  assert.match(stdout, /QS_READOUT_INGESTION_URL/);
+  assert.match(stdout, /QS_READOUT_PRODUCERS_FILE/);
+  assert.match(stdout, /QS_READOUT_PUBLISH_PROJECTS/);
+  assert.match(stdout, /--max-attempts/);
+  assert.match(stdout, /--retry-delay/);
+  assert.match(stdout, /--report-base-url/);
+  assert.match(stdout, /QS_READOUT_PUBLISH_MAX_ATTEMPTS/);
+  assert.match(stdout, /QS_READOUT_PUBLISH_RETRY_DELAY/);
+});
+
+test("any harness can publish a structured readout through the portable command", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const secret = "test-only-codex-laptop-credential-1234567890";
+  const { stdout, stderr } = await execFileAsync(process.execPath, [
+    script,
+    "publish",
+    "--data", JSON.stringify(nativeIngestionEnvelope()),
+    "--endpoint", new URL("api/v1/readouts", ingestion.url).href,
+    "--allowed-projects", "github.com/quickstark/skills",
+    "--json",
+  ], {
+    env: { ...process.env, QS_READOUT_PRODUCER_TOKEN: secret },
+  });
+
+  const result = JSON.parse(stdout);
+  assert.equal(result.status, "published");
+  assert.equal(result.created, true);
+  assert.equal((await fetch(result.url)).status, 200);
+  assert.doesNotMatch(stdout, new RegExp(secret));
+  assert.doesNotMatch(stderr, new RegExp(secret));
+});
+
+test("an explicitly configured native skill render automatically publishes its real local readout", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const input = {
+    skill: "qs-code-build",
+    outcome: "Automatically publish an explicitly opted-in local skill run.",
+    reportId: "f0179c6b-f9f9-4c7b-b877-7143f3a95d12",
+    generatedAt: "2026-07-26T14:00:00.000Z",
+    nextSkills: [],
+  };
+  const { stdout } = await execFileAsync(process.execPath, [
+    script,
+    "render",
+    "--data", JSON.stringify(input),
+    "--directory", localDirectory,
+    "--no-serve",
+    "--json",
+  ], {
+    cwd: repositoryRoot,
+    env: {
+      ...process.env,
+      QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+      QS_READOUT_PRODUCER_ID: "codex-laptop",
+      QS_READOUT_PRODUCER_TOKEN: "test-only-codex-laptop-credential-1234567890",
+      QS_READOUT_PUBLISH_PROJECTS: "github.com/quickstark/skills",
+      QS_READOUT_HARNESS: "codex-desktop",
+      QS_READOUT_PUBLISH_MAX_ATTEMPTS: "2",
+      QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+    },
+  });
+
+  const result = JSON.parse(stdout);
+  assert.equal(result.publication.status, "published");
+  assert.equal(await exists(result.path), true);
+
+  const html = await (await fetch(result.publication.url)).text();
+  assert.match(html, /Automatically publish an explicitly opted-in local skill run/);
+  assert.match(html, /quickstark:harness" content="codex-desktop/);
+  assert.match(await (await fetch(viewer.url)).text(), /Automatically publish an explicitly opted-in local skill run/);
+});
+
+test("the hosted reporting stack isolates authenticated ingestion from its read-only viewer", async () => {
+  const compose = await readFile(join(repositoryRoot, "deploy", "readouts", "compose.yaml"), "utf8");
+
+  assert.match(compose, /quickstark-readout-ingestion:/);
+  assert.match(compose, /QS_READOUT_PUBLIC_URL:\s*https:\/\/reports\.quickstark\.com\/?/);
+  assert.match(compose, /QS_READOUT_PRODUCERS_FILE:\s*\/run\/quickstark\/readout-producers\.json/);
+  assert.match(compose, /traefik\.http\.routers\.quickstark-readout-ingestion\.rule=Host\(`reports\.quickstark\.com`\)\s*&&\s*Path\(`\/api\/v1\/readouts`\)/);
+  assert.match(compose, /traefik\.http\.services\.quickstark-readout-ingestion\.loadbalancer\.server\.port=4174/);
+  assert.match(compose, /quickstark-readout-ingestion:4174\/__quickstark_ingestion_health/);
+  assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:rw/);
+  assert.match(compose, /readout-producers\.json:\/run\/quickstark\/readout-producers\.json:ro/);
+  assert.match(compose, /traefik\.http\.routers\.quickstark-readouts\.middlewares=authelia@file/);
+  assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:ro/);
+  assert.doesNotMatch(compose, /^\s*ports:/m);
+  assert.doesNotMatch(compose, /0\.0\.0\.0/);
+});
+
+test("producer-specific report identities do not collide between authorized harnesses", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    ingestion: {
+      producers: [
+        {
+          id: "codex-laptop",
+          token: "test-only-codex-laptop-credential-1234567890",
+          projects: ["github.com/quickstark/skills"],
+        },
+        {
+          id: "second-codex-laptop",
+          token: "test-only-second-laptop-credential-1234567890",
+          projects: ["github.com/quickstark/skills"],
+        },
+      ],
+    },
+  });
+  const first = await submitIngestion(ingestion, nativeIngestionEnvelope());
+  const second = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    producer: "second-codex-laptop",
+  }), { token: "test-only-second-laptop-credential-1234567890" });
+
+  assert.equal(first.status, 201);
+  assert.equal(second.status, 201);
+
+  const left = await first.json();
+  const right = await second.json();
+  assert.notEqual(left.url, right.url);
+  assert.equal((await fetch(left.url)).status, 200);
+  assert.equal((await fetch(right.url)).status, 200);
+});
+
+test("equivalent project origins and run-identifier casing are safe immutable retries", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const first = await submitIngestion(ingestion, nativeIngestionEnvelope());
+  const same = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    project: "git@github.com:quickstark/skills.git",
+    runId: "A6BA1C2B-D2A5-4962-B591-7D2BEC883021",
+  }));
+
+  assert.equal(first.status, 201);
+  assert.equal(same.status, 200);
+  assert.equal((await same.json()).url, (await first.json()).url);
+});
+
+test("ingestion derives project display identity from authorized canonical ownership", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    project: {
+      ...explicitProject("skills"),
+      label: "forged-owner/private-client-project",
+    },
+  }));
+
+  assert.equal(response.status, 201);
+
+  const report = await (await fetch((await response.json()).url)).text();
+  const gallery = await (await fetch(viewer.url)).text();
+  assert.match(report, /quickstark\/skills/);
+  assert.doesNotMatch(report, /forged-owner|private-client-project/);
+  assert.doesNotMatch(gallery, /forged-owner|private-client-project/);
+});
+
+test("ingestion rejects a symbolic-link escape outside the approved project library", async (context) => {
+  const { ingestion, directory } = await temporaryReadoutIngestion(context);
+  const outside = await temporaryReadoutDirectory(context);
+  await symlink(outside, join(directory, "github.com"), "dir");
+
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope());
+
+  assert.equal(response.status, 503);
+  assert.deepEqual(await response.json(), { error: "readout_unavailable" });
+  assert.deepEqual(await readdir(outside), []);
+});
+
+test("an accepted skill run recovers its immutable report after an interrupted visible write", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const first = await submitIngestion(ingestion, nativeIngestionEnvelope());
+  const accepted = await first.json();
+  const pathname = new URL(accepted.url).pathname;
+  const relativePath = decodeURIComponent(pathname).replace(/^\//, "");
+  const reportPath = join(ingestion.directory, ...relativePath.split("/"));
+
+  await unlink(reportPath);
+
+  const recovered = await submitIngestion(ingestion, nativeIngestionEnvelope());
+  assert.equal(recovered.status, 200);
+  assert.equal((await recovered.json()).url, accepted.url);
+  assert.equal((await fetch(accepted.url)).status, 200);
+});
+
+test("the publisher retries a transient report-ingestion outage within a strict bound", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  let attempts = 0;
+  const gateway = createHttpServer(async (request, response) => {
+    attempts += 1;
+
+    if (attempts === 1) {
+      response.writeHead(503, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ error: "readout_unavailable" }));
+      return;
+    }
+
+    const chunks = [];
+    for await (const chunk of request) chunks.push(chunk);
+
+    const upstream = await fetch(new URL("api/v1/readouts", ingestion.url), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: request.headers.authorization,
+      },
+      body: Buffer.concat(chunks),
+    });
+
+    response.writeHead(upstream.status, { "Content-Type": "application/json" });
+    response.end(await upstream.text());
+  });
+
+  await new Promise((done, fail) => {
+    gateway.once("error", fail);
+    gateway.listen(0, "127.0.0.1", done);
+  });
+
+  context.after(async () => {
+    if (!gateway.listening) return;
+    await new Promise((done, fail) => gateway.close((error) => error ? fail(error) : done()));
+  });
+
+  const gatewayPort = gateway.address().port;
+  const result = await publishSkillReadout(nativeIngestionEnvelope(), {
+    endpoint: `http://127.0.0.1:${gatewayPort}/api/v1/readouts`,
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: ["github.com/quickstark/skills"],
+    maxAttempts: 2,
+    retryDelay: 0,
+  });
+
+  assert.equal(attempts, 2);
+  assert.equal(result.status, "published");
+  assert.equal((await fetch(result.url)).status, 200);
+
+  attempts = 0;
+
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const { stdout } = await execFileAsync(process.execPath, [
+    script,
+    "publish",
+    "--data", JSON.stringify(nativeIngestionEnvelope()),
+    "--endpoint", `http://127.0.0.1:${gatewayPort}/api/v1/readouts`,
+    "--allowed-projects", "github.com/quickstark/skills",
+    "--report-base-url", viewer.url,
+    "--max-attempts", "2",
+    "--retry-delay", "0",
+    "--json",
+  ], {
+    env: {
+      ...process.env,
+      QS_READOUT_PRODUCER_TOKEN: "test-only-codex-laptop-credential-1234567890",
+    },
+  });
+
+  assert.equal(attempts, 2);
+  assert.equal(JSON.parse(stdout).status, "published");
+});
+
+test("readout acceptance records only safe, redacted operational audit evidence", async (context) => {
+  const events = [];
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    ingestion: { audit: (event) => events.push(event) },
+  });
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope());
+
+  assert.equal(response.status, 201);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].producer, "codex-laptop");
+  assert.equal(events[0].project, "github.com/quickstark/skills");
+  assert.equal(events[0].status, 201);
+  assert.equal(events[0].outcome, "created");
+  assert.ok(!Number.isNaN(Date.parse(events[0].timestamp)));
+
+  const recorded = JSON.stringify(events);
+  assert.doesNotMatch(recorded, /test-only-codex-laptop-credential/);
+  assert.doesNotMatch(recorded, /The real report is available/);
+});
+
+test("the actual production ingestion command emits redacted structured audit events", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const grantsPath = join(directory, "test-producer-grants.json");
+  const secret = "test-only-codex-laptop-credential-1234567890";
+
+  await writeFile(grantsPath, JSON.stringify({
+    version: 1,
+    producers: [{
+      id: "codex-laptop",
+      tokenSha256: createHash("sha256").update(secret).digest("hex"),
+      projects: ["github.com/quickstark/skills"],
+    }],
+  }), { encoding: "utf8", mode: 0o600 });
+
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const child = spawn(process.execPath, [
+    script,
+    "ingest",
+    "--directory", directory,
+    "--host", "127.0.0.1",
+    "--port", "0",
+    "--base-url", "http://127.0.0.1:4173/",
+    "--allowed-projects", "github.com/quickstark/skills",
+    "--producers-file", grantsPath,
+  ], { cwd: repositoryRoot, stdio: ["ignore", "pipe", "pipe"] });
+
+  context.after(() => {
+    if (child.exitCode === null && !child.killed) child.kill();
+  });
+
+  let stdout = "";
+  let stderr = "";
+
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
+  child.stdout.on("data", (chunk) => { stdout += chunk; });
+  child.stderr.on("data", (chunk) => { stderr += chunk; });
+
+  const waitFor = (stream, current, pattern) => new Promise((done, fail) => {
+    const finish = () => {
+      if (!pattern.test(current())) return;
+      clearTimeout(timeout);
+      stream.removeListener("data", finish);
+      child.removeListener("error", failure);
+      done();
+    };
+    const failure = (error) => {
+      clearTimeout(timeout);
+      stream.removeListener("data", finish);
+      fail(error);
+    };
+    const timeout = setTimeout(() => failure(new Error("The isolated ingestion command did not produce its expected operational evidence.")), 5000);
+
+    stream.on("data", finish);
+    child.once("error", failure);
+    finish();
+  });
+
+  await waitFor(child.stdout, () => stdout, /QuickStark readout ingestion: http:\/\/127\.0\.0\.1:\d+\//);
+
+  const url = stdout.match(/QuickStark readout ingestion: (http:\/\/127\.0\.0\.1:\d+\/)/)?.[1];
+  assert.ok(url);
+
+  const response = await submitIngestion({ url }, nativeIngestionEnvelope());
+  assert.equal(response.status, 201);
+
+  await waitFor(child.stderr, () => stderr, /"outcome":"created"/);
+
+  const audit = JSON.parse(stderr.trim().split("\n").at(-1));
+  assert.equal(audit.producer, "codex-laptop");
+  assert.equal(audit.project, "github.com/quickstark/skills");
+  assert.equal(audit.status, 201);
+  assert.equal(audit.outcome, "created");
+  assert.doesNotMatch(stderr, /test-only-codex-laptop-credential|The real report is available/);
+});
+
+test("rotating producer grants immediately revokes old tokens without restarting ingestion", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const grantsPath = join(directory, "producer-grants.json");
+  const originalToken = "test-only-original-rotating-producer-1234567890";
+  const rotatedToken = "test-only-replaced-rotating-producer-1234567890";
+  const independentToken = "test-only-independent-producer-secret-1234567890";
+  const grants = (token) => ({
+    version: 1,
+    producers: [
+      {
+        id: "codex-laptop",
+        tokenSha256: createHash("sha256").update(token).digest("hex"),
+        projects: ["github.com/quickstark/skills"],
+      },
+      {
+        id: "independent-laptop",
+        tokenSha256: createHash("sha256").update(independentToken).digest("hex"),
+        projects: ["github.com/quickstark/skills"],
+      },
+    ],
+  });
+
+  await writeFile(grantsPath, JSON.stringify(grants(originalToken)), {
+    encoding: "utf8",
+    mode: 0o600,
+  });
+
+  const viewer = await startReadoutServer({
+    directory,
+    port: 0,
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills"],
+  });
+
+  context.after(async () => {
+    if (!viewer.server.listening) return;
+    await new Promise((done, fail) => viewer.server.close((error) => error ? fail(error) : done()));
+  });
+
+  const ingestion = await startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: viewer.url,
+    allowedProjects: ["github.com/quickstark/skills"],
+    producersFile: grantsPath,
+  });
+
+  context.after(async () => {
+    if (!ingestion.server.listening) return;
+    await new Promise((done, fail) => ingestion.server.close((error) => error ? fail(error) : done()));
+  });
+
+  const first = await submitIngestion(ingestion, nativeIngestionEnvelope(), { token: originalToken });
+  assert.equal(first.status, 201);
+  const originalReport = await first.json();
+
+  await writeFile(grantsPath, JSON.stringify(grants(rotatedToken)), { encoding: "utf8" });
+
+  const revoked = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    runId: "e46fd0fd-94f1-4328-bd57-00c75143f470",
+  }), { token: originalToken });
+  assert.equal(revoked.status, 401);
+
+  const rotated = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    runId: "e46fd0fd-94f1-4328-bd57-00c75143f471",
+  }), { token: rotatedToken });
+  assert.equal(rotated.status, 201);
+
+  const independent = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    producer: "independent-laptop",
+    runId: "e46fd0fd-94f1-4328-bd57-00c75143f472",
+  }), { token: independentToken });
+  assert.equal(independent.status, 201);
+
+  assert.equal((await fetch(originalReport.url)).status, 200);
+});
+
+test("immutable skill submissions remain idempotent after an ingestion-server restart", async (context) => {
+  const { directory, ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const first = await submitIngestion(ingestion, nativeIngestionEnvelope());
+  const created = await first.json();
+
+  await new Promise((done, fail) => ingestion.server.close((error) => error ? fail(error) : done()));
+
+  const restarted = await startReadoutIngestionServer({
+    directory,
+    port: 0,
+    baseUrl: viewer.url,
+    allowedProjects: ["github.com/quickstark/skills"],
+    producers: [{
+      id: "codex-laptop",
+      token: "test-only-codex-laptop-credential-1234567890",
+      projects: ["github.com/quickstark/skills"],
+    }],
+  });
+
+  context.after(async () => {
+    if (!restarted.server.listening) return;
+    await new Promise((done, fail) => restarted.server.close((error) => error ? fail(error) : done()));
+  });
+
+  const retry = await submitIngestion(restarted, nativeIngestionEnvelope());
+
+  assert.equal(first.status, 201);
+  assert.equal(retry.status, 200);
+  assert.equal((await retry.json()).url, created.url);
+  assert.equal((await fetch(created.url)).status, 200);
+});
+
+test("the portable publisher rejects forged hosted report origins, paths, and skills", async (context) => {
+  let accepted;
+  const imposter = createHttpServer((_request, response) => {
+    response.writeHead(201, { "Content-Type": "application/json" });
+    response.end(JSON.stringify(accepted));
+  });
+
+  await new Promise((done, fail) => {
+    imposter.once("error", fail);
+    imposter.listen(0, "127.0.0.1", done);
+  });
+
+  context.after(async () => {
+    if (!imposter.listening) return;
+    await new Promise((done, fail) => imposter.close((error) => error ? fail(error) : done()));
+  });
+
+  const endpoint = `http://127.0.0.1:${imposter.address().port}/api/v1/readouts`;
+  const options = {
+    endpoint,
+    token: "test-only-codex-laptop-credential-1234567890",
+    allowedProjects: ["github.com/quickstark/skills"],
+    reportBaseUrl: "http://127.0.0.1:4173/",
+    maxAttempts: 1,
+  };
+  const standard = {
+    status: "created",
+    project: "github.com/quickstark/skills",
+    skill: "qs-code-build",
+    reportId: "a6ba1c2b-d2a5-4962-b591-7d2bec883021",
+  };
+
+  for (const malicious of [
+    { ...standard, url: "http://127.0.0.1:8443/github.com/quickstark/skills/2026/07/qs-code-build--2026-07-26T12-00-00-000Z--codex-laptop--a6ba1c2b-d2a5-4962-b591-7d2bec883021.html" },
+    { ...standard, url: "http://127.0.0.1:4173/private/unrelated.html" },
+    { ...standard, url: "http://127.0.0.1:4173/github.com/quickstark/skills/2026/07/qs-code-build--2026-07-26T12-00-00-000Z--codex-laptop--ffffffff-d2a5-4962-b591-7d2bec883021.html" },
+    { ...standard, skill: "different-skill", url: "http://127.0.0.1:4173/github.com/quickstark/skills/2026/07/qs-code-build--2026-07-26T12-00-00-000Z--codex-laptop--a6ba1c2b-d2a5-4962-b591-7d2bec883021.html" },
+  ]) {
+    accepted = malicious;
+    assert.deepEqual(await publishSkillReadout(nativeIngestionEnvelope(), options), {
+      status: "local-only",
+      reason: "invalid_publication_response",
+    });
+  }
+});
 
 test("the catalog preserves all 22 upstream skills and adds dedicated deployment and documentation skills", () => {
   assert.equal(UPSTREAM_SKILLS.length, 22);

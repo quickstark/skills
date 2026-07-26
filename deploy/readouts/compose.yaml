@@ -53,6 +53,58 @@ services:
       - traefik.http.routers.quickstark-readouts.middlewares=authelia@file
       - traefik.http.services.quickstark-readouts.loadbalancer.server.port=4173
 
+  quickstark-readout-ingestion:
+    image: node:24-alpine
+    container_name: quickstark-readout-ingestion
+    hostname: quickstark-readout-ingestion
+    working_dir: /opt/quickstark
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      QS_READOUT_DIR: /docker/appdata/quickstark-readouts
+      QS_READOUT_PUBLIC_URL: https://reports.quickstark.com/
+      QS_READOUT_ALLOWED_PROJECTS: github.com/quickstark/skills
+      QS_READOUT_PRODUCERS_FILE: /run/quickstark/readout-producers.json
+    command:
+      - node
+      - /opt/quickstark/scripts/qs-skill-readout.mjs
+      - ingest
+      - --directory
+      - /docker/appdata/quickstark-readouts
+      - --host
+      - quickstark-readout-ingestion
+      - --port
+      - "4174"
+    volumes:
+      - /github/skills:/opt/quickstark:ro
+      - /docker/appdata/quickstark-readouts:/docker/appdata/quickstark-readouts:rw
+      - /docker/appdata/quickstark-readouts-config/readout-producers.json:/run/quickstark/readout-producers.json:ro
+    networks:
+      - proxy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://quickstark-readout-ingestion:4174/__quickstark_ingestion_health').then(r=>r.json()).then(j=>{if(j.service!=='quickstark-skill-readout-ingestion')process.exit(1)}).catch(()=>process.exit(1))"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.quickstark-readout-ingestion.rule=Host(`reports.quickstark.com`) && Path(`/api/v1/readouts`)
+      - traefik.http.routers.quickstark-readout-ingestion.entrypoints=https
+      - traefik.http.routers.quickstark-readout-ingestion.tls.certresolver=cloudflare
+      - traefik.http.routers.quickstark-readout-ingestion.priority=200
+      - traefik.http.services.quickstark-readout-ingestion.loadbalancer.server.port=4174
+
 networks:
   proxy:
     external: true

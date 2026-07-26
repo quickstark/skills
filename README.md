@@ -201,6 +201,69 @@ docker compose -f /docker/stacks/quickstark-readouts/compose.yaml up -d
 
 The intended hostname is `reports.quickstark.com`. It is usable from a personal or managed laptop only after its real DNS record resolves, HTTPS works, Authelia rejects anonymous requests, and an approved user can retrieve an actual report. Do not treat a local reverse-proxy check as proof of remote reachability. No Tailscale, private-network client, or permanent SSH tunnel is required once those external prerequisites are explicitly configured and verified.
 
+### Publishing reports from another harness or laptop
+
+The report stack includes a separate, authenticated write interface:
+
+```text
+POST https://reports.quickstark.com/api/v1/readouts
+```
+
+Only the dedicated ingestion adapter accepts producer submissions. The existing browser gallery and report viewer remain Authelia-protected and read-only. Native QuickStark skills keep their registered, purpose-specific report profiles; explicitly authorized skills from Codex Desktop, Codex CLI, Claude Code, or an independent collection receive an honest external-skill profile and appear in the same approved project library.
+
+Production ingestion starts only when an operator has explicitly configured hashed producer grants in `/docker/appdata/quickstark-readouts-config/readout-producers.json`:
+
+```json
+{
+  "version": 1,
+  "producers": [
+    {
+      "id": "personal-codex-laptop",
+      "tokenSha256": "replace-with-the-64-character-sha256-digest-of-a-private-token",
+      "projects": ["github.com/quickstark/skills"]
+    }
+  ]
+}
+```
+
+Keep the actual bearer token only in the approved producer's private environment; never commit it, insert it into a URL, store it in the report library, or pass it as a command-line argument. The producer's project grant and the hosted publication allowlist must both approve the canonical project.
+
+Configure an explicitly authorized laptop or harness:
+
+```bash
+export QS_READOUT_INGESTION_URL=https://reports.quickstark.com/api/v1/readouts
+export QS_READOUT_PRODUCER_ID=personal-codex-laptop
+export QS_READOUT_PUBLISH_PROJECTS=github.com/quickstark/skills
+export QS_READOUT_HARNESS=codex-desktop
+export QS_READOUT_PUBLISH_MAX_ATTEMPTS=2
+export QS_READOUT_PUBLISH_RETRY_DELAY=50
+# Supply QS_READOUT_PRODUCER_TOKEN through the harness's private credential configuration.
+```
+
+With those explicit settings, a normal QuickStark skill readout is written locally first and then published automatically. Other harnesses can submit a versioned structured readout with the portable command:
+
+```bash
+node scripts/qs-skill-readout.mjs publish \
+  --input /absolute/path/to/approved-readout-envelope.json \
+  --allowed-projects github.com/quickstark/skills \
+  --report-base-url https://reports.quickstark.com/ \
+  --max-attempts 2 \
+  --retry-delay 50 \
+  --json
+```
+
+The command uses the privately configured `QS_READOUT_PRODUCER_TOKEN`; the report envelope includes the actual producer, harness, collection, canonical project, skill, immutable run identifier, actual UTC timestamp, observed status, and outcome. Namespaced plugin identifiers such as `compound-engineering:ce-code-review` are supported without misrepresenting external skills as native QuickStark skills. Publisher attempts are bounded to 1–5 and retry delays to 0–2,000 milliseconds; equivalent `QS_READOUT_PUBLISH_MAX_ATTEMPTS` and `QS_READOUT_PUBLISH_RETRY_DELAY` environment variables also apply to automatically published native readouts. The ingestion service emits only redacted JSON audit events containing the timestamp, authorized producer, authorized project, response status, and outcome. The server renders and escapes its own HTML and never accepts uploaded HTML or arbitrary files. First delivery returns `201`; an identical retry returns the same immutable report with `200`; changed content for the same run returns `409`.
+
+Publishing is disabled by default. If the producer, project grant, remote endpoint, or applicable data-handling policy is missing, the local skill readout remains available and the outcome explicitly says that hosted publication did not happen. Do not publish employer, customer, or confidential project data to personal infrastructure without explicit applicable authorization.
+
+Validate the isolated stack before intentionally activating a production route:
+
+```bash
+docker compose -f deploy/readouts/compose.yaml config --quiet
+```
+
+A real laptop-to-domain delivery, browser-authenticated report retrieval, anonymous browser rejection, producer denial, and live credential rotation must be verified after deployment; a local test or healthy container alone does not establish external delivery.
+
 If a newly created hostname works through public DNS but still fails on the home network, compare the public resolver with the home router:
 
 ```bash

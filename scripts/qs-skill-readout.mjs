@@ -1,7 +1,7 @@
 import { execFile, spawn } from "node:child_process";
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
-import { lstat, mkdir, readFile, readdir, realpath, unlink, writeFile } from "node:fs/promises";
+import { link, lstat, mkdir, readFile, readdir, realpath, unlink, writeFile } from "node:fs/promises";
 import { createServer as createPortProbe } from "node:net";
 import { hostname, networkInterfaces, platform, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
@@ -19,6 +19,8 @@ import {
 export const DEFAULT_READOUT_DIRECTORY = join(tmpdir(), "quickstark-readouts");
 export const DEFAULT_READOUT_HOST = "127.0.0.1";
 export const DEFAULT_READOUT_PORT = 4173;
+export const DEFAULT_READOUT_INGESTION_PORT = 4174;
+export const READOUT_INGESTION_PATH = "/api/v1/readouts";
 export const READOUT_VIEWER_STATE = ".quickstark-readout-viewer.json";
 export const READOUT_FORMAT_VERSION = 1;
 
@@ -29,7 +31,7 @@ const findingPriorities = new Set(["P0", "P1", "P2", "P3"]);
 const pullRequestStates = new Set(["open", "merged", "closed"]);
 const deploymentStatuses = new Set(["verified", "deployed", "failed", "pending"]);
 const fileChangeTypes = new Set(["added", "modified", "deleted", "renamed"]);
-const reportFilename = /^qs-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--[a-f0-9]{8}\.html$/;
+const reportFilename = /^qs-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--(?:[a-f0-9]{8}|[a-z0-9][a-z0-9._-]{0,95}--[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\.html$/i;
 const viewerToken = /^[a-f0-9]{48}$/;
 const loopbackHosts = new Set(["127.0.0.1", "::1", "localhost"]);
 const accessModes = new Set(["auto", "local", "lan", "ssh"]);
@@ -37,6 +39,11 @@ const readoutLayouts = new Set(["flat", "project"]);
 const projectSources = new Set(["git-origin", "git-root", "workspace", "explicit"]);
 const projectSegment = /^[a-z0-9._-]+$/i;
 const reportIdentifier = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
+const ingestionIdentifier = /^[a-z0-9][a-z0-9._-]{0,95}$/i;
+const externalSkillIdentifier = /^[a-z0-9][a-z0-9._:-]{0,127}$/i;
+const ingestionCollection = /^[a-z0-9][a-z0-9._/-]{0,127}$/i;
+const observedUtcTimestamp = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/;
+const ingestionMaximumBytes = 256 * 1024;
 const execFileAsync = promisify(execFile);
 
 export function normalizeReadoutProject(remote) {
@@ -741,6 +748,53 @@ function normalizeReportRelationships(value, items) {
   });
 }
 
+function normalizeReadoutProducer(value) {
+  if (value === undefined || value === null) return null;
+
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("Readout producer metadata must be a validated object.");
+  }
+
+  const producer = requireText(value.producer, "Readout producer");
+  const collection = requireText(value.collection, "Skill collection");
+  const harness = value.harness;
+
+  if (!ingestionIdentifier.test(producer)) {
+    throw new Error("Readout producer must be a safe non-sensitive identifier.");
+  }
+
+  if (
+    !ingestionCollection.test(collection)
+    || collection.split("/").some((segment) => !segment || segment === "." || segment === "..")
+  ) {
+    throw new Error("Skill collection must be a safe namespaced identifier.");
+  }
+
+  if (!harness || typeof harness !== "object" || Array.isArray(harness)) {
+    throw new Error("Readout harness must be a validated object.");
+  }
+
+  const name = requireText(harness.name, "Readout harness");
+
+  if (!ingestionIdentifier.test(name)) {
+    throw new Error("Readout harness must use a safe non-sensitive identifier.");
+  }
+
+  const version = harness.version === undefined
+    ? null
+    : requireText(harness.version, "Readout harness version");
+
+  if (version !== null && !/^[a-z0-9][a-z0-9._+-]{0,63}$/i.test(version)) {
+    throw new Error("Readout harness version must be a safe version identifier.");
+  }
+
+  return {
+    producer,
+    collection,
+    harness: { name, ...(version === null ? {} : { version }) },
+  };
+}
+
 function normalizeRecommendations(skill, recommendations) {
   const allowed = NEXT_SKILLS_BY_NAME[skill.name];
   const selected = recommendations === undefined ? allowed : recommendations;
@@ -846,6 +900,7 @@ export function normalizeSkillReadout(input) {
   }
 
   const execution = normalizeExecutionContext(input.execution, status);
+  const producer = normalizeReadoutProducer(input.ingestion);
   const provenance = normalizeDeliveryProvenance(input.provenance, projectIdentity);
   const relationships = normalizeReportRelationships(input.relationships, [
     findings,
@@ -874,6 +929,7 @@ export function normalizeSkillReadout(input) {
     outputs,
     checks,
     execution,
+    producer,
     provenance,
     relationships,
     nextSkills: normalizeRecommendations(skill, input.nextSkills),
@@ -1278,6 +1334,14 @@ function renderNormalizedSkillReadout(report) {
       `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
       `<meta name="quickstark:project-source" content="${escapeHtml(report.projectIdentity.source)}">`,
     ] : []),
+    ...(report.producer ? [
+      `<meta name="quickstark:producer" content="${escapeHtml(report.producer.producer)}">`,
+      `<meta name="quickstark:harness" content="${escapeHtml(report.producer.harness.name)}">`,
+      `<meta name="quickstark:skill-collection" content="${escapeHtml(report.producer.collection)}">`,
+      ...(report.producer.harness.version ? [
+        `<meta name="quickstark:harness-version" content="${escapeHtml(report.producer.harness.version)}">`,
+      ] : []),
+    ] : []),
     ...(report.execution ? [
       `<meta name="quickstark:machine" content="${escapeHtml(report.execution.machine.hostname)}">`,
       `<meta name="quickstark:platform" content="${escapeHtml(report.execution.machine.platform)}">`,
@@ -1395,7 +1459,10 @@ export async function writeSkillReadout(input, options = {}) {
   }
 
   const timestamp = report.generatedAt.toISOString().replaceAll(":", "-").replaceAll(".", "-");
-  const filename = `${report.skill.name}--${timestamp}--${report.reportId.slice(0, 8)}.html`;
+  const reportSuffix = report.producer
+    ? `${report.producer.producer}--${report.reportId.toLowerCase()}`
+    : report.reportId.slice(0, 8);
+  const filename = `${report.skill.name}--${timestamp}--${reportSuffix}.html`;
   const path = layout === "project"
     ? join(
       directory,
@@ -1418,6 +1485,206 @@ export async function writeSkillReadout(input, options = {}) {
   return {
     skill: report.skill.name,
     status: report.status,
+    reportId: report.reportId,
+    generatedAt: report.generatedAt.toISOString(),
+    projectIdentity: report.projectIdentity,
+    directory,
+    filename,
+    relativePath,
+    path,
+    url: base
+      ? new URL(relativePath.split("/").map(encodeURIComponent).join("/"), base).href
+      : null,
+  };
+}
+
+export function normalizeExternalSkillReadout(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    throw new Error("An external skill readout requires a structured JSON object.");
+  }
+
+  const name = requireText(input.skill, "External skill").replace(/^\//, "");
+
+  if (!externalSkillIdentifier.test(name)) {
+    throw new Error("External skill must use a safe namespaced skill identifier.");
+  }
+
+  const status = input.status ?? "Completed";
+
+  if (!statuses.has(status) || status === "Preview") {
+    throw new Error("An external report must describe an actual completed, awaiting, or blocked skill run.");
+  }
+
+  const producer = normalizeReadoutProducer(input.ingestion);
+
+  if (!producer) throw new Error("An external skill requires verified producer and harness metadata.");
+
+  if (producer.collection === "quickstark/qs-skills") {
+    throw new Error("An external skill cannot claim native QuickStark catalog membership.");
+  }
+
+  const generatedAt = new Date(input.generatedAt ?? Date.now());
+
+  if (Number.isNaN(generatedAt.getTime())) {
+    throw new Error("External skill generation time must be a valid date.");
+  }
+
+  const reportId = requireText(input.reportId, "External report identifier");
+
+  if (!reportIdentifier.test(reportId)) {
+    throw new Error("External report identifier must be a valid UUID.");
+  }
+
+  const findings = normalizeItems(input.findings, "findings");
+  const decisions = normalizeItems(input.decisions, "decisions");
+  const outputs = normalizeItems(input.outputs, "outputs");
+  const checks = normalizeItems(input.checks, "checks", { checks: true });
+  const relationships = normalizeReportRelationships(input.relationships, [
+    findings,
+    decisions,
+    outputs,
+    checks,
+  ]);
+
+  if ([findings, decisions, outputs, checks, relationships].some((items) => items.length > 100)) {
+    throw new Error("External skill report results exceed the allowed collection size.");
+  }
+
+  if (input.provenance !== undefined && input.provenance !== null) {
+    throw new Error("External producer claims cannot be treated as independently verified delivery evidence.");
+  }
+
+  const selected = input.nextSkills ?? [];
+
+  if (!Array.isArray(selected) || selected.length > 3) {
+    throw new Error("External next skills must contain no more than three recommendations.");
+  }
+
+  const nextSkills = selected.map((item, index) => {
+    const candidate = typeof item === "string" ? { name: item } : item;
+
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+      throw new Error(`nextSkills[${index}] must be a safe external skill recommendation.`);
+    }
+
+    const nextName = requireText(candidate.name, `nextSkills[${index}].name`).replace(/^\//, "");
+
+    if (!externalSkillIdentifier.test(nextName)) {
+      throw new Error(`nextSkills[${index}].name must use a safe external skill identifier.`);
+    }
+
+    return {
+      name: nextName,
+      ...(candidate.reason === undefined ? {} : {
+        reason: requireText(candidate.reason, `nextSkills[${index}].reason`),
+      }),
+    };
+  });
+
+  if (new Set(nextSkills.map((item) => item.name)).size !== nextSkills.length) {
+    throw new Error("External skill recommendations must not be repeated.");
+  }
+
+  return {
+    skill: {
+      name,
+      displayName: input.displayName === undefined
+        ? name
+        : requireText(input.displayName, "External skill display name"),
+    },
+    status,
+    outcome: requireText(input.outcome, "External skill outcome"),
+    projectIdentity: normalizeProjectIdentity(input.projectIdentity),
+    reportId,
+    formatVersion: READOUT_FORMAT_VERSION,
+    producer,
+    findings,
+    decisions,
+    outputs,
+    checks,
+    relationships,
+    nextSkills,
+    generatedAt,
+  };
+}
+
+export function renderExternalSkillReadout(input) {
+  const report = normalizeExternalSkillReadout(input);
+  const metadata = [
+    `<meta name="quickstark:skill" content="${escapeHtml(report.skill.name)}">`,
+    `<meta name="quickstark:skill-display-name" content="${escapeHtml(report.skill.displayName)}">`,
+    '<meta name="quickstark:report-origin" content="external">',
+    '<meta name="quickstark:report-profile" content="External skill readout">',
+    `<meta name="quickstark:status" content="${escapeHtml(report.status)}">`,
+    `<meta name="quickstark:generated-at" content="${escapeHtml(report.generatedAt.toISOString())}">`,
+    `<meta name="quickstark:report-id" content="${escapeHtml(report.reportId)}">`,
+    `<meta name="quickstark:format-version" content="${report.formatVersion}">`,
+    `<meta name="quickstark:project" content="${escapeHtml(report.projectIdentity.key)}">`,
+    `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
+    `<meta name="quickstark:project-source" content="${escapeHtml(report.projectIdentity.source)}">`,
+    `<meta name="quickstark:producer" content="${escapeHtml(report.producer.producer)}">`,
+    `<meta name="quickstark:harness" content="${escapeHtml(report.producer.harness.name)}">`,
+    `<meta name="quickstark:skill-collection" content="${escapeHtml(report.producer.collection)}">`,
+    ...(report.producer.harness.version ? [
+      `<meta name="quickstark:harness-version" content="${escapeHtml(report.producer.harness.version)}">`,
+    ] : []),
+  ].join("\n  ");
+  const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
+  const next = report.nextSkills.length
+    ? `<div class="next-grid">${report.nextSkills.map((item) => `<article class="next-card"><p class="eyebrow">Producer recommendation</p><h3>/${escapeHtml(item.name)}</h3>${item.reason ? `<p>${escapeHtml(item.reason)}</p>` : ""}</article>`).join("")}</div>`
+    : '<div class="empty-next">None — no external follow-on was recorded.</div>';
+  const sections = [
+    renderSection("Observed findings", readoutSectionDescriptions.findings, report.findings),
+    renderSection("Recorded decisions", readoutSectionDescriptions.decisions, report.decisions),
+    renderSection("Actual outputs", readoutSectionDescriptions.outputs, report.outputs),
+    renderSection("Observed checks", readoutSectionDescriptions.checks, report.checks, { checks: true }),
+  ].join("\n  ");
+  const body = `<main class="compact-readout">
+  <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
+  <header class="hero"><div class="hero-heading"><div><p class="eyebrow">External skill · ${escapeHtml(report.projectIdentity.label)}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">External skill readout</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p></header>
+  <section class="section"><div class="section-heading"><div><p class="eyebrow">Verified submission identity</p><h2>Producer and harness</h2></div></div><div class="detail-grid"><article class="detail-card"><div class="detail-heading"><h3>Producer</h3></div><p>${escapeHtml(report.producer.producer)}</p></article><article class="detail-card"><div class="detail-heading"><h3>Harness</h3></div><p>${escapeHtml(report.producer.harness.name)}${report.producer.harness.version ? ` · ${escapeHtml(report.producer.harness.version)}` : ""}</p></article><article class="detail-card"><div class="detail-heading"><h3>Skill collection</h3></div><p>${escapeHtml(report.producer.collection)}</p></article></div></section>
+  ${sections}
+  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the work</p><h2>Producer-reported next skills</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
+  <footer class="footer"><span>Authorized external skill readout</span><span>Self-contained HTML · no external scripts or styles</span></footer>
+</main>`;
+
+  return renderDocument({
+    title: report.skill.displayName,
+    body,
+    theme: themes.help,
+    metadata,
+  });
+}
+
+export async function writeExternalSkillReadout(input, options = {}) {
+  const report = normalizeExternalSkillReadout(input);
+  const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
+  const timestamp = report.generatedAt.toISOString().replaceAll(":", "-").replaceAll(".", "-");
+  const slug = report.skill.name.toLowerCase().replace(/[^a-z0-9-]/g, "-").replace(/-+/g, "-").slice(0, 80);
+  const filename = `qs-external-${slug}--${timestamp}--${report.producer.producer}--${report.reportId.toLowerCase()}.html`;
+  const path = join(
+    directory,
+    ...report.projectIdentity.key.split("/"),
+    String(report.generatedAt.getUTCFullYear()),
+    String(report.generatedAt.getUTCMonth() + 1).padStart(2, "0"),
+    filename,
+  );
+  const relativePath = relative(directory, path).split(sep).join("/");
+  const base = normalizeBaseUrl(options.baseUrl ?? process.env.QS_READOUT_BASE_URL);
+
+  await mkdir(dirname(path), { recursive: true, mode: 0o700 });
+  await writeFile(path, renderExternalSkillReadout(input), {
+    encoding: "utf8",
+    flag: "wx",
+    mode: 0o600,
+  });
+
+  return {
+    skill: report.skill.name,
+    status: report.status,
+    reportId: report.reportId,
+    generatedAt: report.generatedAt.toISOString(),
+    projectIdentity: report.projectIdentity,
     directory,
     filename,
     relativePath,
@@ -1501,6 +1768,7 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
       const path = join(current, entry.name);
 
       if (entry.isDirectory()) {
+        if (entry.name.startsWith(".")) continue;
         await visit(path, depth + 1);
         continue;
       }
@@ -1508,7 +1776,13 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
       if (!entry.isFile() || !reportFilename.test(entry.name)) continue;
 
       const html = await readFile(path, "utf8");
-      const skill = SKILLS_BY_NAME.get(findMetadata(html, "skill"));
+      const skillName = decodeHtml(findMetadata(html, "skill"));
+      const external = findMetadata(html, "report-origin") === "external";
+      const skill = SKILLS_BY_NAME.get(skillName)
+        ?? (external && externalSkillIdentifier.test(skillName) ? {
+          name: skillName,
+          displayName: decodeHtml(findMetadata(html, "skill-display-name")) || skillName,
+        } : null);
       const status = findMetadata(html, "status");
       const generatedAt = findMetadata(html, "generated-at");
       const projectKey = decodeHtml(findMetadata(html, "project"));
@@ -1996,6 +2270,998 @@ async function handleReadoutRequest(request, response, directory, accessToken, {
   }
 }
 
+function sendIngestionJson(response, status, payload, headers = {}) {
+  const body = JSON.stringify(payload);
+
+  response.writeHead(status, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Length": Buffer.byteLength(body),
+    "Cache-Control": "no-store",
+    "Cross-Origin-Resource-Policy": "same-origin",
+    "Referrer-Policy": "no-referrer",
+    "X-Content-Type-Options": "nosniff",
+    ...headers,
+  });
+
+  response.end(body);
+}
+
+function normalizeIngestionProducers(value) {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new Error("Readout ingestion requires at least one explicitly authorized producer.");
+  }
+
+  const producers = new Map();
+
+  for (const item of value) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error("Readout producers must be explicitly configured objects.");
+    }
+
+    const id = requireText(item.id, "Readout producer");
+    const token = item.token === undefined
+      ? null
+      : requireText(item.token, "Readout producer credential");
+    const tokenSha256 = item.tokenSha256 === undefined
+      ? null
+      : requireText(item.tokenSha256, "Readout producer credential digest");
+
+    if (!ingestionIdentifier.test(id)) {
+      throw new Error("Readout producer identity must be a safe non-sensitive identifier.");
+    }
+
+    if (token !== null && token.length < 24) {
+      throw new Error("Readout producer credentials must contain at least 24 characters.");
+    }
+
+    if ((token === null) === (tokenSha256 === null)) {
+      throw new Error("Each producer requires exactly one bearer credential or SHA-256 credential digest.");
+    }
+
+    if (tokenSha256 !== null && !/^[a-f0-9]{64}$/i.test(tokenSha256)) {
+      throw new Error("Readout producer credential digest must be a complete SHA-256 value.");
+    }
+
+    if (producers.has(id)) throw new Error("Readout producer identities must be unique.");
+
+    const projects = normalizePublishedProjects(item.projects);
+
+    if (projects.size === 0) {
+      throw new Error("Every readout producer requires at least one explicitly approved project.");
+    }
+
+    producers.set(id, {
+      id,
+      digest: token === null
+        ? Buffer.from(tokenSha256, "hex")
+        : createHash("sha256").update(token).digest(),
+      projects,
+    });
+  }
+
+  return producers;
+}
+
+async function loadReadoutIngestionProducers(options = {}) {
+  if (options.producers !== undefined) {
+    return normalizeIngestionProducers(options.producers);
+  }
+
+  const configuredPath = options.producersFile ?? process.env.QS_READOUT_PRODUCERS_FILE;
+
+  if (!configuredPath) {
+    return normalizeIngestionProducers([]);
+  }
+
+  const path = resolve(configuredPath);
+  const metadata = await lstat(path);
+
+  if (!metadata.isFile() || metadata.isSymbolicLink() || metadata.size > 64 * 1024) {
+    throw new Error("Readout producer configuration must be a bounded regular file.");
+  }
+
+  let configured;
+
+  try {
+    configured = JSON.parse(await readFile(path, "utf8"));
+  } catch {
+    throw new Error("Readout producer configuration must contain valid JSON.");
+  }
+
+  if (!configured || typeof configured !== "object" || Array.isArray(configured) || configured.version !== 1) {
+    throw new Error("Readout producer configuration must use the supported version.");
+  }
+
+  return normalizeIngestionProducers(configured.producers);
+}
+
+function authenticateReadoutProducer(value, producers) {
+  if (typeof value !== "string" || !value.startsWith("Bearer ")) return null;
+
+  const credential = value.slice("Bearer ".length);
+
+  if (credential.length < 24 || credential.length > 512) return null;
+
+  const digest = createHash("sha256").update(credential).digest();
+
+  for (const producer of producers.values()) {
+    if (timingSafeEqual(digest, producer.digest)) return producer;
+  }
+
+  return null;
+}
+
+async function readIngestionBody(request, maxBytes) {
+  const declared = request.headers["content-length"];
+
+  if (declared !== undefined && (!/^\d+$/.test(declared) || Number(declared) > maxBytes)) {
+    return { error: 413, code: "payload_too_large" };
+  }
+
+  let size = 0;
+  const chunks = [];
+
+  for await (const chunk of request) {
+    size += chunk.length;
+
+    if (size > maxBytes) return { error: 413, code: "payload_too_large" };
+
+    chunks.push(chunk);
+  }
+
+  try {
+    return { value: JSON.parse(Buffer.concat(chunks).toString("utf8")) };
+  } catch {
+    return { error: 400, code: "invalid_json" };
+  }
+}
+
+function withinReadoutRateLimit(producer, limits, maxRequestsPerMinute) {
+  const now = Date.now();
+  const current = limits.get(producer.id);
+
+  if (!current || current.resetAt <= now) {
+    limits.set(producer.id, { count: 1, resetAt: now + 60_000 });
+    return { allowed: true };
+  }
+
+  if (current.count >= maxRequestsPerMinute) {
+    return {
+      allowed: false,
+      retryAfter: Math.max(1, Math.ceil((current.resetAt - now) / 1000)),
+    };
+  }
+
+  current.count += 1;
+  return { allowed: true };
+}
+
+function validateIngestionStructure(value, depth = 0) {
+  if (depth > 12) throw new Error("Readout submission exceeds the maximum nesting depth.");
+
+  if (typeof value === "string") {
+    if (value.length > 16_384) throw new Error("Readout submission exceeds the maximum field length.");
+    return;
+  }
+
+  if (Array.isArray(value)) {
+    if (value.length > 100) throw new Error("Readout submission exceeds the maximum collection size.");
+    for (const item of value) validateIngestionStructure(item, depth + 1);
+    return;
+  }
+
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value);
+
+    if (entries.length > 64) throw new Error("Readout submission exceeds the maximum object size.");
+
+    for (const [key, entry] of entries) {
+      if (key.length > 128 || key === "__proto__" || key === "constructor" || key === "prototype") {
+        throw new Error("Readout submission contains an unsafe field.");
+      }
+
+      validateIngestionStructure(entry, depth + 1);
+    }
+  }
+}
+
+function canonicalIngestionValue(value) {
+  if (Array.isArray(value)) return value.map(canonicalIngestionValue);
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [
+      key,
+      canonicalIngestionValue(value[key]),
+    ]));
+  }
+
+  return value;
+}
+
+async function withIngestionRunLock(locks, key, operation) {
+  const pending = (locks.get(key) ?? Promise.resolve())
+    .catch(() => {})
+    .then(operation);
+
+  locks.set(key, pending);
+
+  try {
+    return await pending;
+  } finally {
+    if (locks.get(key) === pending) locks.delete(key);
+  }
+}
+
+async function ensureContainedReadoutDirectory(directory, segments) {
+  const root = await realpath(directory);
+  let current = root;
+
+  for (const segment of segments) {
+    if (
+      typeof segment !== "string"
+      || segment.length === 0
+      || segment === "."
+      || segment === ".."
+      || segment.includes("/")
+      || segment.includes("\\")
+    ) {
+      throw Object.assign(new Error("Readout storage contains an unsafe directory segment."), {
+        code: "EACCES",
+      });
+    }
+
+    current = join(current, segment);
+
+    try {
+      const metadata = await lstat(current);
+
+      if (!metadata.isDirectory() || metadata.isSymbolicLink()) {
+        throw Object.assign(new Error("Readout storage must not contain a symbolic link."), {
+          code: "EACCES",
+        });
+      }
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+
+      try {
+        await mkdir(current, { mode: 0o700 });
+      } catch (creationError) {
+        if (creationError.code !== "EEXIST") throw creationError;
+      }
+
+      const metadata = await lstat(current);
+
+      if (!metadata.isDirectory() || metadata.isSymbolicLink()) {
+        throw Object.assign(new Error("Readout storage must not contain a symbolic link."), {
+          code: "EACCES",
+        });
+      }
+    }
+
+    const resolved = await realpath(current);
+    const fromRoot = relative(root, resolved);
+
+    if (fromRoot === ".." || fromRoot.startsWith(`..${sep}`) || isAbsolute(fromRoot)) {
+      throw Object.assign(new Error("Readout storage escaped its authorized project directory."), {
+        code: "EACCES",
+      });
+    }
+  }
+
+  return current;
+}
+
+async function writeExclusiveIngestionRecord(path, value) {
+  const temporary = `${path}.${randomBytes(12).toString("hex")}.pending`;
+
+  await writeFile(temporary, `${JSON.stringify(value)}\n`, {
+    encoding: "utf8",
+    flag: "wx",
+    mode: 0o600,
+  });
+
+  try {
+    await link(temporary, path);
+  } finally {
+    try {
+      await unlink(temporary);
+    } catch (error) {
+      if (error.code !== "ENOENT") {
+        // A committed immutable record remains valid even if staging cleanup fails.
+      }
+    }
+  }
+}
+
+function ingestionReportIdentity(report, external) {
+  const timestamp = report.generatedAt.toISOString().replaceAll(":", "-").replaceAll(".", "-");
+  const prefix = external
+    ? `qs-external-${report.skill.name.toLowerCase().replace(/[^a-z0-9-]/g, "-").replace(/-+/g, "-").slice(0, 80)}`
+    : report.skill.name;
+  const filename = `${prefix}--${timestamp}--${report.producer.producer}--${report.reportId.toLowerCase()}.html`;
+
+  return [
+    ...report.projectIdentity.key.split("/"),
+    String(report.generatedAt.getUTCFullYear()),
+    String(report.generatedAt.getUTCMonth() + 1).padStart(2, "0"),
+    filename,
+  ].join("/");
+}
+
+async function ensureCommittedReadout({ directory, relativePath, stagedPath, report }) {
+  const segments = relativePath.split("/");
+  const filename = segments.pop();
+  const parent = await ensureContainedReadoutDirectory(directory, segments);
+  const destination = join(parent, filename);
+
+  try {
+    const existing = await lstat(destination);
+
+    if (!existing.isFile() || existing.isSymbolicLink()) {
+      throw Object.assign(new Error("An existing report is not a safe regular file."), {
+        code: "EACCES",
+      });
+    }
+
+    const html = await readFile(destination, "utf8");
+
+    if (
+      decodeHtml(findMetadata(html, "report-id")).toLowerCase() !== report.reportId.toLowerCase()
+      || decodeHtml(findMetadata(html, "producer")) !== report.producer.producer
+      || decodeHtml(findMetadata(html, "project")) !== report.projectIdentity.key
+      || decodeHtml(findMetadata(html, "skill")) !== report.skill.name
+    ) {
+      throw Object.assign(new Error("An existing report does not match its authorized immutable run."), {
+        code: "EEXIST",
+      });
+    }
+
+    return destination;
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+
+  await link(stagedPath, destination);
+
+  try {
+    await unlink(stagedPath);
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      // The committed immutable report and recovery record remain authoritative.
+    }
+  }
+
+  return destination;
+}
+
+async function acceptReadoutSubmission(envelope, {
+  directory,
+  baseUrl,
+  producer,
+  project,
+  locks,
+}) {
+  const observedAt = typeof envelope.generatedAt === "string"
+    && observedUtcTimestamp.test(envelope.generatedAt)
+    ? new Date(envelope.generatedAt)
+    : null;
+
+  if (
+    !reportIdentifier.test(envelope.runId ?? "")
+    || !statuses.has(envelope.status)
+    || envelope.status === "Preview"
+    || observedAt === null
+    || Number.isNaN(observedAt.getTime())
+    || observedAt.toISOString().slice(0, 19) !== envelope.generatedAt.slice(0, 19)
+  ) {
+    return { error: 422, code: "invalid_readout" };
+  }
+
+  const reportInput = {
+    skill: envelope.skill,
+    status: envelope.status,
+    outcome: envelope.outcome,
+    generatedAt: envelope.generatedAt,
+    reportId: envelope.runId.toLowerCase(),
+    projectIdentity: project,
+    ingestion: {
+      producer: producer.id,
+      harness: envelope.harness,
+      collection: envelope.collection,
+    },
+    displayName: envelope.displayName,
+    findings: envelope.findings,
+    decisions: envelope.decisions,
+    outputs: envelope.outputs,
+    checks: envelope.checks,
+    relationships: envelope.relationships,
+    nextSkills: envelope.nextSkills,
+  };
+  const external = envelope.collection !== "quickstark/qs-skills";
+  let normalized;
+
+  try {
+    normalized = external
+      ? normalizeExternalSkillReadout(reportInput)
+      : normalizeSkillReadout(reportInput);
+  } catch {
+    return { error: 422, code: "invalid_readout" };
+  }
+
+  const runKey = `${producer.id}/${project.key}/${normalized.reportId}`;
+  const digest = createHash("sha256")
+    .update(JSON.stringify(canonicalIngestionValue({
+      version: READOUT_FORMAT_VERSION,
+      producer: normalized.producer,
+      project: normalized.projectIdentity.key,
+      skill: normalized.skill.name,
+      displayName: external ? normalized.skill.displayName : undefined,
+      reportId: normalized.reportId,
+      generatedAt: normalized.generatedAt.toISOString(),
+      status: normalized.status,
+      outcome: normalized.outcome,
+      findings: normalized.findings,
+      decisions: normalized.decisions,
+      outputs: normalized.outputs,
+      checks: normalized.checks,
+      relationships: normalized.relationships,
+      nextSkills: normalized.nextSkills,
+    })))
+    .digest("hex");
+  const expectedRelativePath = ingestionReportIdentity(normalized, external);
+  const projectSegments = project.key.split("/");
+  const recordSegments = [
+    ".quickstark-ingestion",
+    "runs",
+    producer.id,
+    ...projectSegments,
+  ];
+  const recordPath = join(
+    directory,
+    ...recordSegments,
+    `${normalized.reportId}.json`,
+  );
+  const stageSegments = [
+    ".quickstark-ingestion",
+    "staging",
+    createHash("sha256").update(runKey).digest("hex"),
+  ];
+
+  return withIngestionRunLock(locks, runKey, async () => {
+    await ensureContainedReadoutDirectory(directory, projectSegments);
+    await ensureContainedReadoutDirectory(directory, recordSegments);
+    let existing;
+
+    try {
+      existing = JSON.parse(await readFile(recordPath, "utf8"));
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+
+    if (existing) {
+      if (
+        existing.digest !== digest
+        || existing.relativePath !== expectedRelativePath
+        || existing.skill !== normalized.skill.name
+      ) {
+        return { error: 409, code: "run_conflict" };
+      }
+    }
+
+    const stageRoot = await ensureContainedReadoutDirectory(directory, stageSegments);
+    await ensureContainedReadoutDirectory(stageRoot, expectedRelativePath.split("/").slice(0, -1));
+    const stagedPath = join(stageRoot, ...expectedRelativePath.split("/"));
+    const finalPath = join(directory, ...expectedRelativePath.split("/"));
+    let committed = false;
+
+    try {
+      const finalMetadata = await lstat(finalPath);
+      committed = finalMetadata.isFile() && !finalMetadata.isSymbolicLink();
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+
+    if (!committed) {
+      let staged = false;
+
+      try {
+        const stageMetadata = await lstat(stagedPath);
+        staged = stageMetadata.isFile() && !stageMetadata.isSymbolicLink();
+      } catch (error) {
+        if (error.code !== "ENOENT") throw error;
+      }
+
+      if (!staged) {
+        const writeReport = external ? writeExternalSkillReadout : writeSkillReadout;
+        const result = await writeReport(reportInput, {
+          directory: stageRoot,
+          layout: "project",
+          baseUrl,
+        });
+
+        if (result.relativePath !== expectedRelativePath) {
+          throw new Error("Staged readout does not match its authorized immutable identity.");
+        }
+      }
+    }
+
+    if (!existing) {
+      await writeExclusiveIngestionRecord(recordPath, {
+        digest,
+        relativePath: expectedRelativePath,
+        skill: normalized.skill.name,
+      });
+    }
+
+    await ensureCommittedReadout({
+      directory,
+      relativePath: expectedRelativePath,
+      stagedPath,
+      report: normalized,
+    });
+
+    const url = new URL(expectedRelativePath.split("/").map(encodeURIComponent).join("/"), baseUrl).href;
+
+    return {
+      statusCode: existing ? 200 : 201,
+      payload: {
+        status: existing ? "existing" : "created",
+        project: project.key,
+        skill: normalized.skill.name,
+        reportId: normalized.reportId,
+        url,
+      },
+    };
+  });
+}
+
+async function handleReadoutIngestion(request, response, {
+  directory,
+  baseUrl,
+  producerState,
+  allowedProjects,
+  maxBytes,
+  locks,
+  rates,
+  maxRequestsPerMinute,
+  audit,
+}) {
+  let pathname;
+  let auditedProducer = null;
+  let auditedProject = null;
+  const respond = (status, payload, headers = {}) => {
+    if (typeof audit === "function") {
+      try {
+        audit({
+          timestamp: new Date().toISOString(),
+          ...(auditedProducer ? { producer: auditedProducer } : {}),
+          ...(auditedProject ? { project: auditedProject } : {}),
+          status,
+          outcome: payload.status ?? payload.error,
+        });
+      } catch {
+        // An optional audit adapter must not expose data or interrupt safe request handling.
+      }
+    }
+
+    sendIngestionJson(response, status, payload, headers);
+  };
+
+  try {
+    pathname = new URL(request.url ?? "/", "http://quickstark.invalid").pathname;
+  } catch {
+    respond(400, { error: "invalid_request" });
+    return;
+  }
+
+  if (pathname === "/__quickstark_ingestion_health" && request.method === "GET") {
+    respond(200, {
+      service: "quickstark-skill-readout-ingestion",
+      version: READOUT_FORMAT_VERSION,
+      directory: readoutDirectoryIdentity(directory),
+    });
+    return;
+  }
+
+  if (pathname !== READOUT_INGESTION_PATH) {
+    respond(404, { error: "not_found" });
+    return;
+  }
+
+  if (request.method !== "POST") {
+    respond(405, { error: "method_not_allowed" }, { Allow: "POST" });
+    return;
+  }
+
+  if (producerState.producersFile) {
+    try {
+      producerState.current = await loadReadoutIngestionProducers({
+        producersFile: producerState.producersFile,
+      });
+    } catch {
+      respond(503, { error: "readout_unavailable" });
+      return;
+    }
+  }
+
+  const producer = authenticateReadoutProducer(request.headers.authorization, producerState.current);
+
+  if (!producer) {
+    respond(401, { error: "unauthorized" }, { "WWW-Authenticate": "Bearer" });
+    return;
+  }
+
+  auditedProducer = producer.id;
+
+  const rate = withinReadoutRateLimit(producer, rates, maxRequestsPerMinute);
+
+  if (!rate.allowed) {
+    respond(429, { error: "rate_limited" }, {
+      "Retry-After": String(rate.retryAfter),
+    });
+    return;
+  }
+
+  if (!/^application\/json(?:\s*;\s*charset=utf-8)?$/i.test(request.headers["content-type"] ?? "")) {
+    respond(415, { error: "unsupported_content_type" });
+    return;
+  }
+
+  if (request.headers["content-encoding"] && request.headers["content-encoding"] !== "identity") {
+    respond(415, { error: "unsupported_content_encoding" });
+    return;
+  }
+
+  const received = await readIngestionBody(request, maxBytes);
+
+  if (received.error) {
+    respond(received.error, { error: received.code });
+    return;
+  }
+
+  const envelope = received.value;
+
+  if (!envelope || typeof envelope !== "object" || Array.isArray(envelope)) {
+    respond(422, { error: "invalid_readout" });
+    return;
+  }
+
+  try {
+    validateIngestionStructure(envelope);
+  } catch {
+    respond(422, { error: "invalid_readout" });
+    return;
+  }
+
+  if (envelope.version !== READOUT_FORMAT_VERSION) {
+    respond(422, { error: "unsupported_readout_version" });
+    return;
+  }
+
+  if (envelope.status === "Preview") {
+    respond(422, { error: "invalid_readout" });
+    return;
+  }
+
+  if (envelope.provenance !== undefined && envelope.provenance !== null) {
+    respond(422, { error: "unverified_provenance" });
+    return;
+  }
+
+  if (envelope.producer !== producer.id) {
+    respond(403, { error: "publication_not_authorized" });
+    return;
+  }
+
+  let project;
+
+  try {
+    const identified = typeof envelope.project === "string"
+      ? normalizeReadoutProject(envelope.project)
+      : normalizeProjectIdentity(envelope.project);
+    project = normalizeProjectIdentity({
+      ...identified,
+      label: `${identified.owner}/${identified.repository}`,
+    });
+  } catch {
+    respond(422, { error: "invalid_project" });
+    return;
+  }
+
+  if (!producer.projects.has(project.key) || !allowedProjects.has(project.key)) {
+    respond(403, { error: "publication_not_authorized" });
+    return;
+  }
+
+  auditedProject = project.key;
+
+  try {
+    const accepted = await acceptReadoutSubmission(envelope, {
+      directory,
+      baseUrl,
+      producer,
+      project,
+      locks,
+    });
+
+    if (accepted.error) {
+      respond(accepted.error, { error: accepted.code });
+      return;
+    }
+
+    respond(accepted.statusCode, accepted.payload, {
+      Location: accepted.payload.url,
+    });
+  } catch (error) {
+    if (error.code === "EEXIST") {
+      respond(409, { error: "run_conflict" });
+      return;
+    }
+
+    respond(503, { error: "readout_unavailable" });
+  }
+}
+
+export async function startReadoutIngestionServer(options = {}) {
+  const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
+  const host = options.host ?? DEFAULT_READOUT_HOST;
+  const port = options.port ?? DEFAULT_READOUT_INGESTION_PORT;
+  const base = normalizeBaseUrl(options.baseUrl ?? process.env.QS_READOUT_PUBLIC_URL);
+
+  if (!base) throw new Error("Readout ingestion requires an explicitly configured public report URL.");
+
+  if (typeof host !== "string" || !host.trim() || host === "0.0.0.0" || host === "::") {
+    throw new Error("Bind readout ingestion to one trusted host, not every network interface.");
+  }
+
+  if (!Number.isInteger(port) || port < 0 || port > 65_535) {
+    throw new Error("Readout ingestion port must be an integer between 0 and 65535.");
+  }
+
+  const allowedProjects = normalizePublishedProjects(
+    options.allowedProjects ?? process.env.QS_READOUT_ALLOWED_PROJECTS,
+  );
+
+  if (allowedProjects.size === 0) {
+    throw new Error("Readout ingestion requires at least one explicitly approved published project.");
+  }
+
+  const producers = await loadReadoutIngestionProducers(options);
+  const producerState = {
+    current: producers,
+    producersFile: options.producers === undefined
+      ? options.producersFile ?? process.env.QS_READOUT_PRODUCERS_FILE ?? null
+      : null,
+  };
+  const maxBytes = options.maxBytes ?? ingestionMaximumBytes;
+  const locks = new Map();
+  const rates = new Map();
+  const maxRequestsPerMinute = options.maxRequestsPerMinute ?? 120;
+
+  if (!Number.isSafeInteger(maxBytes) || maxBytes <= 0 || maxBytes > ingestionMaximumBytes) {
+    throw new Error("Readout ingestion requires a safe positive maximum request size.");
+  }
+
+  if (!Number.isSafeInteger(maxRequestsPerMinute) || maxRequestsPerMinute < 1 || maxRequestsPerMinute > 10_000) {
+    throw new Error("Readout ingestion requires a bounded positive per-producer request rate.");
+  }
+
+  await mkdir(directory, { recursive: true, mode: 0o700 });
+
+  const server = createServer((request, response) => {
+    handleReadoutIngestion(request, response, {
+      directory,
+      baseUrl: base.href,
+      producerState,
+      allowedProjects,
+      maxBytes,
+      locks,
+      rates,
+      maxRequestsPerMinute,
+      audit: options.audit,
+    }).catch(() => {
+      if (!response.headersSent) sendIngestionJson(response, 503, { error: "readout_unavailable" });
+      else response.end();
+    });
+  });
+
+  server.headersTimeout = 10_000;
+  server.requestTimeout = 15_000;
+
+  await new Promise((done, fail) => {
+    server.once("error", fail);
+    server.listen(port, host, () => {
+      server.removeListener("error", fail);
+      done();
+    });
+  });
+
+  const address = server.address();
+  const bracketedHost = host.includes(":") ? `[${host}]` : host;
+
+  return {
+    server,
+    directory,
+    host,
+    port: address.port,
+    baseUrl: base.href,
+    url: `http://${bracketedHost}:${address.port}/`,
+  };
+}
+
+function normalizePublisherEndpoint(value) {
+  if (value === undefined || value === null || value === "") return null;
+
+  let endpoint;
+
+  try {
+    endpoint = new URL(requireText(value, "Readout ingestion endpoint"));
+  } catch {
+    throw new Error("Readout ingestion endpoint must be a valid HTTPS URL.");
+  }
+
+  if (
+    (endpoint.protocol !== "https:" && !(endpoint.protocol === "http:" && loopbackHosts.has(endpoint.hostname)))
+    || endpoint.username
+    || endpoint.password
+    || endpoint.search
+    || endpoint.hash
+    || endpoint.pathname !== READOUT_INGESTION_PATH
+  ) {
+    throw new Error("Readout ingestion endpoint must use the exact trusted HTTPS producer route.");
+  }
+
+  return endpoint;
+}
+
+export async function publishSkillReadout(envelope, options = {}) {
+  const endpoint = normalizePublisherEndpoint(
+    options.endpoint ?? process.env.QS_READOUT_INGESTION_URL,
+  );
+  const token = options.token ?? process.env.QS_READOUT_PRODUCER_TOKEN;
+
+  if (!endpoint || typeof token !== "string" || token.length < 24) {
+    return { status: "local-only", reason: "publication_not_configured" };
+  }
+
+  if (!envelope || typeof envelope !== "object" || Array.isArray(envelope)) {
+    throw new Error("Portable report publication requires a structured skill-readout envelope.");
+  }
+
+  const approved = normalizePublishedProjects(
+    options.allowedProjects ?? process.env.QS_READOUT_PUBLISH_PROJECTS,
+  );
+  let project;
+
+  try {
+    project = typeof envelope.project === "string"
+      ? normalizeReadoutProject(envelope.project)
+      : normalizeProjectIdentity(envelope.project);
+  } catch {
+    return { status: "local-only", reason: "project_not_authorized" };
+  }
+
+  if (!approved.has(project.key)) {
+    return { status: "local-only", reason: "project_not_authorized" };
+  }
+
+  const timeout = options.timeout ?? 5000;
+  const maxAttempts = options.maxAttempts
+    ?? (process.env.QS_READOUT_PUBLISH_MAX_ATTEMPTS === undefined
+      ? 2
+      : Number(process.env.QS_READOUT_PUBLISH_MAX_ATTEMPTS));
+  const retryDelay = options.retryDelay
+    ?? (process.env.QS_READOUT_PUBLISH_RETRY_DELAY === undefined
+      ? 50
+      : Number(process.env.QS_READOUT_PUBLISH_RETRY_DELAY));
+
+  if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 30_000) {
+    throw new Error("Portable report publication requires a bounded positive timeout.");
+  }
+
+  if (!Number.isSafeInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 5) {
+    throw new Error("Portable report publication requires between one and five bounded attempts.");
+  }
+
+  if (!Number.isSafeInteger(retryDelay) || retryDelay < 0 || retryDelay > 2000) {
+    throw new Error("Portable report publication requires a bounded retry delay.");
+  }
+
+  let response;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(envelope),
+        signal: AbortSignal.timeout(timeout),
+        redirect: "error",
+      });
+
+      if (response.status !== 429 && response.status < 500) break;
+    } catch {
+      response = null;
+    }
+
+    if (attempt === maxAttempts) {
+      return { status: "local-only", reason: "publication_unavailable" };
+    }
+
+    if (retryDelay > 0) {
+      await new Promise((done) => setTimeout(done, retryDelay));
+    }
+  }
+
+  if (response.status === 401 || response.status === 403) {
+    return { status: "local-only", reason: "publication_not_authorized" };
+  }
+
+  if (response.status !== 200 && response.status !== 201) {
+    return {
+      status: "local-only",
+      reason: response.status === 409 ? "run_conflict" : "publication_unavailable",
+    };
+  }
+
+  let accepted;
+
+  try {
+    accepted = await response.json();
+    const reportUrl = new URL(accepted.url);
+    const configuredBase = options.reportBaseUrl ?? process.env.QS_READOUT_PUBLIC_URL;
+    const reportBase = configuredBase
+      ? normalizeBaseUrl(configuredBase)
+      : endpoint.protocol === "https:"
+        ? new URL("/", endpoint)
+        : null;
+    const encodedProject = project.key.split("/").map(encodeURIComponent);
+    const pathname = decodeURIComponent(reportUrl.pathname);
+    const expectedProject = `/${encodedProject.join("/")}/`;
+    const relativePath = reportBase
+      ? pathname.slice(reportBase.pathname.length - 1)
+      : pathname;
+    const filename = relativePath.split("/").at(-1);
+    const expectedRun = String(envelope.runId ?? "").toLowerCase();
+
+    if (
+      (reportUrl.protocol !== "https:" && !(reportUrl.protocol === "http:" && loopbackHosts.has(reportUrl.hostname)))
+      || reportUrl.username
+      || reportUrl.password
+      || reportUrl.search
+      || reportUrl.hash
+      || reportUrl.hostname !== endpoint.hostname
+      || (reportBase !== null && (
+        reportUrl.origin !== reportBase.origin
+        || !reportUrl.pathname.startsWith(reportBase.pathname)
+      ))
+      || !relativePath.startsWith(expectedProject)
+      || !reportFilename.test(filename)
+      || !filename.toLowerCase().endsWith(`--${expectedRun}.html`)
+      || accepted.project !== project.key
+      || String(accepted.reportId ?? "").toLowerCase() !== expectedRun
+      || accepted.skill !== envelope.skill
+    ) {
+      throw new Error("The accepted report does not belong to the trusted reporting host.");
+    }
+  } catch {
+    return { status: "local-only", reason: "invalid_publication_response" };
+  }
+
+  return {
+    status: "published",
+    created: response.status === 201,
+    project: accepted.project,
+    skill: accepted.skill,
+    reportId: accepted.reportId,
+    url: accepted.url,
+  };
+}
+
 export async function startReadoutServer(options = {}) {
   const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
   const host = options.host ?? DEFAULT_READOUT_HOST;
@@ -2387,7 +3653,7 @@ function parseOptions(arguments_) {
       continue;
     }
 
-    if (!["--input", "--data", "--directory", "--target-directory", "--base-url", "--host", "--port", "--access", "--layout", "--project", "--retention-days", "--allowed-projects", "--publication-mode"].includes(argument)) {
+    if (!["--input", "--data", "--directory", "--target-directory", "--base-url", "--report-base-url", "--host", "--port", "--access", "--layout", "--project", "--retention-days", "--allowed-projects", "--publication-mode", "--endpoint", "--producers-file", "--max-bytes", "--max-requests-per-minute", "--max-attempts", "--retry-delay", "--timeout"].includes(argument)) {
       throw new Error(`Unknown readout option: ${argument}`);
     }
 
@@ -2415,6 +3681,8 @@ Usage:
   node scripts/qs-skill-readout.mjs render --data '{"skill":"qs-help","outcome":"Selected the right workflow."}'
   node scripts/qs-skill-readout.mjs gallery
   node scripts/qs-skill-readout.mjs serve [--host 127.0.0.1] [--port 4173]
+  node scripts/qs-skill-readout.mjs ingest --producers-file /secure/producers.json
+  node scripts/qs-skill-readout.mjs publish --input /absolute/readout-envelope.json
   node scripts/qs-skill-readout.mjs migrate --project github.com/owner/repository
   node scripts/qs-skill-readout.mjs prune --project github.com/owner/repository --retention-days 90
 
@@ -2424,6 +3692,14 @@ Options:
   --layout MODE     Use flat compatibility or durable project-organized paths.
   --access MODE     Select auto, local, lan, or ssh access.
   --base-url URL    Reuse and verify an existing HTTP(S) report viewer.
+  --report-base-url URL  Verify accepted reports against the exact trusted viewer origin.
+  --endpoint URL    Exact trusted HTTPS skill-readout ingestion endpoint.
+  --producers-file  Versioned producer grants containing only credential digests.
+  --max-bytes       Bounded maximum JSON ingestion request size.
+  --max-requests-per-minute  Bounded producer submission rate.
+  --max-attempts    Bounded publisher attempts; accepts only 1 through 5.
+  --retry-delay     Bounded publisher retry delay in milliseconds; accepts 0 through 2000.
+  --timeout         Bounded publisher request timeout in milliseconds.
   --project KEY     Explicit canonical target for migration or retention.
   --apply           Apply an explicitly reviewed migration or deletion.
   --dry-run         Explicitly request the default non-mutating preview.
@@ -2443,6 +3719,13 @@ Environment:
   QS_READOUT_ALLOWED_PROJECTS  Explicit canonical hosted project allowlist.
   QS_READOUT_CURRENT_PROJECT   Explicit canonical active project for hosted viewers.
   QS_READOUT_TRUSTED_PROXY     true only behind the authenticated private reverse proxy.
+  QS_READOUT_PUBLIC_URL        Canonical public HTTPS report-library origin.
+  QS_READOUT_PRODUCERS_FILE    Private versioned producer-grants JSON path.
+  QS_READOUT_INGESTION_URL     Exact trusted producer ingestion URL; publishing is opt-in.
+  QS_READOUT_PRODUCER_TOKEN    Private bearer credential; never pass it on a command line.
+  QS_READOUT_PUBLISH_PROJECTS  Explicit canonical client-side publication allowlist.
+  QS_READOUT_PUBLISH_MAX_ATTEMPTS  Publisher attempts; 1 through 5, defaults to 2.
+  QS_READOUT_PUBLISH_RETRY_DELAY  Retry delay in milliseconds; 0 through 2000, defaults to 50.
 
 Automatic behavior:
   On a Mac or graphical desktop, reports use a private localhost viewer.
@@ -2474,23 +3757,82 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
     }
 
     const raw = options.input ? await readFile(resolve(options.input), "utf8") : options.data;
+    const input = JSON.parse(raw);
     const viewer = options.noServe ? null : await ensureReadoutViewer(options);
-    const result = await writeSkillReadout(JSON.parse(raw), {
+    const result = await writeSkillReadout(input, {
       ...options,
       baseUrl: viewer?.url ?? options.baseUrl,
     });
 
     if (viewer) await verifyReportedReadout(result);
 
+    const publication = process.env.QS_READOUT_INGESTION_URL
+      ? await publishSkillReadout({
+        version: READOUT_FORMAT_VERSION,
+        producer: process.env.QS_READOUT_PRODUCER_ID,
+        harness: {
+          name: process.env.QS_READOUT_HARNESS ?? "codex",
+          ...(process.env.QS_READOUT_HARNESS_VERSION ? {
+            version: process.env.QS_READOUT_HARNESS_VERSION,
+          } : {}),
+        },
+        collection: "quickstark/qs-skills",
+        project: result.projectIdentity,
+        runId: result.reportId,
+        generatedAt: result.generatedAt,
+        skill: result.skill,
+        status: result.status,
+        outcome: input.outcome,
+        findings: input.findings,
+        decisions: input.decisions,
+        outputs: input.outputs,
+        checks: input.checks,
+        relationships: input.relationships,
+        nextSkills: input.nextSkills,
+      })
+      : null;
+
     if (options.json) {
       console.log(JSON.stringify({
         ...result,
         viewerReused: viewer?.reused ?? null,
+        ...(publication ? { publication } : {}),
       }));
     } else {
       console.log(`QuickStark readout: ${result.path}`);
       if (result.url) console.log(`Verified readout: ${result.url}`);
       if (viewer) console.log(`Readout gallery: ${viewer.url}`);
+      if (publication?.status === "published") {
+        console.log(`Published readout: ${publication.url}`);
+      } else if (publication) {
+        console.log(`Hosted publication: local only (${publication.reason})`);
+      }
+    }
+
+    return;
+  }
+
+  if (command === "publish") {
+    if (Boolean(options.input) === Boolean(options.data)) {
+      throw new Error("publish requires exactly one of --input or --data.");
+    }
+
+    const raw = options.input ? await readFile(resolve(options.input), "utf8") : options.data;
+    const result = await publishSkillReadout(JSON.parse(raw), {
+      endpoint: options.endpoint,
+      allowedProjects: options.allowedProjects,
+      reportBaseUrl: options.reportBaseUrl,
+      ...(options.maxAttempts === undefined ? {} : { maxAttempts: Number(options.maxAttempts) }),
+      ...(options.retryDelay === undefined ? {} : { retryDelay: Number(options.retryDelay) }),
+      ...(options.timeout === undefined ? {} : { timeout: Number(options.timeout) }),
+    });
+
+    if (options.json) {
+      console.log(JSON.stringify(result));
+    } else if (result.status === "published") {
+      console.log(`Published readout: ${result.url}`);
+    } else {
+      console.log(`Hosted publication: local only (${result.reason})`);
     }
 
     return;
@@ -2513,6 +3855,28 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
       if (viewer) console.log(`Verified readout gallery: ${viewer.url}`);
     }
 
+    return;
+  }
+
+  if (command === "ingest") {
+    const port = options.port === undefined ? DEFAULT_READOUT_INGESTION_PORT : Number(options.port);
+    const ingestion = await startReadoutIngestionServer({
+      directory: options.directory,
+      host: options.host,
+      port,
+      baseUrl: options.baseUrl,
+      allowedProjects: options.allowedProjects,
+      producersFile: options.producersFile,
+      ...(options.maxBytes === undefined ? {} : { maxBytes: Number(options.maxBytes) }),
+      ...(options.maxRequestsPerMinute === undefined ? {} : {
+        maxRequestsPerMinute: Number(options.maxRequestsPerMinute),
+      }),
+      audit: (event) => process.stderr.write(`${JSON.stringify(event)}\n`),
+    });
+
+    console.log(`QuickStark readout ingestion: ${ingestion.url}`);
+    console.log(`Readout directory: ${ingestion.directory}`);
+    console.log("Producer submissions require explicit bearer authentication and project grants.");
     return;
   }
 

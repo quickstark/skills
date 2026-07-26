@@ -67,6 +67,21 @@ _Avoid_: Editable latest report, overwritten run.
 **Publication policy**: The explicit decision about which verified projects may appear in an externally accessible report library.
 _Avoid_: Publish everything, inferred authorization.
 
+**Readout producer**: An explicitly authorized harness instance that submits a skill readout using its own scoped machine credential.
+_Avoid_: Anonymous reporter, browser session, globally shared token.
+
+**Producer grant**: The explicit set of verified projects that one readout producer may submit to the hosted project library.
+_Avoid_: Implicit trust, unrestricted project access, guessed repository ownership.
+
+**Readout ingestion**: The bounded, authenticated interface that validates a producer, enforces its producer grant and publication policy, and durably accepts one immutable skill readout.
+_Avoid_: General file upload, writable report viewer, anonymous report endpoint.
+
+**External skill readout**: An honest, server-rendered record of an authorized skill run from a harness or skill collection outside the promoted QuickStark catalog.
+_Avoid_: Fabricated promoted skill, imported HTML, invented delivery evidence.
+
+**Readout publisher**: The portable, explicitly configured adapter that optionally sends one local skill readout to the authenticated ingestion interface without discarding its local report.
+_Avoid_: Automatic exfiltration, inferred publication, compulsory remote dependency.
+
 ## Relationships
 
 - An issue tracker holds many issues.
@@ -84,3 +99,7 @@ _Avoid_: Publish everything, inferred authorization.
 - A visual cue represents observed readout information; a catalog preview never represents an actual skill run.
 - A project library groups immutable readouts by verified project.
 - A publication policy restricts which verified projects can appear in a hosted project library.
+- A readout producer owns one explicitly scoped producer grant.
+- Readout ingestion accepts a producer's skill readout only when its producer grant and publication policy both authorize the verified project.
+- An external skill readout preserves the actual harness, producer, collection, and skill without changing the promoted skill catalog.
+- A readout publisher preserves the local skill readout even when optional hosted publication is unavailable or unauthorized.
