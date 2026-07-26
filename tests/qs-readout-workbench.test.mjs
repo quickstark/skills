@@ -202,6 +202,7 @@ test("the Project Workbench displays the verified model, effort, tokens, duratio
   assert.ok(workspace, "the verified project exposes one recorded skill-run list");
   assert.ok(detail, "the verified project exposes one selected immutable readout");
   assert.ok(html.includes(observed.relativePath));
+  assert.ok(workspace[0].includes("provider-response"), "the skill-run list includes the independently observed measurement source");
   assert.ok(workspace[0].includes("gpt-5.6-sol"), "the skill-run list includes the actual provider-reported model");
   assert.ok(workspace[0].includes("medium"), "the skill-run list includes the observed reasoning effort");
   assert.ok(workspace[0].includes("1,480"), "the skill-run list includes the observed final response tokens");
@@ -311,6 +312,56 @@ test("the Workbench preserves genuinely observed zero tokens and zero active dur
   assert.match(detail[0], /Skill-run active duration<\/dt><dd>0 ms<\/dd>/);
 });
 
+test("the Workbench and immutable readout agree at the 99- and 100-check evidence boundaries", async (context) => {
+  const { directory, viewer } = await createProjectWorkbench(context);
+
+  for (const [index, [passedChecks, failedChecks]] of [[98, 1], [99, 1]].entries()) {
+    const checks = [
+      ...Array.from({ length: passedChecks }, (_, check) => ({
+        title: `Observed passing Workbench check ${check + 1}`,
+        status: "passed",
+      })),
+      ...Array.from({ length: failedChecks }, (_, check) => ({
+        title: `Observed failing Workbench check ${check + 1}`,
+        status: "failed",
+      })),
+    ];
+    const report = await writeSkillReadout({
+      skill: "qs-code-build",
+      outcome: `Preserve ${passedChecks + failedChecks} independently observed Workbench checks.`,
+      generatedAt: `2026-07-26T19:2${index}:00.000Z`,
+      projectIdentity: verifiedProject("skills"),
+      checks,
+      observation: {
+        ...workbenchObservedRun,
+        quality: { source: "observed-checks", passedChecks, failedChecks },
+      },
+    }, { directory, layout: "project" });
+    const parameters = new URLSearchParams({
+      project: "github.com/quickstark/skills",
+      report: report.relativePath,
+    });
+    const response = await fetch(new URL(`?${parameters}`, viewer.url));
+    const html = await response.text();
+    const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+
+    assert.equal(response.status, 200);
+    assert.ok(detail);
+    assert.match(detail[0], /Observed skill-run measurements/);
+    assert.match(detail[0], /gpt-5\.6-sol/);
+    assert.match(detail[0], /Independent quality evidence/);
+    assert.match(detail[0], new RegExp(`<dt>Passed checks<\\/dt><dd>${passedChecks}<\\/dd>`));
+    assert.match(detail[0], new RegExp(`<dt>Failed checks<\\/dt><dd>${failedChecks}<\\/dd>`));
+
+    const standalone = await fetch(new URL(report.relativePath, viewer.url));
+    const immutable = await standalone.text();
+
+    assert.equal(standalone.status, 200);
+    assert.match(immutable, new RegExp(`<meta name="quickstark:quality-passed-checks" content="${passedChecks}">`));
+    assert.match(immutable, new RegExp(`<meta name="quickstark:quality-failed-checks" content="${failedChecks}">`));
+  }
+});
+
 test("the authorized Project Workbench presents the same immutable observed external report as hosted ingestion", async (context) => {
   const workbench = await createProjectWorkbench(context, {
     publicationMode: "hosted",
@@ -326,6 +377,7 @@ test("the authorized Project Workbench presents the same immutable observed exte
   assert.ok(workspace);
   assert.ok(detail);
   assert.match(workspace[0], /external-workbench-review/);
+  assert.match(workspace[0], /provider-response/);
   assert.match(workspace[0], /gpt-5\.6-sol/);
   assert.match(workspace[0], /1,480/);
   assert.match(detail[0], /Observed independent Workbench review/);

@@ -1055,6 +1055,10 @@ function normalizeSkillObservation(value, status, checks = []) {
     const observedPassed = checks.filter((check) => check.status === "passed").length;
     const observedFailed = checks.filter((check) => check.status === "failed").length;
 
+    if (observedPassed + observedFailed > 100) {
+      throw new Error("Observation quality cannot contain more than 100 independently observed checks.");
+    }
+
     for (const [field, observed] of [
       ["passedChecks", observedPassed],
       ["failedChecks", observedFailed],
@@ -2223,16 +2227,18 @@ function discoverStoredObservation(html) {
     }
 
     const qualitySource = metadataValue("quality-source");
-    const checks = Array.from(
-      html.matchAll(/<span class="check-badge check-(passed|failed)">/g),
-      (match) => ({ status: match[1] }),
-    );
-
-    if (checks.length > 100) {
-      throw new Error("Stored observation contains an excessive independent quality check count.");
-    }
+    let checks = [];
 
     if (qualitySource !== undefined) {
+      checks = Array.from(
+        html.matchAll(/<span class="check-badge check-(passed|failed)">/g),
+        (match) => ({ status: match[1] }),
+      );
+
+      if (checks.length > 100) {
+        throw new Error("Stored observation contains an excessive independent quality check count.");
+      }
+
       const quality = {
         source: qualitySource,
         passedChecks: metadataCount("quality-passed-checks"),
@@ -2587,6 +2593,7 @@ function renderWorkbenchObservationSummary(report) {
   const timing = observation.timing ?? {};
   const values = [
     scope,
+    formatWorkbenchObservation(observation.measurementSource),
     formatWorkbenchObservation(inference.model),
     formatWorkbenchObservation(inference.reasoningEffort),
     formatWorkbenchObservation(tokens.total, { numeric: true, suffix: " tokens" }),

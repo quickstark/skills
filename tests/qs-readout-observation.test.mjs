@@ -251,6 +251,45 @@ test("quality evidence rejects fabricated sources, unsupported fields, feedback,
   );
 });
 
+test("independently observed quality uses the same 100-check boundary as the immutable Workbench snapshot", () => {
+  const observedQuality = (passedChecks, failedChecks) => ({
+    ...nativeReadout({
+      ...observedRun,
+      quality: { source: "observed-checks", passedChecks, failedChecks },
+    }),
+    checks: [
+      ...Array.from({ length: passedChecks }, (_, index) => ({
+        title: `Observed passing behavior ${index + 1}`,
+        status: "passed",
+      })),
+      ...Array.from({ length: failedChecks }, (_, index) => ({
+        title: `Observed failing behavior ${index + 1}`,
+        status: "failed",
+      })),
+    ],
+  });
+
+  for (const [passedChecks, failedChecks] of [[98, 1], [99, 1], [100, 0]]) {
+    const input = observedQuality(passedChecks, failedChecks);
+    const normalized = normalizeSkillReadout(input);
+
+    assert.deepEqual(normalized.observation.quality, {
+      source: "observed-checks",
+      passedChecks,
+      failedChecks,
+    });
+    assert.match(renderSkillReadout(input), /Independent quality evidence/);
+  }
+
+  for (const [passedChecks, failedChecks] of [[100, 1], [100, 100]]) {
+    assert.throws(
+      () => normalizeSkillReadout(observedQuality(passedChecks, failedChecks)),
+      /(?:100|bounded|maximum).*checks|checks.*(?:100|bounded|maximum)/i,
+      `${passedChecks} passed and ${failedChecks} failed checks`,
+    );
+  }
+});
+
 test("each supported native observation source is preserved and explicitly identified", () => {
   for (const measurementSource of [
     "provider-response",
