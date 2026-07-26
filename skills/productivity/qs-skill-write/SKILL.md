@@ -71,6 +71,12 @@ Hunt for opportunities to refactor skills to use leading words. A triad spelled 
 
 You win twice over: fewer tokens, _and_ a sharper hook for the agent to hang its thinking on. Assume every skill is carrying restatements that leading words retire — go find them.
 
+## Next prompts
+
+A **next prompt** is a copy-ready continuation, not a skill name followed by a generic reason. Start with the catalog-approved `/qs-` skill, state the specific next action, and carry forward the preceding run's actual outcome and relevant findings, decisions, artifacts, or checks. Put the entire actionable prompt in its own prominent fenced text code block. Place the suggested model and thinking level underneath in a muted callout; raise the suggestion when a real critical finding or failed check warrants deeper reasoning.
+
+Offer at most three genuinely useful continuations, ordered by relevance. Label model guidance as heuristic, never as measured quality, and never change the active configuration automatically. Record prompts as recommendations, never as skills already used. When the requested work is complete, report that no next prompt is needed. The shared catalog owns the available follow-ons and baseline model guidance; the actual run supplies their context.
+
 ## Failure modes
 
 Use these to diagnose issues the user may be having with the skill.
@@ -86,7 +92,7 @@ Use these to diagnose issues the user may be having with the skill.
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
 
-Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, relevant next skills, and only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
+Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and up to three relevant `nextSkills` objects containing `name`, `reason`, and a copy-ready `prompt`. Each prompt explicitly invokes its catalog-approved skill and carries forward the actual outcome, findings, decisions, outputs, and checks relevant to that follow-on. Present each full prompt in its own fenced text code block. Put its suggested model and thinking level in a visually muted callout underneath. Optionally supply `model`, `thinking`, and `modelReason` when the actual remaining work justifies a more specific heuristic suggestion. Record only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
 
 ```bash
 node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"
@@ -109,15 +115,62 @@ Readout: Real absolute HTML path or verified private viewer URL.
 Outputs: Real files, reports, decisions, or changes, when applicable.
 Checks: Only the tests, validations, or observations actually performed.
 Delivery: Verified PRs, closed issues, release, or commit, only when applicable.
-Next best: /qs-skill-name — why it is the best next step.
 ```
 
-Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+**Top next prompts:**
 
-Select at most three genuinely relevant follow-ons from:
+**1. Recommended continuation**
 
-- `/qs-plan-interview` — Clarify the skill's boundaries and expected behavior.
-- `/qs-review-code` — Review skill scripts, examples, and implementation changes.
-- `/qs-code-document` — Document the verified skill behavior, actual files, and installation workflow.
+Clarify the skill's boundaries and expected behavior.
 
-Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.
+```text
+Use /qs-plan-interview to interview me one question at a time to resolve this decision.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: A focused interview benefits from tracking dependent decisions and uncertainty. Never change the active model or thinking level.
+
+Use the same fenced-prompt and muted callout format for at most two genuinely relevant alternatives.
+
+Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**. Make each complete, copy-ready prompt the visual focus in a fenced text code block. Place **Suggested model** and **Suggested thinking** underneath in a muted blockquote callout, label both as heuristic, and never change the active model or thinking level. These suggestions are not observed run measurements, comparative benchmarks, independently verified quality, or automatic model changes. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; suggested prompts belong under **Top next prompts**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+
+Select at most three genuinely relevant, copy-ready prompt directions from:
+
+**1. `/qs-plan-interview`**
+
+Clarify the skill's boundaries and expected behavior.
+
+```text
+Use /qs-plan-interview to interview me one question at a time to resolve this decision.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: A focused interview benefits from tracking dependent decisions and uncertainty.
+
+**2. `/qs-review-code`**
+
+Review skill scripts, examples, and implementation changes.
+
+```text
+Use /qs-review-code to review these changes for correctness, standards, and requirements.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
+
+**3. `/qs-code-document`**
+
+Document the verified skill behavior, actual files, and installation workflow.
+
+```text
+Use /qs-code-document to write or update accurate documentation for the actual project and its verified behavior.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+>
+> Heuristic: Verified documentation usually benefits from focused code-to-document comparison.
+
+Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

@@ -46,6 +46,18 @@ function verifiedProject(repository) {
   };
 }
 
+function visibleProjectSidebar(html) {
+  return html.match(
+    /<aside\b[^>]*aria-label="Verified projects"[^>]*>[\s\S]*?<\/aside>/,
+  );
+}
+
+function visibleSelectedReadout(html) {
+  return html.match(
+    /<aside\b[^>]*aria-label="Selected skill readout"[^>]*>[\s\S]*?<\/aside>/,
+  );
+}
+
 async function createProjectWorkbench(context, options = {}) {
   const directory = await mkdtemp(join(tmpdir(), "quickstark-workbench-test-"));
   const entries = [
@@ -180,6 +192,337 @@ test("the production root presents verified projects, actual skill runs, and the
   assert.doesNotMatch(html, /<script\b/i);
 });
 
+test("the project-first sidebar nests only the selected project's newest-first actual readouts", async (context) => {
+  const { viewer, reports } = await createProjectWorkbench(context);
+  const response = await fetch(viewer.url);
+  const html = await response.text();
+  const sidebar = html.match(/<aside\b[^>]*aria-label="Verified projects"[^>]*>([\s\S]*?)<\/aside>/);
+
+  assert.equal(response.status, 200);
+  assert.ok(sidebar, "the public viewer exposes one accessible verified-project sidebar");
+
+  const projectEntries = [...sidebar[1].matchAll(
+    /<article\b[^>]*data-project="([^"]+)"[^>]*>([\s\S]*?)<\/article>/g,
+  )];
+  const selected = projectEntries.find(([ , key]) => key === "github.com/quickstark/skills");
+  const other = projectEntries.find(([ , key]) => key === "github.com/quickstark/marketplace");
+
+  assert.equal(projectEntries.length, 2, "each verified project is represented once");
+  assert.ok(selected, "the active verified project remains visible");
+  assert.ok(other, "other verified projects remain directly selectable");
+  assert.match(selected[2], /aria-label="Recorded skill runs"/);
+  assert.match(selected[2], /\/qs-code-build/);
+  assert.match(selected[2], /\/qs-plan-research/);
+  assert.ok(
+    selected[2].indexOf("/qs-code-build") < selected[2].indexOf("/qs-plan-research"),
+    "the selected project's real reports are displayed newest first",
+  );
+  assert.ok(
+    selected[2].includes(encodeURIComponent(reports[0].relativePath)),
+    "each nested report retains its safe, restorable immutable-report link",
+  );
+  assert.doesNotMatch(selected[2], /Build the independent marketplace search experience\./);
+  assert.doesNotMatch(other[2], /aria-label="Recorded skill runs"/);
+  assert.doesNotMatch(sidebar[1], /Catalog preview only; no actual prototype skill ran\./);
+});
+
+test("the project-first Workbench presents one report tree without redundant top-level views", async (context) => {
+  const { viewer } = await createProjectWorkbench(context);
+  const response = await fetch(viewer.url);
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.equal(
+    (html.match(/aria-label="Recorded skill runs"/g) ?? []).length,
+    1,
+    "the selected project's actual skill runs appear in exactly one accessible project tree",
+  );
+  assert.match(html, /aria-label="Verified projects"/);
+  assert.match(html, /aria-label="Skill run readouts"/);
+  assert.match(html, /aria-label="Selected skill readout"/);
+  assert.match(html, /Show catalog previews/);
+  assert.doesNotMatch(html, /aria-label="Readout views"/);
+  assert.doesNotMatch(html, /<iframe\b|<script\b/i);
+});
+
+test("the project-first Workbench exposes one accessible project tree and one complete reading pane", async (context) => {
+  const { viewer } = await createProjectWorkbench(context);
+  const response = await fetch(viewer.url);
+  const html = await response.text();
+  const sidebar = visibleProjectSidebar(html);
+  const detail = visibleSelectedReadout(html);
+
+  assert.equal(response.status, 200);
+  assert.ok(sidebar, "verified project navigation has a named accessible sidebar");
+  assert.ok(detail, "the selected immutable report has a named accessible reading pane");
+  assert.equal(
+    (html.match(/<aside\b[^>]*aria-label="Verified projects"/g) ?? []).length,
+    1,
+    "verified projects are presented in exactly one navigation pane",
+  );
+  assert.equal(
+    (html.match(/<aside\b[^>]*aria-label="Selected skill readout"/g) ?? []).length,
+    1,
+    "the full selected report is presented in exactly one reading pane",
+  );
+  assert.equal(
+    (html.match(/<nav\b[^>]*aria-label="Recorded skill runs"/g) ?? []).length,
+    1,
+    "actual skill runs are nested under one selected verified project",
+  );
+  assert.ok(
+    html.indexOf(sidebar[0]) < html.indexOf(detail[0]),
+    "project navigation precedes its integrated readout in the accessible document order",
+  );
+  assert.match(detail[0], /aria-label="Complete immutable skill readout"/);
+  assert.doesNotMatch(html, /aria-label="Readout views"|<iframe\b|<script\b/i);
+});
+
+test("project-tree search restores only matching readouts from the selected verified project", async (context) => {
+  const { viewer, reports } = await createProjectWorkbench(context);
+  const parameters = new URLSearchParams({
+    project: "github.com/quickstark/skills",
+    q: "trust boundaries",
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+  const sidebar = visibleProjectSidebar(html);
+  const detail = visibleSelectedReadout(html);
+
+  assert.equal(response.status, 200);
+  assert.ok(sidebar, "the filtered project tree remains accessible");
+  assert.ok(detail, "the matching report is selected in the same reader");
+  assert.match(sidebar[0], /aria-label="Search selected project reports"/);
+  assert.match(sidebar[0], /value="trust boundaries"/);
+  assert.match(sidebar[0], /\/qs-plan-research/);
+  assert.doesNotMatch(sidebar[0], /\/qs-code-build/);
+  assert.match(detail[0], /Verify the report library trust boundaries\./);
+  assert.match(html, />2 actual skill runs</);
+  assert.ok(html.includes(reports[1].relativePath));
+  assert.doesNotMatch(detail[0], /Build the independent marketplace search experience\./);
+});
+
+test("a project search distinguishes matching actual reports from the project-wide total", async (context) => {
+  const { viewer } = await createProjectWorkbench(context);
+  const parameters = new URLSearchParams({
+    project: "github.com/quickstark/skills",
+    q: "trust boundaries",
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(
+    html,
+    /aria-label="Matching actual skill runs"[^>]*>1 matching</,
+    "one actual report visibly matches the current project search",
+  );
+  assert.match(
+    html,
+    />2 actual skill runs</,
+    "the verified project's independently truthful actual-run total remains visible",
+  );
+  assert.doesNotMatch(html, /Catalog preview only; no actual prototype skill ran\./);
+});
+
+test("verified project reports round-trip independently selectable skill and status filters", async (context) => {
+  const { directory, viewer } = await createProjectWorkbench(context);
+  const blocked = await writeSkillReadout({
+    skill: "qs-plan-research",
+    status: "Blocked",
+    outcome: "Resolve the blocked report filter for the verified project.",
+    generatedAt: "2026-07-26T19:15:00.000Z",
+    projectIdentity: verifiedProject("skills"),
+  }, { directory, layout: "project" });
+
+  for (const filters of [
+    { status: "Blocked" },
+    { skill: "qs-plan-research" },
+    { skill: "qs-plan-research", status: "Blocked" },
+  ]) {
+    const parameters = new URLSearchParams({
+      project: "github.com/quickstark/skills",
+      ...filters,
+    });
+    const response = await fetch(new URL(`?${parameters}`, viewer.url));
+    const html = await response.text();
+    const sidebar = visibleProjectSidebar(html);
+    const detail = visibleSelectedReadout(html);
+
+    assert.equal(response.status, 200, JSON.stringify(filters));
+    assert.ok(sidebar, "the filtered verified-project sidebar remains accessible");
+    assert.ok(detail, "a matching actual immutable report remains selected");
+
+    const runs = sidebar[0].match(
+      /<nav\b[^>]*aria-label="Recorded skill runs"[^>]*>([\s\S]*?)<\/nav>/,
+    );
+
+    assert.ok(runs, "the selected project retains one real skill-run navigation landmark");
+    assert.match(runs[1], /\/qs-plan-research/);
+    assert.doesNotMatch(runs[1], /\/qs-code-build/);
+    assert.match(detail[0], /Resolve the blocked report filter for the verified project\./);
+    assert.ok(html.includes(blocked.relativePath));
+
+    const reportLink = runs[1].match(/<a\b[^>]*href="([^"]+)"/);
+
+    assert.ok(reportLink, "the filtered report has a real shareable navigation link");
+
+    const restored = new URL(reportLink[1].replaceAll("&amp;", "&"), viewer.url);
+
+    assert.equal(restored.searchParams.get("project"), "github.com/quickstark/skills");
+
+    for (const [name, value] of Object.entries(filters)) {
+      assert.equal(restored.searchParams.get(name), value);
+    }
+  }
+});
+
+test("toggling catalog previews preserves the selected project, report, and search", async (context) => {
+  const { viewer, reports } = await createProjectWorkbench(context);
+  const state = new URL(viewer.url);
+
+  state.searchParams.set("project", "github.com/quickstark/marketplace");
+  state.searchParams.set("report", reports[2].relativePath);
+  state.searchParams.set("q", "independent marketplace");
+
+  const response = await fetch(state);
+  const html = await response.text();
+  const show = html.match(/<a\b[^>]*href="([^"]+)"[^>]*>Show catalog previews<\/a>/);
+
+  assert.equal(response.status, 200);
+  assert.ok(show, "the selected project exposes an accessible preview-toggle link");
+
+  const shownState = new URL(show[1].replaceAll("&amp;", "&"), viewer.url);
+
+  assert.equal(shownState.searchParams.get("project"), "github.com/quickstark/marketplace");
+  assert.equal(shownState.searchParams.get("report"), reports[2].relativePath);
+  assert.equal(shownState.searchParams.get("q"), "independent marketplace");
+  assert.equal(shownState.searchParams.get("previews"), "1");
+
+  const shownResponse = await fetch(shownState);
+  const shownHtml = await shownResponse.text();
+  const detail = visibleSelectedReadout(shownHtml);
+  const hide = shownHtml.match(/<a\b[^>]*href="([^"]+)"[^>]*>Hide catalog previews<\/a>/);
+
+  assert.equal(shownResponse.status, 200);
+  assert.ok(detail, "the selected report remains visible after enabling previews");
+  assert.match(detail[0], /Build the independent marketplace search experience\./);
+  assert.doesNotMatch(detail[0], /Deliver the approved single-page Project Workbench\./);
+  assert.ok(hide, "catalog previews can be hidden without resetting project selection");
+
+  const hiddenState = new URL(hide[1].replaceAll("&amp;", "&"), viewer.url);
+
+  assert.equal(hiddenState.searchParams.get("project"), "github.com/quickstark/marketplace");
+  assert.equal(hiddenState.searchParams.get("report"), reports[2].relativePath);
+  assert.equal(hiddenState.searchParams.get("q"), "independent marketplace");
+  assert.equal(hiddenState.searchParams.has("previews"), false);
+});
+
+test("a selected project report presents its complete immutable findings, checks, and next prompts", async (context) => {
+  const { directory, viewer } = await createProjectWorkbench(context);
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Display the selected report without replacing its immutable original.",
+    generatedAt: "2026-07-26T19:04:00.000Z",
+    projectIdentity: verifiedProject("skills"),
+    findings: [{
+      title: "Verified project-first reading behavior",
+      detail: "The selected project and its complete skill readout share one public viewer.",
+    }],
+    checks: [{
+      title: "Original immutable report remains unchanged",
+      status: "passed",
+    }],
+  }, { directory, layout: "project" });
+  const original = await readFile(report.path, "utf8");
+  const parameters = new URLSearchParams({
+    project: "github.com/quickstark/skills",
+    report: report.relativePath,
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+  const observedOutcome = html.match(
+    /<section\b[^>]*aria-label="Observed skill outcome"[^>]*>([\s\S]*?)<\/section>/,
+  );
+
+  assert.equal(response.status, 200);
+  assert.match(html, /aria-label="Selected skill readout"/);
+  assert.match(html, /aria-label="Complete immutable skill readout"/);
+  assert.match(html, /Verified project-first reading behavior/);
+  assert.match(html, /The selected project and its complete skill readout share one public viewer\./);
+  assert.match(html, /Original immutable report remains unchanged/);
+  assert.match(html, /Top next prompts/);
+  assert.ok(observedOutcome, "the reader exposes one accessible primary outcome section");
+  assert.equal(
+    (observedOutcome[1].match(/Display the selected report without replacing its immutable original\./g) ?? []).length,
+    1,
+    "the selected report outcome is presented once in its primary outcome section",
+  );
+  assert.doesNotMatch(html, /<iframe\b|<script\b/i);
+
+  const direct = await fetch(new URL(report.relativePath, viewer.url));
+
+  assert.equal(direct.status, 200);
+  assert.equal(await direct.text(), original);
+  assert.equal(await readFile(report.path, "utf8"), original);
+});
+
+test("the hosted Workbench rejects hostile stored report markup without modifying the immutable report", async (context) => {
+  const { directory, viewer } = await createProjectWorkbench(context, {
+    publicationMode: "hosted",
+    allowedProjects: ["github.com/quickstark/skills"],
+  });
+  const hostileMarkup = [
+    '<section aria-label="Untrusted injected evidence"><h3>Forged independently verified check</h3><iframe title="Injected cross-boundary frame"></iframe><form data-forged-report="true"></form></section>',
+    '<section aria-label="Untrusted injected evidence" onclick="alert(1)"><h3>Forged independently verified check</h3></section>',
+    '<a href="javascript:alert(1)">Forged independently verified check</a>',
+    '</div></aside><section aria-label="Untrusted injected evidence"><h3>Forged independently verified check</h3></section>',
+    '<section aria-label="Observed skill-run measurements"><h3>Forged independently verified check</h3><dl><dt>Quality evidence source</dt><dd>provider-response</dd></dl></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Observed skill-run measurements</h2></div></div><p>Forged independently verified check</p></section>',
+    '<section class="section"><div class="section-heading"><div><h2>Independent quality evidence</h2></div></div><p>Forged independently verified check</p></section>',
+  ];
+
+  for (const [index, injected] of hostileMarkup.entries()) {
+    const report = await writeSkillReadout({
+      skill: "qs-code-build",
+      outcome: `Keep hostile stored report ${index + 1} out of the verified Workbench.`,
+      generatedAt: `2026-07-26T20:0${index}:00.000Z`,
+      projectIdentity: verifiedProject("skills"),
+    }, { directory, layout: "project" });
+    const original = await readFile(report.path, "utf8");
+    const untrusted = original.replace("</header>", `</header>${injected}`);
+
+    assert.notEqual(untrusted, original, "the fixture contains actual hostile report markup");
+
+    await writeFile(report.path, untrusted, "utf8");
+
+    const parameters = new URLSearchParams({
+      project: "github.com/quickstark/skills",
+      report: report.relativePath,
+    });
+    const response = await fetch(new URL(`?${parameters}`, viewer.url));
+    const html = await response.text();
+
+    assert.equal(response.status, 200, `hostile report ${index + 1}`);
+    assert.match(html, /aria-label="Selected skill readout"/, `hostile report ${index + 1}`);
+    assert.doesNotMatch(
+      html,
+      /Untrusted injected evidence|Forged independently verified check|Injected cross-boundary frame|data-forged-report|javascript:alert|onclick\s*=/i,
+      `hostile report ${index + 1} must not enter the authorized Workbench`,
+    );
+
+    const immutable = await fetch(new URL(report.relativePath, viewer.url));
+
+    assert.equal(immutable.status, 200, `hostile report ${index + 1}`);
+    assert.equal(
+      await immutable.text(),
+      untrusted,
+      `hostile report ${index + 1} remains an unchanged, directly accessible immutable report`,
+    );
+    assert.equal(await readFile(report.path, "utf8"), untrusted);
+  }
+});
+
 test("the Project Workbench displays the verified model, effort, tokens, duration, and quality of its selected skill run", async (context) => {
   const { directory, viewer } = await createProjectWorkbench(context);
   const observed = await writeSkillReadout({
@@ -195,8 +538,8 @@ test("the Project Workbench displays the verified model, effort, tokens, duratio
   }, { directory, layout: "project" });
   const response = await fetch(viewer.url);
   const html = await response.text();
-  const workspace = html.match(/<section class="workbench-workspace"[\s\S]*?<\/section><aside class="workbench-detail"/);
-  const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+  const workspace = visibleProjectSidebar(html);
+  const detail = visibleSelectedReadout(html);
 
   assert.equal(response.status, 200);
   assert.ok(workspace, "the verified project exposes one recorded skill-run list");
@@ -225,8 +568,8 @@ test("the Project Workbench labels uninstrumented historical runs and missing qu
   const { viewer } = await createProjectWorkbench(context);
   const response = await fetch(viewer.url);
   const html = await response.text();
-  const workspace = html.match(/<section class="workbench-workspace"[\s\S]*?<\/section><aside class="workbench-detail"/);
-  const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+  const workspace = visibleProjectSidebar(html);
+  const detail = visibleSelectedReadout(html);
 
   assert.equal(response.status, 200);
   assert.ok(workspace);
@@ -255,8 +598,8 @@ test("the Project Workbench preserves thread-level model and tokens without pres
     });
     const response = await fetch(new URL(`?${parameters}`, viewer.url));
     const html = await response.text();
-    const workspace = html.match(/<section class="workbench-workspace"[\s\S]*?<\/section><aside class="workbench-detail"/);
-    const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+    const workspace = visibleProjectSidebar(html);
+    const detail = visibleSelectedReadout(html);
 
     assert.equal(response.status, 200, attributionScope);
     assert.ok(workspace, attributionScope);
@@ -300,8 +643,8 @@ test("the Workbench preserves genuinely observed zero tokens and zero active dur
 
   const response = await fetch(viewer.url);
   const html = await response.text();
-  const workspace = html.match(/<section class="workbench-workspace"[\s\S]*?<\/section><aside class="workbench-detail"/);
-  const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+  const workspace = visibleProjectSidebar(html);
+  const detail = visibleSelectedReadout(html);
 
   assert.equal(response.status, 200);
   assert.ok(workspace);
@@ -343,7 +686,7 @@ test("the Workbench and immutable readout agree at the 99- and 100-check evidenc
     });
     const response = await fetch(new URL(`?${parameters}`, viewer.url));
     const html = await response.text();
-    const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+    const detail = visibleSelectedReadout(html);
 
     assert.equal(response.status, 200);
     assert.ok(detail);
@@ -370,8 +713,8 @@ test("the authorized Project Workbench presents the same immutable observed exte
   const accepted = await publishObservedWorkbenchRun(context, workbench);
   const response = await fetch(workbench.viewer.url);
   const html = await response.text();
-  const workspace = html.match(/<section class="workbench-workspace"[\s\S]*?<\/section><aside class="workbench-detail"/);
-  const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+  const workspace = visibleProjectSidebar(html);
+  const detail = visibleSelectedReadout(html);
 
   assert.equal(response.status, 200);
   assert.ok(workspace);
@@ -442,7 +785,7 @@ test("invalid or fabricated immutable observation metadata never enters the visi
     });
     const response = await fetch(new URL(`?${parameters}`, viewer.url));
     const html = await response.text();
-    const detail = html.match(/<aside class="workbench-detail"[\s\S]*?<\/aside>/);
+    const detail = visibleSelectedReadout(html);
 
     assert.equal(response.status, 200, label);
     assert.ok(detail, label);
@@ -498,9 +841,16 @@ test("the selected Workbench outcome appears once and preserves human-readable s
   const { viewer } = await createProjectWorkbench(context);
   const response = await fetch(viewer.url);
   const html = await response.text();
+  const observedOutcome = html.match(
+    /<section\b[^>]*aria-label="Observed skill outcome"[^>]*>([\s\S]*?)<\/section>/,
+  );
 
   assert.equal(response.status, 200);
-  assert.equal((html.match(/Deliver the approved single-page Project Workbench\./g) ?? []).length, 1);
+  assert.ok(observedOutcome, "the selected readout exposes one accessible outcome section");
+  assert.equal(
+    (observedOutcome[1].match(/Deliver the approved single-page Project Workbench\./g) ?? []).length,
+    1,
+  );
   assert.match(html, /QS Code: Build/);
 });
 
@@ -511,7 +861,7 @@ test("a verified project can be selected without mixing another project's readou
   });
   const response = await fetch(new URL(`?${parameters}`, viewer.url));
   const html = await response.text();
-  const workspace = html.match(/<section class="workbench-workspace"[\s\S]*?<\/section><aside class="workbench-detail"/);
+  const workspace = visibleProjectSidebar(html);
 
   assert.equal(response.status, 200);
   assert.ok(workspace);

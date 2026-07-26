@@ -16,6 +16,7 @@ import {
   READOUT_VIEWER_STATE,
   discoverHomeNetworkAddress,
   ensureReadoutViewer,
+  escapeHtml,
   migrateLegacyReadouts,
   normalizeSkillReadout,
   publishSkillReadout,
@@ -36,6 +37,7 @@ import {
 } from "../scripts/sync-skill-output-contracts.mjs";
 import {
   COLLECTION_PREFIX,
+  MODEL_GUIDANCE_BY_NAME,
   NEXT_SKILLS_BY_NAME,
   READOUT_PROFILES_BY_NAME,
   SKILLS,
@@ -557,13 +559,21 @@ test("an authorized external skill appears truthfully throughout the project gal
 
 test("an authorized plugin-namespaced external skill remains visible throughout the project library", async (context) => {
   const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const nextPrompt = "Use /compound-engineering:ce-work to apply the architecture review's observed findings without claiming the implementation already ran.";
   const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
     harness: { name: "codex-desktop", version: "1.0.0" },
     collection: "compound-engineering/skills",
     skill: "compound-engineering:ce-code-review",
     runId: "ef26ecf9-1d2f-426b-a04f-605a83d40af1",
     outcome: "Record an actual namespaced skill from an independent Codex plugin.",
-    nextSkills: [{ name: "compound-engineering:ce-work", reason: "Apply the verified review." }],
+    nextSkills: [{
+      name: "compound-engineering:ce-work",
+      reason: "Apply the verified review.",
+      prompt: nextPrompt,
+      model: "gpt-5.6-sol",
+      thinking: "high",
+      modelReason: "The recorded architecture findings justify a careful implementation pass.",
+    }],
   }));
 
   assert.equal(response.status, 201);
@@ -576,11 +586,116 @@ test("an authorized plugin-namespaced external skill remains visible throughout 
   assert.match(html, /compound-engineering:ce-code-review/);
   assert.match(html, /compound-engineering:ce-work/);
   assert.match(html, /codex-desktop/);
+  assert.match(html, /Producer-reported next prompts/);
+  assert.ok(html.includes(nextPrompt.replaceAll("'", "&#39;")));
+  assert.match(html, /<pre class="next-prompt-block"><code>/);
+  assert.match(html, /<aside class="next-model-callout" aria-label="Heuristic model and thinking guidance">/);
+  assert.match(html, /Suggested model/);
+  assert.match(html, /gpt-5\.6-sol/);
+  assert.match(html, /Suggested thinking/);
+  assert.match(html, />high</);
+  assert.match(html, /Heuristic suggestion/);
+  assert.doesNotMatch(html, /<meta name="quickstark:model"/);
 
   for (const suffix of ["", "?view=explorer", "?view=activity"]) {
     const page = await fetch(new URL(suffix || ".", viewer.url));
     assert.equal(page.status, 200);
     assert.match(await page.text(), /compound-engineering:ce-code-review/);
+  }
+});
+
+test("hosted external follow-on prompts must explicitly invoke their actual namespaced skill", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const [index, prompt] of [
+    "Apply the verified architecture-review findings.",
+    "Use /compound-engineering:ce-code-review to perform the wrong follow-on.",
+    "Use /compound-engineering:ce-work-extra to perform a merely prefixed follow-on.",
+  ].entries()) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+      harness: { name: "codex-desktop", version: "1.0.0" },
+      collection: "compound-engineering/skills",
+      skill: "compound-engineering:ce-code-review",
+      runId: `ef26ecf${index}-1d2f-426b-a04f-605a83d40af1`,
+      outcome: "Recorded an actual namespaced external architecture review.",
+      nextSkills: [{ name: "compound-engineering:ce-work", prompt }],
+    }));
+
+    assert.equal(response.status, 422, `accepted an invalid external prompt: ${prompt}`);
+  }
+});
+
+test("hosted external follow-on prompts reject misleading first invocations", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const [index, prompt] of [
+    "Use /qs-deploy-release to release this project; mention /compound-engineering:ce-work in the notes.",
+    "Do not use /compound-engineering:ce-work; use /qs-deploy-release instead.",
+    "Mention /compound-engineering:ce-work, then use /qs-deploy-release.",
+    "Use /compound-engineering:ce-work-extra and mention /compound-engineering:ce-work.",
+  ].entries()) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+      harness: { name: "codex-desktop", version: "1.0.0" },
+      collection: "compound-engineering/skills",
+      skill: "compound-engineering:ce-code-review",
+      runId: `bf26ecf${index}-1d2f-426b-a04f-605a83d40af1`,
+      outcome: "Verify the first actionable external follow-on invocation.",
+      nextSkills: [{ name: "compound-engineering:ce-work", prompt }],
+    }));
+
+    assert.equal(response.status, 422, `accepted a misleading external first invocation: ${prompt}`);
+  }
+});
+
+test("hosted external follow-on prompts preserve their valid first namespaced invocation", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const [index, prompt] of [
+    "Use /compound-engineering:ce-work to apply the verified review; consult /qs-review-code only as supporting context.",
+    "  Use   /compound-engineering:ce-work to apply the verified review.  ",
+    "USE /compound-engineering:ce-work to apply the verified review.",
+  ].entries()) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+      harness: { name: "codex-desktop", version: "1.0.0" },
+      collection: "compound-engineering/skills",
+      skill: "compound-engineering:ce-code-review",
+      runId: `cf26ecf${index}-1d2f-426b-a04f-605a83d40af1`,
+      outcome: "Preserve an actual approved first external follow-on invocation.",
+      nextSkills: [{ name: "compound-engineering:ce-work", prompt }],
+    }));
+
+    assert.equal(response.status, 201, `rejected a valid external first invocation: ${prompt}`);
+
+    const accepted = await response.json();
+    const report = await fetch(accepted.url);
+
+    assert.equal(report.status, 200);
+    assert.ok((await report.text()).includes(escapeHtml(prompt.trim())));
+  }
+});
+
+test("hosted external heuristic model and thinking suggestions reject unsafe values", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+
+  for (const [index, override] of [
+    { model: '<script>alert("unsafe")</script>' },
+    { thinking: "turbo" },
+    { modelReason: "" },
+  ].entries()) {
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+      harness: { name: "codex-desktop", version: "1.0.0" },
+      collection: "compound-engineering/skills",
+      skill: "compound-engineering:ce-code-review",
+      runId: `af26ecf${index}-1d2f-426b-a04f-605a83d40af1`,
+      outcome: "Recorded an actual namespaced external architecture review.",
+      nextSkills: [{
+        name: "compound-engineering:ce-work",
+        prompt: "Use /compound-engineering:ce-work to apply the recorded review findings.",
+        ...override,
+      }],
+    }));
+
+    assert.equal(response.status, 422, `accepted unsafe model guidance: ${JSON.stringify(override)}`);
   }
 });
 
@@ -1387,6 +1502,42 @@ test("every skill has valid, specific, non-circular next-step recommendations", 
   }
 });
 
+test("every promoted skill has transparent heuristic model and thinking guidance", () => {
+  const catalogNames = SKILLS.map((skill) => skill.name).sort();
+
+  assert.deepEqual(Object.keys(MODEL_GUIDANCE_BY_NAME).sort(), catalogNames);
+
+  for (const skill of SKILLS) {
+    const guidance = MODEL_GUIDANCE_BY_NAME[skill.name];
+
+    assert.ok(["gpt-5.6-sol", "gpt-5.6-terra"].includes(guidance.model));
+    assert.ok(["low", "medium", "high", "xhigh", "max", "ultra"].includes(guidance.thinking));
+    assert.equal(typeof guidance.reason, "string");
+    assert.ok(guidance.reason.trim().length >= 20, `${skill.name} needs an informative heuristic`);
+  }
+});
+
+test("every promoted skill derives copy-ready next prompts from its actual outcome and approved catalog", () => {
+  for (const skill of SKILLS) {
+    const outcome = `Recorded the actual ${skill.displayName} outcome.`;
+    const report = normalizeSkillReadout({ skill: skill.name, outcome });
+
+    assert.equal(report.nextSkills.length, NEXT_SKILLS_BY_NAME[skill.name].length);
+
+    for (const next of report.nextSkills) {
+      const target = SKILLS_BY_NAME.get(next.name);
+
+      assert.ok(target, `${skill.name} recommends an unknown skill`);
+      assert.ok(next.prompt.includes(`Use /${target.name} to ${target.prompt}.`));
+      assert.ok(next.prompt.includes(outcome), `${skill.name} omits the actual prior outcome`);
+      assert.equal(next.model, MODEL_GUIDANCE_BY_NAME[target.name].model);
+      assert.equal(next.thinking, MODEL_GUIDANCE_BY_NAME[target.name].thinking);
+      assert.equal(next.modelReason, MODEL_GUIDANCE_BY_NAME[target.name].reason);
+      assert.equal(next.modelSource, "heuristic");
+    }
+  }
+});
+
 test("every promoted skill has a distinct, self-contained architecture-quality HTML readout", () => {
   for (const skill of SKILLS) {
     const html = renderSkillReadout({
@@ -1400,13 +1551,38 @@ test("every promoted skill has a distinct, self-contained architecture-quality H
     assert.ok(html.includes(skill.displayName), `${skill.name} omits its readable display name`);
     assert.ok(html.includes(`/${skill.name}`), `${skill.name} omits its actual command`);
     assert.ok(html.includes('content="Completed"'), `${skill.name} omits the actual report status`);
-    assert.ok(html.includes("Next best skills"), `${skill.name} omits follow-on guidance`);
+    assert.ok(html.includes("Top next prompts"), `${skill.name} omits actionable follow-on prompts`);
     assert.ok(html.includes("Self-contained HTML"), `${skill.name} omits its offline guarantee`);
     assert.doesNotMatch(html, /<script\b/i, `${skill.name} unexpectedly depends on executable scripts`);
     assert.doesNotMatch(html, /<link\b[^>]+rel=["']stylesheet/i, `${skill.name} depends on external styles`);
 
     for (const next of NEXT_SKILLS_BY_NAME[skill.name]) {
       assert.ok(html.includes(`/${next.name}`), `${skill.name} omits /${next.name}`);
+    }
+  }
+});
+
+test("every skill presents its full next prompts as prominent accessible code blocks", () => {
+  for (const skill of SKILLS) {
+    const input = {
+      skill: skill.name,
+      outcome: `Recorded the actual ${skill.displayName} outcome.`,
+    };
+    const report = normalizeSkillReadout(input);
+    const html = renderSkillReadout(input);
+    const blocks = [...html.matchAll(
+      /<pre class="next-prompt-block"><code>([\s\S]*?)<\/code><\/pre>/g,
+    )];
+
+    assert.equal(blocks.length, report.nextSkills.length, skill.name);
+
+    for (const [index, next] of report.nextSkills.entries()) {
+      assert.equal(
+        blocks[index][1],
+        escapeHtml(next.prompt),
+        `${skill.name} does not expose a complete copyable prompt`,
+      );
+      assert.doesNotMatch(blocks[index][1], /Suggested model|Suggested thinking|Heuristic suggestion/);
     }
   }
 });
@@ -1453,7 +1629,7 @@ test("actual skill reports automatically identify the actual execution machine n
     assert.ok(html.includes(hostname()), `${skill.name} omits its actual execution machine`);
     assert.ok(html.includes(`<meta name="quickstark:machine" content="${hostname()}">`));
     assert.ok(
-      html.indexOf("Execution context") < html.indexOf("Next best skills"),
+      html.indexOf("Execution context") < html.indexOf("Top next prompts"),
       `${skill.name} hides the execution machine below the completion summary`,
     );
   }
@@ -1481,7 +1657,7 @@ test("deployment reports prominently identify only verified deployment environme
   assert.ok(html.includes(url));
   assert.match(html, /Authelia protects the production report viewer/);
   assert.match(html, /<meta name="quickstark:deployment-url"/);
-  assert.ok(html.indexOf("Verified deployment · production") < html.indexOf("Next best skills"));
+  assert.ok(html.indexOf("Verified deployment · production") < html.indexOf("Top next prompts"));
 });
 
 test("architecture, module, implementation, and documentation reports foreground actual changed files", () => {
@@ -1732,7 +1908,7 @@ test("GitHub-facing reports prominently preserve verified release, issue, PR, an
   assert.match(html, /quickstark:release-version/);
   assert.match(html, /quickstark:commit-sha/);
   assert.ok(
-    html.indexOf("Verified delivery evidence") < html.indexOf("Next best skills"),
+    html.indexOf("Verified delivery evidence") < html.indexOf("Top next prompts"),
     "Verified delivery evidence should appear before follow-on recommendations.",
   );
 });
@@ -2222,6 +2398,11 @@ test("readouts escape user-controlled content and never activate unsafe artifact
     outcome: hostile,
     findings: [{ title: hostile, detail: hostile }],
     outputs: [{ title: "Artifact", detail: hostile, href: "javascript:alert(1)" }],
+    nextSkills: [{
+      name: "qs-review-code",
+      reason: hostile,
+      prompt: `Use /qs-review-code to inspect ${hostile}`,
+    }],
   });
 
   assert.doesNotMatch(html, /<script\b/i);
@@ -2243,6 +2424,238 @@ test("readouts distinguish actually employed skills from catalog recommendations
   );
 });
 
+test("top next prompts carry forward the actual run and explicitly invoke approved skills", () => {
+  const input = {
+    skill: "qs-plan-explore",
+    outcome: "Agreed to replace skill-only suggestions with contextual continuation prompts.",
+    findings: [{ title: "Keep the catalog as the routing source of truth" }],
+    decisions: [{ title: "Embed the approved follow-on skill in every prompt" }],
+    outputs: [{ title: "Existing shared completion-report generator" }],
+    checks: [{ title: "Current recommendation contract", status: "passed" }],
+  };
+  const report = normalizeSkillReadout(input);
+  const html = renderSkillReadout(input);
+
+  assert.equal(report.nextSkills.length, 3);
+
+  for (const next of report.nextSkills) {
+    assert.ok(next.prompt.includes(`/${next.name}`), `${next.name} is not explicitly invocable`);
+    assert.match(next.prompt, /replace skill-only suggestions with contextual continuation prompts/);
+    assert.match(next.prompt, /Keep the catalog as the routing source of truth/);
+    assert.match(next.prompt, /Embed the approved follow-on skill in every prompt/);
+    assert.match(next.prompt, /Existing shared completion-report generator/);
+    assert.match(next.prompt, /Current recommendation contract \(passed\)/);
+    assert.ok(html.includes(next.prompt), `${next.name} omits its copy-ready prompt`);
+    assert.equal(next.modelSource, "heuristic");
+    assert.ok(html.includes(next.model), `${next.name} omits its suggested model`);
+    assert.ok(html.includes(next.thinking), `${next.name} omits its suggested thinking`);
+  }
+
+  assert.match(html, /Top next prompts/);
+  assert.match(html, /Suggested model/);
+  assert.match(html, /Suggested thinking/);
+  assert.match(html, /Heuristic suggestion/);
+  assert.match(html, /<pre class="next-prompt-block"><code>/);
+  assert.match(html, /<aside class="next-model-callout" aria-label="Heuristic model and thinking guidance">/);
+  assert.ok(
+    html.indexOf('<pre class="next-prompt-block"><code>')
+      < html.indexOf('<aside class="next-model-callout"'),
+    "Model guidance must be a secondary callout underneath the prompt.",
+  );
+  assert.doesNotMatch(html, /<p class="next-prompt">/);
+  assert.match(html, /does not change the active model or thinking level/i);
+  assert.doesNotMatch(html, /<meta name="quickstark:model"/);
+  assert.doesNotMatch(html, /Next best skills/);
+});
+
+test("a run can preserve a more specific copy-ready prompt for its approved next skill", () => {
+  const prompt = "Use /qs-review-code to verify the contextual prompt contract, its escaping, and both generated plugin distributions.";
+  const report = normalizeSkillReadout({
+    skill: "qs-skill-write",
+    outcome: "Implemented context-aware continuation prompts for every promoted skill.",
+    nextSkills: [{
+      name: "qs-review-code",
+      reason: "Review the actual shared implementation and generated outputs.",
+      prompt,
+    }],
+  });
+
+  assert.deepEqual(report.nextSkills, [{
+    name: "qs-review-code",
+    reason: "Review the actual shared implementation and generated outputs.",
+    prompt,
+    model: MODEL_GUIDANCE_BY_NAME["qs-review-code"].model,
+    thinking: MODEL_GUIDANCE_BY_NAME["qs-review-code"].thinking,
+    modelReason: MODEL_GUIDANCE_BY_NAME["qs-review-code"].reason,
+    modelSource: "heuristic",
+  }]);
+});
+
+test("an observed critical finding increases the suggested model and thinking level", () => {
+  const report = normalizeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Identified a critical security issue while preparing the follow-on review.",
+    findings: [{ title: "Critical authorization boundary", priority: "P0" }],
+    nextSkills: ["qs-code-document"],
+  });
+
+  assert.equal(MODEL_GUIDANCE_BY_NAME["qs-code-document"].model, "gpt-5.6-terra");
+  assert.equal(report.nextSkills[0].model, "gpt-5.6-sol");
+  assert.equal(report.nextSkills[0].thinking, "xhigh");
+  assert.equal(report.nextSkills[0].modelSource, "heuristic");
+  assert.match(report.nextSkills[0].modelReason, /recorded P0/i);
+  assert.equal(report.observation, null);
+});
+
+test("an actual failed check raises routine follow-on guidance without inventing measurements", () => {
+  const report = normalizeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "A verification check failed and needs investigation.",
+    checks: [{ title: "Regression suite", status: "failed" }],
+    nextSkills: ["qs-code-document"],
+  });
+
+  assert.equal(report.nextSkills[0].model, "gpt-5.6-sol");
+  assert.equal(report.nextSkills[0].thinking, "high");
+  assert.match(report.nextSkills[0].modelReason, /recorded failed check/i);
+  assert.equal(report.observation, null);
+});
+
+test("a more specific next prompt can explicitly override its heuristic model and thinking", () => {
+  const report = normalizeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Completed a substantial implementation requiring deep review.",
+    nextSkills: [{
+      name: "qs-review-code",
+      prompt: "Use /qs-review-code to inspect the authorization, migration, and rollback boundaries.",
+      model: "gpt-5.6-sol",
+      thinking: "xhigh",
+      modelReason: "Substantial authorization and migration changes justify a deeper review.",
+    }],
+  });
+
+  assert.equal(report.nextSkills[0].model, "gpt-5.6-sol");
+  assert.equal(report.nextSkills[0].thinking, "xhigh");
+  assert.match(report.nextSkills[0].modelReason, /authorization and migration/i);
+  assert.equal(report.nextSkills[0].modelSource, "heuristic");
+  assert.equal(report.observation, null);
+});
+
+test("heuristic model suggestions reject unsafe models and unsupported thinking levels", () => {
+  const base = {
+    skill: "qs-skill-write",
+    outcome: "Prepared the contextual skill output contract.",
+  };
+
+  for (const [override, expected] of [
+    [{ model: '<script>alert("unsafe")</script>' }, /safe model identifier/i],
+    [{ model: "gpt 5.6" }, /safe model identifier/i],
+    [{ thinking: "turbo" }, /supported thinking level/i],
+    [{ thinking: "" }, /supported thinking level/i],
+    [{ modelReason: "" }, /non-empty string/i],
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      ...base,
+      nextSkills: [{ name: "qs-review-code", ...override }],
+    }), expected);
+  }
+});
+
+test("next prompts reject an omitted, different, or merely prefixed embedded skill", () => {
+  for (const prompt of [
+    "Review the shared recommendation contract and its tests.",
+    "Use /qs-code-document to describe the recommendation contract.",
+    "Use /qs-review-code-extra to review the recommendation contract.",
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      skill: "qs-skill-write",
+      outcome: "Prepared the shared recommendation contract.",
+      nextSkills: [{ name: "qs-review-code", prompt }],
+    }), /must explicitly invoke \/qs-review-code/i);
+  }
+});
+
+test("native follow-on prompts reject misleading first invocations", () => {
+  for (const prompt of [
+    "Use /qs-deploy-release to release this project; mention /qs-review-code in the notes.",
+    "Do not use /qs-review-code; use /qs-help instead.",
+    "Mention /qs-review-code, then use /qs-deploy-release.",
+    "Use /qs-review-code-extra and mention /qs-review-code.",
+  ]) {
+    assert.throws(() => normalizeSkillReadout({
+      skill: "qs-skill-write",
+      outcome: "Require the first actionable prompt to invoke its approved next skill.",
+      nextSkills: [{ name: "qs-review-code", prompt }],
+    }), /must explicitly invoke \/qs-review-code/i, prompt);
+  }
+});
+
+test("native follow-on prompts preserve their valid first approved invocation", () => {
+  for (const prompt of [
+    "Use /qs-review-code to verify the shared contract; consult /qs-code-document only as supporting context.",
+    "  Use   /qs-review-code to verify the shared contract.  ",
+    "USE /qs-review-code to verify the shared contract.",
+  ]) {
+    const report = normalizeSkillReadout({
+      skill: "qs-skill-write",
+      outcome: "Preserve an actual approved first native follow-on invocation.",
+      nextSkills: [{ name: "qs-review-code", prompt }],
+    });
+
+    assert.equal(report.nextSkills[0].name, "qs-review-code");
+    assert.equal(report.nextSkills[0].prompt, prompt.trim());
+  }
+});
+
+test("catalog preview prompts never claim that prior work actually happened", () => {
+  const report = normalizeSkillReadout({
+    skill: "qs-plan-explore",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "Catalog preview only; no actual exploration occurred.",
+  });
+
+  for (const next of report.nextSkills) {
+    assert.ok(next.prompt.includes(`/${next.name}`));
+    assert.equal(next.modelSource, "heuristic");
+    assert.doesNotMatch(next.prompt, /Continue from the recorded outcome|Carry forward/i);
+    assert.doesNotMatch(next.prompt, /actual exploration occurred/i);
+  }
+});
+
+test("context-aware next prompts remain compact without inventing or losing observed evidence", () => {
+  const longOutcome = `Observed outcome: ${"specific verified result ".repeat(30)}`;
+  const longFinding = `Observed finding: ${"verified evidence ".repeat(20)}`;
+  const report = normalizeSkillReadout({
+    skill: "qs-plan-explore",
+    outcome: longOutcome,
+    findings: [{ title: longFinding }],
+    checks: [{ title: "Optional browser check", status: "skipped" }],
+  });
+
+  for (const next of report.nextSkills) {
+    assert.ok(next.prompt.length < 1_000, `${next.name} produces an oversized continuation`);
+    assert.match(next.prompt, /Observed outcome: specific verified result/);
+    assert.match(next.prompt, /Observed finding: verified evidence/);
+    assert.match(next.prompt, /Optional browser check \(skipped\)/);
+    assert.match(next.prompt, /…/);
+    assert.doesNotMatch(next.prompt, /Optional browser check \(passed\)/);
+  }
+});
+
+test("awaiting-input prompts carry forward the actual unresolved decision", () => {
+  const report = normalizeSkillReadout({
+    skill: "qs-plan-explore",
+    status: "Awaiting input",
+    outcome: "Awaiting a choice between catalog-derived prompts and independently maintained templates.",
+    nextSkills: ["qs-plan-clarify"],
+  });
+
+  assert.match(report.nextSkills[0].prompt, /Use \/qs-plan-clarify/);
+  assert.match(report.nextSkills[0].prompt, /Awaiting a choice between catalog-derived prompts/);
+  assert.doesNotMatch(report.nextSkills[0].prompt, /completed exploration|decision was resolved/i);
+});
+
 test("completed readouts can honestly report that no further skill is required", () => {
   const html = renderSkillReadout({
     skill: "qs-code-build",
@@ -2251,6 +2664,8 @@ test("completed readouts can honestly report that no further skill is required",
   });
 
   assert.ok(html.includes("None — the requested work is complete."));
+  assert.doesNotMatch(html, />Suggested model</);
+  assert.doesNotMatch(html, />Suggested thinking</);
 });
 
 test("readouts reject unknown skills, fabricated skill usage, and irrelevant next steps", () => {
@@ -3560,6 +3975,92 @@ for (const skill of SKILLS) {
   });
 }
 
+test("the root README links the authoritative project architecture, report operations, and contributor guides", async () => {
+  const readme = await readFile(join(repositoryRoot, "README.md"), "utf8");
+
+  for (const guide of [
+    "./docs/architecture.md",
+    "./docs/readout-operations.md",
+    "./docs/contributing.md",
+    "./CHANGELOG.md",
+  ]) {
+    assert.ok(readme.includes(guide), `root README omits ${guide}`);
+    assert.equal(await exists(join(repositoryRoot, guide)), true, `${guide} does not exist`);
+  }
+});
+
+test("project guides document actual skill sources, secure readout boundaries, and contributor checks", async () => {
+  const [architecture, operations, contributing] = await Promise.all([
+    readFile(join(repositoryRoot, "docs", "architecture.md"), "utf8"),
+    readFile(join(repositoryRoot, "docs", "readout-operations.md"), "utf8"),
+    readFile(join(repositoryRoot, "docs", "contributing.md"), "utf8"),
+  ]);
+
+  assert.match(architecture, /scripts\/qs-skill-catalog\.mjs/);
+  assert.match(architecture, /scripts\/qs-skill-readout\.mjs/);
+  assert.match(architecture, /codex\/plugins\/qs-skills\/skills\//);
+  assert.match(architecture, /\.claude-plugin\/plugin\.json/);
+  assert.match(architecture, /api\/v1\/readouts/);
+  assert.match(architecture, /22 upstream|22 adapted/i);
+  assert.match(architecture, /24 promoted/i);
+
+  assert.match(operations, /reports\.quickstark\.com/);
+  assert.match(operations, /api\/v1\/readouts/);
+  assert.match(operations, /QS_READOUT_PRODUCER_TOKEN/);
+  assert.match(operations, /QS_READOUT_PUBLISH_PROJECTS/);
+  assert.match(operations, /QS_READOUT_INGESTION_URL/);
+  assert.match(operations, /\b401\b/);
+  assert.match(operations, /\b409\b/);
+  assert.match(operations, /rotation|rotate|revocation/i);
+  assert.match(operations, /local.only/i);
+
+  assert.match(contributing, /scripts\/qs-skill-catalog\.mjs/);
+  assert.match(contributing, /npm run sync:codex/);
+  assert.match(contributing, /npm run check:codex/);
+  assert.match(contributing, /npm test/);
+  assert.match(contributing, /upstream/i);
+  assert.match(contributing, /Matt Pocock/);
+
+  const [crossHarnessSpecification, crossHarnessTicketPlan] = await Promise.all([
+    readFile(
+      join(repositoryRoot, "docs", "specs", "cross-harness-skill-readout-ingestion.md"),
+      "utf8",
+    ),
+    readFile(
+      join(repositoryRoot, "docs", "specs", "cross-harness-skill-readout-ticket-plan.md"),
+      "utf8",
+    ),
+  ]);
+
+  assert.match(crossHarnessSpecification, /^Status: implemented in QuickStark 2\.4\.0\./m);
+  assert.doesNotMatch(crossHarnessSpecification, /implementation-ready specification/i);
+  assert.match(crossHarnessSpecification, /readout-operations\.md/);
+  assert.match(crossHarnessTicketPlan, /^Status: implementation plan.*QuickStark 2\.4\.0/m);
+  assert.match(crossHarnessTicketPlan, /acceptance checkboxes.*planning criteria/i);
+  assert.match(crossHarnessTicketPlan, /separately located laptop/i);
+  assert.match(crossHarnessTicketPlan, /readout-operations\.md/);
+});
+
+test("the changelog documents the actual QuickStark version and preserves upstream attribution", async () => {
+  const [changelog, project] = await Promise.all([
+    readFile(join(repositoryRoot, "CHANGELOG.md"), "utf8"),
+    readFile(join(repositoryRoot, "package.json"), "utf8").then(JSON.parse),
+  ]);
+
+  const escapedVersion = project.version.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  assert.match(changelog, new RegExp(`^## ${escapedVersion}\\s*$`, "m"));
+  assert.match(changelog, /authenticated.*(?:ingestion|publishing)|(?:ingestion|publishing).*authenticated/i);
+  assert.match(changelog, /qs-code-document/);
+  assert.match(changelog, /Matt Pocock/);
+  assert.match(changelog, /https:\/\/github\.com\/mattpocock\/skills\//);
+  assert.doesNotMatch(
+    changelog,
+    new RegExp(`https:\\/\\/github\\.com\\/quickstark\\/skills\\/releases\\/tag\\/v?${escapedVersion}`),
+    "a repository version must not be presented as an unverified GitHub release",
+  );
+});
+
 test("the root and bucket indexes list exactly the promoted skills", async () => {
   const rootReadme = await readFile(join(repositoryRoot, "README.md"), "utf8");
 
@@ -3720,13 +4221,73 @@ test("project, plugin, and lockfile versions stay synchronized", async () => {
     ).then(JSON.parse),
   ]);
 
-  assert.equal(project.version, "2.4.0");
+  assert.match(project.version, /^\d+\.\d+\.\d+(?:-[\da-z.-]+)?$/i);
   assert.equal(lockfile.name, project.name);
   assert.equal(lockfile.version, project.version);
   assert.equal(lockfile.packages[""].name, project.name);
   assert.equal(lockfile.packages[""].version, project.version);
   assert.equal(claudePlugin.version, project.version);
   assert.equal(codexPlugin.version, project.version);
+});
+
+test("Changesets target QuickStark while preserving historical upstream changesets", async () => {
+  const changesetRoot = join(repositoryRoot, ".changeset");
+  const upstreamArchive = join(repositoryRoot, "docs", "upstream", "changesets");
+  const [configuration, rootEntries, upstreamEntries] = await Promise.all([
+    readFile(join(changesetRoot, "config.json"), "utf8").then(JSON.parse),
+    readdir(changesetRoot, { withFileTypes: true }),
+    readdir(upstreamArchive, { withFileTypes: true }),
+  ]);
+
+  assert.equal(configuration.changelog[1].repo, "quickstark/skills");
+
+  const upstreamNames = upstreamEntries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md") && entry.name !== "README.md")
+    .map((entry) => entry.name)
+    .sort();
+
+  assert.deepEqual(upstreamNames, [
+    "ask-matt-wayfinder-guidance.md",
+    "codex-skill-metadata.md",
+    "friendlier-setup-and-local-tickets.md",
+    "grilling-general-use.md",
+    "prototype-primary-source.md",
+    "ship-as-claude-plugin.md",
+    "wayfinder-decision-tickets.md",
+    "wayfinder-research-subagents.md",
+    "yagni-scope-improve-architecture.md",
+  ]);
+
+  for (const name of upstreamNames) {
+    const historical = await readFile(join(upstreamArchive, name), "utf8");
+    assert.match(historical, /^---\n"mattpocock-skills": (minor|patch)\n---/);
+  }
+
+  for (const entry of rootEntries) {
+    if (!entry.isFile() || !entry.name.endsWith(".md") || entry.name === "README.md") {
+      continue;
+    }
+
+    const pending = await readFile(join(changesetRoot, entry.name), "utf8");
+
+    if (/^---\r?\n---(?:\r?\n|$)/.test(pending)) {
+      continue;
+    }
+
+    assert.match(pending, /^---\n"qs-skills": (major|minor|patch)\n---/);
+    assert.doesNotMatch(pending, /^"mattpocock-skills":/m);
+  }
+});
+
+test("the versioned QuickStark release passes executable Changesets status", async () => {
+  const { stdout } = await execFileAsync("npm", ["run", "changeset", "--", "status"], {
+    cwd: repositoryRoot,
+  });
+
+  assert.match(stdout, /packages to be bumped at patch/i);
+  assert.match(stdout, /packages to be bumped at minor/i);
+  assert.match(stdout, /packages to be bumped at major/i);
+  assert.doesNotMatch(stdout, /mattpocock-skills/i);
 });
 
 test("the router describes the personalized end-to-end workflow", async () => {
@@ -3848,11 +4409,39 @@ test("the help router clearly articulates every promoted skill's purpose", async
   }
 });
 
+test("every featured continuation invokes its first approved skill with catalog-derived model guidance", () => {
+  for (const skill of SKILLS) {
+    const contract = renderSkillOutputContract(skill);
+    const recommendation = NEXT_SKILLS_BY_NAME[skill.name][0];
+    const target = SKILLS_BY_NAME.get(recommendation.name);
+    const guidance = MODEL_GUIDANCE_BY_NAME[recommendation.name];
+    const section = contract.slice(
+      contract.indexOf("**Top next prompts:**"),
+      contract.indexOf("Use the same fenced-prompt and muted callout format"),
+    );
+    const prompt = section.match(/```text\n([^\n]+)\n```/);
+    const model = section.match(
+      /^> Suggested model: `([^`]+)` · Suggested thinking: `([^`]+)`$/m,
+    );
+
+    assert.ok(target, `${skill.name} must feature a real promoted skill`);
+    assert.ok(guidance, `${skill.name} must use actual catalog model guidance`);
+    assert.equal(
+      prompt?.[1],
+      `Use /${target.name} to ${target.prompt}.`,
+      `${skill.name} must prominently feature its first approved continuation`,
+    );
+    assert.equal(model?.[1], guidance.model, `${skill.name} features the wrong model`);
+    assert.equal(model?.[2], guidance.thinking, `${skill.name} features the wrong thinking level`);
+    assert.doesNotMatch(contract, /\/qs-skill-name\b/, `${skill.name} features a nonexistent skill`);
+  }
+});
+
 test("the standard report distinguishes actual skills from suggested next steps", () => {
   for (const skill of SKILLS) {
     const contract = renderSkillOutputContract(skill);
 
-    for (const field of ["Status:", "Skills used:", "Outcome:", "Execution:", "Readout:", "Outputs:", "Checks:", "Delivery:", "Next best:"]) {
+    for (const field of ["Status:", "Skills used:", "Outcome:", "Execution:", "Readout:", "Outputs:", "Checks:", "Delivery:", "Top next prompts:"]) {
       assert.ok(contract.includes(field), `${skill.name} omits the ${field} field`);
     }
 
@@ -3878,6 +4467,19 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(contract, /do not bind to every network interface/i);
     assert.match(contract, /only skills that actually ran/);
     assert.match(contract, /only the tests, validations, or observations actually performed/i);
+    assert.match(contract, /copy-ready/i);
+    assert.match(contract, /fenced (?:text )?code block/i);
+    assert.match(contract, /muted (?:model )?callout/i);
+    assert.match(contract, /\*\*Top next prompts:\*\*/);
+    assert.match(contract, /```text\nUse \/qs-[a-z0-9-]+ to [^\n]+\n```/);
+    assert.match(contract, /^> Suggested model: /m);
+    assert.match(contract, /actual outcome, findings, decisions, outputs, and checks/i);
+    assert.match(contract, /explicitly invokes its catalog-approved skill/i);
+    assert.match(contract, /suggested model/i);
+    assert.match(contract, /suggested thinking/i);
+    assert.match(contract, /heuristic/i);
+    assert.match(contract, /never change the active model or thinking level/i);
+    assert.doesNotMatch(contract, /Next best:/);
     assert.match(contract, /Awaiting input/);
     assert.match(contract, /the requested work is complete/);
 
@@ -3890,6 +4492,65 @@ test("the standard report distinguishes actual skills from suggested next steps"
     assert.match(documentation, /verified deployment/i);
     assert.match(documentation, /verified GitHub pull requests/i);
     assert.match(documentation, /released versions/i);
+    assert.match(documentation, /copy-ready/i);
+    assert.match(documentation, /top next prompts/i);
+    assert.match(documentation, /fenced (?:text )?code block/i);
+    assert.match(documentation, /^> Suggested model: /m);
+    assert.match(documentation, /suggested model/i);
+    assert.match(documentation, /suggested thinking/i);
+    assert.match(documentation, /heuristic/i);
+
+    for (const next of NEXT_SKILLS_BY_NAME[skill.name]) {
+      assert.match(contract, new RegExp(`Use /${next.name} to `));
+      assert.match(documentation, new RegExp(`Use /${next.name} to `));
+      const fencedPrompt = new RegExp(`\x60\x60\x60text\\nUse /${next.name} to [^\\n]+\\n\x60\x60\x60`);
+
+      assert.match(contract, fencedPrompt);
+      assert.match(documentation, fencedPrompt);
+      assert.ok(contract.includes(MODEL_GUIDANCE_BY_NAME[next.name].model));
+      assert.ok(contract.includes(MODEL_GUIDANCE_BY_NAME[next.name].thinking));
+    }
+  }
+});
+
+test("the router, skill-writing vocabulary, and project guidance agree on contextual next prompts", async () => {
+  const [router, skill, glossary, documentation, readme, guidance, context] = await Promise.all([
+    readFile(join(repositoryRoot, "skills", "engineering", "qs-help", "SKILL.md"), "utf8"),
+    readFile(join(repositoryRoot, "skills", "productivity", "qs-skill-write", "SKILL.md"), "utf8"),
+    readFile(join(repositoryRoot, "skills", "productivity", "qs-skill-write", "GLOSSARY.md"), "utf8"),
+    readFile(join(repositoryRoot, "docs", "productivity", "qs-skill-write.md"), "utf8"),
+    readFile(join(repositoryRoot, "README.md"), "utf8"),
+    readFile(join(repositoryRoot, "CLAUDE.md"), "utf8"),
+    readFile(join(repositoryRoot, "CONTEXT.md"), "utf8"),
+  ]);
+
+  assert.match(router, /copy-ready next prompts/i);
+  assert.match(router, /work already accomplished/i);
+  assert.match(router, /fenced (?:text )?code block/i);
+  assert.match(skill, /^## Next prompts$/m);
+  assert.match(skill, /catalog-approved/i);
+  assert.match(skill, /suggested model/i);
+  assert.match(skill, /thinking level/i);
+  assert.match(skill, /fenced (?:text )?code block/i);
+  assert.match(skill, /muted (?:model )?callout/i);
+  assert.match(glossary, /^### Next Prompt$/m);
+  assert.match(glossary, /cognitive load/i);
+  assert.match(documentation, /\*\*Next prompts\*\*/);
+  assert.match(readme, /Top next prompts:/);
+  assert.match(readme, /\*\*Top next prompts:\*\*/);
+  assert.match(readme, /```text\nUse \/qs-plan-clarify to [^\n]+\n```/);
+  assert.match(readme, /^> Suggested model: /m);
+  assert.match(readme, /Suggested model:/);
+  assert.match(readme, /Suggested thinking:/);
+  assert.match(readme, /heuristic/i);
+  assert.match(guidance, /\*\*Top next prompts\*\*/);
+  assert.match(guidance, /suggested model/i);
+  assert.match(guidance, /thinking level/i);
+  assert.match(context, /\*\*Next prompt\*\*/);
+  assert.match(context, /heuristic/i);
+
+  for (const content of [router, skill, documentation, readme, guidance]) {
+    assert.doesNotMatch(content, /Next best:/);
   }
 });
 

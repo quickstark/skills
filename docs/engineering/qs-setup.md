@@ -37,13 +37,45 @@ The output is a set of files under `docs/agents/` — `issue-tracker.md`, `domai
 
 ## Output and next steps
 
-`/qs-setup` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and the best next step. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
+`/qs-setup` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and up to three copy-ready top next prompts. Present each complete prompt prominently in its own fenced text code block and place its suggested model and suggested thinking underneath in a visually muted callout. Each prompt embeds its catalog-approved follow-on skill and builds on the actual outcome, findings, decisions, outputs, and checks rather than merely recommending a skill name. Model and thinking guidance are explicitly heuristic; they are not measured model performance and never change the active configuration. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
 
-Depending on what actually happened, the next step may be:
+Depending on the actual completed work, tailor one to three top next prompts from:
 
-- [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) — Start a new feature after configuring the project.
-- [`/qs-flow-triage`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-flow-triage/SKILL.md) — Sort incoming work using the newly configured tracker.
-- [`/qs-design-architecture`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-architecture/SKILL.md) — Inspect an existing project before starting a refactor.
+**1. [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md)**
+
+Start a new feature after configuring the project.
+
+```text
+Use /qs-plan-clarify to clarify this project and document the resulting decisions.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Clarification benefits from deeper reasoning about requirements and trade-offs.
+
+**2. [`/qs-flow-triage`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-flow-triage/SKILL.md)**
+
+Sort incoming work using the newly configured tracker.
+
+```text
+Use /qs-flow-triage to triage these incoming issues into clear, actionable work.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+>
+> Heuristic: Issue triage usually benefits from focused categorization and prioritization.
+
+**3. [`/qs-design-architecture`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-architecture/SKILL.md)**
+
+Inspect an existing project before starting a refactor.
+
+```text
+Use /qs-design-architecture to find the highest-value architecture improvements in this codebase.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `xhigh`
+>
+> Heuristic: Architecture analysis benefits from deeper cross-module and risk assessment.
 
 ## Where it fits
 

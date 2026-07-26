@@ -1,4 +1,27 @@
-# mattpocock-skills
+# QuickStark Skills changelog
+
+QuickStark versions describe the verified repository and plugin version; they do not, by themselves, claim a published GitHub release or tag.
+
+## 2.5.0
+
+### Minor Changes
+
+- Release QuickStark Skills 2.5.0 with catalog-approved, context-aware next prompts; prominent accessible prompt code blocks; heuristic model and thinking suggestions; and synchronized canonical Claude and generated Codex distributions.
+
+  Harden first-action prompt validation, project-aware readout workbenches, verified observed-run telemetry, immutable cross-harness reports, and authenticated readout operations. Preserve upstream MIT attribution and archive Matt Pocock's historical changesets without applying them to the QuickStark package.
+
+## 2.4.0
+
+- Support authenticated cross-machine report ingestion at the dedicated `/api/v1/readouts` route while preserving the read-only, browser-authenticated project library.
+- Authenticate each producer with its own scoped credential, enforce independent producer and hosted-project allowlists, and support immediate credential rotation and revocation.
+- Preserve immutable report identities, safe idempotent retries, bounded publication, honest external-skill provenance, and local-only fallback.
+- Provide 24 purpose-specific promoted skill reports with verified execution machines, observed deployments, run-owned file changes, and evidence-only GitHub or release metadata.
+- Include the first-class `/qs-code-document` and `/qs-deploy-release` workflows alongside the 22 skills adapted from Matt Pocock.
+- Keep the package, Claude plugin, generated Codex plugin, and reporting helpers synchronized at version `2.4.0`.
+
+## Upstream release history
+
+The following entries preserve the original MIT-licensed Matt Pocock release history, attribution, and source links. Upstream version numbers describe the original project, not QuickStark plugin releases.
 
 ## 1.1.0
 

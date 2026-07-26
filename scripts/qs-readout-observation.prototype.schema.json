@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quickstark.com/schemas/skill-run-observation.prototype.v1.json",
+  "title": "QuickStark observed skill-run telemetry — prototype",
+  "$comment": "Design prototype only. This schema is not active in the production readout normalizer or ingestion module. Capture observed values only; reject telemetry on catalog previews.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "measurementSource",
+    "attributionScope",
+    "capturedAt"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "measurementSource": {
+      "type": "string",
+      "enum": [
+        "provider-response",
+        "codex-opentelemetry",
+        "verified-harness",
+        "user-reported"
+      ]
+    },
+    "attributionScope": {
+      "type": "string",
+      "enum": [
+        "skill-run",
+        "thread-turn",
+        "thread-cumulative"
+      ],
+      "$comment": "Only skill-run observations can be displayed or aggregated as the usage of an individual skill run. Thread-level observations must stay explicitly thread-level."
+    },
+    "capturedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9._-]{0,62}$"
+        },
+        "model": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,126}$"
+        },
+        "reasoningEffort": {
+          "type": "string",
+          "enum": [
+            "none",
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ]
+        }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "cachedInput": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "cacheWrite": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "output": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "reasoningOutput": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "total": {
+          "$ref": "#/$defs/observedCount"
+        }
+      },
+      "$comment": "Use final provider-reported usage. Do not estimate tokens from characters, conflate credential tokens with inference tokens, or split one thread response across multiple skills."
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "startedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finishedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "activeDurationMs": {
+          "$ref": "#/$defs/observedCount"
+        }
+      },
+      "$comment": "A generated-at timestamp alone is not a duration. Validate start/end ordering and active duration in the canonical normalizer."
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "observed-checks",
+            "user-feedback",
+            "review-rubric",
+            "human-calibrated-evaluation"
+          ]
+        },
+        "passedChecks": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "failedChecks": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "feedback": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "needs-revision",
+            "rejected"
+          ]
+        }
+      },
+      "$comment": "Execution speed, token count, and output length are efficiency measurements, not output-quality measurements."
+    },
+    "recommendationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confidence",
+        "comparableRuns"
+      ],
+      "properties": {
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "insufficient",
+            "low",
+            "moderate",
+            "high"
+          ]
+        },
+        "comparableRuns": {
+          "$ref": "#/$defs/observedCount"
+        },
+        "suggestedModel": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,126}$"
+        },
+        "suggestedReasoningEffort": {
+          "$ref": "#/$defs/reasoningEffort"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "confidence": {
+                "const": "insufficient"
+              }
+            },
+            "required": [
+              "confidence"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "suggestedModel"
+                  ]
+                },
+                {
+                  "required": [
+                    "suggestedReasoningEffort"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "$comment": "Hints are advisory only. The approved next skill must still be validated against NEXT_SKILLS_BY_NAME; never switch a task model or thinking level automatically."
+    }
+  },
+  "$defs": {
+    "observedCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "reasoningEffort": {
+      "type": "string",
+      "enum": [
+        "none",
+        "minimal",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+        "ultra"
+      ]
+    }
+  }
+}

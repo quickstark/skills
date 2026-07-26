@@ -10,6 +10,7 @@ import { promisify } from "node:util";
 
 import {
   COLLECTION_NAME,
+  MODEL_GUIDANCE_BY_NAME,
   NEXT_SKILLS_BY_NAME,
   READOUT_PROFILES_BY_NAME,
   SKILLS,
@@ -42,6 +43,14 @@ const observationFeedback = new Set(["accepted", "needs-revision", "rejected"]);
 const observationReasoningEfforts = new Set([
   "none",
   "minimal",
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max",
+  "ultra",
+]);
+const suggestedThinkingLevels = new Set([
   "low",
   "medium",
   "high",
@@ -1113,7 +1122,125 @@ function normalizeSkillObservation(value, status, checks = []) {
   return normalized;
 }
 
-function normalizeRecommendations(skill, recommendations) {
+function summarizeNextPromptText(value, maximum = 180) {
+  const text = value.replace(/\s+/g, " ").trim();
+
+  return text.length <= maximum
+    ? text
+    : `${text.slice(0, maximum - 1).trimEnd()}…`;
+}
+
+function finishNextPromptSentence(value) {
+  return /[.!?…]$/.test(value) ? value : `${value}.`;
+}
+
+function createNextPrompt(name, context, reason) {
+  const target = SKILLS_BY_NAME.get(name);
+  const action = (target?.prompt ?? reason ?? "continue the recorded work")
+    .replace(/[.!?]+$/, "")
+    .trim();
+  const prompt = [
+    `Use /${name} to ${action.charAt(0).toLowerCase()}${action.slice(1)}.`,
+  ];
+
+  if (context.status === "Preview") return prompt[0];
+
+  prompt.push(
+    finishNextPromptSentence(
+      `Continue from the recorded outcome: ${summarizeNextPromptText(context.outcome, 280)}`,
+    ),
+  );
+
+  const evidence = [
+    ["decisions", context.decisions, (item) => item.title],
+    ["outputs", context.outputs, (item) => item.title],
+    ["findings", context.findings, (item) => item.title],
+    ["checks", context.checks, (item) => `${item.title} (${item.status})`],
+  ].flatMap(([label, items, summarize]) => items.length
+    ? [`${label}: ${items.slice(0, 2).map((item) => summarizeNextPromptText(summarize(item))).join("; ")}`]
+    : []);
+
+  if (evidence.length) {
+    prompt.push(finishNextPromptSentence(`Carry forward ${evidence.join("; ")}`));
+  }
+
+  return prompt.join(" ");
+}
+
+function normalizeNextPrompt(value, name, label) {
+  const prompt = requireText(value, label);
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  if (!new RegExp(`^use\\s+/${escapedName}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
+    throw new Error(`${label} must explicitly invoke /${name} as its first action.`);
+  }
+
+  return prompt;
+}
+
+function normalizeNextPromptModel(candidate, name, context, index) {
+  let guidance = MODEL_GUIDANCE_BY_NAME[name] ?? {
+    model: "gpt-5.6-terra",
+    thinking: "medium",
+    reason: "A general-purpose starting point for an independently reported follow-on.",
+  };
+
+  if (context.status !== "Preview") {
+    if (context.findings.some((finding) => finding.priority === "P0")) {
+      guidance = {
+        model: "gpt-5.6-sol",
+        thinking: "xhigh",
+        reason: "A recorded P0 finding warrants deeper reasoning for the next action.",
+      };
+    } else if (
+      context.findings.some((finding) => finding.priority === "P1")
+      || context.checks.some((check) => check.status === "failed")
+    ) {
+      const hasFailure = context.checks.some((check) => check.status === "failed");
+
+      guidance = {
+        model: "gpt-5.6-sol",
+        thinking: ["xhigh", "max", "ultra"].includes(guidance.thinking)
+          ? guidance.thinking
+          : "high",
+        reason: hasFailure
+          ? "A recorded failed check warrants deeper reasoning for the next action."
+          : "A recorded P1 finding warrants deeper reasoning for the next action.",
+      };
+    }
+  }
+
+  const model = candidate.model === undefined
+    ? guidance.model
+    : requireText(candidate.model, `nextSkills[${index}].model`);
+
+  if (!/^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,126}$/.test(model)) {
+    throw new Error(`nextSkills[${index}].model must be a safe model identifier.`);
+  }
+
+  const thinking = candidate.thinking === undefined
+    ? guidance.thinking
+    : candidate.thinking;
+
+  if (!suggestedThinkingLevels.has(thinking)) {
+    throw new Error(`nextSkills[${index}].thinking must be a supported thinking level.`);
+  }
+
+  const customized = candidate.model !== undefined || candidate.thinking !== undefined;
+
+  return {
+    model,
+    thinking,
+    modelReason: candidate.modelReason === undefined
+      ? customized
+        ? "A manually selected heuristic; no comparative performance or quality is implied."
+        : guidance.reason
+      : requireText(candidate.modelReason, `nextSkills[${index}].modelReason`),
+    modelSource: "heuristic",
+  };
+}
+
+function normalizeRecommendations(skill, recommendations, context) {
   const allowed = NEXT_SKILLS_BY_NAME[skill.name];
   const selected = recommendations === undefined ? allowed : recommendations;
 
@@ -1142,11 +1269,17 @@ function normalizeRecommendations(skill, recommendations) {
     if (unique.has(name)) throw new Error(`/${name} appears more than once in nextSkills.`);
     unique.add(name);
 
+    const reason = candidate.reason === undefined
+      ? catalogRecommendation.reason
+      : requireText(candidate.reason, `nextSkills[${index}].reason`);
+
     return {
       name,
-      reason: candidate.reason === undefined
-        ? catalogRecommendation.reason
-        : requireText(candidate.reason, `nextSkills[${index}].reason`),
+      reason,
+      prompt: candidate.prompt === undefined
+        ? createNextPrompt(name, context, reason)
+        : normalizeNextPrompt(candidate.prompt, name, `nextSkills[${index}].prompt`),
+      ...normalizeNextPromptModel(candidate, name, context, index),
     };
   });
 }
@@ -1232,10 +1365,12 @@ export function normalizeSkillReadout(input) {
     throw new Error("A catalog preview cannot claim actual decisions, outputs, or validation results.");
   }
 
+  const outcome = requireText(input.outcome, "outcome");
+
   return {
     skill,
     status,
-    outcome: requireText(input.outcome, "outcome"),
+    outcome,
     project: input.project === undefined
       ? projectIdentity?.label ?? ""
       : requireText(input.project, "project"),
@@ -1252,7 +1387,14 @@ export function normalizeSkillReadout(input) {
     producer,
     provenance,
     relationships,
-    nextSkills: normalizeRecommendations(skill, input.nextSkills),
+    nextSkills: normalizeRecommendations(skill, input.nextSkills, {
+      status,
+      outcome,
+      findings,
+      decisions,
+      outputs,
+      checks,
+    }),
     generatedAt,
   };
 }
@@ -1708,17 +1850,19 @@ function renderDeliveryEvidence(report) {
 const reportStyles = `
   :root{color-scheme:light;--ink:#172033;--muted:#64748b;--paper:#f5f6fa;--card:#fff;--line:#e6e8ee;--accent:#2563eb;--soft:#dbeafe}
   *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}main{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:48px 0 72px}.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:750;letter-spacing:.02em}.brand-mark{display:grid;width:34px;height:34px;place-items:center;border-radius:11px;background:#172033;color:#fff;font-weight:850}.eyebrow{margin:0;color:var(--muted);font-size:11px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}.timestamp{color:var(--muted);font-size:12px}.hero{position:relative;overflow:hidden;padding:38px;border:1px solid var(--line);border-radius:24px;background:var(--card)}.hero::before{position:absolute;inset:0 0 auto;height:4px;background:var(--accent);content:""}.hero-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.hero h1{margin:12px 0 8px;font-size:clamp(32px,6vw,55px);font-weight:770;letter-spacing:-.07em;line-height:1.03}.skill-command{display:inline-block;margin-top:7px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.status{flex-shrink:0;border-radius:999px;padding:9px 13px;background:var(--soft);color:var(--accent);font-size:12px;font-weight:750}.status-blocked{background:#fee2e2;color:#b91c1c}.status-awaiting-input{background:#fef3c7;color:#a16207}.status-preview{background:#e9edf3;color:#475569}.outcome{max-width:72ch;margin:25px 0 0;color:#334155;font-size:17px;line-height:1.7}.preview-note{margin-top:18px;border:1px solid #dbe2eb;border-radius:13px;padding:12px 15px;background:#f8fafc;color:#475569;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:21px}.metric{border:1px solid var(--line);border-radius:15px;padding:15px;background:var(--card)}.metric-label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.metric-value{display:block;margin-top:9px;font-size:25px;font-weight:770;letter-spacing:-.04em}.section{margin-top:34px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section-heading h2{margin:6px 0 0;font-size:23px;font-weight:720;letter-spacing:-.04em}.section-count{display:grid;width:31px;height:31px;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;font-weight:700}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-card{min-width:0;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card)}.detail-heading{display:flex;align-items:center;gap:9px}.detail-heading h3{flex:1;min-width:0;margin:0;overflow-wrap:anywhere;font-size:14px;font-weight:700}.detail-card p{margin:10px 0 0;overflow-wrap:anywhere;color:#526077;font-size:13px;line-height:1.7;white-space:pre-wrap}.item-link{flex-shrink:0;color:var(--accent);font-size:12px;font-weight:700;text-decoration:none}.check-badge{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:750;text-transform:uppercase}.check-passed{background:#dcfce7;color:#15803d}.check-failed{background:#fee2e2;color:#b91c1c}.check-skipped{background:#f1f5f9;color:#475569}.check-info{background:#dbeafe;color:#1d4ed8}.skills-used{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.skill-chip{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}.next-card{display:block;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);text-decoration:none}.next-card:first-child{border-color:var(--accent)}.next-card .eyebrow{color:var(--accent)}.next-card h3{margin:10px 0 7px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}.next-card p:last-child{margin:0;color:#526077;font-size:13px;line-height:1.7}.empty-next{border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);color:#526077;font-size:13px}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:39px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.dashboard-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:22px}.dashboard-card{display:block;border:1px solid var(--line);border-radius:17px;padding:18px;background:var(--card);text-decoration:none}.dashboard-card:hover{border-color:var(--accent)}.dashboard-card h2{margin:10px 0 7px;font-size:17px;letter-spacing:-.03em}.dashboard-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.dashboard-card .status{display:inline-block;margin-top:12px}.empty-gallery{margin-top:22px;border:1px dashed var(--line);border-radius:16px;padding:22px;color:var(--muted);background:var(--card)}
+  .next-prompt-block{margin:11px 0 0;overflow-wrap:anywhere;border:1px solid #24334a;border-left:3px solid var(--accent);border-radius:11px;padding:14px 15px;background:#172033;color:#f8fafc;line-height:1.75;white-space:pre-wrap;word-break:break-word}.next-prompt-block code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}.next-card .next-reason{margin:9px 0 0;color:var(--muted);font-size:12px;line-height:1.6}.next-model-callout{display:grid;gap:5px;margin-top:11px;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:#f8fafc}.next-model-label{color:var(--muted);font-size:11px;font-weight:600}.next-model-label strong{color:#475569;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.next-model-callout .next-model-reason{margin:3px 0 0;color:var(--muted);font-size:11px;line-height:1.6}
   .compact-readout{width:min(900px,calc(100% - 36px));padding:29px 0 43px}.compact-readout .topline{margin-bottom:16px}.compact-readout .hero{padding:23px 25px;border-radius:19px}.compact-readout .hero h1{margin:7px 0 3px;font-size:clamp(26px,5vw,39px);letter-spacing:-.055em}.compact-readout .outcome{margin:14px 0 0;font-size:14px;line-height:1.6}.compact-readout .skills-used{gap:6px;margin-top:10px}.compact-readout .skill-chip{padding:5px 8px;font-size:10px}.profile-title{margin:7px 0 0;color:var(--accent);font-size:12px;font-weight:730}.compact-readout .metrics{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:12px}.compact-readout .metric{border-radius:12px;padding:11px 12px}.compact-readout .metric-label{font-size:10px}.compact-readout .metric-value{margin-top:4px;font-size:19px}.compact-readout .section{margin-top:19px}.compact-readout .section-heading{margin-bottom:9px}.compact-readout .section-heading h2{margin-top:4px;font-size:18px}.compact-readout .section-count{width:26px;height:26px;border-radius:8px;font-size:11px}.compact-readout .detail-grid{gap:9px}.compact-readout .detail-card{border-radius:12px;padding:12px}.compact-readout .detail-card p{margin-top:6px;font-size:12px;line-height:1.55}.compact-readout .footer{margin-top:23px;padding-top:12px}.compact-readout .next-grid{gap:9px}.compact-readout .next-card{border-radius:12px;padding:12px}.compact-readout .next-card h3{margin:7px 0 5px;font-size:12px}.compact-readout .next-card p:last-child{font-size:12px}.signal-panel{margin:13px 0 0;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}.signal-panel figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.signal-caption{color:var(--muted);font-size:10px}.signal-svg{display:block;width:100%;max-width:760px;height:auto}.signal-checks,.signal-brief{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.signal-check,.signal-brief-item{display:grid;grid-template-columns:8px 1fr;align-items:center;column-gap:8px;row-gap:3px;min-height:46px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.signal-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.signal-check strong,.signal-brief-item strong{font-size:12px}.signal-check>span:last-child,.signal-brief-item>span:last-child{grid-column:2;color:var(--muted);font-size:10px}.signal-check-passed .signal-dot{background:#16a34a}.signal-check-failed .signal-dot{background:#dc2626}.signal-check-skipped .signal-dot{background:#94a3b8}.signal-matrix{width:100%;border-collapse:collapse;text-align:left;font-size:12px}.signal-matrix caption{margin-bottom:7px;color:var(--muted);text-align:left;font-size:10px}.signal-matrix th,.signal-matrix td{border-top:1px solid var(--line);padding:8px 7px}.signal-matrix thead th{border-top:0;color:var(--muted);font-size:10px;font-weight:700}.signal-matrix tbody th{font-weight:650}.matrix-kind{color:var(--muted);font-size:10px}
   .gallery-nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}.gallery-nav a,.preview-toggle{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--card);font-size:12px;font-weight:700;text-decoration:none}.gallery-nav a[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:15px}.project-card{min-width:0;border:1px solid var(--line);border-radius:19px;padding:20px;background:var(--card)}.project-card.current{border-color:var(--accent)}.project-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.project-title{display:block;margin:9px 0 5px;overflow-wrap:anywhere;font-size:19px;font-weight:750;letter-spacing:-.04em;text-decoration:none}.project-meta{color:var(--muted);font-size:12px}.current-project{border-radius:999px;padding:6px 9px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:800;white-space:nowrap}.report-list{display:grid;gap:10px;margin-top:15px}.report-row{display:block;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff;text-decoration:none}.report-row:hover,.project-title:hover{border-color:var(--accent);color:var(--accent)}.report-row-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.report-row-title{font-size:13px;font-weight:720}.report-row .status{padding:5px 8px;font-size:10px}.report-outcome{margin:8px 0 0;color:#526077;font-size:12px;line-height:1.6}.report-time{display:block;margin-top:7px;color:var(--muted);font-size:11px}.explorer{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:16px}.explorer-sidebar,.explorer-content{min-width:0;border:1px solid var(--line);border-radius:18px;padding:17px;background:var(--card)}.sidebar-list{display:grid;gap:7px;margin-top:12px}.sidebar-project{display:block;border:1px solid transparent;border-radius:11px;padding:11px;color:var(--muted);font-size:12px;font-weight:650;text-decoration:none;overflow-wrap:anywhere}.sidebar-project[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.search-form{display:flex;gap:8px;margin:15px 0}.search-input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font:inherit;font-size:13px}.search-submit{border:1px solid var(--accent);border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font:inherit;font-size:12px;font-weight:700}.timeline-day{margin-top:23px}.timeline-day h2{margin:0 0 12px;font-size:15px;letter-spacing:-.02em}.timeline-day .report-list{margin-top:0}.legacy-note{margin:15px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
   .report-profile{display:inline-block;margin-top:6px;border-radius:999px;padding:3px 7px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:700}
   .workbench-page{width:min(1480px,calc(100% - 40px));padding:20px 0 30px}.workbench-masthead{display:flex;min-height:48px;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:13px}.workbench-brand{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:760;text-decoration:none}.workbench-brand>span:last-child>span,.workbench-private{color:var(--muted);font-size:11px;font-weight:550}.workbench-brand-mark{display:grid;width:29px;height:29px;place-items:center;border-radius:8px;background:#163a2a;color:#fff;font-weight:850}.workbench-page .gallery-nav{margin:13px 0}.workbench-page .gallery-nav a,.workbench-page .preview-toggle{padding:6px 10px;font-size:11px}
-  .workbench-shell{display:grid;min-height:490px;grid-template-columns:minmax(185px,230px) minmax(280px,1fr) minmax(260px,335px);overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--card)}.workbench-sidebar{min-width:0;border-right:1px solid var(--line);padding:17px 10px}.workbench-rail-heading{margin:0 0 10px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.workbench-projects{display:grid;align-content:start;gap:5px}.workbench-project{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 7px;border:1px solid transparent;border-radius:9px;padding:9px;text-decoration:none}.workbench-project:hover,.workbench-project.is-selected{border-color:var(--line);background:var(--soft)}.workbench-project-title{overflow-wrap:anywhere;font-size:11px;font-weight:690}.workbench-project-count{color:var(--muted);font-size:11px}.workbench-current{grid-column:1/-1;color:var(--accent);font-size:9px;font-weight:750;text-transform:uppercase}.workbench-project-outcome,.workbench-project-profile{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
+  .workbench-shell{display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);min-height:min(680px,calc(100dvh - 150px));max-height:min(860px,calc(100dvh - 110px));margin-top:16px;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--card)}.workbench-sidebar{grid-column:1;grid-row:1/-1;min-width:0;overflow-y:auto;border-right:1px solid var(--line);padding:17px 12px}.workbench-rail-heading{margin:0 0 10px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.workbench-projects{display:grid;align-content:start;gap:9px}.workbench-project{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 7px;border:1px solid transparent;border-radius:9px;padding:10px;text-decoration:none}.workbench-project:hover,.workbench-project.is-selected{border-color:var(--line);background:var(--soft)}.workbench-project-title{overflow-wrap:anywhere;font-size:12px;font-weight:690}.workbench-project-count{color:var(--muted);font-size:11px}.workbench-current{grid-column:1/-1;color:var(--accent);font-size:9px;font-weight:750;text-transform:uppercase}.workbench-project-outcome,.workbench-project-profile{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
   .workbench-workspace{min-width:0;padding:18px 16px}.workbench-workspace-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.workbench-workspace-heading h1{margin:2px 0 4px;font-size:25px;font-weight:750;letter-spacing:-.06em}.workbench-scope{margin:0;color:var(--muted);font-size:11px}.workbench-run-count{flex-shrink:0;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--muted);font-size:10px}.workbench-runs{display:grid;align-content:start}.workbench-run{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 9px;border-bottom:1px solid var(--line);padding:11px 9px;text-decoration:none}.workbench-run:hover,.workbench-run.is-selected{background:var(--soft)}.workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-run-title{display:grid;min-width:0;gap:3px}.workbench-run-title strong{overflow:hidden;font-size:11px;font-weight:730;text-overflow:ellipsis;white-space:nowrap}.workbench-run-title>span,.workbench-run-time{color:var(--muted);font-size:10px}.workbench-run-outcome{grid-column:1/-1;overflow:hidden;color:#465366;font-size:11px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}.workbench-run-time{grid-column:1/-1}.workbench-status{display:inline-flex;align-items:center;gap:5px;align-self:start;color:#15803d;font-size:10px;font-weight:670}.workbench-status-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.workbench-status-blocked{color:#b91c1c}.workbench-status-awaiting-input{color:#a16207}.workbench-status-preview{color:#64748b}
   .workbench-detail{min-width:0;border-left:1px solid var(--line);padding:17px 14px}.workbench-detail-top{display:flex;align-items:center;justify-content:space-between;gap:9px}.workbench-readonly{color:var(--muted);font-size:10px}.workbench-detail-title{margin:16px 0 4px;overflow-wrap:anywhere;font-size:20px;font-weight:740;letter-spacing:-.055em}.workbench-detail-profile{margin:0;color:var(--muted);font-size:11px}.workbench-open-report{display:inline-flex;align-items:center;gap:5px;margin-top:13px;color:var(--accent);font-size:11px;font-weight:690;text-decoration:none}.workbench-detail-section{margin-top:19px;border-top:1px solid var(--line);padding-top:12px}.workbench-detail-section h3{margin:0;font-size:12px;font-weight:710}.workbench-detail-section>p{margin:9px 0 0;overflow-wrap:anywhere;color:#465366;font-size:12px;line-height:1.7}.workbench-evidence{display:grid;grid-template-columns:minmax(86px,1fr) minmax(95px,1fr);gap:0;margin:10px 0 0}.workbench-evidence dt,.workbench-evidence dd{min-width:0;margin:0;border-bottom:1px solid var(--line);padding:8px 0;font-size:10px}.workbench-evidence dt{color:var(--muted)}.workbench-evidence dd{overflow-wrap:anywhere;font-weight:600}.workbench-empty-note,.workbench-detail-empty{color:var(--muted);font-size:11px;line-height:1.65}.workbench-detail-empty h2{color:var(--ink);font-size:15px}.workbench-footer{display:flex;justify-content:space-between;gap:12px;margin-top:15px;color:var(--muted);font-size:10px}
   .workbench-run-observation{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}
   .workbench-projects .project-card{min-width:0;border:0;border-radius:0;padding:0;background:transparent}
-  @media(max-width:980px){.workbench-shell{grid-template-columns:minmax(170px,205px) minmax(0,1fr)}.workbench-detail{grid-column:1/-1;border-top:1px solid var(--line);border-left:0}.workbench-workspace{padding:15px 12px}}
-  @media(max-width:620px){.workbench-page{width:calc(100% - 24px);padding-top:12px}.workbench-masthead{flex-wrap:wrap}.workbench-shell{grid-template-columns:1fr}.workbench-sidebar{border-right:0;border-bottom:1px solid var(--line)}.workbench-projects{display:flex;overflow-x:auto}.workbench-project{min-width:175px}.workbench-workspace-heading{flex-wrap:wrap}.workbench-footer{flex-direction:column}}
+  .workbench-workspace{grid-column:2;grid-row:1;border-bottom:1px solid var(--line);padding:19px 24px}.workbench-workspace-heading{margin-bottom:0}.workbench-detail{grid-column:2;grid-row:2;overflow-y:auto;border-left:0;padding:22px 24px 32px}.workbench-detail-title{font-size:clamp(24px,4vw,34px)}.workbench-project-runs{display:grid;align-content:start;margin:5px 0 4px 9px;border-left:1px solid var(--line)}.workbench-project-runs .workbench-run{border-bottom:0;border-radius:0 8px 8px 0;padding:10px 9px}.workbench-project-runs .workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-projects .search-form{gap:5px;margin:9px 0 5px}.workbench-projects .search-input{padding:8px 9px;font-size:11px}.workbench-projects .search-submit{padding:8px 9px;font-size:10px}.workbench-sidebar-footer{margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}.workbench-sidebar-footer .preview-toggle{display:inline-flex}.workbench-readout-document{min-width:0;margin-top:23px}.workbench-readout-document .section{margin-top:23px}.workbench-readout-document .detail-card,.workbench-readout-document .next-card{min-width:0}.workbench-readout-document .next-grid{grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr))}
+  @media(max-width:980px){.workbench-shell{grid-template-columns:minmax(200px,240px) minmax(0,1fr)}.workbench-workspace{padding:15px 16px}.workbench-detail{grid-column:2;grid-row:2;padding:18px 16px 25px}}
+  @media(max-width:620px){.workbench-page{width:calc(100% - 24px);padding-top:12px}.workbench-masthead{flex-wrap:wrap}.workbench-shell{grid-template-columns:1fr;grid-template-rows:auto auto auto;min-height:0;max-height:none}.workbench-sidebar{grid-column:1;grid-row:1;max-height:200px;overflow-y:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px}.workbench-projects{display:grid;gap:6px}.workbench-project{min-width:0}.workbench-workspace{grid-column:1;grid-row:2;padding:13px 12px}.workbench-workspace-heading{flex-wrap:wrap}.workbench-detail{grid-column:1;grid-row:3;overflow:visible;padding:16px 12px 24px}.workbench-detail-title{margin-top:11px}.workbench-footer{flex-direction:column}}
   .priority-badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:780}.priority-p0,.priority-p1{background:#fee2e2;color:#b91c1c}.priority-p2{background:#fef3c7;color:#a16207}.priority-p3{background:#dbeafe;color:#1d4ed8}.matrix-evidence{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:450;overflow-wrap:anywhere}.signal-matrix+.signal-matrix{margin-top:13px}
   @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.explorer{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
 `;
@@ -1746,6 +1890,10 @@ function formatTimestamp(date) {
     timeStyle: "short",
     timeZone: "UTC",
   }).format(date)} UTC`;
+}
+
+function renderNextPromptCard(item, label) {
+  return `<article class="next-card"><p class="eyebrow">${escapeHtml(label)}</p><h3>/${escapeHtml(item.name)}</h3><pre class="next-prompt-block"><code>${escapeHtml(item.prompt)}</code></pre>${item.reason ? `<p class="next-reason">${escapeHtml(item.reason)}</p>` : ""}<aside class="next-model-callout" aria-label="Heuristic model and thinking guidance"><span class="next-model-label">Suggested model <strong>${escapeHtml(item.model)}</strong></span><span class="next-model-label">Suggested thinking <strong>${escapeHtml(item.thinking)}</strong></span><p class="next-model-reason">Heuristic suggestion · ${escapeHtml(item.modelReason)} Choosing it does not change the active model or thinking level.</p></aside></article>`;
 }
 
 export function renderSkillReadout(input) {
@@ -1838,7 +1986,10 @@ function renderNormalizedSkillReadout(report) {
     )).join("\n  ");
 
   const next = report.nextSkills.length
-    ? `<div class="next-grid">${report.nextSkills.map((item, index) => `<article class="next-card"><p class="eyebrow">${index === 0 ? "Recommended next" : "Alternative"}</p><h3>/${escapeHtml(item.name)}</h3><p>${escapeHtml(item.reason)}</p></article>`).join("")}</div>`
+    ? `<div class="next-grid">${report.nextSkills.map((item, index) => renderNextPromptCard(
+      item,
+      index === 0 ? "Top next prompt" : "Alternative prompt",
+    )).join("")}</div>`
     : '<div class="empty-next">None — the requested work is complete.</div>';
 
   const body = `<main class="compact-readout">
@@ -1851,7 +2002,7 @@ function renderNormalizedSkillReadout(report) {
   ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
   ${visualization}
   ${sections}
-  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the work</p><h2>Next best skills</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
+  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Top next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
   <footer class="footer"><span>Generated by ${escapeHtml(COLLECTION_NAME)}</span><span>Self-contained HTML · no external scripts or styles</span></footer>
 </main>`;
 
@@ -1997,6 +2148,7 @@ export function normalizeExternalSkillReadout(input) {
     throw new Error("External producer claims cannot be treated as independently verified delivery evidence.");
   }
 
+  const outcome = requireText(input.outcome, "External skill outcome");
   const selected = input.nextSkills ?? [];
 
   if (!Array.isArray(selected) || selected.length > 3) {
@@ -2016,11 +2168,31 @@ export function normalizeExternalSkillReadout(input) {
       throw new Error(`nextSkills[${index}].name must use a safe external skill identifier.`);
     }
 
+    const reason = candidate.reason === undefined
+      ? undefined
+      : requireText(candidate.reason, `nextSkills[${index}].reason`);
+
     return {
       name: nextName,
-      ...(candidate.reason === undefined ? {} : {
-        reason: requireText(candidate.reason, `nextSkills[${index}].reason`),
-      }),
+      ...(reason === undefined ? {} : { reason }),
+      prompt: candidate.prompt === undefined
+        ? createNextPrompt(nextName, {
+          status,
+          outcome,
+          findings,
+          decisions,
+          outputs,
+          checks,
+        }, reason)
+        : normalizeNextPrompt(candidate.prompt, nextName, `nextSkills[${index}].prompt`),
+      ...normalizeNextPromptModel(candidate, nextName, {
+        status,
+        outcome,
+        findings,
+        decisions,
+        outputs,
+        checks,
+      }, index),
     };
   });
 
@@ -2036,7 +2208,7 @@ export function normalizeExternalSkillReadout(input) {
         : requireText(input.displayName, "External skill display name"),
     },
     status,
-    outcome: requireText(input.outcome, "External skill outcome"),
+    outcome,
     projectIdentity: normalizeProjectIdentity(input.projectIdentity),
     reportId,
     formatVersion: READOUT_FORMAT_VERSION,
@@ -2076,7 +2248,10 @@ export function renderExternalSkillReadout(input) {
   ].join("\n  ");
   const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
   const next = report.nextSkills.length
-    ? `<div class="next-grid">${report.nextSkills.map((item) => `<article class="next-card"><p class="eyebrow">Producer recommendation</p><h3>/${escapeHtml(item.name)}</h3>${item.reason ? `<p>${escapeHtml(item.reason)}</p>` : ""}</article>`).join("")}</div>`
+    ? `<div class="next-grid">${report.nextSkills.map((item) => renderNextPromptCard(
+      item,
+      "Producer-reported prompt",
+    )).join("")}</div>`
     : '<div class="empty-next">None — no external follow-on was recorded.</div>';
   const sections = [
     renderSection("Observed findings", readoutSectionDescriptions.findings, report.findings),
@@ -2091,7 +2266,7 @@ export function renderExternalSkillReadout(input) {
   ${renderIndependentQuality(report.observation)}
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Verified submission identity</p><h2>Producer and harness</h2></div></div><div class="detail-grid"><article class="detail-card"><div class="detail-heading"><h3>Producer</h3></div><p>${escapeHtml(report.producer.producer)}</p></article><article class="detail-card"><div class="detail-heading"><h3>Harness</h3></div><p>${escapeHtml(report.producer.harness.name)}${report.producer.harness.version ? ` · ${escapeHtml(report.producer.harness.version)}` : ""}</p></article><article class="detail-card"><div class="detail-heading"><h3>Skill collection</h3></div><p>${escapeHtml(report.producer.collection)}</p></article></div></section>
   ${sections}
-  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the work</p><h2>Producer-reported next skills</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
+  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Producer-reported next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
   <footer class="footer"><span>Authorized external skill readout</span><span>Self-contained HTML · no external scripts or styles</span></footer>
 </main>`;
 
@@ -2333,6 +2508,7 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
       reports.push({
         filename: entry.name,
         relativePath: relative(directory, path).split(sep).join("/"),
+        document: html,
         skill,
         status,
         generatedAt,
@@ -2510,12 +2686,14 @@ export async function pruneReadouts(options = {}) {
   };
 }
 
-function galleryHref(view, { project, query, previews, report } = {}) {
+function galleryHref(view, { project, query, skill, status, previews, report } = {}) {
   const parameters = new URLSearchParams();
 
   if (view !== "projects") parameters.set("view", view);
   if (project) parameters.set("project", project);
   if (query) parameters.set("q", query);
+  if (skill) parameters.set("skill", skill);
+  if (status) parameters.set("status", status);
   if (previews) parameters.set("previews", "1");
   if (report) parameters.set("report", report);
 
@@ -2647,7 +2825,34 @@ function renderWorkbenchObservationDetail(report) {
   return `<section class="workbench-detail-section" aria-label="${escapeHtml(title)}"><h3>${escapeHtml(title)}</h3><dl class="workbench-evidence">${renderValues(measurement)}</dl></section><section class="workbench-detail-section" aria-label="Independent quality evidence"><h3>Independent quality evidence</h3><dl class="workbench-evidence">${renderValues(evidence)}</dl></section>`;
 }
 
-function renderWorkbenchProjects(projects, { activeProject, selectedProject, previews }) {
+function matchingWorkbenchRuns(project, query = "", { skill = "", status = "" } = {}) {
+  if (!project) return [];
+
+  const search = query.trim().toLowerCase();
+
+  return project.reports.filter((report) =>
+    (!skill || report.skill.name === skill)
+    && (!status || report.status === status)
+    && (!search || [
+      project.key,
+      project.label,
+      report.skill.name,
+      report.skill.displayName,
+      report.profileTitle,
+      report.outcome,
+      report.status,
+    ].filter(Boolean).some((value) => value.toLowerCase().includes(search))));
+}
+
+function renderWorkbenchProjects(projects, {
+  activeProject,
+  selectedProject,
+  selectedReport,
+  query = "",
+  skill = "",
+  status = "",
+  previews,
+}) {
   if (projects.length === 0) {
     return '<p class="workbench-empty-note">No verified project reports are available.</p>';
   }
@@ -2655,32 +2860,285 @@ function renderWorkbenchProjects(projects, { activeProject, selectedProject, pre
   return projects.map((project) => {
     const selected = project.key === selectedProject;
     const actualCount = project.reports.filter((report) => report.status !== "Preview").length;
-    const latest = project.reports[0];
+    const filtered = Boolean(query.trim() || skill || status);
+    const latest = selected && filtered
+      ? selectedReport ?? project.reports[0]
+      : project.reports[0];
+    const latestReportAttribute = selected || !filtered
+      ? ` data-latest-report="${escapeHtml(latest.relativePath)}"`
+      : "";
     const current = project.key === activeProject;
     const currentBadge = current
       ? '<span class="workbench-current">Current project</span>'
       : "";
-    const latestOutcome = selected
+    const projectSummary = selected || current
       ? ""
-      : `<span class="workbench-project-outcome">${escapeHtml(latest.outcome)}</span>`;
+      : `<span class="workbench-project-outcome">${escapeHtml(latest.outcome)}</span>${latest.profileTitle ? `<span class="workbench-project-profile">${escapeHtml(latest.profileTitle)}</span>` : ""}`;
+    const searchForm = selected
+      ? `<form class="search-form" method="get"><input type="hidden" name="project" value="${escapeHtml(project.key)}">${skill ? `<input type="hidden" name="skill" value="${escapeHtml(skill)}">` : ""}${status ? `<input type="hidden" name="status" value="${escapeHtml(status)}">` : ""}${previews ? '<input type="hidden" name="previews" value="1">' : ""}<input class="search-input" type="search" name="q" value="${escapeHtml(query)}" placeholder="Search selected project reports" aria-label="Search selected project reports"><button class="search-submit" type="submit">Search</button></form>`
+      : "";
+    const nestedRuns = selected
+      ? `<nav class="workbench-project-runs" aria-label="Recorded skill runs">${renderWorkbenchRuns(project, selectedReport, { previews, query, skill, status })}</nav>`
+      : "";
 
-    return `<article class="project-card${current ? " current" : ""}" data-project="${escapeHtml(project.key)}"><a class="workbench-project${selected ? " is-selected" : ""}"${selected ? ' aria-current="page"' : ""} data-latest-report="${escapeHtml(latest.relativePath)}" href="${galleryHref("projects", { project: project.key, previews })}"><span class="workbench-project-title">${escapeHtml(project.label)}</span><span class="workbench-project-count">${actualCount}</span>${currentBadge}${latestOutcome}${latest.profileTitle ? `<span class="workbench-project-profile">${escapeHtml(latest.profileTitle)}</span>` : ""}</a></article>`;
+    return `<article class="project-card${current ? " current" : ""}" data-project="${escapeHtml(project.key)}"><a class="workbench-project${selected ? " is-selected" : ""}"${selected ? ' aria-current="page"' : ""}${latestReportAttribute} href="${galleryHref("projects", { project: project.key, previews })}"><span class="workbench-project-title">${escapeHtml(project.label)}</span><span class="workbench-project-count">${actualCount}</span>${currentBadge}${projectSummary}</a>${searchForm}${nestedRuns}</article>`;
   }).join("");
 }
 
-function renderWorkbenchRuns(project, selectedReport, { previews }) {
+function renderWorkbenchRuns(project, selectedReport, {
+  previews,
+  query = "",
+  skill = "",
+  status = "",
+}) {
   if (!project || project.reports.length === 0) {
     return '<p class="workbench-empty-note">No actual skill readouts are available for this verified project.</p>';
   }
 
-  return project.reports.map((report) => {
+  const reports = matchingWorkbenchRuns(project, query, { skill, status });
+
+  if (reports.length === 0) {
+    return `<p class="workbench-empty-note">No actual skill readouts match this project search. <a href="${galleryHref("projects", { project: project.key, previews })}">Clear search</a></p>`;
+  }
+
+  return reports.map((report) => {
     const selected = report.relativePath === selectedReport?.relativePath;
     const outcome = selected
       ? ""
       : `<span class="workbench-run-outcome">${escapeHtml(report.outcome)}</span>`;
 
-    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${galleryHref("projects", { project: project.key, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${renderWorkbenchObservationSummary(report)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
+    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${galleryHref("projects", { project: project.key, query, skill, status, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${renderWorkbenchObservationSummary(report)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
   }).join("");
+}
+
+const safeStoredReadoutElements = new Set([
+  "a", "article", "aside", "br", "caption", "circle", "code", "dd", "defs",
+  "desc", "div", "dl", "dt", "em", "figcaption", "figure", "g", "h2", "h3",
+  "h4", "hr", "li", "line", "marker", "ol", "p", "path", "polygon", "polyline",
+  "pre", "rect", "section", "small", "span", "strong", "svg", "table", "tbody",
+  "td", "text", "th", "thead", "time", "title", "tr", "ul",
+]);
+const safeStoredReadoutAttributes = new Set([
+  "class", "cx", "cy", "d", "datetime", "fill", "fill-opacity", "font-size",
+  "font-weight", "height", "href", "id", "opacity", "points", "preserveaspectratio",
+  "r", "rel", "role", "rx", "ry", "scope", "stroke", "stroke-dasharray",
+  "stroke-linecap", "stroke-opacity", "stroke-width", "tabindex", "text-anchor",
+  "title", "transform", "viewbox", "width", "x", "x1", "x2", "y", "y1", "y2",
+]);
+const voidStoredReadoutElements = new Set(["br", "hr"]);
+const safeStoredReadoutRoots = new Map([
+  ["section", "section"],
+  ["div", "metrics"],
+  ["figure", "signal-panel"],
+]);
+
+function allowedStoredReadoutSections(report) {
+  const headings = new Set([
+    "Execution context",
+    "Observed skill run",
+    "Observed thread-turn context",
+    "Observed thread-cumulative context",
+    "Independent quality evidence",
+    "Verified delivery evidence",
+    "Catalog information",
+    "Top next prompts",
+    "Next best skills",
+  ]);
+  const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+
+  if (profile) {
+    for (const section of profile.sections) {
+      headings.add(profile.labels[section] ?? readoutSectionLabels[section]);
+    }
+  } else {
+    for (const heading of [
+      "Producer and harness",
+      "Observed findings",
+      "Recorded decisions",
+      "Actual outputs",
+      "Observed checks",
+      "Producer-reported next prompts",
+      "Producer-reported next skills",
+    ]) headings.add(heading);
+  }
+
+  return headings;
+}
+
+function decodeStoredReadoutAttribute(value) {
+  return decodeHtml(value).replace(/&#(x[0-9a-f]+|[0-9]+);/gi, (_, encoded) => {
+    const codePoint = encoded[0].toLowerCase() === "x"
+      ? Number.parseInt(encoded.slice(1), 16)
+      : Number.parseInt(encoded, 10);
+
+    return codePoint > 0 && codePoint <= 0x10ffff
+      ? String.fromCodePoint(codePoint)
+      : "\uFFFD";
+  });
+}
+
+function renderSafeStoredReadoutMarkup(content, report) {
+  const tokenPattern = /<(?:[^"'<>]|"[^"]*"|'[^']*')*>/g;
+  const attributePattern = /\s+([a-z_:][a-z0-9_:.-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/giy;
+  const allowedSections = allowedStoredReadoutSections(report);
+  const observedSections = new Set();
+  const openElements = [];
+  const fragments = [];
+  let cursor = 0;
+  let rootStart = 0;
+
+  for (const token of content.matchAll(tokenPattern)) {
+    const text = content.slice(cursor, token.index);
+
+    if (text.includes("<") || (openElements.length === 0 && text.trim())) return null;
+
+    fragments.push(text);
+
+    const closing = token[0].match(/^<\/\s*([a-z][a-z0-9:-]*)\s*>$/i);
+
+    if (closing) {
+      const name = closing[1].toLowerCase();
+
+      if (openElements.at(-1) !== name) return null;
+
+      openElements.pop();
+      fragments.push(`</${name === "aside" ? "div" : name}>`);
+
+      if (openElements.length === 0 && name === "section") {
+        const rendered = fragments.slice(rootStart).join("");
+        const heading = rendered.match(/<h2\b[^>]*>([^<]*)<\/h2>/i);
+        const title = heading ? decodeHtml(heading[1]) : "";
+
+        if (!allowedSections.has(title) || observedSections.has(title)) return null;
+
+        observedSections.add(title);
+      }
+
+      cursor = token.index + token[0].length;
+      continue;
+    }
+
+    const opening = token[0].match(/^<([a-z][a-z0-9:-]*)([\s\S]*?)>$/i);
+
+    if (!opening) return null;
+
+    const name = opening[1].toLowerCase();
+
+    if (!safeStoredReadoutElements.has(name)) return null;
+
+    const root = openElements.length === 0;
+
+    if (name === "section" && !root) return null;
+
+    let source = opening[2];
+    const selfClosing = /\/\s*$/.test(source);
+
+    if (selfClosing) source = source.replace(/\/\s*$/, "");
+
+    attributePattern.lastIndex = 0;
+    let attributeCursor = 0;
+    let renderedAttributes = "";
+    let rootClass = "";
+    let rootAttributeCount = 0;
+
+    while (attributeCursor < source.length) {
+      if (/^\s*$/.test(source.slice(attributeCursor))) break;
+
+      attributePattern.lastIndex = attributeCursor;
+      const attribute = attributePattern.exec(source);
+
+      if (!attribute || attribute.index !== attributeCursor) return null;
+
+      const originalName = attribute[1];
+      const attributeName = originalName.toLowerCase();
+
+      if (
+        !safeStoredReadoutAttributes.has(attributeName)
+        && !/^aria-[a-z0-9-]+$/.test(attributeName)
+      ) return null;
+
+      const suppliedValue = attribute[2] ?? attribute[3] ?? attribute[4];
+
+      if (suppliedValue === undefined) return null;
+
+      const value = decodeStoredReadoutAttribute(suppliedValue);
+
+      if (root) {
+        rootAttributeCount += 1;
+
+        if (attributeName === "class") rootClass = value;
+      }
+
+      if (attributeName === "href") {
+        let link;
+
+        try {
+          link = new URL(value, "https://quickstark.invalid/");
+        } catch {
+          return null;
+        }
+
+        if (
+          !new Set(["http:", "https:"]).has(link.protocol)
+          || link.username
+          || link.password
+          || /[\u0000-\u001f\u007f]/.test(value)
+        ) return null;
+      }
+
+      renderedAttributes += ` ${originalName}="${escapeHtml(value)}"`;
+      attributeCursor = attributePattern.lastIndex;
+    }
+
+    const outputName = name === "aside" ? "div" : name;
+
+    if (
+      root
+      && (rootAttributeCount !== 1
+        || safeStoredReadoutRoots.get(name) !== rootClass
+        || selfClosing)
+    ) return null;
+
+    if (root) rootStart = fragments.length;
+
+    fragments.push(`<${outputName}${renderedAttributes}${selfClosing ? "/" : ""}>`);
+
+    if (!selfClosing && !voidStoredReadoutElements.has(name)) openElements.push(name);
+
+    cursor = token.index + token[0].length;
+  }
+
+  const trailing = content.slice(cursor);
+
+  if (trailing.includes("<") || trailing.trim() || openElements.length !== 0) return null;
+
+  fragments.push(trailing);
+
+  return fragments.join("");
+}
+
+function renderStoredReadoutContent(report) {
+  if (!report?.document) return "";
+  if (findMetadata(report.document, "observation-source") && !report.observation) return "";
+
+  const main = report.document.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+
+  if (!main) return "";
+
+  const header = main[1].match(/<\/header\s*>/i);
+
+  if (!header) return "";
+
+  let content = main[1].slice(header.index + header[0].length);
+  const footer = content.search(/<footer\b/i);
+
+  if (footer !== -1) content = content.slice(0, footer);
+
+  content = renderSafeStoredReadoutMarkup(content, report);
+
+  if (content === null) return "";
+
+  return `<div class="workbench-readout-document" aria-label="Complete immutable skill readout">${content}</div>`;
 }
 
 function renderWorkbenchDetail(report) {
@@ -2688,7 +3146,7 @@ function renderWorkbenchDetail(report) {
     return '<div class="workbench-detail-empty"><h2>Select a skill readout</h2><p>Choose an actual skill run to inspect its verified project and immutable outcome.</p></div>';
   }
 
-  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p><a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>${renderWorkbenchObservationDetail(report)}`;
+  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p><a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>${renderStoredReadoutContent(report)}${renderWorkbenchObservationDetail(report)}`;
 }
 
 function renderProjectWorkbench(projects, reports, {
@@ -2696,21 +3154,35 @@ function renderProjectWorkbench(projects, reports, {
   selectedProject,
   requestedReport,
   previews,
-  navigation,
+  query = "",
+  skill = "",
+  status = "",
+  previewLink,
   actualCount,
 } = {}) {
   const project = projects.find((entry) => entry.key === selectedProject) ?? null;
-  const selectedReport = project?.reports.find((report) => report.relativePath === requestedReport)
-    ?? project?.reports[0]
+  const matches = matchingWorkbenchRuns(project, query, { skill, status });
+  const selectedReport = matches.find((report) => report.relativePath === requestedReport)
+    ?? matches[0]
     ?? null;
   const projectActualCount = project?.reports.filter((report) => report.status !== "Preview").length
     ?? 0;
+  const filteredActualCount = matches.filter((report) => report.status !== "Preview").length;
+  const matchingCount = project && (query.trim() || skill || status)
+    ? `<span class="workbench-run-count" aria-label="Matching actual skill runs">${filteredActualCount} matching</span>`
+    : "";
+  const projectCount = project
+    ? `<span class="workbench-run-count">${projectActualCount} actual skill run${projectActualCount === 1 ? "" : "s"}</span>`
+    : "";
+  const emptyRuns = project
+    ? ""
+    : renderWorkbenchRuns(null, null, { previews });
   const legacyReports = reports.filter((report) => !report.projectKey);
   const legacy = legacyReports.length > 0
     ? renderProjectLibrary([], legacyReports, { activeProject, previews })
     : "";
 
-  return `<main class="workbench-page"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><span class="workbench-private">Authenticated, read-only project library</span></header>${navigation}<div class="workbench-shell"><aside class="workbench-sidebar"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, previews })}</nav></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${project ? `<span class="workbench-run-count">${projectActualCount} actual skill run${projectActualCount === 1 ? "" : "s"}</span>` : ""}</header><nav class="workbench-runs" aria-label="Recorded skill runs">${renderWorkbenchRuns(project, selectedReport, { previews })}</nav></section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside></div>${legacy}<footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
+  return `<main class="workbench-page"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><span class="workbench-private">Authenticated, read-only project library</span></header><div class="workbench-shell"><aside class="workbench-sidebar" aria-label="Verified projects"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, selectedReport, previews, query, skill, status })}</nav><footer class="workbench-sidebar-footer">${previewLink ?? ""}</footer></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${matchingCount}${projectCount}</header>${emptyRuns}</section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside></div>${legacy}<footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
 }
 
 function renderProjectLibrary(projects, reports, { activeProject, previews } = {}) {
@@ -2811,23 +3283,47 @@ async function renderReadoutIndex(directory, {
       ?? projects[0]?.key
       ?? "";
   const query = projectIsVisible ? (searchParams.get("q") ?? "").slice(0, 200) : "";
+  const requestedSkill = projectIsVisible ? searchParams.get("skill") : null;
+  const skill = requestedSkill && externalSkillIdentifier.test(requestedSkill)
+    ? requestedSkill
+    : "";
+  const requestedStatus = projectIsVisible ? searchParams.get("status") : null;
+  const status = requestedStatus && statuses.has(requestedStatus)
+    ? requestedStatus
+    : "";
+  const requestedReport = searchParams.get("report");
+  const selectedSnapshot = projects.find((project) => project.key === selectedProject) ?? null;
+  const safeRequestedReport = projectIsVisible
+    ? matchingWorkbenchRuns(selectedSnapshot, query, { skill, status })
+      .find((report) => report.relativePath === requestedReport)?.relativePath
+    : undefined;
   const title = view === "activity"
     ? "Recent activity"
     : view === "explorer"
       ? "Project explorer"
       : "Project Workbench";
   const actualCount = discovered.filter((report) => report.status !== "Preview").length;
+  const previewState = {
+    project: view === "projects" || view === "explorer" ? selectedProject : undefined,
+    query,
+    skill: view === "projects" ? skill : undefined,
+    status: view === "projects" ? status : undefined,
+    report: view === "projects" ? safeRequestedReport : undefined,
+  };
   const previewLink = previews
-    ? `<a class="preview-toggle" href="${galleryHref(view, { project: view === "explorer" ? selectedProject : undefined, query })}">Hide catalog previews</a>`
-    : `<a class="preview-toggle" href="${galleryHref(view, { project: view === "explorer" ? selectedProject : undefined, query, previews: true })}">Show catalog previews</a>`;
+    ? `<a class="preview-toggle" href="${galleryHref(view, previewState)}">Hide catalog previews</a>`
+    : `<a class="preview-toggle" href="${galleryHref(view, { ...previewState, previews: true })}">Show catalog previews</a>`;
   const navigation = `<nav class="gallery-nav" aria-label="Readout views"><a href="${galleryHref("projects", { previews })}"${view === "projects" ? ' aria-current="page"' : ""}>Project library</a><a href="${galleryHref("explorer", { project: selectedProject, previews })}"${view === "explorer" ? ' aria-current="page"' : ""}>Project explorer</a><a href="${galleryHref("activity", { previews })}"${view === "activity" ? ' aria-current="page"' : ""}>Recent activity</a>${previewLink}</nav>`;
   const body = view === "projects"
     ? renderProjectWorkbench(projects, reports, {
       activeProject,
       selectedProject,
-      requestedReport: searchParams.get("report"),
+      requestedReport: safeRequestedReport,
       previews,
-      navigation,
+      query,
+      skill,
+      status,
+      previewLink,
       actualCount,
     })
     : `<main><div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">Private report library</span></div><header class="hero"><p class="eyebrow">Project-aware skill readouts</p><h1>${escapeHtml(title)}</h1><p class="outcome">Browse verified project reports, explore a selected repository, and follow actual skill activity. Catalog previews remain clearly labeled and hidden until requested.</p></header>${navigation}${view === "activity" ? renderActivityTimeline(reports) : renderProjectExplorer(projects, { selectedProject, query, previews })}<footer class="footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Self-contained HTML · no external scripts or styles</span></footer></main>`;

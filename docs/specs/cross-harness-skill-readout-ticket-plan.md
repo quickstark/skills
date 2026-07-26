@@ -1,6 +1,12 @@
 # Ticket plan: authenticated cross-harness skill readout ingestion
 
-Status: user-approved; published as nine `ready-for-agent` GitHub issues with verified native blocking relationships.
+Status: implementation plan for the authenticated cross-harness reporting delivered in QuickStark 2.4.0. The linked GitHub issues and dependency graph are historical planning references; inspect the actual tracker before claiming an issue is currently open, closed, released, or ready for an agent.
+
+Implementation evidence: `scripts/qs-skill-readout.mjs`, `deploy/readouts/compose.yaml`, and the cross-harness ingestion, publication, immutable-retry, producer-authorization, safe-rendering, and live credential-rotation behavior tests in `tests/qs-skills.test.mjs`.
+
+The original acceptance checkboxes below remain planning criteria, not an assertion that every GitHub issue was updated. A real separately located laptop, authorized cross-harness delivery, or browser-authenticated retrieval must be directly verified before declaring that operational acceptance complete.
+
+See [`../readout-operations.md`](../readout-operations.md) for the current deployment, producer configuration, verification, and troubleshooting runbook.
 
 Parent: GitHub issue [#1 — authenticated cross-harness skill readout ingestion](https://github.com/quickstark/skills/issues/1).
 

@@ -1,6 +1,12 @@
 # Specification: authenticated cross-harness skill readout ingestion
 
-Status: implementation-ready specification; published as GitHub issue [#1](https://github.com/quickstark/skills/issues/1).
+Status: implemented in QuickStark 2.4.0. The original parent specification was published as GitHub issue [#1](https://github.com/quickstark/skills/issues/1).
+
+Implementation evidence: `scripts/qs-skill-readout.mjs`, `deploy/readouts/compose.yaml`, and the authenticated-ingestion, immutable-retry, producer-isolation, external-skill, credential-rotation, and portable-publisher tests in `tests/qs-skills.test.mjs`.
+
+Operational guidance: [`../readout-operations.md`](../readout-operations.md). Architecture and security boundaries: [`../architecture.md`](../architecture.md).
+
+The requirements below preserve the original design and acceptance intent. Their presence does not independently establish the current state of a GitHub issue, a published GitHub release, or a real separately located laptop.
 
 Owner: QuickStark Skills.
 

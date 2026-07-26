@@ -74,7 +74,7 @@ Side effects happen inline as decisions crystallize — run the `/qs-design-doma
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
 
-Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, relevant next skills, and only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
+Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and up to three relevant `nextSkills` objects containing `name`, `reason`, and a copy-ready `prompt`. Each prompt explicitly invokes its catalog-approved skill and carries forward the actual outcome, findings, decisions, outputs, and checks relevant to that follow-on. Present each full prompt in its own fenced text code block. Put its suggested model and thinking level in a visually muted callout underneath. Optionally supply `model`, `thinking`, and `modelReason` when the actual remaining work justifies a more specific heuristic suggestion. Record only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
 
 ```bash
 node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"
@@ -97,15 +97,62 @@ Readout: Real absolute HTML path or verified private viewer URL.
 Outputs: Real files, reports, decisions, or changes, when applicable.
 Checks: Only the tests, validations, or observations actually performed.
 Delivery: Verified PRs, closed issues, release, or commit, only when applicable.
-Next best: /qs-skill-name — why it is the best next step.
 ```
 
-Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+**Top next prompts:**
 
-Select at most three genuinely relevant follow-ons from:
+**1. Recommended continuation**
 
-- `/qs-design-modules` — Design the interface and seam for the selected architecture candidate.
-- `/qs-plan-clarify` — Confirm the refactor's scope, constraints, and expected outcome.
-- `/qs-plan-spec` — Document a selected, nontrivial refactoring before implementation.
+Design the interface and seam for the selected architecture candidate.
 
-Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.
+```text
+Use /qs-design-modules to design a clean, deep, and testable module for this problem.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Module design benefits from carefully reasoning about interfaces and seams. Never change the active model or thinking level.
+
+Use the same fenced-prompt and muted callout format for at most two genuinely relevant alternatives.
+
+Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**. Make each complete, copy-ready prompt the visual focus in a fenced text code block. Place **Suggested model** and **Suggested thinking** underneath in a muted blockquote callout, label both as heuristic, and never change the active model or thinking level. These suggestions are not observed run measurements, comparative benchmarks, independently verified quality, or automatic model changes. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; suggested prompts belong under **Top next prompts**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+
+Select at most three genuinely relevant, copy-ready prompt directions from:
+
+**1. `/qs-design-modules`**
+
+Design the interface and seam for the selected architecture candidate.
+
+```text
+Use /qs-design-modules to design a clean, deep, and testable module for this problem.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Module design benefits from carefully reasoning about interfaces and seams.
+
+**2. `/qs-plan-clarify`**
+
+Confirm the refactor's scope, constraints, and expected outcome.
+
+```text
+Use /qs-plan-clarify to clarify this project and document the resulting decisions.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Clarification benefits from deeper reasoning about requirements and trade-offs.
+
+**3. `/qs-plan-spec`**
+
+Document a selected, nontrivial refactoring before implementation.
+
+```text
+Use /qs-plan-spec to turn the agreed requirements into an actionable specification.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: A specification benefits from reconciling boundaries, decisions, and requirements.
+
+Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

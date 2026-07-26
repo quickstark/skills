@@ -3,6 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
+  MODEL_GUIDANCE_BY_NAME,
   NEXT_SKILLS_BY_NAME,
   PERSONAL_REPOSITORY,
   SKILLS,
@@ -21,16 +22,53 @@ export function renderSkillOutputContract(skill) {
     throw new Error(`No next-skill guidance exists for ${skill.name}.`);
   }
 
-  const nextSkills = recommendations
-    .map((next) => `- \`/${next.name}\` — ${next.reason}`)
-    .join("\n");
+  const firstRecommendation = recommendations[0];
+  const firstTarget = SKILLS_BY_NAME.get(firstRecommendation.name);
+  const firstGuidance = MODEL_GUIDANCE_BY_NAME[firstRecommendation.name];
+
+  if (!firstTarget) {
+    throw new Error(`${skill.name} recommends an unknown skill: ${firstRecommendation.name}.`);
+  }
+
+  if (!firstGuidance) {
+    throw new Error(`${skill.name} recommends a skill without model guidance: ${firstRecommendation.name}.`);
+  }
+
+  const nextPrompts = recommendations
+    .map((next, index) => {
+      const target = SKILLS_BY_NAME.get(next.name);
+      const guidance = MODEL_GUIDANCE_BY_NAME[next.name];
+
+      if (!target) {
+        throw new Error(`${skill.name} recommends an unknown skill: ${next.name}.`);
+      }
+
+      if (!guidance) {
+        throw new Error(`${skill.name} recommends a skill without model guidance: ${next.name}.`);
+      }
+
+      return [
+        `**${index + 1}. \`/${target.name}\`**`,
+        "",
+        next.reason,
+        "",
+        "```text",
+        `Use /${target.name} to ${target.prompt}.`,
+        "```",
+        "",
+        `> Suggested model: \`${guidance.model}\` · Suggested thinking: \`${guidance.thinking}\``,
+        ">",
+        `> Heuristic: ${guidance.reason}`,
+      ].join("\n");
+    })
+    .join("\n\n");
 
   return [
     SKILL_OUTPUT_HEADING,
     "",
     "Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.",
     "",
-    "Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, relevant next skills, and only directly verified execution context, delivery provenance, or relationships. Generate the readout with:",
+    "Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and up to three relevant `nextSkills` objects containing `name`, `reason`, and a copy-ready `prompt`. Each prompt explicitly invokes its catalog-approved skill and carries forward the actual outcome, findings, decisions, outputs, and checks relevant to that follow-on. Present each full prompt in its own fenced text code block. Put its suggested model and thinking level in a visually muted callout underneath. Optionally supply `model`, `thinking`, and `modelReason` when the actual remaining work justifies a more specific heuristic suggestion. Record only directly verified execution context, delivery provenance, or relationships. Generate the readout with:",
     "",
     "```bash",
     'node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"',
@@ -53,16 +91,31 @@ export function renderSkillOutputContract(skill) {
     "Outputs: Real files, reports, decisions, or changes, when applicable.",
     "Checks: Only the tests, validations, or observations actually performed.",
     "Delivery: Verified PRs, closed issues, release, or commit, only when applicable.",
-    "Next best: /qs-skill-name — why it is the best next step.",
     "```",
     "",
-    "Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.",
+    "**Top next prompts:**",
     "",
-    "Select at most three genuinely relevant follow-ons from:",
+    "**1. Recommended continuation**",
     "",
-    nextSkills,
+    firstRecommendation.reason,
     "",
-    "Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.",
+    "```text",
+    `Use /${firstTarget.name} to ${firstTarget.prompt}.`,
+    "```",
+    "",
+    `> Suggested model: \`${firstGuidance.model}\` · Suggested thinking: \`${firstGuidance.thinking}\``,
+    ">",
+    `> Heuristic: ${firstGuidance.reason} Never change the active model or thinking level.`,
+    "",
+    "Use the same fenced-prompt and muted callout format for at most two genuinely relevant alternatives.",
+    "",
+    "Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**. Make each complete, copy-ready prompt the visual focus in a fenced text code block. Place **Suggested model** and **Suggested thinking** underneath in a muted blockquote callout, label both as heuristic, and never change the active model or thinking level. These suggestions are not observed run measurements, comparative benchmarks, independently verified quality, or automatic model changes. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; suggested prompts belong under **Top next prompts**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.",
+    "",
+    "Select at most three genuinely relevant, copy-ready prompt directions from:",
+    "",
+    nextPrompts,
+    "",
+    "Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.",
     "",
   ].join("\n");
 }
@@ -74,25 +127,42 @@ export function renderDocumentationOutputContract(skill) {
     throw new Error(`No next-skill documentation exists for ${skill.name}.`);
   }
 
-  const nextSkills = recommendations.map((next) => {
+  const nextPrompts = recommendations.map((next, index) => {
     const target = SKILLS_BY_NAME.get(next.name);
+    const guidance = MODEL_GUIDANCE_BY_NAME[next.name];
 
     if (!target) {
       throw new Error(`${skill.name} recommends an unknown skill: ${next.name}.`);
     }
 
+    if (!guidance) {
+      throw new Error(`${skill.name} recommends a skill without model guidance: ${next.name}.`);
+    }
+
     const source = `${PERSONAL_REPOSITORY}/blob/main/skills/${target.bucket}/${target.name}/SKILL.md`;
-    return `- [\`/${target.name}\`](${source}) — ${next.reason}`;
+    return [
+      `**${index + 1}. [\`/${target.name}\`](${source})**`,
+      "",
+      next.reason,
+      "",
+      "```text",
+      `Use /${target.name} to ${target.prompt}.`,
+      "```",
+      "",
+      `> Suggested model: \`${guidance.model}\` · Suggested thinking: \`${guidance.thinking}\``,
+      ">",
+      `> Heuristic: ${guidance.reason}`,
+    ].join("\n");
   });
 
   return [
     DOCUMENTATION_OUTPUT_HEADING,
     "",
-    `\`/${skill.name}\` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and the best next step. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared \`scripts/qs-skill-readout.mjs\` generator and defaults to the OS temporary \`quickstark-readouts\` directory. Set \`QS_READOUT_DIR=/docker/appdata/quickstark-readouts\` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.`,
+    `\`/${skill.name}\` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and up to three copy-ready top next prompts. Present each complete prompt prominently in its own fenced text code block and place its suggested model and suggested thinking underneath in a visually muted callout. Each prompt embeds its catalog-approved follow-on skill and builds on the actual outcome, findings, decisions, outputs, and checks rather than merely recommending a skill name. Model and thinking guidance are explicitly heuristic; they are not measured model performance and never change the active configuration. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared \`scripts/qs-skill-readout.mjs\` generator and defaults to the OS temporary \`quickstark-readouts\` directory. Set \`QS_READOUT_DIR=/docker/appdata/quickstark-readouts\` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.`,
     "",
-    "Depending on what actually happened, the next step may be:",
+    "Depending on the actual completed work, tailor one to three top next prompts from:",
     "",
-    ...nextSkills,
+    nextPrompts.join("\n\n"),
     "",
   ].join("\n");
 }
@@ -162,7 +232,7 @@ export async function syncSkillOutputContracts({ check = false } = {}) {
   }
 
   if (check) {
-    console.log(`Verified output contracts and next steps for all ${SKILLS.length} skills.`);
+    console.log(`Verified output contracts and top next prompts for all ${SKILLS.length} skills.`);
   } else {
     console.log(`Synchronized ${updated} skill and documentation output contracts.`);
   }

@@ -416,6 +416,85 @@ export const SKILLS_BY_NAME = new Map(
   SKILLS.map((skill) => [skill.name, skill]),
 );
 
+function defineModelGuidance(model, thinking, reason) {
+  return Object.freeze({ model, thinking, reason });
+}
+
+export const MODEL_GUIDANCE_BY_NAME = Object.freeze({
+  "qs-help": defineModelGuidance(
+    "gpt-5.6-terra", "low", "Workflow routing usually needs quick, focused orientation.",
+  ),
+  "qs-setup": defineModelGuidance(
+    "gpt-5.6-terra", "medium", "Project setup benefits from careful, bounded configuration checks.",
+  ),
+  "qs-plan-clarify": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Clarification benefits from deeper reasoning about requirements and trade-offs.",
+  ),
+  "qs-plan-explore": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Open-ended exploration benefits from examining several plausible directions.",
+  ),
+  "qs-plan-interview": defineModelGuidance(
+    "gpt-5.6-sol", "high", "A focused interview benefits from tracking dependent decisions and uncertainty.",
+  ),
+  "qs-plan-spec": defineModelGuidance(
+    "gpt-5.6-sol", "high", "A specification benefits from reconciling boundaries, decisions, and requirements.",
+  ),
+  "qs-plan-tickets": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Ticket decomposition benefits from reasoning about scope and dependencies.",
+  ),
+  "qs-plan-roadmap": defineModelGuidance(
+    "gpt-5.6-sol", "xhigh", "A large or uncertain roadmap benefits from deeper dependency analysis.",
+  ),
+  "qs-plan-research": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Research benefits from comparing evidence, uncertainty, and primary sources.",
+  ),
+  "qs-design-prototype": defineModelGuidance(
+    "gpt-5.6-terra", "high", "A focused prototype benefits from practical implementation and design iteration.",
+  ),
+  "qs-design-domain": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Domain modeling benefits from precise concepts, boundaries, and relationships.",
+  ),
+  "qs-design-modules": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Module design benefits from carefully reasoning about interfaces and seams.",
+  ),
+  "qs-design-architecture": defineModelGuidance(
+    "gpt-5.6-sol", "xhigh", "Architecture analysis benefits from deeper cross-module and risk assessment.",
+  ),
+  "qs-code-build": defineModelGuidance(
+    "gpt-5.6-terra", "high", "Implementation benefits from sustained reasoning and direct verification.",
+  ),
+  "qs-code-document": defineModelGuidance(
+    "gpt-5.6-terra", "medium", "Verified documentation usually benefits from focused code-to-document comparison.",
+  ),
+  "qs-code-debug": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Debugging benefits from tracing failure evidence back to its actual cause.",
+  ),
+  "qs-test-tdd": defineModelGuidance(
+    "gpt-5.6-terra", "high", "Test-driven work benefits from reasoning through behavior and regression seams.",
+  ),
+  "qs-review-code": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Code review benefits from deeper correctness, security, and standards analysis.",
+  ),
+  "qs-git-merge": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Conflict resolution benefits from preserving intent across competing changes.",
+  ),
+  "qs-flow-triage": defineModelGuidance(
+    "gpt-5.6-terra", "medium", "Issue triage usually benefits from focused categorization and prioritization.",
+  ),
+  "qs-flow-handoff": defineModelGuidance(
+    "gpt-5.6-terra", "medium", "A handoff benefits from concise preservation of verified state and decisions.",
+  ),
+  "qs-learn-teach": defineModelGuidance(
+    "gpt-5.6-terra", "medium", "Guided learning benefits from clear explanations and incremental practice.",
+  ),
+  "qs-skill-write": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Skill authoring benefits from predictable instructions and invocation boundaries.",
+  ),
+  "qs-deploy-release": defineModelGuidance(
+    "gpt-5.6-terra", "high", "An approved release benefits from deliberate prerequisite and smoke-test checks.",
+  ),
+});
+
 export const NEXT_SKILLS_BY_NAME = Object.freeze({
   "qs-help": [
     {

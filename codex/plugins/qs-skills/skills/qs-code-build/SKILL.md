@@ -17,7 +17,7 @@ Commit your work to the current branch.
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
 
-Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, relevant next skills, and only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
+Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and up to three relevant `nextSkills` objects containing `name`, `reason`, and a copy-ready `prompt`. Each prompt explicitly invokes its catalog-approved skill and carries forward the actual outcome, findings, decisions, outputs, and checks relevant to that follow-on. Present each full prompt in its own fenced text code block. Put its suggested model and thinking level in a visually muted callout underneath. Optionally supply `model`, `thinking`, and `modelReason` when the actual remaining work justifies a more specific heuristic suggestion. Record only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
 
 ```bash
 node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"
@@ -40,15 +40,62 @@ Readout: Real absolute HTML path or verified private viewer URL.
 Outputs: Real files, reports, decisions, or changes, when applicable.
 Checks: Only the tests, validations, or observations actually performed.
 Delivery: Verified PRs, closed issues, release, or commit, only when applicable.
-Next best: /qs-skill-name — why it is the best next step.
 ```
 
-Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+**Top next prompts:**
 
-Select at most three genuinely relevant follow-ons from:
+**1. Recommended continuation**
 
-- `/qs-test-tdd` — Add or complete behavior-focused coverage for the implemented change.
-- `/qs-review-code` — Review the implementation against its requirements and standards.
-- `/qs-code-document` — Document the verified implementation, changed files, and operational behavior.
+Add or complete behavior-focused coverage for the implemented change.
 
-Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.
+```text
+Use /qs-test-tdd to implement this behavior using a red-green test-driven loop.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
+>
+> Heuristic: Test-driven work benefits from reasoning through behavior and regression seams. Never change the active model or thinking level.
+
+Use the same fenced-prompt and muted callout format for at most two genuinely relevant alternatives.
+
+Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**. Make each complete, copy-ready prompt the visual focus in a fenced text code block. Place **Suggested model** and **Suggested thinking** underneath in a muted blockquote callout, label both as heuristic, and never change the active model or thinking level. These suggestions are not observed run measurements, comparative benchmarks, independently verified quality, or automatic model changes. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; suggested prompts belong under **Top next prompts**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+
+Select at most three genuinely relevant, copy-ready prompt directions from:
+
+**1. `/qs-test-tdd`**
+
+Add or complete behavior-focused coverage for the implemented change.
+
+```text
+Use /qs-test-tdd to implement this behavior using a red-green test-driven loop.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
+>
+> Heuristic: Test-driven work benefits from reasoning through behavior and regression seams.
+
+**2. `/qs-review-code`**
+
+Review the implementation against its requirements and standards.
+
+```text
+Use /qs-review-code to review these changes for correctness, standards, and requirements.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
+
+**3. `/qs-code-document`**
+
+Document the verified implementation, changed files, and operational behavior.
+
+```text
+Use /qs-code-document to write or update accurate documentation for the actual project and its verified behavior.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+>
+> Heuristic: Verified documentation usually benefits from focused code-to-document comparison.
+
+Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

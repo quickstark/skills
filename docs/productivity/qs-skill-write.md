@@ -33,19 +33,52 @@ Most of these skills are user-invoked, which is why cognitive load is the pressu
 The rest of the reference is the toolkit for spending those loads well:
 
 - **Leading words** — a compact concept already in the model's pretraining (_tight_, _red_, _tracer bullet_) that the agent thinks with while running the skill. It anchors execution *and* invocation in the fewest tokens; hunt restatements that a single word can retire.
+- **Next prompts** — a complete, copy-ready next action displayed in its own prominent fenced code block. It embeds its catalog-approved `/qs-` skill and carries forward the actual preceding outcome, decisions, findings, artifacts, or checks. A visually muted callout underneath suggests a heuristic model and thinking level without claiming the follow-on already ran.
 - **Information hierarchy** — the ladder from in-skill step, to in-skill reference, to external reference behind a **context pointer**. **Progressive disclosure** is the move down that ladder so the top stays legible.
 - **Pruning** — single source of truth, relevance, and the no-op test applied sentence by sentence, against **sediment** and **sprawl**.
 - **Failure modes** — **premature completion**, **duplication**, **sediment**, **sprawl**, **no-op** — to diagnose a skill that isn't behaving.
 
 ## Output and next steps
 
-`/qs-skill-write` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and the best next step. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
+`/qs-skill-write` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and up to three copy-ready top next prompts. Present each complete prompt prominently in its own fenced text code block and place its suggested model and suggested thinking underneath in a visually muted callout. Each prompt embeds its catalog-approved follow-on skill and builds on the actual outcome, findings, decisions, outputs, and checks rather than merely recommending a skill name. Model and thinking guidance are explicitly heuristic; they are not measured model performance and never change the active configuration. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
 
-Depending on what actually happened, the next step may be:
+Depending on the actual completed work, tailor one to three top next prompts from:
 
-- [`/qs-plan-interview`](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-plan-interview/SKILL.md) — Clarify the skill's boundaries and expected behavior.
-- [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) — Review skill scripts, examples, and implementation changes.
-- [`/qs-code-document`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-document/SKILL.md) — Document the verified skill behavior, actual files, and installation workflow.
+**1. [`/qs-plan-interview`](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-plan-interview/SKILL.md)**
+
+Clarify the skill's boundaries and expected behavior.
+
+```text
+Use /qs-plan-interview to interview me one question at a time to resolve this decision.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: A focused interview benefits from tracking dependent decisions and uncertainty.
+
+**2. [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md)**
+
+Review skill scripts, examples, and implementation changes.
+
+```text
+Use /qs-review-code to review these changes for correctness, standards, and requirements.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
+
+**3. [`/qs-code-document`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-document/SKILL.md)**
+
+Document the verified skill behavior, actual files, and installation workflow.
+
+```text
+Use /qs-code-document to write or update accurate documentation for the actual project and its verified behavior.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+>
+> Heuristic: Verified documentation usually benefits from focused code-to-document comparison.
 
 ## Where it fits
 

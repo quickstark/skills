@@ -6,7 +6,7 @@ Promoted skills live under `skills/engineering/` and `skills/productivity/`. Eve
 
 ## Source of truth
 
-`scripts/qs-skill-catalog.mjs` defines each promoted skill, its upstream name, bucket, invocation policy, display metadata, purpose, and appropriate next skills. Add or rename a skill there before updating its folder.
+`scripts/qs-skill-catalog.mjs` defines each promoted skill, its upstream name, bucket, invocation policy, display metadata, baseline action, purpose, approved follow-on skills, and heuristic model and thinking guidance. Add or rename a skill there before updating its folder. Derive copy-ready next prompts and their suggested model and thinking level from that catalog and the actual run evidence; do not maintain an independent prompt-routing catalog.
 
 Each promoted skill must have:
 
@@ -16,7 +16,7 @@ Each promoted skill must have:
 - A documentation page under `docs/<bucket>/<skill-name>.md`.
 - An entry in `.claude-plugin/plugin.json`.
 - A source-synchronized Codex copy in `codex/plugins/qs-skills/skills/`.
-- A catalog-generated, architecture-quality HTML readout, completion report, and relevant next-skill recommendations.
+- A catalog-generated, architecture-quality HTML readout, completion report, and up to three context-aware next prompts that explicitly embed approved follow-on skills and suggest a heuristic model and thinking level.
 
 Preserve invocation mode in both harnesses. Explicitly invoked skills set `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked skills omit both restrictions.
 
@@ -41,7 +41,7 @@ When Claude Code is available, also run `claude plugin validate . --strict` afte
 
 Keep each promoted documentation page synchronized with its skill. Retain absolute links to the original upstream source when the skill was adapted from Matt Pocock. Never claim a personalized GitHub fork or published documentation URL exists before it has actually been created.
 
-Every skill ends with `## Completion report and next steps`. Each run generates a self-contained HTML readout through `scripts/qs-skill-readout.mjs`. Its in-chat output reports **Status**, **Skills used**, **Outcome**, **Readout**, and **Next best**; **Outputs** and **Checks** are included only when applicable. List only skills actually used and recommend only contextually appropriate catalog entries. `scripts/sync-skill-output-contracts.mjs` generates and verifies this contract in both skill instructions and documentation.
+Every skill ends with `## Completion report and next steps`. Each run generates a self-contained HTML readout through `scripts/qs-skill-readout.mjs`. Its in-chat output reports **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**; **Outputs** and **Checks** are included only when applicable. List only skills actually used. Offer at most three copy-ready prompts, each explicitly invoking a catalog-approved follow-on skill and carrying forward the run's actual outcome and relevant observed findings, decisions, outputs, and checks. Put every complete prompt in its own visually prominent fenced text code block. Put its heuristic suggested model and thinking level in a visually muted callout underneath. Never present a suggestion as observed quality or automatically change the active configuration. Report `None — the requested work is complete` when no follow-up is necessary. `scripts/sync-skill-output-contracts.mjs` generates and verifies this contract in both skill instructions and documentation.
 
 Readouts live in the OS temporary `quickstark-readouts` directory. Rendering automatically starts or reuses a health-checked viewer: localhost on a Mac or graphical desktop, and one capability-protected private home-network address on a headless or SSH-connected Linux dev box. Linux remote viewers run as temporary user-managed services so they survive isolated Codex commands without permanent setup. `QS_READOUT_ACCESS=ssh` forces localhost for SSH forwarding. Never bind to every network interface, expose the repository, require Tailscale, or present an unverified report URL as accessible.
 

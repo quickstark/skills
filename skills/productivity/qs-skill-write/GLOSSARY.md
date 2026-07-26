@@ -58,6 +58,12 @@ A **user-invoked** skill whose job is to point at your other user-invoked skills
 
 _Avoid_: dispatcher, menu, registry, index, router procedure
 
+### Next Prompt
+
+A copy-ready continuation presented in its own prominent fenced code block. It embeds the catalog-approved skill needed for the next action and carries forward the preceding run's actual outcome, findings, decisions, artifacts, or checks. A muted callout underneath can suggest a suitable model and thinking level. It reduces **cognitive load** by showing what to ask, which skill to invoke, and where to start the next run. Model guidance is heuristic, never a measured performance claim or automatic configuration change. A recommendation is not an invocation; a completed request needs no continuation.
+
+_Avoid_: next best skill, skill-only recommendation, generic template, claimed execution, compulsory follow-up
+
 ### Granularity
 
 How finely you divide skills. Finer division spends one of the two loads: more **model-invoked** skills spend **context load** (more descriptions crowding the window and competing for attention); more **user-invoked** skills spend **cognitive load** (more for the human to remember and reach for). Two cuts guide the division. By **invocation**, split off a model-invoked skill where you have a distinct **leading word** to trigger it — a trigger word you actually use in your prompts. By **sequence**, split a run of **steps** where a step's **post-completion steps** need hiding, since isolating it in its own context clears what follows. Beware the reverse: merging sequences exposes each step's post-completion steps to what follows, inviting premature completion.

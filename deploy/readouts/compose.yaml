@@ -53,6 +53,52 @@ services:
       - traefik.http.routers.quickstark-readouts.middlewares=authelia@file
       - traefik.http.services.quickstark-readouts.loadbalancer.server.port=4173
 
+  quickstark-readout-prototype:
+    image: node:24-alpine
+    container_name: quickstark-readout-prototype
+    hostname: quickstark-readout-prototype
+    working_dir: /opt/quickstark
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      QS_READOUT_DIR: /docker/appdata/quickstark-readouts
+      QS_READOUT_ALLOWED_PROJECTS: github.com/quickstark/skills
+      QS_READOUT_PROTOTYPE_HOST: quickstark-readout-prototype
+      QS_READOUT_PROTOTYPE_PORT: "4181"
+      QS_READOUT_PROTOTYPE_BASE_PATH: /prototype
+    command:
+      - node
+      - /opt/quickstark/scripts/qs-readout-gallery.prototype.mjs
+    volumes:
+      - /github/skills:/opt/quickstark:ro
+      - /docker/appdata/quickstark-readouts:/docker/appdata/quickstark-readouts:ro
+    networks:
+      - proxy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://quickstark-readout-prototype:4181/prototype/__quickstark_prototype_health').then(r=>r.json()).then(j=>{if(j.service!=='quickstark-skill-readout-prototype')process.exit(1)}).catch(()=>process.exit(1))"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.quickstark-readout-prototype.rule=Host(`reports.quickstark.com`) && (Path(`/prototype`) || PathPrefix(`/prototype/`))
+      - traefik.http.routers.quickstark-readout-prototype.entrypoints=https
+      - traefik.http.routers.quickstark-readout-prototype.tls.certresolver=cloudflare
+      - traefik.http.routers.quickstark-readout-prototype.middlewares=authelia@file
+      - traefik.http.routers.quickstark-readout-prototype.priority=150
+      - traefik.http.services.quickstark-readout-prototype.loadbalancer.server.port=4181
+
   quickstark-readout-ingestion:
     image: node:24-alpine
     container_name: quickstark-readout-ingestion

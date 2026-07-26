@@ -52,6 +52,14 @@ This example describes the supported schema; it does not assert that an actual i
 - Omit the entire delivery-evidence section when no relevant evidence exists.
 - Catalog previews cannot contain delivery provenance or observed work.
 
+## Cross-harness report evidence
+
+Authorized reports from another machine must retain their actual producer, harness, skill collection, verified canonical project, immutable run identity, UTC timestamp, and observed outcome. Native QuickStark skills keep their catalog-defined visual profiles; independently authored skills use an honest external-skill presentation.
+
+The hosted browser viewer remains authenticated and read-only. Only the dedicated `/api/v1/readouts` service can accept a structured producer submission, and both its producer grant and hosted publication policy must authorize the project. Record a successful publication only after receiving and verifying the actual accepted report URL. Missing credentials, denied projects, unreachable endpoints, and revoked producers leave the real local report intact.
+
+Do not promote an external skill, import arbitrary HTML, imply browser authentication bypass, fabricate remotely verified provenance, or count a preview as actual published work.
+
 ## Recommended view for each skill
 
 | Skill | Lead with | Most useful visual | Relevant delivery evidence |

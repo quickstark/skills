@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # QS Help
 
-Orient the user. Identify the actual situation, recommend the correct next step, and explain why it comes before the alternatives. Do not begin an implementation, review, deployment, or other skill's work merely because it appears in the map.
+Orient the user. Identify the actual situation and offer up to three copy-ready next prompts, ordered by the work already accomplished. Put each complete prompt in its own prominent fenced text code block. Embed the appropriate `/qs-` skill, carry forward the actual decisions and evidence, and place a suitable heuristic model and thinking level in a muted callout underneath. Explain why the first action comes before the alternatives. A suggested skill has not run; begin implementation, review, deployment, or other follow-on work only when the user actually requests it. Never automatically change the active model or thinking level.
 
 ## Choose the right starting point
 
@@ -21,7 +21,7 @@ Orient the user. Identify the actual situation, recommend the correct next step,
 - **In-progress Git conflict:** start with `/qs-git-merge`.
 - **Completed, reviewed change ready for a documented release:** start with `/qs-deploy-release`.
 
-Recommend only the path that fits the situation. A tiny, already-understood change does not need a roadmap, a prototype, a specification, and tickets simply because those skills exist.
+Offer only prompts that fit the situation. A tiny, already-understood change does not need a roadmap, a prototype, a specification, and tickets simply because those skills exist.
 
 ## Order of operations: new work
 
@@ -90,7 +90,7 @@ When the starting point is an observed failure, use `/qs-code-debug` before an a
 
 Keep clarification, design, specifications, and ticket breakdown in one coherent session when practical. Once tickets are ready, implement each ticket in a fresh session.
 
-Use `/qs-flow-handoff` before crossing sessions when the next agent needs decisions, artifact paths, open questions, or recommended skills. Do not copy secrets, entire transcripts, or content that already exists in a specification, ticket, ADR, commit, or report.
+Use `/qs-flow-handoff` before crossing sessions when the next agent needs decisions, artifact paths, open questions, or a context-aware next prompt with its embedded skill. Do not copy secrets, entire transcripts, or content that already exists in a specification, ticket, ADR, commit, or report.
 
 Use `/compact` only when continuing the same conversation; use `/qs-flow-handoff` when a different session must continue the work.
 
@@ -98,7 +98,7 @@ Use `/compact` only when continuing the same conversation; use `/qs-flow-handoff
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
 
-Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, relevant next skills, and only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
+Write a small JSON input containing the actual skill, status, outcome, findings, decisions, real outputs, checks actually performed, and up to three relevant `nextSkills` objects containing `name`, `reason`, and a copy-ready `prompt`. Each prompt explicitly invokes its catalog-approved skill and carries forward the actual outcome, findings, decisions, outputs, and checks relevant to that follow-on. Present each full prompt in its own fenced text code block. Put its suggested model and thinking level in a visually muted callout underneath. Optionally supply `model`, `thinking`, and `modelReason` when the actual remaining work justifies a more specific heuristic suggestion. Record only directly verified execution context, delivery provenance, or relationships. Generate the readout with:
 
 ```bash
 node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --input "<absolute-path-to-readout.json>"
@@ -121,15 +121,62 @@ Readout: Real absolute HTML path or verified private viewer URL.
 Outputs: Real files, reports, decisions, or changes, when applicable.
 Checks: Only the tests, validations, or observations actually performed.
 Delivery: Verified PRs, closed issues, release, or commit, only when applicable.
-Next best: /qs-skill-name — why it is the best next step.
 ```
 
-Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Next best**. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; a recommendation belongs under **Next best**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+**Top next prompts:**
 
-Select at most three genuinely relevant follow-ons from:
+**1. Recommended continuation**
 
-- `/qs-setup` — Configure a project that has not used the collection before.
-- `/qs-plan-clarify` — Clarify requirements and durable decisions for new work.
-- `/qs-design-architecture` — Identify and prioritize an existing codebase's refactoring opportunities.
+Configure a project that has not used the collection before.
 
-Explain why the recommendation advances the actual work. If the request is finished, say `Next best: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.
+```text
+Use /qs-setup to configure this project for the QuickStark engineering skills.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+>
+> Heuristic: Project setup benefits from careful, bounded configuration checks. Never change the active model or thinking level.
+
+Use the same fenced-prompt and muted callout format for at most two genuinely relevant alternatives.
+
+Always include **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**. Make each complete, copy-ready prompt the visual focus in a fenced text code block. Place **Suggested model** and **Suggested thinking** underneath in a muted blockquote callout, label both as heuristic, and never change the active model or thinking level. These suggestions are not observed run measurements, comparative benchmarks, independently verified quality, or automatic model changes. When the readout cannot be created, state `Readout: Not created —` and the actual reason. Omit deployment details, changed files, **Outputs**, **Checks**, or **Delivery** when no corresponding evidence exists. List only skills that actually ran; suggested prompts belong under **Top next prompts**, not **Skills used**. Never claim a machine, check, changed file, artifact, issue, pull request, release, URL, or result you did not verify.
+
+Select at most three genuinely relevant, copy-ready prompt directions from:
+
+**1. `/qs-setup`**
+
+Configure a project that has not used the collection before.
+
+```text
+Use /qs-setup to configure this project for the QuickStark engineering skills.
+```
+
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+>
+> Heuristic: Project setup benefits from careful, bounded configuration checks.
+
+**2. `/qs-plan-clarify`**
+
+Clarify requirements and durable decisions for new work.
+
+```text
+Use /qs-plan-clarify to clarify this project and document the resulting decisions.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+>
+> Heuristic: Clarification benefits from deeper reasoning about requirements and trade-offs.
+
+**3. `/qs-design-architecture`**
+
+Identify and prioritize an existing codebase's refactoring opportunities.
+
+```text
+Use /qs-design-architecture to find the highest-value architecture improvements in this codebase.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `xhigh`
+>
+> Heuristic: Architecture analysis benefits from deeper cross-module and risk assessment.
+
+Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

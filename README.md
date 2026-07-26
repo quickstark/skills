@@ -4,6 +4,13 @@ A focused, personal collection of engineering and productivity skills for Codex 
 
 The engineering disciplines are adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). The upstream repository, original MIT license, and original source links remain available for reference.
 
+## Project documentation
+
+- [Architecture and trust boundaries](./docs/architecture.md) — canonical skills, plugin generation, reporting, and authenticated publication.
+- [Readout operations](./docs/readout-operations.md) — local and hosted reports, cross-machine publishing, producer grants, and credential rotation.
+- [Contributing](./docs/contributing.md) — catalog-first skill changes, synchronization, tests, and release safety.
+- [Changelog](./CHANGELOG.md) — verified QuickStark changes and preserved upstream release history.
+
 ## Clone on another machine
 
 ```bash
@@ -85,16 +92,18 @@ Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use 
     ↓
 /qs-code-build
     ↓
+/qs-code-document  (when documentation needs updating)
+    ↓
 /qs-review-code
     ↓
 /qs-deploy-release  (only when requested and approved)
 ```
 
-Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation only when the refactor is large enough to justify them. `/qs-help` explains both workflows, every skill's purpose, and the next best step for the actual situation.
+Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation only when the refactor is large enough to justify them. `/qs-help` explains both workflows, every skill's purpose, and the top next prompts for the actual situation.
 
 ## Visual skill readouts
 
-Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 24 report profiles keep an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and relevant next skills; each foregrounds the information that matters for that particular skill.
+Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 24 report profiles keep an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts; each foregrounds the information that matters for that particular skill. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
 
 | Skill purpose | Primary visual signal |
 | --- | --- |
@@ -285,12 +294,33 @@ Execution: Actual development machine; only files changed by this skill run.
 Readout: /tmp/quickstark-readouts/qs-design-architecture--2026-07-25T15-30-00-000Z--a1b2c3d4.html
 Outputs: /absolute/path/to/architecture-review.html
 Checks: Confirmed the affected modules and existing test coverage.
-Next best: /qs-plan-clarify — agree on the chosen refactor's scope.
 ```
 
-`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs`, `Checks`, and delivery evidence appear only when real artifacts, validations, or GitHub records exist. `Next best` explains one to three relevant follow-on skills; it says `None` when the requested work is already complete.
+**Top next prompts:**
 
-Next-step recommendations are maintained in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs), not reinvented independently by each skill.
+**1. Clarify the selected refactor**
+
+```text
+Use /qs-plan-clarify to agree on the selected architectural refactor's scope, preserved behavior, and existing test coverage.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`.
+>
+> Heuristic guidance; the active model and thinking level are not changed automatically.
+
+**2. Design the selected architectural seam**
+
+```text
+Use /qs-design-modules to design the interface and seam for the architectural candidate identified in the review.
+```
+
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`.
+>
+> Heuristic guidance; the active model and thinking level are not changed automatically.
+
+`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs`, `Checks`, and delivery evidence appear only when real artifacts, validations, or GitHub records exist. `Top next prompts` provides up to three copy-ready, context-aware prompts that explicitly invoke approved follow-on skills and build on what this run actually accomplished. Each includes a suggested model and suggested thinking level. These suggestions are heuristic starting points, not benchmarks or observed results; they never change the active model automatically. A recorded critical finding or failed check can suggest deeper reasoning. The report says `None — the requested work is complete` when no follow-up is needed; suggested skills never appear under `Skills used`.
+
+Approved follow-on skills, their baseline actions, and their heuristic model and thinking guidance remain in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs). The readout renderer specializes each prompt using the current run's recorded outcome, findings, decisions, outputs, and checks; skill instructions and documentation inherit the contract from [`scripts/sync-skill-output-contracts.mjs`](./scripts/sync-skill-output-contracts.mjs).
 
 ## Engineering
 
@@ -347,7 +377,7 @@ npm run sync:codex
 npm test
 ```
 
-`npm run sync:codex` first regenerates the standardized HTML-readout contract, output, and next-step guidance in every skill and documentation page, then packages exactly the promoted skills and their shared readout helpers. The tests verify that every packaged file matches its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
+`npm run sync:codex` first regenerates the standardized HTML-readout contract, output, and context-aware next-prompt guidance in every skill and documentation page, then packages exactly the promoted skills and their shared readout helpers. The tests verify that every packaged file matches its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
 
 ## Keeping the upstream as a reference
 

@@ -22,6 +22,9 @@ _Avoid_: Suggested skill, simulated run, example execution.
 **Skill readout**: The concise, self-contained record of an individual skill run or explicitly labeled preview. Its status, findings, decisions, outputs, and checks describe only what actually occurred.
 _Avoid_: Dashboard, generated work, completion claim.
 
+**Next prompt**: A copy-ready continuation presented as a prominent fenced code block that explicitly invokes a catalog-approved follow-on skill and carries forward the preceding skill run's actual outcome and relevant observed evidence. A subdued callout underneath can suggest a model and thinking level. Model guidance is heuristic, never a measured result or automatic configuration change. A prompt suggests future work; it never claims its embedded skill has already run.
+_Avoid_: Skill-only recommendation, invented accomplishment, autonomous invocation, mandatory follow-up.
+
 **Execution context**: The automatically observed machine and platform that actually generated a skill readout, plus any independently verified deployments and repository-relative files modified by that specific run.
 _Avoid_: Guessed host, full machine path, dirty-worktree snapshot, unrelated change.
 
@@ -90,6 +93,7 @@ _Avoid_: Automatic exfiltration, inferred publication, compulsory remote depende
 - A promoted skill is the source of truth for its generated Codex-plugin copy.
 - Each adapted promoted skill retains an identifiable upstream counterpart.
 - A skill run produces one immutable skill readout.
+- A skill readout can suggest up to three next prompts; each embeds an approved follow-on skill without turning that recommendation into an actual skill run.
 - Every actual skill readout records its real execution machine; previews do not describe a run.
 - An execution context contains only deployments and project files actually verified for that run.
 - A GitHub-facing skill run can record optional delivery provenance only from independently verified records.
