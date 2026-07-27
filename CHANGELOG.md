@@ -2,6 +2,18 @@
 
 QuickStark versions describe the verified repository and plugin version; they do not, by themselves, claim a published GitHub release or tag.
 
+## 2.6.0
+
+### Minor Changes
+
+- Release QuickStark Skills 2.6.0 with synchronized Claude and Codex plugins, all 24 promoted skills, and the production-ready, purpose-built skill reporting experience.
+
+  - Ship the approved design B with visual exception summaries, 13 px featured details, 12 px native skill prompts, aligned responsive prompt cards, and a full-height Project Workbench.
+  - Keep next prompts truthful, concise, catalog-derived, and ordered by actual build, behavior-first test, independent review, GitHub integration, and separately approved release evidence.
+  - Distinguish verified GitHub issue totals from the separate relevant-issue sidebar, reject closed or unverified issues, and link branches or commits only after independently verifying their publication.
+  - Preserve all 24 honest skill previews, immutable historical reports, native first-action validation, and source-synchronized plugin distributions.
+  - Verify the release against the complete 285-test production and browser regression suite.
+
 ## 2.5.0
 
 ### Minor Changes
