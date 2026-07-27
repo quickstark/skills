@@ -1298,7 +1298,21 @@ function normalizeNextPromptModel(candidate, name, context, index) {
 
 function normalizeRecommendations(skill, recommendations, context) {
   const allowed = NEXT_SKILLS_BY_NAME[skill.name];
-  const selected = recommendations === undefined ? allowed : recommendations;
+  const passedChecks = context.checks.some((check) => check.status === "passed")
+    && !context.checks.some((check) => check.status === "failed");
+  const reviewedWithoutFindings = (
+    skill.name === "qs-review-code"
+    || context.skillsUsed.includes("qs-review-code")
+  )
+    && context.status === "Completed"
+    && context.findings.length === 0
+    && passedChecks;
+  const selected = recommendations === undefined && reviewedWithoutFindings
+    ? [...allowed].sort((left, right) =>
+      Number(right.name === "qs-git-merge") - Number(left.name === "qs-git-merge"))
+    : recommendations === undefined
+      ? allowed
+      : recommendations;
 
   if (!Array.isArray(selected) || selected.length > 3) {
     throw new Error("nextSkills must contain no more than three catalog recommendations.");
@@ -1446,6 +1460,7 @@ export function normalizeSkillReadout(input) {
     nextSkills: normalizeRecommendations(skill, input.nextSkills, {
       status,
       outcome,
+      skillsUsed: used,
       findings,
       decisions,
       outputs,

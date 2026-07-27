@@ -61,6 +61,17 @@ A promoted skill has one canonical `SKILL.md`, matching agent metadata, an entry
 
 Delivery provenance is optional and evidence-based. A local commit is not a published commit; a version in `package.json` is not evidence of a Git tag, a GitHub release, a merged pull request, or a closed issue.
 
+## GitHub integration and release
+
+Implementation, behavior-first testing, and independent review precede delivery. `/qs-git-merge` then inspects the verified current branch, remote tracking, GitHub pull-request state, and actual merge or rebase before selecting an integration path:
+
+- A reviewed default-branch commit ahead of `origin/main` requires an explicitly approved `git push origin main`; no branch merge is invented.
+- A feature branch can require an explicitly approved branch push, pull request, successful required checks, and GitHub pull-request merge.
+- An actual merge or rebase conflict is resolved against both original intentions and the project's verified checks.
+- `/qs-deploy-release` remains a separate, explicitly approved production or release operation.
+
+Never publish to the read-only `upstream` reference. Record remote publication, pull-request merges, issue closure, and releases only after independently verifying each actual GitHub artifact.
+
 ## Production trust boundaries
 
 - The public browser library is protected by Traefik and Authelia; it is read-only.

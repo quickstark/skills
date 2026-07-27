@@ -13,6 +13,8 @@ Once done, use /qs-review-code to review the work.
 
 Commit your work to the current branch.
 
+Before declaring delivery complete, inspect the current branch, tracked remote, ahead/behind state, independent review, checks, and any actual GitHub pull request. Recommend `$qs-git-merge` when a reviewed commit, branch push, pull request, or actual merge remains pending. A commit on `main` ahead of `origin/main` needs explicit approval for `git push origin main`; it does not need a fabricated branch merge. Keep `/qs-deploy-release` separate and explicitly approved. Never claim a local commit has already been published.
+
 ## Completion report and next steps
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
@@ -86,16 +88,16 @@ Use $qs-review-code to review these changes for correctness, standards, and requ
 >
 > Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
 
-**3. `/qs-code-document`**
+**3. `/qs-git-merge`**
 
-Document the verified implementation, changed files, and operational behavior.
+Integrate the reviewed change and verify its actual branch, pull request, and GitHub publication.
 
 ```text
-Use $qs-code-document to write or update accurate documentation for the actual project and its verified behavior.
+Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication.
 ```
 
-> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
 >
-> Heuristic: Verified documentation usually benefits from focused code-to-document comparison.
+> Heuristic: GitHub integration benefits from verifying branch state, publication, pull requests, and competing changes.
 
 Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

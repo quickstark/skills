@@ -15,6 +15,7 @@ import {
 import {
   READOUT_PROFILES_BY_NAME,
   SKILLS,
+  SKILLS_BY_NAME,
 } from "../scripts/qs-skill-catalog.mjs";
 import {
   observeGitHubProject,
@@ -288,6 +289,142 @@ test("the five-second summary displays the verified issue total instead of the s
     /<span>OPEN ISSUES<\/span><strong>22<\/strong><small>Verified GitHub issues<\/small>/,
   );
   assert.doesNotMatch(summary, /<span>OPEN ISSUES<\/span><strong>8<\/strong>/);
+});
+
+test("a completed clean code review recommends verified Git integration as its next action", () => {
+  const input = {
+    skill: "qs-review-code",
+    outcome: "Independently verified the approved reporting change; main remains ahead of origin/main.",
+    findings: [],
+    checks: [{ title: "Independent review and production regression suite", status: "passed" }],
+  };
+  const report = normalizeSkillReadout(input);
+  const html = renderSkillReadout(input);
+
+  assert.equal(report.nextSkills[0].name, "qs-git-merge");
+  assert.match(report.nextSkills[0].prompt, /^Use \$qs-git-merge\b/);
+  assert.match(report.nextSkills[0].prompt, /main remains ahead of origin\/main/i);
+  assert.match(html, /\$qs-git-merge/);
+  assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/);
+});
+
+test("tested and independently reviewed build and TDD reports surface the pending GitHub integration", () => {
+  for (const [skill, skillsUsed] of [
+    ["qs-code-build", ["qs-code-build", "qs-test-tdd", "qs-review-code"]],
+    ["qs-test-tdd", ["qs-test-tdd", "qs-review-code"]],
+  ]) {
+    const input = {
+      skill,
+      skillsUsed,
+      outcome: "Verified the implementation and review; the current main commit has not been published to GitHub.",
+      findings: [],
+      checks: [{ title: "Behavior-first regression suite", status: "passed" }],
+    };
+    const report = normalizeSkillReadout(input);
+    const html = renderSkillReadout(input);
+
+    assert.equal(report.nextSkills[0].name, "qs-git-merge", skill);
+    assert.match(report.nextSkills[0].prompt, /^Use \$qs-git-merge\b/, skill);
+    assert.match(report.nextSkills[0].prompt, /has not been published to GitHub/i, skill);
+    assert.match(html, /\$qs-git-merge/, skill);
+    assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/, skill);
+  }
+});
+
+test("actionable reviews and failed checks never recommend merging an unready change", () => {
+  for (const input of [
+    {
+      skill: "qs-review-code",
+      outcome: "An independently observed review finding must be fixed before integration.",
+      findings: [{ title: "Documented requirement is not implemented", priority: "P1" }],
+      checks: [{ title: "Regression suite", status: "passed" }],
+    },
+    {
+      skill: "qs-review-code",
+      outcome: "A failed regression must not be published.",
+      findings: [],
+      checks: [{ title: "Regression suite", status: "failed" }],
+    },
+    {
+      skill: "qs-code-build",
+      skillsUsed: ["qs-code-build", "qs-review-code"],
+      outcome: "An independently reviewed implementation still has a failing check.",
+      checks: [{ title: "Regression suite", status: "failed" }],
+    },
+  ]) {
+    const report = normalizeSkillReadout(input);
+
+    assert.notEqual(report.nextSkills[0].name, "qs-git-merge", input.outcome);
+    assert.doesNotMatch(report.nextSkills[0].prompt, /^Use \$qs-git-merge\b/, input.outcome);
+  }
+});
+
+test("Git integration preserves a separate explicitly approved release step", () => {
+  const input = {
+    skill: "qs-git-merge",
+    outcome: "Verified the current branch and GitHub integration without claiming a release.",
+    checks: [{ title: "Integrated production regression suite", status: "passed" }],
+  };
+  const report = normalizeSkillReadout(input);
+  const release = report.nextSkills.find((next) => next.name === "qs-deploy-release");
+  const html = renderSkillReadout(input);
+
+  assert.ok(release, "a documented GitHub delivery can lead to a separately approved release");
+  assert.match(release.prompt, /^Use \$qs-deploy-release\b/);
+  assert.match(release.reason, /approved|explicit/i);
+  assert.match(html, /\$qs-deploy-release/);
+  assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/);
+});
+
+test("the Git skill distinguishes a real merge, a pull request, and publishing an ahead default branch", async () => {
+  const skill = SKILLS_BY_NAME.get("qs-git-merge");
+  const [instructions, agent, documentation] = await Promise.all([
+    readFile(join(process.cwd(), "skills/engineering/qs-git-merge/SKILL.md"), "utf8"),
+    readFile(join(process.cwd(), "skills/engineering/qs-git-merge/agents/openai.yaml"), "utf8"),
+    readFile(join(process.cwd(), "docs/engineering/qs-git-merge.md"), "utf8"),
+  ]);
+
+  assert.match(skill.shortDescription, /GitHub|publish|integration/i);
+  assert.match(skill.prompt, /GitHub|publish|pull request/i);
+  assert.match(instructions, /git push origin main/);
+  assert.match(instructions, /pull request/i);
+  assert.match(instructions, /explicit(?:ly)? (?:requested|approved|authorized)/i);
+  assert.match(instructions, /no (?:branch )?merge|no merge.*(?:required|necessary)/i);
+  assert.match(instructions, /upstream.*(?:read.only|never push)|never push.*upstream/i);
+  assert.match(agent, /GitHub|publish|integration/i);
+  assert.match(documentation, /git push origin main/);
+  assert.match(documentation, /pull request/i);
+  assert.match(documentation, /explicit(?:ly)? (?:requested|approved|authorized)/i);
+});
+
+test("the engineering router places GitHub integration between a passing review and an explicitly approved release", async () => {
+  const [router, readme, engineering] = await Promise.all([
+    readFile(join(process.cwd(), "skills/engineering/qs-help/SKILL.md"), "utf8"),
+    readFile(join(process.cwd(), "README.md"), "utf8"),
+    readFile(join(process.cwd(), "skills/engineering/README.md"), "utf8"),
+  ]);
+  const newWork = router.slice(
+    router.indexOf("## Order of operations: new work"),
+    router.indexOf("## Order of operations: refactoring"),
+  );
+  const refactoring = router.slice(
+    router.indexOf("## Order of operations: refactoring"),
+    router.indexOf("## Every skill and its purpose"),
+  );
+
+  for (const [label, workflow] of [["new work", newWork], ["refactoring", refactoring]]) {
+    const review = workflow.indexOf("/qs-review-code");
+    const integration = workflow.indexOf("/qs-git-merge", review + 1);
+    const release = workflow.indexOf("/qs-deploy-release", integration + 1);
+
+    assert.ok(review >= 0, `${label} includes an independent review`);
+    assert.ok(integration > review, `${label} integrates only after review`);
+    assert.ok(release > integration, `${label} keeps deployment separate from GitHub integration`);
+    assert.match(workflow, /explicit(?:ly)?|approval|authorization/i, `${label} preserves explicit external authorization`);
+  }
+
+  assert.match(readme, /\/qs-review-code[\s\S]{0,100}\/qs-git-merge[\s\S]{0,100}\/qs-deploy-release/);
+  assert.match(engineering, /qs-git-merge[^\n]*(?:GitHub|publish|integration)/i);
 });
 
 test("locally observed branches and unpublished commits never become GitHub artifact links", () => {

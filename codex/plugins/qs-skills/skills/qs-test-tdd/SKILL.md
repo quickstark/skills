@@ -35,6 +35,8 @@ Ask: "What's the public interface, and which seams should we test?"
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `qs-review-code` skill), not the red → green implementation cycle.
 
+After the behavior-first checks pass, recommend `/qs-review-code` when independent review remains outstanding. Once the actual implementation and review are complete, recommend `$qs-git-merge` for the observed pending branch push, pull request, merge, or GitHub verification. Never claim that tests alone published or released the change.
+
 ## Completion report and next steps
 
 Finish every invocation with an architecture-quality, self-contained HTML readout and a concise in-chat completion report. Resolve the QuickStark root by walking upward from this skill's `SKILL.md`; both the canonical repository and installed Codex plugin contain `scripts/qs-skill-readout.mjs`.
@@ -108,16 +110,16 @@ Use $qs-review-code to review these changes for correctness, standards, and requ
 >
 > Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
 
-**3. `/qs-design-modules`**
+**3. `/qs-git-merge`**
 
-Improve an interface when the test exposes an unhealthy seam.
+Integrate the behavior-first change after its tests and independent review pass.
 
 ```text
-Use $qs-design-modules to design a clean, deep, and testable module for this problem.
+Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication.
 ```
 
 > Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
 >
-> Heuristic: Module design benefits from carefully reasoning about interfaces and seams.
+> Heuristic: GitHub integration benefits from verifying branch state, publication, pull requests, and competing changes.
 
 Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

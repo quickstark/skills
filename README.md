@@ -53,7 +53,7 @@ Run `/qs-setup` once in a project to configure its issue tracker, domain documen
 | Testing | `/qs-test-tdd` | Build behavior using a test-first feedback loop. |
 | Review | `/qs-review-code` | Review changes against code standards and requirements. |
 | Deployment | `/qs-deploy-release` | Verify and execute an existing, documented deployment safely. |
-| Git | `/qs-git-merge` | Resolve an in-progress merge or rebase. |
+| Git | `/qs-git-merge` | Verify approved GitHub integration, publication, pull requests, and merge or rebase conflicts. |
 | Workflow | `/qs-flow-triage`, `/qs-flow-handoff` | Organize incoming issues and hand work to another session. |
 | Learning and skill authoring | `/qs-learn-teach`, `/qs-skill-write` | Learn a subject or improve an agent skill. |
 
@@ -74,10 +74,14 @@ Run `/qs-setup` once in a project to configure its issue tracker, domain documen
     ↓
 /qs-review-code
     ↓
+/qs-git-merge  (verify the actual branch, pull request, or approved GitHub push)
+    ↓
 /qs-deploy-release
 ```
 
 Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use `/qs-flow-triage` when the work starts as an incoming issue, `/qs-code-debug` when something is broken, and `/qs-help` whenever you are unsure where to start.
+
+GitHub integration and production release are separate. After tests and independent review pass, `/qs-git-merge` checks whether the actual next operation is an approved default-branch push, a feature-branch pull request, a pull-request merge, or a real merge or rebase conflict. Invoke `/qs-deploy-release` only when a documented production release has been separately requested and approved. Never report a local commit as already published.
 
 ## The refactoring workflow
 
@@ -95,6 +99,8 @@ Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use 
 /qs-code-document  (when documentation needs updating)
     ↓
 /qs-review-code
+    ↓
+/qs-git-merge  (verify the actual branch, pull request, or approved GitHub push)
     ↓
 /qs-deploy-release  (only when requested and approved)
 ```
@@ -353,7 +359,7 @@ These skills can also be selected automatically when the task fits.
 - [qs-code-document](./skills/engineering/qs-code-document/SKILL.md) — Write accurate documentation from verified project behavior.
 - [qs-test-tdd](./skills/engineering/qs-test-tdd/SKILL.md) — Implement behavior using a red-green test-driven loop.
 - [qs-review-code](./skills/engineering/qs-review-code/SKILL.md) — Review code against its specification and project standards.
-- [qs-git-merge](./skills/engineering/qs-git-merge/SKILL.md) — Resolve Git merge and rebase conflicts without losing work.
+- [qs-git-merge](./skills/engineering/qs-git-merge/SKILL.md) — Verify GitHub integration, approved publication, pull requests, and actual merge or rebase conflicts.
 
 ## Productivity
 

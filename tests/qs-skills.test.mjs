@@ -2629,7 +2629,7 @@ test("a run can preserve a more specific copy-ready prompt for its approved next
 
 test("an observed critical finding increases the suggested model and thinking level", () => {
   const report = normalizeSkillReadout({
-    skill: "qs-code-build",
+    skill: "qs-skill-write",
     outcome: "Identified a critical security issue while preparing the follow-on review.",
     findings: [{ title: "Critical authorization boundary", priority: "P0" }],
     nextSkills: ["qs-code-document"],
@@ -2645,7 +2645,7 @@ test("an observed critical finding increases the suggested model and thinking le
 
 test("an actual failed check raises routine follow-on guidance without inventing measurements", () => {
   const report = normalizeSkillReadout({
-    skill: "qs-code-build",
+    skill: "qs-skill-write",
     outcome: "A verification check failed and needs investigation.",
     checks: [{ title: "Regression suite", status: "failed" }],
     nextSkills: ["qs-code-document"],
@@ -4506,6 +4506,7 @@ test("the help router enumerates the right order for new work", async () => {
     "qs-design-modules",
     "qs-code-build",
     "qs-review-code",
+    "qs-git-merge",
     "qs-deploy-release",
   ];
   let previous = -1;
@@ -4539,6 +4540,7 @@ test("the help router enumerates safe, test-first refactoring", async () => {
     "qs-test-tdd",
     "qs-code-build",
     "qs-review-code",
+    "qs-git-merge",
     "qs-deploy-release",
   ];
   let previous = -1;

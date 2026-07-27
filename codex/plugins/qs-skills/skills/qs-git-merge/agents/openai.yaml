@@ -1,4 +1,4 @@
 interface:
   display_name: "QS Git: Merge"
-  short_description: "Safely resolve Git merge and rebase conflicts"
-  default_prompt: "Use $qs-git-merge to resolve the current merge or rebase conflicts without losing work."
+  short_description: "Safely integrate and publish verified GitHub changes"
+  default_prompt: "Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication."

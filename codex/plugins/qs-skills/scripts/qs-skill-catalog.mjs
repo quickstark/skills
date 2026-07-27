@@ -171,8 +171,8 @@ export const SKILLS = Object.freeze([
     upstreamName: "resolving-merge-conflicts",
     name: "qs-git-merge",
     displayName: "QS Git: Merge",
-    shortDescription: "Safely resolve Git merge and rebase conflicts",
-    prompt: "resolve the current merge or rebase conflicts without losing work",
+    shortDescription: "Safely integrate and publish verified GitHub changes",
+    prompt: "verify and complete the actual Git integration, pull request, or GitHub publication",
     userInvoked: false,
   },
   {
@@ -365,11 +365,11 @@ export const READOUT_PROFILES_BY_NAME = Object.freeze({
     { findings: "Review matrix", checks: "Review verification", decisions: "Review decisions" },
   ),
   "qs-git-merge": defineReadoutProfile(
-    "Merge resolution",
-    "Show actual conflict resolution and verification",
+    "GitHub integration",
+    "Show verified Git integration, publication, and conflict resolution",
     "flow",
     ["findings", "decisions", "checks", "outputs"],
-    { findings: "Observed conflicts", decisions: "Resolution decisions", checks: "Merge verification" },
+    { findings: "Git and GitHub state", decisions: "Integration decisions", checks: "Integration verification" },
   ),
   "qs-flow-triage": defineReadoutProfile(
     "Issue triage",
@@ -476,7 +476,7 @@ export const MODEL_GUIDANCE_BY_NAME = Object.freeze({
     "gpt-5.6-sol", "high", "Code review benefits from deeper correctness, security, and standards analysis.",
   ),
   "qs-git-merge": defineModelGuidance(
-    "gpt-5.6-sol", "high", "Conflict resolution benefits from preserving intent across competing changes.",
+    "gpt-5.6-sol", "high", "GitHub integration benefits from verifying branch state, publication, pull requests, and competing changes.",
   ),
   "qs-flow-triage": defineModelGuidance(
     "gpt-5.6-terra", "medium", "Issue triage usually benefits from focused categorization and prioritization.",
@@ -688,8 +688,8 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
       reason: "Review the implementation against its requirements and standards.",
     },
     {
-      name: "qs-code-document",
-      reason: "Document the verified implementation, changed files, and operational behavior.",
+      name: "qs-git-merge",
+      reason: "Integrate the reviewed change and verify its actual branch, pull request, and GitHub publication.",
     },
   ],
   "qs-code-document": [
@@ -730,8 +730,8 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
       reason: "Review the completed behavior and the quality of its tests.",
     },
     {
-      name: "qs-design-modules",
-      reason: "Improve an interface when the test exposes an unhealthy seam.",
+      name: "qs-git-merge",
+      reason: "Integrate the behavior-first change after its tests and independent review pass.",
     },
   ],
   "qs-review-code": [
@@ -740,8 +740,8 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
       reason: "Address actionable findings before the change is considered complete.",
     },
     {
-      name: "qs-test-tdd",
-      reason: "Add missing regression coverage revealed by the review.",
+      name: "qs-git-merge",
+      reason: "Verify the branch, pull request, integration, and GitHub publication required for the reviewed change.",
     },
     {
       name: "qs-deploy-release",
@@ -751,15 +751,15 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
   "qs-git-merge": [
     {
       name: "qs-test-tdd",
-      reason: "Verify that resolving the conflict preserved observable behavior.",
+      reason: "Verify that Git integration or conflict resolution preserved observable behavior.",
     },
     {
       name: "qs-review-code",
-      reason: "Review the combined changes and the conflict resolution.",
+      reason: "Review the integrated changes, actual branch state, and any conflict resolution.",
     },
     {
-      name: "qs-code-debug",
-      reason: "Investigate a behavior regression introduced by the merge.",
+      name: "qs-deploy-release",
+      reason: "Run the documented release workflow only after GitHub publication is verified and deployment is explicitly approved.",
     },
   ],
   "qs-flow-triage": [

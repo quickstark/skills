@@ -18,7 +18,7 @@ Orient the user. Identify the actual situation and offer up to three copy-ready 
 - **Reproducible bug or regression:** start with `/qs-code-debug`.
 - **Missing, outdated, or unverified project documentation:** start with `/qs-code-document`.
 - **Incoming reports or requests:** start with `/qs-flow-triage`.
-- **In-progress Git conflict:** start with `/qs-git-merge`.
+- **Reviewed work awaiting GitHub integration, pull-request delivery, or conflict resolution:** start with `/qs-git-merge`.
 - **Completed, reviewed change ready for a documented release:** start with `/qs-deploy-release`.
 
 Offer only prompts that fit the situation. A tiny, already-understood change does not need a roadmap, a prototype, a specification, and tickets simply because those skills exist.
@@ -36,10 +36,11 @@ Offer only prompts that fit the situation. A tiny, already-understood change doe
 9. **Design the seam — `/qs-design-modules`.** Define a small interface and deep implementation when a new module or significant boundary is involved.
 10. **Build and test — `/qs-code-build` with `/qs-test-tdd`.** Implement the next agreed change or unblocked ticket. Write behavior-focused tests at confirmed seams; run one ticket per fresh session when the work was split.
 11. **Document verified behavior — `/qs-code-document`.** Update the actual README, module documentation, runbook, architecture note, or release documentation when the completed change requires it.
-12. **Review — `/qs-review-code`.** Check requirements, correctness, regressions, documentation, and repository standards. Address findings before release.
-13. **Release — `/qs-deploy-release`.** Use only the actual, documented deployment workflow. Verify prerequisites and obtain explicit approval before any production, publishing, infrastructure, migration, or other external change.
+12. **Review — `/qs-review-code`.** Check requirements, correctness, regressions, documentation, and repository standards. Address findings before integration.
+13. **Integrate and verify GitHub delivery — `/qs-git-merge`.** Inspect the actual branch, tracked remote, upstream divergence, GitHub pull request, and any in-progress conflict. A reviewed commit already on `main` needs an explicitly approved `git push origin main`, not a fabricated merge; a feature branch may need an explicitly approved push, pull request, checks, and merge. Verify the remote result before claiming publication.
+14. **Release — `/qs-deploy-release`.** Use only the actual, documented deployment workflow. Verify prerequisites and obtain separate explicit approval before any production, publishing, infrastructure, migration, or other external change.
 
-For small changes, the effective route is often `/qs-plan-clarify` → `/qs-code-build` → `/qs-test-tdd` → `/qs-review-code`. Include `/qs-deploy-release` only when the user has actually requested deployment.
+For small changes, the effective route is often `/qs-plan-clarify` → `/qs-code-build` → `/qs-test-tdd` → `/qs-review-code` → `/qs-git-merge`. Include `/qs-deploy-release` only when the user has actually requested deployment.
 
 ## Order of operations: refactoring
 
@@ -53,7 +54,8 @@ For small changes, the effective route is often `/qs-plan-clarify` → `/qs-code
 8. **Make the change — `/qs-code-build`.** Refactor in small, tested steps while preserving the agreed external behavior.
 9. **Document changed architecture — `/qs-code-document`.** Update verified module boundaries, interfaces, architecture records, and any affected operational guidance.
 10. **Review — `/qs-review-code`.** Verify the architectural improvement, unchanged behavior, documentation, test quality, and project standards.
-11. **Release only when requested — `/qs-deploy-release`.** Follow the existing release process and require explicit authorization for external changes.
+11. **Integrate and verify GitHub delivery — `/qs-git-merge`.** Select only the actual, explicitly authorized branch push, pull request, merge, or conflict-resolution operation; verify its remote state.
+12. **Release only when requested — `/qs-deploy-release`.** Follow the existing release process and require separate explicit authorization for deployment.
 
 When the starting point is an observed failure, use `/qs-code-debug` before an architectural review. Do not use a speculative refactor as a substitute for reproducing a bug.
 
@@ -79,7 +81,7 @@ When the starting point is an observed failure, use `/qs-code-debug` before an a
 | `/qs-code-debug` | Reproduce, diagnose, and fix a bug or regression. |
 | `/qs-test-tdd` | Write behavior-focused tests and drive a red-green implementation loop. |
 | `/qs-review-code` | Review a change against its requirements and coding standards. |
-| `/qs-git-merge` | Resolve an existing Git merge or rebase conflict safely. |
+| `/qs-git-merge` | Verify and complete approved GitHub integration, publication, pull requests, and actual conflicts. |
 | `/qs-flow-triage` | Turn incoming reports and requests into actionable work. |
 | `/qs-flow-handoff` | Preserve essential work and recommendations for the next session. |
 | `/qs-learn-teach` | Teach a subject through a stateful, guided learning workflow. |

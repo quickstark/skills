@@ -29,4 +29,4 @@ These skills are also available for automatic selection when their task fits.
 - [qs-code-document](./qs-code-document/SKILL.md) — Write accurate documentation from verified project behavior.
 - [qs-test-tdd](./qs-test-tdd/SKILL.md) — Implement behavior using test-driven development.
 - [qs-review-code](./qs-review-code/SKILL.md) — Review code against standards and requirements.
-- [qs-git-merge](./qs-git-merge/SKILL.md) — Resolve an in-progress merge or rebase conflict.
+- [qs-git-merge](./qs-git-merge/SKILL.md) — Verify approved GitHub integration, publication, pull requests, and actual merge or rebase conflicts.

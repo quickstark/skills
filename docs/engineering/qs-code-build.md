@@ -55,17 +55,17 @@ Use $qs-review-code to review these changes for correctness, standards, and requ
 >
 > Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
 
-**3. [`/qs-code-document`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-document/SKILL.md)**
+**3. [`/qs-git-merge`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-git-merge/SKILL.md)**
 
-Document the verified implementation, changed files, and operational behavior.
+Integrate the reviewed change and verify its actual branch, pull request, and GitHub publication.
 
 ```text
-Use $qs-code-document to write or update accurate documentation for the actual project and its verified behavior.
+Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication.
 ```
 
-> Suggested model: `gpt-5.6-terra` · Suggested thinking: `medium`
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
 >
-> Heuristic: Verified documentation usually benefits from focused code-to-document comparison.
+> Heuristic: GitHub integration benefits from verifying branch state, publication, pull requests, and competing changes.
 
 ## Where it fits
 

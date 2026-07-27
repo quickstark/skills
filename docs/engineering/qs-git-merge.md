@@ -9,15 +9,15 @@ codex plugin add qs-skills@quickstark
 
 ## What it does
 
-`qs-git-merge` works through an in-progress git merge or rebase conflict, hunk by hunk, and finishes the operation — resolved, checked, and committed.
+`qs-git-merge` checks the actual branch, tracked remote, GitHub pull request, merge or rebase, and publication state. It recommends or completes only the integration operation that actually exists and has been explicitly requested or approved.
 
-It resolves by **intent**, not by text. Before touching a hunk it traces each side back to its **primary source** — the commit message, the PR, the original issue — to understand why the change was made, then preserves both intents where they're compatible. It never invents new behaviour to paper over a clash, and it never reaches for `--abort`: the merge always gets finished.
+When reviewed changes are already committed on `main` and `main` is ahead of `origin/main`, no branch merge is required. The correct explicitly approved GitHub action is `git push origin main`. A feature branch may instead require an approved branch push, pull-request creation, required checks, and a pull-request merge. A release is a separate explicitly approved `/qs-deploy-release` operation.
 
 ## When to reach for it
 
 Type `/qs-git-merge`, or the agent reaches for it automatically when a task fits.
 
-Reach for this when you're mid-merge or mid-rebase and git has stopped on conflicts it can't resolve itself. It's for the conflict in front of you — not for planning the merge or for debugging behaviour that broke afterwards. If the merge is done but something's now failing for reasons you can't see, use [qs-code-debug](https://aihero.dev/skills-diagnosing-bugs) instead.
+Reach for this after an implemented, tested, and independently reviewed change still needs Git integration or GitHub publication, or when an actual merge or rebase stops on a conflict. Verify repository ownership, the default branch, the remote tracking state, and any real pull request before selecting a path. Never push to `upstream`; it remains the read-only Matt Pocock reference.
 
 ## Resolving by intent
 
@@ -30,7 +30,9 @@ That's why the primary sources matter. You can't preserve an intent you haven't 
 - Each resolved hunk keeps both sides' behaviour, or names the trade-off where it couldn't.
 - No new behaviour appears that wasn't on either branch.
 - The project's own checks — typecheck, tests, format — are found and run green before the commit.
-- The merge or rebase is carried all the way to a finished commit, never aborted.
+- An actual merge or rebase is carried all the way to a finished commit, never aborted.
+- A default-branch push, feature-branch pull request, GitHub merge, and production release are correctly identified as separate operations.
+- Publication is claimed only after the exact GitHub repository, remote branch, and commit have been verified.
 
 ## Output and next steps
 
@@ -40,7 +42,7 @@ Depending on the actual completed work, tailor one to three top next prompts fro
 
 **1. [`/qs-test-tdd`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-tdd/SKILL.md)**
 
-Verify that resolving the conflict preserved observable behavior.
+Verify that Git integration or conflict resolution preserved observable behavior.
 
 ```text
 Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
@@ -52,7 +54,7 @@ Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
 
 **2. [`/qs-review-code`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md)**
 
-Review the combined changes and the conflict resolution.
+Review the integrated changes, actual branch state, and any conflict resolution.
 
 ```text
 Use $qs-review-code to review these changes for correctness, standards, and requirements.
@@ -62,17 +64,17 @@ Use $qs-review-code to review these changes for correctness, standards, and requ
 >
 > Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
 
-**3. [`/qs-code-debug`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-debug/SKILL.md)**
+**3. [`/qs-deploy-release`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-deploy-release/SKILL.md)**
 
-Investigate a behavior regression introduced by the merge.
+Run the documented release workflow only after GitHub publication is verified and deployment is explicitly approved.
 
 ```text
-Use $qs-code-debug to reproduce, diagnose, and fix this bug with a regression test.
+Use $qs-deploy-release to verify and run this project's documented release workflow.
 ```
 
-> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
 >
-> Heuristic: Debugging benefits from tracing failure evidence back to its actual cause.
+> Heuristic: An approved release benefits from deliberate prerequisite and smoke-test checks.
 
 ## Where it fits
 

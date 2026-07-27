@@ -1,19 +1,19 @@
 ---
 name: qs-git-merge
-description: "Use when you need to resolve an in-progress git merge/rebase conflict."
+description: "Safely inspect and complete actual Git integration, GitHub pull requests, approved publication, and merge or rebase conflicts."
 ---
 
-1. **See the current state** of the merge/rebase. Check Git history, the current branch, upstream divergence, and conflicting files. If no merge or rebase is in progress, report the observed local and remote state instead of creating, staging, or claiming a merge.
+1. **Verify the actual Git and GitHub state.** Check the current branch, tracked remote, default branch, local commits, upstream divergence, in-progress merge or rebase, and any existing GitHub pull request. Use the configured GitHub MCP or authenticated `gh` CLI for directly observed remote state. Never infer a merge, pull request, publication, issue closure, or release from a local commit.
 
-2. **Find the primary sources** for each conflict. Understand deeply why each change was made, and what the original intent was. Read the commit messages, check the PRs, check original issues/tickets.
+2. **Choose only the integration path that actually applies.** If reviewed commits are already on the default branch and ahead of `origin`, no branch merge is required: `git push origin main` is the correct publication step only when explicitly requested or approved. If the work is on a feature branch, verify whether it needs an explicitly approved branch push, pull-request creation, pull-request checks, or pull-request merge. If a Git merge or rebase is already in progress, inspect its actual conflicting files. If nothing is pending, report that there is nothing to integrate or publish.
 
-3. **Resolve each hunk.** Preserve both intents where possible. Where incompatible, pick the one matching the merge's stated goal and note the trade-off. Do **not** invent new behaviour. Always resolve; never `--abort`.
+3. **Preserve conflict intent when conflicts actually exist.** Read each side's commit, pull request, and issue evidence before resolving a hunk. Preserve both intentions when compatible; otherwise record the trade-off matching the requested integration. Do not invent behavior, create a conflict, or abort an in-progress operation.
 
-4. Discover the project's **automated checks** and run them — typically typecheck, then tests, then format. Fix anything the merge broke.
+4. **Verify before external delivery.** Run the project's actual automated checks and inspect required pull-request checks. Address failed checks or review findings before publishing or merging. Preserve unrelated worktree changes; never stage a user-owned prototype, configuration, or unrelated change.
 
-5. **Finish the actual merge/rebase.** Stage only files belonging to the in-progress resolution and commit. If rebasing, continue the rebase process until all commits are rebased. Preserve unrelated user changes.
+5. **Finish only the explicitly authorized operation.** Complete an actual merge or rebase, push approved changes to `origin`, or create or merge the explicitly approved GitHub pull request. Never push to `upstream`; it is a read-only attribution reference. Do not bypass protected branches, required checks, review rules, or authentication.
 
-6. **Record verified delivery evidence.** Include the resolved commit hash, and distinguish a local commit from one actually present on its remote. Include GitHub pull-request links and states only when directly verified. Include a release version or issues closed by that release only when the release and each actual closure have been independently confirmed. A merge, commit message, or local tag alone does not establish publication, pull-request merge, issue closure, or release.
+6. **Independently verify delivery.** Confirm the published remote branch and exact commit using Git or GitHub. Include a pull-request URL and merged state only after observing the real pull request. A release remains a separate `/qs-deploy-release` step that requires its own explicit approval; publishing a branch is not a deployment or release.
 
 ## Completion report and next steps
 
@@ -48,7 +48,7 @@ Delivery: Verified PRs, closed issues, release, or commit, only when applicable.
 
 **1. Recommended continuation**
 
-Verify that resolving the conflict preserved observable behavior.
+Verify that Git integration or conflict resolution preserved observable behavior.
 
 ```text
 Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
@@ -66,7 +66,7 @@ Select at most three genuinely relevant, copy-ready prompt directions from:
 
 **1. `/qs-test-tdd`**
 
-Verify that resolving the conflict preserved observable behavior.
+Verify that Git integration or conflict resolution preserved observable behavior.
 
 ```text
 Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
@@ -78,7 +78,7 @@ Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
 
 **2. `/qs-review-code`**
 
-Review the combined changes and the conflict resolution.
+Review the integrated changes, actual branch state, and any conflict resolution.
 
 ```text
 Use $qs-review-code to review these changes for correctness, standards, and requirements.
@@ -88,16 +88,16 @@ Use $qs-review-code to review these changes for correctness, standards, and requ
 >
 > Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
 
-**3. `/qs-code-debug`**
+**3. `/qs-deploy-release`**
 
-Investigate a behavior regression introduced by the merge.
+Run the documented release workflow only after GitHub publication is verified and deployment is explicitly approved.
 
 ```text
-Use $qs-code-debug to reproduce, diagnose, and fix this bug with a regression test.
+Use $qs-deploy-release to verify and run this project's documented release workflow.
 ```
 
-> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
+> Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
 >
-> Heuristic: Debugging benefits from tracing failure evidence back to its actual cause.
+> Heuristic: An approved release benefits from deliberate prerequisite and smoke-test checks.
 
 Tailor every selected prompt to this run's actual outcome and recorded evidence; the catalog wording is a starting point, not a substitute for the accomplished work. Explain why the prompt advances the actual remaining work. If the request is finished, say `Top next prompts: None — the requested work is complete.` If input or approval is required, name the decision and do not imply that a suggested skill has already run.

@@ -79,6 +79,10 @@ Present the two reports under `## Standards` and `## Spec` headings, verbatim or
 
 End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
 
+### 6. Surface the actual delivery decision
+
+When actionable findings or failed checks remain, recommend `/qs-code-build` or `/qs-test-tdd`; do not suggest merging a failing change. When both independent review axes are clean and the observed checks pass, inspect the current branch, tracked remote, ahead/behind state, and any actual GitHub pull request. Recommend `$qs-git-merge` to complete only the verified, explicitly authorized integration or publication path. A commit already on `main` and ahead of `origin/main` requires an approved `git push origin main`, not a nonexistent branch merge. Treat `/qs-deploy-release` as a separate, explicitly approved release; never claim a PR, merge, published commit, or release without independently verifying it.
+
 ## Why two axes
 
 A change can pass one axis and fail the other:
@@ -149,17 +153,17 @@ Use $qs-code-build to implement this specification or ticket with appropriate te
 >
 > Heuristic: Implementation benefits from sustained reasoning and direct verification.
 
-**2. `/qs-test-tdd`**
+**2. `/qs-git-merge`**
 
-Add missing regression coverage revealed by the review.
+Verify the branch, pull request, integration, and GitHub publication required for the reviewed change.
 
 ```text
-Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
+Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication.
 ```
 
-> Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
+> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
 >
-> Heuristic: Test-driven work benefits from reasoning through behavior and regression seams.
+> Heuristic: GitHub integration benefits from verifying branch state, publication, pull requests, and competing changes.
 
 **3. `/qs-deploy-release`**
 

@@ -63,17 +63,17 @@ Use $qs-review-code to review these changes for correctness, standards, and requ
 >
 > Heuristic: Code review benefits from deeper correctness, security, and standards analysis.
 
-**3. [`/qs-design-modules`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-modules/SKILL.md)**
+**3. [`/qs-git-merge`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-git-merge/SKILL.md)**
 
-Improve an interface when the test exposes an unhealthy seam.
+Integrate the behavior-first change after its tests and independent review pass.
 
 ```text
-Use $qs-design-modules to design a clean, deep, and testable module for this problem.
+Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication.
 ```
 
 > Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
 >
-> Heuristic: Module design benefits from carefully reasoning about interfaces and seams.
+> Heuristic: GitHub integration benefits from verifying branch state, publication, pull requests, and competing changes.
 
 ## Where it fits
 
