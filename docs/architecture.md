@@ -30,10 +30,12 @@ flowchart LR
 | Claude distribution | `.claude-plugin/plugin.json` | Explicit list of promoted canonical skill directories. |
 | Codex distribution | `codex/plugins/qs-skills/skills/` | Generated, promoted-only snapshot; never edit it independently. |
 | Readout rendering and publishing | `scripts/qs-skill-readout.mjs` | Report normalization, project identity, HTML rendering, viewer, ingestion, publisher, migration, and retention. |
+| Report presentation and GitHub evidence | `scripts/qs-skill-report-presentation.mjs` | Approved B presentation, five-second summaries, native prompt cards, verified repository ownership, exact open-issue totals, and separate sampled-issue sidebars. |
 | Skill output contracts | `scripts/sync-skill-output-contracts.mjs` | Generated completion-report and next-step instructions in canonical skill and documentation files. |
-| Codex snapshot generation | `scripts/sync-codex-plugin.mjs` | Synchronizes promoted skill files and the shared catalog and renderer into the Codex plugin. |
+| Codex snapshot generation | `scripts/sync-codex-plugin.mjs` | Synchronizes promoted skill files and the shared catalog, renderer, and report presentation module into the Codex plugin. |
 | Production deployment | `deploy/readouts/compose.yaml` | Separate read-only viewer and authenticated ingestion services behind the existing reverse proxy. |
 | Behavioral verification | `tests/qs-skills.test.mjs` | Observable skill, plugin, reporting, publishing, security, and documentation behavior. |
+| Real-browser report verification | `tests/qs-report-presentation.test.mjs` | Chromium-measured 13 px featured observations, 12 px native prompts, responsive prompt alignment, full-height report rendering, immutable history, and GitHub issue sidebars. |
 
 The upstream `misc`, `personal`, `in-progress`, and `deprecated` directories remain reference material. They are not promoted, routed, or packaged.
 
@@ -48,12 +50,14 @@ A promoted skill has one canonical `SKILL.md`, matching agent metadata, an entry
 1. The invoked skill records only its observed outcome, findings, decisions, outputs, checks, and genuinely relevant next steps.
 2. The renderer automatically captures the actual execution hostname and platform.
 3. The canonical Git origin resolves to a safe project identity such as `github.com/quickstark/skills`.
-4. Verified deployments and run-owned repository-relative file changes are included only when explicitly observed.
-5. The catalog selects a purpose-specific visual profile. Previews cannot claim a skill run, machine, changed file, deployment, test, or release.
-6. A unique, self-contained HTML report is written to temporary storage or an explicitly configured durable project library.
-7. When a producer and project are explicitly authorized, the optional publisher submits a versioned structured envelope to `/api/v1/readouts`.
-8. The ingestion service authenticates the producer, verifies both project allowlists, renders safe server-owned HTML, and persists an immutable report.
-9. The existing read-only viewer exposes approved reports through browser authentication.
+4. GitHub repository ownership, the complete open-issue count, and a bounded sample of explicitly open same-repository issues are verified independently; samples never stand in for the total.
+5. Verified deployments and run-owned repository-relative file changes are included only when explicitly observed. Local Git branches and commits remain unlinked unless their exact remote publication is independently verified.
+6. The catalog selects a purpose-specific B visual profile. Previews cannot claim a skill run, machine, changed file, deployment, test, issue, or release.
+7. A unique, self-contained HTML report stores the verified issue total and bounded issue evidence separately in immutable metadata.
+8. The full-height Project Workbench reconstructs a separate issue sidebar only from validated, same-project immutable evidence; existing historical reports are never rewritten.
+9. When a producer and project are explicitly authorized, the optional publisher submits a versioned structured envelope to `/api/v1/readouts`.
+10. The ingestion service authenticates the producer, verifies both project allowlists, renders safe server-owned HTML, and persists an immutable report.
+11. The existing read-only viewer exposes approved reports through browser authentication.
 
 Delivery provenance is optional and evidence-based. A local commit is not a published commit; a version in `package.json` is not evidence of a Git tag, a GitHub release, a merged pull request, or a closed issue.
 

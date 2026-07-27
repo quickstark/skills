@@ -35,7 +35,7 @@ They run as parallel sub-agents so neither pollutes the other's context, and the
 
 ## Output and next steps
 
-`/qs-review-code` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and up to three copy-ready top next prompts. Present each complete prompt prominently in its own fenced text code block and place its suggested model and suggested thinking underneath in a visually muted callout. Each prompt embeds its catalog-approved follow-on skill and builds on the actual outcome, findings, decisions, outputs, and checks rather than merely recommending a skill name. Model and thinking guidance are explicitly heuristic; they are not measured model performance and never change the active configuration. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and browse verified projects, searchable reports, and actual recent activity. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
+`/qs-review-code` automatically starts or reuses a private, health-checked readout viewer; generates an architecture-quality, self-contained HTML readout; and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified viewer link and real readout path, real outputs or checks where applicable, and up to three copy-ready top next prompts. Present each complete prompt prominently in its own fenced text code block and place its suggested model and suggested thinking underneath in a visually muted callout. Each prompt embeds its catalog-approved follow-on skill and builds on the actual outcome, findings, decisions, outputs, and checks rather than merely recommending a skill name. Automatically generated prompts use the Codex-native `$qs-...` skill spelling; legacy explicit `/qs-...` prompts remain valid. Only the Codex composer and its skill picker can resolve a native skill mention into a blue token; a report cannot manufacture that UI state. Model and thinking guidance are explicitly heuristic; they are not measured model performance and never change the active configuration. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and open one full-height, project-first Project Workbench with verified project navigation, searchable actual skill runs, and complete immutable readouts. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
 
 Depending on the actual completed work, tailor one to three top next prompts from:
 
@@ -44,7 +44,7 @@ Depending on the actual completed work, tailor one to three top next prompts fro
 Address actionable findings before the change is considered complete.
 
 ```text
-Use /qs-code-build to implement this specification or ticket with appropriate tests.
+Use $qs-code-build to implement this specification or ticket with appropriate tests.
 ```
 
 > Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
@@ -56,7 +56,7 @@ Use /qs-code-build to implement this specification or ticket with appropriate te
 Add missing regression coverage revealed by the review.
 
 ```text
-Use /qs-test-tdd to implement this behavior using a red-green test-driven loop.
+Use $qs-test-tdd to implement this behavior using a red-green test-driven loop.
 ```
 
 > Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
@@ -68,7 +68,7 @@ Use /qs-test-tdd to implement this behavior using a red-green test-driven loop.
 Release an approved change after all required checks pass.
 
 ```text
-Use /qs-deploy-release to verify and run this project's documented release workflow.
+Use $qs-deploy-release to verify and run this project's documented release workflow.
 ```
 
 > Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`

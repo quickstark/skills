@@ -192,6 +192,114 @@ test("the production root presents verified projects, actual skill runs, and the
   assert.doesNotMatch(html, /<script\b/i);
 });
 
+test("the production Workbench presents the selected B metadata, visual summary, and native next prompts", async (context) => {
+  const { directory, viewer } = await createProjectWorkbench(context);
+  const report = await writeSkillReadout({
+    skill: "qs-code-debug",
+    outcome: "Diagnosed the verified panel-height regression.",
+    generatedAt: "2026-07-26T21:00:00.000Z",
+    projectIdentity: verifiedProject("skills"),
+    findings: [{
+      title: "The application was cut off by a legacy panel-height cap",
+      detail: "An observed CSS maximum prevented the full project workspace from rendering.",
+    }],
+    checks: [{ title: "Verified full-height regression", status: "passed" }],
+  }, { directory, layout: "project" });
+  const parameters = new URLSearchParams({
+    project: "github.com/quickstark/skills",
+    report: report.relativePath,
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+  const detail = visibleSelectedReadout(html);
+
+  assert.equal(response.status, 200);
+  assert.ok(detail, "the selected report remains inside the existing project-first reading pane");
+  assert.match(detail[0], /aria-label="Verified project and run metadata"/);
+  assert.match(detail[0], /aria-label="Five-second report summary"/);
+  assert.match(detail[0], /NO CRITICAL EXCEPTIONS/);
+  assert.match(detail[0], /The application was cut off by a legacy panel-height cap/);
+  assert.match(detail[0], /1 of 1 recorded checks passed/);
+  assert.match(detail[0], /Use \$qs-test-tdd/);
+  assert.match(detail[0], /Heuristic model and thinking guidance/);
+  assert.match(detail[0], /aria-label="Complete immutable skill readout"/);
+  assert.ok(
+    detail[0].indexOf('aria-label="Verified project and run metadata"')
+      < detail[0].indexOf('aria-label="Five-second report summary"'),
+    "the selected production report presents project metadata before its visual summary",
+  );
+  assert.ok(
+    detail[0].indexOf('aria-label="Five-second report summary"')
+      < detail[0].indexOf("Top next prompts"),
+    "the five-second summary comes before the native, copy-ready next prompts",
+  );
+  assert.doesNotMatch(html, /<script\b|<iframe\b/i);
+});
+
+test("the production Project Workbench fills the full viewport without a capped or clipped application panel", async (context) => {
+  const { viewer } = await createProjectWorkbench(context);
+  const response = await fetch(viewer.url);
+  const html = await response.text();
+  const stylesheet = html.match(/<style\b[^>]*>([\s\S]*?)<\/style>/i);
+
+  assert.equal(response.status, 200);
+  assert.ok(stylesheet, "the self-contained production Workbench includes its actual rendered stylesheet");
+
+  const page = stylesheet[1].match(/(?:^|})\s*\.workbench-page\s*\{([^}]*)\}/);
+  const shell = stylesheet[1].match(/(?:^|})\s*\.workbench-shell\s*\{([^}]*)\}/);
+
+  assert.ok(page, "the production page defines its actual full-viewport application layout");
+  assert.ok(shell, "the production page defines its actual integrated Workbench shell");
+  assert.match(page[1], /(?:^|;)\s*height\s*:\s*100dvh(?:;|$)/);
+  assert.match(page[1], /(?:^|;)\s*min-height\s*:\s*100dvh(?:;|$)/);
+  assert.match(page[1], /(?:^|;)\s*display\s*:\s*grid(?:;|$)/);
+  assert.match(
+    page[1],
+    /(?:^|;)\s*grid-template-rows\s*:\s*auto\s+minmax\(0,\s*1fr\)\s+auto(?:;|$)/,
+    "the header, flexible application, and footer occupy the entire browser viewport",
+  );
+  assert.match(shell[1], /(?:^|;)\s*min-height\s*:\s*0(?:;|$)/);
+  assert.match(shell[1], /(?:^|;)\s*max-height\s*:\s*none(?:;|$)/);
+  assert.doesNotMatch(
+    shell[1],
+    /(?:^|;)\s*max-height\s*:\s*(?:min|max|clamp)\s*\(/,
+    "a legacy viewport cap must not truncate the actual reading pane",
+  );
+});
+
+test("retired gallery URLs always resolve to the full Project Workbench without resurrecting the old navigation", async (context) => {
+  const { viewer } = await createProjectWorkbench(context);
+
+  for (const suffix of [
+    "?view=projects",
+    "?view=explorer",
+    "?view=activity",
+    "?view=explorer&project=github.com%2Fquickstark%2Fskills&q=trust+boundaries",
+  ]) {
+    const response = await fetch(new URL(suffix, viewer.url));
+    const html = await response.text();
+
+    assert.equal(response.status, 200, suffix);
+    assert.match(html, /<title>Project Workbench(?:\s*[·|–-][^<]*)?<\/title>/, suffix);
+    assert.match(html, /aria-label="Verified projects"/, suffix);
+    assert.match(html, /aria-label="Skill run readouts"/, suffix);
+    assert.match(html, /aria-label="Selected skill readout"/, suffix);
+    assert.doesNotMatch(html, /aria-label="Readout views"/, suffix);
+    assert.doesNotMatch(html, /\bclass="gallery-nav"/, suffix);
+    assert.doesNotMatch(
+      html,
+      /(?:^|[}\s])\.(?:gallery-nav|explorer|explorer-sidebar|explorer-content|timeline-day)(?:[.#:{\s>]|$)/,
+      `retired gallery menu and view styles must not be shipped: ${suffix}`,
+    );
+    assert.doesNotMatch(html, /\bname="view"/, suffix);
+    assert.doesNotMatch(html, /href="[^"<>]*\bview=(?:explorer|activity)\b/, suffix);
+
+    if (suffix.includes("trust+boundaries")) {
+      assert.match(html, /Verify the report library trust boundaries\./, suffix);
+    }
+  }
+});
+
 test("the project-first sidebar nests only the selected project's newest-first actual readouts", async (context) => {
   const { viewer, reports } = await createProjectWorkbench(context);
   const response = await fetch(viewer.url);

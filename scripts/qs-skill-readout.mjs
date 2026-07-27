@@ -16,6 +16,14 @@ import {
   SKILLS,
   SKILLS_BY_NAME,
 } from "./qs-skill-catalog.mjs";
+import {
+  REPORT_PRESENTATION_STYLES,
+  observeGitHubProject,
+  renderReadoutGitHubIssues,
+  renderReadoutNextPrompts,
+  renderReadoutProjectMetadata,
+  renderReadoutSignalSummary,
+} from "./qs-skill-report-presentation.mjs";
 
 export const DEFAULT_READOUT_DIRECTORY = join(tmpdir(), "quickstark-readouts");
 export const DEFAULT_READOUT_HOST = "127.0.0.1";
@@ -86,6 +94,7 @@ const ingestionCollection = /^[a-z0-9][a-z0-9._/-]{0,127}$/i;
 const observedUtcTimestamp = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/;
 const ingestionMaximumBytes = 256 * 1024;
 const execFileAsync = promisify(execFile);
+const observedGitContexts = new Map();
 
 export function normalizeReadoutProject(remote) {
   const value = requireText(remote, "Git origin");
@@ -256,6 +265,51 @@ export async function discoverReadoutProject(options = {}) {
   }
 
   return localProjectIdentity(await realpath(cwd), "workspace");
+}
+
+async function observeReadoutGitContext(project, options = {}) {
+  if (!project || project.source !== "git-origin") return null;
+
+  const cwd = resolve(options.cwd ?? process.cwd());
+  const cacheKey = `${cwd}\0${project.key}`;
+  const cached = observedGitContexts.get(cacheKey);
+
+  if (cached && Date.now() - cached.capturedAt < 2_000) return cached.result;
+
+  const result = (async () => {
+    const current = await discoverReadoutProject({ cwd }).catch(() => null);
+
+    if (current?.key !== project.key) return null;
+
+    const observed = (arguments_) => execFileAsync("git", ["-C", cwd, ...arguments_], {
+      timeout: 3_000,
+      windowsHide: true,
+      maxBuffer: 1024 * 1024,
+    }).then(({ stdout }) => stdout.trim()).catch(() => "");
+    const [branch, revision, tracking, changes] = await Promise.all([
+      observed(["symbolic-ref", "--quiet", "--short", "HEAD"]),
+      observed(["rev-parse", "HEAD"]),
+      observed(["rev-list", "--left-right", "--count", "@{upstream}...HEAD"]),
+      observed(["status", "--porcelain", "--untracked-files=normal"]),
+    ]);
+    const [behind, ahead] = tracking.split(/\s+/).map(Number);
+
+    return {
+      branch: /^[a-z0-9][a-z0-9._/-]{0,199}$/i.test(branch)
+        ? branch
+        : "Detached HEAD",
+      revision: /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/i.test(revision)
+        ? revision.toLowerCase()
+        : null,
+      behind: Number.isSafeInteger(behind) && behind >= 0 ? behind : null,
+      ahead: Number.isSafeInteger(ahead) && ahead >= 0 ? ahead : null,
+      dirtyCount: changes ? changes.split("\n").length : 0,
+    };
+  })().catch(() => null);
+
+  observedGitContexts.set(cacheKey, { capturedAt: Date.now(), result });
+
+  return result;
 }
 
 function isPrivateIpv4(address) {
@@ -1139,8 +1193,9 @@ function createNextPrompt(name, context, reason) {
   const action = (target?.prompt ?? reason ?? "continue the recorded work")
     .replace(/[.!?]+$/, "")
     .trim();
+  const invocation = SKILLS_BY_NAME.has(name) ? `$${name}` : `/${name}`;
   const prompt = [
-    `Use /${name} to ${action.charAt(0).toLowerCase()}${action.slice(1)}.`,
+    `Use ${invocation} to ${action.charAt(0).toLowerCase()}${action.slice(1)}.`,
   ];
 
   if (context.status === "Preview") return prompt[0];
@@ -1170,8 +1225,9 @@ function createNextPrompt(name, context, reason) {
 function normalizeNextPrompt(value, name, label) {
   const prompt = requireText(value, label);
   const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const prefix = SKILLS_BY_NAME.has(name) ? "[/\\$]" : "/";
 
-  if (!new RegExp(`^use\\s+/${escapedName}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
+  if (!new RegExp(`^use\\s+${prefix}${escapedName}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
     throw new Error(`${label} must explicitly invoke /${name} as its first action.`);
   }
 
@@ -1852,19 +1908,19 @@ const reportStyles = `
   *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}body{margin:0;color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}main{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:48px 0 72px}.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:750;letter-spacing:.02em}.brand-mark{display:grid;width:34px;height:34px;place-items:center;border-radius:11px;background:#172033;color:#fff;font-weight:850}.eyebrow{margin:0;color:var(--muted);font-size:11px;font-weight:750;letter-spacing:.14em;text-transform:uppercase}.timestamp{color:var(--muted);font-size:12px}.hero{position:relative;overflow:hidden;padding:38px;border:1px solid var(--line);border-radius:24px;background:var(--card)}.hero::before{position:absolute;inset:0 0 auto;height:4px;background:var(--accent);content:""}.hero-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.hero h1{margin:12px 0 8px;font-size:clamp(32px,6vw,55px);font-weight:770;letter-spacing:-.07em;line-height:1.03}.skill-command{display:inline-block;margin-top:7px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.status{flex-shrink:0;border-radius:999px;padding:9px 13px;background:var(--soft);color:var(--accent);font-size:12px;font-weight:750}.status-blocked{background:#fee2e2;color:#b91c1c}.status-awaiting-input{background:#fef3c7;color:#a16207}.status-preview{background:#e9edf3;color:#475569}.outcome{max-width:72ch;margin:25px 0 0;color:#334155;font-size:17px;line-height:1.7}.preview-note{margin-top:18px;border:1px solid #dbe2eb;border-radius:13px;padding:12px 15px;background:#f8fafc;color:#475569;font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:21px}.metric{border:1px solid var(--line);border-radius:15px;padding:15px;background:var(--card)}.metric-label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.metric-value{display:block;margin-top:9px;font-size:25px;font-weight:770;letter-spacing:-.04em}.section{margin-top:34px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section-heading h2{margin:6px 0 0;font-size:23px;font-weight:720;letter-spacing:-.04em}.section-count{display:grid;width:31px;height:31px;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:12px;font-weight:700}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-card{min-width:0;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card)}.detail-heading{display:flex;align-items:center;gap:9px}.detail-heading h3{flex:1;min-width:0;margin:0;overflow-wrap:anywhere;font-size:14px;font-weight:700}.detail-card p{margin:10px 0 0;overflow-wrap:anywhere;color:#526077;font-size:13px;line-height:1.7;white-space:pre-wrap}.item-link{flex-shrink:0;color:var(--accent);font-size:12px;font-weight:700;text-decoration:none}.check-badge{border-radius:999px;padding:5px 8px;font-size:10px;font-weight:750;text-transform:uppercase}.check-passed{background:#dcfce7;color:#15803d}.check-failed{background:#fee2e2;color:#b91c1c}.check-skipped{background:#f1f5f9;color:#475569}.check-info{background:#dbeafe;color:#1d4ed8}.skills-used{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.skill-chip{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}.next-card{display:block;border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);text-decoration:none}.next-card:first-child{border-color:var(--accent)}.next-card .eyebrow{color:var(--accent)}.next-card h3{margin:10px 0 7px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}.next-card p:last-child{margin:0;color:#526077;font-size:13px;line-height:1.7}.empty-next{border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--card);color:#526077;font-size:13px}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:39px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.dashboard-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:22px}.dashboard-card{display:block;border:1px solid var(--line);border-radius:17px;padding:18px;background:var(--card);text-decoration:none}.dashboard-card:hover{border-color:var(--accent)}.dashboard-card h2{margin:10px 0 7px;font-size:17px;letter-spacing:-.03em}.dashboard-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.dashboard-card .status{display:inline-block;margin-top:12px}.empty-gallery{margin-top:22px;border:1px dashed var(--line);border-radius:16px;padding:22px;color:var(--muted);background:var(--card)}
   .next-prompt-block{margin:11px 0 0;overflow-wrap:anywhere;border:1px solid #24334a;border-left:3px solid var(--accent);border-radius:11px;padding:14px 15px;background:#172033;color:#f8fafc;line-height:1.75;white-space:pre-wrap;word-break:break-word}.next-prompt-block code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}.next-card .next-reason{margin:9px 0 0;color:var(--muted);font-size:12px;line-height:1.6}.next-model-callout{display:grid;gap:5px;margin-top:11px;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:#f8fafc}.next-model-label{color:var(--muted);font-size:11px;font-weight:600}.next-model-label strong{color:#475569;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}.next-model-callout .next-model-reason{margin:3px 0 0;color:var(--muted);font-size:11px;line-height:1.6}
   .compact-readout{width:min(900px,calc(100% - 36px));padding:29px 0 43px}.compact-readout .topline{margin-bottom:16px}.compact-readout .hero{padding:23px 25px;border-radius:19px}.compact-readout .hero h1{margin:7px 0 3px;font-size:clamp(26px,5vw,39px);letter-spacing:-.055em}.compact-readout .outcome{margin:14px 0 0;font-size:14px;line-height:1.6}.compact-readout .skills-used{gap:6px;margin-top:10px}.compact-readout .skill-chip{padding:5px 8px;font-size:10px}.profile-title{margin:7px 0 0;color:var(--accent);font-size:12px;font-weight:730}.compact-readout .metrics{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:12px}.compact-readout .metric{border-radius:12px;padding:11px 12px}.compact-readout .metric-label{font-size:10px}.compact-readout .metric-value{margin-top:4px;font-size:19px}.compact-readout .section{margin-top:19px}.compact-readout .section-heading{margin-bottom:9px}.compact-readout .section-heading h2{margin-top:4px;font-size:18px}.compact-readout .section-count{width:26px;height:26px;border-radius:8px;font-size:11px}.compact-readout .detail-grid{gap:9px}.compact-readout .detail-card{border-radius:12px;padding:12px}.compact-readout .detail-card p{margin-top:6px;font-size:12px;line-height:1.55}.compact-readout .footer{margin-top:23px;padding-top:12px}.compact-readout .next-grid{gap:9px}.compact-readout .next-card{border-radius:12px;padding:12px}.compact-readout .next-card h3{margin:7px 0 5px;font-size:12px}.compact-readout .next-card p:last-child{font-size:12px}.signal-panel{margin:13px 0 0;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--card)}.signal-panel figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.signal-caption{color:var(--muted);font-size:10px}.signal-svg{display:block;width:100%;max-width:760px;height:auto}.signal-checks,.signal-brief{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}.signal-check,.signal-brief-item{display:grid;grid-template-columns:8px 1fr;align-items:center;column-gap:8px;row-gap:3px;min-height:46px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}.signal-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.signal-check strong,.signal-brief-item strong{font-size:12px}.signal-check>span:last-child,.signal-brief-item>span:last-child{grid-column:2;color:var(--muted);font-size:10px}.signal-check-passed .signal-dot{background:#16a34a}.signal-check-failed .signal-dot{background:#dc2626}.signal-check-skipped .signal-dot{background:#94a3b8}.signal-matrix{width:100%;border-collapse:collapse;text-align:left;font-size:12px}.signal-matrix caption{margin-bottom:7px;color:var(--muted);text-align:left;font-size:10px}.signal-matrix th,.signal-matrix td{border-top:1px solid var(--line);padding:8px 7px}.signal-matrix thead th{border-top:0;color:var(--muted);font-size:10px;font-weight:700}.signal-matrix tbody th{font-weight:650}.matrix-kind{color:var(--muted);font-size:10px}
-  .gallery-nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0}.gallery-nav a,.preview-toggle{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--card);font-size:12px;font-weight:700;text-decoration:none}.gallery-nav a[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:15px}.project-card{min-width:0;border:1px solid var(--line);border-radius:19px;padding:20px;background:var(--card)}.project-card.current{border-color:var(--accent)}.project-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.project-title{display:block;margin:9px 0 5px;overflow-wrap:anywhere;font-size:19px;font-weight:750;letter-spacing:-.04em;text-decoration:none}.project-meta{color:var(--muted);font-size:12px}.current-project{border-radius:999px;padding:6px 9px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:800;white-space:nowrap}.report-list{display:grid;gap:10px;margin-top:15px}.report-row{display:block;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff;text-decoration:none}.report-row:hover,.project-title:hover{border-color:var(--accent);color:var(--accent)}.report-row-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.report-row-title{font-size:13px;font-weight:720}.report-row .status{padding:5px 8px;font-size:10px}.report-outcome{margin:8px 0 0;color:#526077;font-size:12px;line-height:1.6}.report-time{display:block;margin-top:7px;color:var(--muted);font-size:11px}.explorer{display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr);gap:16px}.explorer-sidebar,.explorer-content{min-width:0;border:1px solid var(--line);border-radius:18px;padding:17px;background:var(--card)}.sidebar-list{display:grid;gap:7px;margin-top:12px}.sidebar-project{display:block;border:1px solid transparent;border-radius:11px;padding:11px;color:var(--muted);font-size:12px;font-weight:650;text-decoration:none;overflow-wrap:anywhere}.sidebar-project[aria-current="page"]{border-color:var(--accent);background:var(--soft);color:var(--accent)}.search-form{display:flex;gap:8px;margin:15px 0}.search-input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font:inherit;font-size:13px}.search-submit{border:1px solid var(--accent);border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font:inherit;font-size:12px;font-weight:700}.timeline-day{margin-top:23px}.timeline-day h2{margin:0 0 12px;font-size:15px;letter-spacing:-.02em}.timeline-day .report-list{margin-top:0}.legacy-note{margin:15px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+  .preview-toggle{border:1px solid var(--line);border-radius:999px;padding:9px 14px;background:var(--card);font-size:12px;font-weight:700;text-decoration:none}.project-card{min-width:0;border:1px solid var(--line);border-radius:19px;padding:20px;background:var(--card)}.report-list{display:grid;gap:10px;margin-top:15px}.report-row{display:block;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fff;text-decoration:none}.report-row:hover{border-color:var(--accent);color:var(--accent)}.report-row-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.report-row-title{font-size:13px;font-weight:720}.report-row .status{padding:5px 8px;font-size:10px}.report-outcome{margin:8px 0 0;color:#526077;font-size:12px;line-height:1.6}.report-time{display:block;margin-top:7px;color:var(--muted);font-size:11px}.search-form{display:flex;gap:8px;margin:15px 0}.search-input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:#fff;font:inherit;font-size:13px}.search-submit{border:1px solid var(--accent);border-radius:11px;padding:10px 14px;background:var(--accent);color:#fff;font:inherit;font-size:12px;font-weight:700}.legacy-note{margin:15px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
   .report-profile{display:inline-block;margin-top:6px;border-radius:999px;padding:3px 7px;background:var(--soft);color:var(--accent);font-size:10px;font-weight:700}
-  .workbench-page{width:min(1480px,calc(100% - 40px));padding:20px 0 30px}.workbench-masthead{display:flex;min-height:48px;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:13px}.workbench-brand{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:760;text-decoration:none}.workbench-brand>span:last-child>span,.workbench-private{color:var(--muted);font-size:11px;font-weight:550}.workbench-brand-mark{display:grid;width:29px;height:29px;place-items:center;border-radius:8px;background:#163a2a;color:#fff;font-weight:850}.workbench-page .gallery-nav{margin:13px 0}.workbench-page .gallery-nav a,.workbench-page .preview-toggle{padding:6px 10px;font-size:11px}
-  .workbench-shell{display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);min-height:min(680px,calc(100dvh - 150px));max-height:min(860px,calc(100dvh - 110px));margin-top:16px;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--card)}.workbench-sidebar{grid-column:1;grid-row:1/-1;min-width:0;overflow-y:auto;border-right:1px solid var(--line);padding:17px 12px}.workbench-rail-heading{margin:0 0 10px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.workbench-projects{display:grid;align-content:start;gap:9px}.workbench-project{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 7px;border:1px solid transparent;border-radius:9px;padding:10px;text-decoration:none}.workbench-project:hover,.workbench-project.is-selected{border-color:var(--line);background:var(--soft)}.workbench-project-title{overflow-wrap:anywhere;font-size:12px;font-weight:690}.workbench-project-count{color:var(--muted);font-size:11px}.workbench-current{grid-column:1/-1;color:var(--accent);font-size:9px;font-weight:750;text-transform:uppercase}.workbench-project-outcome,.workbench-project-profile{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
+  .workbench-page{width:100%;height:100dvh;min-height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:16px clamp(12px,2.2vw,28px) 14px}.workbench-masthead{display:flex;min-height:48px;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:13px}.workbench-brand{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:760;text-decoration:none}.workbench-brand>span:last-child>span,.workbench-private{color:var(--muted);font-size:11px;font-weight:550}.workbench-brand-mark{display:grid;width:29px;height:29px;place-items:center;border-radius:8px;background:#163a2a;color:#fff;font-weight:850}.workbench-page .preview-toggle{padding:6px 10px;font-size:11px}
+  .workbench-shell{display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);min-height:0;max-height:none;margin-top:12px;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:var(--card)}.workbench-sidebar{grid-column:1;grid-row:1/-1;min-width:0;min-height:0;overflow-y:auto;border-right:1px solid var(--line);padding:17px 12px}.workbench-rail-heading{margin:0 0 10px;color:var(--muted);font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.workbench-projects{display:grid;align-content:start;gap:9px}.workbench-project{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 7px;border:1px solid transparent;border-radius:9px;padding:10px;text-decoration:none}.workbench-project:hover,.workbench-project.is-selected{border-color:var(--line);background:var(--soft)}.workbench-project-title{overflow-wrap:anywhere;font-size:12px;font-weight:690}.workbench-project-count{color:var(--muted);font-size:11px}.workbench-current{grid-column:1/-1;color:var(--accent);font-size:9px;font-weight:750;text-transform:uppercase}.workbench-project-outcome,.workbench-project-profile{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap}
   .workbench-workspace{min-width:0;padding:18px 16px}.workbench-workspace-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}.workbench-workspace-heading h1{margin:2px 0 4px;font-size:25px;font-weight:750;letter-spacing:-.06em}.workbench-scope{margin:0;color:var(--muted);font-size:11px}.workbench-run-count{flex-shrink:0;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--muted);font-size:10px}.workbench-runs{display:grid;align-content:start}.workbench-run{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 9px;border-bottom:1px solid var(--line);padding:11px 9px;text-decoration:none}.workbench-run:hover,.workbench-run.is-selected{background:var(--soft)}.workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-run-title{display:grid;min-width:0;gap:3px}.workbench-run-title strong{overflow:hidden;font-size:11px;font-weight:730;text-overflow:ellipsis;white-space:nowrap}.workbench-run-title>span,.workbench-run-time{color:var(--muted);font-size:10px}.workbench-run-outcome{grid-column:1/-1;overflow:hidden;color:#465366;font-size:11px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}.workbench-run-time{grid-column:1/-1}.workbench-status{display:inline-flex;align-items:center;gap:5px;align-self:start;color:#15803d;font-size:10px;font-weight:670}.workbench-status-dot{width:7px;height:7px;border-radius:50%;background:currentColor}.workbench-status-blocked{color:#b91c1c}.workbench-status-awaiting-input{color:#a16207}.workbench-status-preview{color:#64748b}
   .workbench-detail{min-width:0;border-left:1px solid var(--line);padding:17px 14px}.workbench-detail-top{display:flex;align-items:center;justify-content:space-between;gap:9px}.workbench-readonly{color:var(--muted);font-size:10px}.workbench-detail-title{margin:16px 0 4px;overflow-wrap:anywhere;font-size:20px;font-weight:740;letter-spacing:-.055em}.workbench-detail-profile{margin:0;color:var(--muted);font-size:11px}.workbench-open-report{display:inline-flex;align-items:center;gap:5px;margin-top:13px;color:var(--accent);font-size:11px;font-weight:690;text-decoration:none}.workbench-detail-section{margin-top:19px;border-top:1px solid var(--line);padding-top:12px}.workbench-detail-section h3{margin:0;font-size:12px;font-weight:710}.workbench-detail-section>p{margin:9px 0 0;overflow-wrap:anywhere;color:#465366;font-size:12px;line-height:1.7}.workbench-evidence{display:grid;grid-template-columns:minmax(86px,1fr) minmax(95px,1fr);gap:0;margin:10px 0 0}.workbench-evidence dt,.workbench-evidence dd{min-width:0;margin:0;border-bottom:1px solid var(--line);padding:8px 0;font-size:10px}.workbench-evidence dt{color:var(--muted)}.workbench-evidence dd{overflow-wrap:anywhere;font-weight:600}.workbench-empty-note,.workbench-detail-empty{color:var(--muted);font-size:11px;line-height:1.65}.workbench-detail-empty h2{color:var(--ink);font-size:15px}.workbench-footer{display:flex;justify-content:space-between;gap:12px;margin-top:15px;color:var(--muted);font-size:10px}
   .workbench-run-observation{grid-column:1/-1;overflow:hidden;color:var(--muted);font-size:10px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}
   .workbench-projects .project-card{min-width:0;border:0;border-radius:0;padding:0;background:transparent}
-  .workbench-workspace{grid-column:2;grid-row:1;border-bottom:1px solid var(--line);padding:19px 24px}.workbench-workspace-heading{margin-bottom:0}.workbench-detail{grid-column:2;grid-row:2;overflow-y:auto;border-left:0;padding:22px 24px 32px}.workbench-detail-title{font-size:clamp(24px,4vw,34px)}.workbench-project-runs{display:grid;align-content:start;margin:5px 0 4px 9px;border-left:1px solid var(--line)}.workbench-project-runs .workbench-run{border-bottom:0;border-radius:0 8px 8px 0;padding:10px 9px}.workbench-project-runs .workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-projects .search-form{gap:5px;margin:9px 0 5px}.workbench-projects .search-input{padding:8px 9px;font-size:11px}.workbench-projects .search-submit{padding:8px 9px;font-size:10px}.workbench-sidebar-footer{margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}.workbench-sidebar-footer .preview-toggle{display:inline-flex}.workbench-readout-document{min-width:0;margin-top:23px}.workbench-readout-document .section{margin-top:23px}.workbench-readout-document .detail-card,.workbench-readout-document .next-card{min-width:0}.workbench-readout-document .next-grid{grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr))}
+  .workbench-workspace{grid-column:2;grid-row:1;border-bottom:1px solid var(--line);padding:19px 24px}.workbench-workspace-heading{margin-bottom:0}.workbench-detail{grid-column:2;grid-row:2;min-height:0;overflow-y:auto;border-left:0;padding:22px 24px 32px}.workbench-detail-title{font-size:clamp(24px,4vw,34px)}.workbench-project-runs{display:grid;align-content:start;margin:5px 0 4px 9px;border-left:1px solid var(--line)}.workbench-project-runs .workbench-run{border-bottom:0;border-radius:0 8px 8px 0;padding:10px 9px}.workbench-project-runs .workbench-run.is-selected{box-shadow:inset 2px 0 var(--accent)}.workbench-projects .search-form{gap:5px;margin:9px 0 5px}.workbench-projects .search-input{padding:8px 9px;font-size:11px}.workbench-projects .search-submit{padding:8px 9px;font-size:10px}.workbench-unassigned{margin-top:17px}.workbench-unassigned .section-heading h2{font-size:15px}.workbench-unassigned .report-list{gap:8px;margin-top:10px}.workbench-sidebar-footer{margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}.workbench-sidebar-footer .preview-toggle{display:inline-flex}.workbench-readout-document{min-width:0;margin-top:23px}.workbench-readout-document .section{margin-top:23px}.workbench-readout-document .detail-card,.workbench-readout-document .next-card{min-width:0}.workbench-readout-document .next-grid{grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr))}
   @media(max-width:980px){.workbench-shell{grid-template-columns:minmax(200px,240px) minmax(0,1fr)}.workbench-workspace{padding:15px 16px}.workbench-detail{grid-column:2;grid-row:2;padding:18px 16px 25px}}
-  @media(max-width:620px){.workbench-page{width:calc(100% - 24px);padding-top:12px}.workbench-masthead{flex-wrap:wrap}.workbench-shell{grid-template-columns:1fr;grid-template-rows:auto auto auto;min-height:0;max-height:none}.workbench-sidebar{grid-column:1;grid-row:1;max-height:200px;overflow-y:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px}.workbench-projects{display:grid;gap:6px}.workbench-project{min-width:0}.workbench-workspace{grid-column:1;grid-row:2;padding:13px 12px}.workbench-workspace-heading{flex-wrap:wrap}.workbench-detail{grid-column:1;grid-row:3;overflow:visible;padding:16px 12px 24px}.workbench-detail-title{margin-top:11px}.workbench-footer{flex-direction:column}}
+  @media(max-width:620px){.workbench-page{width:100%;height:auto;min-height:100dvh;grid-template-rows:auto auto auto;padding:12px 12px 15px}.workbench-masthead{flex-wrap:wrap}.workbench-shell{grid-template-columns:1fr;grid-template-rows:auto auto auto;min-height:0;max-height:none}.workbench-sidebar{grid-column:1;grid-row:1;max-height:200px;overflow-y:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px}.workbench-projects{display:grid;gap:6px}.workbench-project{min-width:0}.workbench-workspace{grid-column:1;grid-row:2;padding:13px 12px}.workbench-workspace-heading{flex-wrap:wrap}.workbench-detail{grid-column:1;grid-row:3;overflow:visible;padding:16px 12px 24px}.workbench-detail-title{margin-top:11px}.workbench-footer{flex-direction:column}}
   .priority-badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:780}.priority-p0,.priority-p1{background:#fee2e2;color:#b91c1c}.priority-p2{background:#fef3c7;color:#a16207}.priority-p3{background:#dbeafe;color:#1d4ed8}.matrix-evidence{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:450;overflow-wrap:anywhere}.signal-matrix+.signal-matrix{margin-top:13px}
-  @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.explorer{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
+  @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
 `;
 
 function renderDocument({ title, body, theme, metadata = "" }) {
@@ -1875,7 +1931,7 @@ function renderDocument({ title, body, theme, metadata = "" }) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   ${metadata}
   <title>${escapeHtml(title)} · QuickStark readout</title>
-  <style>${reportStyles}</style>
+  <style>${reportStyles}${REPORT_PRESENTATION_STYLES}</style>
 </head>
 <body style="--accent:${theme.accent};--soft:${theme.soft}">
 ${body}
@@ -1921,6 +1977,38 @@ function renderNormalizedSkillReadout(report) {
       `<meta name="quickstark:project" content="${escapeHtml(report.projectIdentity.key)}">`,
       `<meta name="quickstark:project-label" content="${escapeHtml(report.projectIdentity.label)}">`,
       `<meta name="quickstark:project-source" content="${escapeHtml(report.projectIdentity.source)}">`,
+    ] : []),
+    ...(report.gitContext ? [
+      `<meta name="quickstark:git-branch" content="${escapeHtml(report.gitContext.branch)}">`,
+      ...(report.gitContext.revision ? [
+        `<meta name="quickstark:git-revision" content="${escapeHtml(report.gitContext.revision)}">`,
+      ] : []),
+      ...(Number.isSafeInteger(report.gitContext.ahead) ? [
+        `<meta name="quickstark:git-ahead" content="${report.gitContext.ahead}">`,
+      ] : []),
+      ...(Number.isSafeInteger(report.gitContext.behind) ? [
+        `<meta name="quickstark:git-behind" content="${report.gitContext.behind}">`,
+      ] : []),
+      `<meta name="quickstark:git-dirty-count" content="${report.gitContext.dirtyCount}">`,
+    ] : []),
+    ...(report.github ? [
+      '<meta name="quickstark:github-verified" content="true">',
+      `<meta name="quickstark:github-repository" content="${escapeHtml(report.github.fullName)}">`,
+      ...(report.github.defaultBranch ? [
+        `<meta name="quickstark:github-default-branch" content="${escapeHtml(report.github.defaultBranch)}">`,
+      ] : []),
+      ...(report.github.visibility ? [
+        `<meta name="quickstark:github-visibility" content="${escapeHtml(report.github.visibility)}">`,
+      ] : []),
+      ...(Number.isSafeInteger(report.github.openIssueCount)
+        && report.github.openIssueCount >= 0 ? [
+          `<meta name="quickstark:github-open-issues" content="${report.github.openIssueCount}">`,
+          '<meta name="quickstark:github-open-issues-source" content="github-issue-search">',
+        ] : []),
+      ...(Array.isArray(report.github.issues)
+        ? report.github.issues.slice(0, 8).map((issue) =>
+          `<meta name="quickstark:github-issue" content="${escapeHtml(JSON.stringify(issue))}">`)
+        : []),
     ] : []),
     ...(report.producer ? [
       `<meta name="quickstark:producer" content="${escapeHtml(report.producer.producer)}">`,
@@ -1972,6 +2060,8 @@ function renderNormalizedSkillReadout(report) {
   const execution = renderExecutionContext(report);
   const evidence = renderDeliveryEvidence(report);
   const visualization = renderReadoutVisualization(report, profile);
+  const summary = renderReadoutSignalSummary(report, profile);
+  const githubIssues = renderReadoutGitHubIssues(report.github);
   const sections = report.status === "Preview"
     ? renderSection(
       "Catalog information",
@@ -1985,24 +2075,21 @@ function renderNormalizedSkillReadout(report) {
       { checks: section === "checks" },
     )).join("\n  ");
 
-  const next = report.nextSkills.length
-    ? `<div class="next-grid">${report.nextSkills.map((item, index) => renderNextPromptCard(
-      item,
-      index === 0 ? "Top next prompt" : "Alternative prompt",
-    )).join("")}</div>`
-    : '<div class="empty-next">None — the requested work is complete.</div>';
+  const next = renderReadoutNextPrompts(report);
 
   const body = `<main class="compact-readout">
   <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
-  <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}</header>
+  <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}${renderReadoutProjectMetadata(report)}</header>
+  ${summary}
   ${execution}
+  ${evidence}
+  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Top next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
   ${renderObservedRun(report.observation)}
   ${report.status === "Preview" ? "" : renderIndependentQuality(report.observation)}
-  ${evidence}
   ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
   ${visualization}
   ${sections}
-  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Top next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
+  ${githubIssues}
   <footer class="footer"><span>Generated by ${escapeHtml(COLLECTION_NAME)}</span><span>Self-contained HTML · no external scripts or styles</span></footer>
 </main>`;
 
@@ -2041,7 +2128,16 @@ export async function writeSkillReadout(input, options = {}) {
   const projectIdentity = input.projectIdentity === undefined
     ? await discoverReadoutProject({ cwd: options.cwd })
     : input.projectIdentity;
-  const report = normalizeSkillReadout({ ...input, projectIdentity });
+  const normalized = normalizeSkillReadout({ ...input, projectIdentity });
+  const gitContext = await observeReadoutGitContext(normalized.projectIdentity, {
+    cwd: options.cwd,
+  });
+  const github = gitContext && normalized.projectIdentity.host === "github.com"
+    ? await observeGitHubProject(normalized.projectIdentity, {
+      fetcher: options.githubFetcher ?? globalThis.fetch,
+    })
+    : null;
+  const report = { ...normalized, gitContext, github };
   const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
   const layout = options.layout
     ?? process.env.QS_READOUT_LAYOUT
@@ -2438,6 +2534,109 @@ function discoverStoredObservation(html) {
   }
 }
 
+function discoverStoredGitContext(html) {
+  const branch = decodeHtml(findMetadata(html, "git-branch"));
+  const revision = decodeHtml(findMetadata(html, "git-revision"));
+  const dirty = findMetadata(html, "git-dirty-count");
+
+  if (
+    (!/^[a-z0-9][a-z0-9._/-]{0,199}$/i.test(branch) && branch !== "Detached HEAD")
+    || (revision && !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/i.test(revision))
+    || !/^(?:0|[1-9][0-9]*)$/.test(dirty)
+    || !Number.isSafeInteger(Number(dirty))
+  ) return null;
+
+  const integer = (name) => {
+    const value = findMetadata(html, name);
+
+    if (!/^(?:0|[1-9][0-9]*)$/.test(value)) return null;
+
+    const parsed = Number(value);
+
+    return Number.isSafeInteger(parsed) ? parsed : null;
+  };
+
+  return {
+    branch,
+    revision: revision || null,
+    ahead: integer("git-ahead"),
+    behind: integer("git-behind"),
+    dirtyCount: Number(dirty),
+  };
+}
+
+function discoverStoredGitHub(html, projectKey) {
+  if (findMetadata(html, "github-verified") !== "true") return null;
+
+  const repository = decodeHtml(findMetadata(html, "github-repository"));
+
+  if (`github.com/${repository}` !== projectKey) return null;
+
+  const defaultBranch = decodeHtml(findMetadata(html, "github-default-branch"));
+  const visibility = decodeHtml(findMetadata(html, "github-visibility"));
+  const issueCount = findMetadata(html, "github-open-issues");
+  const openIssueCount = findMetadata(html, "github-open-issues-source") === "github-issue-search"
+    && /^(?:0|[1-9][0-9]*)$/.test(issueCount)
+    && Number.isSafeInteger(Number(issueCount))
+    ? Number(issueCount)
+    : null;
+  const capturedIssues = [...html.matchAll(
+    /<meta name="quickstark:github-issue" content="([^"]*)">/g,
+  )];
+  let issues = null;
+
+  if (capturedIssues.length > 0 && capturedIssues.length <= 8) {
+    try {
+      const seen = new Set();
+
+      issues = capturedIssues.map((match) => {
+        const issue = JSON.parse(decodeHtml(match[1]));
+
+        if (
+          !issue
+          || typeof issue !== "object"
+          || Array.isArray(issue)
+          || !Number.isSafeInteger(issue.number)
+          || issue.number <= 0
+          || seen.has(issue.number)
+          || typeof issue.title !== "string"
+          || issue.url !== `https://github.com/${repository}/issues/${issue.number}`
+          || !Array.isArray(issue.labels)
+          || issue.labels.some((label) => typeof label !== "string")
+        ) throw new Error("The stored GitHub issue is not independently verified.");
+
+        seen.add(issue.number);
+
+        return {
+          number: issue.number,
+          title: issue.title,
+          url: issue.url,
+          labels: issue.labels,
+        };
+      });
+
+      if (openIssueCount !== null && issues.length > openIssueCount) issues = null;
+    } catch {
+      issues = null;
+    }
+  } else if (capturedIssues.length === 0 && openIssueCount === 0) {
+    issues = [];
+  }
+
+  return {
+    fullName: repository,
+    url: `https://github.com/${repository}`,
+    defaultBranch: /^[a-z0-9][a-z0-9._/-]{0,199}$/i.test(defaultBranch)
+      ? defaultBranch
+      : null,
+    visibility: new Set(["public", "private", "internal"]).has(visibility)
+      ? visibility
+      : null,
+    openIssueCount,
+    issues,
+  };
+}
+
 function normalizePublishedProjects(value) {
   if (value === undefined || value === null || value === "") return new Set();
 
@@ -2519,6 +2718,8 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
         projectKey,
         projectLabel: decodeHtml(findMetadata(html, "project-label")),
         projectSource: findMetadata(html, "project-source"),
+        gitContext: discoverStoredGitContext(html),
+        github: discoverStoredGitHub(html, projectKey),
         observation: discoverStoredObservation(html),
       });
     }
@@ -2686,10 +2887,9 @@ export async function pruneReadouts(options = {}) {
   };
 }
 
-function galleryHref(view, { project, query, skill, status, previews, report } = {}) {
+function workbenchHref({ project, query, skill, status, previews, report } = {}) {
   const parameters = new URLSearchParams();
 
-  if (view !== "projects") parameters.set("view", view);
   if (project) parameters.set("project", project);
   if (query) parameters.set("q", query);
   if (skill) parameters.set("skill", skill);
@@ -2705,17 +2905,13 @@ function reportHref(report) {
   return escapeHtml(report.relativePath.split("/").map(encodeURIComponent).join("/"));
 }
 
-function renderGalleryReport(report, { showProject = false } = {}) {
+function renderUnassignedLegacyReadout(report) {
   const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
-  const label = showProject && report.projectLabel
-    ? `${report.skill.displayName} · ${report.projectLabel}`
-    : report.skill.displayName;
-
   const profile = report.profileTitle
     ? `<span class="report-profile">${escapeHtml(report.profileTitle)}</span>`
     : "";
 
-  return `<a class="report-row" href="${reportHref(report)}"><div class="report-row-heading"><span class="report-row-title">${escapeHtml(label)}</span><span class="status status-${escapeHtml(statusClass)}">${escapeHtml(report.status)}</span></div>${profile}<p class="report-outcome">${escapeHtml(report.outcome)}</p><time class="report-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
+  return `<a class="report-row" href="${reportHref(report)}"><div class="report-row-heading"><span class="report-row-title">${escapeHtml(report.skill.displayName)}</span><span class="status status-${escapeHtml(statusClass)}">${escapeHtml(report.status)}</span></div>${profile}<p class="report-outcome">${escapeHtml(report.outcome)}</p><time class="report-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
 }
 
 function groupReadoutProjects(reports) {
@@ -2881,7 +3077,7 @@ function renderWorkbenchProjects(projects, {
       ? `<nav class="workbench-project-runs" aria-label="Recorded skill runs">${renderWorkbenchRuns(project, selectedReport, { previews, query, skill, status })}</nav>`
       : "";
 
-    return `<article class="project-card${current ? " current" : ""}" data-project="${escapeHtml(project.key)}"><a class="workbench-project${selected ? " is-selected" : ""}"${selected ? ' aria-current="page"' : ""}${latestReportAttribute} href="${galleryHref("projects", { project: project.key, previews })}"><span class="workbench-project-title">${escapeHtml(project.label)}</span><span class="workbench-project-count">${actualCount}</span>${currentBadge}${projectSummary}</a>${searchForm}${nestedRuns}</article>`;
+    return `<article class="project-card${current ? " current" : ""}" data-project="${escapeHtml(project.key)}"><a class="workbench-project${selected ? " is-selected" : ""}"${selected ? ' aria-current="page"' : ""}${latestReportAttribute} href="${workbenchHref({ project: project.key, previews })}"><span class="workbench-project-title">${escapeHtml(project.label)}</span><span class="workbench-project-count">${actualCount}</span>${currentBadge}${projectSummary}</a>${searchForm}${nestedRuns}</article>`;
   }).join("");
 }
 
@@ -2898,7 +3094,7 @@ function renderWorkbenchRuns(project, selectedReport, {
   const reports = matchingWorkbenchRuns(project, query, { skill, status });
 
   if (reports.length === 0) {
-    return `<p class="workbench-empty-note">No actual skill readouts match this project search. <a href="${galleryHref("projects", { project: project.key, previews })}">Clear search</a></p>`;
+    return `<p class="workbench-empty-note">No actual skill readouts match this project search. <a href="${workbenchHref({ project: project.key, previews })}">Clear search</a></p>`;
   }
 
   return reports.map((report) => {
@@ -2907,7 +3103,7 @@ function renderWorkbenchRuns(project, selectedReport, {
       ? ""
       : `<span class="workbench-run-outcome">${escapeHtml(report.outcome)}</span>`;
 
-    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${galleryHref("projects", { project: project.key, query, skill, status, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${renderWorkbenchObservationSummary(report)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
+    return `<a class="workbench-run${selected ? " is-selected" : ""}"${selected ? ' aria-current="true"' : ""} href="${workbenchHref({ project: project.key, query, skill, status, previews, report: report.relativePath })}"><span class="workbench-run-title"><strong>/${escapeHtml(report.skill.name)}</strong><span>${escapeHtml(report.skill.displayName)}</span>${report.profileTitle ? `<span>${escapeHtml(report.profileTitle)}</span>` : ""}</span>${renderWorkbenchStatus(report.status)}${renderWorkbenchObservationSummary(report)}${outcome}<time class="workbench-run-time" datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></a>`;
   }).join("");
 }
 
@@ -2922,14 +3118,15 @@ const safeStoredReadoutAttributes = new Set([
   "class", "cx", "cy", "d", "datetime", "fill", "fill-opacity", "font-size",
   "font-weight", "height", "href", "id", "opacity", "points", "preserveaspectratio",
   "r", "rel", "role", "rx", "ry", "scope", "stroke", "stroke-dasharray",
-  "stroke-linecap", "stroke-opacity", "stroke-width", "tabindex", "text-anchor",
+  "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-opacity", "stroke-width",
+  "tabindex", "text-anchor",
   "title", "transform", "viewbox", "width", "x", "x1", "x2", "y", "y1", "y2",
 ]);
 const voidStoredReadoutElements = new Set(["br", "hr"]);
 const safeStoredReadoutRoots = new Map([
-  ["section", "section"],
-  ["div", "metrics"],
-  ["figure", "signal-panel"],
+  ["section", new Set(["section", "section presentation-issue-sidebar"])],
+  ["div", new Set(["metrics", "presentation-summary-panel"])],
+  ["figure", new Set(["signal-panel"])],
 ]);
 
 function allowedStoredReadoutSections(report) {
@@ -2956,6 +3153,8 @@ function allowedStoredReadoutSections(report) {
   }
 
   if (report.status === "Preview") headings.add("Catalog information");
+
+  if (report.github) headings.add("Relevant open issues");
 
   if (
     /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/i.test(findMetadata(report.document, "commit-sha"))
@@ -3187,7 +3386,7 @@ function renderSafeStoredReadoutMarkup(content, report) {
     if (
       root
       && (rootAttributeCount !== 1
-        || safeStoredReadoutRoots.get(name) !== rootClass
+        || !safeStoredReadoutRoots.get(name)?.has(rootClass)
         || selfClosing)
     ) return null;
 
@@ -3230,6 +3429,23 @@ function renderStoredReadoutContent(report) {
 
   if (content === null) return "";
 
+  if (
+    report.github
+    && report.github.openIssueCount === null
+    && findMetadata(report.document, "github-open-issues")
+    && findMetadata(report.document, "github-open-issues-source") !== "github-issue-search"
+  ) {
+    content = content.replace(
+      /(<span>OPEN ISSUES<\/span><strong>)(?:0|[1-9][0-9]*)(<\/strong><small>)Verified GitHub issues(<\/small>)/g,
+      "$1—$2Not independently verified$3",
+    );
+  }
+
+  content = content.replace(
+    /<section class="section presentation-issue-sidebar">[\s\S]*?<\/section>/g,
+    "",
+  );
+
   return `<div class="workbench-readout-document" aria-label="Complete immutable skill readout">${content}</div>`;
 }
 
@@ -3238,7 +3454,7 @@ function renderWorkbenchDetail(report) {
     return '<div class="workbench-detail-empty"><h2>Select a skill readout</h2><p>Choose an actual skill run to inspect its verified project and immutable outcome.</p></div>';
   }
 
-  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p><a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>${renderStoredReadoutContent(report)}${renderWorkbenchObservationDetail(report)}`;
+  return `<div class="workbench-detail-top"><span class="workbench-readonly">Read-only report</span>${renderWorkbenchStatus(report.status)}</div><h2 class="workbench-detail-title">/${escapeHtml(report.skill.name)}</h2><p class="workbench-detail-profile">${escapeHtml(report.skill.displayName)}${report.profileTitle ? ` · ${escapeHtml(report.profileTitle)}` : ""}</p>${renderReadoutProjectMetadata(report)}<a class="workbench-open-report" href="${reportHref(report)}">Open immutable readout <span aria-hidden="true">↗</span></a><section class="workbench-detail-section" aria-label="Observed skill outcome"><h3>Observed outcome</h3><p>${escapeHtml(report.outcome || "The immutable report did not record an outcome.")}</p></section><section class="workbench-detail-section" aria-label="Verified run evidence"><h3>Verified run evidence</h3><dl class="workbench-evidence"><dt>Verified project</dt><dd>${escapeHtml(report.projectLabel)}</dd><dt>Primary skill</dt><dd>/${escapeHtml(report.skill.name)}</dd><dt>Recorded status</dt><dd>${escapeHtml(report.status)}</dd><dt>Generated</dt><dd><time datetime="${escapeHtml(report.generatedAt)}">${escapeHtml(formatTimestamp(new Date(report.generatedAt)))}</time></dd>${report.profileTitle ? `<dt>Report profile</dt><dd>${escapeHtml(report.profileTitle)}</dd>` : ""}</dl></section>${renderStoredReadoutContent(report)}${renderWorkbenchObservationDetail(report)}`;
 }
 
 function renderProjectWorkbench(projects, reports, {
@@ -3269,80 +3485,23 @@ function renderProjectWorkbench(projects, reports, {
   const emptyRuns = project
     ? ""
     : renderWorkbenchRuns(null, null, { previews });
-  const legacyReports = reports.filter((report) => !report.projectKey);
-  const legacy = legacyReports.length > 0
-    ? renderProjectLibrary([], legacyReports, { activeProject, previews })
+  const unassignedLegacy = renderUnassignedLegacyReports(reports);
+  const issueSidebar = Array.isArray(selectedReport?.github?.issues)
+    ? `<aside class="workbench-issues" aria-label="Relevant open GitHub issues">${renderReadoutGitHubIssues(selectedReport.github)}</aside>`
     : "";
+  const shellClass = issueSidebar
+    ? "workbench-shell has-issue-sidebar"
+    : "workbench-shell";
 
-  return `<main class="workbench-page"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><span class="workbench-private">Authenticated, read-only project library</span></header><div class="workbench-shell"><aside class="workbench-sidebar" aria-label="Verified projects"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, selectedReport, previews, query, skill, status })}</nav><footer class="workbench-sidebar-footer">${previewLink ?? ""}</footer></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${matchingCount}${projectCount}</header>${emptyRuns}</section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside></div>${legacy}<footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
+  return `<main class="workbench-page"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><span class="workbench-private">Authenticated, read-only project library</span></header><div class="${shellClass}"><aside class="workbench-sidebar" aria-label="Verified projects"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, selectedReport, previews, query, skill, status })}</nav>${unassignedLegacy}<footer class="workbench-sidebar-footer">${previewLink ?? ""}</footer></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${matchingCount}${projectCount}</header>${emptyRuns}</section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside>${issueSidebar}</div><footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
 }
 
-function renderProjectLibrary(projects, reports, { activeProject, previews } = {}) {
-  const cards = projects.map((project) => {
-    const current = project.key === activeProject;
-    const actualCount = project.reports.filter((report) => report.status !== "Preview").length;
-    const previewCount = project.reports.length - actualCount;
-    const summary = `${actualCount} actual report${actualCount === 1 ? "" : "s"}`
-      + (previews && previewCount ? ` · ${previewCount} clearly labeled preview${previewCount === 1 ? "" : "s"}` : "");
-
-    return `<article class="project-card${current ? " current" : ""}" data-project="${escapeHtml(project.key)}"><div class="project-card-header"><div><p class="eyebrow">Verified project</p><a class="project-title" href="${galleryHref("explorer", { project: project.key, previews })}">${escapeHtml(project.label)}</a><span class="project-meta">${escapeHtml(summary)}</span></div>${current ? '<span class="current-project">CURRENT PROJECT</span>' : ""}</div><div class="report-list">${project.reports.slice(0, 4).map((report) => renderGalleryReport(report)).join("")}</div></article>`;
-  }).join("");
-
+function renderUnassignedLegacyReports(reports) {
   const legacy = reports.filter((report) => !report.projectKey);
-  const legacySection = legacy.length
-    ? `<section class="section"><div class="section-heading"><div><p class="eyebrow">Project identity not verified</p><h2>Unassigned legacy reports</h2></div><span class="section-count">${legacy.length}</span></div><p class="legacy-note">These original reports remain available, but their free-text headings do not prove repository ownership. Associate them with a project only through an explicitly reviewed migration.</p><div class="report-list">${legacy.map((report) => renderGalleryReport(report)).join("")}</div></section>`
-    : "";
-  const empty = !cards && !legacySection
-    ? '<p class="empty-gallery">No actual skill reports yet. Run a QuickStark skill to create a verified project report, or explicitly show clearly labeled catalog previews.</p>'
-    : "";
 
-  return `${cards ? `<div class="project-grid">${cards}</div>` : ""}${legacySection}${empty}`;
-}
+  if (legacy.length === 0) return "";
 
-function renderProjectExplorer(projects, { selectedProject, query, previews } = {}) {
-  const selected = projects.find((project) => project.key === selectedProject) ?? null;
-  const search = query.trim().toLowerCase();
-  const matches = selected?.reports.filter((report) => !search || [
-    selected.label,
-    selected.key,
-    report.skill.name,
-    report.skill.displayName,
-    report.outcome,
-    report.status,
-  ].some((value) => value.toLowerCase().includes(search))) ?? [];
-  const sidebar = projects.map((project) =>
-    `<a class="sidebar-project"${project.key === selected?.key ? ' aria-current="page"' : ""} href="${galleryHref("explorer", { project: project.key, previews })}">${escapeHtml(project.label)} <span class="project-meta">(${project.reports.length})</span></a>`).join("");
-  const hidden = `<input type="hidden" name="view" value="explorer"><input type="hidden" name="project" value="${escapeHtml(selected?.key ?? "")}">${previews ? '<input type="hidden" name="previews" value="1">' : ""}`;
-  const title = selected ? selected.label : "Select an authorized project";
-  const empty = selected
-    ? (search ? "No reports match this search in the selected project." : "No actual reports are available in the selected project.")
-    : "Choose a verified project from the sidebar.";
-
-  return `<div class="explorer"><aside class="explorer-sidebar"><p class="eyebrow">Verified projects</p><nav class="sidebar-list" aria-label="Projects">${sidebar || '<span class="project-meta">No projects available.</span>'}</nav></aside><section class="explorer-content"><p class="eyebrow">Project explorer</p><h2>${escapeHtml(title)}</h2>${selected ? `<form class="search-form" method="get">${hidden}<input class="search-input" type="search" name="q" value="${escapeHtml(query)}" placeholder="Search skills, outcomes, or project" aria-label="Search selected project reports"><button class="search-submit" type="submit">Search</button></form>` : ""}${matches.length ? `<div class="report-list">${matches.map((report) => renderGalleryReport(report)).join("")}</div>` : `<p class="empty-gallery">${escapeHtml(empty)}</p>`}</section></div>`;
-}
-
-function renderActivityTimeline(reports) {
-  const grouped = new Map();
-
-  for (const report of reports) {
-    const day = report.generatedAt.slice(0, 10);
-
-    if (!grouped.has(day)) grouped.set(day, []);
-    grouped.get(day).push(report);
-  }
-
-  if (grouped.size === 0) {
-    return '<p class="empty-gallery">No actual skill activity yet. Catalog previews stay hidden unless explicitly requested.</p>';
-  }
-
-  return [...grouped].map(([day, entries]) => {
-    const label = new Intl.DateTimeFormat("en-US", {
-      dateStyle: "full",
-      timeZone: "UTC",
-    }).format(new Date(`${day}T00:00:00.000Z`));
-
-    return `<section class="timeline-day"><h2>${escapeHtml(label)} · UTC</h2><div class="report-list">${entries.map((report) => renderGalleryReport(report, { showProject: true })).join("")}</div></section>`;
-  }).join("");
+  return `<section class="section workbench-unassigned" aria-label="Unassigned legacy reports"><div class="section-heading"><div><p class="eyebrow">Project identity not verified</p><h2>Unassigned legacy reports</h2></div><span class="section-count">${legacy.length}</span></div><p class="legacy-note">These original reports remain available, but their free-text headings do not prove repository ownership. Associate them with a project only through an explicitly reviewed migration.</p><div class="report-list">${legacy.map((report) => renderUnassignedLegacyReadout(report)).join("")}</div></section>`;
 }
 
 async function renderReadoutIndex(directory, {
@@ -3354,8 +3513,6 @@ async function renderReadoutIndex(directory, {
   const previews = searchParams.get("previews") === "1";
   const reports = discovered.filter((report) => previews || report.status !== "Preview");
   const projects = groupReadoutProjects(reports);
-  const requestedView = searchParams.get("view") ?? "projects";
-  const view = ["projects", "explorer", "activity"].includes(requestedView) ? requestedView : "projects";
   let activeProject = currentProject ?? "";
 
   if (!activeProject) {
@@ -3389,38 +3546,30 @@ async function renderReadoutIndex(directory, {
     ? matchingWorkbenchRuns(selectedSnapshot, query, { skill, status })
       .find((report) => report.relativePath === requestedReport)?.relativePath
     : undefined;
-  const title = view === "activity"
-    ? "Recent activity"
-    : view === "explorer"
-      ? "Project explorer"
-      : "Project Workbench";
   const actualCount = discovered.filter((report) => report.status !== "Preview").length;
   const previewState = {
-    project: view === "projects" || view === "explorer" ? selectedProject : undefined,
+    project: selectedProject,
     query,
-    skill: view === "projects" ? skill : undefined,
-    status: view === "projects" ? status : undefined,
-    report: view === "projects" ? safeRequestedReport : undefined,
+    skill,
+    status,
+    report: safeRequestedReport,
   };
   const previewLink = previews
-    ? `<a class="preview-toggle" href="${galleryHref(view, previewState)}">Hide catalog previews</a>`
-    : `<a class="preview-toggle" href="${galleryHref(view, { ...previewState, previews: true })}">Show catalog previews</a>`;
-  const navigation = `<nav class="gallery-nav" aria-label="Readout views"><a href="${galleryHref("projects", { previews })}"${view === "projects" ? ' aria-current="page"' : ""}>Project library</a><a href="${galleryHref("explorer", { project: selectedProject, previews })}"${view === "explorer" ? ' aria-current="page"' : ""}>Project explorer</a><a href="${galleryHref("activity", { previews })}"${view === "activity" ? ' aria-current="page"' : ""}>Recent activity</a>${previewLink}</nav>`;
-  const body = view === "projects"
-    ? renderProjectWorkbench(projects, reports, {
-      activeProject,
-      selectedProject,
-      requestedReport: safeRequestedReport,
-      previews,
-      query,
-      skill,
-      status,
-      previewLink,
-      actualCount,
-    })
-    : `<main><div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">Private report library</span></div><header class="hero"><p class="eyebrow">Project-aware skill readouts</p><h1>${escapeHtml(title)}</h1><p class="outcome">Browse verified project reports, explore a selected repository, and follow actual skill activity. Catalog previews remain clearly labeled and hidden until requested.</p></header>${navigation}${view === "activity" ? renderActivityTimeline(reports) : renderProjectExplorer(projects, { selectedProject, query, previews })}<footer class="footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Self-contained HTML · no external scripts or styles</span></footer></main>`;
+    ? `<a class="preview-toggle" href="${workbenchHref(previewState)}">Hide catalog previews</a>`
+    : `<a class="preview-toggle" href="${workbenchHref({ ...previewState, previews: true })}">Show catalog previews</a>`;
+  const body = renderProjectWorkbench(projects, reports, {
+    activeProject,
+    selectedProject,
+    requestedReport: safeRequestedReport,
+    previews,
+    query,
+    skill,
+    status,
+    previewLink,
+    actualCount,
+  });
 
-  return renderDocument({ title, body, theme: view === "projects" ? themes.code : themes.help });
+  return renderDocument({ title: "Project Workbench", body, theme: themes.code });
 }
 
 function sendHtml(response, status, content, { head = false, allowForms = false } = {}) {

@@ -19,6 +19,7 @@ const generatedRoot = join(pluginRoot, "skills");
 const generatedSupportRoot = join(pluginRoot, "scripts");
 const sharedSupportFiles = Object.freeze([
   "qs-skill-catalog.mjs",
+  "qs-skill-report-presentation.mjs",
   "qs-skill-readout.mjs",
 ]);
 const check = process.argv.includes("--check");

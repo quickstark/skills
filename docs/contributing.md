@@ -16,7 +16,13 @@ npm run check:codex
 npm test
 ```
 
-The project test suite checks all promoted skills, plugin versions, generated snapshots, documentation contracts, report rendering, viewer security, producer ingestion, cross-machine publishing, immutable retries, and credential rotation.
+The project test suite checks all promoted skills, plugin versions, generated snapshots, documentation contracts, report rendering, viewer security, producer ingestion, cross-machine publishing, immutable retries, and credential rotation. Its pinned Playwright Core integration also uses actual Chromium to measure report typography, responsive card alignment, the separate GitHub issue sidebar, and full-height Workbench behavior.
+
+If Chromium is not already available in the local Playwright browser cache, install the browser matching the lockfile before running the suite:
+
+```bash
+npx playwright-core install chromium
+```
 
 ## Change a promoted skill
 

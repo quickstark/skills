@@ -103,7 +103,9 @@ Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation onl
 
 ## Visual skill readouts
 
-Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 24 report profiles keep an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts; each foregrounds the information that matters for that particular skill. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
+Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 24 report profiles use the approved editorial presentation: a verified project and Git metadata strip, a five-second visual summary, real exceptions and checks, complete native next prompts, and the selected skill's actual evidence. A shared deep presentation module, `scripts/qs-skill-report-presentation.mjs`, owns the readable typography, aligned responsive prompt cards, GitHub context, and exception-based summaries; `scripts/qs-skill-readout.mjs` remains the small reporting interface. Each report keeps an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
+
+Generated next prompts use Codex's native `$qs-skill-name` spelling so they match the installed skill's `agents/openai.yaml` default prompt. Existing explicit `/qs-skill-name` prompts remain supported. The blue resolved-skill token is created by the Codex composer when a skill is selected from its `$` picker; HTML, Markdown, and copied prompt text cannot independently force or synthesize that application-controlled state.
 
 | Skill purpose | Primary visual signal |
 | --- | --- |
@@ -159,7 +161,7 @@ To explicitly generate a local-only report without starting any viewer, use the 
 
 ### Persistent, project-aware report library
 
-The default viewer now combines three production views: a project-first library, a searchable project explorer, and a newest-first cross-project activity timeline. It discovers the active repository from its verified Git origin and groups reports under canonical identities such as `github.com/quickstark/skills`. Actual skill runs and catalog previews are always distinguished; previews stay out of project counts and activity until you explicitly choose **Show catalog previews**.
+The default viewer is one full-height, project-first Project Workbench. It combines verified project navigation, searchable newest-first skill runs, and the complete selected immutable report in a single responsive application. It discovers the active repository from its verified Git origin and groups reports under canonical identities such as `github.com/quickstark/skills`. Bookmarked legacy gallery views safely open the same Workbench without restoring retired navigation. Actual skill runs and catalog previews are always distinguished; previews stay out of project counts until you explicitly choose **Show catalog previews**.
 
 Temporary, flat report storage remains the backward-compatible default. To opt into durable, automatically project-organized reports on the dev box, configure a persistent report root:
 
@@ -199,7 +201,7 @@ Inspect the selected reports before deliberately adding `--apply`. Neither comma
 
 ### Authenticated hosted access
 
-[`deploy/readouts/compose.yaml`](./deploy/readouts/compose.yaml) provides a dedicated persistent readout service for the existing Docker `proxy` network, Traefik HTTPS router, and Authelia authentication middleware. The running viewer publishes **only** explicitly allowlisted canonical project identities; `github.com/quickstark/skills` is the sole default. Unauthorized projects cannot appear in the library, project search, activity timeline, direct-report links, or error messages. The container has a read-only filesystem and report mount, drops Linux capabilities, exposes no host port, and serves no checkout files.
+[`deploy/readouts/compose.yaml`](./deploy/readouts/compose.yaml) provides a dedicated persistent readout service for the existing Docker `proxy` network, Traefik HTTPS router, and Authelia authentication middleware. The running viewer publishes **only** explicitly allowlisted canonical project identities; `github.com/quickstark/skills` is the sole default. Unauthorized projects cannot appear in the Workbench, project search, selected reports, direct-report links, or error messages. The container has a read-only filesystem and report mount, drops Linux capabilities, exposes no host port, and serves no checkout files.
 
 Validate and start the dedicated stack only after approving the configured hostname and publication policy:
 
@@ -301,7 +303,7 @@ Checks: Confirmed the affected modules and existing test coverage.
 **1. Clarify the selected refactor**
 
 ```text
-Use /qs-plan-clarify to agree on the selected architectural refactor's scope, preserved behavior, and existing test coverage.
+Use $qs-plan-clarify to agree on the selected architectural refactor's scope, preserved behavior, and existing test coverage.
 ```
 
 > Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`.
@@ -311,7 +313,7 @@ Use /qs-plan-clarify to agree on the selected architectural refactor's scope, pr
 **2. Design the selected architectural seam**
 
 ```text
-Use /qs-design-modules to design the interface and seam for the architectural candidate identified in the review.
+Use $qs-design-modules to design the interface and seam for the architectural candidate identified in the review.
 ```
 
 > Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`.

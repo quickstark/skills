@@ -18,11 +18,12 @@
     "readouts:gallery": "node scripts/qs-skill-readout.mjs gallery",
     "readouts:prototype": "node scripts/qs-skill-readout.prototype.mjs",
     "readouts:serve": "node scripts/qs-skill-readout.mjs serve",
-    "test": "node --test tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs tests/qs-readout-observation.test.mjs"
+    "test": "node --test tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs tests/qs-readout-observation.test.mjs tests/qs-report-presentation.test.mjs"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",
-    "@changesets/cli": "^2.30.0"
+    "@changesets/cli": "^2.30.0",
+    "playwright-core": "1.61.0"
   },
   "packageManager": "npm@10.9.4"
 }
