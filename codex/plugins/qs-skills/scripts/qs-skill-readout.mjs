@@ -1,9 +1,9 @@
 import { execFile, spawn } from "node:child_process";
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
-import { link, lstat, mkdir, readFile, readdir, realpath, unlink, writeFile } from "node:fs/promises";
+import { link, lstat, mkdir, open, readFile, readdir, realpath, unlink, writeFile } from "node:fs/promises";
 import { createServer as createPortProbe } from "node:net";
-import { hostname, networkInterfaces, platform, tmpdir } from "node:os";
+import { homedir, hostname, networkInterfaces, platform, tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
@@ -18,17 +18,29 @@ import {
 } from "./qs-skill-catalog.mjs";
 import {
   REPORT_PRESENTATION_STYLES,
+  decodeReadoutPreferences,
+  loadReadoutPreferenceSecret,
+  normalizeReadoutPreferences,
   observeGitHubProject,
+  renderReadoutActionableCode,
   renderReadoutGitHubIssues,
   renderReadoutNextPrompts,
   renderReadoutProjectMetadata,
+  renderReadoutRunMetrics,
   renderReadoutSignalSummary,
 } from "./qs-skill-report-presentation.mjs";
+import {
+  READOUT_PORTFOLIO_STYLES,
+  buildReadoutPortfolioSnapshot,
+  readReadoutPortfolioInventory,
+  renderReadoutPortfolio,
+} from "./qs-readout-portfolio.mjs";
 
 export const DEFAULT_READOUT_DIRECTORY = join(tmpdir(), "quickstark-readouts");
 export const DEFAULT_READOUT_HOST = "127.0.0.1";
 export const DEFAULT_READOUT_PORT = 4173;
 export const DEFAULT_READOUT_INGESTION_PORT = 4174;
+export const DEFAULT_READOUT_INGESTION_URL = "https://reports.quickstark.com/api/v1/readouts";
 export const READOUT_INGESTION_PATH = "/api/v1/readouts";
 export const READOUT_VIEWER_STATE = ".quickstark-readout-viewer.json";
 export const READOUT_FORMAT_VERSION = 1;
@@ -221,6 +233,65 @@ function normalizeProjectIdentity(value) {
       ? `${owner}/${repository}`
       : requireText(value.label, "Project label"),
     source,
+  };
+}
+
+function normalizeReadoutGitContext(value, project) {
+  if (value === undefined || value === null) return null;
+
+  if (
+    !value
+    || typeof value !== "object"
+    || Array.isArray(value)
+    || Object.getPrototypeOf(value) !== Object.prototype
+    || !project
+    || project.source !== "git-origin"
+    || value.projectKey !== project.key
+  ) {
+    throw new Error("Observed Git context must belong to the actual authorized originating Git project.");
+  }
+
+  const allowed = new Set(["projectKey", "branch", "revision", "ahead", "behind", "dirtyCount"]);
+
+  if (Object.keys(value).some((field) => !allowed.has(field))) {
+    throw new Error("Observed Git context contains an unsupported field.");
+  }
+
+  if (
+    typeof value.branch !== "string"
+    || (value.branch !== "Detached HEAD"
+      && !/^[a-z0-9][a-z0-9._/-]{0,199}$/i.test(value.branch))
+  ) {
+    throw new Error("Observed Git context requires a safe originating branch.");
+  }
+
+  if (
+    value.revision !== null
+    && (typeof value.revision !== "string"
+      || !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/i.test(value.revision))
+  ) {
+    throw new Error("Observed Git context requires a complete safe originating revision.");
+  }
+
+  for (const field of ["ahead", "behind"]) {
+    if (
+      value[field] !== null
+      && (!Number.isSafeInteger(value[field]) || value[field] < 0)
+    ) {
+      throw new Error(`Observed Git context requires a safe ${field} count.`);
+    }
+  }
+
+  if (!Number.isSafeInteger(value.dirtyCount) || value.dirtyCount < 0) {
+    throw new Error("Observed Git context requires a safe originating worktree count.");
+  }
+
+  return {
+    branch: value.branch,
+    revision: value.revision,
+    ahead: value.ahead,
+    behind: value.behind,
+    dirtyCount: value.dirtyCount,
   };
 }
 
@@ -646,6 +717,21 @@ function normalizeDeploymentUrl(value, label) {
   return candidate.href;
 }
 
+function containsSensitiveProjectPath(segments) {
+  const sensitiveDirectories = new Set([".git", ".ssh", ".aws", ".docker", ".gnupg", ".kube"]);
+
+  return segments.some((segment) => {
+    const lower = segment.toLowerCase();
+
+    return sensitiveDirectories.has(lower)
+      || /^\.env(?:\.|$)/i.test(segment)
+      || /^\.(?:envrc|git-credentials|npmrc|pypirc|netrc)$/i.test(segment)
+      || /^(?:id_(?:rsa|dsa|ecdsa|ed25519)|application_default_credentials|service-account)(?:\.[a-z0-9_-]+)?$/i.test(segment)
+      || /^(?:credentials?|secrets?|tokens?|private[_-]?keys?)(?:\.(?:json|ya?ml|toml|ini|txt|env))?$/i.test(segment)
+      || /\.(?:pem|key|p12|pfx|jks|keystore)$/i.test(segment);
+  });
+}
+
 function normalizeChangedFile(item, index) {
   const label = `execution.files[${index}]`;
 
@@ -666,18 +752,7 @@ function normalizeChangedFile(item, index) {
     throw new Error(`${label}.path must be a safe relative project file.`);
   }
 
-  const sensitiveDirectory = new Set([".git", ".ssh", ".aws", ".docker", ".gnupg", ".kube"]);
-
-  if (segments.some((segment) => {
-    const lower = segment.toLowerCase();
-
-    return sensitiveDirectory.has(lower)
-      || /^\.env(?:\.|$)/i.test(segment)
-      || /^\.(?:envrc|git-credentials|npmrc|pypirc|netrc)$/i.test(segment)
-      || /^(?:id_(?:rsa|dsa|ecdsa|ed25519)|application_default_credentials|service-account)(?:\.[a-z0-9_-]+)?$/i.test(segment)
-      || /^(?:credentials?|secrets?|tokens?|private[_-]?keys?)(?:\.(?:json|ya?ml|toml|ini|txt|env))?$/i.test(segment)
-      || /\.(?:pem|key|p12|pfx|jks|keystore)$/i.test(segment);
-  })) {
+  if (containsSensitiveProjectPath(segments)) {
     throw new Error(`${label}.path must not disclose sensitive environment or credential files.`);
   }
 
@@ -815,6 +890,112 @@ function normalizeItems(items, label, { checks = false } = {}) {
   });
 }
 
+function validateActionableEvidenceText(text, label) {
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(text)) {
+    throw new Error(`${label} must not contain unsafe control characters.`);
+  }
+
+  if (
+    /-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----/.test(text)
+    || /\b(?:gh[pousr]_[a-z0-9_]{20,}|github_pat_[a-z0-9_]{20,}|sk-(?:proj-)?[a-z0-9_-]{20,}|AKIA[0-9A-Z]{16})\b/i.test(text)
+    || /\b(?:api[_-]?key|access[_-]?token|auth[_-]?token|secret|password)\b\s*[:=]\s*["']?[a-z0-9][a-z0-9._~+/-]{11,}/i.test(text)
+    || /\bbearer\s+[a-z0-9][a-z0-9._~+/-]{11,}/i.test(text)
+    || /\bhttps?:\/\/[^\s/@:]+:[^\s/@]{8,}@/i.test(text)
+  ) {
+    throw new Error(`${label} must not contain a credential, token, or private key.`);
+  }
+}
+
+function normalizeActionableCode(items, label) {
+  if (items === undefined) return [];
+
+  if (!Array.isArray(items) || items.length > 12) {
+    throw new Error(`${label} must be an array of at most 12 recorded items.`);
+  }
+
+  const value = label === "commands" ? "command" : "code";
+  const supportedFields = new Set(
+    label === "commands"
+      ? ["title", "command", "detail", "language"]
+      : ["title", "code", "detail", "language", "path"],
+  );
+  const seen = new Set();
+
+  return items.map((item, index) => {
+    const name = `${label}[${index}]`;
+
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error(`${name} must describe an explicitly recorded ${value}.`);
+    }
+
+    for (const field of Object.keys(item)) {
+      if (!supportedFields.has(field)) {
+        throw new Error(`${name}.${field} is not a supported recorded ${value} field.`);
+      }
+    }
+
+    const title = requireText(item.title, `${name}.title`);
+    const content = requireText(item[value], `${name}.${value}`);
+    const language = item.language === undefined
+      ? label === "commands" ? "bash" : "text"
+      : requireText(item.language, `${name}.language`).toLowerCase();
+
+    if (seen.has(title)) throw new Error(`${label} must not repeat an item title.`);
+    seen.add(title);
+
+    if (title.length > 160 || Buffer.byteLength(content, "utf8") > 12_000) {
+      throw new Error(`${name} exceeds the safe recorded ${value} size.`);
+    }
+
+    if (!/^[a-z0-9][a-z0-9+#.-]{0,31}$/.test(language)) {
+      throw new Error(`${name}.language must be a safe code-block language.`);
+    }
+
+    validateActionableEvidenceText(title, `${name}.title`);
+    validateActionableEvidenceText(content, `${name}.${value}`);
+
+    const detail = item.detail === undefined
+      ? undefined
+      : requireText(item.detail, `${name}.detail`);
+
+    if (label === "commands" && detail === undefined) {
+      throw new Error(`${name}.detail must explain why or when the user should run this command.`);
+    }
+
+    if (detail && detail.length > 1_200) {
+      throw new Error(`${name}.detail exceeds the safe explanation size.`);
+    }
+
+    if (detail) validateActionableEvidenceText(detail, `${name}.detail`);
+
+    let path;
+
+    if (item.path !== undefined) {
+      path = requireText(item.path, `${name}.path`);
+      const segments = path.split("/");
+
+      if (
+        isAbsolute(path)
+        || /^[a-z]:/i.test(path)
+        || path.includes("\\")
+        || /[\u0000-\u001f\u007f]/.test(path)
+        || segments.some((segment) => segment === "" || segment === "." || segment === "..")
+        || containsSensitiveProjectPath(segments)
+      ) {
+        throw new Error(`${name}.path must be a safe, non-sensitive relative project file.`);
+      }
+    }
+
+    return {
+      title,
+      [value]: content,
+      language,
+      ...(detail === undefined ? {} : { detail }),
+      ...(path === undefined ? {} : { path }),
+    };
+  });
+}
+
 function normalizeReportRelationships(value, items) {
   if (value === undefined) return [];
   if (!Array.isArray(value)) throw new Error("Report relationships must be an array.");
@@ -932,6 +1113,262 @@ function normalizeObservationCount(value, label) {
   }
 
   return value;
+}
+
+async function discoverCodexTaskSession(threadId, sessionDirectory, now) {
+  if (typeof threadId !== "string" || !reportIdentifier.test(threadId)) return null;
+
+  const roots = sessionDirectory === undefined
+    ? Array.from({ length: 3 }, (_, offset) => {
+      const date = new Date(now.getTime() - offset * 86_400_000);
+
+      return join(
+        process.env.CODEX_HOME ?? join(homedir(), ".codex"),
+        "sessions",
+        String(date.getUTCFullYear()),
+        String(date.getUTCMonth() + 1).padStart(2, "0"),
+        String(date.getUTCDate()).padStart(2, "0"),
+      );
+    })
+    : [resolve(sessionDirectory)];
+  const suffix = `-${threadId.toLowerCase()}.jsonl`;
+  const candidates = [];
+
+  for (const root of roots) {
+    let entries;
+
+    try {
+      entries = await readdir(root, { withFileTypes: true });
+    } catch (error) {
+      if (error.code === "ENOENT" || error.code === "EACCES") continue;
+      return null;
+    }
+
+    if (entries.length > 512) return null;
+
+    for (const entry of entries) {
+      if (entry.isFile() && entry.name.toLowerCase().endsWith(suffix)) {
+        candidates.push(join(root, entry.name));
+      }
+    }
+  }
+
+  return candidates.length === 1 ? candidates[0] : null;
+}
+
+function codexProviderUsage(event) {
+  const usage = event?.payload?.info?.total_token_usage;
+
+  if (!usage || typeof usage !== "object" || Array.isArray(usage)) return null;
+
+  const fields = {
+    input: usage.input_tokens,
+    cachedInput: usage.cached_input_tokens,
+    cacheWrite: usage.cache_write_input_tokens,
+    output: usage.output_tokens,
+    reasoningOutput: usage.reasoning_output_tokens,
+    total: usage.total_tokens,
+  };
+
+  if (
+    !Number.isSafeInteger(fields.input)
+    || !Number.isSafeInteger(fields.output)
+    || !Number.isSafeInteger(fields.total)
+    || fields.input < 0
+    || fields.output < 0
+    || fields.total !== fields.input + fields.output
+    || Object.values(fields).some((count) => count !== undefined
+      && (!Number.isSafeInteger(count) || count < 0))
+  ) {
+    return null;
+  }
+
+  return fields;
+}
+
+function extractCodexTaskObservation(events, expectedSkill, now) {
+  let taskStart = -1;
+
+  for (let index = 0; index < events.length; index += 1) {
+    if (events[index].type === "event_msg" && events[index].payload?.type === "task_started") {
+      taskStart = index;
+    }
+  }
+
+  if (taskStart < 0) return null;
+
+  let baseline = null;
+
+  for (let index = taskStart - 1; index >= 0; index -= 1) {
+    if (events[index].type === "event_msg" && events[index].payload?.type === "token_count") {
+      baseline = codexProviderUsage(events[index]);
+      break;
+    }
+  }
+
+  if (!baseline) return null;
+
+  const users = [];
+  const models = new Set();
+  const reasoning = new Set();
+  let observed = null;
+
+  for (let index = taskStart + 1; index < events.length; index += 1) {
+    const event = events[index];
+    const payload = event.payload ?? {};
+
+    if (event.type === "event_msg" && payload.type === "task_started") return null;
+
+    if (event.type === "event_msg" && payload.type === "user_message") {
+      const message = typeof payload.message === "string"
+        ? payload.message
+        : typeof payload.text === "string" ? payload.text : "";
+      const mentionedSkills = new Set(
+        [...message.matchAll(/(?:^|[\s[(])(?:\$|\/)(?:qs-skills:)?(qs-[a-z0-9-]+)(?![a-z0-9._:-])/gi)]
+          .map((match) => match[1].toLowerCase()),
+      );
+
+      users.push(mentionedSkills.size === 1 ? [...mentionedSkills][0] : null);
+      continue;
+    }
+
+    if (event.type === "turn_context") {
+      if (typeof payload.model === "string") models.add(payload.model);
+
+      const effort = payload.effort ?? payload.reasoning_effort;
+
+      if (typeof effort === "string") reasoning.add(effort);
+      continue;
+    }
+
+    if (event.type === "event_msg" && payload.type === "token_count") {
+      observed = codexProviderUsage(event) ?? observed;
+    }
+  }
+
+  if (
+    users.length !== 1
+    || users[0] !== expectedSkill
+    || !observed
+    || models.size > 1
+    || reasoning.size > 1
+  ) {
+    return null;
+  }
+
+  const tokens = {};
+
+  for (const field of ["input", "cachedInput", "cacheWrite", "output", "reasoningOutput", "total"]) {
+    if (observed[field] === undefined || baseline[field] === undefined) continue;
+
+    const difference = observed[field] - baseline[field];
+
+    if (!Number.isSafeInteger(difference) || difference < 0) return null;
+
+    tokens[field] = difference;
+  }
+
+  if (tokens.total !== tokens.input + tokens.output) return null;
+
+  const startedAt = events[taskStart].timestamp;
+  const started = new Date(startedAt);
+  const elapsed = now.getTime() - started.getTime();
+
+  if (!observedUtcTimestamp.test(startedAt ?? "") || !Number.isSafeInteger(elapsed) || elapsed < 0) {
+    return null;
+  }
+
+  const inference = {
+    ...(models.size === 1 ? { model: [...models][0] } : {}),
+    ...(reasoning.size === 1 ? { reasoningEffort: [...reasoning][0] } : {}),
+  };
+  const observation = {
+    version: 1,
+    measurementSource: "verified-harness",
+    attributionScope: "skill-run",
+    capturedAt: now.toISOString(),
+    ...(Object.keys(inference).length ? { inference } : {}),
+    tokens,
+    timing: { startedAt, activeDurationMs: elapsed },
+  };
+
+  try {
+    return normalizeSkillObservation(observation, "Completed");
+  } catch {
+    return null;
+  }
+}
+
+export async function captureCodexSkillObservation(skill, {
+  threadId = process.env.CODEX_THREAD_ID,
+  sessionDirectory = process.env.QS_READOUT_CODEX_SESSION_DIRECTORY,
+  now = new Date(),
+} = {}) {
+  const expectedSkill = typeof skill === "string" ? skill.replace(/^\//, "").toLowerCase() : "";
+
+  if (
+    !SKILLS_BY_NAME.has(expectedSkill)
+    || !(now instanceof Date)
+    || Number.isNaN(now.getTime())
+  ) {
+    return null;
+  }
+
+  const path = await discoverCodexTaskSession(threadId, sessionDirectory, now);
+
+  if (!path) return null;
+
+  let handle;
+
+  try {
+    const metadata = await lstat(path);
+
+    if (!metadata.isFile() || metadata.isSymbolicLink() || metadata.size < 1) return null;
+
+    handle = await open(path, "r");
+
+    for (let maximum = 128 * 1024; maximum <= 64 * 1024 * 1024; maximum *= 2) {
+      const length = Math.min(metadata.size, maximum);
+      const position = metadata.size - length;
+      const buffer = Buffer.alloc(length);
+      const { bytesRead } = await handle.read(buffer, 0, length, position);
+      const lines = buffer.subarray(0, bytesRead).toString("utf8").split("\n");
+
+      if (position > 0) lines.shift();
+
+      const events = [];
+
+      for (const line of lines) {
+        if (!line) continue;
+
+        try {
+          const event = JSON.parse(line);
+
+          if (
+            event
+            && typeof event === "object"
+            && (event.type === "turn_context"
+              || event.type === "event_msg" && ["task_started", "user_message", "token_count"].includes(event.payload?.type))
+          ) {
+            events.push(event);
+          }
+        } catch {
+          // A partial or malformed session event is not evidence of a skill measurement.
+        }
+      }
+
+      const observation = extractCodexTaskObservation(events, expectedSkill, now);
+
+      if (observation) return observation;
+      if (position === 0) break;
+    }
+  } catch {
+    return null;
+  } finally {
+    if (handle) await handle.close();
+  }
+
+  return null;
 }
 
 function normalizeSkillObservation(value, status, checks = []) {
@@ -1399,6 +1836,7 @@ export function normalizeSkillReadout(input) {
   const projectIdentity = input.projectIdentity === undefined
     ? null
     : normalizeProjectIdentity(input.projectIdentity);
+  const gitContext = normalizeReadoutGitContext(input.gitContext, projectIdentity);
   const reportId = input.reportId === undefined
     ? randomUUID()
     : requireText(input.reportId, "Report identifier");
@@ -1411,6 +1849,8 @@ export function normalizeSkillReadout(input) {
   const decisions = normalizeItems(input.decisions, "decisions");
   const outputs = normalizeItems(input.outputs, "outputs");
   const checks = normalizeItems(input.checks, "checks", { checks: true });
+  const commands = normalizeActionableCode(input.commands, "commands");
+  const keyCode = normalizeActionableCode(input.keyCode, "keyCode");
 
   if (status === "Preview" && input.provenance !== undefined && input.provenance !== null) {
     throw new Error("A catalog preview cannot claim actual GitHub or release provenance.");
@@ -1431,8 +1871,11 @@ export function normalizeSkillReadout(input) {
     checks,
   ]);
 
-  if (status === "Preview" && (decisions.length > 0 || outputs.length > 0 || checks.length > 0)) {
-    throw new Error("A catalog preview cannot claim actual decisions, outputs, or validation results.");
+  if (
+    status === "Preview"
+    && (decisions.length > 0 || outputs.length > 0 || checks.length > 0 || commands.length > 0 || keyCode.length > 0)
+  ) {
+    throw new Error("A catalog preview cannot claim actual decisions, outputs, validation results, commands, or code.");
   }
 
   const outcome = requireText(input.outcome, "outcome");
@@ -1445,6 +1888,7 @@ export function normalizeSkillReadout(input) {
       ? projectIdentity?.label ?? ""
       : requireText(input.project, "project"),
     projectIdentity,
+    gitContext,
     reportId,
     formatVersion: READOUT_FORMAT_VERSION,
     skillsUsed: used,
@@ -1452,6 +1896,8 @@ export function normalizeSkillReadout(input) {
     decisions,
     outputs,
     checks,
+    commands,
+    keyCode,
     execution,
     observation,
     producer,
@@ -1632,6 +2078,32 @@ function compactLabel(value, limit = 29) {
     : characters.join("");
 }
 
+function wrapMapLabel(value, limit = 42) {
+  const words = String(value).trim().split(/\s+/).flatMap((word) => {
+    const characters = Array.from(word);
+    const segments = [];
+
+    for (let index = 0; index < characters.length; index += limit) {
+      segments.push(characters.slice(index, index + limit).join(""));
+    }
+
+    return segments;
+  });
+  const lines = [];
+
+  for (const word of words) {
+    const previous = lines.at(-1);
+
+    if (previous && Array.from(`${previous} ${word}`).length <= limit) {
+      lines[lines.length - 1] = `${previous} ${word}`;
+    } else {
+      lines.push(word);
+    }
+  }
+
+  return lines.length ? lines : [""];
+}
+
 function actualReportSignals(report, profile) {
   return profile.sections
     .filter((section) => report[section].length > 0)
@@ -1652,22 +2124,35 @@ function renderMapVisualization(report, profile, signals) {
     title: item.title,
     kind: signal.label,
   }))).slice(0, 5);
-  const height = Math.max(110, items.length * 43 + 14);
+  let position = 10;
+  const cards = items.map((item) => {
+    const titleLines = wrapMapLabel(item.title);
+    const height = Math.max(49, 28 + titleLines.length * 15);
+    const card = { ...item, titleLines, y: position, height };
+
+    position += height + 8;
+
+    return card;
+  });
+  const height = Math.max(110, position + 2);
   const center = Math.round(height / 2);
-  const displayed = new Map(items.map((item, index) => [item.title, index]));
+  const displayed = new Map(cards.map((card) => [card.title, card]));
   const verified = report.relationships.filter((relationship) =>
     displayed.has(relationship.from) && displayed.has(relationship.to));
   const links = verified.map((relationship) => {
-    const from = displayed.get(relationship.from) * 43 + 28;
-    const to = displayed.get(relationship.to) * 43 + 28;
+    const source = displayed.get(relationship.from);
+    const target = displayed.get(relationship.to);
+    const from = source.y + source.height / 2;
+    const to = target.y + target.height / 2;
     const description = relationship.label ?? `${relationship.from} to ${relationship.to}`;
 
     return `<path d="M377 ${from} C315 ${from},315 ${to},377 ${to}" fill="none" stroke="var(--accent)" stroke-opacity=".48" stroke-width="2"><title>${escapeHtml(description)}</title></path>`;
   }).join("");
-  const nodes = items.map((item, index) => {
-    const y = index * 43 + 10;
+  const nodes = cards.map((card) => {
+    const lines = card.titleLines.map((line, index) =>
+      `${index ? " " : ""}<tspan x="405" y="${card.y + 19 + index * 15}">${escapeHtml(line)}</tspan>`).join("");
 
-    return `<g><rect x="378" y="${y}" width="364" height="35" rx="10" fill="var(--card)" stroke="var(--line)"/><circle cx="393" cy="${y + 18}" r="4" fill="var(--accent)"/><text x="405" y="${y + 22}" fill="var(--ink)" font-size="12" font-weight="650">${escapeHtml(compactLabel(item.title, 35))}</text><text x="729" y="${y + 22}" fill="var(--muted)" font-size="10" text-anchor="end">${escapeHtml(compactLabel(item.kind, 17))}</text></g>`;
+    return `<g><rect x="378" y="${card.y}" width="364" height="${card.height}" rx="10" fill="var(--card)" stroke="var(--line)"/><circle cx="393" cy="${card.y + 16}" r="4" fill="var(--accent)"/><text fill="var(--ink)" font-size="12" font-weight="650">${lines}</text><text x="405" y="${card.y + card.height - 8}" fill="var(--muted)" font-size="10">${escapeHtml(card.kind)}</text></g>`;
   }).join("");
   const root = `<rect x="12" y="${center - 22}" width="210" height="44" rx="12" fill="var(--soft)"/><text x="27" y="${center - 2}" fill="var(--accent)" font-size="11" font-weight="750">${escapeHtml(compactLabel(profile.title, 24))}</text><text x="27" y="${center + 13}" fill="var(--muted)" font-size="10">${items.length} recorded item${items.length === 1 ? "" : "s"}</text>`;
 
@@ -1938,7 +2423,7 @@ const reportStyles = `
   @media(max-width:640px){main{width:calc(100% - 28px);padding-top:25px}.hero{padding:24px}.hero-heading{flex-direction:column}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}.footer{flex-direction:column}.search-form{flex-wrap:wrap}.signal-panel figcaption{align-items:flex-start;flex-direction:column}.compact-readout{width:calc(100% - 22px);padding-top:19px}.compact-readout .hero{padding:16px}}
 `;
 
-function renderDocument({ title, body, theme, metadata = "" }) {
+function renderDocument({ title, body, theme, metadata = "", styles = "" }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -1946,7 +2431,7 @@ function renderDocument({ title, body, theme, metadata = "" }) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   ${metadata}
   <title>${escapeHtml(title)} · QuickStark readout</title>
-  <style>${reportStyles}${REPORT_PRESENTATION_STYLES}</style>
+  <style>${reportStyles}${REPORT_PRESENTATION_STYLES}${styles}</style>
 </head>
 <body style="--accent:${theme.accent};--soft:${theme.soft}">
 ${body}
@@ -2048,6 +2533,10 @@ function renderNormalizedSkillReadout(report) {
       `<meta name="quickstark:changed-file" content="${escapeHtml(file.path)}">`,
       `<meta name="quickstark:file-change" content="${escapeHtml(file.change)}">`,
     ]),
+    ...report.commands.map((command) =>
+      `<meta name="quickstark:user-command" content="${escapeHtml(JSON.stringify(command))}">`),
+    ...report.keyCode.map((code) =>
+      `<meta name="quickstark:key-code" content="${escapeHtml(JSON.stringify(code))}">`),
     ...(report.provenance?.commit ? [
       `<meta name="quickstark:commit-sha" content="${escapeHtml(report.provenance.commit.sha)}">`,
       `<meta name="quickstark:commit-published" content="${report.provenance.commit.published}">`,
@@ -2091,14 +2580,17 @@ function renderNormalizedSkillReadout(report) {
     )).join("\n  ");
 
   const next = renderReadoutNextPrompts(report);
+  const actionableCode = renderReadoutActionableCode(report);
 
   const body = `<main class="compact-readout">
   <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
   <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}${renderReadoutProjectMetadata(report)}</header>
   ${summary}
+  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Top next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
+  ${renderReadoutRunMetrics(report)}
+  ${actionableCode}
   ${execution}
   ${evidence}
-  <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Top next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
   ${renderObservedRun(report.observation)}
   ${report.status === "Preview" ? "" : renderIndependentQuality(report.observation)}
   ${metrics ? `<div class="metrics">${metrics}</div>` : ""}
@@ -2135,6 +2627,120 @@ function normalizeBaseUrl(value) {
   return base;
 }
 
+export async function writeReadoutVisualArtifact(input, options = {}) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    throw new Error("A browser visual artifact requires a structured input.");
+  }
+
+  const skillName = requireText(input.skill, "Visual artifact skill").replace(/^\//, "");
+  const skill = SKILLS_BY_NAME.get(skillName);
+
+  if (!skill) {
+    throw new Error("A browser visual artifact requires a promoted QuickStark skill.");
+  }
+
+  const base = normalizeBaseUrl(options.baseUrl ?? process.env.QS_READOUT_BASE_URL);
+
+  if (!base) {
+    throw new Error("A browser visual artifact requires an actual HTTP or HTTPS baseUrl.");
+  }
+
+  const source = resolve(requireText(input.source, "Visual artifact source"));
+  const sourceMetadata = await lstat(source);
+
+  if (!sourceMetadata.isFile() || sourceMetadata.isSymbolicLink()) {
+    throw new Error("A browser visual artifact requires a regular, non-symbolic source file.");
+  }
+
+  if (sourceMetadata.size > 512 * 1024) {
+    throw new Error("A browser visual artifact exceeds its bounded maximum document size.");
+  }
+
+  const html = await readFile(source, "utf8");
+
+  if (
+    !/^\s*<!doctype\s+html\s*>/i.test(html)
+    || !/<html(?:\s[^>]*)?>/i.test(html)
+    || !/<head(?:\s[^>]*)?>/i.test(html)
+    || !/<\/head\s*>/i.test(html)
+    || !/<body(?:\s[^>]*)?>/i.test(html)
+    || !/<\/body\s*>/i.test(html)
+  ) {
+    throw new Error("A browser visual artifact must be a complete self-contained HTML document.");
+  }
+
+  if (
+    /<\s*(?:script|iframe|frame|frameset|object|embed|base)\b/i.test(html)
+    || /<\s*meta\b[^>]*\bhttp-equiv\s*=\s*["']?\s*refresh\b/i.test(html)
+    || /\s+on[a-z][a-z0-9:_-]*\s*=/i.test(html)
+    || /\b(?:href|src|action|formaction|data)\s*=\s*["']?\s*(?:javascript|vbscript|data):/i.test(html)
+    || /<\s*meta\b[^>]*\bname\s*=\s*["']quickstark:/i.test(html)
+  ) {
+    throw new Error("A browser visual artifact contains unsafe executable or navigation content.");
+  }
+
+  validateActionableEvidenceText(html, "Visual artifact");
+
+  const projectIdentity = input.projectIdentity === undefined
+    ? await discoverReadoutProject({ cwd: options.cwd })
+    : normalizeProjectIdentity(input.projectIdentity);
+  const generatedAt = new Date(input.generatedAt ?? Date.now());
+
+  if (Number.isNaN(generatedAt.getTime())) {
+    throw new Error("A browser visual artifact requires a valid generation timestamp.");
+  }
+
+  const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
+  const layout = options.layout
+    ?? process.env.QS_READOUT_LAYOUT
+    ?? (process.env.QS_READOUT_DIR && options.directory === undefined ? "project" : "flat");
+
+  if (!readoutLayouts.has(layout)) {
+    throw new Error("Visual artifact layout must be flat or project.");
+  }
+
+  const timestamp = generatedAt.toISOString().replaceAll(":", "-").replaceAll(".", "-");
+  const visualSkill = skill.name.replace(/^qs-(?:design-)?/, "");
+  const filename = "qs-visual-" + visualSkill + "--" + timestamp + "--"
+    + randomUUID().slice(0, 8) + ".html";
+
+  await mkdir(directory, { recursive: true, mode: 0o700 });
+
+  const segments = layout === "project"
+    ? [
+      ...projectIdentity.key.split("/"),
+      String(generatedAt.getUTCFullYear()),
+      String(generatedAt.getUTCMonth() + 1).padStart(2, "0"),
+    ]
+    : [];
+  const parent = await ensureContainedReadoutDirectory(directory, segments);
+  const path = join(parent, filename);
+  const relativePath = relative(directory, path).split(sep).join("/");
+  const metadata = [
+    '<meta name="quickstark:project" content="' + escapeHtml(projectIdentity.key) + '">',
+    '<meta name="quickstark:visual-artifact" content="' + escapeHtml(skill.name) + '">',
+    '<meta name="quickstark:visual-generated-at" content="' + generatedAt.toISOString() + '">',
+  ].join("\n  ");
+  const document = html.replace(/<head(?:\s[^>]*)?>/i, (head) => head + "\n  " + metadata);
+
+  await writeFile(path, document, {
+    encoding: "utf8",
+    flag: "wx",
+    mode: 0o600,
+  });
+
+  return {
+    skill: skill.name,
+    projectIdentity,
+    generatedAt: generatedAt.toISOString(),
+    directory,
+    filename,
+    relativePath,
+    path,
+    url: new URL(relativePath.split("/").map(encodeURIComponent).join("/"), base).href,
+  };
+}
+
 export async function writeSkillReadout(input, options = {}) {
   if (!input || typeof input !== "object" || Array.isArray(input)) {
     throw new Error("A skill readout requires a JSON object.");
@@ -2144,7 +2750,7 @@ export async function writeSkillReadout(input, options = {}) {
     ? await discoverReadoutProject({ cwd: options.cwd })
     : input.projectIdentity;
   const normalized = normalizeSkillReadout({ ...input, projectIdentity });
-  const gitContext = await observeReadoutGitContext(normalized.projectIdentity, {
+  const gitContext = normalized.gitContext ?? await observeReadoutGitContext(normalized.projectIdentity, {
     cwd: options.cwd,
   });
   const github = gitContext && normalized.projectIdentity.host === "github.com"
@@ -2192,6 +2798,7 @@ export async function writeSkillReadout(input, options = {}) {
     reportId: report.reportId,
     generatedAt: report.generatedAt.toISOString(),
     projectIdentity: report.projectIdentity,
+    gitContext: report.gitContext,
     directory,
     filename,
     relativePath,
@@ -2243,6 +2850,8 @@ export function normalizeExternalSkillReadout(input) {
   const decisions = normalizeItems(input.decisions, "decisions");
   const outputs = normalizeItems(input.outputs, "outputs");
   const checks = normalizeItems(input.checks, "checks", { checks: true });
+  const commands = normalizeActionableCode(input.commands, "commands");
+  const keyCode = normalizeActionableCode(input.keyCode, "keyCode");
   const observation = normalizeSkillObservation(input.observation, status, checks);
   const relationships = normalizeReportRelationships(input.relationships, [
     findings,
@@ -2328,6 +2937,8 @@ export function normalizeExternalSkillReadout(input) {
     decisions,
     outputs,
     checks,
+    commands,
+    keyCode,
     observation,
     relationships,
     nextSkills,
@@ -2356,6 +2967,10 @@ export function renderExternalSkillReadout(input) {
     ...(report.producer.harness.version ? [
       `<meta name="quickstark:harness-version" content="${escapeHtml(report.producer.harness.version)}">`,
     ] : []),
+    ...report.commands.map((command) =>
+      `<meta name="quickstark:user-command" content="${escapeHtml(JSON.stringify(command))}">`),
+    ...report.keyCode.map((code) =>
+      `<meta name="quickstark:key-code" content="${escapeHtml(JSON.stringify(code))}">`),
   ].join("\n  ");
   const statusClass = report.status.toLowerCase().replaceAll(" ", "-");
   const next = report.nextSkills.length
@@ -2378,6 +2993,7 @@ export function renderExternalSkillReadout(input) {
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Verified submission identity</p><h2>Producer and harness</h2></div></div><div class="detail-grid"><article class="detail-card"><div class="detail-heading"><h3>Producer</h3></div><p>${escapeHtml(report.producer.producer)}</p></article><article class="detail-card"><div class="detail-heading"><h3>Harness</h3></div><p>${escapeHtml(report.producer.harness.name)}${report.producer.harness.version ? ` · ${escapeHtml(report.producer.harness.version)}` : ""}</p></article><article class="detail-card"><div class="detail-heading"><h3>Skill collection</h3></div><p>${escapeHtml(report.producer.collection)}</p></article></div></section>
   ${sections}
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Producer-reported next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
+  ${renderReadoutActionableCode(report)}
   <footer class="footer"><span>Authorized external skill readout</span><span>Self-contained HTML · no external scripts or styles</span></footer>
 </main>`;
 
@@ -2456,6 +3072,24 @@ function decodeHtml(value) {
     "&quot;": '"',
     "&#39;": "'",
   })[entity]);
+}
+
+function discoverStoredActionableCode(html, name, label) {
+  const entries = [...html.matchAll(
+    new RegExp(`<meta name="quickstark:${name}" content="([^\"]*)">`, "g"),
+  )];
+
+  if (entries.length === 0) return [];
+  if (entries.length > 12) return null;
+
+  try {
+    return normalizeActionableCode(
+      entries.map((entry) => JSON.parse(decodeHtml(entry[1]))),
+      label,
+    );
+  } catch {
+    return null;
+  }
 }
 
 function discoverStoredObservation(html) {
@@ -2660,12 +3294,20 @@ function normalizePublishedProjects(value) {
 
   for (const item of values) {
     const key = requireText(item, "Published project");
+
+    if (key === "*") {
+      projects.add(key);
+      continue;
+    }
+
     const segments = key.split("/");
+    const ownerScope = segments.at(-1) === "*";
+    const identitySegments = ownerScope ? segments.slice(1, -1) : segments.slice(1);
 
     if (
       segments.length < 3
       || !/^[a-z0-9.-]+(?:~\d{1,5})?$/i.test(segments[0])
-      || segments.slice(1).some((segment) => !projectSegment.test(segment) || segment === "." || segment === "..")
+      || identitySegments.some((segment) => !projectSegment.test(segment) || segment === "." || segment === "..")
     ) {
       throw new Error("Published projects must use safe, canonical host/owner/repository identities.");
     }
@@ -2674,6 +3316,25 @@ function normalizePublishedProjects(value) {
   }
 
   return projects;
+}
+
+function projectMatchesPublishedScope(projects, key) {
+  if (!(projects instanceof Set) || typeof key !== "string") return false;
+  if (projects.has(key)) return true;
+
+  const segments = key.split("/");
+
+  if (
+    segments.length < 3
+    || !/^[a-z0-9.-]+(?:~\d{1,5})?$/i.test(segments[0])
+    || segments.slice(1).some((segment) => !projectSegment.test(segment) || segment === "." || segment === "..")
+  ) {
+    return false;
+  }
+
+  if (projects.has("*")) return true;
+
+  return projects.has(`${segments.slice(0, -1).join("/")}/*`);
 }
 
 async function discoverStoredReadouts(directory, { allowedProjects = null, maxDepth = 10 } = {}) {
@@ -2715,7 +3376,7 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
       const projectKey = decodeHtml(findMetadata(html, "project"));
 
       if (!skill || !statuses.has(status) || Number.isNaN(Date.parse(generatedAt))) continue;
-      if (allowedProjects !== null && !allowedProjects.has(projectKey)) continue;
+      if (allowedProjects !== null && !projectMatchesPublishedScope(allowedProjects, projectKey)) continue;
 
       const match = html.match(/<p class="outcome">([\s\S]*?)<\/p>/);
 
@@ -3139,7 +3800,7 @@ const safeStoredReadoutAttributes = new Set([
 ]);
 const voidStoredReadoutElements = new Set(["br", "hr"]);
 const safeStoredReadoutRoots = new Map([
-  ["section", new Set(["section", "section presentation-issue-sidebar"])],
+  ["section", new Set(["section", "section presentation-issue-sidebar", "section presentation-run-metrics"])],
   ["div", new Set(["metrics", "presentation-summary-panel"])],
   ["figure", new Set(["signal-panel"])],
 ]);
@@ -3151,8 +3812,16 @@ function allowedStoredReadoutSections(report) {
   ]);
   const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
   const capturedProfile = findMetadata(report.document, "report-profile");
+  const commands = discoverStoredActionableCode(report.document, "user-command", "commands");
+  const keyCode = discoverStoredActionableCode(report.document, "key-code", "keyCode");
 
-  if (report.status !== "Preview") headings.add("Independent quality evidence");
+  if (commands?.length) headings.add("Commands to run");
+  if (keyCode?.length) headings.add("Key code");
+
+  if (report.status !== "Preview") {
+    headings.add("Independent quality evidence");
+    headings.add("Skill run metrics");
+  }
 
   if (
     findMetadata(report.document, "machine")
@@ -3305,10 +3974,24 @@ function renderSafeStoredReadoutMarkup(content, report) {
         const heading = rendered.match(/<h2\b[^>]*>([^<]*)<\/h2>/i);
         const title = heading ? decodeHtml(heading[1]) : "";
         const evidenceSection = storedReadoutEvidenceSection(report, title);
+        const actionable = title === "Commands to run"
+          ? { commands: discoverStoredActionableCode(report.document, "user-command", "commands"), keyCode: [] }
+          : title === "Key code"
+            ? { commands: [], keyCode: discoverStoredActionableCode(report.document, "key-code", "keyCode") }
+            : null;
+        const observedMetrics = title === "Skill run metrics"
+          ? renderReadoutRunMetrics(report)
+          : null;
 
         if (
           !allowedSections.has(title)
           || observedSections.has(title)
+          || (actionable && (
+            !actionable.commands
+            || !actionable.keyCode
+            || rendered !== renderReadoutActionableCode(actionable)
+          ))
+          || (observedMetrics !== null && rendered !== observedMetrics)
           || (evidenceSection && !isGeneratedStoredReadoutEvidence(
             rendered,
             report,
@@ -3482,7 +4165,12 @@ function renderProjectWorkbench(projects, reports, {
   status = "",
   previewLink,
   actualCount,
+  preferences,
 } = {}) {
+  const selectedPreferences = normalizeReadoutPreferences(preferences);
+  const presentation = `--presentation-feature:${selectedPreferences.featurePx}px;`
+    + `--presentation-body:${selectedPreferences.promptPx}px;`
+    + `--presentation-support:${Math.max(11, selectedPreferences.promptPx - 1)}px;`;
   const project = projects.find((entry) => entry.key === selectedProject) ?? null;
   const matches = matchingWorkbenchRuns(project, query, { skill, status });
   const selectedReport = matches.find((report) => report.relativePath === requestedReport)
@@ -3508,7 +4196,7 @@ function renderProjectWorkbench(projects, reports, {
     ? "workbench-shell has-issue-sidebar"
     : "workbench-shell";
 
-  return `<main class="workbench-page"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><span class="workbench-private">Authenticated, read-only project library</span></header><div class="${shellClass}"><aside class="workbench-sidebar" aria-label="Verified projects"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, selectedReport, previews, query, skill, status })}</nav>${unassignedLegacy}<footer class="workbench-sidebar-footer">${previewLink ?? ""}</footer></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${matchingCount}${projectCount}</header>${emptyRuns}</section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside>${issueSidebar}</div><footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
+  return `<main class="workbench-page" data-preference-size="${selectedPreferences.size}" data-preference-density="${selectedPreferences.density}" style="${presentation}"><header class="workbench-masthead"><a class="workbench-brand" href="./"><span class="workbench-brand-mark">Q</span><span>QuickStark <span>Reports</span></span></a><div class="workbench-masthead-actions"><span class="workbench-private">Authenticated, read-only project library</span><a class="workbench-settings-link" href="/settings">Settings</a></div></header><div class="${shellClass}"><aside class="workbench-sidebar" aria-label="Verified projects"><p class="workbench-rail-heading">Verified projects</p><nav class="workbench-projects" aria-label="Verified projects">${renderWorkbenchProjects(projects, { activeProject, selectedProject, selectedReport, previews, query, skill, status })}</nav>${unassignedLegacy}<footer class="workbench-sidebar-footer">${previewLink ?? ""}</footer></aside><section class="workbench-workspace" aria-label="Skill run readouts"><header class="workbench-workspace-heading"><div><p class="workbench-rail-heading">Project library</p><h1>Project Workbench</h1>${project ? `<p class="workbench-scope">${escapeHtml(project.label)}</p>` : ""}</div>${matchingCount}${projectCount}</header>${emptyRuns}</section><aside class="workbench-detail" aria-label="Selected skill readout">${renderWorkbenchDetail(selectedReport)}</aside>${issueSidebar}</div><footer class="workbench-footer"><span>${actualCount} actual QuickStark report${actualCount === 1 ? "" : "s"}</span><span>Verified projects · immutable readouts · no external scripts</span></footer></main>`;
 }
 
 function renderUnassignedLegacyReports(reports) {
@@ -3523,6 +4211,8 @@ async function renderReadoutIndex(directory, {
   searchParams = new URLSearchParams(),
   allowedProjects = null,
   currentProject = null,
+  homepage = "workbench",
+  preferences,
 } = {}) {
   const discovered = await discoverStoredReadouts(directory, { allowedProjects });
   const previews = searchParams.get("previews") === "1";
@@ -3536,6 +4226,37 @@ async function renderReadoutIndex(directory, {
     } catch {
       // Gallery browsing must remain available when no current Git checkout exists.
     }
+  }
+
+  const explicitWorkbench = [
+    "project",
+    "report",
+    "view",
+    "previews",
+    "skill",
+    "status",
+  ].some((key) => searchParams.has(key));
+
+  if (homepage === "portfolio" && !explicitWorkbench) {
+    const inventory = await readReadoutPortfolioInventory(directory);
+    const snapshot = buildReadoutPortfolioSnapshot({
+      reports: discovered,
+      inventory,
+      allowedProjects,
+      currentProject: activeProject,
+    });
+    const body = renderReadoutPortfolio(snapshot, {
+      query: (searchParams.get("q") ?? "").slice(0, 160),
+      activeProject,
+      preferences,
+    });
+
+    return renderDocument({
+      title: "Portfolio overview",
+      body,
+      theme: themes.code,
+      styles: READOUT_PORTFOLIO_STYLES,
+    });
   }
 
   const requestedProject = searchParams.get("project");
@@ -3582,6 +4303,7 @@ async function renderReadoutIndex(directory, {
     status,
     previewLink,
     actualCount,
+    preferences,
   });
 
   return renderDocument({ title: "Project Workbench", body, theme: themes.code });
@@ -3634,6 +4356,9 @@ function tokenMatches(actual, expected) {
 async function handleReadoutRequest(request, response, directory, accessToken, {
   allowedProjects = null,
   currentProject = null,
+  homepage = "workbench",
+  trustedProxy = false,
+  preferenceSecret = null,
 } = {}) {
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.writeHead(405, { Allow: "GET, HEAD" });
@@ -3671,10 +4396,20 @@ async function handleReadoutRequest(request, response, directory, accessToken, {
   }
 
   if (pathname === "/") {
+    const user = trustedProxy && typeof request.headers["remote-user"] === "string"
+      && /^[a-z0-9][a-z0-9._@-]{0,159}$/i.test(request.headers["remote-user"])
+      ? request.headers["remote-user"]
+      : null;
+    const preferences = user && preferenceSecret
+      ? decodeReadoutPreferences(preferenceSecret, user, request.headers.cookie)
+      : normalizeReadoutPreferences();
+
     sendHtml(response, 200, await renderReadoutIndex(directory, {
       searchParams: requestUrl.searchParams,
       allowedProjects,
       currentProject,
+      homepage,
+      preferences,
     }), {
       head: request.method === "HEAD",
       allowForms: true,
@@ -3709,7 +4444,10 @@ async function handleReadoutRequest(request, response, directory, accessToken, {
 
     const html = await readFile(path, "utf8");
 
-    if (allowedProjects !== null && !allowedProjects.has(decodeHtml(findMetadata(html, "project")))) {
+    if (
+      allowedProjects !== null
+      && !projectMatchesPublishedScope(allowedProjects, decodeHtml(findMetadata(html, "project")))
+    ) {
       throw Object.assign(new Error("Not an allowed readout"), { code: "ENOENT" });
     }
 
@@ -4127,7 +4865,10 @@ async function acceptReadoutSubmission(envelope, {
     decisions: envelope.decisions,
     outputs: envelope.outputs,
     checks: envelope.checks,
+    commands: envelope.commands,
+    keyCode: envelope.keyCode,
     observation: envelope.observation,
+    gitContext: envelope.gitContext,
     relationships: envelope.relationships,
     nextSkills: envelope.nextSkills,
   };
@@ -4158,7 +4899,10 @@ async function acceptReadoutSubmission(envelope, {
       decisions: normalized.decisions,
       outputs: normalized.outputs,
       checks: normalized.checks,
+      ...(normalized.commands.length ? { commands: normalized.commands } : {}),
+      ...(normalized.keyCode.length ? { keyCode: normalized.keyCode } : {}),
       ...(normalized.observation ? { observation: normalized.observation } : {}),
+      ...(normalized.gitContext ? { gitContext: normalized.gitContext } : {}),
       relationships: normalized.relationships,
       nextSkills: normalized.nextSkills,
     })))
@@ -4374,11 +5118,15 @@ async function handleReadoutIngestion(request, response, {
     return;
   }
 
-  const envelope = received.value;
+  let envelope = received.value;
 
   if (!envelope || typeof envelope !== "object" || Array.isArray(envelope)) {
     respond(422, { error: "invalid_readout" });
     return;
+  }
+
+  if (envelope.producer === undefined) {
+    envelope = { ...envelope, producer: producer.id };
   }
 
   try {
@@ -4423,7 +5171,10 @@ async function handleReadoutIngestion(request, response, {
     return;
   }
 
-  if (!producer.projects.has(project.key) || !allowedProjects.has(project.key)) {
+  if (
+    !projectMatchesPublishedScope(producer.projects, project.key)
+    || !projectMatchesPublishedScope(allowedProjects, project.key)
+  ) {
     respond(403, { error: "publication_not_authorized" });
     return;
   }
@@ -4570,10 +5321,14 @@ function normalizePublisherEndpoint(value) {
 }
 
 export async function publishSkillReadout(envelope, options = {}) {
-  const endpoint = normalizePublisherEndpoint(
-    options.endpoint ?? process.env.QS_READOUT_INGESTION_URL,
-  );
   const token = options.token ?? process.env.QS_READOUT_PRODUCER_TOKEN;
+  const endpoint = normalizePublisherEndpoint(
+    options.endpoint
+      ?? process.env.QS_READOUT_INGESTION_URL
+      ?? (typeof token === "string" && token.length >= 24
+        ? DEFAULT_READOUT_INGESTION_URL
+        : undefined),
+  );
 
   if (!endpoint || typeof token !== "string" || token.length < 24) {
     return { status: "local-only", reason: "publication_not_configured" };
@@ -4583,9 +5338,7 @@ export async function publishSkillReadout(envelope, options = {}) {
     throw new Error("Portable report publication requires a structured skill-readout envelope.");
   }
 
-  const approved = normalizePublishedProjects(
-    options.allowedProjects ?? process.env.QS_READOUT_PUBLISH_PROJECTS,
-  );
+  const configuredProjects = options.allowedProjects ?? process.env.QS_READOUT_PUBLISH_PROJECTS;
   let project;
 
   try {
@@ -4596,7 +5349,27 @@ export async function publishSkillReadout(envelope, options = {}) {
     return { status: "local-only", reason: "project_not_authorized" };
   }
 
-  if (!approved.has(project.key)) {
+  let approved;
+
+  if (configuredProjects === undefined || configuredProjects === null || configuredProjects === "") {
+    let discovered;
+
+    try {
+      discovered = await discoverReadoutProject({ cwd: options.cwd });
+    } catch {
+      return { status: "local-only", reason: "project_not_authorized" };
+    }
+
+    if (discovered.key !== project.key) {
+      return { status: "local-only", reason: "project_not_authorized" };
+    }
+
+    approved = new Set([discovered.key]);
+  } else {
+    approved = normalizePublishedProjects(configuredProjects);
+  }
+
+  if (!projectMatchesPublishedScope(approved, project.key)) {
     return { status: "local-only", reason: "project_not_authorized" };
   }
 
@@ -4626,7 +5399,7 @@ export async function publishSkillReadout(envelope, options = {}) {
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      response = await fetch(endpoint, {
+      response = await (options.fetcher ?? fetch)(endpoint, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -4689,7 +5462,7 @@ export async function publishSkillReadout(envelope, options = {}) {
       || reportUrl.password
       || reportUrl.search
       || reportUrl.hash
-      || reportUrl.hostname !== endpoint.hostname
+      || reportUrl.hostname !== (reportBase?.hostname ?? endpoint.hostname)
       || (reportBase !== null && (
         reportUrl.origin !== reportBase.origin
         || !reportUrl.pathname.startsWith(reportBase.pathname)
@@ -4721,6 +5494,11 @@ export async function startReadoutServer(options = {}) {
   const directory = resolve(options.directory ?? process.env.QS_READOUT_DIR ?? DEFAULT_READOUT_DIRECTORY);
   const host = options.host ?? DEFAULT_READOUT_HOST;
   const port = options.port ?? DEFAULT_READOUT_PORT;
+  const homepage = options.homepage ?? process.env.QS_READOUT_HOMEPAGE ?? "workbench";
+
+  if (homepage !== "workbench" && homepage !== "portfolio") {
+    throw new Error("Readout homepage must be workbench or portfolio.");
+  }
 
   if (typeof host !== "string" || host.trim().length === 0) {
     throw new Error("Readout host must be a non-empty hostname or IP address.");
@@ -4754,7 +5532,11 @@ export async function startReadoutServer(options = {}) {
     ? explicitReadoutProject(configuredCurrentProject).key
     : null;
 
-  if (allowedProjects !== null && currentProject !== null && !allowedProjects.has(currentProject)) {
+  if (
+    allowedProjects !== null
+    && currentProject !== null
+    && !projectMatchesPublishedScope(allowedProjects, currentProject)
+  ) {
     throw new Error("The hosted current project must be explicitly approved for publication.");
   }
 
@@ -4768,6 +5550,11 @@ export async function startReadoutServer(options = {}) {
   if (trustedProxy && publicationMode !== "hosted") {
     throw new Error("A trusted reverse proxy requires hosted publication and approved projects.");
   }
+
+  const preferenceSecret = await loadReadoutPreferenceSecret({
+    secret: options.preferenceSecret,
+    path: options.preferenceSecretFile ?? process.env.QS_READOUT_PREFERENCE_SECRET_FILE,
+  });
 
   const accessToken = trustedProxy
     ? null
@@ -4785,6 +5572,9 @@ export async function startReadoutServer(options = {}) {
     handleReadoutRequest(request, response, directory, accessToken, {
       allowedProjects,
       currentProject,
+      homepage,
+      trustedProxy,
+      preferenceSecret,
     }).catch(() => {
       if (!response.headersSent) {
         response.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
@@ -5108,7 +5898,7 @@ function parseOptions(arguments_) {
       continue;
     }
 
-    if (!["--input", "--data", "--directory", "--target-directory", "--base-url", "--report-base-url", "--host", "--port", "--access", "--layout", "--project", "--retention-days", "--allowed-projects", "--publication-mode", "--endpoint", "--producers-file", "--max-bytes", "--max-requests-per-minute", "--max-attempts", "--retry-delay", "--timeout"].includes(argument)) {
+    if (!["--input", "--data", "--skill", "--directory", "--target-directory", "--base-url", "--report-base-url", "--host", "--port", "--access", "--layout", "--project", "--retention-days", "--allowed-projects", "--publication-mode", "--endpoint", "--producers-file", "--max-bytes", "--max-requests-per-minute", "--max-attempts", "--retry-delay", "--timeout"].includes(argument)) {
       throw new Error(`Unknown readout option: ${argument}`);
     }
 
@@ -5134,6 +5924,7 @@ function printHelp() {
 Usage:
   node scripts/qs-skill-readout.mjs render --input /absolute/readout.json
   node scripts/qs-skill-readout.mjs render --data '{"skill":"qs-help","outcome":"Selected the right workflow."}'
+  node scripts/qs-skill-readout.mjs visual --skill qs-design-architecture --input /absolute/visual.html
   node scripts/qs-skill-readout.mjs gallery
   node scripts/qs-skill-readout.mjs serve [--host 127.0.0.1] [--port 4173]
   node scripts/qs-skill-readout.mjs ingest --producers-file /secure/producers.json
@@ -5142,6 +5933,7 @@ Usage:
   node scripts/qs-skill-readout.mjs prune --project github.com/owner/repository --retention-days 90
 
 Options:
+  --skill NAME      Actual promoted skill that produced a browser visual.
   --directory PATH  Store or serve reports from a specific directory.
   --target-directory PATH  Optional durable destination for legacy migration.
   --layout MODE     Use flat compatibility or durable project-organized paths.
@@ -5167,6 +5959,7 @@ Options:
 
 Environment:
   QS_READOUT_DIR               Report directory; defaults to the OS temporary directory.
+  QS_READOUT_HOMEPAGE          workbench or portfolio; defaults to workbench.
   QS_READOUT_LAYOUT            flat or project; persistent directories default to project.
   QS_READOUT_ACCESS            auto, local, lan, or ssh; defaults to auto.
   QS_READOUT_BASE_URL          Existing verified viewer URL for generated report links.
@@ -5176,13 +5969,17 @@ Environment:
   QS_READOUT_TRUSTED_PROXY     true only behind the authenticated private reverse proxy.
   QS_READOUT_PUBLIC_URL        Canonical public HTTPS report-library origin.
   QS_READOUT_PRODUCERS_FILE    Private versioned producer-grants JSON path.
-  QS_READOUT_INGESTION_URL     Exact trusted producer ingestion URL; publishing is opt-in.
-  QS_READOUT_PRODUCER_TOKEN    Private bearer credential; never pass it on a command line.
-  QS_READOUT_PUBLISH_PROJECTS  Explicit canonical client-side publication allowlist.
+  QS_READOUT_INGESTION_URL     Optional override for the trusted default reports API.
+  QS_READOUT_PRODUCER_ID       Optional explicit producer; bearer authentication derives it.
+  QS_READOUT_PRODUCER_TOKEN    Only required setting; privately configured bearer credential.
+  QS_READOUT_PUBLISH_PROJECTS  Optional tighter project restriction; Git origin is inferred.
+  QS_READOUT_HARNESS           Actual Codex, Claude, or other publishing harness.
   QS_READOUT_PUBLISH_MAX_ATTEMPTS  Publisher attempts; 1 through 5, defaults to 2.
   QS_READOUT_PUBLISH_RETRY_DELAY  Retry delay in milliseconds; 0 through 2000, defaults to 50.
 
 Automatic behavior:
+  An explicitly configured authenticated producer publishes completed skill
+  reports to the shared reports API without requiring a local report viewer.
   On a Mac or graphical desktop, reports use a private localhost viewer.
   On a headless or SSH-connected Linux host, reports use its private home-network
   IP and an unguessable report URL. No Tailscale or always-on service is needed.
@@ -5212,16 +6009,26 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
     }
 
     const raw = options.input ? await readFile(resolve(options.input), "utf8") : options.data;
-    const input = JSON.parse(raw);
-    const viewer = options.noServe ? null : await ensureReadoutViewer(options);
-    const result = await writeSkillReadout(input, {
+    const supplied = JSON.parse(raw);
+    const capturedObservation = supplied.observation === undefined && supplied.status !== "Preview"
+      ? await captureCodexSkillObservation(supplied.skill)
+      : null;
+    const input = capturedObservation
+      ? { ...supplied, observation: capturedObservation }
+      : supplied;
+    const hostedPublicationConfigured = typeof process.env.QS_READOUT_PRODUCER_TOKEN === "string"
+      && process.env.QS_READOUT_PRODUCER_TOKEN.trim().length >= 24;
+    const viewer = options.noServe || hostedPublicationConfigured
+      ? null
+      : await ensureReadoutViewer(options);
+    let result = await writeSkillReadout(input, {
       ...options,
       baseUrl: viewer?.url ?? options.baseUrl,
     });
 
     if (viewer) await verifyReportedReadout(result);
 
-    const publication = process.env.QS_READOUT_INGESTION_URL
+    const publication = hostedPublicationConfigured
       ? await publishSkillReadout({
         version: READOUT_FORMAT_VERSION,
         producer: process.env.QS_READOUT_PRODUCER_ID,
@@ -5242,11 +6049,23 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
         decisions: input.decisions,
         outputs: input.outputs,
         checks: input.checks,
+        commands: input.commands,
+        keyCode: input.keyCode,
         observation: input.observation,
+        ...(result.gitContext ? {
+          gitContext: {
+            projectKey: result.projectIdentity.key,
+            ...result.gitContext,
+          },
+        } : {}),
         relationships: input.relationships,
         nextSkills: input.nextSkills,
       })
       : null;
+
+    if (publication?.status === "published") {
+      result = { ...result, url: publication.url };
+    }
 
     if (options.json) {
       console.log(JSON.stringify({
@@ -5263,6 +6082,39 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
       } else if (publication) {
         console.log(`Hosted publication: local only (${publication.reason})`);
       }
+    }
+
+    return;
+  }
+
+  if (command === "visual") {
+    if (!options.input || !options.skill) {
+      throw new Error("visual requires both --input and --skill.");
+    }
+
+    if (options.noServe && !options.baseUrl) {
+      throw new Error("A browser visual requires an actual HTTP or HTTPS base URL.");
+    }
+
+    const viewer = options.baseUrl ? null : await ensureReadoutViewer(options);
+    const result = await writeReadoutVisualArtifact({
+      skill: options.skill,
+      source: options.input,
+    }, {
+      ...options,
+      baseUrl: viewer?.url ?? options.baseUrl,
+    });
+
+    await verifyReportedReadout(result);
+
+    if (options.json) {
+      console.log(JSON.stringify({
+        ...result,
+        viewerReused: viewer?.reused ?? null,
+      }));
+    } else {
+      console.log("Browser visual: " + result.url);
+      console.log("Preserved visual: " + result.path);
     }
 
     return;

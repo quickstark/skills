@@ -109,9 +109,35 @@ Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation onl
 
 ## Visual skill readouts
 
-Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and starts or reuses its lightweight report viewer. The 24 report profiles use the approved editorial presentation: a verified project and Git metadata strip, a five-second visual summary, real exceptions and checks, complete native next prompts, and the selected skill's actual evidence. A shared deep presentation module, `scripts/qs-skill-report-presentation.mjs`, owns the readable typography, aligned responsive prompt cards, GitHub context, and exception-based summaries; `scripts/qs-skill-readout.mjs` remains the small reporting interface. Each report keeps an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
+Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout. With an explicitly authorized cross-machine producer, the normal skill command publishes that immutable run to the shared reports API; otherwise it starts or reuses a lightweight private report viewer. The 24 report profiles use the approved editorial presentation: a verified project and Git metadata strip, a five-second visual summary, immediately visible native next prompts, real exceptions and checks, and the selected skill's actual evidence. A shared deep presentation module, `scripts/qs-skill-report-presentation.mjs`, owns the readable typography, aligned responsive prompt cards, actionable user-run terminal commands, noteworthy code excerpts, GitHub context, and exception-based summaries; `scripts/qs-skill-readout.mjs` remains the small reporting interface. Each report keeps an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
 
 Generated next prompts use Codex's native `$qs-skill-name` spelling so they match the installed skill's `agents/openai.yaml` default prompt. Existing explicit `/qs-skill-name` prompts remain supported. The blue resolved-skill token is created by the Codex composer when a skill is selected from its `$` picker; HTML, Markdown, and copied prompt text cannot independently force or synthesize that application-controlled state.
+
+### User-run commands and key code
+
+A completed skill can record a terminal command only when the user actually needs to run it afterward. Every command explains what it does and why or when to run it. The skill can also highlight a small, genuinely relevant source excerpt. Both are displayed as readable, copyable code blocks after the top next prompts:
+
+```json
+{
+  "commands": [
+    {
+      "title": "Install the updated QuickStark plugin",
+      "command": "codex plugin add qs-skills@quickstark --json",
+      "detail": "Run this in your terminal to install the published plugin update."
+    }
+  ],
+  "keyCode": [
+    {
+      "title": "Verify the installed plugin version",
+      "path": "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+      "language": "json",
+      "code": "{ \"version\": \"2.6.0\" }"
+    }
+  ]
+}
+```
+
+These sections are optional. A check the skill already ran, an execution transcript, an imagined next step, a credential, a private file, or a catalog preview is never presented as a command for the user. Authenticated hosted reports preserve the same evidence and reject conflicting changes to an immutable run.
 
 | Skill purpose | Primary visual signal |
 | --- | --- |
@@ -207,7 +233,7 @@ Inspect the selected reports before deliberately adding `--apply`. Neither comma
 
 ### Authenticated hosted access
 
-[`deploy/readouts/compose.yaml`](./deploy/readouts/compose.yaml) provides a dedicated persistent readout service for the existing Docker `proxy` network, Traefik HTTPS router, and Authelia authentication middleware. The running viewer publishes **only** explicitly allowlisted canonical project identities; `github.com/quickstark/skills` is the sole default. Unauthorized projects cannot appear in the Workbench, project search, selected reports, direct-report links, or error messages. The container has a read-only filesystem and report mount, drops Linux capabilities, exposes no host port, and serves no checkout files.
+[`deploy/readouts/compose.yaml`](./deploy/readouts/compose.yaml) provides a dedicated persistent readout service for Traefik HTTPS and Authelia authentication. An authorized producer token can publish any safely derived actual project; GitHub ownership is not an additional reporting requirement. The read-only viewer exposes only accepted, safely identified immutable project reports. Privileged Dashboard Settings uses a separate internal proxy-exclusive network and verifies the exact forwarding proxy before trusting authenticated user headers. Its report-style sidebar separates **Profile & personal settings** from a conventional **Producer tokens** table. Creating a token selects its platform and reveals that credential's exact copy-ready installation command once; administrators can safely inspect producer metadata, edit display names, or immediately revoke an individual token. The viewer has a read-only filesystem and report mount, drops Linux capabilities, exposes no host port, and serves no checkout files.
 
 Validate and start the dedicated stack only after approving the configured hostname and publication policy:
 
@@ -237,27 +263,38 @@ Production ingestion starts only when an operator has explicitly configured hash
     {
       "id": "personal-codex-laptop",
       "tokenSha256": "replace-with-the-64-character-sha256-digest-of-a-private-token",
-      "projects": ["github.com/quickstark/skills"]
+      "projects": ["*"]
     }
   ]
 }
 ```
 
-The ingestion container mounts `/docker/appdata/quickstark-readouts-config/` read-only, so atomic producer-grant replacements become visible immediately and credentials can be rotated or revoked without restarting the service. Keep actual bearer tokens outside that mounted directory: the approved laptop credential is stored with `0600` permissions in `/docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token`, which is never mounted into either container. Supply a producer token only through its private environment; never commit it, insert it into a URL, store it in the report library, or pass it as a command-line argument. The producer's project grant and the hosted publication allowlist must both approve the canonical project.
+The ingestion container mounts `/docker/appdata/quickstark-readouts-config/` read-only, so atomic producer-grant replacements become visible immediately and credentials can be rotated or revoked without restarting the service. Keep actual bearer tokens outside that mounted directory: the approved laptop credential is stored with `0600` permissions in `/docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token`, which is never mounted into either container. Never commit a token, insert it into a URL, log it, or store it in the report library. The user-requested token-bearing installation command is visible only during original token creation; copy it only to the intended trusted machine. Linux imports the user environment without passing the bearer as a subprocess argument, macOS writes Keychain through standard input, and `launchctl setenv` necessarily receives the value briefly when preparing the macOS desktop session. The producer's project grant and the hosted publication allowlist must both approve the canonical project.
 
-Configure an explicitly authorized laptop or harness:
+Generate additional, independently revocable machine credentials without exposing a token:
 
 ```bash
-export QS_READOUT_INGESTION_URL=https://reports.quickstark.com/api/v1/readouts
-export QS_READOUT_PRODUCER_ID=personal-codex-laptop
-export QS_READOUT_PUBLISH_PROJECTS=github.com/quickstark/skills
-export QS_READOUT_HARNESS=codex-desktop
-export QS_READOUT_PUBLISH_MAX_ATTEMPTS=2
-export QS_READOUT_PUBLISH_RETRY_DELAY=50
-# Supply QS_READOUT_PRODUCER_TOKEN through the harness's private credential configuration.
+node scripts/qs-readout-producer-token.mjs --producer openai-codex-laptop --json
+node scripts/qs-readout-producer-token.mjs --producer linux-codex-dev-server --json
 ```
 
-With those explicit settings, a normal QuickStark skill readout is written locally first and then published automatically. Other harnesses can submit a versioned structured readout with the portable command:
+Each command creates a separate restricted credential, obtains an interprocess grant lock, atomically registers only its SHA-256 digest, and preserves every existing producer even when independent machines issue credentials simultaneously.
+
+On Linux or macOS, configure just the private reporting token in the environment inherited by Codex. For the existing restricted local credential file, this can be done without printing the token:
+
+```bash
+export QS_READOUT_PRODUCER_TOKEN="$(< /docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token)"
+```
+
+On Windows, supply the operator-authorized token from that machine's private credential file:
+
+```powershell
+$env:QS_READOUT_PRODUCER_TOKEN = (Get-Content -Raw "C:\path\to\your\private\quickstark-reporting.token").Trim()
+```
+
+`QS_READOUT_PRODUCER_TOKEN` is the only required machine setting. The authenticated server derives producer identity from the token; every skill derives its project from the current working directory, using its Git origin when available or a safely fingerprinted local workspace when no Git remote exists. The application defaults to `codex` and submits its report to `https://reports.quickstark.com/api/v1/readouts`. No GitHub verification, owner patterns, project lists, producer identifiers, harness variables, or endpoint configuration are required. The server-side `"*"` grant lets the authenticated token report any safely identified project; it never permits anonymous access, unsafe paths, or a mislabeled workspace.
+
+The renderer automatically verifies the exact requested Codex skill, its task boundary, provider usage baseline, actual model, and reasoning effort before surfacing genuinely attributable input tokens, output tokens, total tokens, and elapsed task time immediately after its top next prompts. It never publishes prompts, responses, unrelated conversation totals, or inferred usage. Missing or ambiguous measurements remain honestly labeled `Not captured`. Every normal QuickStark skill preserves its immutable local report and presents a hosted report URL only after authenticated API acceptance. Other harnesses can submit a versioned structured readout with the portable command:
 
 ```bash
 node scripts/qs-skill-readout.mjs publish \
@@ -326,7 +363,7 @@ Use $qs-design-modules to design the interface and seam for the architectural ca
 >
 > Heuristic guidance; the active model and thinking level are not changed automatically.
 
-`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs`, `Checks`, and delivery evidence appear only when real artifacts, validations, or GitHub records exist. `Top next prompts` provides up to three copy-ready, context-aware prompts that explicitly invoke approved follow-on skills and build on what this run actually accomplished. Each includes a suggested model and suggested thinking level. These suggestions are heuristic starting points, not benchmarks or observed results; they never change the active model automatically. A recorded critical finding or failed check can suggest deeper reasoning. The report says `None — the requested work is complete` when no follow-up is needed; suggested skills never appear under `Skills used`.
+`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs`, `Checks`, user-run `Commands`, `Key code`, and delivery evidence appear only when real artifacts, validations, pending user actions, noteworthy excerpts, or GitHub records exist. `Top next prompts` provides up to three copy-ready, context-aware prompts that explicitly invoke approved follow-on skills and build on what this run actually accomplished. Each includes a suggested model and suggested thinking level. These suggestions are heuristic starting points, not benchmarks or observed results; they never change the active model automatically. A recorded critical finding or failed check can suggest deeper reasoning. The report says `None — the requested work is complete` when no follow-up is needed; suggested skills never appear under `Skills used`.
 
 Approved follow-on skills, their baseline actions, and their heuristic model and thinking guidance remain in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs). The readout renderer specializes each prompt using the current run's recorded outcome, findings, decisions, outputs, and checks; skill instructions and documentation inherit the contract from [`scripts/sync-skill-output-contracts.mjs`](./scripts/sync-skill-output-contracts.mjs).
 

@@ -18,6 +18,7 @@ const pluginRoot = join(repositoryRoot, "codex", "plugins", "qs-skills");
 const generatedRoot = join(pluginRoot, "skills");
 const generatedSupportRoot = join(pluginRoot, "scripts");
 const sharedSupportFiles = Object.freeze([
+  "qs-readout-portfolio.mjs",
   "qs-skill-catalog.mjs",
   "qs-skill-report-presentation.mjs",
   "qs-skill-readout.mjs",

@@ -1,0 +1,172 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "QuickStark skill readout producer",
+    "version": "1.0.0",
+    "description": "Publish a genuine immutable skill run using an independently registered producer bearer token."
+  },
+  "servers": [
+    {
+      "url": "https://reports.quickstark.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/readouts": {
+      "post": {
+        "operationId": "publishQuickStarkSkillReadout",
+        "summary": "Publish an observed immutable skill readout",
+        "description": "The reporting server derives the producer identity from its registered bearer token. Do not send HTML, credentials, fabricated execution evidence, or inferred Codex-only metrics.",
+        "security": [
+          {
+            "producerBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillReadout"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A new immutable report was accepted."
+          },
+          "200": {
+            "description": "The identical immutable report already exists."
+          },
+          "401": {
+            "description": "The producer bearer token is missing, invalid, or revoked."
+          },
+          "403": {
+            "description": "The authenticated producer cannot claim another producer or project."
+          },
+          "409": {
+            "description": "Different content attempted to reuse an existing immutable skill run."
+          },
+          "422": {
+            "description": "The submitted report does not match its observed, safe readout format."
+          },
+          "429": {
+            "description": "The producer exceeded its configured request rate."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "producerBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Configure this independently generated producer credential in the GPT Action authentication settings."
+      }
+    },
+    "schemas": {
+      "SkillReadout": {
+        "type": "object",
+        "required": [
+          "version",
+          "harness",
+          "collection",
+          "project",
+          "runId",
+          "generatedAt",
+          "skill",
+          "status",
+          "outcome"
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "const": 1
+          },
+          "harness": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The genuinely observed submitting harness, such as chatgpt."
+              },
+              "version": {
+                "type": "string"
+              }
+            }
+          },
+          "collection": {
+            "type": "string"
+          },
+          "project": {
+            "description": "The actual safely derived project identity.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          },
+          "runId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "skill": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Completed",
+              "Awaiting input",
+              "Blocked"
+            ]
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "decisions": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "nextSkills": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

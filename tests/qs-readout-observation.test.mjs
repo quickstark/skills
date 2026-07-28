@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -117,6 +117,426 @@ function submitObservedReadout(ingestion, envelope, options = {}) {
   });
 }
 
+test("Codex captures only provider usage belonging to one explicitly invoked skill task", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-codex-skill-observation-"));
+  const threadId = "8472f96c-9fd4-4a40-973a-d4474a24d891";
+  const session = join(directory, `rollout-2026-07-27T18-00-00-${threadId}.jsonl`);
+  const usage = (input, output, cachedInput, reasoningOutput) => ({
+    input_tokens: input,
+    cached_input_tokens: cachedInput,
+    cache_write_input_tokens: 0,
+    output_tokens: output,
+    reasoning_output_tokens: reasoningOutput,
+    total_tokens: input + output,
+  });
+  const event = (timestamp, type, payload) => JSON.stringify({ timestamp, type, payload });
+  const records = [
+    event("2026-07-27T18:00:00.000Z", "event_msg", {
+      type: "token_count",
+      info: { total_token_usage: usage(1_000, 200, 100, 20) },
+    }),
+    event("2026-07-27T18:01:00.000Z", "event_msg", {
+      type: "task_started",
+      turn_id: "isolated-skill-turn",
+    }),
+    event("2026-07-27T18:01:01.000Z", "event_msg", {
+      type: "user_message",
+      message: "Use $qs-code-build to repair PRIVATE_FIXTURE_PROMPT_DO_NOT_LEAK.",
+    }),
+    event("2026-07-27T18:01:02.000Z", "turn_context", {
+      model: "gpt-5.6-sol",
+      effort: "high",
+    }),
+    event("2026-07-27T18:01:06.000Z", "response_item", {
+      type: "message",
+      content: "PRIVATE_FIXTURE_RESPONSE_DO_NOT_LEAK",
+    }),
+    event("2026-07-27T18:01:08.000Z", "event_msg", {
+      type: "token_count",
+      info: { total_token_usage: usage(1_180, 265, 130, 34) },
+    }),
+  ];
+
+  await writeFile(session, `${records.join("\n")}\n`, { encoding: "utf8", mode: 0o600 });
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+
+  const module = await import("../scripts/qs-skill-readout.mjs");
+
+  assert.equal(typeof module.captureCodexSkillObservation, "function",
+    "the public readout boundary exposes a real Codex task-observation adapter");
+
+  const observation = await module.captureCodexSkillObservation("qs-code-build", {
+    threadId,
+    sessionDirectory: directory,
+    now: new Date("2026-07-27T18:01:12.000Z"),
+  });
+
+  assert.deepEqual(observation, {
+    version: 1,
+    measurementSource: "verified-harness",
+    attributionScope: "skill-run",
+    capturedAt: "2026-07-27T18:01:12.000Z",
+    inference: { model: "gpt-5.6-sol", reasoningEffort: "high" },
+    tokens: {
+      input: 180,
+      cachedInput: 30,
+      cacheWrite: 0,
+      output: 65,
+      reasoningOutput: 14,
+      total: 245,
+    },
+    timing: {
+      startedAt: "2026-07-27T18:01:00.000Z",
+      activeDurationMs: 12_000,
+    },
+  });
+  assert.doesNotMatch(JSON.stringify(observation), /PRIVATE_FIXTURE_(?:PROMPT|RESPONSE)/,
+    "the observation never exports source prompts, model responses, or tool output");
+});
+
+test("Codex captures the exact skill selected through its namespaced plugin picker", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-namespaced-skill-observation-"));
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+
+  const fixtures = [
+    {
+      threadId: "ad4b0a10-6f34-4c63-9e60-47b33a5e4801",
+      message: "Use [$qs-skills:qs-code-build](/private/qs-code-build/SKILL.md) for PRIVATE_PLUGIN_REQUEST.",
+      captured: true,
+    },
+    {
+      threadId: "ad4b0a10-6f34-4c63-9e60-47b33a5e4802",
+      message: "Use $qs-skills:qs-code-build for PRIVATE_PLUGIN_REQUEST.",
+      captured: true,
+    },
+    {
+      threadId: "ad4b0a10-6f34-4c63-9e60-47b33a5e4803",
+      message: "Use /qs-skills:qs-code-build for PRIVATE_PLUGIN_REQUEST.",
+      captured: true,
+    },
+    {
+      threadId: "ad4b0a10-6f34-4c63-9e60-47b33a5e4804",
+      message: "Use $qs-skills:qs-code-build and $qs-skills:qs-test-tdd for PRIVATE_PLUGIN_REQUEST.",
+      captured: false,
+    },
+  ];
+  const usage = (input, output) => ({
+    input_tokens: input,
+    cached_input_tokens: 0,
+    cache_write_input_tokens: 0,
+    output_tokens: output,
+    reasoning_output_tokens: 0,
+    total_tokens: input + output,
+  });
+  const event = (timestamp, type, payload) => JSON.stringify({ timestamp, type, payload });
+  const { captureCodexSkillObservation } = await import("../scripts/qs-skill-readout.mjs");
+
+  for (const fixture of fixtures) {
+    const session = join(directory, `rollout-2026-07-27T18-00-00-${fixture.threadId}.jsonl`);
+    const records = [
+      event("2026-07-27T18:00:00.000Z", "event_msg", {
+        type: "token_count",
+        info: { total_token_usage: usage(1_000, 100) },
+      }),
+      event("2026-07-27T18:01:00.000Z", "event_msg", {
+        type: "task_started",
+        turn_id: `namespaced-${fixture.threadId}`,
+      }),
+      event("2026-07-27T18:01:01.000Z", "event_msg", {
+        type: "user_message",
+        message: fixture.message,
+      }),
+      event("2026-07-27T18:01:02.000Z", "turn_context", {
+        model: "gpt-5.6-sol",
+        effort: "high",
+      }),
+      event("2026-07-27T18:01:08.000Z", "event_msg", {
+        type: "token_count",
+        info: { total_token_usage: usage(1_400, 200) },
+      }),
+    ];
+    await writeFile(session, `${records.join("\n")}\n`, { encoding: "utf8", mode: 0o600 });
+
+    const observation = await captureCodexSkillObservation("qs-code-build", {
+      threadId: fixture.threadId,
+      sessionDirectory: directory,
+      now: new Date("2026-07-27T18:01:12.000Z"),
+    });
+
+    if (!fixture.captured) {
+      assert.equal(observation, null, "mixed namespaced skills must never claim single-skill metrics");
+      continue;
+    }
+
+    assert.deepEqual(observation, {
+      version: 1,
+      measurementSource: "verified-harness",
+      attributionScope: "skill-run",
+      capturedAt: "2026-07-27T18:01:12.000Z",
+      inference: { model: "gpt-5.6-sol", reasoningEffort: "high" },
+      tokens: {
+        input: 400,
+        cachedInput: 0,
+        cacheWrite: 0,
+        output: 100,
+        reasoningOutput: 0,
+        total: 500,
+      },
+      timing: {
+        startedAt: "2026-07-27T18:01:00.000Z",
+        activeDurationMs: 12_000,
+      },
+    }, `capture the exact namespaced invocation: ${fixture.message.replace(/PRIVATE_PLUGIN_REQUEST/g, "[private]")}`);
+    assert.doesNotMatch(JSON.stringify(observation), /PRIVATE_PLUGIN_REQUEST|\/private\//,
+      "plugin-selected metrics never export the user's prompt or skill path");
+  }
+});
+
+test("long-running Codex tasks retain genuine skill metrics beyond the original four-megabyte session window", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-long-codex-observation-"));
+  const threadId = "79ad94ef-6cf3-47a0-916b-e6604993b1c5";
+  const session = join(directory, `rollout-2026-07-27T18-00-00-${threadId}.jsonl`);
+  const usage = (input, output) => ({
+    input_tokens: input,
+    cached_input_tokens: 0,
+    cache_write_input_tokens: 0,
+    output_tokens: output,
+    reasoning_output_tokens: 0,
+    total_tokens: input + output,
+  });
+  const event = (timestamp, type, payload) => JSON.stringify({ timestamp, type, payload });
+  const records = [
+    event("2026-07-27T18:00:00.000Z", "event_msg", {
+      type: "token_count",
+      info: { total_token_usage: usage(1_000, 100) },
+    }),
+    event("2026-07-27T18:01:00.000Z", "event_msg", {
+      type: "task_started",
+      turn_id: "long-running-verified-skill",
+    }),
+    event("2026-07-27T18:01:01.000Z", "event_msg", {
+      type: "user_message",
+      message: "Use $qs-code-build to fix PRIVATE_LONG_RUNNING_SKILL_REQUEST.",
+    }),
+    event("2026-07-27T18:01:02.000Z", "turn_context", {
+      model: "gpt-5.6-sol",
+      effort: "high",
+    }),
+    event("2026-07-27T18:01:03.000Z", "response_item", {
+      type: "message",
+      content: `PRIVATE_LONG_RUNNING_RESPONSE_${"x".repeat(5 * 1024 * 1024)}`,
+    }),
+    event("2026-07-27T18:02:00.000Z", "event_msg", {
+      type: "token_count",
+      info: { total_token_usage: usage(1_480, 240) },
+    }),
+  ];
+
+  await writeFile(session, `${records.join("\n")}\n`, { encoding: "utf8", mode: 0o600 });
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+
+  const { captureCodexSkillObservation } = await import("../scripts/qs-skill-readout.mjs");
+  const observation = await captureCodexSkillObservation("qs-code-build", {
+    threadId,
+    sessionDirectory: directory,
+    now: new Date("2026-07-27T18:02:10.000Z"),
+  });
+
+  assert.ok(observation, "real skill usage survives a large, private long-running Codex task");
+  assert.equal(observation.measurementSource, "verified-harness");
+  assert.equal(observation.attributionScope, "skill-run");
+  assert.deepEqual(observation.inference, { model: "gpt-5.6-sol", reasoningEffort: "high" });
+  assert.equal(observation.tokens.input, 480);
+  assert.equal(observation.tokens.output, 140);
+  assert.equal(observation.tokens.total, 620);
+  assert.equal(observation.timing.activeDurationMs, 70_000);
+  assert.doesNotMatch(JSON.stringify(observation), /PRIVATE_LONG_RUNNING_(?:SKILL_REQUEST|RESPONSE)/,
+    "no private prompt, response, or intermediate model output enters the observation");
+});
+
+test("Codex skill metrics reject another task, ambiguous skills, mixed models, and unsafe counter attribution", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-codex-observation-boundaries-"));
+  const module = await import("../scripts/qs-skill-readout.mjs");
+  const now = new Date("2026-07-27T18:01:12.000Z");
+  const usage = (input, output) => ({
+    input_tokens: input,
+    cached_input_tokens: 0,
+    cache_write_input_tokens: 0,
+    output_tokens: output,
+    reasoning_output_tokens: 0,
+    total_tokens: input + output,
+  });
+  const event = (timestamp, type, payload) => JSON.stringify({ timestamp, type, payload });
+  const baseline = event("2026-07-27T18:00:00.000Z", "event_msg", {
+    type: "token_count",
+    info: { total_token_usage: usage(1_000, 100) },
+  });
+  const start = event("2026-07-27T18:01:00.000Z", "event_msg", {
+    type: "task_started",
+    turn_id: "exact-skill-turn",
+  });
+  const requested = event("2026-07-27T18:01:01.000Z", "event_msg", {
+    type: "user_message",
+    message: "Use $qs-code-build to safely process PRIVATE_BOUNDARY_PROMPT.",
+  });
+  const model = event("2026-07-27T18:01:02.000Z", "turn_context", {
+    model: "gpt-5.6-sol",
+    effort: "high",
+  });
+  const observed = event("2026-07-27T18:01:08.000Z", "event_msg", {
+    type: "token_count",
+    info: { total_token_usage: usage(1_200, 150) },
+  });
+  const cases = [
+    {
+      label: "a different first-invoked skill",
+      lines: [baseline, start, event("2026-07-27T18:01:01.000Z", "event_msg", {
+        type: "user_message",
+        message: "Use $qs-review-code before $qs-code-build.",
+      }), model, observed],
+    },
+    {
+      label: "multiple user actions in one task",
+      lines: [baseline, start, requested, event("2026-07-27T18:01:04.000Z", "event_msg", {
+        type: "user_message",
+        message: "Use $qs-design-modules as an additional independent task.",
+      }), model, observed],
+    },
+    {
+      label: "multiple different skills in one user message",
+      lines: [baseline, start, event("2026-07-27T18:01:01.000Z", "event_msg", {
+        type: "user_message",
+        message: "Use $qs-code-build and $qs-design-modules in the same task.",
+      }), model, observed],
+    },
+    {
+      label: "inconsistent provider models",
+      lines: [baseline, start, requested, model, event("2026-07-27T18:01:05.000Z", "turn_context", {
+        model: "gpt-5.6-terra",
+        effort: "high",
+      }), observed],
+    },
+    {
+      label: "provider counters that go backwards",
+      lines: [baseline, start, requested, model, event("2026-07-27T18:01:08.000Z", "event_msg", {
+        type: "token_count",
+        info: { total_token_usage: usage(900, 90) },
+      })],
+    },
+    {
+      label: "missing pre-skill usage evidence",
+      lines: [start, requested, model, observed],
+    },
+  ];
+
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+
+  for (let index = 0; index < cases.length; index += 1) {
+    const threadId = `a8f2d908-933a-4b94-9d5b-${String(index + 1).padStart(12, "0")}`;
+    const session = join(directory, `rollout-2026-07-27T18-00-00-${threadId}.jsonl`);
+
+    await writeFile(session, `${cases[index].lines.join("\n")}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+
+    assert.equal(
+      await module.captureCodexSkillObservation("qs-code-build", {
+        threadId,
+        sessionDirectory: directory,
+        now,
+      }),
+      null,
+      `${cases[index].label} must not be presented as verified individual skill usage`,
+    );
+  }
+});
+
+test("an ordinary skill render automatically publishes only its directly observed Codex invocation metrics", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-codex-automatic-observation-"));
+  const { ingestion } = await createObservedIngestion(context);
+  const threadId = "2c63a311-8dc9-495e-bf8d-f2778fd9f987";
+  const session = join(directory, `rollout-2026-07-27T18-00-00-${threadId}.jsonl`);
+  const input = join(directory, "input.json");
+  const startedAt = new Date(Date.now() - 8_000).toISOString();
+  const capturedAt = new Date(Date.now() - 2_000).toISOString();
+  const usage = (inputTokens, outputTokens) => ({
+    input_tokens: inputTokens,
+    cached_input_tokens: 0,
+    cache_write_input_tokens: 0,
+    output_tokens: outputTokens,
+    reasoning_output_tokens: 0,
+    total_tokens: inputTokens + outputTokens,
+  });
+  const event = (timestamp, type, payload) => JSON.stringify({ timestamp, type, payload });
+  const events = [
+    event(new Date(Date.now() - 10_000).toISOString(), "event_msg", {
+      type: "token_count",
+      info: { total_token_usage: usage(900, 100) },
+    }),
+    event(startedAt, "event_msg", { type: "task_started", turn_id: "automatic-skill-task" }),
+    event(startedAt, "event_msg", {
+      type: "user_message",
+      message: "Use $qs-code-build to verify PRIVATE_AUTOMATIC_PROMPT_DO_NOT_LEAK.",
+    }),
+    event(startedAt, "turn_context", { model: "gpt-5.6-sol", effort: "high" }),
+    event(capturedAt, "event_msg", {
+      type: "token_count",
+      info: { total_token_usage: usage(1_140, 160) },
+    }),
+  ];
+
+  await writeFile(session, `${events.join("\n")}\n`, { encoding: "utf8", mode: 0o600 });
+  await writeFile(input, JSON.stringify({
+    skill: "qs-code-build",
+    outcome: "Automatically preserve the actual skill-bounded Codex provider measurements.",
+    nextSkills: [],
+  }), { encoding: "utf8", mode: 0o600 });
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+
+  const environment = {
+    ...process.env,
+    CODEX_THREAD_ID: threadId,
+    QS_READOUT_CODEX_SESSION_DIRECTORY: directory,
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+    QS_READOUT_PRODUCER_TOKEN: "test-only-observed-codex-credential-1234567890",
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  };
+
+  const { stdout } = await execFileAsync(process.execPath, [
+    readoutScript,
+    "render",
+    "--input", input,
+    "--directory", directory,
+    "--no-serve",
+    "--json",
+  ], { env: environment });
+  const result = JSON.parse(stdout);
+
+  assert.equal(result.publication.status, "published");
+
+  const local = await readFile(result.path, "utf8");
+  const response = await fetch(result.publication.url);
+
+  assert.equal(response.status, 200);
+
+  const hosted = await response.text();
+
+  for (const html of [local, hosted]) {
+    assert.ok(html.includes('<meta name="quickstark:observation-source" content="verified-harness">'));
+    assert.ok(html.includes('<meta name="quickstark:observation-scope" content="skill-run">'));
+    assert.ok(html.includes('<meta name="quickstark:model" content="gpt-5.6-sol">'));
+    assert.ok(html.includes('<meta name="quickstark:reasoning-effort" content="high">'));
+    assert.ok(html.includes('<meta name="quickstark:input-tokens" content="240">'));
+    assert.ok(html.includes('<meta name="quickstark:output-tokens" content="60">'));
+    assert.ok(html.includes('<meta name="quickstark:total-tokens" content="300">'));
+    assert.match(html, /<meta name="quickstark:active-duration-ms" content="\d+">/);
+    assert.doesNotMatch(html, /PRIVATE_AUTOMATIC_PROMPT_DO_NOT_LEAK/);
+  }
+
+  assert.doesNotMatch(stdout, /test-only-observed-codex-credential/i);
+});
+
 test("an actual native skill readout preserves and renders its directly observed model, effort, tokens, and active duration", () => {
   const normalized = normalizeSkillReadout(nativeReadout());
 
@@ -138,6 +558,61 @@ test("an actual native skill readout preserves and renders its directly observed
   assert.match(html, /<meta name="quickstark:model" content="gpt-5\.6-sol">/);
   assert.match(html, /<meta name="quickstark:total-tokens" content="1480">/);
   assert.doesNotMatch(html, /<script\b/i);
+});
+
+test("verified Codex skill-run metrics appear near the top immediately after next prompts", () => {
+  const html = renderSkillReadout(nativeReadout());
+  const metrics = html.match(/<section class="section presentation-run-metrics"[\s\S]*?<\/section>/)?.[0];
+
+  assert.ok(metrics, "a directly observed skill run has a concise top-level metrics section");
+  assert.match(metrics, /<h2>Skill run metrics<\/h2>/);
+  assert.match(metrics, /provider-response/);
+  assert.match(metrics, /skill-run/);
+  assert.match(metrics, /gpt-5\.6-sol/);
+  assert.match(metrics, /medium/);
+  assert.match(metrics, /1,200/);
+  assert.match(metrics, /280/);
+  assert.match(metrics, /1,480/);
+  assert.match(metrics, /42,000 ms/);
+  assert.ok(html.indexOf('<h2>Top next prompts</h2>') < html.indexOf('<h2>Skill run metrics</h2>'));
+  assert.ok(html.indexOf('<h2>Skill run metrics</h2>') < html.indexOf('<h2>Execution context</h2>'));
+});
+
+test("uninstrumented Codex skill runs identify unavailable top-level metrics without inventing them", () => {
+  const html = renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Preserve an actual skill result without fabricating provider telemetry.",
+  });
+  const metrics = html.match(/<section class="section presentation-run-metrics"[\s\S]*?<\/section>/)?.[0];
+
+  assert.ok(metrics, "an actual skill run explains when Codex metrics were not captured");
+  assert.match(metrics, /<h2>Skill run metrics<\/h2>/);
+  assert.ok((metrics.match(/Not captured/g) ?? []).length >= 6);
+  assert.doesNotMatch(metrics, /gpt-5\.6|provider-response|\b\d{1,3}(?:,\d{3})+\b/);
+});
+
+test("top-level skill-run metrics never misattribute thread-level Codex telemetry", () => {
+  for (const attributionScope of ["thread-turn", "thread-cumulative"]) {
+    const html = renderSkillReadout(nativeReadout({ ...observedRun, attributionScope }));
+    const metrics = html.match(/<section class="section presentation-run-metrics"[\s\S]*?<\/section>/)?.[0];
+
+    assert.ok(metrics, `${attributionScope} explains the missing individual skill measurements`);
+    assert.match(metrics, /<h2>Skill run metrics<\/h2>/);
+    assert.ok((metrics.match(/Not captured/g) ?? []).length >= 6);
+    assert.doesNotMatch(metrics, /gpt-5\.6-sol|\b1,200\b|\b1,480\b|42,000 ms/);
+    assert.match(html, new RegExp(`Observed ${attributionScope} context`));
+  }
+});
+
+test("an unrun catalog preview never claims a Codex skill-run metrics section", () => {
+  const html = renderSkillReadout({
+    skill: "qs-code-build",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "Catalog preview only; no skill has run.",
+  });
+
+  assert.doesNotMatch(html, /<h2>Skill run metrics<\/h2>/);
 });
 
 test("a native observed skill run records independently verified passed and failed checks", () => {
@@ -614,6 +1089,7 @@ test("a directly observed report survives immutable storage and the protected re
   assert.match(response.headers.get("content-security-policy"), /default-src 'none'/);
   assert.equal(await response.text(), original);
   assert.match(original, /Observed skill run/);
+  assert.match(original, /<h2>Skill run metrics<\/h2>/);
   assert.match(original, /gpt-5\.6-sol/);
   assert.match(original, /<meta name="quickstark:observation-scope" content="skill-run">/);
   assert.match(original, /<meta name="quickstark:total-tokens" content="1480">/);
@@ -640,6 +1116,7 @@ test("authorized hosted native ingestion preserves the directly observed skill r
   assert.equal(hosted.status, 200);
   assert.match(hosted.headers.get("content-security-policy"), /default-src 'none'/);
   assert.match(html, /Observed skill run/);
+  assert.match(html, /<h2>Skill run metrics<\/h2>/);
   assert.match(html, /provider-response/);
   assert.match(html, /gpt-5\.6-sol/);
   assert.match(html, /1,480/);

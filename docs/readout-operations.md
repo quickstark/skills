@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Use this runbook to view a report locally, publish an explicitly approved report from another machine, operate the authenticated project library, and investigate delivery problems without exposing credentials or unpublished project data.
+Use this runbook to view a report locally, automatically publish verified skill runs from another machine using a single private token, operate the authenticated project library, and investigate delivery problems without exposing credentials or unpublished project data.
 
 The repository's authoritative deployment definition is `deploy/readouts/compose.yaml`. The running production stack is managed from `/docker/stacks/quickstark-readouts/compose.yaml`. Check the actual configuration before changing or restarting either service.
 
@@ -42,12 +42,21 @@ Use the actual URL returned by the health-checked viewer. A private home-network
 
 ## Hosted service architecture
 
-The dedicated Docker stack runs two independently bounded services:
+The prepared Docker stack separates the read-only viewer, producer ingestion, and privileged Dashboard Settings into three independently scoped runtimes:
 
 - `quickstark-readouts` serves immutable reports with a read-only report mount, Traefik HTTPS, and Authelia browser authentication.
 - `quickstark-readout-ingestion` accepts only authenticated, structured JSON at `https://reports.quickstark.com/api/v1/readouts` and has the report-library write permission required for accepted submissions.
+- `quickstark-readout-settings`, when explicitly deployed, serves `/settings` behind Authelia on the private, internal `quickstark-readout-settings-auth` network. Only Traefik's explicitly configured `10.250.12.2` address can supply a trusted user identity. Only this administrator-checked runtime receives the writable producer-grant and private-credential mounts required for one-time token generation.
 
-Neither service publishes a host port, serves the Git checkout, binds a public listener, or stores producer bearer credentials in the report library.
+None of these runtimes publishes a host port, serves the Git checkout, binds a wildcard listener, or stores producer bearer credentials in the report library. The viewer and ingestion runtimes never receive the private producer-credential mount. Preparing the Settings deployment definition does not restart or deploy production.
+
+When the Settings runtime has been explicitly approved and deployed, authenticated users can open `/settings` for **Profile & personal settings** or `/settings?tab=producer-tokens` for the administrator-managed token table. Only a configured administrator can create, inspect, rename, or revoke a producer. Token issuance and mutations require the isolated proxy address, user-bound anti-CSRF protection, same-origin requests, and bounded JSON; creation is independently rate-limited to 30 requests per administrator per minute. **Create new token** opens the only platform selector. Its original no-store response contains the actual one-time token and a complete copy-ready Linux, macOS, Windows, or ChatGPT instruction block with that exact token already embedded. The token and token-bearing command disappear when the creation modal closes or reloads; existing table rows expose only metadata and a short digest fingerprint. A bounded interprocess lock serializes every producer-grant update, preserving unrelated credentials.
+
+Token-embedded shell commands are secrets: execute them only on the intended machine and account, and be aware that local shell or PowerShell history can retain a pasted command. Linux commands establish an owner-only credential file and use `systemctl --user import-environment` so the bearer never enters `systemctl` process arguments. macOS sends the Keychain operation through `security` standard input; the final `launchctl setenv` step necessarily exposes the environment value briefly to same-user process inspection while configuring a GUI-launched Codex session, so use it only on a trusted Mac. Windows uses a protected user-owned file and its current and persistent user environments. ChatGPT receives private GPT Action authentication instructions instead of an operating-system command. Never paste any producer token into a chat, issue, URL, or report.
+
+Appearance changes are signed with the owner-only `/docker/appdata/quickstark-readouts-config/readout-preferences.key`, bound to the authenticated user, and stored in an `HttpOnly`, `Secure`, `SameSite=Strict`, root-path cookie. The viewer mounts only that signing-key file read-only, not the credential directory. Text size and information density apply to the live authenticated Workbench and Settings without modifying an immutable report.
+
+For ChatGPT, open **Producer tokens**, choose **Create new token**, and select **ChatGPT GPT Action**. Import `/settings/chatgpt/openapi.json` into the GPT Action and copy that token's **API key → Bearer** instructions into the private authentication setting. The action submits to the existing `/api/v1/readouts` endpoint; it does not require a local shell, a Codex environment variable, or a shared machine token.
 
 Validate the repository definition without starting anything:
 
@@ -78,7 +87,7 @@ curl -sS -o /dev/null -w 'HTTP %{http_code}\n' \
 
 Do not treat a healthy local container as proof that public DNS, TLS, external routing, browser authentication, or laptop-to-server delivery works.
 
-## Authorize one reporting machine
+## Authorize each reporting machine
 
 Production producer grants reside in `/docker/appdata/quickstark-readouts-config/readout-producers.json`. The ingestion service reads the directory through its restricted mount and requires versioned, explicitly scoped grants:
 
@@ -89,33 +98,50 @@ Production producer grants reside in `/docker/appdata/quickstark-readouts-config
     {
       "id": "personal-codex-laptop",
       "tokenSha256": "REPLACE_WITH_THE_SHA256_DIGEST_OF_THE_PRIVATE_TOKEN",
-      "projects": ["github.com/quickstark/skills"]
+      "projects": ["*"]
     }
   ]
 }
 ```
 
-The value above is an illustrative placeholder, not a valid credential or an existing grant. Generate a distinct, high-entropy token per producer; store it with restricted permissions outside the mounted configuration and report directories; place only its SHA-256 digest in the server grant. Supply the actual token through the approved harness's private environment or credential storage.
+The digest above is an illustrative placeholder, not a valid credential or an existing grant. Generate a high-entropy producer token, store it with restricted permissions outside the mounted configuration and report directories, and place only its SHA-256 digest in the server grant. `"*"` is an explicit server-side decision allowing this authenticated producer to submit any safely identified project, whether it has a Git remote or is an ordinary local workspace. Token authentication authorizes publication; the project identity only organizes the immutable report. Never permit anonymous submission, unsafe project paths, absolute local path disclosure, or a report that claims to belong to a different actual workspace. Supply the actual token through the approved harness's private environment or credential storage.
 
-Never commit, print, log, pass as a command-line argument, place in a URL, or mount the bearer token into the viewer or ingestion container. Do not grant employer, customer, or private projects without explicit permission.
+Never commit, log, place in a URL, or mount the bearer token into the viewer or ingestion container. A user-requested one-time, token-bearing setup command must be copied only to its intended machine; avoid subprocess-argument exposure except the explicitly documented `launchctl setenv` required to make a macOS GUI session inherit its credential. Treat local shell history as secret. Do not grant employer, customer, or private projects without explicit permission.
 
-Configure the authorized publishing machine:
+Generate an independently revocable credential for each submitting machine with the dedicated producer utility:
 
 ```bash
-export QS_READOUT_INGESTION_URL=https://reports.quickstark.com/api/v1/readouts
-export QS_READOUT_PRODUCER_ID=personal-codex-laptop
-export QS_READOUT_PUBLISH_PROJECTS=github.com/quickstark/skills
-export QS_READOUT_HARNESS=codex-desktop
-export QS_READOUT_PUBLISH_MAX_ATTEMPTS=2
-export QS_READOUT_PUBLISH_RETRY_DELAY=50
-# Supply QS_READOUT_PRODUCER_TOKEN using private harness credential configuration.
+node scripts/qs-readout-producer-token.mjs --producer openai-codex-laptop --json
+node scripts/qs-readout-producer-token.mjs --producer linux-codex-dev-server --json
 ```
 
-Once configured, native QuickStark skill rendering first creates the real local report and then attempts bounded hosted publication. Remote publication is disabled when these explicit settings or the producer token are absent.
+The utility generates 48 cryptographically random bytes per token, creates a `0600` private file in `/docker/appdata/quickstark-readouts-credentials/`, and atomically registers only its SHA-256 digest in the server's producer-grant file. Existing credentials and unrelated grants remain intact. Console output contains the producer identity and credential path, never the bearer token. The ingestion service reloads the updated grant without a restart.
+
+Configure the single required environment setting in the Linux or macOS process that launches Codex. The existing restricted private credential can be loaded without printing its contents:
+
+```bash
+export QS_READOUT_PRODUCER_TOKEN="$(< /docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token)"
+```
+
+On Windows, load the token from an operator-authorized private credential file:
+
+```powershell
+$env:QS_READOUT_PRODUCER_TOKEN = (Get-Content -Raw "C:\path\to\your\private\quickstark-reporting.token").Trim()
+```
+
+`QS_READOUT_PRODUCER_TOKEN` is the only required setting. The reporting endpoint defaults to `https://reports.quickstark.com/api/v1/readouts`; the server authenticates the token and derives its registered producer; the harness defaults to `codex`; and the project is inferred from the current working directory. Use a Git origin when available; workspaces without a Git remote receive a safely fingerprinted local project identity. Do not maintain GitHub verification, project lists, owner patterns, producer names, harness settings, or endpoint variables for ordinary skill runs. All 24 native QuickStark skills write an immutable local report and publish their actual structured results without first starting a local viewer. Return a hosted URL only after authenticated API acceptance. Missing credentials, unsafe project identities, failed submissions, and invalid hosted responses preserve the local report and never pretend delivery succeeded.
+
+### Skill-run metrics
+
+Every completed report places **Skill run metrics** immediately after **Top next prompts**. For Codex, the normal renderer privately locates only the exact current task's bounded session tail, verifies that the user invoked exactly the reported skill, and subtracts the directly observed pre-task provider counters. It records the observed model, reasoning effort, input and output tokens, total usage, and elapsed active task time without exposing message contents, tool outputs, task-wide totals, credentials, or absolute paths. The measurement source is `verified-harness` and the scope is `skill-run`.
+
+If the skill invocation, baseline, consistent model, safe counters, or readable task boundary cannot be verified, the renderer fails closed and shows `Not captured`. Thread-turn or cumulative conversation measurements remain explicitly thread-level and are never reassigned to an individual skill. Catalog previews do not claim run measurements.
+
+Repository metadata is independent of model telemetry. For a Git-backed run, the publishing machine captures its actual branch, full revision, upstream counts when available, and changed-worktree count before submitting the report. Hosted ingestion validates that snapshot against the authorized canonical project and preserves it in immutable report metadata even when the reporting container does not have Git installed. Public GitHub default branch, visibility, and issue counts are shown only when independently verified. An unavailable per-skill model or token count must never suppress available repository evidence.
 
 ## Publish an external skill
 
-Other Codex harnesses, Claude Code, and approved independent skill collections can submit a versioned structured envelope. Preserve the actual producer, harness, collection, canonical project, skill name, UTC run timestamp, observed completion status, and real findings. Do not send HTML, source trees, screenshots, shell logs, credentials, or unverified release claims.
+Other Codex harnesses, Claude Code, and approved independent skill collections can submit a versioned structured envelope. Preserve the actual producer, harness, collection, canonical project, skill name, UTC run timestamp, observed completion status, and real findings. Include optional `commands` only for terminal actions the user still needs to run, each with an exact command and an explanation of why or when it is needed. Include optional `keyCode` only for relevant, safely scoped source excerpts. Both are part of the immutable submission: changing either for the same run returns `409 Conflict`. Do not send HTML, source trees, screenshots, shell logs, credentials, private keys, or unverified release claims.
 
 ```bash
 node scripts/qs-skill-readout.mjs publish \
@@ -173,6 +199,6 @@ Neither command writes or deletes unless explicitly rerun with `--apply`. Do not
 - If the browser URL redirects unexpectedly, verify the intended hostname, Traefik route, HTTPS, and Authelia rather than bypassing authentication.
 - If the producer gets `401`, verify the producer identity and current grant without printing its bearer token.
 - If it gets `403`, compare the canonical project with both the producer grant and hosted publication allowlist.
-- If publication is local-only, retain the local report and check the explicit HTTPS endpoint, private token configuration, bounded retry settings, and network reachability.
+- If publication is local-only, retain the local report and check the private token, automatically detected current project, server-side grant, default HTTPS endpoint, and network reachability.
 - If a new hostname fails only on the home network, compare the public and router DNS resolvers; an `NXDOMAIN` can be the home router's negative DNS cache.
 - If identical retries return `409`, inspect the actual run identity and submitted content; never replace an existing immutable report.

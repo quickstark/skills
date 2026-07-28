@@ -16,9 +16,11 @@ services:
     environment:
       QS_READOUT_DIR: /docker/appdata/quickstark-readouts
       QS_READOUT_PUBLICATION_MODE: hosted
-      QS_READOUT_ALLOWED_PROJECTS: github.com/quickstark/skills
+      QS_READOUT_HOMEPAGE: portfolio
+      QS_READOUT_ALLOWED_PROJECTS: "*"
       QS_READOUT_CURRENT_PROJECT: github.com/quickstark/skills
       QS_READOUT_TRUSTED_PROXY: "true"
+      QS_READOUT_PREFERENCE_SECRET_FILE: /run/quickstark-readout-preferences.key
     command:
       - node
       - /opt/quickstark/scripts/qs-skill-readout.mjs
@@ -32,6 +34,7 @@ services:
     volumes:
       - /github/skills:/opt/quickstark:ro
       - /docker/appdata/quickstark-readouts:/docker/appdata/quickstark-readouts:ro
+      - /docker/appdata/quickstark-readouts-config/readout-preferences.key:/run/quickstark-readout-preferences.key:ro
     networks:
       - proxy
     healthcheck:
@@ -52,6 +55,57 @@ services:
       - traefik.http.routers.quickstark-readouts.tls.certresolver=cloudflare
       - traefik.http.routers.quickstark-readouts.middlewares=authelia@file
       - traefik.http.services.quickstark-readouts.loadbalancer.server.port=4173
+
+  quickstark-readout-settings:
+    image: node:24-alpine
+    container_name: quickstark-readout-settings
+    hostname: quickstark-readout-settings
+    working_dir: /opt/quickstark
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      QS_READOUT_SETTINGS_HOST: quickstark-readout-settings
+      QS_READOUT_SETTINGS_PORT: "4175"
+      QS_READOUT_SETTINGS_TRUSTED_PROXY: "true"
+      QS_READOUT_SETTINGS_TRUSTED_PROXY_ADDRESSES: "10.250.12.2"
+      QS_READOUT_SETTINGS_ADMIN_GROUPS: admins
+      QS_READOUT_CREDENTIALS_DIRECTORY: /run/quickstark-credentials
+      QS_READOUT_PRODUCERS_FILE: /run/quickstark-config/readout-producers.json
+      QS_READOUT_PREFERENCE_SECRET_FILE: /run/quickstark-config/readout-preferences.key
+    command:
+      - node
+      - /opt/quickstark/scripts/qs-readout-settings.mjs
+    volumes:
+      - /github/skills:/opt/quickstark:ro
+      - /docker/appdata/quickstark-readouts-credentials:/run/quickstark-credentials:rw
+      - /docker/appdata/quickstark-readouts-config:/run/quickstark-config:rw
+    networks:
+      settings_auth:
+        ipv4_address: 10.250.12.3
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://quickstark-readout-settings:4175/__quickstark_settings_health').then(r=>r.json()).then(j=>{if(j.service!=='quickstark-readout-settings')process.exit(1)}).catch(()=>process.exit(1))"
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=quickstark-readout-settings-auth
+      - traefik.http.routers.quickstark-readout-settings.rule=Host(`reports.quickstark.com`) && (Path(`/settings`) || PathPrefix(`/settings/`))
+      - traefik.http.routers.quickstark-readout-settings.entrypoints=https
+      - traefik.http.routers.quickstark-readout-settings.tls.certresolver=cloudflare
+      - traefik.http.routers.quickstark-readout-settings.middlewares=authelia@file
+      - traefik.http.routers.quickstark-readout-settings.priority=250
+      - traefik.http.services.quickstark-readout-settings.loadbalancer.server.port=4175
 
   quickstark-readout-prototype:
     image: node:24-alpine
@@ -114,7 +168,7 @@ services:
     environment:
       QS_READOUT_DIR: /docker/appdata/quickstark-readouts
       QS_READOUT_PUBLIC_URL: https://reports.quickstark.com/
-      QS_READOUT_ALLOWED_PROJECTS: github.com/quickstark/skills
+      QS_READOUT_ALLOWED_PROJECTS: "*"
       QS_READOUT_PRODUCERS_FILE: /run/quickstark/readout-producers.json
     command:
       - node
@@ -154,3 +208,10 @@ services:
 networks:
   proxy:
     external: true
+  settings_auth:
+    name: quickstark-readout-settings-auth
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.250.12.0/29

