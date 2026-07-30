@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { execFile, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtemp, readdir, readFile, rm, stat, symlink, unlink, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, readdir, readFile, rm, stat, symlink, unlink, writeFile } from "node:fs/promises";
 import { createServer as createHttpServer } from "node:http";
 import { createServer as createPortBlocker } from "node:net";
 import { hostname, platform, tmpdir } from "node:os";
@@ -24,6 +24,7 @@ import {
   pruneReadouts,
   readoutDirectoryIdentity,
   renderSkillReadout,
+  resolveReadoutProducerToken,
   resolveReadoutViewerHost,
   startReadoutIngestionServer,
   startReadoutServer,
@@ -1353,6 +1354,385 @@ test("a single reporting token automatically identifies the producer, harness, a
   assert.match(index, /quickstark\/marketplace/);
   assert.match(index, /quickstarkdemo\/blossy-app/);
   assert.match(index, /independent-team\/private-tool/);
+});
+
+test("a securely installed Linux token publishes remote Sterling Hollis readouts to the reports service instead of a private-IP viewer", async (context) => {
+  const credential = "test-only-standard-file-machine-credential-1234567890";
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "linux-codex-dev-server",
+        token: credential,
+        projects: ["*"],
+      }],
+    },
+  });
+  const home = await temporaryReadoutDirectory(context);
+  const privateDirectory = join(home, ".config", "quickstark");
+  const credentialPath = join(privateDirectory, "producer.token");
+  await mkdir(privateDirectory, { recursive: true, mode: 0o700 });
+  await writeFile(credentialPath, `${credential}\n`, { encoding: "utf8", mode: 0o600 });
+
+  const cwd = await temporaryGitProject(
+    context,
+    "https://github.com/quickstarkdemo/sterling-hollis-be.git",
+  );
+  const localDirectory = await temporaryReadoutDirectory(context);
+  const environment = { ...process.env };
+
+  delete environment.QS_READOUT_PRODUCER_TOKEN;
+  delete environment.QS_READOUT_PRODUCER_ID;
+  delete environment.QS_READOUT_PUBLISH_PROJECTS;
+  delete environment.QS_READOUT_HARNESS;
+  delete environment.CODEX_HOME;
+
+  Object.assign(environment, {
+    HOME: home,
+    QS_READOUT_BASE_URL: "http://127.0.0.1:1/",
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  });
+
+  const { stdout, stderr } = await execFileAsync(process.execPath, [
+    join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+    "render",
+    "--data", JSON.stringify({
+      skill: "qs-code-debug",
+      outcome: "Publish the actual remote Sterling Hollis backend report to the configured reporting service.",
+      nextSkills: [],
+    }),
+    "--directory", localDirectory,
+    "--no-serve",
+    "--json",
+  ], { cwd, env: environment });
+
+  const result = JSON.parse(stdout);
+
+  assert.equal(result.projectIdentity.key, "github.com/quickstarkdemo/sterling-hollis-be");
+  assert.equal(result.publication?.status, "published",
+    "an already-installed owner-only Linux token must enable authenticated hosted publication");
+  assert.equal(result.url, result.publication.url,
+    "the actual skill result must link to the accepted hosted report, never a local IP viewer");
+  assert.ok(result.url.startsWith(viewer.url));
+  assert.equal(result.viewerReused, null,
+    "hosted reporting must not start or depend on a private-network viewer");
+  assert.doesNotMatch(stdout, new RegExp(credential),
+    "the discovered private machine token must never appear in skill output");
+  assert.doesNotMatch(stderr, new RegExp(credential),
+    "the discovered private machine token must never appear in diagnostics");
+
+  const response = await fetch(result.url);
+  assert.equal(response.status, 200);
+  assert.match(await response.text(),
+    /<meta name="quickstark:project" content="github\.com\/quickstarkdemo\/sterling-hollis-be">/,
+    "the accepted report must preserve the actual remote backend repository identity");
+});
+
+test("separate default and demo Codex profiles publish Sterling Hollis reports using their own private producer tokens", async (context) => {
+  const profiles = [
+    {
+      directory: ".codex",
+      producer: "primary-macos-codex",
+      token: "test-only-primary-profile-machine-credential-1234567890",
+    },
+    {
+      directory: ".codex-demo",
+      producer: "demo-macos-codex",
+      token: "test-only-demo-profile-machine-credential-1234567890",
+    },
+  ];
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: profiles.map((profile) => ({
+        id: profile.producer,
+        token: profile.token,
+        projects: ["*"],
+      })),
+    },
+  });
+  const home = await temporaryReadoutDirectory(context);
+  const cwd = await temporaryGitProject(
+    context,
+    "https://github.com/quickstarkdemo/sterling-hollis-be.git",
+  );
+  const localDirectory = await temporaryReadoutDirectory(context);
+
+  for (const profile of profiles) {
+    const profileDirectory = join(home, profile.directory);
+    const credentialDirectory = join(profileDirectory, "quickstark");
+    await mkdir(credentialDirectory, { recursive: true, mode: 0o700 });
+    await writeFile(join(credentialDirectory, "producer.token"), `${profile.token}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+
+    const environment = { ...process.env };
+    delete environment.QS_READOUT_PRODUCER_TOKEN;
+    delete environment.QS_READOUT_PRODUCER_ID;
+    delete environment.QS_READOUT_PUBLISH_PROJECTS;
+    delete environment.QS_READOUT_HARNESS;
+    Object.assign(environment, {
+      HOME: home,
+      CODEX_HOME: profileDirectory,
+      QS_READOUT_BASE_URL: "http://127.0.0.1:1/",
+      QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+      QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+    });
+
+    const { stdout, stderr } = await execFileAsync(process.execPath, [
+      join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+      "render",
+      "--data", JSON.stringify({
+        skill: "qs-code-debug",
+        outcome: `Publish the Sterling Hollis report from the ${profile.directory} Codex profile.`,
+        nextSkills: [],
+      }),
+      "--directory", localDirectory,
+      "--no-serve",
+      "--json",
+    ], { cwd, env: environment });
+
+    const result = JSON.parse(stdout);
+    assert.equal(result.projectIdentity.key, "github.com/quickstarkdemo/sterling-hollis-be");
+    assert.equal(result.publication?.status, "published",
+      `${profile.directory} must automatically publish using its own installed credential`);
+    assert.equal(result.url, result.publication.url,
+      `${profile.directory} must return the reports-service URL, not a private viewer`);
+    assert.ok(result.url.startsWith(viewer.url));
+    assert.equal(result.viewerReused, null);
+
+    const response = await fetch(result.url);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.ok(html.includes(`<meta name="quickstark:producer" content="${profile.producer}">`),
+      `${profile.directory} must remain independently identifiable and revocable`);
+
+    for (const candidate of profiles) {
+      assert.doesNotMatch(stdout, new RegExp(candidate.token));
+      assert.doesNotMatch(stderr, new RegExp(candidate.token));
+      assert.ok(!html.includes(candidate.token),
+        "neither profile's private credential may enter its immutable hosted readout");
+    }
+  }
+});
+
+test("macOS profile credentials remain independent even when both Codex applications inherit a shared desktop token", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const sharedToken = "test-only-shared-macos-desktop-credential-1234567890";
+  const profiles = [
+    { directory: ".codex", token: "test-only-primary-macos-profile-credential-1234567890" },
+    { directory: ".codex-demo", token: "test-only-demo-macos-profile-credential-1234567890" },
+  ];
+
+  for (const profile of profiles) {
+    const profileHome = join(home, profile.directory);
+    const credentialDirectory = join(profileHome, "quickstark");
+
+    await mkdir(credentialDirectory, { recursive: true, mode: 0o700 });
+    await writeFile(join(credentialDirectory, "producer.token"), `${profile.token}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+
+    assert.equal(
+      await resolveReadoutProducerToken({
+        environment: {
+          CODEX_HOME: profileHome,
+          QS_READOUT_PRODUCER_TOKEN: sharedToken,
+        },
+        home,
+        operatingSystem: "darwin",
+      }),
+      profile.token,
+      `${profile.directory} must prefer its own private token over a shared macOS desktop environment`,
+    );
+  }
+
+  const unconfiguredHome = await temporaryReadoutDirectory(context);
+
+  assert.equal(
+    await resolveReadoutProducerToken({
+      environment: { QS_READOUT_PRODUCER_TOKEN: sharedToken },
+      home: unconfiguredHome,
+      operatingSystem: "darwin",
+    }),
+    sharedToken,
+    "an explicitly configured macOS token remains supported when no active profile credential exists",
+  );
+
+  assert.equal(
+    await resolveReadoutProducerToken({
+      environment: {
+        CODEX_HOME: join(home, ".codex-demo"),
+        QS_READOUT_PRODUCER_TOKEN: sharedToken,
+      },
+      home,
+      operatingSystem: "linux",
+    }),
+    sharedToken,
+    "existing explicit Linux producer-token precedence remains backward compatible",
+  );
+});
+
+test("the active macOS profile Keychain credential takes precedence over a shared desktop producer token", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const bin = join(home, "mock-bin");
+  const profile = join(home, ".codex-demo");
+  const profileToken = "test-only-macos-demo-keychain-credential-1234567890";
+  const sharedToken = "test-only-shared-macos-desktop-credential-1234567890";
+
+  await mkdir(bin, { recursive: true, mode: 0o700 });
+  await mkdir(profile, { recursive: true, mode: 0o700 });
+  await writeFile(join(bin, "security"), [
+    "#!/bin/sh",
+    'case "$*" in',
+    '  *quickstark-readout-producer-token-.codex-demo*)',
+    '    printf "%s\\n" "$QUICKSTARK_TEST_PROFILE_KEYCHAIN_TOKEN" ;;',
+    "  *) exit 44 ;;",
+    "esac",
+    "",
+  ].join("\n"), { encoding: "utf8", mode: 0o755 });
+
+  const module = new URL("../scripts/qs-skill-readout.mjs", import.meta.url).href;
+  const evaluate = [
+    `import { resolveReadoutProducerToken } from ${JSON.stringify(module)};`,
+    "const token = await resolveReadoutProducerToken({",
+    "  environment: process.env,",
+    `  home: ${JSON.stringify(home)},`,
+    "  operatingSystem: 'darwin',",
+    "});",
+    "console.log(JSON.stringify({",
+    "  usedActiveProfileKeychain: token === process.env.QUICKSTARK_TEST_PROFILE_KEYCHAIN_TOKEN,",
+    "  usedSharedDesktopToken: token === process.env.QS_READOUT_PRODUCER_TOKEN,",
+    "}));",
+  ].join("\n");
+  const environment = {
+    ...process.env,
+    HOME: home,
+    USER: "quickstark-test-user",
+    CODEX_HOME: profile,
+    PATH: `${bin}:${process.env.PATH ?? ""}`,
+    QUICKSTARK_TEST_PROFILE_KEYCHAIN_TOKEN: profileToken,
+    QS_READOUT_PRODUCER_TOKEN: sharedToken,
+  };
+
+  const { stdout, stderr } = await execFileAsync(process.execPath, [
+    "--input-type=module", "--eval", evaluate,
+  ], { env: environment });
+
+  assert.deepEqual(JSON.parse(stdout), {
+    usedActiveProfileKeychain: true,
+    usedSharedDesktopToken: false,
+  }, "a profile-specific Keychain item preserves the demo producer when no token file exists");
+  assert.ok(!stdout.includes(profileToken) && !stdout.includes(sharedToken));
+  assert.ok(!stderr.includes(profileToken) && !stderr.includes(sharedToken));
+});
+
+test("secure token discovery rejects a Codex profile symlink outside the current user home", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const outside = await temporaryReadoutDirectory(context);
+  const credentialDirectory = join(outside, "quickstark");
+
+  await mkdir(credentialDirectory, { recursive: true, mode: 0o700 });
+  await writeFile(
+    join(credentialDirectory, "producer.token"),
+    "test-only-outside-user-home-producer-credential-1234567890\n",
+    { encoding: "utf8", mode: 0o600 },
+  );
+  await symlink(outside, join(home, ".codex-demo"), "dir");
+
+  await assert.rejects(
+    resolveReadoutProducerToken({
+      environment: { CODEX_HOME: join(home, ".codex-demo") },
+      home,
+      operatingSystem: "linux",
+    }),
+    /symbolic|symlink|current user home|profile|credential directory/i,
+    "a symbolic-link profile must fail closed instead of loading another home's credential",
+  );
+});
+
+test("secure token discovery rejects intermediate Codex profile symlinks", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const outside = await temporaryReadoutDirectory(context);
+  const externalProfile = join(outside, "demo");
+  const credentialDirectory = join(externalProfile, "quickstark");
+
+  await mkdir(credentialDirectory, { recursive: true, mode: 0o700 });
+  await writeFile(
+    join(credentialDirectory, "producer.token"),
+    "test-only-intermediate-symlink-producer-credential-1234567890\n",
+    { encoding: "utf8", mode: 0o600 },
+  );
+  await symlink(outside, join(home, "profiles"), "dir");
+
+  await assert.rejects(
+    resolveReadoutProducerToken({
+      environment: { CODEX_HOME: join(home, "profiles", "demo") },
+      home,
+      operatingSystem: "linux",
+    }),
+    /symbolic|symlink|current user home|profile|credential directory/i,
+    "a symbolic link in any intermediate profile ancestor must not bypass home containment",
+  );
+});
+
+test("Codex profile credential discovery rejects unsafe files and never crosses another user home", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const directory = join(home, ".config", "quickstark");
+  const credentialPath = join(directory, "producer.token");
+  await mkdir(directory, { recursive: true, mode: 0o700 });
+
+  await writeFile(credentialPath,
+    "test-only-insecure-profile-credential-1234567890\n", {
+      encoding: "utf8",
+      mode: 0o644,
+    });
+  await chmod(credentialPath, 0o644);
+
+  await assert.rejects(
+    resolveReadoutProducerToken({ environment: {}, home, operatingSystem: "linux" }),
+    /owner-only regular file/i,
+    "group-readable or world-readable profile credentials must never be used",
+  );
+
+  await unlink(credentialPath);
+  const outside = join(home, "outside.token");
+  await writeFile(outside, "test-only-symlink-target-credential-1234567890\n", {
+    encoding: "utf8",
+    mode: 0o600,
+  });
+  await symlink(outside, credentialPath);
+
+  await assert.rejects(
+    resolveReadoutProducerToken({ environment: {}, home, operatingSystem: "linux" }),
+    /owner-only regular file/i,
+    "symbolic-link token files must never escape the configured private profile",
+  );
+
+  await assert.rejects(
+    resolveReadoutProducerToken({
+      environment: { CODEX_HOME: join(tmpdir(), "another-user-codex-profile") },
+      home,
+      operatingSystem: "linux",
+    }),
+    /current user home/i,
+    "profile discovery must never read a Codex root outside the actual user home",
+  );
+
+  await assert.rejects(
+    resolveReadoutProducerToken({
+      environment: { QS_READOUT_PRODUCER_TOKEN: "not-a-valid-token" },
+      home,
+      operatingSystem: "linux",
+    }),
+    /valid private producer token/i,
+    "an explicitly invalid configured token must fail closed instead of choosing another profile",
+  );
 });
 
 test("one authorized reporting token publishes Git projects without remotes and ordinary local workspaces", async (context) => {

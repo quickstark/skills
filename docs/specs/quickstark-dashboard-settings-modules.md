@@ -34,11 +34,13 @@ Token generation requires a trusted forward-authenticated user, an explicitly au
 Use one interface with exactly four adapters:
 
 - Linux: the actual one-time token, an owner-only credential file, the current shell, and the user service environment inherited by Codex.
-- macOS: the actual one-time token, Keychain, and the desktop launch environment.
+- macOS: the actual one-time token, an explicitly selected owner-only `.codex` or `.codex-demo` profile credential, an independently named profile Keychain entry, and an ordinary-Terminal installation command that never changes the shared desktop launch environment.
 - Windows: the actual one-time token, a restricted credential file, the current PowerShell process, and the persistent user environment.
 - ChatGPT: the actual one-time token, private GPT Action bearer authentication, and the authenticated `/settings/chatgpt/openapi.json` schema.
 
 Every submitter receives its own independently revocable token. Codex and ChatGPT use the same server-side bearer authentication and the same structured immutable readout ingestion.
+
+The renderer automatically discovers the active Codex profile credential and returns the verified `https://reports.quickstark.com/` report URL. Default and demo profiles never share or replace each other's credential, even if both inherited a legacy shared macOS environment token. The selected profile's owner-only file or independently named Keychain item takes precedence over that shared token; a valid explicitly configured token remains available when no profile-specific credential exists. When no profile credential exists, Linux and macOS can use the owner-only `~/.config/quickstark/producer.token`; Windows can use its protected `~/.quickstark/producer.token`; macOS can use the existing legacy Keychain item. The macOS installer rejects symlinked profile, credential-directory, and token paths before disclosing the one-time bearer and atomically writes or rotates its private `0600` file. Unsafe permissions, symbolic links at any profile or credential ancestor, invalid tokens, and profiles whose real path escapes the current user home fail closed.
 
 ### Guided producer setup
 
@@ -47,7 +49,7 @@ Open a compact, accessible creation modal only when the administrator clicks **C
 The flow remains explicit:
 
 1. Choose Codex or ChatGPT.
-2. Select the Codex operating system, when applicable.
+2. Select the Codex operating system and, on macOS, explicitly choose the default `.codex` or demo `.codex-demo` profile.
 3. Name and generate one separately identified producer token and reveal it once.
 4. Copy the exact platform-specific instructions with that actual token already embedded; no manual token substitution is required.
 5. Verify the integration by publishing and opening a real immutable skill readout.
@@ -66,7 +68,7 @@ Observable interface:
 
 ## Regression coverage
 
-Test actual report-style Settings navigation and independently restored sidebar tabs; responsive, accessible producer-table rows; the real browser create/view/edit/delete flow; native Bash, Zsh, and PowerShell syntax; exact per-platform token-bearing copy commands; project isolation; source immutability; the default 13 px and 12 px typography; anonymous and non-administrator denial; invalid anti-CSRF tokens and hostile origins; one-time browser-visible producer disclosure; concurrent Codex and ChatGPT issuance; bounded token generation; SHA-256-only grants; immediate revocation without affecting another producer; user-bound preference restoration; the authenticated ChatGPT schema; an actual cross-project ChatGPT submission, idempotent retry, and immutable conflict; safe permissions; and restrictive, route-specific browser policies.
+Test actual report-style Settings navigation and independently restored sidebar tabs; responsive, accessible producer-table rows; the real browser create/view/edit/delete flow; native Bash, Zsh, and PowerShell syntax; exact per-platform token-bearing copy commands; ordinary-Terminal execution of both independently selected macOS profile commands; inherited shared-token isolation; intermediate profile symlink and outside-home real-path rejection; project isolation; source immutability; the default 13 px and 12 px typography; anonymous and non-administrator denial; invalid anti-CSRF tokens and hostile origins; one-time browser-visible producer disclosure; concurrent Codex and ChatGPT issuance; bounded token generation; SHA-256-only grants; immediate revocation without affecting another producer; user-bound preference restoration; the authenticated ChatGPT schema; an actual cross-project ChatGPT submission, idempotent retry, and immutable conflict; safe permissions; and restrictive, route-specific browser policies.
 
 ## Deployment
 

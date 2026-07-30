@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, readFile, rm, stat, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -98,7 +98,8 @@ test("one platform interface gives Linux, macOS, Windows, and ChatGPT truthful b
   assert.deepEqual(adapters.map((adapter) => adapter.id), ["linux", "macos", "windows", "chatgpt"]);
   assert.match(adapters[0].command, /QS_READOUT_PRODUCER_TOKEN/);
   assert.match(adapters[1].command, /security find-generic-password/);
-  assert.match(adapters[1].command, /launchctl setenv/);
+  assert.doesNotMatch(adapters[1].command, /launchctl\s+setenv/,
+    "macOS setup must never place a profile-specific bearer in the shared desktop environment");
   assert.match(adapters[2].command, /SetEnvironmentVariable/);
   assert.match(adapters[3].command, /Bearer/);
   assert.match(adapters[3].command, /OpenAPI/);
@@ -107,6 +108,233 @@ test("one platform interface gives Linux, macOS, Windows, and ChatGPT truthful b
     assert.doesNotMatch(adapter.command, /Bearer\s+[A-Za-z0-9_-]{24,}/);
     assert.doesNotMatch(adapter.command, /sk-(?:proj-)?[A-Za-z0-9_-]{20,}/);
   }
+});
+
+test("macOS token setup installs an independently discoverable credential for the active Codex profile", async () => {
+  const token = "m".repeat(64);
+  const macos = readoutPlatformSetup(token).find((adapter) => adapter.id === "macos");
+
+  assert.ok(macos);
+  assert.match(macos.command, /\$HOME\/\.codex(?:["']|\s|$)/,
+    "an ordinary macOS Terminal can install the default Codex profile without inheriting CODEX_HOME");
+  assert.match(macos.command, /\$quickstark_codex_home\/quickstark/,
+    "the macOS setup selects the active Codex profile's private QuickStark directory");
+  assert.match(macos.command, /\$quickstark_codex_directory\/producer\.token/,
+    "the macOS setup creates the secure profile credential the renderer can actually discover");
+  assert.match(macos.command, /quickstark-readout-producer-token-/,
+    "each Codex profile receives an independently named Keychain credential");
+  assert.match(macos.command, /install -d -m 700/,
+    "profile credential storage is restricted to its owning macOS user");
+  assert.doesNotMatch(macos.command, /launchctl\s+setenv|QS_READOUT_PRODUCER_TOKEN/,
+    "profile-specific macOS installation never overrides another desktop application's producer");
+  assert.ok(macos.command.includes(token),
+    "the ready-to-paste instruction contains the exact one-time token");
+  await execFileAsync("zsh", ["-n", "-c", macos.command]);
+});
+
+test("macOS setup executes independent default and demo installations from an ordinary Terminal", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-macos-profile-setup-"));
+  const home = join(directory, "home");
+  const bin = join(directory, "bin");
+  const keychainLog = join(directory, "keychain.log");
+
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+  await mkdir(home, { recursive: true, mode: 0o700 });
+  await mkdir(bin, { recursive: true, mode: 0o700 });
+  await writeFile(join(bin, "security"), [
+    "#!/bin/sh",
+    'case "$1" in',
+    '  -i) cat >> "$QUICKSTARK_TEST_KEYCHAIN_LOG" ;;',
+    '  find-generic-password) printf "%s\\n" "$*" >> "$QUICKSTARK_TEST_KEYCHAIN_LOG" ;;',
+    "  *) exit 64 ;;",
+    "esac",
+    "",
+  ].join("\n"), { encoding: "utf8", mode: 0o755 });
+
+  const environment = {
+    ...process.env,
+    HOME: home,
+    USER: "quickstark-test-user",
+    PATH: `${bin}:${process.env.PATH ?? ""}`,
+    QUICKSTARK_TEST_KEYCHAIN_LOG: keychainLog,
+  };
+
+  delete environment.CODEX_HOME;
+  delete environment.QS_READOUT_PRODUCER_TOKEN;
+
+  const profiles = [
+    { name: ".codex", token: "a".repeat(64) },
+    { name: ".codex-demo", token: "b".repeat(64) },
+  ];
+
+  for (const profile of profiles) {
+    const macos = readoutPlatformSetup(profile.token, {
+      codexProfile: profile.name,
+    }).find((adapter) => adapter.id === "macos");
+
+    assert.ok(macos);
+    assert.ok(macos.command.includes(`$HOME/${profile.name}`),
+      `${profile.name} must be explicitly selected in the copy-ready Terminal command`);
+    assert.doesNotMatch(macos.command, /launchctl\s+setenv|QS_READOUT_PRODUCER_TOKEN/,
+      `${profile.name} never changes the shared macOS application environment`);
+
+    await execFileAsync("zsh", ["-f", "-c", macos.command], { env: environment });
+
+    const path = join(home, profile.name, "quickstark", "producer.token");
+
+    assert.equal((await readFile(path, "utf8")).trim(), profile.token,
+      `${profile.name} receives only its own one-time token`);
+    assert.equal((await stat(path)).mode & 0o777, 0o600,
+      `${profile.name} stores its bearer with owner-only permissions`);
+  }
+
+  assert.equal(
+    (await readFile(join(home, ".codex", "quickstark", "producer.token"), "utf8")).trim(),
+    profiles[0].token,
+    "installing the demo profile never overwrites the original default-profile producer",
+  );
+
+  const recordedKeychain = await readFile(keychainLog, "utf8");
+
+  for (const profile of profiles) {
+    assert.ok(recordedKeychain.includes(`quickstark-readout-producer-token-${profile.name}`),
+      `${profile.name} receives a separately named Keychain credential`);
+  }
+});
+
+test("macOS setup rejects unsafe and unsupported Codex profile names", () => {
+  const token = "m".repeat(64);
+
+  for (const codexProfile of ["", "../.codex", ".codex/../../other-home", ".codex-custom", "/tmp/.codex"]) {
+    assert.throws(
+      () => readoutPlatformSetup(token, { codexProfile }),
+      /safe|supported|codex profile/i,
+      `the Settings command must never interpolate the unsafe profile ${JSON.stringify(codexProfile)}`,
+    );
+  }
+});
+
+test("macOS profile installation rejects symbolic links before disclosing its producer token", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-macos-unsafe-installer-"));
+  const bin = join(directory, "bin");
+  const keychainLog = join(directory, "keychain.log");
+  const token = "s".repeat(64);
+
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+  await mkdir(bin, { recursive: true, mode: 0o700 });
+  await writeFile(join(bin, "security"), [
+    "#!/bin/sh",
+    'case "$1" in',
+    '  -i) cat >> "$QUICKSTARK_TEST_KEYCHAIN_LOG" ;;',
+    '  find-generic-password) printf "%s\\n" "$*" >> "$QUICKSTARK_TEST_KEYCHAIN_LOG" ;;',
+    "  *) exit 64 ;;",
+    "esac",
+    "",
+  ].join("\n"), { encoding: "utf8", mode: 0o755 });
+
+  for (const scenario of ["profile", "directory", "token"]) {
+    const home = join(directory, `${scenario}-home`);
+    const outside = join(directory, `${scenario}-outside`);
+    const profile = join(home, ".codex-demo");
+    const credentialDirectory = join(profile, "quickstark");
+    const outsideToken = join(outside, "producer.token");
+
+    await mkdir(home, { recursive: true, mode: 0o700 });
+    await mkdir(outside, { recursive: true, mode: 0o700 });
+    await writeFile(outsideToken, "unchanged external credential\n", {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+
+    if (scenario === "profile") {
+      await mkdir(join(outside, "quickstark"), { recursive: true, mode: 0o700 });
+      await symlink(outside, profile, "dir");
+    } else if (scenario === "directory") {
+      await mkdir(profile, { recursive: true, mode: 0o700 });
+      await symlink(outside, credentialDirectory, "dir");
+    } else {
+      await mkdir(credentialDirectory, { recursive: true, mode: 0o700 });
+      await symlink(outsideToken, join(credentialDirectory, "producer.token"));
+    }
+
+    const environment = {
+      ...process.env,
+      HOME: home,
+      USER: "quickstark-test-user",
+      PATH: `${bin}:${process.env.PATH ?? ""}`,
+      QUICKSTARK_TEST_KEYCHAIN_LOG: keychainLog,
+    };
+
+    delete environment.CODEX_HOME;
+    delete environment.QS_READOUT_PRODUCER_TOKEN;
+
+    const adapter = readoutPlatformSetup(token, { codexProfile: ".codex-demo" })
+      .find((item) => item.id === "macos");
+
+    await assert.rejects(
+      execFileAsync("zsh", ["-f", "-c", adapter.command], { env: environment }),
+      `the installer refuses a symbolic-link ${scenario} before writing its token`,
+    );
+
+    assert.equal(
+      await readFile(outsideToken, "utf8"),
+      "unchanged external credential\n",
+      `a symbolic-link ${scenario} cannot redirect the new token outside its selected profile`,
+    );
+  }
+
+  await assert.rejects(readFile(keychainLog, "utf8"), /ENOENT/,
+    "an unsafe installer path never reaches macOS Keychain token disclosure");
+});
+
+test("macOS profile token rotation repairs existing unsafe permissions without sharing its credential", async (context) => {
+  const directory = await mkdtemp(join(tmpdir(), "quickstark-macos-token-rotation-"));
+  const home = join(directory, "home");
+  const bin = join(directory, "bin");
+  const keychainLog = join(directory, "keychain.log");
+  const credentialDirectory = join(home, ".codex-demo", "quickstark");
+  const credentialPath = join(credentialDirectory, "producer.token");
+  const token = "r".repeat(64);
+
+  context.after(async () => rm(directory, { recursive: true, force: true }));
+  await mkdir(credentialDirectory, { recursive: true, mode: 0o700 });
+  await mkdir(bin, { recursive: true, mode: 0o700 });
+  await writeFile(credentialPath, "old-world-readable-token\n", {
+    encoding: "utf8",
+    mode: 0o644,
+  });
+  await chmod(credentialPath, 0o644);
+  await writeFile(join(bin, "security"), [
+    "#!/bin/sh",
+    'case "$1" in',
+    '  -i) cat >> "$QUICKSTARK_TEST_KEYCHAIN_LOG" ;;',
+    '  find-generic-password) printf "%s\\n" "$*" >> "$QUICKSTARK_TEST_KEYCHAIN_LOG" ;;',
+    "  *) exit 64 ;;",
+    "esac",
+    "",
+  ].join("\n"), { encoding: "utf8", mode: 0o755 });
+
+  const environment = {
+    ...process.env,
+    HOME: home,
+    USER: "quickstark-test-user",
+    PATH: `${bin}:${process.env.PATH ?? ""}`,
+    QUICKSTARK_TEST_KEYCHAIN_LOG: keychainLog,
+  };
+
+  delete environment.CODEX_HOME;
+  delete environment.QS_READOUT_PRODUCER_TOKEN;
+
+  const adapter = readoutPlatformSetup(token, { codexProfile: ".codex-demo" })
+    .find((item) => item.id === "macos");
+
+  await execFileAsync("zsh", ["-f", "-c", adapter.command], { env: environment });
+
+  assert.equal((await readFile(credentialPath, "utf8")).trim(), token,
+    "rotation replaces the selected profile's old regular credential");
+  assert.equal((await stat(credentialPath)).mode & 0o777, 0o600,
+    "the newly issued bearer is never left with the previous world-readable mode");
+  assert.doesNotMatch(adapter.command, /launchctl\s+setenv|QS_READOUT_PRODUCER_TOKEN/);
 });
 
 test("the unified Settings document renders private preferences, token controls, and four setup paths", () => {
@@ -610,7 +838,7 @@ test("creating a producer returns its exact one-time token inside the selected p
   const csrf = csrfFrom(await (await administratorPage(settings)).text());
   const cases = [
     { platform: "linux", producer: "token-linux-codex", expected: /install -d -m 700|systemctl --user set-environment/ },
-    { platform: "macos", producer: "token-macos-codex", expected: /security add-generic-password|launchctl setenv/ },
+    { platform: "macos", producer: "token-macos-codex", expected: /security -i|add-generic-password/ },
     { platform: "windows", producer: "token-windows-codex", expected: /SetEnvironmentVariable|icacls/ },
     { platform: "chatgpt", producer: "token-chatgpt-web", expected: /Authentication: API key.*Bearer|OpenAPI schema/ },
   ];
@@ -671,6 +899,71 @@ test("creating a producer returns its exact one-time token inside the selected p
 
   for (const token of revealed) {
     assert.ok(!table.includes(token), "the producer table cannot reveal a past one-time token");
+  }
+});
+
+test("macOS producer creation returns an independently executable command for the selected Codex profile", async (context) => {
+  const { settings, producersFile } = await createSettings(context);
+  const csrf = csrfFrom(await (await administratorPage(settings)).text());
+  const profiles = [
+    { name: ".codex", producer: "macos-primary-codex" },
+    { name: ".codex-demo", producer: "macos-demo-codex" },
+  ];
+
+  for (const profile of profiles) {
+    const response = await fetch(new URL("/settings/tokens", settings.url), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Remote-User": "quickstark-admin",
+        "X-QuickStark-CSRF": csrf,
+      },
+      body: JSON.stringify({
+        producer: profile.producer,
+        platform: "macos",
+        codexProfile: profile.name,
+      }),
+    });
+
+    assert.equal(response.status, 201,
+      `${profile.name} receives a separately generated macOS producer`);
+
+    const issued = await response.json();
+
+    assert.equal(issued.codexProfile, profile.name);
+    assert.equal(issued.installation.codexProfile, profile.name);
+    assert.ok(issued.installation.command.includes(`$HOME/${profile.name}`),
+      `${profile.name} is explicitly encoded in its ready-to-paste Terminal command`);
+    assert.ok(issued.installation.command.includes(issued.token));
+    assert.doesNotMatch(issued.installation.command, /launchctl\s+setenv|\$\{CODEX_HOME/,
+      `${profile.name} never relies on a shared desktop token or an inherited Terminal profile`);
+  }
+
+  const grants = JSON.parse(await readFile(producersFile, "utf8"));
+
+  assert.deepEqual(
+    grants.producers.map((producer) => producer.id).sort(),
+    profiles.map((profile) => profile.producer).sort(),
+    "both independently authorized profile grants survive issuance",
+  );
+
+  for (const invalid of ["../.codex", "/tmp/.codex", ".codex-other"]) {
+    const response = await fetch(new URL("/settings/tokens", settings.url), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Remote-User": "quickstark-admin",
+        "X-QuickStark-CSRF": csrf,
+      },
+      body: JSON.stringify({
+        producer: `rejected-profile-${invalid.replace(/[^a-z0-9]+/gi, "-")}`,
+        platform: "macos",
+        codexProfile: invalid,
+      }),
+    });
+
+    assert.equal(response.status, 422,
+      `the authenticated Settings API rejects unsafe macOS profile ${JSON.stringify(invalid)}`);
   }
 });
 
@@ -1661,6 +1954,9 @@ test("Chromium manages tokens from the report-style Settings sidebar with one-ti
   assert.equal(await wizard.evaluate((dialog) => dialog.open), true);
 
   await wizard.locator('[data-wizard-platform="macos"]').click();
+  assert.equal(await wizard.locator("#wizard-profile-step").isVisible(), true,
+    "macOS token creation explicitly offers both independent Codex profiles");
+  await wizard.locator('[data-wizard-profile=".codex-demo"]').click();
   await wizard.getByRole("textbox", { name: "Wizard producer identity" }).fill("browser-macbook");
 
   const [response] = await Promise.all([
@@ -1675,11 +1971,16 @@ test("Chromium manages tokens from the report-style Settings sidebar with one-ti
   const command = await wizard.locator("#wizard-command").innerText();
 
   assert.equal(issued.platform, "macos");
+  assert.equal(issued.codexProfile, ".codex-demo");
+  assert.equal(issued.installation.codexProfile, ".codex-demo");
   assert.ok(command.includes(issued.token),
     "the macOS installation command already contains the exact one-time token");
+  assert.match(command, /\$HOME\/\.codex-demo/,
+    "the copied browser command installs directly into the selected demo profile");
   assert.match(command, /security -i/);
   assert.match(command, /add-generic-password/);
-  assert.match(command, /launchctl setenv/);
+  assert.doesNotMatch(command, /launchctl\s+setenv|QS_READOUT_PRODUCER_TOKEN/,
+    "the browser command never changes the shared macOS desktop producer token");
 
   await wizard.getByRole("button", { name: "Copy setup instructions" }).click();
 
@@ -1943,7 +2244,8 @@ test("Chromium completes one-time Codex and ChatGPT token generation entirely in
   assert.match(macos, /security -i/);
   assert.match(macos, /add-generic-password/);
   assert.match(macos, /security find-generic-password/);
-  assert.match(macos, /launchctl setenv/);
+  assert.doesNotMatch(macos, /launchctl\s+setenv|QS_READOUT_PRODUCER_TOKEN/,
+    "switching an issued credential to macOS never changes the shared desktop environment");
   assert.ok(macos.includes(codexToken), "the macOS command contains the selected one-time token");
 
   await wizard.locator('[data-wizard-platform="windows"]').click();

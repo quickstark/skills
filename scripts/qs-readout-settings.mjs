@@ -21,6 +21,7 @@ import {
 
 const safeIdentity = /^[a-z0-9][a-z0-9._@-]{0,159}$/i;
 const safeProducer = /^[a-z0-9][a-z0-9._-]{0,95}$/i;
+const codexProfiles = new Set([".codex", ".codex-demo"]);
 
 export { normalizeReadoutPreferences } from "./qs-skill-report-presentation.mjs";
 
@@ -33,9 +34,13 @@ function escape(value) {
     .replaceAll("'", "&#39;");
 }
 
-export function readoutPlatformSetup(token) {
+export function readoutPlatformSetup(token, { codexProfile = ".codex" } = {}) {
   if (token !== undefined && !/^[A-Za-z0-9_-]{64}$/.test(token)) {
     throw new Error("Platform setup requires the actual safely generated one-time producer token.");
+  }
+
+  if (!codexProfiles.has(codexProfile)) {
+    throw new Error("Platform setup requires a safe supported Codex profile.");
   }
 
   const credential = token ?? "PASTE_NEWLY_GENERATED_TOKEN";
@@ -56,15 +61,52 @@ export function readoutPlatformSetup(token) {
     {
       id: "macos",
       title: "macOS",
-      detail: "Store the token in macOS Keychain and make it available to the Codex desktop launch session.",
+      detail: `Store the token only for the selected ~/${codexProfile} Codex profile in its owner-only file and separately named macOS Keychain entry.`,
       command: [
+        `quickstark_codex_home="$HOME/${codexProfile}"`,
+        `quickstark_codex_profile="${codexProfile}"`,
+        'quickstark_codex_directory="$quickstark_codex_home/quickstark"',
+        'quickstark_codex_token="$quickstark_codex_directory/producer.token"',
+        'if [ -L "$quickstark_codex_home" ] || [ -L "$quickstark_codex_directory" ] || [ -L "$quickstark_codex_token" ]; then',
+        "  printf '%s\\n' 'QuickStark refused a symbolic-link Codex credential path.' >&2",
+        "  exit 1",
+        "fi",
+        'install -d -m 700 "$quickstark_codex_directory" || exit 1',
+        'if [ ! -O "$quickstark_codex_home" ] || [ ! -O "$quickstark_codex_directory" ]; then',
+        "  printf '%s\\n' 'QuickStark refused a Codex credential path owned by another user.' >&2",
+        "  exit 1",
+        "fi",
+        'quickstark_real_home="$(cd "$HOME" && pwd -P)" || exit 1',
+        'quickstark_real_directory="$(cd "$quickstark_codex_directory" && pwd -P)" || exit 1',
+        `if [ "$quickstark_real_directory" != "$quickstark_real_home/${codexProfile}/quickstark" ]; then`,
+        "  printf '%s\\n' 'QuickStark refused a Codex credential outside the current user home.' >&2",
+        "  exit 1",
+        "fi",
+        'if [ -e "$quickstark_codex_token" ] && [ ! -f "$quickstark_codex_token" ]; then',
+        "  printf '%s\\n' 'QuickStark refused a non-regular Codex credential.' >&2",
+        "  exit 1",
+        "fi",
+        'quickstark_codex_temporary="$(mktemp "$quickstark_codex_directory/.producer.token.XXXXXXXXXX")" || exit 1',
+        `if ! (umask 077; printf '%s\\n' '${credential}' > "$quickstark_codex_temporary" && chmod 600 "$quickstark_codex_temporary"); then`,
+        '  rm -f "$quickstark_codex_temporary"',
+        "  exit 1",
+        "fi",
+        'if [ -L "$quickstark_codex_home" ] || [ -L "$quickstark_codex_directory" ] || [ -L "$quickstark_codex_token" ]; then',
+        '  rm -f "$quickstark_codex_temporary"',
+        "  printf '%s\\n' 'QuickStark refused a changed symbolic-link Codex credential path.' >&2",
+        "  exit 1",
+        "fi",
+        'if ! mv -f "$quickstark_codex_temporary" "$quickstark_codex_token"; then',
+        '  rm -f "$quickstark_codex_temporary"',
+        "  exit 1",
+        "fi",
         "security -i <<QUICKSTARK_KEYCHAIN_SETUP",
-        `add-generic-password -U -a "$USER" -s quickstark-readout-producer-token -w '${credential}'`,
+        `add-generic-password -U -a "$USER" -s "quickstark-readout-producer-token-$quickstark_codex_profile" -w '${credential}'`,
         "QUICKSTARK_KEYCHAIN_SETUP",
-        'launchctl setenv QS_READOUT_PRODUCER_TOKEN "$(security find-generic-password \\',
-        '  -a "$USER" -s quickstark-readout-producer-token -w)"',
+        'security find-generic-password \\',
+        '  -a "$USER" -s "quickstark-readout-producer-token-$quickstark_codex_profile" >/dev/null',
       ].join("\n"),
-      after: "Restart Codex. Run this only in a trusted macOS session; launchctl briefly receives the desktop environment value.",
+      after: `Restart only the selected ~/${codexProfile} Codex application. Its private credential is discovered automatically; no shared macOS desktop token is configured.`,
     },
     {
       id: "windows",
@@ -193,6 +235,10 @@ export function renderReadoutSettings({
   const selected = normalizeReadoutPreferences(preferences);
   const safeProducers = producerList(producers);
   const adapters = readoutPlatformSetup();
+  const macosAdapters = Object.fromEntries([...codexProfiles].map((codexProfile) => [
+    codexProfile,
+    readoutPlatformSetup(undefined, { codexProfile }).find((adapter) => adapter.id === "macos"),
+  ]));
   const platformTitle = Object.fromEntries(adapters.map((adapter) => [adapter.id, adapter.title]));
   const producerItems = safeProducers.length
     ? safeProducers.map((producer) => {
@@ -228,12 +274,14 @@ export function renderReadoutSettings({
   ].join("");
 
   const script = [
-    'const adapters=' + JSON.stringify(adapters) + ';let revealedToken=null;let selectedPlatform="linux";',
+    'const adapters=' + JSON.stringify(adapters)
+      + ';const macosAdapters=' + JSON.stringify(macosAdapters)
+      + ';let revealedToken=null;let selectedPlatform="linux";let selectedCodexProfile=".codex";',
     'const root=document.querySelector(".settings");const form=document.querySelector("#wizard-token-form");const csrf=form.elements.csrf.value;const requestHeaders={"Content-Type":"application/json","X-QuickStark-CSRF":csrf};async function copyValue(value,button){try{await navigator.clipboard.writeText(value);button.textContent="Copied"}catch{button.textContent="Copy failed"}}',
     'async function savePreferences(change){const preferences={size:root.dataset.preferenceSize,density:root.dataset.preferenceDensity,...change};const response=await fetch("/settings/preferences",{method:"POST",headers:requestHeaders,body:JSON.stringify(preferences)});if(!response.ok)return;const saved=await response.json();root.dataset.preferenceSize=saved.size;root.dataset.preferenceDensity=saved.density;document.documentElement.style.setProperty("--feature",saved.featurePx+"px");document.documentElement.style.setProperty("--prompt",saved.promptPx+"px");for(const button of document.querySelectorAll("button[data-preference-size]"))button.classList.toggle("selected",button.dataset.preferenceSize===saved.size);for(const button of document.querySelectorAll("button[data-preference-density]"))button.classList.toggle("selected",button.dataset.preferenceDensity===saved.density)}for(const button of document.querySelectorAll("button[data-preference-size]"))button.addEventListener("click",()=>savePreferences({size:button.dataset.preferenceSize}));for(const button of document.querySelectorAll("button[data-preference-density]"))button.addEventListener("click",()=>savePreferences({density:button.dataset.preferenceDensity}));',
-    'const wizard=document.querySelector("#producer-setup-wizard");const command=document.querySelector("#wizard-command");const guide=document.querySelector("#wizard-guide");const schema=document.querySelector("#wizard-openapi");const os=document.querySelector("#wizard-os-step");const reveal=document.querySelector("#wizard-token-reveal");function choosePlatform(id){const adapter=adapters.find(item=>item.id===id);if(!adapter)return;selectedPlatform=id;command.textContent=adapter.command.replaceAll("PASTE_NEWLY_GENERATED_TOKEN",revealedToken||"PASTE_NEWLY_GENERATED_TOKEN");guide.textContent=adapter.detail+" "+adapter.after;schema.hidden=id!=="chatgpt";for(const button of document.querySelectorAll("[data-wizard-platform]"))button.classList.toggle("selected",button.dataset.wizardPlatform===id)}function clearReveal(){revealedToken=null;reveal.replaceChildren();reveal.hidden=true;choosePlatform(selectedPlatform)}const launch=document.querySelector("#open-setup-wizard");if(launch)launch.addEventListener("click",()=>{clearReveal();wizard.showModal();choosePlatform("linux")});document.querySelector("#close-setup-wizard").addEventListener("click",()=>{clearReveal();wizard.close()});wizard.addEventListener("close",clearReveal);for(const option of document.querySelectorAll("[data-wizard-platform]"))option.addEventListener("click",()=>choosePlatform(option.dataset.wizardPlatform));for(const option of document.querySelectorAll("[data-wizard-harness]"))option.addEventListener("click",()=>{for(const item of document.querySelectorAll("[data-wizard-harness]"))item.classList.toggle("selected",item===option);const chat=option.dataset.wizardHarness==="chatgpt";os.hidden=chat;choosePlatform(chat?"chatgpt":"linux")});document.querySelector("#copy-wizard-command").addEventListener("click",event=>copyValue(command.textContent,event.currentTarget));',
+    'const wizard=document.querySelector("#producer-setup-wizard");const command=document.querySelector("#wizard-command");const guide=document.querySelector("#wizard-guide");const schema=document.querySelector("#wizard-openapi");const os=document.querySelector("#wizard-os-step");const profileStep=document.querySelector("#wizard-profile-step");const reveal=document.querySelector("#wizard-token-reveal");function choosePlatform(id){const adapter=id==="macos"?macosAdapters[selectedCodexProfile]:adapters.find(item=>item.id===id);if(!adapter)return;selectedPlatform=id;command.textContent=adapter.command.replaceAll("PASTE_NEWLY_GENERATED_TOKEN",revealedToken||"PASTE_NEWLY_GENERATED_TOKEN");guide.textContent=adapter.detail+" "+adapter.after;schema.hidden=id!=="chatgpt";profileStep.hidden=id!=="macos";for(const button of document.querySelectorAll("[data-wizard-platform]"))button.classList.toggle("selected",button.dataset.wizardPlatform===id)}function chooseCodexProfile(id){if(!Object.hasOwn(macosAdapters,id))return;selectedCodexProfile=id;for(const button of document.querySelectorAll("[data-wizard-profile]"))button.classList.toggle("selected",button.dataset.wizardProfile===id);if(selectedPlatform==="macos")choosePlatform("macos")}function clearReveal(){revealedToken=null;reveal.replaceChildren();reveal.hidden=true;choosePlatform(selectedPlatform)}const launch=document.querySelector("#open-setup-wizard");if(launch)launch.addEventListener("click",()=>{selectedCodexProfile=".codex";clearReveal();wizard.showModal();chooseCodexProfile(".codex");choosePlatform("linux")});document.querySelector("#close-setup-wizard").addEventListener("click",()=>{clearReveal();wizard.close()});wizard.addEventListener("close",clearReveal);for(const option of document.querySelectorAll("[data-wizard-platform]"))option.addEventListener("click",()=>choosePlatform(option.dataset.wizardPlatform));for(const option of document.querySelectorAll("[data-wizard-profile]"))option.addEventListener("click",()=>chooseCodexProfile(option.dataset.wizardProfile));for(const option of document.querySelectorAll("[data-wizard-harness]"))option.addEventListener("click",()=>{for(const item of document.querySelectorAll("[data-wizard-harness]"))item.classList.toggle("selected",item===option);const chat=option.dataset.wizardHarness==="chatgpt";os.hidden=chat;choosePlatform(chat?"chatgpt":"linux")});document.querySelector("#copy-wizard-command").addEventListener("click",event=>copyValue(command.textContent,event.currentTarget));',
     'function actionButton(action,id){const button=document.createElement("button");button.type="button";button.className="icon-action"+(action==="delete"?" is-danger":"");button.dataset.producerAction=action;button.dataset.producer=id;button.setAttribute("aria-label",action.charAt(0).toUpperCase()+action.slice(1)+" token "+id);const template=document.querySelector("#icon-"+action);if(template)button.append(template.content.cloneNode(true));return button}function upsertRow(producer){const body=document.querySelector(".producer-list");body.querySelector(".producer-empty")?.remove();let row=body.querySelector("[data-producer-row="+CSS.escape(producer.producer||producer.id)+"]");if(!row){row=document.createElement("tr");row.dataset.producerRow=producer.producer||producer.id;for(let i=0;i<5;i++)row.append(document.createElement("td"));body.append(row)}const id=producer.producer||producer.id;row.cells[0].className="token-actions";row.cells[0].replaceChildren(...["view","edit","delete"].map(action=>actionButton(action,id)));const strong=document.createElement("strong");strong.className="token-name";strong.textContent=producer.label||id;const sub=document.createElement("span");sub.className="token-id";sub.textContent=id;row.cells[1].replaceChildren(strong,sub);row.cells[2].textContent=adapters.find(item=>item.id===producer.platform)?.title||"Not recorded";const badge=document.createElement("span");badge.className="badge";badge.textContent="Active";row.cells[3].replaceChildren(badge);row.cells[4].className="table-note";row.cells[4].textContent=producer.createdAt?producer.createdAt.slice(0,10):"Not recorded"}',
-    'form.addEventListener("submit",async event=>{event.preventDefault();const response=await fetch("/settings/tokens",{method:"POST",headers:requestHeaders,body:JSON.stringify({producer:form.elements.producer.value,label:form.elements.label.value,platform:selectedPlatform})});const result=await response.json();reveal.hidden=false;reveal.replaceChildren();if(!response.ok){reveal.textContent=result.error||"Token generation failed.";return}revealedToken=result.token;const explanation=document.createElement("p");explanation.textContent="Copy this token and its install command now. Neither can be viewed after you close this window.";const secret=document.createElement("code");secret.textContent=result.token;const copy=document.createElement("button");copy.type="button";copy.className="copy";copy.textContent="Copy token";copy.addEventListener("click",event=>copyValue(result.token,event.currentTarget));reveal.append(explanation,secret,copy);upsertRow(result);choosePlatform(result.platform)});',
+    'form.addEventListener("submit",async event=>{event.preventDefault();const payload={producer:form.elements.producer.value,label:form.elements.label.value,platform:selectedPlatform,...(selectedPlatform==="macos"?{codexProfile:selectedCodexProfile}:{})};const response=await fetch("/settings/tokens",{method:"POST",headers:requestHeaders,body:JSON.stringify(payload)});const result=await response.json();reveal.hidden=false;reveal.replaceChildren();if(!response.ok){reveal.textContent=result.error||"Token generation failed.";return}revealedToken=result.token;if(result.codexProfile)selectedCodexProfile=result.codexProfile;const explanation=document.createElement("p");explanation.textContent="Copy this token and its install command now. Neither can be viewed after you close this window.";const secret=document.createElement("code");secret.textContent=result.token;const copy=document.createElement("button");copy.type="button";copy.className="copy";copy.textContent="Copy token";copy.addEventListener("click",event=>copyValue(result.token,event.currentTarget));reveal.append(explanation,secret,copy);upsertRow(result);choosePlatform(result.platform)});',
     'const detail=document.querySelector("#producer-detail-dialog");const edit=document.querySelector("#producer-edit-dialog");const removal=document.querySelector("#producer-delete-dialog");let activeProducer=null;document.querySelector(".producer-list")?.addEventListener("click",async event=>{const button=event.target.closest("[data-producer-action]");if(!button)return;activeProducer=button.dataset.producer;const endpoint="/settings/tokens/"+encodeURIComponent(activeProducer);if(button.dataset.producerAction==="delete"){document.querySelector("#delete-producer-name").textContent=activeProducer;removal.showModal();return}const response=await fetch(endpoint);if(!response.ok)return;const producer=await response.json();if(button.dataset.producerAction==="view"){document.querySelector("#detail-producer-name").textContent=producer.label;document.querySelector("#detail-producer-id").textContent=producer.id;document.querySelector("#detail-producer-platform").textContent=adapters.find(item=>item.id===producer.platform)?.title||"Not recorded";document.querySelector("#detail-producer-fingerprint").textContent=producer.fingerprint?"SHA-256 · "+producer.fingerprint+"…":"Not recorded";document.querySelector("#detail-producer-created").textContent=producer.createdAt||"Not recorded";detail.showModal();return}document.querySelector("#producer-edit-label").value=producer.label;edit.showModal()});',
     'for(const button of document.querySelectorAll("[data-close-dialog]"))button.addEventListener("click",()=>button.closest("dialog").close());document.querySelector("#producer-edit-form").addEventListener("submit",async event=>{event.preventDefault();if(!activeProducer)return;const response=await fetch("/settings/tokens/"+encodeURIComponent(activeProducer),{method:"PATCH",headers:requestHeaders,body:JSON.stringify({label:document.querySelector("#producer-edit-label").value})});if(!response.ok)return;upsertRow(await response.json());edit.close()});document.querySelector("#confirm-delete-producer").addEventListener("click",async()=>{if(!activeProducer)return;const response=await fetch("/settings/tokens/"+encodeURIComponent(activeProducer),{method:"DELETE",headers:requestHeaders,body:"{}"});if(!response.ok)return;document.querySelector("[data-producer-row="+CSS.escape(activeProducer)+"]")?.remove();const body=document.querySelector(".producer-list");if(!body.rows.length){const row=body.insertRow();row.className="producer-empty";const cell=row.insertCell();cell.colSpan=5;cell.textContent="No producer tokens have been registered."}removal.close();activeProducer=null});',
   ].join(";");
@@ -298,6 +346,11 @@ export function renderReadoutSettings({
     + '<div class="wizard-platforms"><button type="button" class="selected" data-wizard-platform="linux">Linux</button>'
     + '<button type="button" data-wizard-platform="macos">macOS</button>'
     + '<button type="button" data-wizard-platform="windows">Windows</button></div></section>'
+    + '<section class="wizard-step" id="wizard-profile-step" hidden>'
+    + '<strong>Choose the macOS Codex profile</strong><div class="wizard-options">'
+    + '<button type="button" class="selected" data-wizard-profile=".codex">Default · ~/.codex</button>'
+    + '<button type="button" data-wizard-profile=".codex-demo">Demo · ~/.codex-demo</button>'
+    + '</div><p class="wizard-guide">Each Codex application receives its own private, independently revocable token.</p></section>'
     + '<section class="wizard-step"><strong><span class="wizard-number">3</span>Name and create your producer token</strong>'
     + '<p class="wizard-guide">This credential and its tailored installation command are shown only while this window remains open.</p>'
     + '<form class="token-form" id="wizard-token-form"><input type="hidden" name="csrf" value="' + escape(csrf) + '">'
@@ -816,6 +869,14 @@ export async function startReadoutSettingsServer(options = {}) {
         return;
       }
 
+      if (
+        payload.codexProfile !== undefined
+        && (payload.platform !== "macos" || !codexProfiles.has(payload.codexProfile))
+      ) {
+        sendJson(response, 422, { error: "invalid_codex_profile" });
+        return;
+      }
+
       const now = Date.now();
       const observedRate = issuanceRates.get(user);
       const rate = observedRate && observedRate.resetAt > now
@@ -849,18 +910,22 @@ export async function startReadoutSettingsServer(options = {}) {
           options.audit({ action: "producer-created", user, producer: result.producer });
         }
 
-        const adapter = readoutPlatformSetup(result.token).find((item) => item.id === result.platform);
+        const codexProfile = payload.codexProfile ?? ".codex";
+        const adapter = readoutPlatformSetup(result.token, { codexProfile })
+          .find((item) => item.id === result.platform);
 
         sendJson(response, 201, {
           producer: result.producer,
           label: result.label,
           platform: result.platform,
+          ...(result.platform === "macos" ? { codexProfile } : {}),
           createdAt: result.createdAt,
           authorizedProjects: result.authorizedProjects,
           tokenDisclosed: true,
           token: result.token,
           installation: {
             platform: adapter.id,
+            ...(result.platform === "macos" ? { codexProfile } : {}),
             title: adapter.title,
             command: adapter.command,
             after: adapter.after,

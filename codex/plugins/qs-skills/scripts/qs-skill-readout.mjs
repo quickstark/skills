@@ -108,6 +108,260 @@ const ingestionMaximumBytes = 256 * 1024;
 const execFileAsync = promisify(execFile);
 const observedGitContexts = new Map();
 
+async function resolveMacosReadoutKeychain(environment, profileHome, { includeLegacy = true } = {}) {
+  if (
+    typeof environment.USER !== "string"
+    || !/^[a-z0-9][a-z0-9._-]{0,127}$/i.test(environment.USER)
+  ) {
+    return null;
+  }
+
+  const services = [...new Set([
+    `quickstark-readout-producer-token-${basename(profileHome)}`,
+    ...(includeLegacy ? ["quickstark-readout-producer-token"] : []),
+  ])];
+
+  for (const service of services) {
+    try {
+      const { stdout } = await execFileAsync("security", [
+        "find-generic-password", "-a", environment.USER, "-s", service, "-w",
+      ], { maxBuffer: 1024, timeout: 2_000 });
+      const value = stdout.trim();
+
+      if (!/^[A-Za-z0-9_-]{24,512}$/.test(value)) {
+        throw new Error("The macOS Keychain reporting credential has an invalid format.");
+      }
+
+      return value;
+    } catch (error) {
+      if (/Keychain reporting credential/i.test(error.message ?? "")) throw error;
+    }
+  }
+
+  return null;
+}
+
+export async function resolveReadoutProducerToken({
+  environment = process.env,
+  home = homedir(),
+  operatingSystem = platform(),
+} = {}) {
+  const explicit = environment.QS_READOUT_PRODUCER_TOKEN;
+  let explicitToken = null;
+
+  if (explicit !== undefined && explicit !== null && explicit !== "") {
+    if (typeof explicit !== "string" || !/^[A-Za-z0-9_-]{24,512}$/.test(explicit.trim())) {
+      throw new Error("The configured reporting credential must be a valid private producer token.");
+    }
+
+    explicitToken = explicit.trim();
+
+    if (operatingSystem !== "darwin") return explicitToken;
+  }
+
+  const userHome = resolve(home);
+  const configuredProfile = environment.CODEX_HOME;
+  let profileHome = join(userHome, ".codex");
+
+  if (configuredProfile !== undefined && configuredProfile !== null && configuredProfile !== "") {
+    if (typeof configuredProfile !== "string" || !isAbsolute(configuredProfile)) {
+      throw new Error("The Codex profile must be a safe absolute directory in the current user home.");
+    }
+
+    profileHome = resolve(configuredProfile);
+
+    if (profileHome === userHome || !profileHome.startsWith(`${userHome}${sep}`)) {
+      throw new Error("The Codex profile must be a safe absolute directory in the current user home.");
+    }
+  }
+
+  const candidates = [...new Set([
+    join(profileHome, "quickstark", "producer.token"),
+    ...(operatingSystem === "win32"
+      ? [join(userHome, ".quickstark", "producer.token")]
+      : []),
+    join(userHome, ".config", "quickstark", "producer.token"),
+  ])];
+  const currentUser = typeof process.getuid === "function" ? process.getuid() : null;
+
+  for (const [index, candidate] of candidates.entries()) {
+    if (index > 0 && operatingSystem === "darwin") {
+      const profileKeychainToken = await resolveMacosReadoutKeychain(
+        environment,
+        profileHome,
+        { includeLegacy: false },
+      );
+
+      if (profileKeychainToken) return profileKeychainToken;
+      if (explicitToken) return explicitToken;
+    }
+
+    const relativeParent = relative(userHome, dirname(candidate));
+
+    if (
+      relativeParent === ".."
+      || relativeParent.startsWith(`..${sep}`)
+      || isAbsolute(relativeParent)
+    ) {
+      throw new Error("The private reporting credential must remain inside the current user home.");
+    }
+
+    const ancestors = [];
+    let ancestor = userHome;
+    let missingAncestor = false;
+
+    for (const segment of relativeParent.split(sep).filter(Boolean)) {
+      ancestor = join(ancestor, segment);
+
+      let inspected;
+
+      try {
+        inspected = await lstat(ancestor);
+      } catch (error) {
+        if (error.code === "ENOENT") {
+          missingAncestor = true;
+          break;
+        }
+
+        throw new Error("The private reporting credential directory could not be safely inspected.");
+      }
+
+      if (
+        !inspected.isDirectory()
+        || inspected.isSymbolicLink()
+        || (operatingSystem !== "win32" && (inspected.mode & 0o022) !== 0)
+        || (currentUser !== null && inspected.uid !== currentUser)
+      ) {
+        throw new Error("The private reporting credential directory cannot contain a symbolic link or leave the current user home.");
+      }
+
+      ancestors.push({ path: ancestor, dev: inspected.dev, ino: inspected.ino });
+    }
+
+    if (missingAncestor) continue;
+
+    let metadata;
+
+    try {
+      metadata = await lstat(candidate);
+    } catch (error) {
+      if (error.code === "ENOENT" || error.code === "ENOTDIR") continue;
+      throw new Error("The private reporting credential could not be safely inspected.");
+    }
+
+    if (
+      !metadata.isFile()
+      || metadata.isSymbolicLink()
+      || metadata.size < 24
+      || metadata.size > 513
+      || (operatingSystem !== "win32" && (metadata.mode & 0o077) !== 0)
+      || (currentUser !== null && metadata.uid !== currentUser)
+    ) {
+      throw new Error("The private reporting credential must be an owner-only regular file.");
+    }
+
+    let parent;
+
+    try {
+      parent = await lstat(dirname(candidate));
+    } catch {
+      throw new Error("The private reporting credential directory could not be safely inspected.");
+    }
+
+    if (
+      !parent.isDirectory()
+      || parent.isSymbolicLink()
+      || (operatingSystem !== "win32" && (parent.mode & 0o022) !== 0)
+      || (currentUser !== null && parent.uid !== currentUser)
+    ) {
+      throw new Error("The private reporting credential must remain inside a user-owned directory.");
+    }
+
+    let resolvedHome;
+    let resolvedParent;
+
+    try {
+      [resolvedHome, resolvedParent] = await Promise.all([
+        realpath(userHome),
+        realpath(dirname(candidate)),
+      ]);
+    } catch {
+      throw new Error("The private reporting credential directory could not be safely resolved.");
+    }
+
+    const resolvedRelative = relative(resolvedHome, resolvedParent);
+
+    if (
+      resolvedRelative === ".."
+      || resolvedRelative.startsWith(`..${sep}`)
+      || isAbsolute(resolvedRelative)
+    ) {
+      throw new Error("The private reporting credential must remain inside the current user home.");
+    }
+
+    let handle;
+
+    try {
+      handle = await open(candidate, "r");
+      const opened = await handle.stat();
+
+      if (
+        !opened.isFile()
+        || opened.dev !== metadata.dev
+        || opened.ino !== metadata.ino
+        || opened.size !== metadata.size
+        || (operatingSystem !== "win32" && (opened.mode & 0o077) !== 0)
+        || (currentUser !== null && opened.uid !== currentUser)
+      ) {
+        throw new Error("The private reporting credential changed during secure inspection.");
+      }
+
+      for (const inspected of ancestors) {
+        const unchanged = await lstat(inspected.path);
+
+        if (
+          !unchanged.isDirectory()
+          || unchanged.isSymbolicLink()
+          || unchanged.dev !== inspected.dev
+          || unchanged.ino !== inspected.ino
+          || (operatingSystem !== "win32" && (unchanged.mode & 0o022) !== 0)
+          || (currentUser !== null && unchanged.uid !== currentUser)
+        ) {
+          throw new Error("The private reporting credential directory changed during secure inspection.");
+        }
+      }
+
+      const openedParent = await realpath(dirname(candidate));
+
+      if (openedParent !== resolvedParent) {
+        throw new Error("The private reporting credential directory changed during secure inspection.");
+      }
+
+      const value = (await handle.readFile({ encoding: "utf8" })).trim();
+
+      if (!/^[A-Za-z0-9_-]{24,512}$/.test(value)) {
+        throw new Error("The installed reporting credential contains an invalid producer token.");
+      }
+
+      return value;
+    } catch (error) {
+      if (/private reporting credential|installed reporting credential/i.test(error.message ?? "")) {
+        throw error;
+      }
+
+      throw new Error("The private reporting credential could not be safely loaded.");
+    } finally {
+      if (handle) await handle.close();
+    }
+  }
+
+  if (explicitToken) return explicitToken;
+
+  return operatingSystem === "darwin"
+    ? resolveMacosReadoutKeychain(environment, profileHome)
+    : null;
+}
+
 export function normalizeReadoutProject(remote) {
   const value = requireText(remote, "Git origin");
   let host;
@@ -5980,6 +6234,9 @@ Environment:
 Automatic behavior:
   An explicitly configured authenticated producer publishes completed skill
   reports to the shared reports API without requiring a local report viewer.
+  Codex also securely discovers an owner-only producer credential from its
+  current profile or the platform-standard private QuickStark token file.
+  Separate .codex and .codex-demo profiles retain independent credentials.
   On a Mac or graphical desktop, reports use a private localhost viewer.
   On a headless or SSH-connected Linux host, reports use its private home-network
   IP and an unguessable report URL. No Tailscale or always-on service is needed.
@@ -6016,8 +6273,13 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
     const input = capturedObservation
       ? { ...supplied, observation: capturedObservation }
       : supplied;
-    const hostedPublicationConfigured = typeof process.env.QS_READOUT_PRODUCER_TOKEN === "string"
-      && process.env.QS_READOUT_PRODUCER_TOKEN.trim().length >= 24;
+    const privateViewerExplicitlyRequested = options.access === "local"
+      || options.access === "lan"
+      || options.access === "ssh";
+    const producerToken = privateViewerExplicitlyRequested
+      ? null
+      : await resolveReadoutProducerToken();
+    const hostedPublicationConfigured = typeof producerToken === "string";
     const viewer = options.noServe || hostedPublicationConfigured
       ? null
       : await ensureReadoutViewer(options);
@@ -6060,7 +6322,7 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
         } : {}),
         relationships: input.relationships,
         nextSkills: input.nextSkills,
-      })
+      }, { token: producerToken })
       : null;
 
     if (publication?.status === "published") {
