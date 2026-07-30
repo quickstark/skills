@@ -69,7 +69,7 @@ A repository version does not establish a published release. Record Git tags, Gi
 
 A skill readout can include only its actual execution machine, explicitly verified deployments, and files owned by that skill run. Never sweep pre-existing worktree changes into a report. Never record `.env` files, credentials, private keys, Git configuration, access tokens, internal source trees, or unapproved project data.
 
-Hosted publishing is opt-in. Keep browser viewing, producer authentication, immutable storage, producer project grants, and the hosted project allowlist separate. Treat unknown external skills as external; do not add them to the QuickStark catalog merely to ingest a report.
+Hosted publishing to the exact authenticated `https://reports.quickstark.com/api/v1/readouts` endpoint is mandatory for actual promoted skill completions; validate that canonical endpoint before sending producer credentials. Explicitly requested private preview galleries remain opt-in and must never replace a promoted skill's hosted report. Keep browser viewing, producer authentication, immutable storage, producer project grants, and the hosted project allowlist separate. Preserve a safely generated immutable local recovery report when hosted publication fails. Treat unknown external skills as external; do not add them to the QuickStark catalog merely to ingest a report.
 
 ## Release a version
 

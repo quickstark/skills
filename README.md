@@ -109,7 +109,7 @@ Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation onl
 
 ## Visual skill readouts
 
-Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout. With an explicitly authorized cross-machine producer, the normal skill command publishes that immutable run to the shared reports API; otherwise it starts or reuses a lightweight private report viewer. The 24 report profiles use the approved editorial presentation: a verified project and Git metadata strip, a five-second visual summary, immediately visible native next prompts, real exceptions and checks, and the selected skill's actual evidence. A shared deep presentation module, `scripts/qs-skill-report-presentation.mjs`, owns the readable typography, aligned responsive prompt cards, actionable user-run terminal commands, noteworthy code excerpts, GitHub context, and exception-based summaries; `scripts/qs-skill-readout.mjs` remains the small reporting interface. Each report keeps an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
+Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and uses `render --require-hosted` to publish that immutable run through the authenticated `https://reports.quickstark.com/` service. If its private producer credential is missing, rejected, or unsafe, the skill fails clearly while preserving a private local recovery artifact; it never substitutes a local file, localhost, or private-IP viewer for the hosted report. Private galleries and viewers remain available only when explicitly requested outside normal skill reporting. The 24 report profiles use the approved editorial presentation: a verified project and Git metadata strip, a five-second visual summary, immediately visible native next prompts, real exceptions and checks, and the selected skill's actual evidence. A shared deep presentation module, `scripts/qs-skill-report-presentation.mjs`, owns the readable typography, aligned responsive prompt cards, actionable user-run terminal commands, noteworthy code excerpts, GitHub context, and exception-based summaries; `scripts/qs-skill-readout.mjs` remains the small reporting interface. Each report keeps an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
 
 Generated next prompts use Codex's native `$qs-skill-name` spelling so they match the installed skill's `agents/openai.yaml` default prompt. Existing explicit `/qs-skill-name` prompts remain supported. The blue resolved-skill token is created by the Codex composer when a skill is selected from its `$` picker; HTML, Markdown, and copied prompt text cannot independently force or synthesize that application-controlled state.
 
@@ -159,19 +159,19 @@ npm run readouts:gallery
 
 Previews explicitly say that no skill has run and claim no project changes or checks. The gallery command starts its viewer automatically, verifies that it responds, and prints the clickable gallery URL.
 
-When a skill runs on a Mac or graphical desktop, its viewer uses local loopback:
+Only when a user explicitly requests a local preview gallery or private viewer on a Mac or graphical desktop, it uses local loopback:
 
 ```text
 http://127.0.0.1:4173/
 ```
 
-When a skill runs on a headless or SSH-connected Linux dev box, it automatically detects the private home-network address and starts a capability-protected viewer:
+Only when a user explicitly requests a private home-network preview on a headless or SSH-connected Linux dev box, it detects the private address and starts a capability-protected viewer:
 
 ```text
 http://192.168.1.200:4173/r/<unguessable-access-token>/
 ```
 
-Open the exact link returned by the skill on a laptop connected to the same home network. No Tailscale account, manual server startup, public listener, or always-on service is required. If port `4173` is already used by a web preview or another development tool, the viewer automatically chooses the next available port. On Linux, a temporary user-managed service keeps the viewer available after the Codex command finishes without installing a permanent startup service. The server binds to one private IP, serves only generated QuickStark HTML, and returns `404` without the access token.
+Open the exact explicitly requested preview-gallery link on a laptop connected to the same home network. Actual promoted skill readouts always use `https://reports.quickstark.com/`, not these private diagnostic URLs. No Tailscale account, manual server startup, public listener, or always-on service is required for an explicitly requested private preview. If port `4173` is already used by a web preview or another development tool, the viewer automatically chooses the next available port. On Linux, a temporary user-managed service keeps the private viewer available after the command finishes without installing a permanent startup service. The server binds to one private IP, serves only generated QuickStark HTML, and returns `404` without the access token.
 
 ### Viewing reports from a remote Codex machine
 
@@ -346,8 +346,8 @@ Status: Completed
 Skills used: /qs-design-architecture; /qs-design-modules
 Outcome: Identified and prioritized the highest-value architectural refactor.
 Execution: Actual development machine; only files changed by this skill run.
-Readout: /tmp/quickstark-readouts/qs-design-architecture--2026-07-25T15-30-00-000Z--a1b2c3d4.html
-Outputs: /absolute/path/to/architecture-review.html
+Readout: https://reports.quickstark.com/github.com/quickstark/skills/2026/07/qs-design-architecture--2026-07-25T15-30-00-000Z--a1b2c3d4.html
+Outputs: Verified hosted architecture review and observed module-deepening opportunities.
 Checks: Confirmed the affected modules and existing test coverage.
 ```
 
@@ -373,7 +373,7 @@ Use $qs-design-modules to design the interface and seam for the architectural ca
 >
 > Heuristic guidance; the active model and thinking level are not changed automatically.
 
-`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the actual generated HTML path or a verified private viewer URL. `Outputs`, `Checks`, user-run `Commands`, `Key code`, and delivery evidence appear only when real artifacts, validations, pending user actions, noteworthy excerpts, or GitHub records exist. `Top next prompts` provides up to three copy-ready, context-aware prompts that explicitly invoke approved follow-on skills and build on what this run actually accomplished. Each includes a suggested model and suggested thinking level. These suggestions are heuristic starting points, not benchmarks or observed results; they never change the active model automatically. A recorded critical finding or failed check can suggest deeper reasoning. The report says `None — the requested work is complete` when no follow-up is needed; suggested skills never appear under `Skills used`.
+`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the independently accepted `https://reports.quickstark.com/` skill-report URL; never substitute a local filesystem path, localhost, or private IP. `Outputs`, `Checks`, user-run `Commands`, `Key code`, and delivery evidence appear only when real artifacts, validations, pending user actions, noteworthy excerpts, or GitHub records exist. `Top next prompts` provides up to three copy-ready, context-aware prompts that explicitly invoke approved follow-on skills and build on what this run actually accomplished. Each includes a suggested model and suggested thinking level. These suggestions are heuristic starting points, not benchmarks or observed results; they never change the active model automatically. A recorded critical finding or failed check can suggest deeper reasoning. The report says `None — the requested work is complete` when no follow-up is needed; suggested skills never appear under `Skills used`.
 
 Approved follow-on skills, their baseline actions, and their heuristic model and thinking guidance remain in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs). The readout renderer specializes each prompt using the current run's recorded outcome, findings, decisions, outputs, and checks; skill instructions and documentation inherit the contract from [`scripts/sync-skill-output-contracts.mjs`](./scripts/sync-skill-output-contracts.mjs).
 

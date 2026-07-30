@@ -6166,7 +6166,7 @@ function parseOptions(arguments_) {
   for (let index = 0; index < arguments_.length; index += 1) {
     const argument = arguments_[index];
 
-    if (["--json", "--no-serve", "--apply", "--dry-run", "--trusted-proxy"].includes(argument)) {
+    if (["--json", "--no-serve", "--require-hosted", "--apply", "--dry-run", "--trusted-proxy"].includes(argument)) {
       const key = argument.slice(2).replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
 
       if (parsed[key]) throw new Error(`${argument} was specified more than once.`);
@@ -6231,6 +6231,7 @@ Options:
   --allowed-projects KEYS  Comma-separated canonical hosted project allowlist.
   --trusted-proxy   Accept an authenticated, private-network reverse proxy.
   --no-serve        Generate the HTML file without starting a viewer.
+  --require-hosted  Require authenticated hosted publication; never fall back to a private viewer.
   --json            Print machine-readable render or gallery results.
 
 Environment:
@@ -6254,14 +6255,15 @@ Environment:
   QS_READOUT_PUBLISH_RETRY_DELAY  Retry delay in milliseconds; 0 through 2000, defaults to 50.
 
 Automatic behavior:
-  An explicitly configured authenticated producer publishes completed skill
-  reports to the shared reports API without requiring a local report viewer.
+  Every promoted skill uses render --require-hosted and publishes its accepted
+  report to https://reports.quickstark.com/ without starting a local viewer.
   Codex also securely discovers an owner-only producer credential from its
   current profile or the platform-standard private QuickStark token file.
   Separate .codex and .codex-demo profiles retain independent credentials.
-  On a Mac or graphical desktop, reports use a private localhost viewer.
-  On a headless or SSH-connected Linux host, reports use its private home-network
-  IP and an unguessable report URL. No Tailscale or always-on service is needed.
+  Missing credentials or rejected publication fail clearly and preserve an
+  immutable private recovery report without displaying a filesystem or IP URL.
+  Private localhost, home-network, and SSH viewers remain available only when
+  explicitly requested; no Tailscale or always-on service is needed.
 
 Privacy:
   Use --access ssh to keep a remote viewer on localhost for SSH port forwarding.
@@ -6277,6 +6279,10 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
   }
 
   const options = parseOptions(rest);
+
+  if (options.requireHosted && command !== "render") {
+    throw new Error("The --require-hosted option applies only to the render command.");
+  }
 
   if (options.apply && options.dryRun) {
     throw new Error("Choose either --apply or --dry-run, not both.");
@@ -6298,19 +6304,70 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
     const privateViewerExplicitlyRequested = options.access === "local"
       || options.access === "lan"
       || options.access === "ssh";
-    const producerToken = privateViewerExplicitlyRequested
-      ? null
-      : await resolveReadoutProducerToken();
+
+    if (options.requireHosted && privateViewerExplicitlyRequested) {
+      throw new Error("Hosted QuickStark reporting cannot be combined with a local, LAN, or SSH viewer.");
+    }
+
+    let result = options.requireHosted
+      ? await writeSkillReadout(input, {
+        ...options,
+        baseUrl: options.baseUrl,
+      })
+      : null;
+
+    let requiredHostedEndpoint;
+
+    if (options.requireHosted) {
+      requiredHostedEndpoint = normalizePublisherEndpoint(
+        options.endpoint
+          ?? process.env.QS_READOUT_INGESTION_URL
+          ?? DEFAULT_READOUT_INGESTION_URL,
+      );
+
+      if (requiredHostedEndpoint?.href !== DEFAULT_READOUT_INGESTION_URL) {
+        throw new Error(
+          "Hosted QuickStark reporting requires the canonical "
+          + "https://reports.quickstark.com/api/v1/readouts endpoint; "
+          + "the immutable local report was preserved without sending a producer credential.",
+        );
+      }
+    }
+
+    let producerToken;
+
+    try {
+      producerToken = privateViewerExplicitlyRequested
+        ? null
+        : await resolveReadoutProducerToken();
+    } catch (error) {
+      if (!options.requireHosted) throw error;
+
+      throw new Error(
+        "Hosted QuickStark reporting requires a valid, safe producer credential; "
+        + "the immutable local report was preserved without starting a private viewer.",
+        { cause: error },
+      );
+    }
+
     const hostedPublicationConfigured = typeof producerToken === "string";
-    const viewer = options.noServe || hostedPublicationConfigured
+    const viewer = options.noServe || options.requireHosted || hostedPublicationConfigured
       ? null
       : await ensureReadoutViewer(options);
-    let result = await writeSkillReadout(input, {
+
+    result ??= await writeSkillReadout(input, {
       ...options,
       baseUrl: viewer?.url ?? options.baseUrl,
     });
 
     if (viewer) await verifyReportedReadout(result);
+
+    if (options.requireHosted && !hostedPublicationConfigured) {
+      throw new Error(
+        "Hosted QuickStark reporting requires a securely installed producer token; "
+        + "the immutable local report was preserved without starting a private viewer.",
+      );
+    }
 
     const publication = hostedPublicationConfigured
       ? await publishSkillReadout({
@@ -6344,8 +6401,29 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
         } : {}),
         relationships: input.relationships,
         nextSkills: input.nextSkills,
-      }, { token: producerToken })
+      }, {
+        token: producerToken,
+        ...(options.requireHosted ? { endpoint: requiredHostedEndpoint.href } : {}),
+      })
       : null;
+
+    if (options.requireHosted && publication?.status !== "published") {
+      throw new Error(
+        `Hosted QuickStark reporting failed (${publication?.reason ?? "publication_unavailable"}); `
+        + "the immutable local report was preserved without starting a private viewer.",
+      );
+    }
+
+    if (options.requireHosted) {
+      const actualOrigin = new URL(publication.url).origin;
+
+      if (actualOrigin !== new URL(DEFAULT_READOUT_INGESTION_URL).origin) {
+        throw new Error(
+          "Hosted QuickStark reporting accepted a URL outside the canonical "
+          + "https://reports.quickstark.com domain; the immutable local report was preserved.",
+        );
+      }
+    }
 
     if (publication?.status === "published") {
       result = { ...result, url: publication.url };
@@ -6357,6 +6435,8 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
         viewerReused: viewer?.reused ?? null,
         ...(publication ? { publication } : {}),
       }));
+    } else if (options.requireHosted) {
+      console.log(`QuickStark readout: ${result.url}`);
     } else {
       console.log(`QuickStark readout: ${result.path}`);
       if (result.url) console.log(`Verified readout: ${result.url}`);

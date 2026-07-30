@@ -10,9 +10,10 @@ The repository's authoritative deployment definition is `deploy/readouts/compose
 
 | Situation | Readout location | Access |
 | --- | --- | --- |
-| Same machine or graphical desktop | Operating-system temporary `quickstark-readouts` directory | Automatically verified localhost viewer. |
-| Laptop on the same trusted home network | Private remote-machine report directory | Capability-protected private-IP viewer. |
-| SSH-only remote access | Remote localhost | `QS_READOUT_ACCESS=ssh` and an explicit SSH tunnel. |
+| Actual promoted skill on any authorized platform | Authenticated immutable report library | Required verified `https://reports.quickstark.com/` URL; fail clearly when the producer credential or delivery is unavailable. |
+| Explicitly requested same-machine preview | Operating-system temporary `quickstark-readouts` directory | Deliberately selected verified localhost viewer. |
+| Explicitly requested trusted-home-network preview | Private remote-machine report directory | Deliberately selected capability-protected private-IP viewer. |
+| Explicitly requested SSH-only preview | Remote localhost | `QS_READOUT_ACCESS=ssh` and an explicit SSH tunnel. |
 | Durable project history | `/docker/appdata/quickstark-readouts` | Canonical project, year, and month directories. |
 | Authorized report from another machine | Existing authenticated project library | Explicit producer grant and `POST /api/v1/readouts`. |
 
@@ -38,7 +39,7 @@ npm run readouts:gallery -- --access ssh
 ssh -N -L 4173:127.0.0.1:4173 your-user@your-codex-host
 ```
 
-Use the actual URL returned by the health-checked viewer. A private home-network address is not a public or remotely reachable HTTPS address.
+Use the actual URL returned by a deliberately requested, health-checked preview viewer. A private home-network address is not a public or remotely reachable HTTPS address and is never the normal skill-readout link.
 
 ## Hosted service architecture
 
@@ -139,7 +140,7 @@ On Windows, load the token from an operator-authorized private credential file:
 $env:QS_READOUT_PRODUCER_TOKEN = (Get-Content -Raw "C:\path\to\your\private\quickstark-reporting.token").Trim()
 ```
 
-`QS_READOUT_PRODUCER_TOKEN` remains the only required setting when an owner-only installed profile credential is unavailable. Either the explicit token or its securely discovered private profile credential authenticates publication. The reporting endpoint defaults to `https://reports.quickstark.com/api/v1/readouts`; the server authenticates the token and derives its registered producer; the harness defaults to `codex`; and the project is inferred from the current working directory. Use a Git origin when available; workspaces without a Git remote receive a safely fingerprinted local project identity. Do not maintain GitHub verification, project lists, owner patterns, producer names, harness settings, or endpoint variables for ordinary skill runs. All 24 native QuickStark skills write an immutable local report and publish their actual structured results without first starting a private-IP viewer. Return the `https://reports.quickstark.com/` hosted URL only after authenticated API acceptance. Missing credentials, unsafe project identities, failed submissions, and invalid hosted responses preserve the local report and never pretend delivery succeeded.
+`QS_READOUT_PRODUCER_TOKEN` remains the only required setting when an owner-only installed profile credential is unavailable. Either the explicit token or its securely discovered private profile credential authenticates publication. The reporting endpoint defaults to `https://reports.quickstark.com/api/v1/readouts`; the server authenticates the token and derives its registered producer; the harness defaults to `codex`; and the project is inferred from the current working directory. Use a Git origin when available; workspaces without a Git remote receive a safely fingerprinted local project identity. Do not maintain GitHub verification, project lists, owner patterns, producer names, harness settings, or endpoint variables for ordinary skill runs. All 24 native QuickStark skills invoke `render --require-hosted`, write an immutable local recovery artifact, and publish their actual structured results without first starting a private-IP viewer. Return only the verified `https://reports.quickstark.com/` hosted URL after authenticated API acceptance. Missing credentials, unsafe project identities, failed submissions, and invalid hosted responses fail clearly, preserve the private recovery report, and never present localhost, a private IP, or a filesystem path as the skill readout.
 
 ### Skill-run metrics
 

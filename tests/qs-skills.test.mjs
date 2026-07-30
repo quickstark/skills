@@ -239,6 +239,22 @@ async function temporaryReadoutIngestion(context, options = {}) {
   return { directory, viewer, ingestion };
 }
 
+function redirectCanonicalHostedIngestion(ingestion) {
+  const shim = [
+    "const originalFetch = globalThis.fetch;",
+    `const ingestion = ${JSON.stringify(ingestion.url)};`,
+    "globalThis.fetch = (resource, options) => {",
+    "  const target = new URL(resource instanceof Request ? resource.url : String(resource));",
+    "  if (target.href === 'https://reports.quickstark.com/api/v1/readouts') {",
+    "    return originalFetch(new URL(target.pathname, ingestion), options);",
+    "  }",
+    "  return originalFetch(resource, options);",
+    "};",
+  ].join("\n");
+
+  return `data:text/javascript,${encodeURIComponent(shim)}`;
+}
+
 function submitIngestion(ingestion, envelope, {
   token = "test-only-codex-laptop-credential-1234567890",
   headers = {},
@@ -1280,6 +1296,249 @@ test("owner-scoped reporting discovers and publishes the actual Git repository w
   assert.match(index, /quickstark\/skills/);
   assert.match(index, /quickstark\/marketplace/);
   assert.match(index, /quickstarkdemo\/blossy-app/);
+});
+
+test("hosted-only skill rendering never substitutes a filesystem path or private-IP viewer for a missing producer token", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const directory = await temporaryReadoutDirectory(context);
+  const environment = { ...process.env };
+
+  delete environment.QS_READOUT_PRODUCER_TOKEN;
+  delete environment.QS_READOUT_PRODUCER_ID;
+  delete environment.QS_READOUT_HARNESS;
+  delete environment.QS_READOUT_BASE_URL;
+  delete environment.QS_READOUT_ACCESS;
+
+  Object.assign(environment, {
+    HOME: home,
+    CODEX_HOME: join(home, ".codex"),
+  });
+
+  await assert.rejects(
+    execFileAsync(process.execPath, [
+      join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+      "render",
+      "--require-hosted",
+      "--data", JSON.stringify({
+        skill: "qs-design-architecture",
+        status: "Awaiting input",
+        outcome: "Present the architecture review only on the authenticated reports domain.",
+        nextSkills: [],
+      }),
+      "--directory", directory,
+      "--json",
+    ], { env: environment }),
+    (error) => {
+      assert.match(error.stderr, /hosted.*producer|producer.*hosted|reports\.quickstark\.com/i);
+      assert.doesNotMatch(error.stderr, /http:\/\/(?:localhost|127\.0\.0\.1|192\.168\.)/i);
+      return true;
+    },
+    "an actual promoted skill must fail clearly without publishing credentials instead of returning a local path or private-IP viewer",
+  );
+
+  const reports = (await readdir(directory)).filter((entry) => entry.endsWith(".html"));
+
+  assert.equal(reports.length, 1,
+    "a hosted-publication failure must still preserve the immutable local recovery artifact");
+});
+
+test("hosted-only architecture rendering returns only the accepted reports-service URL", async (context) => {
+  const credential = "test-only-hosted-architecture-credential-1234567890";
+  const { ingestion, viewer } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      baseUrl: "https://reports.quickstark.com/",
+      allowedProjects: ["*"],
+      producers: [{ id: "architecture-codex", token: credential, projects: ["*"] }],
+    },
+  });
+  const directory = await temporaryReadoutDirectory(context);
+  const environment = {
+    ...process.env,
+    QS_READOUT_PRODUCER_TOKEN: credential,
+    QS_READOUT_INGESTION_URL: "https://other.invalid/api/v1/readouts",
+    QS_READOUT_BASE_URL: "http://127.0.0.1:1/",
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  };
+
+  const { stdout, stderr } = await execFileAsync(process.execPath, [
+    "--import", redirectCanonicalHostedIngestion(ingestion),
+    join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+    "render",
+    "--require-hosted",
+    "--endpoint", "https://reports.quickstark.com/api/v1/readouts",
+    "--data", JSON.stringify({
+      skill: "qs-design-architecture",
+      status: "Awaiting input",
+      outcome: "Present the architecture opportunities through the authenticated reporting domain.",
+      nextSkills: [],
+    }),
+    "--directory", directory,
+    "--json",
+  ], { env: environment });
+  const result = JSON.parse(stdout);
+
+  assert.equal(result.publication?.status, "published");
+  assert.equal(result.url, result.publication.url);
+  assert.equal(new URL(result.url).origin, "https://reports.quickstark.com");
+  assert.equal(result.viewerReused, null,
+    "hosted-only architecture rendering must never start a local or private-network viewer");
+  assert.doesNotMatch(stdout, /other\.invalid/i,
+    "an untrusted environment endpoint must never override the explicitly validated canonical domain");
+  assert.doesNotMatch(stdout, new RegExp(credential));
+  assert.doesNotMatch(stderr, new RegExp(credential));
+  const storedReport = new URL(new URL(result.url).pathname, viewer.url);
+
+  assert.equal((await fetch(storedReport)).status, 200);
+});
+
+test("hosted-only skill rendering fails closed when authenticated publication is rejected", async (context) => {
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      baseUrl: "https://reports.quickstark.com/",
+      allowedProjects: ["*"],
+      producers: [{
+        id: "authorized-codex",
+        token: "test-only-authorized-producer-credential-1234567890",
+        projects: ["*"],
+      }],
+    },
+  });
+  const directory = await temporaryReadoutDirectory(context);
+  const rejectedToken = "test-only-rejected-producer-credential-1234567890";
+  const environment = {
+    ...process.env,
+    QS_READOUT_PRODUCER_TOKEN: rejectedToken,
+    QS_READOUT_PUBLISH_RETRY_DELAY: "0",
+  };
+
+  await assert.rejects(
+    execFileAsync(process.execPath, [
+      "--import", redirectCanonicalHostedIngestion(ingestion),
+      join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+      "render",
+      "--require-hosted",
+      "--data", JSON.stringify({
+        skill: "qs-design-architecture",
+        outcome: "Never replace denied hosted architecture reporting with a private-IP viewer.",
+        nextSkills: [],
+      }),
+      "--directory", directory,
+      "--json",
+    ], { env: environment }),
+    (error) => {
+      assert.match(error.stderr, /hosted.*failed|publication_not_authorized|reports\.quickstark\.com/i);
+      assert.doesNotMatch(error.stderr, new RegExp(rejectedToken));
+      assert.doesNotMatch(error.stderr, /http:\/\/(?:localhost|127\.0\.0\.1|192\.168\.)/i);
+      return true;
+    },
+  );
+
+  assert.equal((await readdir(directory)).filter((entry) => entry.endsWith(".html")).length, 1,
+    "a rejected hosted submission must preserve its immutable local recovery artifact");
+});
+
+test("hosted-only reporting rejects noncanonical endpoints before sending a producer credential", async (context) => {
+  let credentialRequests = 0;
+  const { ingestion } = await temporaryReadoutIngestion(context, {
+    viewer: { allowedProjects: ["*"] },
+    ingestion: {
+      allowedProjects: ["*"],
+      producers: [{
+        id: "local-imposter",
+        token: "test-only-hosted-domain-bound-producer-credential-1234567890",
+        projects: ["*"],
+      }],
+      audit() {
+        credentialRequests += 1;
+      },
+    },
+  });
+  const directory = await temporaryReadoutDirectory(context);
+  const credential = "test-only-hosted-domain-bound-producer-credential-1234567890";
+  const environment = {
+    ...process.env,
+    QS_READOUT_PRODUCER_TOKEN: credential,
+    QS_READOUT_INGESTION_URL: new URL("api/v1/readouts", ingestion.url).href,
+  };
+
+  await assert.rejects(
+    execFileAsync(process.execPath, [
+      join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+      "render",
+      "--require-hosted",
+      "--data", JSON.stringify({
+        skill: "qs-design-architecture",
+        outcome: "Never send a hosted-only producer credential to another server.",
+        nextSkills: [],
+      }),
+      "--directory", directory,
+      "--json",
+    ], { env: environment }),
+    (error) => {
+      assert.match(error.stderr, /canonical|reports\.quickstark\.com|trusted.*domain/i);
+      assert.doesNotMatch(error.stderr, new RegExp(credential));
+      return true;
+    },
+  );
+
+  assert.equal(credentialRequests, 0,
+    "the producer credential must never be sent to an override, loopback, or imposter endpoint");
+  assert.equal((await readdir(directory)).filter((entry) => entry.endsWith(".html")).length, 1,
+    "the blocked canonical-domain mismatch must preserve its private immutable report");
+});
+
+test("invalid hosted-only producer credentials preserve a private immutable recovery report", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const directory = await temporaryReadoutDirectory(context);
+  const environment = {
+    ...process.env,
+    HOME: home,
+    CODEX_HOME: join(home, ".codex"),
+    QS_READOUT_PRODUCER_TOKEN: "invalid",
+  };
+
+  await assert.rejects(
+    execFileAsync(process.execPath, [
+      join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+      "render",
+      "--require-hosted",
+      "--data", JSON.stringify({
+        skill: "qs-design-architecture",
+        outcome: "Preserve the immutable report when private producer validation fails.",
+        nextSkills: [],
+      }),
+      "--directory", directory,
+      "--json",
+    ], { env: environment }),
+    (error) => {
+      assert.match(error.stderr, /safe|invalid|producer|credential/i);
+      assert.doesNotMatch(error.stderr, /invalid\s*$/i);
+      return true;
+    },
+  );
+
+  assert.equal((await readdir(directory)).filter((entry) => entry.endsWith(".html")).length, 1,
+    "unsafe producer configuration must not prevent recovery-report creation");
+});
+
+test("hosted-only mode never applies to standalone visuals, galleries, or portable publishing", async () => {
+  for (const command of ["visual", "gallery", "publish"]) {
+    await assert.rejects(
+      execFileAsync(process.execPath, [
+        join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
+        command,
+        "--require-hosted",
+        "--json",
+      ]),
+      (error) => {
+        assert.match(error.stderr, /require-hosted.*render|render.*require-hosted/i,
+          `${command} must reject a flag whose hosted-only guarantees it cannot enforce`);
+        return true;
+      },
+    );
+  }
 });
 
 test("a single reporting token automatically identifies the producer, harness, and any actual project", async (context) => {
@@ -5974,6 +6233,39 @@ test("the standard report distinguishes actual skills from suggested next steps"
       assert.ok(contract.includes(MODEL_GUIDANCE_BY_NAME[next.name].thinking));
     }
   }
+});
+
+test("every promoted skill requires the authenticated reports domain instead of accepting local or private-IP readouts", async () => {
+  for (const skill of SKILLS) {
+    const contract = renderSkillOutputContract(skill);
+    const documentation = renderDocumentationOutputContract(skill);
+
+    assert.match(contract, /readout\.mjs["`]?\s+render\s+--require-hosted/i,
+      `${skill.name} must use the hosted-only renderer for ordinary skill completion`);
+    assert.match(contract, /Readout:\s+Verified https:\/\/reports\.quickstark\.com\//,
+      `${skill.name} must present the verified reports domain as the user-facing readout`);
+    assert.doesNotMatch(contract, /Readout:\s+Real absolute HTML path or verified private viewer URL/i,
+      `${skill.name} must not accept the exact local path or private-IP output reported by the user`);
+    assert.match(contract, /(?:missing|unavailable).*(?:credential|token).*(?:fail|report)/i,
+      `${skill.name} must explain a missing producer credential instead of silently opening localhost`);
+    assert.match(documentation, /https:\/\/reports\.quickstark\.com\//,
+      `${skill.name} documentation must describe the canonical hosted report domain`);
+    assert.doesNotMatch(documentation,
+      /On a Mac the viewer uses localhost; on a headless or SSH-connected Linux dev box it uses a protected private home-network URL/i,
+      `${skill.name} documentation must not describe local URLs as the ordinary skill result`);
+  }
+
+  const architecture = await readFile(
+    join(repositoryRoot, "skills", "engineering", "qs-design-architecture", "SKILL.md"),
+    "utf8",
+  );
+
+  assert.doesNotMatch(architecture, /Include the real absolute path in the shared QuickStark skill readout/i,
+    "the architecture skill must not return its temporary HTML source as the report");
+  assert.doesNotMatch(architecture, /(?:xdg-open|open|start)\s+<path>/i,
+    "architecture results must not open a filesystem path in the editor instead of the hosted browser report");
+  assert.match(architecture, /https:\/\/reports\.quickstark\.com\//,
+    "the architecture skill must present the authenticated reports-domain URL");
 });
 
 test("the router, skill-writing vocabulary, and project guidance agree on contextual next prompts", async () => {
