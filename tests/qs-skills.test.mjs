@@ -1681,6 +1681,86 @@ test("secure token discovery rejects intermediate Codex profile symlinks", async
   );
 });
 
+test("secure machine fallback rejects tokenless Codex profile and credential-directory symlinks", async (context) => {
+  for (const kind of ["profile", "intermediate", "credential-directory"]) {
+    const home = await temporaryReadoutDirectory(context);
+    const outside = await temporaryReadoutDirectory(context);
+    const machineDirectory = join(home, ".config", "quickstark");
+    const machineToken = "test-only-secure-machine-fallback-credential-1234567890";
+    let profile = join(home, ".codex-demo");
+
+    await mkdir(machineDirectory, { recursive: true, mode: 0o700 });
+    await writeFile(join(machineDirectory, "producer.token"), `${machineToken}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+
+    if (kind === "profile") {
+      await symlink(outside, profile, "dir");
+    } else if (kind === "intermediate") {
+      await mkdir(join(outside, "demo"), { recursive: true, mode: 0o700 });
+      await symlink(outside, join(home, "profiles"), "dir");
+      profile = join(home, "profiles", "demo");
+    } else {
+      await mkdir(profile, { recursive: true, mode: 0o700 });
+      await symlink(outside, join(profile, "quickstark"), "dir");
+    }
+
+    await assert.rejects(
+      resolveReadoutProducerToken({
+        environment: { CODEX_HOME: profile },
+        home,
+        operatingSystem: "linux",
+      }),
+      /symbolic|symlink|current user home|profile|credential directory/i,
+      `a tokenless ${kind} symlink must fail closed instead of using the machine token`,
+    );
+  }
+});
+
+test("a missing group-writable Codex profile credential preserves secure Linux machine-token fallback", async (context) => {
+  const home = await temporaryReadoutDirectory(context);
+  const profile = join(home, ".codex");
+  const machineDirectory = join(home, ".config", "quickstark");
+  const machineToken = "test-only-secure-linux-machine-fallback-credential-1234567890";
+
+  await mkdir(profile, { recursive: true, mode: 0o775 });
+  await chmod(profile, 0o775);
+  await mkdir(machineDirectory, { recursive: true, mode: 0o700 });
+  await writeFile(join(machineDirectory, "producer.token"), `${machineToken}\n`, {
+    encoding: "utf8",
+    mode: 0o600,
+  });
+
+  assert.equal(
+    await resolveReadoutProducerToken({
+      environment: { CODEX_HOME: profile },
+      home,
+      operatingSystem: "linux",
+    }),
+    machineToken,
+    "a common 0775 Codex profile with no producer file cannot disable an existing secure machine credential",
+  );
+
+  const profileDirectory = join(profile, "quickstark");
+
+  await mkdir(profileDirectory, { recursive: true, mode: 0o700 });
+  await writeFile(join(profileDirectory, "producer.token"), `${"p".repeat(64)}\n`, {
+    encoding: "utf8",
+    mode: 0o600,
+  });
+
+  await assert.rejects(
+    resolveReadoutProducerToken({
+      environment: { CODEX_HOME: profile },
+      home,
+      operatingSystem: "linux",
+    }),
+    /symbolic|current user home|credential directory/i,
+    "an actual profile credential below a group-writable ancestor still fails closed",
+  );
+});
+
 test("Codex profile credential discovery rejects unsafe files and never crosses another user home", async (context) => {
   const home = await temporaryReadoutDirectory(context);
   const directory = join(home, ".config", "quickstark");

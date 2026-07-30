@@ -175,6 +175,31 @@ export async function resolveReadoutProducerToken({
     }
   }
 
+  const currentUser = typeof process.getuid === "function" ? process.getuid() : null;
+  const relativeProfileDirectory = relative(userHome, join(profileHome, "quickstark"));
+  let profileAncestor = userHome;
+
+  for (const segment of relativeProfileDirectory.split(sep).filter(Boolean)) {
+    profileAncestor = join(profileAncestor, segment);
+
+    let inspected;
+
+    try {
+      inspected = await lstat(profileAncestor);
+    } catch (error) {
+      if (error.code === "ENOENT") break;
+      throw new Error("The private reporting credential directory could not be safely inspected.");
+    }
+
+    if (
+      !inspected.isDirectory()
+      || inspected.isSymbolicLink()
+      || (currentUser !== null && inspected.uid !== currentUser)
+    ) {
+      throw new Error("The private reporting credential directory cannot contain a symbolic link or leave the current user home.");
+    }
+  }
+
   const candidates = [...new Set([
     join(profileHome, "quickstark", "producer.token"),
     ...(operatingSystem === "win32"
@@ -182,8 +207,6 @@ export async function resolveReadoutProducerToken({
       : []),
     join(userHome, ".config", "quickstark", "producer.token"),
   ])];
-  const currentUser = typeof process.getuid === "function" ? process.getuid() : null;
-
   for (const [index, candidate] of candidates.entries()) {
     if (index > 0 && operatingSystem === "darwin") {
       const profileKeychainToken = await resolveMacosReadoutKeychain(
@@ -194,6 +217,26 @@ export async function resolveReadoutProducerToken({
 
       if (profileKeychainToken) return profileKeychainToken;
       if (explicitToken) return explicitToken;
+    }
+
+    let metadata;
+
+    try {
+      metadata = await lstat(candidate);
+    } catch (error) {
+      if (error.code === "ENOENT" || error.code === "ENOTDIR") continue;
+      throw new Error("The private reporting credential could not be safely inspected.");
+    }
+
+    if (
+      !metadata.isFile()
+      || metadata.isSymbolicLink()
+      || metadata.size < 24
+      || metadata.size > 513
+      || (operatingSystem !== "win32" && (metadata.mode & 0o077) !== 0)
+      || (currentUser !== null && metadata.uid !== currentUser)
+    ) {
+      throw new Error("The private reporting credential must be an owner-only regular file.");
     }
 
     const relativeParent = relative(userHome, dirname(candidate));
@@ -239,27 +282,6 @@ export async function resolveReadoutProducerToken({
     }
 
     if (missingAncestor) continue;
-
-    let metadata;
-
-    try {
-      metadata = await lstat(candidate);
-    } catch (error) {
-      if (error.code === "ENOENT" || error.code === "ENOTDIR") continue;
-      throw new Error("The private reporting credential could not be safely inspected.");
-    }
-
-    if (
-      !metadata.isFile()
-      || metadata.isSymbolicLink()
-      || metadata.size < 24
-      || metadata.size > 513
-      || (operatingSystem !== "win32" && (metadata.mode & 0o077) !== 0)
-      || (currentUser !== null && metadata.uid !== currentUser)
-    ) {
-      throw new Error("The private reporting credential must be an owner-only regular file.");
-    }
-
     let parent;
 
     try {
