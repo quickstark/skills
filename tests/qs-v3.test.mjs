@@ -7,9 +7,11 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 import {
+  READOUT_PROFILES_BY_NAME,
   SKILLS,
   V3_CORE_SKILLS,
   V3_INTERNAL_CAPABILITIES,
+  V3_SKILL_DISPOSITIONS_BY_NAME,
   V3_SPECIALIST_SKILLS,
 } from "../scripts/qs-skill-catalog.mjs";
 import { normalizeSkillReadout, renderSkillReadout } from "../scripts/qs-skill-readout.mjs";
@@ -23,7 +25,8 @@ const coreNames = [
   "qs-deploy-release", "qs-flow-triage", "qs-flow-handoff",
 ];
 const specialistNames = [
-  "qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-learn-teach", "qs-skill-write",
+  "qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-test-author",
+  "qs-test-verify", "qs-learn-teach", "qs-skill-write",
 ];
 const retiredNames = [
   "qs-plan-explore", "qs-plan-interview", "qs-plan-tickets", "qs-design-domain",
@@ -41,7 +44,7 @@ test("v3 exposes the exact ordered core and specialist command surfaces", () => 
   assert.deepEqual(V3_CORE_SKILLS.map((skill) => skill.name), coreNames);
   assert.deepEqual(V3_SPECIALIST_SKILLS.map((skill) => skill.name), specialistNames);
   assert.deepEqual(SKILLS.map((skill) => skill.name), [...coreNames, ...specialistNames]);
-  assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 17 }, (_, index) => (index + 1) * 10));
+  assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 19 }, (_, index) => (index + 1) * 10));
   assert.deepEqual(V3_INTERNAL_CAPABILITIES.map((item) => item.name), [
     "domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop",
   ]);
@@ -142,6 +145,68 @@ test("review owns safe first-class refactoring without authorizing whole-codebas
   assert.match(skill, /characterization tests/i);
   assert.match(skill, /whole codebase.*does not authorize broad edits/i);
   assert.match(skill, /input-required/i);
+});
+
+test("testing specialists separate test mutation from read-only verification while TDD stays internal", async () => {
+  const author = await readFile(
+    join(root, "skills", "engineering", "qs-test-author", "SKILL.md"),
+    "utf8",
+  );
+  const verify = await readFile(
+    join(root, "skills", "engineering", "qs-test-verify", "SKILL.md"),
+    "utf8",
+  );
+
+  assert.match(author, /already-established behavior/i);
+  assert.match(author, /must not change product behavior/i);
+  assert.match(author, /production testability seam/i);
+  assert.match(author, /\/qs-code-build/);
+
+  assert.match(verify, /verification matrix/i);
+  assert.match(verify, /does not edit source, tests, snapshots, configuration, or expectations/i);
+  assert.match(verify, /does not fix failures/i);
+  assert.match(verify, /\/qs-code-debug/);
+
+  assert.equal(SKILLS.some((skill) => skill.name === "qs-test-tdd"), false);
+  assert.equal(Object.keys(V3_SKILL_DISPOSITIONS_BY_NAME).length, 24);
+  assert.equal(V3_SKILL_DISPOSITIONS_BY_NAME["qs-test-author"], undefined);
+  assert.equal(V3_SKILL_DISPOSITIONS_BY_NAME["qs-test-verify"], undefined);
+  assert.equal(READOUT_PROFILES_BY_NAME["qs-test-author"].title, "Test coverage change");
+  assert.equal(READOUT_PROFILES_BY_NAME["qs-test-verify"].title, "Verification matrix");
+  assert.equal(
+    V3_SPECIALIST_SKILLS.find((skill) => skill.name === "qs-test-author")?.invocationPolicy,
+    "explicit",
+  );
+  assert.equal(
+    V3_SPECIALIST_SKILLS.find((skill) => skill.name === "qs-test-verify")?.invocationPolicy,
+    "explicit",
+  );
+  assert.deepEqual(
+    V3_SPECIALIST_SKILLS.find((skill) => skill.name === "qs-test-author")?.continuation.approvedSkills,
+    ["qs-code-build"],
+  );
+  assert.deepEqual(
+    V3_SPECIALIST_SKILLS.find((skill) => skill.name === "qs-test-verify")?.continuation.approvedSkills,
+    ["qs-code-debug"],
+  );
+  const authorReadout = normalizeSkillReadout({
+    skill: "qs-test-author",
+    outcome: "Added focused tests for established behavior.",
+  });
+  assert.equal(authorReadout.completionState, "complete");
+  assert.deepEqual(authorReadout.nextSkills, []);
+
+  const verifyContinuation = normalizeSkillReadout({
+    skill: "qs-test-verify",
+    status: "Completed",
+    completionState: "continuation-required",
+    outcome: "Observed a reproducible verification failure.",
+  });
+  assert.equal(verifyContinuation.nextSkills[0].name, "qs-code-debug");
+  assert.deepEqual(
+    V3_INTERNAL_CAPABILITIES.find((capability) => capability.name === "tdd-loop")?.owners,
+    ["qs-code-build"],
+  );
 });
 
 test("migration documentation accounts for every v2 command exactly once", async () => {

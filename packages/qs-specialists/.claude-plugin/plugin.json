@@ -1,7 +1,7 @@
 {
   "name": "qs-specialists",
   "version": "3.0.0",
-  "description": "Optional QuickStark research, prototyping, documentation, teaching, and skill-authoring workflows.",
+  "description": "Optional QuickStark research, prototyping, documentation, testing, teaching, and skill-authoring workflows.",
   "author": {
     "name": "QuickStark",
     "url": "https://github.com/quickstark"
@@ -18,6 +18,8 @@
     "./skills/qs-plan-research",
     "./skills/qs-design-prototype",
     "./skills/qs-code-document",
+    "./skills/qs-test-author",
+    "./skills/qs-test-verify",
     "./skills/qs-learn-teach",
     "./skills/qs-skill-write"
   ]

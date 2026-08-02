@@ -123,7 +123,7 @@ The catalog owns discovery order without numeric command-name prefixes:
 11. `qs-flow-triage`
 12. `qs-flow-handoff`
 
-Optional specialists follow as a separate package: `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-learn-teach`, and `qs-skill-write`. Hosts that impose alphabetical sorting use that stable host order without renaming commands.
+Optional specialists follow as a separate package: `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-test-author`, `qs-test-verify`, `qs-learn-teach`, and `qs-skill-write`. Hosts that impose alphabetical sorting use that stable host order without renaming commands.
 
 ## Relationships
 

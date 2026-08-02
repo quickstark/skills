@@ -3285,6 +3285,7 @@ test("every promoted report uses the selected B presentation and an honest five-
   for (const skill of SKILLS) {
     const html = renderSkillReadout({
       skill: skill.name,
+      report: "full",
       outcome: `Recorded the actual ${skill.displayName} outcome.`,
       findings: [{ title: "Observed report behavior", detail: "A directly recorded result." }],
       checks: [{ title: "Actual report check", status: "passed" }],
@@ -3472,6 +3473,7 @@ test("actual skill reports identify the actual execution machine after top next 
   for (const skill of SKILLS) {
     const input = {
       skill: skill.name,
+      report: "full",
       outcome: `Verified the actual ${skill.displayName} execution machine.`,
     };
     const report = normalizeSkillReadout(input);
@@ -5895,7 +5897,7 @@ test("project guides document actual skill sources, secure readout boundaries, a
   assert.match(architecture, /\.claude-plugin\/plugin\.json/);
   assert.match(architecture, /api\/v1\/readouts/);
   assert.match(architecture, /twelve core commands/i);
-  assert.match(architecture, /five optional specialist commands/i);
+  assert.match(architecture, /seven optional specialist commands/i);
   assert.match(architecture, /four former command techniques are internal capabilities/i);
 
   assert.match(operations, /reports\.quickstark\.com/);

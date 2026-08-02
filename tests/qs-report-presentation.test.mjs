@@ -1650,8 +1650,8 @@ test("production reports accept only the exact approved dollar or slash skill as
   }
 });
 
-test("all 17 v3 first-run summaries show honest preview states without invented findings or check progress", () => {
-  assert.equal(SKILLS.length, 17, "the test covers every v3 public QuickStark command");
+test("all 19 v3 first-run summaries show honest preview states without invented findings or check progress", () => {
+  assert.equal(SKILLS.length, 19, "the test covers every v3 public QuickStark command");
 
   for (const skill of SKILLS) {
     const html = renderSkillReadout({

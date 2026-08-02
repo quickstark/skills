@@ -222,6 +222,32 @@ const LEGACY_V2_SKILLS = Object.freeze([
   },
 ]);
 
+const V3_ONLY_SKILLS = Object.freeze([
+  {
+    bucket: "engineering",
+    upstreamName: null,
+    name: "qs-test-author",
+    displayName: "QS Test: Author",
+    shortDescription: "Add focused tests for existing behavior",
+    prompt: "add or improve focused automated tests for this existing behavior",
+    userInvoked: true,
+  },
+  {
+    bucket: "engineering",
+    upstreamName: null,
+    name: "qs-test-verify",
+    displayName: "QS Test: Verify",
+    shortDescription: "Run and report selected software verification",
+    prompt: "run and report the selected test suites and environments without changing the software",
+    userInvoked: true,
+  },
+]);
+
+const ALL_SKILL_DEFINITIONS = Object.freeze([
+  ...LEGACY_V2_SKILLS,
+  ...V3_ONLY_SKILLS,
+]);
+
 function defineReadoutProfile(title, signal, visualization, sections, labels = {}) {
   return Object.freeze({
     title,
@@ -357,6 +383,30 @@ export const READOUT_PROFILES_BY_NAME = Object.freeze({
     ["checks", "outputs", "findings", "decisions"],
     { checks: "Verification", outputs: "Test artifacts", findings: "Observed behavior" },
   ),
+  "qs-test-author": defineReadoutProfile(
+    "Test coverage change",
+    "Show the behavior covered and actual validation results",
+    "checks",
+    ["outputs", "checks", "decisions", "findings"],
+    {
+      outputs: "Test artifacts",
+      checks: "Test validation",
+      decisions: "Coverage decisions",
+      findings: "Observed gaps",
+    },
+  ),
+  "qs-test-verify": defineReadoutProfile(
+    "Verification matrix",
+    "Show actual pass, fail, skipped, and blocked results by target",
+    "matrix",
+    ["checks", "findings", "outputs", "decisions"],
+    {
+      checks: "Verification results",
+      findings: "Observed failures",
+      outputs: "Test artifacts",
+      decisions: "Matrix decisions",
+    },
+  ),
   "qs-review-code": defineReadoutProfile(
     "Review findings",
     "Distinguish actual standards and specification findings",
@@ -409,7 +459,7 @@ export const READOUT_PROFILES_BY_NAME = Object.freeze({
 });
 
 export const READOUT_SKILLS_BY_NAME = new Map(
-  LEGACY_V2_SKILLS.map((skill) => [skill.name, skill]),
+  ALL_SKILL_DEFINITIONS.map((skill) => [skill.name, skill]),
 );
 
 const V3_CORE_COMMAND_DEFINITIONS = Object.freeze([
@@ -431,8 +481,10 @@ const V3_SPECIALIST_COMMAND_DEFINITIONS = Object.freeze([
   ["qs-plan-research", "plan", 130, "qs-plan-spec"],
   ["qs-design-prototype", "design", 140, "qs-plan-spec"],
   ["qs-code-document", "code", 150, "qs-review-code"],
-  ["qs-learn-teach", "learn", 160, "qs-plan-research"],
-  ["qs-skill-write", "skill", 170, "qs-review-code"],
+  ["qs-test-author", "test", 160, "qs-code-build"],
+  ["qs-test-verify", "test", 170, "qs-code-debug"],
+  ["qs-learn-teach", "learn", 180, "qs-plan-research"],
+  ["qs-skill-write", "skill", 190, "qs-review-code"],
 ]);
 
 const V3_EFFORT_MODES = Object.freeze(["quick", "standard", "deep"]);
@@ -532,6 +584,7 @@ function buildV3SkillDispositions() {
   const dispositions = {};
 
   for (const command of V3_PUBLIC_COMMANDS) {
+    if (!LEGACY_V2_SKILLS.some((skill) => skill.name === command.name)) continue;
     dispositions[command.name] = Object.freeze({
       kind: command.distribution,
       target: command.name,
@@ -644,6 +697,7 @@ export function validateV3CatalogModel(model) {
   }
 
   const activeNames = LEGACY_V2_SKILLS.map((skill) => skill.name).sort();
+  const legacyNameSet = new Set(activeNames);
   const dispositionNames = Object.keys(dispositionsByName).sort();
 
   if (!hasExactValues(dispositionNames, activeNames)) {
@@ -657,7 +711,7 @@ export function validateV3CatalogModel(model) {
 
   for (const [index, command] of publicCommands.entries()) {
     if (!READOUT_SKILLS_BY_NAME.has(command.name)) {
-      throw new Error(`The v3 public command ${command.name} is not in the active v2 catalog.`);
+      throw new Error(`The v3 public command ${command.name} is not in the active skill catalog.`);
     }
 
     const [, expectedGroup, expectedPosition, expectedContinuation] = expectedDefinitions[index];
@@ -700,8 +754,12 @@ export function validateV3CatalogModel(model) {
     }
 
     const disposition = dispositionsByName[command.name];
-    if (disposition?.kind !== command.distribution || disposition.target !== command.name) {
-      throw new Error(`The v3 public command ${command.name} has invalid package membership.`);
+    if (legacyNameSet.has(command.name)) {
+      if (disposition?.kind !== command.distribution || disposition.target !== command.name) {
+        throw new Error(`The v3 public command ${command.name} has invalid package membership.`);
+      }
+    } else if (disposition !== undefined) {
+      throw new Error(`The v3-only command ${command.name} must not appear in the v2 disposition map.`);
     }
   }
 
@@ -802,6 +860,12 @@ export const MODEL_GUIDANCE_BY_NAME = Object.freeze({
   ),
   "qs-test-tdd": defineModelGuidance(
     "gpt-5.6-terra", "high", "Test-driven work benefits from reasoning through behavior and regression seams.",
+  ),
+  "qs-test-author": defineModelGuidance(
+    "gpt-5.6-terra", "high", "Focused test authoring benefits from reasoning about observable behavior and stable seams.",
+  ),
+  "qs-test-verify": defineModelGuidance(
+    "gpt-5.6-terra", "high", "Verification matrices benefit from deliberate command selection and truthful result classification.",
   ),
   "qs-review-code": defineModelGuidance(
     "gpt-5.6-sol", "high", "Code review benefits from deeper correctness, security, and standards analysis.",

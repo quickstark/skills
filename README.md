@@ -1,6 +1,6 @@
 # QuickStark Skills v3
 
-A focused engineering workflow for Codex and Claude Code. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds five bounded specialist workflows.
+A focused engineering workflow for Codex and Claude Code. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds seven bounded specialist workflows.
 
 QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills). The upstream attribution and license are preserved.
 
@@ -60,6 +60,8 @@ Restart the host or begin a new task after changing installed plugins. A Git pul
 | [`qs-plan-research`](./skills/engineering/qs-plan-research/SKILL.md) | Answer one evidence-backed question. |
 | [`qs-design-prototype`](./skills/engineering/qs-design-prototype/SKILL.md) | Test one design hypothesis. |
 | [`qs-code-document`](./skills/engineering/qs-code-document/SKILL.md) | Document verified behavior. |
+| [`qs-test-author`](./skills/engineering/qs-test-author/SKILL.md) | Add focused tests for existing behavior. |
+| [`qs-test-verify`](./skills/engineering/qs-test-verify/SKILL.md) | Run and report selected software verification. |
 | [`qs-learn-teach`](./skills/productivity/qs-learn-teach/SKILL.md) | Teach one bounded subject. |
 | [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
 

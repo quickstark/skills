@@ -1,6 +1,6 @@
 # QuickStark skill collection
 
-QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills` and five optional commands in `qs-specialists`. Canonical public skill sources live under `skills/engineering/` and `skills/productivity/`. Domain modeling, module decomposition, ticket decomposition, and TDD live under `skills/internal/` as non-command capabilities.
+QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills` and seven optional commands in `qs-specialists`. Canonical public skill sources live under `skills/engineering/` and `skills/productivity/`. Domain modeling, module decomposition, ticket decomposition, and TDD live under `skills/internal/` as non-command capabilities.
 
 Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
 
@@ -21,7 +21,7 @@ Explicit commands use `disable-model-invocation: true` and `policy.allow_implici
 
 ## Packages
 
-The default core contains exactly twelve commands. The optional specialists package contains exactly research, prototyping, documentation, teaching, and skill authoring. Core must operate without specialist assets. No removed v2 name may be an alias, wrapper, router, or installable command.
+The default core contains exactly twelve commands. The optional specialists package contains exactly research, prototyping, documentation, test authoring, test verification, teaching, and skill authoring. Core must operate without specialist assets. No removed v2 name may be an alias, wrapper, router, or installable command.
 
 - Claude core manifest: `.claude-plugin/plugin.json`
 - Claude specialist package: `packages/qs-specialists/`

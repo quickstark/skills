@@ -41,7 +41,7 @@ const packages = Object.freeze([
   {
     name: "qs-specialists",
     displayName: "QuickStark Specialists",
-    description: "Optional QuickStark research, prototyping, documentation, teaching, and skill-authoring workflows.",
+    description: "Optional QuickStark research, prototyping, documentation, testing, teaching, and skill-authoring workflows.",
     projection: V3_SPECIALIST_SKILLS,
     codexRoot: join(repositoryRoot, "codex", "plugins", "qs-specialists"),
     claudeRoot: join(repositoryRoot, "packages", "qs-specialists"),

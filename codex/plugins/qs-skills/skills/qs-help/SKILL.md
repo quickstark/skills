@@ -26,12 +26,13 @@ Inspect the request and available project evidence, then recommend the single be
 
 ## Optional specialists
 
-`/qs-plan-research`, `/qs-design-prototype`, `/qs-code-document`, `/qs-learn-teach`, and `/qs-skill-write` are independently installable in `qs-specialists`. Core workflows do not require them.
+`/qs-plan-research`, `/qs-design-prototype`, `/qs-code-document`, `/qs-test-author`, `/qs-test-verify`, `/qs-learn-teach`, and `/qs-skill-write` are independently installable in `qs-specialists`. Core workflows do not require them.
 
 ## Routing rules
 
 - Prefer the command whose primary outcome matches the request, not an intermediate technique.
 - Refactoring belongs to `/qs-review-code` with `action=improve` and a narrow selected target. Whole-codebase refactoring starts with a bounded read-only review.
+- Adding or improving tests for already-established behavior belongs to `/qs-test-author`; executing and reporting a read-only verification matrix belongs to `/qs-test-verify`.
 - Test-driven development is internal to `/qs-code-build`, not a command.
 - Domain modeling, module decomposition, and ticket decomposition are internal planning or implementation capabilities.
 - Recommend one command with one copy-ready prompt. If the requested work is already complete, recommend none.
