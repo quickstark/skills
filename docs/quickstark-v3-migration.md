@@ -30,3 +30,5 @@ QuickStark v3 is a clean break. Removed names are not aliases, wrappers, implici
 | `qs-deploy-release` | Core | `qs-deploy-release` |
 
 For refactoring, use `qs-review-code action=refactor target=<module|component|package|path|named concern>`. A whole-codebase request first returns ranked candidates and asks for one selected scope before editing.
+
+QuickStark v3 later added two new optional specialists without restoring the retired TDD command: use `qs-test-author` to add or improve tests for already-established behavior, and `qs-test-verify` to run and report a read-only verification matrix. New-feature test-first implementation remains the internal TDD capability of `qs-code-build`.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Test: Verify"
+  short_description: "Run and report selected software verification"
+  default_prompt: "Use $qs-test-verify to run and report the selected test suites and environments without changing the software."
+policy:
+  allow_implicit_invocation: false

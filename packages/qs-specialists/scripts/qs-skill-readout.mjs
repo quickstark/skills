@@ -2098,7 +2098,10 @@ export function normalizeSkillReadout(input) {
   }
 
   const skillName = requireText(input.skill, "skill").replace(/^\//, "");
-  const v3 = input.completionState !== undefined
+  const v3OnlySkill = SKILLS_BY_NAME.has(skillName)
+    && LEGACY_NEXT_SKILLS_BY_NAME[skillName] === undefined;
+  const v3 = v3OnlySkill
+    || input.completionState !== undefined
     || input.effort !== undefined
     || input.report !== undefined
     || input.reportMode !== undefined;

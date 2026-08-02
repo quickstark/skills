@@ -19,7 +19,7 @@ Use `/qs-skill-write` when the requested primary outcome is: create or improve a
 
 ## Where it fits
 
-This is lifecycle position 170 in the specialist projection and is installed through `qs-specialists`. It owns one bounded root run and never starts another public skill automatically.
+This is lifecycle position 190 in the specialist projection and is installed through `qs-specialists`. It owns one bounded root run and never starts another public skill automatically.
 
 ## Output and next steps
 
