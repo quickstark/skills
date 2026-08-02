@@ -416,6 +416,328 @@ export const SKILLS_BY_NAME = new Map(
   SKILLS.map((skill) => [skill.name, skill]),
 );
 
+const V3_CORE_COMMAND_DEFINITIONS = Object.freeze([
+  ["qs-help", "help", 10, "qs-setup"],
+  ["qs-setup", "setup", 20, "qs-plan-clarify"],
+  ["qs-plan-clarify", "plan", 30, "qs-plan-spec"],
+  ["qs-plan-roadmap", "plan", 40, "qs-plan-spec"],
+  ["qs-plan-spec", "plan", 50, "qs-code-build"],
+  ["qs-code-build", "code", 60, "qs-review-code"],
+  ["qs-code-debug", "code", 70, "qs-review-code"],
+  ["qs-review-code", "review", 80, "qs-git-merge"],
+  ["qs-git-merge", "git", 90, "qs-deploy-release"],
+  ["qs-deploy-release", "deploy", 100, "qs-flow-handoff"],
+  ["qs-flow-triage", "flow", 110, "qs-plan-clarify"],
+  ["qs-flow-handoff", "flow", 120, "qs-help"],
+]);
+
+const V3_SPECIALIST_COMMAND_DEFINITIONS = Object.freeze([
+  ["qs-plan-research", "plan", 130, "qs-plan-spec"],
+  ["qs-design-prototype", "design", 140, "qs-plan-spec"],
+  ["qs-code-document", "code", 150, "qs-review-code"],
+  ["qs-learn-teach", "learn", 160, "qs-plan-research"],
+  ["qs-skill-write", "skill", 170, "qs-review-code"],
+]);
+
+const V3_EFFORT_MODES = Object.freeze(["quick", "standard", "deep"]);
+const V3_REPORT_MODES = Object.freeze(["brief", "full"]);
+const V3_NO_PROMPT_STATES = Object.freeze(["complete"]);
+const V3_ONE_PROMPT_STATES = Object.freeze(["continuation-required", "input-required"]);
+
+const V3_EFFORT_POLICY = Object.freeze({
+  supported: V3_EFFORT_MODES,
+  default: "standard",
+});
+
+const V3_REPORT_POLICY = Object.freeze({
+  supported: V3_REPORT_MODES,
+  default: "brief",
+});
+
+const V3_CONTINUATION_POLICY = Object.freeze({
+  maximumPrompts: 1,
+  automaticPublicSkillHops: false,
+  noPromptStates: V3_NO_PROMPT_STATES,
+  onePromptStates: V3_ONE_PROMPT_STATES,
+});
+
+function defineV3PublicCommand([name, group, position, approvedContinuation], distribution) {
+  const skill = SKILLS_BY_NAME.get(name);
+
+  if (!skill) throw new Error(`The v3 catalog references unknown public command ${name}.`);
+
+  return Object.freeze({
+    ...skill,
+    distribution,
+    lifecycle: Object.freeze({ group, position }),
+    invocationPolicy: skill.userInvoked ? "explicit" : "model",
+    effort: V3_EFFORT_POLICY,
+    report: V3_REPORT_POLICY,
+    continuation: Object.freeze({
+      ...V3_CONTINUATION_POLICY,
+      approvedSkills: Object.freeze([approvedContinuation]),
+    }),
+  });
+}
+
+export const V3_PUBLIC_COMMANDS = Object.freeze([
+  ...V3_CORE_COMMAND_DEFINITIONS.map((definition) => defineV3PublicCommand(definition, "core")),
+  ...V3_SPECIALIST_COMMAND_DEFINITIONS.map(
+    (definition) => defineV3PublicCommand(definition, "specialist"),
+  ),
+]);
+
+export const V3_CORE_SKILLS = Object.freeze(
+  V3_PUBLIC_COMMANDS.filter((command) => command.distribution === "core"),
+);
+
+export const V3_SPECIALIST_SKILLS = Object.freeze(
+  V3_PUBLIC_COMMANDS.filter((command) => command.distribution === "specialist"),
+);
+
+function defineV3InternalCapability(name, legacySkillName, owners) {
+  return Object.freeze({
+    name,
+    legacySkillName,
+    owners: Object.freeze([...owners]),
+  });
+}
+
+export const V3_INTERNAL_CAPABILITIES = Object.freeze([
+  defineV3InternalCapability(
+    "domain-modeling",
+    "qs-design-domain",
+    ["qs-plan-clarify", "qs-plan-spec", "qs-review-code"],
+  ),
+  defineV3InternalCapability(
+    "module-decomposition",
+    "qs-design-modules",
+    ["qs-plan-spec", "qs-code-build", "qs-review-code"],
+  ),
+  defineV3InternalCapability(
+    "ticket-decomposition",
+    "qs-plan-tickets",
+    ["qs-plan-spec"],
+  ),
+  defineV3InternalCapability(
+    "tdd-loop",
+    "qs-test-tdd",
+    ["qs-code-build"],
+  ),
+]);
+
+const V3_ABSORBED_SKILLS = Object.freeze({
+  "qs-plan-explore": "qs-plan-clarify",
+  "qs-plan-interview": "qs-plan-clarify",
+  "qs-design-architecture": "qs-review-code",
+});
+
+function buildV3SkillDispositions() {
+  const dispositions = {};
+
+  for (const command of V3_PUBLIC_COMMANDS) {
+    dispositions[command.name] = Object.freeze({
+      kind: command.distribution,
+      target: command.name,
+    });
+  }
+
+  for (const capability of V3_INTERNAL_CAPABILITIES) {
+    dispositions[capability.legacySkillName] = Object.freeze({
+      kind: "internal",
+      target: capability.name,
+    });
+  }
+
+  for (const [name, target] of Object.entries(V3_ABSORBED_SKILLS)) {
+    dispositions[name] = Object.freeze({ kind: "absorbed", target });
+  }
+
+  return Object.freeze(dispositions);
+}
+
+export const V3_SKILL_DISPOSITIONS_BY_NAME = buildV3SkillDispositions();
+
+export const V3_CATALOG = Object.freeze({
+  version: 3,
+  publicCommands: V3_PUBLIC_COMMANDS,
+  coreSkills: V3_CORE_SKILLS,
+  specialistSkills: V3_SPECIALIST_SKILLS,
+  internalCapabilities: V3_INTERNAL_CAPABILITIES,
+  dispositionsByName: V3_SKILL_DISPOSITIONS_BY_NAME,
+});
+
+function hasExactValues(actual, expected) {
+  return Array.isArray(actual)
+    && actual.length === expected.length
+    && actual.every((value, index) => value === expected[index]);
+}
+
+function requireExactNames(actual, expected, label) {
+  if (!hasExactValues(actual, expected)) {
+    throw new Error(`The v3 ${label} does not match the confirmed command model.`);
+  }
+}
+
+export function validateV3CatalogModel(model) {
+  if (!model || typeof model !== "object" || Array.isArray(model)) {
+    throw new Error("The v3 catalog model must be an object.");
+  }
+
+  const publicCommands = model.publicCommands;
+  const internalCapabilities = model.internalCapabilities;
+  const dispositionsByName = model.dispositionsByName;
+
+  if (!Array.isArray(publicCommands)) {
+    throw new Error("The v3 catalog must contain public commands.");
+  }
+
+  if (model.version !== 3) {
+    throw new Error("The v3 catalog must identify version 3.");
+  }
+
+  if (!Array.isArray(internalCapabilities)) {
+    throw new Error("The v3 catalog must contain internal capabilities.");
+  }
+
+  if (!dispositionsByName || typeof dispositionsByName !== "object" || Array.isArray(dispositionsByName)) {
+    throw new Error("Every v2 skill must have exactly one v3 disposition.");
+  }
+
+  const coreNames = publicCommands
+    .filter((command) => command.distribution === "core")
+    .map((command) => command.name);
+  const specialistNames = publicCommands
+    .filter((command) => command.distribution === "specialist")
+    .map((command) => command.name);
+  const expectedCoreNames = V3_CORE_COMMAND_DEFINITIONS.map(([name]) => name);
+  const expectedSpecialistNames = V3_SPECIALIST_COMMAND_DEFINITIONS.map(([name]) => name);
+
+  requireExactNames(coreNames, expectedCoreNames, "core membership");
+  requireExactNames(specialistNames, expectedSpecialistNames, "specialist membership");
+  requireExactNames(
+    model.coreSkills?.map((command) => command.name),
+    expectedCoreNames,
+    "core projection",
+  );
+  requireExactNames(
+    model.specialistSkills?.map((command) => command.name),
+    expectedSpecialistNames,
+    "specialist projection",
+  );
+  requireExactNames(
+    internalCapabilities.map((capability) => capability.name),
+    ["domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop"],
+    "internal capability membership",
+  );
+
+  const publicNames = publicCommands.map((command) => command.name);
+  const publicNameSet = new Set(publicNames);
+  const positions = publicCommands.map((command) => command.lifecycle?.position);
+
+  if (publicNameSet.size !== publicNames.length) {
+    throw new Error("The v3 public command names must be unique.");
+  }
+
+  if (new Set(positions).size !== positions.length) {
+    throw new Error("The v3 lifecycle positions must be unique.");
+  }
+
+  if (positions.some((position, index) => !Number.isInteger(position) || position !== (index + 1) * 10)) {
+    throw new Error("The v3 lifecycle positions must follow the confirmed catalog order.");
+  }
+
+  const activeNames = SKILLS.map((skill) => skill.name).sort();
+  const dispositionNames = Object.keys(dispositionsByName).sort();
+
+  if (!hasExactValues(dispositionNames, activeNames)) {
+    throw new Error("Every v2 skill must have exactly one v3 disposition.");
+  }
+
+  const expectedDefinitions = [
+    ...V3_CORE_COMMAND_DEFINITIONS,
+    ...V3_SPECIALIST_COMMAND_DEFINITIONS,
+  ];
+
+  for (const [index, command] of publicCommands.entries()) {
+    if (!SKILLS_BY_NAME.has(command.name)) {
+      throw new Error(`The v3 public command ${command.name} is not in the active v2 catalog.`);
+    }
+
+    const [, expectedGroup, expectedPosition, expectedContinuation] = expectedDefinitions[index];
+    if (command.lifecycle?.group !== expectedGroup || command.lifecycle.position !== expectedPosition) {
+      throw new Error(`The v3 public command ${command.name} needs lifecycle metadata.`);
+    }
+
+    if (!hasExactValues(command.effort?.supported, V3_EFFORT_MODES)
+      || command.effort?.default !== "standard") {
+      throw new Error(`The v3 public command ${command.name} has invalid effort modes.`);
+    }
+
+    if (!hasExactValues(command.report?.supported, V3_REPORT_MODES)
+      || command.report?.default !== "brief") {
+      throw new Error(`The v3 public command ${command.name} has invalid report modes.`);
+    }
+
+    const currentSkill = SKILLS_BY_NAME.get(command.name);
+    const expectedInvocationPolicy = currentSkill.userInvoked ? "explicit" : "model";
+    if (command.invocationPolicy !== expectedInvocationPolicy) {
+      throw new Error(`The v3 public command ${command.name} has an invalid invocation policy.`);
+    }
+
+    if (command.continuation?.maximumPrompts !== 1) {
+      throw new Error(`The v3 public command ${command.name} must allow at most one continuation prompt.`);
+    }
+
+    if (!hasExactValues(command.continuation.approvedSkills, [expectedContinuation])
+      || !publicNameSet.has(expectedContinuation)
+      || expectedContinuation === command.name) {
+      throw new Error(
+        `The v3 public command ${command.name} must designate exactly one approved public continuation.`,
+      );
+    }
+
+    if (command.continuation.automaticPublicSkillHops !== false
+      || !hasExactValues(command.continuation.noPromptStates, V3_NO_PROMPT_STATES)
+      || !hasExactValues(command.continuation.onePromptStates, V3_ONE_PROMPT_STATES)) {
+      throw new Error(`The v3 public command ${command.name} has an invalid continuation policy.`);
+    }
+
+    const disposition = dispositionsByName[command.name];
+    if (disposition?.kind !== command.distribution || disposition.target !== command.name) {
+      throw new Error(`The v3 public command ${command.name} has invalid package membership.`);
+    }
+  }
+
+  for (const capability of internalCapabilities) {
+    if (!SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName)) {
+      throw new Error(`The v3 internal capability ${capability.name} must replace one non-public v2 skill.`);
+    }
+
+    if (!Array.isArray(capability.owners)
+      || capability.owners.length === 0
+      || capability.owners.some((owner) => !publicNameSet.has(owner))) {
+      throw new Error(`The v3 internal capability ${capability.name} must be owned by public root commands.`);
+    }
+
+    const disposition = dispositionsByName[capability.legacySkillName];
+    if (disposition?.kind !== "internal" || disposition.target !== capability.name) {
+      throw new Error(`The v3 internal capability ${capability.name} has an invalid disposition.`);
+    }
+  }
+
+  for (const [name, target] of Object.entries(V3_ABSORBED_SKILLS)) {
+    const disposition = dispositionsByName[name];
+    if (disposition?.kind !== "absorbed" || disposition.target !== target || !publicNameSet.has(target)) {
+      throw new Error(`The absorbed v2 command ${name} must target one v3 public root command.`);
+    }
+  }
+
+  return true;
+}
+
+validateV3CatalogModel(V3_CATALOG);
+
 function defineModelGuidance(model, thinking, reason) {
   return Object.freeze({ model, thinking, reason });
 }

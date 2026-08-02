@@ -45,6 +45,13 @@ import {
   SKILLS,
   SKILLS_BY_NAME,
   UPSTREAM_SKILLS,
+  V3_CATALOG,
+  V3_CORE_SKILLS,
+  V3_INTERNAL_CAPABILITIES,
+  V3_PUBLIC_COMMANDS,
+  V3_SKILL_DISPOSITIONS_BY_NAME,
+  V3_SPECIALIST_SKILLS,
+  validateV3CatalogModel,
 } from "../scripts/qs-skill-catalog.mjs";
 import { observeGitHubProject } from "../scripts/qs-skill-report-presentation.mjs";
 
@@ -2967,6 +2974,180 @@ test("the catalog preserves all 22 upstream skills and adds dedicated deployment
   assert.equal(SKILLS.filter((skill) => skill.upstreamName === null).length, 2);
   assert.ok(SKILLS.some((skill) => skill.name === "qs-deploy-release"));
   assert.ok(SKILLS.some((skill) => skill.name === "qs-code-document"));
+});
+
+test("the v3 catalog projects the confirmed core, specialists, and internal capabilities without changing v2", () => {
+  assert.equal(validateV3CatalogModel(V3_CATALOG), true);
+  assert.equal(SKILLS.length, 24, "the active v2 catalog remains intact until cutover");
+
+  assert.deepEqual(V3_CORE_SKILLS.map((skill) => skill.name), [
+    "qs-help",
+    "qs-setup",
+    "qs-plan-clarify",
+    "qs-plan-roadmap",
+    "qs-plan-spec",
+    "qs-code-build",
+    "qs-code-debug",
+    "qs-review-code",
+    "qs-git-merge",
+    "qs-deploy-release",
+    "qs-flow-triage",
+    "qs-flow-handoff",
+  ]);
+  assert.deepEqual(V3_SPECIALIST_SKILLS.map((skill) => skill.name), [
+    "qs-plan-research",
+    "qs-design-prototype",
+    "qs-code-document",
+    "qs-learn-teach",
+    "qs-skill-write",
+  ]);
+  assert.deepEqual(V3_INTERNAL_CAPABILITIES.map((capability) => capability.name), [
+    "domain-modeling",
+    "module-decomposition",
+    "ticket-decomposition",
+    "tdd-loop",
+  ]);
+
+  assert.equal(V3_PUBLIC_COMMANDS.length, 17);
+  assert.deepEqual(
+    V3_PUBLIC_COMMANDS.map((command) => command.lifecycle.position),
+    Array.from({ length: 17 }, (_, index) => (index + 1) * 10),
+  );
+
+  for (const command of V3_PUBLIC_COMMANDS) {
+    assert.ok(["explicit", "model"].includes(command.invocationPolicy));
+    assert.deepEqual(command.effort.supported, ["quick", "standard", "deep"]);
+    assert.equal(command.effort.default, "standard");
+    assert.deepEqual(command.report.supported, ["brief", "full"]);
+    assert.equal(command.report.default, "brief");
+    assert.equal(command.continuation.maximumPrompts, 1);
+    assert.equal(command.continuation.automaticPublicSkillHops, false);
+    assert.equal(command.continuation.approvedSkills.length, 1);
+    assert.ok(V3_PUBLIC_COMMANDS.some(
+      (candidate) => candidate.name === command.continuation.approvedSkills[0],
+    ));
+    assert.deepEqual(command.continuation.noPromptStates, ["complete"]);
+    assert.deepEqual(command.continuation.onePromptStates, [
+      "continuation-required",
+      "input-required",
+    ]);
+  }
+
+  assert.deepEqual(
+    Object.fromEntries(V3_PUBLIC_COMMANDS.map((command) => [
+      command.name,
+      command.continuation.approvedSkills[0],
+    ])),
+    {
+      "qs-help": "qs-setup",
+      "qs-setup": "qs-plan-clarify",
+      "qs-plan-clarify": "qs-plan-spec",
+      "qs-plan-roadmap": "qs-plan-spec",
+      "qs-plan-spec": "qs-code-build",
+      "qs-code-build": "qs-review-code",
+      "qs-code-debug": "qs-review-code",
+      "qs-review-code": "qs-git-merge",
+      "qs-git-merge": "qs-deploy-release",
+      "qs-deploy-release": "qs-flow-handoff",
+      "qs-flow-triage": "qs-plan-clarify",
+      "qs-flow-handoff": "qs-help",
+      "qs-plan-research": "qs-plan-spec",
+      "qs-design-prototype": "qs-plan-spec",
+      "qs-code-document": "qs-review-code",
+      "qs-learn-teach": "qs-plan-research",
+      "qs-skill-write": "qs-review-code",
+    },
+  );
+
+  const publicNames = new Set(V3_PUBLIC_COMMANDS.map((command) => command.name));
+  for (const capability of V3_INTERNAL_CAPABILITIES) {
+    assert.ok(!publicNames.has(capability.legacySkillName));
+    assert.equal(V3_SKILL_DISPOSITIONS_BY_NAME[capability.legacySkillName].kind, "internal");
+    assert.equal(V3_SKILL_DISPOSITIONS_BY_NAME[capability.legacySkillName].target, capability.name);
+  }
+
+  assert.deepEqual(
+    Object.keys(V3_SKILL_DISPOSITIONS_BY_NAME).sort(),
+    SKILLS.map((skill) => skill.name).sort(),
+  );
+  assert.deepEqual(
+    Object.fromEntries(
+      Object.entries(V3_SKILL_DISPOSITIONS_BY_NAME)
+        .filter(([, disposition]) => disposition.kind === "absorbed")
+        .map(([name, disposition]) => [name, disposition.target]),
+    ),
+    {
+      "qs-plan-explore": "qs-plan-clarify",
+      "qs-plan-interview": "qs-plan-clarify",
+      "qs-design-architecture": "qs-review-code",
+    },
+  );
+});
+
+test("the v3 catalog rejects invalid membership, ordering, modes, and continuation policy", () => {
+  const invalidModels = [
+    [
+      "duplicate lifecycle position",
+      (model) => { model.publicCommands[1].lifecycle.position = 10; },
+      /lifecycle positions must be unique/i,
+    ],
+    [
+      "missing disposition",
+      (model) => { delete model.dispositionsByName["qs-help"]; },
+      /exactly one v3 disposition/i,
+    ],
+    [
+      "invalid package membership",
+      (model) => { model.publicCommands[0].distribution = "specialist"; },
+      /core membership/i,
+    ],
+    [
+      "stale core projection",
+      (model) => { model.coreSkills.pop(); },
+      /core projection/i,
+    ],
+    [
+      "incorrect lifecycle group",
+      (model) => { model.publicCommands[0].lifecycle.group = "plan"; },
+      /lifecycle metadata/i,
+    ],
+    [
+      "incompatible invocation policy",
+      (model) => { model.publicCommands[8].invocationPolicy = "explicit"; },
+      /invocation policy/i,
+    ],
+    [
+      "unsupported effort mode",
+      (model) => { model.publicCommands[0].effort.supported.push("unbounded"); },
+      /effort modes/i,
+    ],
+    [
+      "unsupported report mode",
+      (model) => { model.publicCommands[0].report.default = "verbose"; },
+      /report modes/i,
+    ],
+    [
+      "multiple continuation prompts",
+      (model) => { model.publicCommands[0].continuation.maximumPrompts = 2; },
+      /at most one continuation prompt/i,
+    ],
+    [
+      "multiple approved continuations",
+      (model) => { model.publicCommands[0].continuation.approvedSkills.push("qs-plan-spec"); },
+      /exactly one approved public continuation/i,
+    ],
+    [
+      "internal capability continuation",
+      (model) => { model.publicCommands[0].continuation.approvedSkills[0] = "qs-test-tdd"; },
+      /exactly one approved public continuation/i,
+    ],
+  ];
+
+  for (const [label, mutate, expected] of invalidModels) {
+    const model = structuredClone(V3_CATALOG);
+    mutate(model);
+    assert.throws(() => validateV3CatalogModel(model), expected, label);
+  }
 });
 
 test("skill names are unique, discoverable, and organized by purpose", () => {
