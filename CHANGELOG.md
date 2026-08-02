@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.1.0
+
+### Minor Changes
+
+- [#36](https://github.com/quickstark/skills/pull/36) [`3b3ad27`](https://github.com/quickstark/skills/commit/3b3ad27bab89635876f63865fc5801e460e7c757) Thanks [@quickstark](https://github.com/quickstark)! - Add optional `qs-test-author` and `qs-test-verify` specialist workflows while keeping TDD internal to `qs-code-build`.
+
 QuickStark versions describe the verified repository and plugin version; they do not, by themselves, claim a published GitHub release or tag.
 
 ## 3.0.0
