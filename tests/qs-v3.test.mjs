@@ -58,7 +58,7 @@ test("generated core and specialist packages are isolated and versioned together
   const codexCore = JSON.parse(await readFile(join(root, "codex", "plugins", "qs-skills", ".codex-plugin", "plugin.json"), "utf8"));
   const codexSpecialists = JSON.parse(await readFile(join(root, "codex", "plugins", "qs-specialists", ".codex-plugin", "plugin.json"), "utf8"));
 
-  assert.equal(project.version, "3.0.0");
+  assert.equal(project.version, "3.1.0");
   assert.equal(lock.version, project.version);
   assert.equal(lock.packages[""].version, project.version);
   for (const manifest of [claude, claudeSpecialists, codexCore, codexSpecialists]) assert.equal(manifest.version, project.version);
