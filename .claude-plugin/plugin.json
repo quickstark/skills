@@ -1,7 +1,7 @@
 {
   "name": "qs-skills",
-  "version": "2.6.0",
-  "description": "QuickStark's grouped planning, design, coding, testing, review, deployment, and productivity skills.",
+  "version": "3.0.0",
+  "description": "QuickStark's twelve-command core engineering workflow.",
   "author": {
     "name": "QuickStark",
     "url": "https://github.com/quickstark"
@@ -12,37 +12,20 @@
   "keywords": [
     "quickstark",
     "engineering",
-    "planning",
-    "coding",
-    "testing",
-    "code-review",
-    "deployment",
-    "productivity"
+    "workflow"
   ],
   "skills": [
     "./skills/engineering/qs-help",
     "./skills/engineering/qs-setup",
     "./skills/engineering/qs-plan-clarify",
-    "./skills/engineering/qs-plan-spec",
-    "./skills/engineering/qs-plan-tickets",
     "./skills/engineering/qs-plan-roadmap",
-    "./skills/engineering/qs-plan-research",
-    "./skills/engineering/qs-design-prototype",
-    "./skills/engineering/qs-design-domain",
-    "./skills/engineering/qs-design-modules",
-    "./skills/engineering/qs-design-architecture",
+    "./skills/engineering/qs-plan-spec",
     "./skills/engineering/qs-code-build",
-    "./skills/engineering/qs-code-document",
     "./skills/engineering/qs-code-debug",
-    "./skills/engineering/qs-test-tdd",
     "./skills/engineering/qs-review-code",
     "./skills/engineering/qs-git-merge",
-    "./skills/engineering/qs-flow-triage",
     "./skills/engineering/qs-deploy-release",
-    "./skills/productivity/qs-plan-explore",
-    "./skills/productivity/qs-plan-interview",
-    "./skills/productivity/qs-flow-handoff",
-    "./skills/productivity/qs-learn-teach",
-    "./skills/productivity/qs-skill-write"
+    "./skills/engineering/qs-flow-triage",
+    "./skills/productivity/qs-flow-handoff"
   ]
 }

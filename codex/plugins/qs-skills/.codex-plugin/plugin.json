@@ -1,7 +1,7 @@
 {
   "name": "qs-skills",
-  "version": "2.6.0",
-  "description": "QuickStark's grouped planning, design, coding, testing, review, deployment, and productivity skills.",
+  "version": "3.0.0",
+  "description": "QuickStark's twelve-command core engineering workflow.",
   "author": {
     "name": "QuickStark",
     "url": "https://github.com/quickstark"
@@ -11,18 +11,13 @@
   "keywords": [
     "quickstark",
     "engineering",
-    "planning",
-    "coding",
-    "testing",
-    "code-review",
-    "deployment",
-    "productivity"
+    "workflow"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "QuickStark Skills",
-    "shortDescription": "Grouped planning, coding, testing, and deployment skills",
-    "longDescription": "A curated personal engineering workflow covering research, planning, specifications, architecture, implementation, debugging, tests, review, Git, handoffs, and confirmed deployment.",
+    "shortDescription": "QuickStark's twelve-command core engineering workflow.",
+    "longDescription": "QuickStark's twelve-command core engineering workflow.",
     "developerName": "QuickStark",
     "category": "Coding",
     "capabilities": [
@@ -33,8 +28,7 @@
     "websiteURL": "https://github.com/quickstark/skills",
     "defaultPrompt": [
       "Help me choose the right QuickStark workflow",
-      "Turn my idea into a clear implementation plan",
-      "Review, test, and safely release this change"
+      "Build and review this scoped change"
     ]
   }
 }

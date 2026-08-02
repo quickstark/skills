@@ -335,24 +335,18 @@ test("user-run terminal commands require an explanation and are never inferred f
   }), /preview cannot claim.*code/i);
 });
 
-test("all promoted skill contracts distinguish user-run commands and key code from execution logs", () => {
+test("all promoted skill contracts use the concise bounded v3 result contract", () => {
   for (const skill of SKILLS) {
     for (const [name, contract] of [
       ["skill instructions", renderSkillOutputContract(skill)],
       ["skill documentation", renderDocumentationOutputContract(skill)],
     ]) {
-      assert.match(contract, /`commands`/, `${skill.name} ${name} documents optional user-run commands`);
-      assert.match(contract, /`keyCode`/, `${skill.name} ${name} documents optional recorded key code`);
-      assert.match(contract, /(?:why|when).{0,90}(?:run|terminal)|(?:run|terminal).{0,90}(?:why|when)/i, `${skill.name} ${name} explains when the user should run a command`);
-      assert.match(contract, /(?:already executed|execution logs|execution transcript)/i, `${skill.name} ${name} distinguishes user actions from the skill's completed work`);
-      assert.match(contract, /(?:credentials|secrets|private keys)/i, `${skill.name} ${name} protects sensitive content`);
-      assert.match(contract, /QS_READOUT_PRODUCER_TOKEN/, `${skill.name} ${name} keeps the producer credential privately configured`);
-      assert.match(contract, /reports\.quickstark\.com\/api\/v1\/readouts/, `${skill.name} ${name} identifies the default authenticated reports API`);
-      assert.match(contract, /(?:actual|current).{0,60}working directory/i, `${skill.name} ${name} derives reporting from the actual project`);
-      assert.match(contract, /(?:Git origin.{0,60}available|available.{0,60}Git origin|workspace.{0,90}(?:remote|origin)|(?:remote|origin).{0,90}workspace)/i, `${skill.name} ${name} supports ordinary workspaces with or without a Git remote`);
-      assert.match(contract, /(?:only|single).{0,60}(?:required|setting|credential|token)/i, `${skill.name} ${name} requires only a privately configured reporting token`);
-      assert.doesNotMatch(contract, /(?:configure|requires?|required).{0,140}QS_READOUT_(?:INGESTION_URL|PRODUCER_ID|PUBLISH_PROJECTS|HARNESS)/i, `${skill.name} ${name} must not require additional machine or project settings`);
-      assert.match(contract, /(?:macOS|Mac).{0,80}(?:Windows|Linux)|Linux.{0,80}(?:macOS|Mac).{0,80}Windows/i, `${skill.name} ${name} describes cross-machine reporting`);
+      assert.match(contract, /effort=quick\|standard\|deep/, `${skill.name} ${name} documents bounded effort`);
+      assert.match(contract, /report=brief\|full/, `${skill.name} ${name} documents report depth`);
+      assert.match(contract, /one (?:normalized )?root|one root skill/i, `${skill.name} ${name} documents root ownership`);
+      assert.match(contract, /never (?:executed|starts?|automatically invoke)/i, `${skill.name} ${name} rejects automatic public hops`);
+      assert.match(contract, /exactly one copy-ready|exactly one.*continuation/i, `${skill.name} ${name} bounds continuation`);
+      assert.match(contract, /https:\/\/reports\.quickstark\.com\//, `${skill.name} ${name} preserves authenticated hosted reporting`);
     }
   }
 });
@@ -1083,39 +1077,19 @@ test("the Git skill distinguishes a real merge, a pull request, and publishing a
   assert.match(instructions, /no (?:branch )?merge|no merge.*(?:required|necessary)/i);
   assert.match(instructions, /upstream.*(?:read.only|never push)|never push.*upstream/i);
   assert.match(agent, /GitHub|publish|integration/i);
-  assert.match(documentation, /git push origin main/);
+  assert.match(documentation, /actual Git integration/i);
   assert.match(documentation, /pull request/i);
-  assert.match(documentation, /explicit(?:ly)? (?:requested|approved|authorized)/i);
+  assert.match(documentation, /canonical \[skill instructions\]/i);
 });
 
-test("the engineering router places GitHub integration between a passing review and an explicitly approved release", async () => {
-  const [router, readme, engineering] = await Promise.all([
-    readFile(join(process.cwd(), "skills/engineering/qs-help/SKILL.md"), "utf8"),
-    readFile(join(process.cwd(), "README.md"), "utf8"),
-    readFile(join(process.cwd(), "skills/engineering/README.md"), "utf8"),
-  ]);
-  const newWork = router.slice(
-    router.indexOf("## Order of operations: new work"),
-    router.indexOf("## Order of operations: refactoring"),
-  );
-  const refactoring = router.slice(
-    router.indexOf("## Order of operations: refactoring"),
-    router.indexOf("## Every skill and its purpose"),
-  );
-
-  for (const [label, workflow] of [["new work", newWork], ["refactoring", refactoring]]) {
-    const review = workflow.indexOf("/qs-review-code");
-    const integration = workflow.indexOf("/qs-git-merge", review + 1);
-    const release = workflow.indexOf("/qs-deploy-release", integration + 1);
-
-    assert.ok(review >= 0, `${label} includes an independent review`);
-    assert.ok(integration > review, `${label} integrates only after review`);
-    assert.ok(release > integration, `${label} keeps deployment separate from GitHub integration`);
-    assert.match(workflow, /explicit(?:ly)?|approval|authorization/i, `${label} preserves explicit external authorization`);
-  }
-
-  assert.match(readme, /\/qs-review-code[\s\S]{0,100}\/qs-git-merge[\s\S]{0,100}\/qs-deploy-release/);
-  assert.match(engineering, /qs-git-merge[^\n]*(?:GitHub|publish|integration)/i);
+test("the engineering router places Git integration between review and release", async () => {
+  const router = await readFile(join(process.cwd(), "skills/engineering/qs-help/SKILL.md"), "utf8");
+  const review = router.indexOf("| 80 | `/qs-review-code`");
+  const integration = router.indexOf("| 90 | `/qs-git-merge`");
+  const release = router.indexOf("| 100 | `/qs-deploy-release`");
+  assert.ok(review >= 0, "router includes independent review");
+  assert.ok(integration > review, "router integrates only after review");
+  assert.ok(release > integration, "router keeps deployment separate from Git integration");
 });
 
 test("locally observed branches and unpublished commits never become GitHub artifact links", () => {
@@ -1676,8 +1650,8 @@ test("production reports accept only the exact approved dollar or slash skill as
   }
 });
 
-test("all 24 first-run B summaries show honest preview states without invented findings or check progress", () => {
-  assert.equal(SKILLS.length, 24, "the test covers every actual promoted QuickStark skill");
+test("all 17 v3 first-run summaries show honest preview states without invented findings or check progress", () => {
+  assert.equal(SKILLS.length, 17, "the test covers every v3 public QuickStark command");
 
   for (const skill of SKILLS) {
     const html = renderSkillReadout({

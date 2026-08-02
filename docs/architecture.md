@@ -2,14 +2,14 @@
 
 ## System at a glance
 
-QuickStark is a versioned collection of 24 promoted skills for Codex and Claude Code. It adapts 22 upstream skills from Matt Pocock and adds two project-specific workflows: /qs-code-document and /qs-deploy-release. One canonical skill catalog drives both plugin distributions, every generated skill report, and the permitted next-step recommendations.
+QuickStark v3 is a versioned collection of twelve core commands and five optional specialist commands for Codex and Claude Code. Four former command techniques are internal capabilities. One canonical catalog drives both package projections, lifecycle order, invocation policy, report profiles, and deterministic continuation.
 
 ```mermaid
 flowchart LR
     catalog["Canonical skill catalog"] --> sources["Engineering and productivity skill sources"]
     catalog --> contracts["Generated completion contracts"]
-    catalog --> claude["Claude plugin manifest"]
-    catalog --> codex["Generated Codex plugin"]
+    catalog --> claude["Core and specialist Claude packages"]
+    catalog --> codex["Core and specialist Codex packages"]
     catalog --> renderer["Purpose-specific report renderer"]
     sources --> codex
     contracts --> sources
@@ -24,17 +24,17 @@ flowchart LR
 
 | Component | Authoritative source | Responsibility |
 | --- | --- | --- |
-| Skill identity and behavior | `scripts/qs-skill-catalog.mjs` | All 24 promoted skills, upstream mapping, bucket, invocation policy, display metadata, report profile, and allowed next skills. |
+| Skill identity and behavior | `scripts/qs-skill-catalog.mjs` | Twelve core commands, five specialists, four internal capabilities, lifecycle order, invocation policy, report profile, and one approved continuation. |
 | Engineering skills | `skills/engineering/` | Canonical engineering skill instructions and `agents/openai.yaml` metadata. |
 | Productivity skills | `skills/productivity/` | Canonical productivity skill instructions and `agents/openai.yaml` metadata. |
-| Claude distribution | `.claude-plugin/plugin.json` | Explicit list of promoted canonical skill directories. |
-| Codex distribution | `codex/plugins/qs-skills/skills/` | Generated, promoted-only snapshot; never edit it independently. |
+| Claude distribution | `.claude-plugin/plugin.json`, `packages/qs-specialists/` | Isolated core and optional specialist projections. |
+| Codex distribution | `codex/plugins/qs-skills/skills/`, `codex/plugins/qs-specialists/skills/` | Generated isolated package snapshots; never edit independently. |
 | Readout rendering and publishing | `scripts/qs-skill-readout.mjs` | Report normalization, project identity, bounded task-attributed Codex observations, HTML rendering, viewer, ingestion, publisher, migration, and retention. |
 | Report presentation, GitHub evidence, and user appearance | `scripts/qs-skill-report-presentation.mjs` | Approved B presentation, five-second summaries, signed user-bound Workbench preferences, native prompt cards, verified skill-run metrics, user-run commands, exact open-issue totals, and separate sampled-issue sidebars. |
 | Privileged Dashboard Settings | `scripts/qs-readout-settings.mjs` | Exact proxy identity, administrator authorization, report-style personal-settings and producer-token sidebar, safe token-table CRUD, cross-user-safe appearance, and one-time token-specific platform installation. |
 | Producer credential issuance | `scripts/qs-readout-producer-token.mjs` | Interprocess-locked issuance, atomic display-name updates, independent immediate revocation, and SHA-256-only bearer grants. |
 | Skill output contracts | `scripts/sync-skill-output-contracts.mjs` | Generated completion-report and next-step instructions in canonical skill and documentation files. |
-| Codex snapshot generation | `scripts/sync-codex-plugin.mjs` | Synchronizes promoted skill files and the shared catalog, renderer, and report presentation module into the Codex plugin. |
+| Package projection generation | `scripts/sync-codex-plugin.mjs` | Deterministically synchronizes isolated core and specialist packages, manifests, capabilities, and shared runtime support. |
 | Production deployment | `deploy/readouts/compose.yaml` | Independently isolated read-only viewer, authenticated ingestion, and privileged Dashboard Settings services behind the existing reverse proxy. |
 | Behavioral verification | `tests/qs-skills.test.mjs` | Observable skill, plugin, reporting, publishing, security, and documentation behavior. |
 | Real-browser report verification | `tests/qs-report-presentation.test.mjs` | Chromium-measured 13 px featured observations, 12 px native prompts and code blocks, responsive card alignment, complete wrapped module visual summaries, full-height report rendering, immutable history, and GitHub issue sidebars. |
@@ -45,7 +45,7 @@ The upstream `misc`, `personal`, `in-progress`, and `deprecated` directories rem
 
 The catalog records whether a skill must be explicitly requested or may also be selected automatically. Claude uses `disable-model-invocation: true` for explicitly invoked skills. Codex represents the same restriction in `agents/openai.yaml` using `policy.allow_implicit_invocation: false`. The Codex synchronizer removes Claude-only frontmatter while preserving the actual invocation policy.
 
-A promoted skill has one canonical `SKILL.md`, matching agent metadata, an entry in its bucket and root indexes, a page in `docs/engineering/` or `docs/productivity/`, a Claude plugin entry, and a generated Codex snapshot. Keep the package and both plugin manifests on the same version.
+A public command has one canonical `SKILL.md`, matching agent metadata, lifecycle-ordered index entries, concise generated documentation, one package assignment, and one generated Codex snapshot. Core packages include the four internal capability references; specialist packages do not. Keep the package, lockfile, and all four plugin manifests on the same version.
 
 ## Readout lifecycle
 

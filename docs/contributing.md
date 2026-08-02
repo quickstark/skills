@@ -2,9 +2,9 @@
 
 ## Start from the source of truth
 
-Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` is the source of truth for every promoted skill, its upstream mapping, bucket, invocation policy, display metadata, report profile, and recommended follow-ons.
+Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` is the source of truth for core and specialist membership, lifecycle order, invocation policy, display metadata, report profile, and deterministic continuation.
 
-Canonical skill files live in `skills/engineering/` and `skills/productivity/`. `codex/plugins/qs-skills/skills/` is a generated snapshot, not a second source tree. Do not promote `skills/misc/`, `skills/personal/`, `skills/in-progress/`, or `skills/deprecated/`.
+Canonical public skill files live in `skills/engineering/` and `skills/productivity/`. Internal capabilities live in `skills/internal/`. Generated core and specialist package trees are not independent sources. Do not promote reference directories.
 
 ## Install and verify
 
@@ -28,8 +28,8 @@ npx playwright-core install chromium
 
 1. Update `scripts/qs-skill-catalog.mjs` first when adding or renaming a skill, adjusting invocation mode, changing its report profile, or changing its valid next steps.
 2. Edit its canonical `skills/<bucket>/<skill-name>/SKILL.md` and matching `agents/openai.yaml`.
-3. Update the corresponding `docs/<bucket>/<skill-name>.md`, bucket `README.md`, root `README.md`, and `skills/engineering/qs-help/SKILL.md` when discovery or workflow changes.
-4. Add the promoted skill to `.claude-plugin/plugin.json`; preserve the explicit-versus-model-invoked policy.
+3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `scripts/sync-v3-docs.mjs` owns concise command pages.
+4. Assign the command to one catalog package projection; generated manifests must not be hand-edited.
 5. Add behavior-focused tests to `tests/qs-skills.test.mjs`.
 6. Regenerate output contracts and the Codex snapshot:
 
@@ -44,10 +44,11 @@ npm run check:codex
 npm test
 ```
 
-When Claude Code is installed and its manifest changed, also run:
+When Claude Code is installed and manifests changed, run both:
 
 ```bash
 claude plugin validate . --strict
+claude plugin validate ./packages/qs-specialists --strict
 ```
 
 Do not claim that a Claude validation ran if the CLI is unavailable.
@@ -83,7 +84,7 @@ npm run check:codex
 npm test
 ```
 
-Keep `package.json`, `package-lock.json`, `.claude-plugin/plugin.json`, and `codex/plugins/qs-skills/.codex-plugin/plugin.json` synchronized. Publishing a commit, Git tag, plugin release, or deployed service is a separate, explicitly approved operation.
+Keep `package.json`, `package-lock.json`, the core and specialist Claude manifests, and the core and specialist Codex manifests synchronized. Publishing a commit, Git tag, plugin release, or deployed service is a separate, explicitly approved operation.
 
 Put active release changesets for the `qs-skills` package directly in `.changeset/`, and keep the Changesets GitHub configuration pointed at `quickstark/skills`. Matt Pocock's original `mattpocock-skills` changesets are preserved in `docs/upstream/changesets/` as MIT-licensed historical reference; do not place them in the active Changesets directory.
 

@@ -38,7 +38,7 @@ const visualDocument = [
   "<body><main>",
   "  <h1>QuickStark Dashboard Settings</h1>",
   '  <p class="featured">One-time producer token generation and appearance preferences.</p>',
-  '  <code class="prompt">Use $qs-design-modules to prepare the protected settings module.</code>',
+  '  <code class="prompt">Use $qs-review-code to review the protected settings module.</code>',
   "  <p>Linux · macOS · Windows · ChatGPT</p>",
   "</main></body></html>",
 ].join("\n");
@@ -75,14 +75,14 @@ async function createVisualFixture(context, viewerOptions = {}) {
 test("a primary visual artifact opens as a verified browser website rather than a local editor file", async (context) => {
   const { directory, source, viewer } = await createVisualFixture(context);
   const artifact = await writeReadoutVisualArtifact({
-    skill: "qs-design-architecture",
+    skill: "qs-review-code",
     source,
     projectIdentity: skillsProject,
   }, { directory, baseUrl: viewer.url });
 
   assert.equal(new URL(artifact.url).protocol, "http:");
   assert.doesNotMatch(artifact.url, /^file:|\/tmp\/|vscode:/i);
-  assert.match(artifact.filename, /^qs-visual-architecture--.*--[a-f0-9]{8}\.html$/);
+  assert.match(artifact.filename, /^qs-visual-review-code--.*--[a-f0-9]{8}\.html$/);
   assert.equal((await stat(artifact.path)).mode & 0o777, 0o600);
 
   const response = await fetch(artifact.url);
@@ -99,7 +99,7 @@ test("visual artifacts require an actual HTTP or HTTPS browser destination", asy
   for (const baseUrl of [undefined, "file:///tmp/", "vscode://file/tmp/report.html", "javascript:alert(1)"]) {
     await assert.rejects(
       writeReadoutVisualArtifact({
-        skill: "qs-design-architecture",
+        skill: "qs-review-code",
         source,
         projectIdentity: skillsProject,
       }, { directory, baseUrl }),
@@ -112,7 +112,7 @@ test("a primary visual never appears as a fabricated skill run in the Project Wo
   const { directory, source, viewer } = await createVisualFixture(context);
 
   await writeReadoutVisualArtifact({
-    skill: "qs-design-architecture",
+    skill: "qs-review-code",
     source,
     projectIdentity: skillsProject,
   }, { directory, baseUrl: viewer.url });
@@ -143,7 +143,7 @@ test("browser visual artifacts reject executable documents, unsafe resource beha
 
     await assert.rejects(
       writeReadoutVisualArtifact({
-        skill: "qs-design-architecture",
+        skill: "qs-review-code",
         source,
         projectIdentity: skillsProject,
       }, { directory, baseUrl: viewer.url }),
@@ -163,7 +163,7 @@ test("browser visual artifacts reject symbolic links, unsupported skills, and ov
 
   await assert.rejects(
     writeReadoutVisualArtifact({
-      skill: "qs-design-architecture",
+      skill: "qs-review-code",
       source: linkedSource,
       projectIdentity: skillsProject,
     }, { directory, baseUrl: viewer.url }),
@@ -181,7 +181,7 @@ test("browser visual artifacts reject symbolic links, unsupported skills, and ov
 
   await assert.rejects(
     writeReadoutVisualArtifact({
-      skill: "qs-design-architecture",
+      skill: "qs-review-code",
       source: oversizedSource,
       projectIdentity: skillsProject,
     }, { directory, baseUrl: viewer.url }),
@@ -197,13 +197,13 @@ test("hosted visual artifacts honor project access without exposing another proj
   });
 
   const allowed = await writeReadoutVisualArtifact({
-    skill: "qs-design-architecture",
+    skill: "qs-review-code",
     source,
     projectIdentity: skillsProject,
   }, { directory, baseUrl: viewer.url });
 
   const forbidden = await writeReadoutVisualArtifact({
-    skill: "qs-design-architecture",
+    skill: "qs-review-code",
     source,
     projectIdentity: {
       ...skillsProject,
@@ -222,12 +222,12 @@ test("publishing a browser visual preserves its original document and creates di
   const before = await readFile(source, "utf8");
 
   const first = await writeReadoutVisualArtifact({
-    skill: "qs-design-architecture",
+    skill: "qs-review-code",
     source,
     projectIdentity: skillsProject,
   }, { directory, baseUrl: viewer.url });
   const second = await writeReadoutVisualArtifact({
-    skill: "qs-design-architecture",
+    skill: "qs-review-code",
     source,
     projectIdentity: skillsProject,
   }, { directory, baseUrl: viewer.url });
@@ -245,26 +245,25 @@ test("the canonical visual command returns a verified browser URL instead of a t
     join(repositoryRoot, "scripts", "qs-skill-readout.mjs"),
     "visual",
     "--input", source,
-    "--skill", "qs-design-architecture",
+    "--skill", "qs-review-code",
     "--directory", directory,
     "--base-url", viewer.url,
     "--json",
   ]);
   const artifact = JSON.parse(stdout);
 
-  assert.equal(artifact.skill, "qs-design-architecture");
+  assert.equal(artifact.skill, "qs-review-code");
   assert.equal(new URL(artifact.url).protocol, "http:");
   assert.doesNotMatch(artifact.url, /^file:|\/tmp\/|vscode:/i);
   assert.equal((await fetch(artifact.url)).status, 200);
 });
 
-test("every promoted skill explicitly delivers visual artifacts as browser HTTP(S), not editor files", () => {
+test("every promoted skill returns only an authenticated hosted report, not an editor or local path", () => {
   for (const skill of SKILLS) {
     const contract = renderSkillOutputContract(skill);
 
-    assert.match(contract, /visual artifact/i, skill.name);
-    assert.match(contract, /HTTP(?:\(S\)| or HTTPS)/, skill.name);
-    assert.match(contract, /readout\.mjs.*visual/i, skill.name);
-    assert.match(contract, /(?:never|do not).*(?:\/tmp|filesystem|file:|editor)/i, skill.name);
+    assert.match(contract, /render --require-hosted/i, skill.name);
+    assert.match(contract, /https:\/\/reports\.quickstark\.com\//i, skill.name);
+    assert.match(contract, /without exposing its path, localhost, or a private-IP URL/i, skill.name);
   }
 });

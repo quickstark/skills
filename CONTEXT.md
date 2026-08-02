@@ -12,7 +12,19 @@ A personal collection of namespaced engineering and productivity skills for Code
 
 **Triage role**: A state-machine label applied to an issue by `/qs-flow-triage`. Its actual label string is documented in `docs/agents/triage-labels.md` for the project using the skill.
 
-**Promoted skill**: A canonical skill in `skills/engineering/` or `skills/productivity/`, registered in the skill catalog and included in both plugin distributions.
+**Promoted skill**: A canonical public skill registered in the skill catalog and included in its assigned Claude and Codex plugin distributions.
+
+**Core skill**: A promoted skill shipped in the default `qs-skills` plugin. The core contains the twelve commands used for the main engineering workflow.
+_Avoid_: Default skill, bundled helper.
+
+**Specialist skill**: A promoted skill shipped in the optional `qs-specialists` plugin. Core skills never require a specialist skill to complete their work.
+_Avoid_: Extra skill, hidden skill.
+
+**Internal capability**: Non-command instructions or reference material used inside a root skill run. It never produces its own readout or invokes a public skill.
+_Avoid_: Internal skill, chained skill.
+
+**Root skill**: The one public skill explicitly selected for a skill run. One root skill produces one skill readout.
+_Avoid_: Parent skill, orchestrator skill.
 
 **Upstream skill**: Matt Pocock's original, unprefixed version. The original-to-personal name mapping is recorded in `scripts/qs-skill-catalog.mjs`.
 
@@ -21,6 +33,15 @@ _Avoid_: Suggested skill, simulated run, example execution.
 
 **Skill readout**: The concise, self-contained record of an individual skill run or explicitly labeled preview. Its status, findings, decisions, outputs, and checks describe only what actually occurred.
 _Avoid_: Dashboard, generated work, completion claim.
+
+**Effort mode**: The `quick`, `standard`, or `deep` bound on how much work a root skill performs. `standard` is the default and effort does not determine report length.
+_Avoid_: Runtime promise, model setting.
+
+**Report mode**: The `brief` or `full` presentation depth of a skill readout. `brief` is the default even for deep work.
+_Avoid_: Effort mode, execution depth.
+
+**Completion state**: The root skill's explicit `complete`, `continuation-required`, or `input-required` disposition. It determines whether the readout contains a next prompt.
+_Avoid_: Skill status, inferred follow-up.
 
 **Next prompt**: A copy-ready continuation presented as a prominent fenced code block that explicitly invokes a catalog-approved follow-on skill and carries forward the preceding skill run's actual outcome and relevant observed evidence. A subdued callout underneath can suggest a model and thinking level. Model guidance is heuristic, never a measured result or automatic configuration change. A prompt suggests future work; it never claims its embedded skill has already run.
 _Avoid_: Skill-only recommendation, invented accomplishment, autonomous invocation, mandatory follow-up.
@@ -85,6 +106,25 @@ _Avoid_: Fabricated promoted skill, imported HTML, invented delivery evidence.
 **Readout publisher**: The portable, explicitly configured adapter that optionally sends one local skill readout to the authenticated ingestion interface without discarding its local report.
 _Avoid_: Automatic exfiltration, inferred publication, compulsory remote dependency.
 
+## Canonical command order
+
+The catalog owns discovery order without numeric command-name prefixes:
+
+1. `qs-help`
+2. `qs-setup`
+3. `qs-plan-clarify`
+4. `qs-plan-roadmap`
+5. `qs-plan-spec`
+6. `qs-code-build`
+7. `qs-code-debug`
+8. `qs-review-code`
+9. `qs-git-merge`
+10. `qs-deploy-release`
+11. `qs-flow-triage`
+12. `qs-flow-handoff`
+
+Optional specialists follow as a separate package: `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-learn-teach`, and `qs-skill-write`. Hosts that impose alphabetical sorting use that stable host order without renaming commands.
+
 ## Relationships
 
 - An issue tracker holds many issues.
@@ -92,8 +132,11 @@ _Avoid_: Automatic exfiltration, inferred publication, compulsory remote depende
 - A decision ticket is an issue used by the roadmap workflow.
 - A promoted skill is the source of truth for its generated Codex-plugin copy.
 - Each adapted promoted skill retains an identifiable upstream counterpart.
-- A skill run produces one immutable skill readout.
-- A skill readout can suggest up to three next prompts; each embeds an approved follow-on skill without turning that recommendation into an actual skill run.
+- A promoted skill is either a core skill or a specialist skill.
+- A skill run has one root skill, can use internal capabilities, and produces one immutable skill readout.
+- A public skill never automatically invokes another public skill; only the user can start the next root skill.
+- A skill readout contains exactly one next prompt when its completion state is `continuation-required` or `input-required`, and none when it is `complete`.
+- Effort mode bounds execution while report mode independently controls presentation depth.
 - Every actual skill readout records its real execution machine; previews do not describe a run.
 - An execution context contains only deployments and project files actually verified for that run.
 - A GitHub-facing skill run can record optional delivery provenance only from independently verified records.

@@ -1,451 +1,96 @@
-# QuickStark Skills
+# QuickStark Skills v3
 
-A focused, personal collection of engineering and productivity skills for Codex and Claude Code. Every promoted skill starts with `qs-`, so entering `/qs-` shows the collection together, and continuing with `/qs-plan-`, `/qs-code-`, `/qs-test-`, or `/qs-deploy-` narrows it by intent.
+A focused engineering workflow for Codex and Claude Code. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds five bounded specialist workflows.
 
-The engineering disciplines are adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). The upstream repository, original MIT license, and original source links remain available for reference.
+QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills). The upstream attribution and license are preserved.
 
-## Project documentation
+To inspect upstream changes without publishing to it, use `git fetch upstream`; personalized changes are pushed only to `origin`.
 
-- [Architecture and trust boundaries](./docs/architecture.md) — canonical skills, plugin generation, reporting, and authenticated publication.
-- [Readout operations](./docs/readout-operations.md) — local and hosted reports, cross-machine publishing, producer grants, and credential rotation.
-- [Contributing](./docs/contributing.md) — catalog-first skill changes, synchronization, tests, and release safety.
-- [Changelog](./CHANGELOG.md) — verified QuickStark changes and preserved upstream release history.
-
-## Clone on another machine
+## Install
 
 ```bash
 git clone https://github.com/quickstark/skills.git
 cd skills
 ```
 
-## Install in Codex
-
-From the root of this repository:
+Codex core:
 
 ```bash
 codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-Start a new Codex task after installing. Type `/qs-` to see the whole collection or `/qs-help` to find the right workflow.
+Optional Codex specialists:
 
-The Codex plugin packages only the promoted skills. Draft, personal, miscellaneous, and deprecated upstream skills do not appear in the installed collection.
+```bash
+codex plugin add qs-specialists@quickstark
+```
 
-## Install in Claude Code
-
-From the root of this repository:
+Claude Code core and optional specialists:
 
 ```bash
 claude plugin marketplace add .
 claude plugin install qs-skills@quickstark
+claude plugin install qs-specialists@quickstark
 ```
 
-Run `/qs-setup` once in a project to configure its issue tracker, domain documentation, and triage conventions.
+Restart the host or begin a new task after changing installed plugins. A Git pull updates the checkout; it does not automatically refresh a cached installed plugin.
 
-## Browse by purpose
+## Core commands
 
-| Type | Commands | Purpose |
-| --- | --- | --- |
-| Help and setup | `/qs-help`, `/qs-setup` | Choose a workflow and configure a project. |
-| Planning | `/qs-plan-clarify`, `/qs-plan-explore`, `/qs-plan-interview`, `/qs-plan-spec`, `/qs-plan-tickets`, `/qs-plan-roadmap`, `/qs-plan-research` | Turn an idea into researched, actionable work. |
-| Design | `/qs-design-domain`, `/qs-design-modules`, `/qs-design-architecture`, `/qs-design-prototype` | Explore domain models, interfaces, architecture, and prototypes. |
-| Coding and documentation | `/qs-code-build`, `/qs-code-debug`, `/qs-code-document` | Build, diagnose, and accurately document verified project behavior. |
-| Testing | `/qs-test-tdd` | Build behavior using a test-first feedback loop. |
-| Review | `/qs-review-code` | Review changes against code standards and requirements. |
-| Deployment | `/qs-deploy-release` | Verify and execute an existing, documented deployment safely. |
-| Git | `/qs-git-merge` | Verify approved GitHub integration, publication, pull requests, and merge or rebase conflicts. |
-| Workflow | `/qs-flow-triage`, `/qs-flow-handoff` | Organize incoming issues and hand work to another session. |
-| Learning and skill authoring | `/qs-learn-teach`, `/qs-skill-write` | Learn a subject or improve an agent skill. |
+| Order | Command | Purpose |
+| ---: | --- | --- |
+| 10 | [`qs-help`](./skills/engineering/qs-help/SKILL.md) | Choose one workflow. |
+| 20 | [`qs-setup`](./skills/engineering/qs-setup/SKILL.md) | Prepare or verify a project. |
+| 30 | [`qs-plan-clarify`](./skills/engineering/qs-plan-clarify/SKILL.md) | Resolve scope and material decisions. |
+| 40 | [`qs-plan-roadmap`](./skills/engineering/qs-plan-roadmap/SKILL.md) | Sequence confirmed outcomes. |
+| 50 | [`qs-plan-spec`](./skills/engineering/qs-plan-spec/SKILL.md) | Write an implementation specification or tickets. |
+| 60 | [`qs-code-build`](./skills/engineering/qs-code-build/SKILL.md) | Implement one scoped change. |
+| 70 | [`qs-code-debug`](./skills/engineering/qs-code-debug/SKILL.md) | Diagnose and repair a defect. |
+| 80 | [`qs-review-code`](./skills/engineering/qs-review-code/SKILL.md) | Review, improve, or refactor selected code. |
+| 90 | [`qs-git-merge`](./skills/engineering/qs-git-merge/SKILL.md) | Integrate selected Git changes safely. |
+| 100 | [`qs-deploy-release`](./skills/engineering/qs-deploy-release/SKILL.md) | Validate and execute an approved release. |
+| 110 | [`qs-flow-triage`](./skills/engineering/qs-flow-triage/SKILL.md) | Route incoming work. |
+| 120 | [`qs-flow-handoff`](./skills/productivity/qs-flow-handoff/SKILL.md) | Preserve verified continuation state. |
 
-## The main engineering workflow
+## Optional specialists
 
-```text
-/qs-setup
-    ↓
-/qs-plan-clarify
-    ↓
-/qs-plan-spec
-    ↓
-/qs-plan-tickets
-    ↓
-/qs-code-build  →  /qs-test-tdd
-    ↓
-/qs-code-document  (when documentation needs updating)
-    ↓
-/qs-review-code
-    ↓
-/qs-git-merge  (verify the actual branch, pull request, or approved GitHub push)
-    ↓
-/qs-deploy-release
-```
-
-Use `/qs-plan-roadmap` before the main flow for a large, ambiguous project. Use `/qs-flow-triage` when the work starts as an incoming issue, `/qs-code-debug` when something is broken, and `/qs-help` whenever you are unsure where to start.
-
-GitHub integration and production release are separate. After tests and independent review pass, `/qs-git-merge` checks whether the actual next operation is an approved default-branch push, a feature-branch pull request, a pull-request merge, or a real merge or rebase conflict. Invoke `/qs-deploy-release` only when a documented production release has been separately requested and approved. Never report a local commit as already published.
-
-## The refactoring workflow
-
-```text
-/qs-design-architecture
-    ↓
-/qs-plan-clarify
-    ↓
-/qs-design-modules  →  /qs-design-domain
-    ↓
-/qs-test-tdd
-    ↓
-/qs-code-build
-    ↓
-/qs-code-document  (when documentation needs updating)
-    ↓
-/qs-review-code
-    ↓
-/qs-git-merge  (verify the actual branch, pull request, or approved GitHub push)
-    ↓
-/qs-deploy-release  (only when requested and approved)
-```
-
-Use `/qs-plan-spec` and `/qs-plan-tickets` between design and implementation only when the refactor is large enough to justify them. `/qs-help` explains both workflows, every skill's purpose, and the top next prompts for the actual situation.
-
-## Visual skill readouts
-
-Every promoted skill automatically produces a compact, purpose-specific, self-contained HTML readout and uses `render --require-hosted` to publish that immutable run through the authenticated `https://reports.quickstark.com/` service. If its private producer credential is missing, rejected, or unsafe, the skill fails clearly while preserving a private local recovery artifact; it never substitutes a local file, localhost, or private-IP viewer for the hosted report. Private galleries and viewers remain available only when explicitly requested outside normal skill reporting. The 24 report profiles use the approved editorial presentation: a verified project and Git metadata strip, a five-second visual summary, immediately visible native next prompts, real exceptions and checks, and the selected skill's actual evidence. A shared deep presentation module, `scripts/qs-skill-report-presentation.mjs`, owns the readable typography, aligned responsive prompt cards, actionable user-run terminal commands, noteworthy code excerpts, GitHub context, and exception-based summaries; `scripts/qs-skill-readout.mjs` remains the small reporting interface. Each report keeps an honest status, concise outcome, actual execution machine, verified deployment evidence, genuinely changed project files, findings, decisions, outputs, checks, and up to three copy-ready top next prompts. Every complete prompt appears in a prominent code block, embeds its catalog-approved next skill, and carries forward the actual outcome and relevant observed evidence. A quieter callout underneath suggests a heuristic model and thinking level.
-
-Generated next prompts use Codex's native `$qs-skill-name` spelling so they match the installed skill's `agents/openai.yaml` default prompt. Existing explicit `/qs-skill-name` prompts remain supported. The blue resolved-skill token is created by the Codex composer when a skill is selected from its `$` picker; HTML, Markdown, and copied prompt text cannot independently force or synthesize that application-controlled state.
-
-### User-run commands and key code
-
-A completed skill can record a terminal command only when the user actually needs to run it afterward. Every command explains what it does and why or when to run it. The skill can also highlight a small, genuinely relevant source excerpt. Both are displayed as readable, copyable code blocks after the top next prompts:
-
-```json
-{
-  "commands": [
-    {
-      "title": "Install the updated QuickStark plugin",
-      "command": "codex plugin add qs-skills@quickstark --json",
-      "detail": "Run this in your terminal to install the published plugin update."
-    }
-  ],
-  "keyCode": [
-    {
-      "title": "Verify the installed plugin version",
-      "path": "codex/plugins/qs-skills/.codex-plugin/plugin.json",
-      "language": "json",
-      "code": "{ \"version\": \"2.6.0\" }"
-    }
-  ]
-}
-```
-
-These sections are optional. A check the skill already ran, an execution transcript, an imagined next step, a credential, a private file, or a catalog preview is never presented as a command for the user. Authenticated hosted reports preserve the same evidence and reject conflicting changes to an immutable run.
-
-| Skill purpose | Primary visual signal |
+| Command | Purpose |
 | --- | --- |
-| Domain and architecture | Accessible maps of actual concepts, boundaries, and decisions. |
-| Research and exploration | Evidence and observed findings visualized as compact charts. |
-| Planning and implementation | Decision sequences, actual deliverables, and verified checks. |
-| Test-driven development | Only the tests that actually passed, failed, or were skipped. |
-| Code review and triage | Concise comparison of real findings, review axes, and outcomes. |
-| Deployment and setup | Actual release gates, validation results, and deployment artifacts. |
-| Guidance, handoff, and learning | Focused recommendations, current state, and real next steps. |
+| [`qs-plan-research`](./skills/engineering/qs-plan-research/SKILL.md) | Answer one evidence-backed question. |
+| [`qs-design-prototype`](./skills/engineering/qs-design-prototype/SKILL.md) | Test one design hypothesis. |
+| [`qs-code-document`](./skills/engineering/qs-code-document/SKILL.md) | Document verified behavior. |
+| [`qs-learn-teach`](./skills/productivity/qs-learn-teach/SKILL.md) | Teach one bounded subject. |
+| [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
 
-Visualizations are accessible, responsive, and self-contained; they never invent activity, progress, test results, or report data. Reports have no external JavaScript or stylesheet dependency and use the operating system's temporary `quickstark-readouts` directory by default.
+## v3 behavior
 
-Generate a clearly labeled preview for all 24 skills:
+- Domain modeling, module decomposition, ticket decomposition, and TDD are internal capabilities, not commands.
+- `qs-review-code action=refactor target=<scope>` is the refactoring workflow. An unscoped whole-codebase request stays read-only until a target is selected.
+- Every invocation has one root skill and zero automatic public-skill hops.
+- `effort=quick|standard|deep` controls execution depth; `report=brief|full` independently controls presentation. Defaults are `standard` and `brief`.
+- Complete work has no next prompt. Work requiring a distinct workflow or user decision has exactly one.
 
-```bash
-npm run readouts:gallery
-```
+See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
 
-Previews explicitly say that no skill has run and claim no project changes or checks. The gallery command starts its viewer automatically, verifies that it responds, and prints the clickable gallery URL.
+## Reports
 
-Only when a user explicitly requests a local preview gallery or private viewer on a Mac or graphical desktop, it uses local loopback:
+Actual promoted runs publish one authenticated immutable readout through `https://reports.quickstark.com/`. A missing or rejected producer credential fails clearly and never substitutes a local path or private URL. Operational details live in [readout operations](./docs/readout-operations.md).
 
-```text
-http://127.0.0.1:4173/
-```
+## Development
 
-Only when a user explicitly requests a private home-network preview on a headless or SSH-connected Linux dev box, it detects the private address and starts a capability-protected viewer:
-
-```text
-http://192.168.1.200:4173/r/<unguessable-access-token>/
-```
-
-Open the exact explicitly requested preview-gallery link on a laptop connected to the same home network. Actual promoted skill readouts always use `https://reports.quickstark.com/`, not these private diagnostic URLs. No Tailscale account, manual server startup, public listener, or always-on service is required for an explicitly requested private preview. If port `4173` is already used by a web preview or another development tool, the viewer automatically chooses the next available port. On Linux, a temporary user-managed service keeps the private viewer available after the command finishes without installing a permanent startup service. The server binds to one private IP, serves only generated QuickStark HTML, and returns `404` without the access token.
-
-### Viewing reports from a remote Codex machine
-
-Home-network links work directly when the laptop can reach the dev box. For a stricter SSH-only setup, generate the gallery in SSH mode:
-
-```bash
-npm run readouts:gallery -- --access ssh
-```
-
-On your Mac, create an SSH tunnel to the remote machine:
-
-```bash
-ssh -N -L 4173:127.0.0.1:4173 your-user@your-codex-host
-```
-
-Then open `http://127.0.0.1:4173/` on your Mac. No report port is exposed to the home network. Set `QS_READOUT_ACCESS=ssh` for subsequent skill runs when SSH-only access should remain the default.
-
-To explicitly generate a local-only report without starting any viewer, use the renderer's `--no-serve` option. Existing viewers are reused only after their health endpoint confirms that they are the expected QuickStark report service.
-
-### Persistent, project-aware report library
-
-The default viewer is one full-height, project-first Project Workbench. It combines verified project navigation, searchable newest-first skill runs, and the complete selected immutable report in a single responsive application. It discovers the active repository from its verified Git origin and groups reports under canonical identities such as `github.com/quickstark/skills`. Bookmarked legacy gallery views safely open the same Workbench without restoring retired navigation. Actual skill runs and catalog previews are always distinguished; previews stay out of project counts until you explicitly choose **Show catalog previews**.
-
-Temporary, flat report storage remains the backward-compatible default. To opt into durable, automatically project-organized reports on the dev box, configure a persistent report root:
-
-```bash
-export QS_READOUT_DIR=/docker/appdata/quickstark-readouts
-```
-
-New reports are then created under immutable paths such as:
-
-```text
-/docker/appdata/quickstark-readouts/
-  github.com/quickstark/skills/2026/07/
-    qs-code-build--2026-07-25T21-42-54-022Z--a417bd19.html
-```
-
-Existing flat reports remain available at their original addresses. Historical reports without verified project metadata appear as **Unassigned legacy reports**; their free-text headings are never represented as proof of repository ownership. Preview an explicit, non-mutating migration before applying it:
-
-```bash
-node scripts/qs-skill-readout.mjs migrate \
-  --directory /tmp/quickstark-readouts \
-  --target-directory /docker/appdata/quickstark-readouts \
-  --project github.com/quickstark/skills \
-  --json
-```
-
-The command makes no changes unless repeated with `--apply`. Migration preserves the original, writes an immutable verified copy, and can safely be repeated. Project-specific retention is also dry-run-first:
-
-```bash
-node scripts/qs-skill-readout.mjs prune \
-  --directory /docker/appdata/quickstark-readouts \
-  --project github.com/quickstark/skills \
-  --retention-days 90 \
-  --json
-```
-
-Inspect the selected reports before deliberately adding `--apply`. Neither command migrates, publishes, or deletes another project's reports.
-
-### Authenticated hosted access
-
-[`deploy/readouts/compose.yaml`](./deploy/readouts/compose.yaml) provides a dedicated persistent readout service for Traefik HTTPS and Authelia authentication. An authorized producer token can publish any safely derived actual project; GitHub ownership is not an additional reporting requirement. The read-only viewer exposes only accepted, safely identified immutable project reports. Privileged Dashboard Settings uses a separate internal proxy-exclusive network and verifies the exact forwarding proxy before trusting authenticated user headers. Its report-style sidebar separates **Profile & personal settings** from a conventional **Producer tokens** table. Creating a token selects its platform and reveals that credential's exact copy-ready installation command once; administrators can safely inspect producer metadata, edit display names, or immediately revoke an individual token. The viewer has a read-only filesystem and report mount, drops Linux capabilities, exposes no host port, and serves no checkout files.
-
-Validate and start the dedicated stack only after approving the configured hostname and publication policy:
-
-```bash
-docker compose -f /docker/stacks/quickstark-readouts/compose.yaml config --quiet
-docker compose -f /docker/stacks/quickstark-readouts/compose.yaml up -d
-```
-
-The intended hostname is `reports.quickstark.com`. It is usable from a personal or managed laptop only after its real DNS record resolves, HTTPS works, Authelia rejects anonymous requests, and an approved user can retrieve an actual report. Do not treat a local reverse-proxy check as proof of remote reachability. No Tailscale, private-network client, or permanent SSH tunnel is required once those external prerequisites are explicitly configured and verified.
-
-### Publishing reports from another harness or laptop
-
-The report stack includes a separate, authenticated write interface:
-
-```text
-POST https://reports.quickstark.com/api/v1/readouts
-```
-
-Only the dedicated ingestion adapter accepts producer submissions. The existing browser gallery and report viewer remain Authelia-protected and read-only. Native QuickStark skills keep their registered, purpose-specific report profiles; explicitly authorized skills from Codex Desktop, Codex CLI, Claude Code, or an independent collection receive an honest external-skill profile and appear in the same approved project library.
-
-Production ingestion starts only when an operator has explicitly configured hashed producer grants in `/docker/appdata/quickstark-readouts-config/readout-producers.json`:
-
-```json
-{
-  "version": 1,
-  "producers": [
-    {
-      "id": "personal-codex-laptop",
-      "tokenSha256": "replace-with-the-64-character-sha256-digest-of-a-private-token",
-      "projects": ["*"]
-    }
-  ]
-}
-```
-
-The ingestion container mounts `/docker/appdata/quickstark-readouts-config/` read-only, so atomic producer-grant replacements become visible immediately and credentials can be rotated or revoked without restarting the service. Keep actual bearer tokens outside that mounted directory: the approved laptop credential is stored with `0600` permissions in `/docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token`, which is never mounted into either container. Never commit a token, insert it into a URL, log it, or store it in the report library. The user-requested token-bearing installation command is visible only during original token creation; copy it only to the intended trusted machine. Linux imports the user environment without passing the bearer as a subprocess argument; macOS installs the explicitly selected profile's owner-only credential and writes its separate Keychain entry through standard input, without `launchctl setenv` or a shared desktop token. The producer's project grant and the hosted publication allowlist must both approve the canonical project.
-
-Generate additional, independently revocable machine credentials without exposing a token:
-
-```bash
-node scripts/qs-readout-producer-token.mjs --producer openai-codex-laptop --json
-node scripts/qs-readout-producer-token.mjs --producer linux-codex-dev-server --json
-```
-
-Each command creates a separate restricted credential, obtains an interprocess grant lock, atomically registers only its SHA-256 digest, and preserves every existing producer even when independent machines issue credentials simultaneously.
-
-Codex automatically discovers an existing, owner-only producer credential without requiring the desktop process to inherit an exported variable. A profile-specific credential takes precedence, so the default and demo applications remain independently authorized:
-
-```text
-~/.codex/quickstark/producer.token
-~/.codex-demo/quickstark/producer.token
-~/.config/quickstark/producer.token
-```
-
-The active Codex profile selects its own file; the Linux configuration path is the secure machine-level fallback. On macOS, the installed profile credential or its separately named Keychain item takes precedence even if a legacy desktop environment still contains another producer's token. macOS also supports the existing legacy Keychain item when no profile-specific or explicitly configured credential exists. Windows discovers its existing restricted `~/.quickstark/producer.token`. Symbolic links in the profile or any credential ancestor, another user's profile, unsafe file permissions, and malformed credentials fail closed. Create independently revocable profile credentials using **Dashboard Settings → Producer tokens**; select **Default · ~/.codex** or **Demo · ~/.codex-demo** for macOS and copy only the one-time command generated for that exact profile.
-
-An explicitly inherited producer token remains supported. It takes precedence on Linux and Windows; on macOS, the current profile's securely installed credential takes precedence so a shared desktop environment cannot impersonate another profile, and an explicit token remains the fallback when that profile has no credential. On Linux or macOS an existing restricted local credential can still be loaded without printing the token:
-
-```bash
-export QS_READOUT_PRODUCER_TOKEN="$(< /docker/appdata/quickstark-readouts-credentials/personal-codex-laptop.token)"
-```
-
-On Windows, supply the operator-authorized token from that machine's private credential file:
-
-```powershell
-$env:QS_READOUT_PRODUCER_TOKEN = (Get-Content -Raw "C:\path\to\your\private\quickstark-reporting.token").Trim()
-```
-
-`QS_READOUT_PRODUCER_TOKEN` remains the only required setting when an owner-only installed profile credential is unavailable. Either the explicit token or its securely discovered private profile credential authenticates publication. The authenticated server derives producer identity from the token; every skill derives its project from the current working directory, using its Git origin when available or a safely fingerprinted local workspace when no Git remote exists. The application defaults to `codex` and submits its report to `https://reports.quickstark.com/api/v1/readouts`, returning the accepted `https://reports.quickstark.com/` report URL rather than a private-network viewer. No GitHub verification, owner patterns, project lists, producer identifiers, harness variables, or endpoint configuration are required. The server-side `"*"` grant lets the authenticated token report any safely identified project, including `quickstarkdemo/sterling-hollis-be`; it never permits anonymous access, unsafe paths, or a mislabeled workspace.
-
-The renderer automatically verifies the exact requested Codex skill, its task boundary, provider usage baseline, actual model, and reasoning effort before surfacing genuinely attributable input tokens, output tokens, total tokens, and elapsed task time immediately after its top next prompts. It never publishes prompts, responses, unrelated conversation totals, or inferred usage. Missing or ambiguous measurements remain honestly labeled `Not captured`. Every normal QuickStark skill preserves its immutable local report and presents a hosted report URL only after authenticated API acceptance. Other harnesses can submit a versioned structured readout with the portable command:
-
-```bash
-node scripts/qs-skill-readout.mjs publish \
-  --input /absolute/path/to/approved-readout-envelope.json \
-  --allowed-projects github.com/quickstark/skills \
-  --report-base-url https://reports.quickstark.com/ \
-  --max-attempts 2 \
-  --retry-delay 50 \
-  --json
-```
-
-The command uses the privately configured `QS_READOUT_PRODUCER_TOKEN`; the report envelope includes the actual producer, harness, collection, canonical project, skill, immutable run identifier, actual UTC timestamp, observed status, and outcome. Namespaced plugin identifiers such as `compound-engineering:ce-code-review` are supported without misrepresenting external skills as native QuickStark skills. Publisher attempts are bounded to 1–5 and retry delays to 0–2,000 milliseconds; equivalent `QS_READOUT_PUBLISH_MAX_ATTEMPTS` and `QS_READOUT_PUBLISH_RETRY_DELAY` environment variables also apply to automatically published native readouts. The ingestion service emits only redacted JSON audit events containing the timestamp, authorized producer, authorized project, response status, and outcome. The server renders and escapes its own HTML and never accepts uploaded HTML or arbitrary files. First delivery returns `201`; an identical retry returns the same immutable report with `200`; changed content for the same run returns `409`.
-
-Publishing is disabled by default. If the producer, project grant, remote endpoint, or applicable data-handling policy is missing, the local skill readout remains available and the outcome explicitly says that hosted publication did not happen. Do not publish employer, customer, or confidential project data to personal infrastructure without explicit applicable authorization.
-
-Validate the isolated stack before intentionally activating a production route:
-
-```bash
-docker compose -f deploy/readouts/compose.yaml config --quiet
-```
-
-A real laptop-to-domain delivery, browser-authenticated report retrieval, anonymous browser rejection, producer denial, and live credential rotation must be verified after deployment; a local test or healthy container alone does not establish external delivery.
-
-If a newly created hostname works through public DNS but still fails on the home network, compare the public resolver with the home router:
-
-```bash
-dig @1.1.1.1 reports.quickstark.com A
-dig @192.168.1.1 reports.quickstark.com A
-```
-
-An `NXDOMAIN` from the router while Cloudflare returns public addresses means the router is caching the hostname's previous nonexistence. Wait for the router's negative-cache TTL to expire or clear that router's DNS cache; flushing only the dev box cannot remove an upstream cached result.
-
-## Consistent skill output
-
-Every promoted skill also finishes with the same concise, human-readable summary:
-
-```text
-Status: Completed
-Skills used: /qs-design-architecture; /qs-design-modules
-Outcome: Identified and prioritized the highest-value architectural refactor.
-Execution: Actual development machine; only files changed by this skill run.
-Readout: https://reports.quickstark.com/github.com/quickstark/skills/2026/07/qs-design-architecture--2026-07-25T15-30-00-000Z--a1b2c3d4.html
-Outputs: Verified hosted architecture review and observed module-deepening opportunities.
-Checks: Confirmed the affected modules and existing test coverage.
-```
-
-**Top next prompts:**
-
-**1. Clarify the selected refactor**
-
-```text
-Use $qs-plan-clarify to agree on the selected architectural refactor's scope, preserved behavior, and existing test coverage.
-```
-
-> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`.
->
-> Heuristic guidance; the active model and thinking level are not changed automatically.
-
-**2. Design the selected architectural seam**
-
-```text
-Use $qs-design-modules to design the interface and seam for the architectural candidate identified in the review.
-```
-
-> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`.
->
-> Heuristic guidance; the active model and thinking level are not changed automatically.
-
-`Skills used` lists only skills that actually ran. `Execution` identifies the actual machine and includes deployment details or changed files only when independently verified. `Readout` is the independently accepted `https://reports.quickstark.com/` skill-report URL; never substitute a local filesystem path, localhost, or private IP. `Outputs`, `Checks`, user-run `Commands`, `Key code`, and delivery evidence appear only when real artifacts, validations, pending user actions, noteworthy excerpts, or GitHub records exist. `Top next prompts` provides up to three copy-ready, context-aware prompts that explicitly invoke approved follow-on skills and build on what this run actually accomplished. Each includes a suggested model and suggested thinking level. These suggestions are heuristic starting points, not benchmarks or observed results; they never change the active model automatically. A recorded critical finding or failed check can suggest deeper reasoning. The report says `None — the requested work is complete` when no follow-up is needed; suggested skills never appear under `Skills used`.
-
-Approved follow-on skills, their baseline actions, and their heuristic model and thinking guidance remain in [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs). The readout renderer specializes each prompt using the current run's recorded outcome, findings, decisions, outputs, and checks; skill instructions and documentation inherit the contract from [`scripts/sync-skill-output-contracts.mjs`](./scripts/sync-skill-output-contracts.mjs).
-
-## Engineering
-
-### User-invoked
-
-These skills run only when explicitly requested.
-
-- [qs-help](./skills/engineering/qs-help/SKILL.md) — Find the right skill and understand the end-to-end workflow.
-- [qs-setup](./skills/engineering/qs-setup/SKILL.md) — Configure a project's issue tracker, labels, and domain documentation.
-- [qs-plan-clarify](./skills/engineering/qs-plan-clarify/SKILL.md) — Clarify a project through questions and capture durable decisions.
-- [qs-plan-spec](./skills/engineering/qs-plan-spec/SKILL.md) — Turn agreed requirements into an actionable specification.
-- [qs-plan-tickets](./skills/engineering/qs-plan-tickets/SKILL.md) — Break a plan into small, dependency-aware implementation tickets.
-- [qs-plan-roadmap](./skills/engineering/qs-plan-roadmap/SKILL.md) — Map a large, ambiguous project into manageable decisions.
-- [qs-design-architecture](./skills/engineering/qs-design-architecture/SKILL.md) — Find and improve weak points in an existing architecture.
-- [qs-code-build](./skills/engineering/qs-code-build/SKILL.md) — Implement a specification or tracked ticket.
-- [qs-flow-triage](./skills/engineering/qs-flow-triage/SKILL.md) — Turn incoming issues into actionable work.
-- [qs-deploy-release](./skills/engineering/qs-deploy-release/SKILL.md) — Verify and run a documented deployment after the required confirmation.
-
-### Model-invoked
-
-These skills can also be selected automatically when the task fits.
-
-- [qs-plan-research](./skills/engineering/qs-plan-research/SKILL.md) — Research a question against reliable primary sources.
-- [qs-design-prototype](./skills/engineering/qs-design-prototype/SKILL.md) — Build a focused prototype to answer a design question.
-- [qs-design-domain](./skills/engineering/qs-design-domain/SKILL.md) — Develop a clear domain model and shared project vocabulary.
-- [qs-design-modules](./skills/engineering/qs-design-modules/SKILL.md) — Design clean interfaces and deep, testable modules.
-- [qs-code-debug](./skills/engineering/qs-code-debug/SKILL.md) — Reproduce, diagnose, and regression-test a bug.
-- [qs-code-document](./skills/engineering/qs-code-document/SKILL.md) — Write accurate documentation from verified project behavior.
-- [qs-test-tdd](./skills/engineering/qs-test-tdd/SKILL.md) — Implement behavior using a red-green test-driven loop.
-- [qs-review-code](./skills/engineering/qs-review-code/SKILL.md) — Review code against its specification and project standards.
-- [qs-git-merge](./skills/engineering/qs-git-merge/SKILL.md) — Verify GitHub integration, approved publication, pull requests, and actual merge or rebase conflicts.
-
-## Productivity
-
-### User-invoked
-
-- [qs-plan-explore](./skills/productivity/qs-plan-explore/SKILL.md) — Explore and pressure-test an idea without requiring a codebase.
-- [qs-flow-handoff](./skills/productivity/qs-flow-handoff/SKILL.md) — Prepare a concise handoff for another agent or session.
-- [qs-learn-teach](./skills/productivity/qs-learn-teach/SKILL.md) — Learn a subject through a practical, guided study plan.
-- [qs-skill-write](./skills/productivity/qs-skill-write/SKILL.md) — Create or improve a focused, reliable agent skill.
-
-### Model-invoked
-
-- [qs-plan-interview](./skills/productivity/qs-plan-interview/SKILL.md) — Resolve a plan or decision through one focused question at a time.
-
-## Updating the Codex plugin
-
-The canonical skill files live under `skills/engineering` and `skills/productivity`. The Codex plugin contains a generated, curated snapshot because Codex accepts one skill directory, not the two promoted buckets.
-
-After adding or changing a promoted skill:
+Update the source-of-truth catalog at `scripts/qs-skill-catalog.mjs` before changing promoted membership or order, then run:
 
 ```bash
 npm run sync:codex
 npm test
 ```
 
-`npm run sync:codex` first regenerates the standardized HTML-readout contract, output, and context-aware next-prompt guidance in every skill and documentation page, then packages exactly the promoted skills and their shared readout helpers. The tests verify that every packaged file matches its canonical source; the only permitted transformation removes Claude-only invocation frontmatter, because Codex represents the same restriction in `agents/openai.yaml`.
-
-## Keeping the upstream as a reference
-
-The `origin` remote is the [QuickStark fork](https://github.com/quickstark/skills). Matt's original repository remains available through the `upstream` remote:
+When Claude Code is available:
 
 ```bash
-git fetch upstream
-git log HEAD..upstream/main --oneline
-git show upstream/main:skills/engineering/tdd/SKILL.md
+claude plugin validate . --strict
+claude plugin validate ./packages/qs-specialists --strict
 ```
 
-Consult [`scripts/qs-skill-catalog.mjs`](./scripts/qs-skill-catalog.mjs) for the mapping from each original upstream name to its QuickStark command. Review useful upstream changes and adapt them to the namespaced skill rather than blindly overwriting the personalized collection.
-
-## License and attribution
-
-The 22 adapted skills originate from [Matt Pocock's skills](https://github.com/mattpocock/skills) and remain covered by the original [MIT license](./LICENSE). `/qs-deploy-release`, `/qs-code-document`, the QuickStark naming system, the Codex packaging, and the repository validation are personal additions.
+See [architecture](./docs/architecture.md), [contributing](./docs/contributing.md), and the [changelog](./CHANGELOG.md).

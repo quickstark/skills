@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { lstat, readFile } from "node:fs/promises";
 
-import { SKILLS_BY_NAME } from "./qs-skill-catalog.mjs";
+import { READOUT_SKILLS_BY_NAME } from "./qs-skill-catalog.mjs";
 
 const githubContexts = new Map();
 const readoutTextSizes = Object.freeze({
@@ -384,7 +384,7 @@ export function renderReadoutNextPrompts(report) {
   }
 
   return `<div class="next-grid">${report.nextSkills.map((item, index) => {
-    const skill = SKILLS_BY_NAME.get(item.name);
+    const skill = READOUT_SKILLS_BY_NAME.get(item.name);
     const label = index === 0 ? "Top next prompt" : "Alternative prompt";
     const recommendation = index === 0 ? "RECOMMENDED" : "ALTERNATIVE";
 

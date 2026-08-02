@@ -1,0 +1,24 @@
+{
+  "name": "qs-specialists",
+  "version": "3.0.0",
+  "description": "Optional QuickStark research, prototyping, documentation, teaching, and skill-authoring workflows.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "repository": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "engineering",
+    "specialists"
+  ],
+  "skills": [
+    "./skills/qs-plan-research",
+    "./skills/qs-design-prototype",
+    "./skills/qs-code-document",
+    "./skills/qs-learn-teach",
+    "./skills/qs-skill-write"
+  ]
+}

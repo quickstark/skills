@@ -9,15 +9,23 @@
     {
       "name": "qs-skills",
       "source": "./",
-      "description": "Grouped planning, design, coding, testing, review, deployment, Git, and workflow skills.",
+      "description": "QuickStark's twelve-command core engineering workflow.",
       "category": "engineering",
       "keywords": [
         "quickstark",
         "engineering",
-        "planning",
-        "coding",
-        "testing",
-        "deployment"
+        "workflow"
+      ]
+    },
+    {
+      "name": "qs-specialists",
+      "source": "./packages/qs-specialists",
+      "description": "Optional QuickStark research, prototyping, documentation, teaching, and skill-authoring workflows.",
+      "category": "engineering",
+      "keywords": [
+        "quickstark",
+        "engineering",
+        "specialists"
       ]
     }
   ]

@@ -1,6 +1,6 @@
 {
   "name": "qs-skills",
-  "version": "2.6.0",
+  "version": "3.0.0",
   "private": true,
   "description": "QuickStark's grouped engineering, productivity, and deployment skills",
   "repository": {
@@ -11,15 +11,15 @@
   "scripts": {
     "changeset": "changeset",
     "version": "changeset version",
-    "sync:outputs": "node scripts/sync-skill-output-contracts.mjs",
-    "check:outputs": "node scripts/sync-skill-output-contracts.mjs --check",
-    "sync:codex": "node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs",
-    "check:codex": "node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check",
+    "sync:outputs": "node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs",
+    "check:outputs": "node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check",
+    "sync:codex": "node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs",
+    "check:codex": "node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check",
     "readouts:gallery": "node scripts/qs-skill-readout.mjs gallery",
     "readouts:prototype": "node scripts/qs-skill-readout.prototype.mjs",
     "readouts:portfolio:refresh": "node scripts/qs-readout-portfolio.mjs refresh --directory /docker/appdata/quickstark-readouts --owners quickstark,quickstarkdemo",
     "readouts:serve": "node scripts/qs-skill-readout.mjs serve",
-    "test": "node --test tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs tests/qs-readout-observation.test.mjs tests/qs-report-presentation.test.mjs tests/qs-readout-visual-artifact.test.mjs tests/qs-readout-settings.test.mjs tests/qs-readout-portfolio.test.mjs"
+    "test": "node --test tests/qs-v3.test.mjs tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs tests/qs-readout-observation.test.mjs tests/qs-report-presentation.test.mjs tests/qs-readout-visual-artifact.test.mjs tests/qs-readout-settings.test.mjs tests/qs-readout-portfolio.test.mjs"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",

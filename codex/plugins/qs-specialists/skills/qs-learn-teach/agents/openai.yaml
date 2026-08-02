@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Learn: Teach"
+  short_description: "Learn a subject through a guided study plan"
+  default_prompt: "Use $qs-learn-teach to teach me this subject through a practical, guided study plan."
+policy:
+  allow_implicit_invocation: false

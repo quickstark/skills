@@ -2,6 +2,15 @@
 
 QuickStark versions describe the verified repository and plugin version; they do not, by themselves, claim a published GitHub release or tag.
 
+## 3.0.0
+
+- Consolidated the default plugin to twelve lifecycle-ordered core commands.
+- Added the independently installable five-command `qs-specialists` package.
+- Internalized domain modeling, module decomposition, ticket decomposition, and TDD without command aliases.
+- Added bounded effort and report modes, one normalized result, deterministic continuation, and zero automatic public-skill hops.
+- Expanded `qs-review-code` to review, improve, or behavior-preservingly refactor an explicitly selected codebase scope.
+- Preserved Matt Pocock's original MIT license and attribution: https://github.com/mattpocock/skills/.
+
 ## 2.6.0
 
 ### Minor Changes
