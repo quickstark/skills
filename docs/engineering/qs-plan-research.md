@@ -1,73 +1,32 @@
+# QS Plan: Research
+
 Quickstart:
 
 ```bash
 codex plugin marketplace add ./codex
-codex plugin add qs-skills@quickstark
+codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/mattpocock/skills/tree/main/skills/engineering/research)
+[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-research/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/research)
 
 ## What it does
 
-`qs-plan-research` answers a question by reading the sources that own the answer and leaving a cited Markdown file behind. It works only from **primary sources** — official docs, source code, specs, first-party APIs — never a secondary write-up of them, so what it saves is traceable back to something authoritative rather than a summary of a summary.
+`/qs-plan-research` research a question using reliable sources. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-plan-research/SKILL.md).
 
 ## When to reach for it
 
-Type `/qs-plan-research`, or the agent reaches for it automatically when a task turns into reading legwork.
-
-Reach for it when the next step is *finding something out* — how an API behaves, what a spec actually says, whether a claim holds — and you'd rather not stall your own thread doing the reading. For sharpening a plan by interview instead of by reading, use [qs-plan-interview](https://aihero.dev/skills-grilling); for exploring what to build with throwaway code, use [qs-design-prototype](https://aihero.dev/skills-prototype).
-
-## Delegated legwork
-
-The defining move is that the reading runs as a **background agent**. You keep working; it goes off, follows each claim back to its primary source, and drops a single cited Markdown file into wherever the repo keeps such notes. Research is legwork you delegate, not thinking you outsource — you get back a document to react to, with its sources attached.
-
-## Output and next steps
-
-`/qs-plan-research` generates an architecture-quality, self-contained HTML readout, publishes it through the authenticated `https://reports.quickstark.com/` service using `render --require-hosted`, and closes with the same concise report used across the collection: status, skills actually used, outcome, actual execution machine, the verified hosted-domain report URL, real outputs or checks where applicable, and up to three copy-ready top next prompts. Never substitute a local filesystem path, localhost, or private-IP viewer for an actual skill result. Present each complete prompt prominently in its own fenced text code block and place its suggested model and suggested thinking underneath in a visually muted callout. Each prompt embeds its catalog-approved follow-on skill and builds on the actual outcome, findings, decisions, outputs, and checks rather than merely recommending a skill name. Automatically generated prompts use the Codex-native `$qs-...` skill spelling; legacy explicit `/qs-...` prompts remain valid. Only the Codex composer and its skill picker can resolve a native skill mention into a blue token; a report cannot manufacture that UI state. Model and thinking guidance are explicitly heuristic; they are not measured model performance and never change the active configuration. Each skill uses its own compact, purpose-specific visual report profile; charts, concept maps, review matrices, and check summaries represent only actual recorded results. Relevant runs can include verified deployment environments and URLs, repository-relative files actually changed, independently verified GitHub pull requests, actually closed issues, released versions, complete Git commit hashes, and explicitly observed visual relationships. Local commits are never labeled as published, and issue closure is never attributed to an unverified release. Tailscale is not required. Its readout uses the shared `scripts/qs-skill-readout.mjs` generator and defaults to the OS temporary `quickstark-readouts` directory for private recovery artifacts. Set `QS_READOUT_DIR=/docker/appdata/quickstark-readouts` to opt into durable, project-organized storage and open one full-height, project-first Project Workbench with verified project navigation, searchable actual skill runs, and complete immutable readouts. Private viewers remain available only when explicitly requested separately. Catalog previews remain explicitly identified, and no report claims that a suggested skill has already run.
-
-To automatically publish actual skill reports from Linux, macOS, or Windows, `QS_READOUT_PRODUCER_TOKEN` remains the only required setting when no owner-only profile credential is installed. Linux and Windows preserve valid explicit-token precedence. On macOS the renderer first selects the current `.codex` or `.codex-demo` profile's private file or named Keychain token so a shared desktop environment cannot replace that profile's producer; the valid explicit token remains supported when neither profile credential exists. A safely installed machine token and the legacy macOS Keychain entry remain supported. Reject user-home escapes and symbolic links in every profile or credential ancestor. The reporting API derives the producer identity, while the skill automatically identifies the Codex harness and the project from its current working directory. Use the Git origin when available; otherwise derive a safe, stable local-workspace identity without revealing the absolute filesystem path. The default reports endpoint is `https://reports.quickstark.com/api/v1/readouts`; ordinary runs require no project list, owner pattern, producer identifier, harness setting, GitHub verification, Git remote, or private-IP viewer. Generate the immutable local report first and present the hosted `https://reports.quickstark.com/` report URL only after authenticated acceptance. Explicit local, LAN, or SSH viewers remain available. Never expose the private token, mislabel another project, accept unsafe project paths, or claim that a failed submission succeeded.
-A completed report displays a compact Skill run metrics section near the top, immediately after Top next prompts. It shows actual skill-attributed model, reasoning effort, provider-reported input and output tokens, total tokens, and active duration only when the running harness or provider genuinely captured them. Show `Not captured` for unavailable values, preserve thread-level evidence under its actual scope, and never invent measurements or attach skill-run metrics to a catalog preview.
-
-When this skill leaves a genuine user action, its readout may include `commands` containing the exact terminal command, a clear title, and a `detail` explaining why or when the user should run it. When actual source deserves attention, its readout may include `keyCode` containing the exact code, language, and optional safe repository-relative file path. Both appear as separate, copyable code blocks. Execution logs and already executed commands are not user instructions; omit both sections when they are not applicable. Never include secrets, credentials, tokens, private keys, invented code, or speculative terminal instructions.
-
-Depending on the actual completed work, tailor one to three top next prompts from:
-
-**1. [`/qs-plan-clarify`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md)**
-
-Use the research findings to settle the remaining requirements.
-
-```text
-Use $qs-plan-clarify to clarify this project and document the resulting decisions.
-```
-
-> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
->
-> Heuristic: Clarification benefits from deeper reasoning about requirements and trade-offs.
-
-**2. [`/qs-design-prototype`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-prototype/SKILL.md)**
-
-Test a promising research finding with a focused prototype.
-
-```text
-Use $qs-design-prototype to build a focused prototype to answer this design question.
-```
-
-> Suggested model: `gpt-5.6-terra` · Suggested thinking: `high`
->
-> Heuristic: A focused prototype benefits from practical implementation and design iteration.
-
-**3. [`/qs-plan-spec`](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-spec/SKILL.md)**
-
-Incorporate verified findings into an actionable specification.
-
-```text
-Use $qs-plan-spec to turn the agreed requirements into an actionable specification.
-```
-
-> Suggested model: `gpt-5.6-sol` · Suggested thinking: `high`
->
-> Heuristic: A specification benefits from reconciling boundaries, decisions, and requirements.
+Use `/qs-plan-research` when the requested primary outcome is: research this question and capture evidence-backed findings. Choose another root command when that would be only an intermediate technique.
 
 ## Where it fits
 
-A reach-for-it-anytime standalone that feeds the thinking skills: the file it produces is something to grill, plan, or design against, so it sits upstream of work like [qs-plan-interview](https://aihero.dev/skills-grilling) and [to-prd](https://aihero.dev/skills-to-prd) rather than in the build chain. For the whole map, see [qs-help](https://aihero.dev/skills-ask-matt).
+This is lifecycle position 130 in the specialist projection and is installed through `qs-specialists`. It owns one bounded root run and never starts another public skill automatically.
+
+## Output and next steps
+
+`/qs-plan-research` produces one normalized root result and one authenticated hosted readout. It accepts independent `effort=quick|standard|deep` and `report=brief|full` modes, defaulting to `standard` and `brief`.
+
+Complete work emits no next prompt. A distinct required workflow or material user decision emits exactly one copy-ready continuation. Public skills are never executed automatically. Brief reports show only the decision-grade result; full reports add supporting evidence without adding continuations.
+
+The catalog-approved continuation, only when the result requires it, is `/qs-plan-spec`.
+
+The hosted and in-chat views consume the same normalized result. Ordinary runs return only an authenticated `https://reports.quickstark.com/` URL; local viewers remain explicit diagnostic tools. See [the shared skill-run contract](../skill-run-contract.md).

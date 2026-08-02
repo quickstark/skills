@@ -10,9 +10,11 @@ import { promisify } from "node:util";
 
 import {
   COLLECTION_NAME,
+  LEGACY_NEXT_SKILLS_BY_NAME,
   MODEL_GUIDANCE_BY_NAME,
   NEXT_SKILLS_BY_NAME,
   READOUT_PROFILES_BY_NAME,
+  READOUT_SKILLS_BY_NAME,
   SKILLS,
   SKILLS_BY_NAME,
 } from "./qs-skill-catalog.mjs";
@@ -45,7 +47,16 @@ export const READOUT_INGESTION_PATH = "/api/v1/readouts";
 export const READOUT_VIEWER_STATE = ".quickstark-readout-viewer.json";
 export const READOUT_FORMAT_VERSION = 1;
 
-const statuses = new Set(["Completed", "Awaiting input", "Blocked", "Preview"]);
+const statuses = new Set(["Completed", "Awaiting input", "Blocked", "Failed", "Preview"]);
+const effortModes = new Set(["quick", "standard", "deep"]);
+const reportModes = new Set(["brief", "full"]);
+const completionStates = new Set([
+  "complete",
+  "continuation-required",
+  "input-required",
+  "failed",
+  "preview",
+]);
 const observationSources = new Set([
   "provider-response",
   "codex-opentelemetry",
@@ -1902,11 +1913,11 @@ function finishNextPromptSentence(value) {
 }
 
 function createNextPrompt(name, context, reason) {
-  const target = SKILLS_BY_NAME.get(name);
+  const target = READOUT_SKILLS_BY_NAME.get(name);
   const action = (target?.prompt ?? reason ?? "continue the recorded work")
     .replace(/[.!?]+$/, "")
     .trim();
-  const invocation = SKILLS_BY_NAME.has(name) ? `$${name}` : `/${name}`;
+  const invocation = READOUT_SKILLS_BY_NAME.has(name) ? `$${name}` : `/${name}`;
   const prompt = [
     `Use ${invocation} to ${action.charAt(0).toLowerCase()}${action.slice(1)}.`,
   ];
@@ -1938,7 +1949,7 @@ function createNextPrompt(name, context, reason) {
 function normalizeNextPrompt(value, name, label) {
   const prompt = requireText(value, label);
   const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const prefix = SKILLS_BY_NAME.has(name) ? "[/\\$]" : "/";
+  const prefix = READOUT_SKILLS_BY_NAME.has(name) ? "[/\\$]" : "/";
 
   if (!new RegExp(`^use\\s+${prefix}${escapedName}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
     throw new Error(`${label} must explicitly invoke /${name} as its first action.`);
@@ -2010,25 +2021,39 @@ function normalizeNextPromptModel(candidate, name, context, index) {
 }
 
 function normalizeRecommendations(skill, recommendations, context) {
-  const allowed = NEXT_SKILLS_BY_NAME[skill.name];
+  const allowed = context.v3
+    ? NEXT_SKILLS_BY_NAME[skill.name]
+    : LEGACY_NEXT_SKILLS_BY_NAME[skill.name];
+  const needsOne = ["continuation-required", "input-required"].includes(context.completionState);
   const passedChecks = context.checks.some((check) => check.status === "passed")
     && !context.checks.some((check) => check.status === "failed");
-  const reviewedWithoutFindings = (
-    skill.name === "qs-review-code"
-    || context.skillsUsed.includes("qs-review-code")
-  )
+  const reviewedWithoutFindings = !context.v3
+    && (skill.name === "qs-review-code" || context.skillsUsed.includes("qs-review-code"))
     && context.status === "Completed"
     && context.findings.length === 0
     && passedChecks;
-  const selected = recommendations === undefined && reviewedWithoutFindings
-    ? [...allowed].sort((left, right) =>
-      Number(right.name === "qs-git-merge") - Number(left.name === "qs-git-merge"))
-    : recommendations === undefined
-      ? allowed
-      : recommendations;
+  const selected = recommendations === undefined
+    ? context.v3
+      ? needsOne ? [allowed[0]] : []
+      : reviewedWithoutFindings
+        ? [...allowed].sort((left, right) =>
+          Number(right.name === "qs-git-merge") - Number(left.name === "qs-git-merge"))
+        : allowed
+    : recommendations;
 
-  if (!Array.isArray(selected) || selected.length > 3) {
-    throw new Error("nextSkills must contain no more than three catalog recommendations.");
+  const maximum = context.v3 ? 1 : 3;
+  if (!Array.isArray(selected) || selected.length > maximum) {
+    throw new Error(context.v3
+      ? "A v3 root run can contain at most one deterministic continuation."
+      : "nextSkills must contain no more than three catalog recommendations.");
+  }
+
+  if (context.v3 && needsOne && selected.length !== 1) {
+    throw new Error(`${context.completionState} requires exactly one continuation prompt.`);
+  }
+
+  if (context.v3 && context.completionState === "complete" && selected.length !== 0) {
+    throw new Error("A complete result cannot contain a continuation prompt.");
   }
 
   const unique = new Set();
@@ -2073,14 +2098,48 @@ export function normalizeSkillReadout(input) {
   }
 
   const skillName = requireText(input.skill, "skill").replace(/^\//, "");
-  const skill = SKILLS_BY_NAME.get(skillName);
+  const v3 = input.completionState !== undefined
+    || input.effort !== undefined
+    || input.report !== undefined
+    || input.reportMode !== undefined;
+  const skill = (v3 ? SKILLS_BY_NAME : READOUT_SKILLS_BY_NAME).get(skillName);
 
   if (!skill) throw new Error(`/${skillName} is not a promoted QuickStark skill.`);
 
-  const status = input.status ?? "Completed";
+  const suppliedStatus = input.status;
+  const status = suppliedStatus ?? "Completed";
 
   if (!statuses.has(status)) {
-    throw new Error("status must be Completed, Awaiting input, Blocked, or Preview.");
+    throw new Error("status must be Completed, Awaiting input, Blocked, Failed, or Preview.");
+  }
+
+  const effort = input.effort ?? "standard";
+  const reportMode = input.report ?? input.reportMode ?? (v3 ? "brief" : "full");
+  if (!effortModes.has(effort)) throw new Error("effort must be quick, standard, or deep.");
+  if (!reportModes.has(reportMode)) throw new Error("report must be brief or full.");
+
+  const inferredCompletionState = status === "Preview"
+    ? "preview"
+    : status === "Awaiting input"
+      ? "input-required"
+      : status === "Blocked" || status === "Failed"
+        ? "failed"
+        : !v3 || Array.isArray(input.nextSkills) && input.nextSkills.length > 0
+          ? "continuation-required"
+          : "complete";
+  const completionState = input.completionState ?? inferredCompletionState;
+  if (!completionStates.has(completionState)) {
+    throw new Error("completionState must be complete, continuation-required, input-required, failed, or preview.");
+  }
+  const expectedStatuses = {
+    complete: ["Completed"],
+    "continuation-required": ["Completed"],
+    "input-required": ["Awaiting input"],
+    failed: ["Blocked", "Failed"],
+    preview: ["Preview"],
+  };
+  if (!expectedStatuses[completionState].includes(status)) {
+    throw new Error(`status ${status} is incompatible with completionState ${completionState}.`);
   }
 
   const suppliedSkills = input.skillsUsed ?? (status === "Preview" ? [] : [skill.name]);
@@ -2090,7 +2149,7 @@ export function normalizeSkillReadout(input) {
   const used = suppliedSkills.map((name, index) => {
     const normalized = requireText(name, `skillsUsed[${index}]`).replace(/^\//, "");
 
-    if (!SKILLS_BY_NAME.has(normalized)) {
+    if (!(v3 ? SKILLS_BY_NAME : READOUT_SKILLS_BY_NAME).has(normalized)) {
       throw new Error(`/${normalized} is not a promoted QuickStark skill.`);
     }
 
@@ -2103,6 +2162,9 @@ export function normalizeSkillReadout(input) {
   }
   if (status !== "Preview" && !used.includes(skill.name)) {
     throw new Error(`skillsUsed must include the actual active skill, /${skill.name}.`);
+  }
+  if (v3 && status !== "Preview" && (used.length !== 1 || used[0] !== skill.name)) {
+    throw new Error("A v3 run records exactly one root public skill; internal capabilities are not skillsUsed.");
   }
 
   const generatedAt = new Date(input.generatedAt ?? Date.now());
@@ -2156,9 +2218,22 @@ export function normalizeSkillReadout(input) {
 
   const outcome = requireText(input.outcome, "outcome");
 
+  if (
+    v3 && completionState === "complete"
+    && (
+      checks.some((check) => check.status === "failed")
+      || findings.some((finding) => finding.priority === "P0" || finding.priority === "P1")
+    )
+  ) {
+    throw new Error("Failed required checks and actionable P0/P1 findings prohibit a complete result.");
+  }
+
   return {
     skill,
     status,
+    effort,
+    report: reportMode,
+    completionState,
     outcome,
     project: input.project === undefined
       ? projectIdentity?.label ?? ""
@@ -2181,6 +2256,8 @@ export function normalizeSkillReadout(input) {
     relationships,
     nextSkills: normalizeRecommendations(skill, input.nextSkills, {
       status,
+      completionState,
+      v3,
       outcome,
       skillsUsed: used,
       findings,
@@ -2745,6 +2822,9 @@ function renderNormalizedSkillReadout(report) {
     `<meta name="quickstark:skill-display-name" content="${escapeHtml(report.skill.displayName)}">`,
     `<meta name="quickstark:report-profile" content="${escapeHtml(profile.title)}">`,
     `<meta name="quickstark:status" content="${escapeHtml(report.status)}">`,
+    `<meta name="quickstark:completion-state" content="${escapeHtml(report.completionState)}">`,
+    `<meta name="quickstark:effort" content="${escapeHtml(report.effort)}">`,
+    `<meta name="quickstark:report-mode" content="${escapeHtml(report.report)}">`,
     `<meta name="quickstark:generated-at" content="${escapeHtml(report.generatedAt.toISOString())}">`,
     `<meta name="quickstark:report-id" content="${escapeHtml(report.reportId)}">`,
     `<meta name="quickstark:format-version" content="${report.formatVersion}">`,
@@ -2834,13 +2914,26 @@ function renderNormalizedSkillReadout(report) {
     ? '<p class="preview-note">Catalog preview only. No skill has been run, no checks have been performed, and no project files have been changed.</p>'
     : "";
 
-  const signals = report.status === "Preview" ? [] : actualReportSignals(report, profile);
+  let remainingBriefItems = 3;
+  const displayReport = report.report === "full" || report.status === "Preview"
+    ? report
+    : {
+      ...report,
+      ...Object.fromEntries(["findings", "decisions"].map((section) => {
+        const items = report[section].slice(0, remainingBriefItems);
+        remainingBriefItems -= items.length;
+        return [section, items];
+      })),
+      outputs: report.outputs.slice(0, 3),
+      checks: report.checks.filter((check) => check.status !== "passed").slice(0, 3),
+    };
+  const signals = report.status === "Preview" ? [] : actualReportSignals(displayReport, profile);
   const metrics = signals.slice(0, 3).map((signal) =>
     `<div class="metric"><span class="metric-label">${escapeHtml(signal.label)}</span><span class="metric-value">${signal.count}</span></div>`).join("");
-  const execution = renderExecutionContext(report);
+  const execution = report.report === "full" ? renderExecutionContext(report) : "";
   const evidence = renderDeliveryEvidence(report);
-  const visualization = renderReadoutVisualization(report, profile);
-  const summary = renderReadoutSignalSummary(report, profile);
+  const visualization = renderReadoutVisualization(displayReport, profile);
+  const summary = renderReadoutSignalSummary(displayReport, profile);
   const githubIssues = renderReadoutGitHubIssues(report.github);
   const sections = report.status === "Preview"
     ? renderSection(
@@ -2851,7 +2944,7 @@ function renderNormalizedSkillReadout(report) {
     : profile.sections.map((section) => renderSection(
       profile.labels[section] ?? readoutSectionLabels[section],
       readoutSectionDescriptions[section],
-      report[section],
+      displayReport[section],
       { checks: section === "checks" },
     )).join("\n  ");
 
@@ -3642,7 +3735,7 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
       const html = await readFile(path, "utf8");
       const skillName = decodeHtml(findMetadata(html, "skill"));
       const external = findMetadata(html, "report-origin") === "external";
-      const skill = SKILLS_BY_NAME.get(skillName)
+      const skill = READOUT_SKILLS_BY_NAME.get(skillName)
         ?? (external && externalSkillIdentifier.test(skillName) ? {
           name: skillName,
           displayName: decodeHtml(findMetadata(html, "skill-display-name")) || skillName,

@@ -3,7 +3,7 @@ export const COLLECTION_NAME = "QuickStark Skills";
 export const PERSONAL_REPOSITORY = "https://github.com/quickstark/skills";
 export const UPSTREAM_REPOSITORY = "https://github.com/mattpocock/skills";
 
-export const SKILLS = Object.freeze([
+const LEGACY_V2_SKILLS = Object.freeze([
   {
     bucket: "engineering",
     upstreamName: "ask-matt",
@@ -162,8 +162,8 @@ export const SKILLS = Object.freeze([
     upstreamName: "code-review",
     name: "qs-review-code",
     displayName: "QS Review: Code",
-    shortDescription: "Review code for correctness and requirements",
-    prompt: "review these changes for correctness, standards, and requirements",
+    shortDescription: "Review, improve, or refactor selected code safely",
+    prompt: "review, improve, or refactor the explicitly selected code scope safely",
     userInvoked: false,
   },
   {
@@ -408,12 +408,8 @@ export const READOUT_PROFILES_BY_NAME = Object.freeze({
   ),
 });
 
-export const UPSTREAM_SKILLS = Object.freeze(
-  SKILLS.filter((skill) => skill.upstreamName !== null),
-);
-
-export const SKILLS_BY_NAME = new Map(
-  SKILLS.map((skill) => [skill.name, skill]),
+export const READOUT_SKILLS_BY_NAME = new Map(
+  LEGACY_V2_SKILLS.map((skill) => [skill.name, skill]),
 );
 
 const V3_CORE_COMMAND_DEFINITIONS = Object.freeze([
@@ -462,7 +458,7 @@ const V3_CONTINUATION_POLICY = Object.freeze({
 });
 
 function defineV3PublicCommand([name, group, position, approvedContinuation], distribution) {
-  const skill = SKILLS_BY_NAME.get(name);
+  const skill = READOUT_SKILLS_BY_NAME.get(name);
 
   if (!skill) throw new Error(`The v3 catalog references unknown public command ${name}.`);
 
@@ -647,7 +643,7 @@ export function validateV3CatalogModel(model) {
     throw new Error("The v3 lifecycle positions must follow the confirmed catalog order.");
   }
 
-  const activeNames = SKILLS.map((skill) => skill.name).sort();
+  const activeNames = LEGACY_V2_SKILLS.map((skill) => skill.name).sort();
   const dispositionNames = Object.keys(dispositionsByName).sort();
 
   if (!hasExactValues(dispositionNames, activeNames)) {
@@ -660,7 +656,7 @@ export function validateV3CatalogModel(model) {
   ];
 
   for (const [index, command] of publicCommands.entries()) {
-    if (!SKILLS_BY_NAME.has(command.name)) {
+    if (!READOUT_SKILLS_BY_NAME.has(command.name)) {
       throw new Error(`The v3 public command ${command.name} is not in the active v2 catalog.`);
     }
 
@@ -679,7 +675,7 @@ export function validateV3CatalogModel(model) {
       throw new Error(`The v3 public command ${command.name} has invalid report modes.`);
     }
 
-    const currentSkill = SKILLS_BY_NAME.get(command.name);
+    const currentSkill = READOUT_SKILLS_BY_NAME.get(command.name);
     const expectedInvocationPolicy = currentSkill.userInvoked ? "explicit" : "model";
     if (command.invocationPolicy !== expectedInvocationPolicy) {
       throw new Error(`The v3 public command ${command.name} has an invalid invocation policy.`);
@@ -710,7 +706,7 @@ export function validateV3CatalogModel(model) {
   }
 
   for (const capability of internalCapabilities) {
-    if (!SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName)) {
+    if (!READOUT_SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName)) {
       throw new Error(`The v3 internal capability ${capability.name} must replace one non-public v2 skill.`);
     }
 
@@ -737,6 +733,19 @@ export function validateV3CatalogModel(model) {
 }
 
 validateV3CatalogModel(V3_CATALOG);
+
+// QuickStark v3 is the active promoted surface. The complete v2 inventory remains
+// private to this module only so migration coverage can prove every old command has
+// exactly one disposition without accidentally re-exporting it as installable.
+export const SKILLS = V3_PUBLIC_COMMANDS;
+
+export const SKILLS_BY_NAME = new Map(
+  SKILLS.map((skill) => [skill.name, skill]),
+);
+
+export const UPSTREAM_SKILLS = Object.freeze(
+  SKILLS.filter((skill) => skill.upstreamName !== null),
+);
 
 function defineModelGuidance(model, thinking, reason) {
   return Object.freeze({ model, thinking, reason });
@@ -817,7 +826,7 @@ export const MODEL_GUIDANCE_BY_NAME = Object.freeze({
   ),
 });
 
-export const NEXT_SKILLS_BY_NAME = Object.freeze({
+export const LEGACY_NEXT_SKILLS_BY_NAME = Object.freeze({
   "qs-help": [
     {
       name: "qs-setup",
@@ -1155,3 +1164,19 @@ export const NEXT_SKILLS_BY_NAME = Object.freeze({
     },
   ],
 });
+
+export const NEXT_SKILLS_BY_NAME = Object.freeze(Object.fromEntries(
+  V3_PUBLIC_COMMANDS.map((command) => {
+    const name = command.continuation.approvedSkills[0];
+    const target = SKILLS_BY_NAME.get(name);
+
+    if (!target) {
+      throw new Error(`/${command.name} recommends unavailable v3 command /${name}.`);
+    }
+
+    return [command.name, Object.freeze([Object.freeze({
+      name,
+      reason: `Continue with /${name} only when the completed /${command.name} outcome requires a distinct ${target.shortDescription.toLowerCase()} workflow.`,
+    })])];
+  }),
+));

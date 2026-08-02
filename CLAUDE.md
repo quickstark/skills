@@ -1,50 +1,69 @@
 # QuickStark skill collection
 
-Promoted skills live under `skills/engineering/` and `skills/productivity/`. Every promoted skill uses the `qs-` prefix; the next name segment describes its purpose: `plan`, `design`, `code`, `test`, `review`, `deploy`, `git`, `flow`, `learn`, or `skill`.
+QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills` and five optional commands in `qs-specialists`. Canonical public skill sources live under `skills/engineering/` and `skills/productivity/`. Domain modeling, module decomposition, ticket decomposition, and TDD live under `skills/internal/` as non-command capabilities.
 
-`skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` remain upstream reference material. Never promote them into the root `README.md`, the Claude plugin, or the generated Codex plugin.
+Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
 
 ## Source of truth
 
-`scripts/qs-skill-catalog.mjs` defines each promoted skill, its upstream name, bucket, invocation policy, display metadata, baseline action, purpose, approved follow-on skills, and heuristic model and thinking guidance. Add or rename a skill there before updating its folder. Derive copy-ready next prompts and their suggested model and thinking level from that catalog and the actual run evidence; do not maintain an independent prompt-routing catalog.
+`scripts/qs-skill-catalog.mjs` owns public membership, package projection, lifecycle position, invocation policy, display metadata, report profile, and the one approved continuation. Add or rename a public command there first.
 
-Each promoted skill must have:
+Every public command has:
 
-- A folder named exactly like its `SKILL.md` frontmatter `name`.
-- An `agents/openai.yaml` with matching `QS` display metadata and a `$qs-...` default prompt.
-- A linked entry in `README.md` and its bucket `README.md`.
-- A documentation page under `docs/<bucket>/<skill-name>.md`.
-- An entry in `.claude-plugin/plugin.json`.
-- A source-synchronized Codex copy in `codex/plugins/qs-skills/skills/`.
-- A catalog-generated, architecture-quality HTML readout, completion report, and up to three context-aware next prompts that explicitly embed approved follow-on skills and suggest a heuristic model and thinking level.
+- A matching canonical folder and `SKILL.md` frontmatter name.
+- Matching `agents/openai.yaml` display metadata and `$qs-...` prompt.
+- Root and bucket index entries in lifecycle order.
+- A concise generated page under `docs/<bucket>/`.
+- A purpose-specific report profile.
+- A source-synchronized copy in exactly one generated package projection.
 
-Preserve invocation mode in both harnesses. Explicitly invoked skills set `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked skills omit both restrictions.
+Explicit commands use `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked commands omit both.
 
-## Plugins
+## Packages
 
-The Claude marketplace is `.claude-plugin/marketplace.json`. Its plugin is `.claude-plugin/plugin.json` and must list exactly the promoted skills.
+The default core contains exactly twelve commands. The optional specialists package contains exactly research, prototyping, documentation, teaching, and skill authoring. Core must operate without specialist assets. No removed v2 name may be an alias, wrapper, router, or installable command.
 
-The Codex marketplace is `codex/.agents/plugins/marketplace.json`. Its plugin is `codex/plugins/qs-skills/.codex-plugin/plugin.json`. Codex accepts one skill-directory path, so `codex/plugins/qs-skills/skills/` is a generated, promoted-only snapshot rather than a second independently edited source. `codex/plugins/qs-skills/scripts/` is the generated snapshot of the shared skill catalog and HTML readout helper. The sync removes Claude-only `disable-model-invocation` frontmatter from generated Codex skills; `agents/openai.yaml` preserves the equivalent explicit-invocation policy.
+- Claude core manifest: `.claude-plugin/plugin.json`
+- Claude specialist package: `packages/qs-specialists/`
+- Codex core package: `codex/plugins/qs-skills/`
+- Codex specialist package: `codex/plugins/qs-specialists/`
+- Claude and Codex marketplaces each expose both packages.
 
-Keep `package.json`, the Claude plugin, and the Codex plugin on the same version. After changing a promoted skill or plugin, run:
+Codex and generated Claude specialist snapshots are generated outputs. Never edit them independently. Keep package, lockfile, both Claude manifests, and both Codex manifests on the same version.
+
+After a public skill, capability, catalog, documentation, or plugin change, run:
 
 ```bash
 npm run sync:codex
+npm run check:codex
 npm test
 ```
 
-When Claude Code is available, also run `claude plugin validate . --strict` after changing a Claude manifest.
+When Claude Code is available, validate both package roots:
 
-## Router and documentation
+```bash
+claude plugin validate . --strict
+claude plugin validate ./packages/qs-specialists --strict
+```
 
-`skills/engineering/qs-help/SKILL.md` is the authoritative router. Update it whenever a user-reachable skill, workflow, or category changes. Keep the root and bucket indexes split into **User-invoked** and **Model-invoked**.
+## Root-run contract
 
-Keep each promoted documentation page synchronized with its skill. Retain absolute links to the original upstream source when the skill was adapted from Matt Pocock. Never claim a personalized GitHub fork or published documentation URL exists before it has actually been created.
+`skills/engineering/qs-help/SKILL.md` is the authoritative router. `docs/skill-run-contract.md` owns shared execution and presentation policy.
 
-Every skill ends with `## Completion report and next steps`. Each run generates a self-contained HTML readout through `scripts/qs-skill-readout.mjs`. Its in-chat output reports **Status**, **Skills used**, **Outcome**, **Execution**, **Readout**, and **Top next prompts**; **Outputs** and **Checks** are included only when applicable. List only skills actually used. Offer at most three copy-ready prompts, each explicitly invoking a catalog-approved follow-on skill and carrying forward the run's actual outcome and relevant observed findings, decisions, outputs, and checks. Put every complete prompt in its own visually prominent fenced text code block. Put its heuristic suggested model and thinking level in a visually muted callout underneath. Never present a suggestion as observed quality or automatically change the active configuration. Report `None — the requested work is complete` when no follow-up is necessary. `scripts/sync-skill-output-contracts.mjs` generates and verifies this contract in both skill instructions and documentation.
+Every invocation has one public root, one bounded result, and one hosted readout. Public skills never automatically execute other public skills. Internal capabilities and bounded helpers remain inside the root run and do not produce their own readout, status, skill-used entry, or continuation.
 
-Every actual promoted skill must render with `scripts/qs-skill-readout.mjs render --require-hosted` and return only an authenticated, independently accepted `https://reports.quickstark.com/` report URL. Validate the canonical ingestion origin before sending a producer credential. If the private token, safe current-project identity, or hosted service is unavailable, fail clearly and preserve the immutable local recovery artifact when it can be safely created; never substitute localhost, a private IP, or a filesystem path as the skill result. Readouts can remain in the OS temporary `quickstark-readouts` directory as private recovery artifacts. Only an explicitly requested local preview or gallery may start a health-checked viewer: localhost on a Mac or graphical desktop, or one capability-protected private home-network address on a headless or SSH-connected Linux dev box. Linux remote preview viewers run as temporary user-managed services so they survive isolated Codex commands without permanent setup. `QS_READOUT_ACCESS=ssh` forces localhost for explicitly requested SSH forwarding. Never bind to every network interface, expose the repository, require Tailscale, or present an unverified report URL as accessible.
+`effort=quick|standard|deep` controls evidence depth and defaults to `standard`. `report=brief|full` independently controls presentation and defaults to `brief`. Effort never expands mutation scope or authorizes publication.
+
+Completion is one of `complete`, `continuation-required`, `input-required`, or `failed`. Complete emits no next prompt. Continuation-required and input-required emit exactly one copy-ready prompt. Failed emits at most one recovery prompt. Failed required checks and actionable P0/P1 findings prohibit complete.
+
+Every public `SKILL.md` ends with `## Completion report and next steps`. Shared text is generated by `scripts/sync-skill-output-contracts.mjs`; concise documentation is generated by `scripts/sync-v3-docs.mjs`.
+
+## Hosted reports
+
+Actual public runs use `scripts/qs-skill-readout.mjs render --require-hosted` and return only an independently accepted `https://reports.quickstark.com/` URL. Validate the canonical ingestion origin before sending a producer credential. Missing credentials, unsafe identity, or failed delivery must fail clearly while preserving a private recovery artifact when safe. Never substitute a filesystem path, localhost, private IP, or unverified URL.
+
+Only explicitly requested diagnostic previews may start a private viewer. Never bind to every interface, expose the repository, require Tailscale, or embed credentials in reports.
 
 ## Upstream
 
-The `origin` remote points to the personal fork at `https://github.com/quickstark/skills`. The `upstream` remote points to `https://github.com/mattpocock/skills` and must remain a read-only reference for reviewing original changes. Push personalized changes only to `origin`. Preserve the original MIT license and Matt Pocock attribution.
+`origin` is the personal fork at `https://github.com/quickstark/skills`. `upstream` is the read-only reference at `https://github.com/mattpocock/skills`. Preserve Matt Pocock's MIT license and attribution. Push personalized changes only to `origin`.

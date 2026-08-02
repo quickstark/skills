@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Skill: Write"
+  short_description: "Create and improve focused, reliable AI skills"
+  default_prompt: "Use $qs-skill-write to create or improve an effective, reliable agent skill."
+policy:
+  allow_implicit_invocation: false
