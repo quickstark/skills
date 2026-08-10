@@ -17,7 +17,7 @@ Every public invocation has one root skill, one bounded outcome, one normalized 
 
 ## In-chat continuation format
 
-Write a required continuation beneath `Top next prompt:` as a plain Markdown paragraph. In Codex it begins with the exact installed plugin literal—`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>`—and in Claude it begins with `/<command>`. Never wrap the prompt in a fenced or indented code block, and do not put the prompt or skill literal in backticks. Model and thinking guidance remains a separate muted blockquote.
+Write a required continuation beneath `Top next prompt:` in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. In Codex the prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>`—and in Claude it begins with `/<command>`. Model and thinking guidance remains outside the fence in a separate muted blockquote.
 
 ## Normalized result
 

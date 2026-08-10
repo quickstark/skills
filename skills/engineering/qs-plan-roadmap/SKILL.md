@@ -44,6 +44,6 @@ Status: Complete | Continuation required | Input required | Failed
 Skills used: /qs-plan-roadmap
 Outcome: Concise verified result.
 Readout: Verified https://reports.quickstark.com/ report URL only.
-Top next prompt: None — the requested work is complete. | one plain-text copy-ready prompt
+Top next prompt: None — the requested work is complete. | one copy-ready prompt in a fenced `text` block
 
-When continuation is required, write `Top next prompt:` and place the single complete prompt beneath it as a plain Markdown paragraph beginning with the exact Codex skill literal $qs-skills:qs-plan-spec. Claude uses `/qs-plan-spec`. Never wrap the prompt in a fenced or indented code block, and do not put the prompt or skill literal in backticks. Put heuristic model/thinking guidance in a muted blockquote beneath it. Never change the active model or reasoning setting.
+When continuation is required, write `Top next prompt:` and place the single complete prompt beneath it in its own fenced `text` block beginning with the exact Codex skill literal $qs-skills:qs-plan-spec. Claude uses `/qs-plan-spec`. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. Put heuristic model/thinking guidance outside the fence in a muted blockquote beneath it. Never change the active model or reasoning setting.

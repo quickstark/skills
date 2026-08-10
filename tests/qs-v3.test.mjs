@@ -178,16 +178,25 @@ test("all active commands default to v3 and emit only their current deterministi
   }
 });
 
-test("all active completion contracts present exact continuations as unfenced chat text", async () => {
+test("all active completion contracts present exact continuations in plain-text code blocks", async () => {
   for (const skill of SKILLS) {
     const approved = skill.continuation.approvedSkills[0];
     const target = SKILLS.find((candidate) => candidate.name === approved);
     const literal = `$${target.distribution === "core" ? "qs-skills" : "qs-specialists"}:${approved}`;
     const contract = renderSkillOutputContract(skill);
 
-    assert.match(contract, /plain Markdown paragraph/i, `${skill.name} must request ordinary chat text`);
+    assert.match(
+      contract,
+      /its own fenced `text` block/i,
+      `${skill.name} must request the code-block format rendered as Plain text`,
+    );
     assert.match(contract, new RegExp(`\\${literal}\\b`), `${skill.name} must cite the exact Codex literal`);
-    assert.doesNotMatch(contract, /```text|fenced copy-ready prompt|own fenced `text` block/i);
+    assert.match(
+      contract,
+      /never use `markdown`, `bash`, `json`, or another language/i,
+      `${skill.name} must reject every non-text fence language`,
+    );
+    assert.doesNotMatch(contract, /plain Markdown paragraph|never wrap the prompt in a fenced/i);
   }
 
   for (const path of [
@@ -197,8 +206,13 @@ test("all active completion contracts present exact continuations as unfenced ch
   ]) {
     const content = await readFile(path, "utf8");
 
-    assert.match(content, /plain Markdown paragraph/i, `${path} must document unfenced chat prompts`);
-    assert.doesNotMatch(content, /prominent fenced code block|own fenced `text` block/i);
+    assert.match(
+      content,
+      /fenced `text` (?:code )?block/i,
+      `${path} must document the code-block format rendered as Plain text`,
+    );
+    assert.match(content, /never (?:use|`markdown`).*(?:another language|`json`)/i);
+    assert.doesNotMatch(content, /plain Markdown paragraph|never (?:wrap|wrapped).*fenced/i);
   }
 });
 
