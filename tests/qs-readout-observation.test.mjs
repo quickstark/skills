@@ -45,6 +45,7 @@ const observedRun = Object.freeze({
 function nativeReadout(observation = observedRun) {
   return {
     skill: "qs-code-build",
+    report: "full",
     outcome: "Preserve the directly observed native skill-run measurements.",
     observation,
   };
@@ -561,7 +562,10 @@ test("an actual native skill readout preserves and renders its directly observed
 });
 
 test("verified Codex skill-run metrics appear near the top immediately after next prompts", () => {
-  const html = renderSkillReadout(nativeReadout());
+  const html = renderSkillReadout({
+    ...nativeReadout(),
+    completionState: "continuation-required",
+  });
   const metrics = html.match(/<section class="section presentation-run-metrics"[\s\S]*?<\/section>/)?.[0];
 
   assert.ok(metrics, "a directly observed skill run has a concise top-level metrics section");
@@ -623,6 +627,8 @@ test("a native observed skill run records independently verified passed and fail
   };
   const input = {
     ...nativeReadout({ ...observedRun, quality }),
+    status: "Failed",
+    completionState: "failed",
     checks: [
       { title: "Native observation validation", status: "passed" },
       { title: "Immutable hosted delivery", status: "passed" },
@@ -732,6 +738,7 @@ test("independently observed quality uses the same 100-check boundary as the imm
       ...observedRun,
       quality: { source: "observed-checks", passedChecks, failedChecks },
     }),
+    ...(failedChecks > 0 ? { status: "Failed", completionState: "failed" } : {}),
     checks: [
       ...Array.from({ length: passedChecks }, (_, index) => ({
         title: `Observed passing behavior ${index + 1}`,
@@ -1184,6 +1191,7 @@ test("an opted-in native render preserves observed model and independent quality
   assert.match(local, /<meta name="quickstark:quality-source" content="observed-checks">/);
   assert.match(html, /<meta name="quickstark:model" content="gpt-5\.6-sol">/);
   assert.match(html, /<meta name="quickstark:quality-source" content="observed-checks">/);
+  assert.match(html, /<meta name="quickstark:report-mode" content="full">/);
   assert.match(html, /Automatically published observation/);
   assert.doesNotMatch(stdout, /test-only-observed-codex-credential/i);
 });

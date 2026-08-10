@@ -46,12 +46,10 @@ Present only the independently accepted `https://reports.quickstark.com/` URL. I
 
 Brief in-chat output contains Status, Outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, Readout, and the one continuation only when required. Full adds the evidence trail and alternatives but never extra prompts. Omit empty sections and routine successful detail.
 
-```text
 Status: Complete | Continuation required | Input required | Failed
 Skills used: /qs-setup
 Outcome: Concise verified result.
 Readout: Verified https://reports.quickstark.com/ report URL only.
-Top next prompt: None — the requested work is complete. | one fenced copy-ready prompt
-```
+Top next prompt: None — the requested work is complete. | one plain-text copy-ready prompt
 
-When continuation is required, place the single complete prompt in its own fenced `text` block and put heuristic model/thinking guidance in a muted blockquote beneath it. Never change the active model or reasoning setting.
+When continuation is required, write `Top next prompt:` and place the single complete prompt beneath it as a plain Markdown paragraph beginning with the exact Codex skill literal $qs-skills:qs-plan-clarify. Claude uses `/qs-plan-clarify`. Never wrap the prompt in a fenced or indented code block, and do not put the prompt or skill literal in backticks. Put heuristic model/thinking guidance in a muted blockquote beneath it. Never change the active model or reasoning setting.

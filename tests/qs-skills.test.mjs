@@ -71,6 +71,7 @@ import {
   renderSkillOutputContract,
 } from "../scripts/sync-skill-output-contracts.mjs";
 import {
+  codexSkillLiteral,
   COLLECTION_PREFIX,
   MODEL_GUIDANCE_BY_NAME,
   NEXT_SKILLS_BY_NAME,
@@ -3326,6 +3327,9 @@ test("a production B report features only actual blocked states, critical findin
 
   const critical = renderSkillReadout({
     skill: "qs-code-debug",
+    status: "Failed",
+    completionState: "failed",
+    report: "full",
     outcome: "Observed a directly recorded regression.",
     findings: [{ title: "Verified production blocker", priority: "P1" }],
     checks: [{ title: "Observed failed regression", status: "failed" }],
@@ -3495,6 +3499,7 @@ test("deployment reports prominently identify only verified deployment environme
   const url = "https://reports.quickstark.com/";
   const html = renderSkillReadout({
     skill: "qs-deploy-release",
+    report: "full",
     outcome: "Verified the authenticated report deployment.",
     execution: {
       deployments: [
@@ -3528,6 +3533,7 @@ test("architecture, module, implementation, and documentation reports foreground
   ]) {
     const html = renderSkillReadout({
       skill,
+      report: "full",
       outcome: "Recorded only files actually modified by this skill run.",
       execution: {
         files: [
@@ -3648,6 +3654,7 @@ test("execution context escapes observed summaries and never attributes unrelate
   const hostile = '<script>alert("unsafe")</script>';
   const html = renderSkillReadout({
     skill: "qs-code-document",
+    report: "full",
     outcome: "Recorded only the documentation file changed by this run.",
     execution: {
       files: [{
@@ -3712,6 +3719,7 @@ test("the documentation skill has a distinct, evidence-led documentation coverag
 
   const html = renderSkillReadout({
     skill: "qs-code-document",
+    report: "full",
     outcome: "Documented the verified report contract and deployment behavior.",
     execution: {
       files: [{
@@ -3933,6 +3941,9 @@ test("catalog previews reject all claimed GitHub and release provenance", () => 
 test("review reports preserve independent Standards and Specification priorities", () => {
   const html = renderSkillReadout({
     skill: "qs-review-code",
+    status: "Failed",
+    completionState: "failed",
+    report: "full",
     outcome: "Reviewed standards and specification requirements independently.",
     findings: [
       {
@@ -4151,6 +4162,7 @@ test("implementation and review reports expose different useful results", () => 
 test("roadmap and release reports prioritize actual decisions and observed release gates", () => {
   const roadmap = renderSkillReadout({
     skill: "qs-plan-roadmap",
+    report: "full",
     outcome: "Ordered the independently recorded report design decisions.",
     decisions: [
       { title: "Model the domain vocabulary", detail: "Resolve purpose, primary signals, and preview semantics." },
@@ -4159,6 +4171,7 @@ test("roadmap and release reports prioritize actual decisions and observed relea
   });
   const release = renderSkillReadout({
     skill: "qs-deploy-release",
+    report: "full",
     outcome: "Verified and redeployed the existing readout service.",
     checks: [
       { title: "Docker health", status: "passed", detail: "The approved deployed service is healthy." },
@@ -4299,7 +4312,7 @@ test("top next prompts carry forward the actual run and explicitly invoke approv
   assert.equal(report.nextSkills.length, 3);
 
   for (const next of report.nextSkills) {
-    assert.ok(next.prompt.includes(`$${next.name}`), `${next.name} is not a Codex-native skill invocation`);
+    assert.ok(next.prompt.includes(codexSkillLiteral(next.name)), `${next.name} is not a Codex-native skill invocation`);
     assert.match(next.prompt, /replace skill-only suggestions with contextual continuation prompts/);
     assert.match(next.prompt, /Keep the catalog as the routing source of truth/);
     assert.match(next.prompt, /Embed the approved follow-on skill in every prompt/);
@@ -4354,12 +4367,13 @@ test("a run can preserve a more specific copy-ready prompt for its approved next
 test("an observed critical finding increases the suggested model and thinking level", () => {
   const report = normalizeSkillReadout({
     skill: "qs-skill-write",
+    completionState: "continuation-required",
     outcome: "Identified a critical security issue while preparing the follow-on review.",
     findings: [{ title: "Critical authorization boundary", priority: "P0" }],
-    nextSkills: ["qs-code-document"],
+    nextSkills: ["qs-review-code"],
   });
 
-  assert.equal(MODEL_GUIDANCE_BY_NAME["qs-code-document"].model, "gpt-5.6-terra");
+  assert.equal(MODEL_GUIDANCE_BY_NAME["qs-review-code"].model, "gpt-5.6-sol");
   assert.equal(report.nextSkills[0].model, "gpt-5.6-sol");
   assert.equal(report.nextSkills[0].thinking, "xhigh");
   assert.equal(report.nextSkills[0].modelSource, "heuristic");
@@ -4370,9 +4384,10 @@ test("an observed critical finding increases the suggested model and thinking le
 test("an actual failed check raises routine follow-on guidance without inventing measurements", () => {
   const report = normalizeSkillReadout({
     skill: "qs-skill-write",
+    completionState: "continuation-required",
     outcome: "A verification check failed and needs investigation.",
     checks: [{ title: "Regression suite", status: "failed" }],
-    nextSkills: ["qs-code-document"],
+    nextSkills: ["qs-review-code"],
   });
 
   assert.equal(report.nextSkills[0].model, "gpt-5.6-sol");
@@ -4431,7 +4446,7 @@ test("next prompts reject an omitted, different, or merely prefixed embedded ski
       skill: "qs-skill-write",
       outcome: "Prepared the shared recommendation contract.",
       nextSkills: [{ name: "qs-review-code", prompt }],
-    }), /must explicitly invoke \/qs-review-code/i);
+    }), /must explicitly invoke .*\/qs-review-code/i);
   }
 });
 
@@ -4446,7 +4461,7 @@ test("native follow-on prompts reject misleading first invocations", () => {
       skill: "qs-skill-write",
       outcome: "Require the first actionable prompt to invoke its approved next skill.",
       nextSkills: [{ name: "qs-review-code", prompt }],
-    }), /must explicitly invoke \/qs-review-code/i, prompt);
+    }), /must explicitly invoke .*\/qs-review-code/i, prompt);
   }
 });
 
@@ -4455,9 +4470,9 @@ test("native follow-on prompts preserve their valid first approved invocation", 
     "Use /qs-review-code to verify the shared contract; consult /qs-code-document only as supporting context.",
     "  Use   /qs-review-code to verify the shared contract.  ",
     "USE /qs-review-code to verify the shared contract.",
-    "Use $qs-review-code to verify the shared contract; consult /qs-code-document only as supporting context.",
-    "  Use   $qs-review-code to verify the shared contract.  ",
-    "USE $qs-review-code to verify the shared contract.",
+    "Use $qs-skills:qs-review-code to verify the shared contract; consult /qs-code-document only as supporting context.",
+    "  Use   $qs-skills:qs-review-code to verify the shared contract.  ",
+    "USE $qs-skills:qs-review-code to verify the shared contract.",
   ]) {
     const report = normalizeSkillReadout({
       skill: "qs-skill-write",
@@ -4472,17 +4487,18 @@ test("native follow-on prompts preserve their valid first approved invocation", 
 
 test("native Codex skill mentions reject misleading or merely prefixed first actions", () => {
   for (const prompt of [
-    "Use $qs-deploy-release to release this project; mention $qs-review-code later.",
-    "Do not use $qs-review-code; use $qs-help instead.",
-    "Mention $qs-review-code, then use $qs-deploy-release.",
-    "Use $qs-review-code-extra and mention $qs-review-code.",
-    "Use $qs-review-code:extra to bypass the approved skill.",
+    "Use $qs-skills:qs-deploy-release to release this project; mention $qs-skills:qs-review-code later.",
+    "Do not use $qs-skills:qs-review-code; use $qs-skills:qs-help instead.",
+    "Mention $qs-skills:qs-review-code, then use $qs-skills:qs-deploy-release.",
+    "Use $qs-skills:qs-review-code-extra and mention $qs-skills:qs-review-code.",
+    "Use $qs-skills:qs-review-code:extra to bypass the approved skill.",
+    "Use $qs-review-code to bypass the package-qualified literal.",
   ]) {
     assert.throws(() => normalizeSkillReadout({
       skill: "qs-skill-write",
       outcome: "Preserve strict first-action validation for native Codex skill mentions.",
       nextSkills: [{ name: "qs-review-code", prompt }],
-    }), /must explicitly invoke \/qs-review-code/i, prompt);
+    }), /must explicitly invoke .*\/qs-review-code/i, prompt);
   }
 });
 
@@ -4495,7 +4511,7 @@ test("catalog preview prompts never claim that prior work actually happened", ()
   });
 
   for (const next of report.nextSkills) {
-    assert.ok(next.prompt.includes(`$${next.name}`));
+    assert.ok(next.prompt.includes(codexSkillLiteral(next.name)));
     assert.equal(next.modelSource, "heuristic");
     assert.doesNotMatch(next.prompt, /Continue from the recorded outcome|Carry forward/i);
     assert.doesNotMatch(next.prompt, /actual exploration occurred/i);
@@ -4530,7 +4546,7 @@ test("awaiting-input prompts carry forward the actual unresolved decision", () =
     nextSkills: ["qs-plan-clarify"],
   });
 
-  assert.match(report.nextSkills[0].prompt, /Use \$qs-plan-clarify/);
+  assert.match(report.nextSkills[0].prompt, /Use \$qs-skills:qs-plan-clarify/);
   assert.match(report.nextSkills[0].prompt, /Awaiting a choice between catalog-derived prompts/);
   assert.doesNotMatch(report.nextSkills[0].prompt, /completed exploration|decision was resolved/i);
 });
@@ -4816,6 +4832,7 @@ test("the HTTP viewer serves the actual execution machine, verified deployment, 
   const directory = await temporaryReadoutDirectory(context);
   const report = await writeSkillReadout({
     skill: "qs-code-document",
+    report: "full",
     outcome: "Documented the verified hosted report deployment.",
     projectIdentity: explicitProject("skills"),
     execution: {

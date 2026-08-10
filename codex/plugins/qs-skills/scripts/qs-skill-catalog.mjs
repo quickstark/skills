@@ -491,6 +491,10 @@ const V3_EFFORT_MODES = Object.freeze(["quick", "standard", "deep"]);
 const V3_REPORT_MODES = Object.freeze(["brief", "full"]);
 const V3_NO_PROMPT_STATES = Object.freeze(["complete"]);
 const V3_ONE_PROMPT_STATES = Object.freeze(["continuation-required", "input-required"]);
+const V3_CODEX_PLUGIN_BY_DISTRIBUTION = Object.freeze({
+  core: "qs-skills",
+  specialist: "qs-specialists",
+});
 
 const V3_EFFORT_POLICY = Object.freeze({
   supported: V3_EFFORT_MODES,
@@ -517,6 +521,7 @@ function defineV3PublicCommand([name, group, position, approvedContinuation], di
   return Object.freeze({
     ...skill,
     distribution,
+    codexPlugin: V3_CODEX_PLUGIN_BY_DISTRIBUTION[distribution],
     lifecycle: Object.freeze({ group, position }),
     invocationPolicy: skill.userInvoked ? "explicit" : "model",
     effort: V3_EFFORT_POLICY,
@@ -735,6 +740,10 @@ export function validateV3CatalogModel(model) {
       throw new Error(`The v3 public command ${command.name} has an invalid invocation policy.`);
     }
 
+    if (command.codexPlugin !== V3_CODEX_PLUGIN_BY_DISTRIBUTION[command.distribution]) {
+      throw new Error(`The v3 public command ${command.name} has an invalid Codex plugin literal.`);
+    }
+
     if (command.continuation?.maximumPrompts !== 1) {
       throw new Error(`The v3 public command ${command.name} must allow at most one continuation prompt.`);
     }
@@ -800,6 +809,14 @@ export const SKILLS = V3_PUBLIC_COMMANDS;
 export const SKILLS_BY_NAME = new Map(
   SKILLS.map((skill) => [skill.name, skill]),
 );
+
+export function codexSkillLiteral(name) {
+  const skill = SKILLS_BY_NAME.get(name);
+
+  if (!skill) throw new Error(`/${name} is not an active QuickStark v3 command.`);
+
+  return `$${skill.codexPlugin}:${skill.name}`;
+}
 
 export const UPSTREAM_SKILLS = Object.freeze(
   SKILLS.filter((skill) => skill.upstreamName !== null),

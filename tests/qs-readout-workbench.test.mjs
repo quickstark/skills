@@ -196,6 +196,8 @@ test("the production Workbench presents the selected B metadata, visual summary,
   const { directory, viewer } = await createProjectWorkbench(context);
   const report = await writeSkillReadout({
     skill: "qs-code-debug",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Diagnosed the verified panel-height regression.",
     generatedAt: "2026-07-26T21:00:00.000Z",
     projectIdentity: verifiedProject("skills"),
@@ -220,7 +222,8 @@ test("the production Workbench presents the selected B metadata, visual summary,
   assert.match(detail[0], /NO CRITICAL EXCEPTIONS/);
   assert.match(detail[0], /The application was cut off by a legacy panel-height cap/);
   assert.match(detail[0], /1 of 1 recorded checks passed/);
-  assert.match(detail[0], /Use \$qs-test-tdd/);
+  assert.match(detail[0], /Use \$qs-skills:qs-review-code/);
+  assert.doesNotMatch(detail[0], /qs-test-tdd|qs-design-architecture|qs-plan-interview/);
   assert.match(detail[0], /Heuristic model and thinking guidance/);
   assert.match(detail[0], /aria-label="Complete immutable skill readout"/);
   assert.ok(
@@ -530,6 +533,8 @@ test("a selected project report presents its complete immutable findings, checks
   const { directory, viewer } = await createProjectWorkbench(context);
   const report = await writeSkillReadout({
     skill: "qs-code-build",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Display the selected report without replacing its immutable original.",
     generatedAt: "2026-07-26T19:04:00.000Z",
     projectIdentity: verifiedProject("skills"),
@@ -579,6 +584,8 @@ test("the Workbench safely preserves complete historical readouts without profil
   const { directory, viewer } = await createProjectWorkbench(context);
   const report = await writeSkillReadout({
     skill: "qs-code-build",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Preserve the verified historical readout and its original section labels.",
     generatedAt: "2026-07-26T20:15:00.000Z",
     projectIdentity: verifiedProject("skills"),
@@ -708,6 +715,7 @@ test("the Project Workbench displays the verified model, effort, tokens, duratio
   const { directory, viewer } = await createProjectWorkbench(context);
   const observed = await writeSkillReadout({
     skill: "qs-code-build",
+    report: "full",
     outcome: "Display the exact immutable observed skill run in the Project Workbench.",
     generatedAt: "2026-07-26T19:03:00.000Z",
     projectIdentity: verifiedProject("skills"),
@@ -852,6 +860,9 @@ test("the Workbench and immutable readout agree at the 99- and 100-check evidenc
     ];
     const report = await writeSkillReadout({
       skill: "qs-code-build",
+      status: "Failed",
+      completionState: "failed",
+      report: "full",
       outcome: `Preserve ${passedChecks + failedChecks} independently observed Workbench checks.`,
       generatedAt: `2026-07-26T19:2${index}:00.000Z`,
       projectIdentity: verifiedProject("skills"),

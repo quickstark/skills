@@ -15,6 +15,10 @@ Every public invocation has one root skill, one bounded outcome, one normalized 
 - `input-required`: work requires one material user decision, permission, or unavailable input. It emits exactly one prompt that requests and carries that input forward.
 - `failed`: execution or validation did not produce a usable outcome. It emits at most one recovery prompt when a concrete action can resolve the failure.
 
+## In-chat continuation format
+
+Write a required continuation beneath `Top next prompt:` as a plain Markdown paragraph. In Codex it begins with the exact installed plugin literal—`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>`—and in Claude it begins with `/<command>`. Never wrap the prompt in a fenced or indented code block, and do not put the prompt or skill literal in backticks. Model and thinking guidance remains a separate muted blockquote.
+
 ## Normalized result
 
 The result records the root skill, effort, report mode, completion state, concise outcome, real decisions and findings, material outputs, checks actually performed, verified execution evidence, and zero or one continuation. Failed required checks and actionable P0/P1 findings cannot normalize as complete. The renderer applies omission rules and projects both the in-chat summary and hosted report from this result.

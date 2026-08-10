@@ -15,6 +15,7 @@ import {
   V3_SPECIALIST_SKILLS,
 } from "../scripts/qs-skill-catalog.mjs";
 import { normalizeSkillReadout, renderSkillReadout } from "../scripts/qs-skill-readout.mjs";
+import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
 import { validatePublicSkillText, validateV3Skills } from "../scripts/validate-v3-skills.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -38,6 +39,20 @@ async function directories(path) {
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
     .sort();
+}
+
+async function filesRecursively(path) {
+  const entries = await readdir(path, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const entryPath = join(path, entry.name);
+
+    if (entry.isDirectory()) files.push(...await filesRecursively(entryPath));
+    else if (entry.isFile()) files.push(entryPath);
+  }
+
+  return files;
 }
 
 test("v3 exposes the exact ordered core and specialist command surfaces", () => {
@@ -113,6 +128,97 @@ test("normalized v3 results enforce modes, completion, and deterministic continu
     completionState: "continuation-required",
     nextSkills: ["qs-review-code", "qs-review-code"],
   }), /at most one/i);
+});
+
+test("all active commands default to v3 and emit only their current deterministic prompt", () => {
+  for (const skill of SKILLS) {
+    const complete = normalizeSkillReadout({
+      skill: skill.name,
+      outcome: `Completed the bounded ${skill.name} result.`,
+    });
+
+    assert.equal(complete.report, "brief", `${skill.name} must default to the v3 brief report`);
+    assert.equal(complete.completionState, "complete", `${skill.name} must default to v3 completion`);
+    assert.deepEqual(complete.nextSkills, [], `${skill.name} must not manufacture follow-on work`);
+
+    for (const [status, completionState] of [
+      ["Completed", "continuation-required"],
+      ["Awaiting input", "input-required"],
+    ]) {
+      const result = normalizeSkillReadout({
+        skill: skill.name,
+        status,
+        completionState,
+        outcome: `The bounded ${skill.name} result requires its approved continuation.`,
+      });
+      const approved = skill.continuation.approvedSkills[0];
+      const target = SKILLS.find((candidate) => candidate.name === approved);
+      const literal = `$${target.distribution === "core" ? "qs-skills" : "qs-specialists"}:${approved}`;
+
+      assert.equal(result.nextSkills.length, 1, `${skill.name} must emit exactly one prompt`);
+      assert.equal(result.nextSkills[0].name, approved, `${skill.name} must use its catalog route`);
+      assert.match(
+        result.nextSkills[0].prompt,
+        new RegExp(`^Use \\${literal}\\b`),
+        `${skill.name} must emit the exact package-qualified Codex invocation`,
+      );
+      assert.doesNotMatch(
+        result.nextSkills[0].prompt,
+        new RegExp(`^Use \\$${approved}\\b`),
+        `${skill.name} must not emit an unqualified Codex invocation`,
+      );
+      for (const retired of retiredNames) {
+        assert.doesNotMatch(
+          result.nextSkills[0].prompt,
+          new RegExp(`[$/]${retired}\\b`),
+          `${skill.name} must not recommend retired ${retired}`,
+        );
+      }
+    }
+  }
+});
+
+test("all active completion contracts present exact continuations as unfenced chat text", async () => {
+  for (const skill of SKILLS) {
+    const approved = skill.continuation.approvedSkills[0];
+    const target = SKILLS.find((candidate) => candidate.name === approved);
+    const literal = `$${target.distribution === "core" ? "qs-skills" : "qs-specialists"}:${approved}`;
+    const contract = renderSkillOutputContract(skill);
+
+    assert.match(contract, /plain Markdown paragraph/i, `${skill.name} must request ordinary chat text`);
+    assert.match(contract, new RegExp(`\\${literal}\\b`), `${skill.name} must cite the exact Codex literal`);
+    assert.doesNotMatch(contract, /```text|fenced copy-ready prompt|own fenced `text` block/i);
+  }
+
+  for (const path of [
+    join(root, "docs", "skill-run-contract.md"),
+    join(root, "CONTEXT.md"),
+    join(root, "skills", "productivity", "qs-skill-write", "GLOSSARY.md"),
+  ]) {
+    const content = await readFile(path, "utf8");
+
+    assert.match(content, /plain Markdown paragraph/i, `${path} must document unfenced chat prompts`);
+    assert.doesNotMatch(content, /prominent fenced code block|own fenced `text` block/i);
+  }
+});
+
+test("active canonical and generated skill files contain no retired public command references", async () => {
+  const roots = [
+    ...SKILLS.map((skill) => join(root, "skills", skill.bucket, skill.name)),
+    join(root, "codex", "plugins", "qs-skills", "skills"),
+    join(root, "codex", "plugins", "qs-specialists", "skills"),
+    join(root, "packages", "qs-specialists", "skills"),
+  ];
+
+  for (const path of roots) {
+    for (const file of await filesRecursively(path)) {
+      const content = await readFile(file, "utf8");
+
+      for (const retired of retiredNames) {
+        assert.doesNotMatch(content, new RegExp(`\\b${retired}\\b`), `${file} references ${retired}`);
+      }
+    }
+  }
 });
 
 test("brief and full reports project different evidence from the same result", () => {

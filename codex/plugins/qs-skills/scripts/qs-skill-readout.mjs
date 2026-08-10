@@ -10,6 +10,7 @@ import { promisify } from "node:util";
 
 import {
   COLLECTION_NAME,
+  codexSkillLiteral,
   LEGACY_NEXT_SKILLS_BY_NAME,
   MODEL_GUIDANCE_BY_NAME,
   NEXT_SKILLS_BY_NAME,
@@ -1917,7 +1918,11 @@ function createNextPrompt(name, context, reason) {
   const action = (target?.prompt ?? reason ?? "continue the recorded work")
     .replace(/[.!?]+$/, "")
     .trim();
-  const invocation = READOUT_SKILLS_BY_NAME.has(name) ? `$${name}` : `/${name}`;
+  const invocation = SKILLS_BY_NAME.has(name)
+    ? codexSkillLiteral(name)
+    : READOUT_SKILLS_BY_NAME.has(name)
+      ? `$${name}`
+      : `/${name}`;
   const prompt = [
     `Use ${invocation} to ${action.charAt(0).toLowerCase()}${action.slice(1)}.`,
   ];
@@ -1949,10 +1954,20 @@ function createNextPrompt(name, context, reason) {
 function normalizeNextPrompt(value, name, label) {
   const prompt = requireText(value, label);
   const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const prefix = READOUT_SKILLS_BY_NAME.has(name) ? "[/\\$]" : "/";
+  const invocation = SKILLS_BY_NAME.has(name)
+    ? codexSkillLiteral(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    : null;
+  const firstAction = invocation
+    ? `(?:${invocation}|/${escapedName})`
+    : READOUT_SKILLS_BY_NAME.has(name)
+      ? `[/\\$]${escapedName}`
+      : `/${escapedName}`;
 
-  if (!new RegExp(`^use\\s+${prefix}${escapedName}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
-    throw new Error(`${label} must explicitly invoke /${name} as its first action.`);
+  if (!new RegExp(`^use\\s+${firstAction}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
+    const expected = SKILLS_BY_NAME.has(name)
+      ? `${codexSkillLiteral(name)} or /${name}`
+      : `/${name}`;
+    throw new Error(`${label} must explicitly invoke ${expected} as its first action.`);
   }
 
   return prompt;
@@ -2098,13 +2113,10 @@ export function normalizeSkillReadout(input) {
   }
 
   const skillName = requireText(input.skill, "skill").replace(/^\//, "");
-  const v3OnlySkill = SKILLS_BY_NAME.has(skillName)
-    && LEGACY_NEXT_SKILLS_BY_NAME[skillName] === undefined;
-  const v3 = v3OnlySkill
-    || input.completionState !== undefined
-    || input.effort !== undefined
-    || input.report !== undefined
-    || input.reportMode !== undefined;
+  // Public catalog membership selects the v3 contract. Optional result fields
+  // refine that contract; their omission must never opt an active command back
+  // into the retired v2 prompt graph.
+  const v3 = SKILLS_BY_NAME.has(skillName);
   const skill = (v3 ? SKILLS_BY_NAME : READOUT_SKILLS_BY_NAME).get(skillName);
 
   if (!skill) throw new Error(`/${skillName} is not a promoted QuickStark skill.`);
@@ -3167,6 +3179,9 @@ export async function writeSkillReadout(input, options = {}) {
   return {
     skill: report.skill.name,
     status: report.status,
+    effort: report.effort,
+    report: report.report,
+    completionState: report.completionState,
     reportId: report.reportId,
     generatedAt: report.generatedAt.toISOString(),
     projectIdentity: report.projectIdentity,
@@ -5223,6 +5238,9 @@ async function acceptReadoutSubmission(envelope, {
   const reportInput = {
     skill: envelope.skill,
     status: envelope.status,
+    effort: envelope.effort,
+    report: envelope.report,
+    completionState: envelope.completionState,
     outcome: envelope.outcome,
     generatedAt: envelope.generatedAt,
     reportId: envelope.runId.toLowerCase(),
@@ -5266,6 +5284,9 @@ async function acceptReadoutSubmission(envelope, {
       reportId: normalized.reportId,
       generatedAt: normalized.generatedAt.toISOString(),
       status: normalized.status,
+      effort: normalized.effort,
+      report: normalized.report,
+      completionState: normalized.completionState,
       outcome: normalized.outcome,
       findings: normalized.findings,
       decisions: normalized.decisions,
@@ -6295,7 +6316,7 @@ function printHelp() {
 
 Usage:
   node scripts/qs-skill-readout.mjs render --input /absolute/readout.json
-  node scripts/qs-skill-readout.mjs render --data '{"skill":"qs-help","outcome":"Selected the right workflow."}'
+  node scripts/qs-skill-readout.mjs render --data '{"skill":"qs-help","completionState":"complete","outcome":"Selected the right workflow."}'
   node scripts/qs-skill-readout.mjs visual --skill qs-design-architecture --input /absolute/visual.html
   node scripts/qs-skill-readout.mjs gallery
   node scripts/qs-skill-readout.mjs serve [--host 127.0.0.1] [--port 4173]
@@ -6481,6 +6502,9 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
         generatedAt: result.generatedAt,
         skill: result.skill,
         status: result.status,
+        effort: result.effort,
+        report: result.report,
+        completionState: result.completionState,
         outcome: input.outcome,
         findings: input.findings,
         decisions: input.decisions,

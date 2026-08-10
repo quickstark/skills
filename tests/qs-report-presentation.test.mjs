@@ -13,6 +13,7 @@ import {
   writeSkillReadout,
 } from "../scripts/qs-skill-readout.mjs";
 import {
+  codexSkillLiteral,
   READOUT_PROFILES_BY_NAME,
   SKILLS,
   SKILLS_BY_NAME,
@@ -186,6 +187,7 @@ test("actual skill readouts expose only recorded user-run commands and key code 
   };
   const input = {
     skill: "qs-code-build",
+    completionState: "continuation-required",
     outcome: "Recorded the actual user installation command and versioned plugin manifest.",
     commands: [command],
     keyCode: [keyCode],
@@ -222,6 +224,8 @@ test("actual skill readouts expose only recorded user-run commands and key code 
 test("top next prompts follow the visual summary before user actions and execution evidence", () => {
   const html = renderSkillReadout({
     skill: "qs-code-build",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Keep the next action above recorded commands, source, and changed files.",
     execution: {
       files: [{
@@ -448,6 +452,8 @@ test("the Project Workbench preserves recorded user commands and key code withou
   const snippet = '{\n  "name": "qs-skills",\n  "version": "2.6.0"\n}';
   const report = await writeSkillReadout({
     skill: "qs-code-build",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Preserve an actionable installation command and the actual published plugin version.",
     generatedAt: "2026-07-27T18:10:00.000Z",
     projectIdentity: { ...quickStarkProject, source: "git-origin" },
@@ -622,6 +628,8 @@ test("actual Chromium renders verified Codex metrics as responsive top-of-report
 
   await page.setContent(renderSkillReadout({
     skill: "qs-code-build",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Show the independently observed Codex metrics without moving recommended next actions.",
     observation: {
       version: 1,
@@ -703,6 +711,8 @@ test("actual Chromium renders responsive 12 px user-run commands and complete ke
 
   await page.setContent(renderSkillReadout({
     skill: "qs-code-build",
+    report: "full",
+    completionState: "continuation-required",
     outcome: "Provide actual install and debugging instructions with the published manifest.",
     commands,
     keyCode: [{
@@ -773,6 +783,9 @@ test("actual Chromium renders responsive 12 px user-run commands and complete ke
 test("the five-second report summary features a recorded P0 before an earlier P1 finding", () => {
   const html = renderSkillReadout({
     skill: "qs-code-debug",
+    status: "Failed",
+    completionState: "failed",
+    report: "full",
     outcome: "Diagnosed multiple independently recorded production regressions.",
     findings: [
       {
@@ -979,6 +992,7 @@ test("the five-second summary displays the verified issue total instead of the s
 test("a completed clean code review recommends verified Git integration as its next action", () => {
   const input = {
     skill: "qs-review-code",
+    completionState: "continuation-required",
     outcome: "Independently verified the approved reporting change; main remains ahead of origin/main.",
     findings: [],
     checks: [{ title: "Independent review and production regression suite", status: "passed" }],
@@ -987,66 +1001,66 @@ test("a completed clean code review recommends verified Git integration as its n
   const html = renderSkillReadout(input);
 
   assert.equal(report.nextSkills[0].name, "qs-git-merge");
-  assert.match(report.nextSkills[0].prompt, /^Use \$qs-git-merge\b/);
+  assert.match(report.nextSkills[0].prompt, /^Use \$qs-skills:qs-git-merge\b/);
   assert.match(report.nextSkills[0].prompt, /main remains ahead of origin\/main/i);
-  assert.match(html, /\$qs-git-merge/);
+  assert.match(html, /\$qs-skills:qs-git-merge/);
   assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/);
 });
 
-test("tested and independently reviewed build and TDD reports surface the pending GitHub integration", () => {
-  for (const [skill, skillsUsed] of [
-    ["qs-code-build", ["qs-code-build", "qs-test-tdd", "qs-review-code"]],
-    ["qs-test-tdd", ["qs-test-tdd", "qs-review-code"]],
-  ]) {
-    const input = {
-      skill,
-      skillsUsed,
-      outcome: "Verified the implementation and review; the current main commit has not been published to GitHub.",
-      findings: [],
-      checks: [{ title: "Behavior-first regression suite", status: "passed" }],
-    };
-    const report = normalizeSkillReadout(input);
-    const html = renderSkillReadout(input);
+test("a completed build uses the single v3 review continuation", () => {
+  const input = {
+    skill: "qs-code-build",
+    completionState: "continuation-required",
+    outcome: "Verified the implementation and its internal TDD loop; an independent review remains.",
+    findings: [],
+    checks: [{ title: "Behavior-first regression suite", status: "passed" }],
+  };
+  const report = normalizeSkillReadout(input);
+  const html = renderSkillReadout(input);
 
-    assert.equal(report.nextSkills[0].name, "qs-git-merge", skill);
-    assert.match(report.nextSkills[0].prompt, /^Use \$qs-git-merge\b/, skill);
-    assert.match(report.nextSkills[0].prompt, /has not been published to GitHub/i, skill);
-    assert.match(html, /\$qs-git-merge/, skill);
-    assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/, skill);
-  }
+  assert.equal(report.nextSkills[0].name, "qs-review-code");
+  assert.match(report.nextSkills[0].prompt, /^Use \$qs-skills:qs-review-code\b/);
+  assert.match(report.nextSkills[0].prompt, /independent review remains/i);
+  assert.match(html, /\$qs-skills:qs-review-code/);
+  assert.doesNotMatch(html, /\$qs-test-tdd|Merged pull request|Published commit|Released version/);
 });
 
 test("actionable reviews and failed checks never recommend merging an unready change", () => {
   for (const input of [
     {
       skill: "qs-review-code",
+      status: "Failed",
+      completionState: "failed",
       outcome: "An independently observed review finding must be fixed before integration.",
       findings: [{ title: "Documented requirement is not implemented", priority: "P1" }],
       checks: [{ title: "Regression suite", status: "passed" }],
     },
     {
       skill: "qs-review-code",
+      status: "Failed",
+      completionState: "failed",
       outcome: "A failed regression must not be published.",
       findings: [],
       checks: [{ title: "Regression suite", status: "failed" }],
     },
     {
       skill: "qs-code-build",
-      skillsUsed: ["qs-code-build", "qs-review-code"],
+      status: "Failed",
+      completionState: "failed",
       outcome: "An independently reviewed implementation still has a failing check.",
       checks: [{ title: "Regression suite", status: "failed" }],
     },
   ]) {
     const report = normalizeSkillReadout(input);
 
-    assert.notEqual(report.nextSkills[0].name, "qs-git-merge", input.outcome);
-    assert.doesNotMatch(report.nextSkills[0].prompt, /^Use \$qs-git-merge\b/, input.outcome);
+    assert.deepEqual(report.nextSkills, [], input.outcome);
   }
 });
 
 test("Git integration preserves a separate explicitly approved release step", () => {
   const input = {
     skill: "qs-git-merge",
+    completionState: "continuation-required",
     outcome: "Verified the current branch and GitHub integration without claiming a release.",
     checks: [{ title: "Integrated production regression suite", status: "passed" }],
   };
@@ -1055,9 +1069,9 @@ test("Git integration preserves a separate explicitly approved release step", ()
   const html = renderSkillReadout(input);
 
   assert.ok(release, "a documented GitHub delivery can lead to a separately approved release");
-  assert.match(release.prompt, /^Use \$qs-deploy-release\b/);
-  assert.match(release.reason, /approved|explicit/i);
-  assert.match(html, /\$qs-deploy-release/);
+  assert.match(release.prompt, /^Use \$qs-skills:qs-deploy-release\b/);
+  assert.match(release.reason, /only when|documented deployment/i);
+  assert.match(html, /\$qs-skills:qs-deploy-release/);
   assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/);
 });
 
@@ -1452,23 +1466,13 @@ test("GitHub verification rejects unsafe repository identities before making an 
   }
 });
 
-test("production B renders actual 13 px featured details, 12 px native prompts, and aligned responsive cards", async (context) => {
+test("production B renders the single current v3 prompt with responsive readable typography", async (context) => {
   const featuredDetail = "The full-height report keeps its recorded observation independently readable.";
   const nextSkills = [
     {
-      name: "qs-test-tdd",
-      reason: "Protect the confirmed production failure with a regression test.",
-      prompt: "Use $qs-test-tdd to protect the confirmed full-height report regression.",
-    },
-    {
       name: "qs-review-code",
       reason: "Independently review the recorded report, sidebar, issue ownership, immutable history, verified issue totals, publication boundaries, and responsive presentation before treating the implementation as complete.",
-      prompt: "Use $qs-review-code to independently inspect the full-height report, verified GitHub issue total, responsive presentation, complete native prompts, preserved immutable historical reports, and unlinked local Git artifacts.",
-    },
-    {
-      name: "qs-design-architecture",
-      reason: "Inspect the confirmed architectural boundary.",
-      prompt: "Use /qs-design-architecture to inspect the verified production boundary.",
+      prompt: "Use $qs-skills:qs-review-code to independently inspect the full-height report, verified GitHub issue total, responsive presentation, complete native prompts, preserved immutable historical reports, and unlinked local Git artifacts.",
     },
   ];
   const browser = await chromium.launch({ headless: true });
@@ -1481,6 +1485,7 @@ test("production B renders actual 13 px featured details, 12 px native prompts, 
 
   await page.setContent(renderSkillReadout({
     skill: "qs-code-debug",
+    completionState: "continuation-required",
     outcome: "Verify the approved B layout in an actual Chromium browser.",
     findings: [{
       title: "A recorded production observation",
@@ -1501,7 +1506,7 @@ test("production B renders actual 13 px featured details, 12 px native prompts, 
 
   const cards = page.locator("article.next-card");
 
-  assert.equal(await cards.count(), 3);
+  assert.equal(await cards.count(), 1);
 
   for (const [index, next] of nextSkills.entries()) {
     const card = cards.nth(index);
@@ -1513,67 +1518,26 @@ test("production B renders actual 13 px featured details, 12 px native prompts, 
     assert.equal(await code.textContent(), next.prompt, "the actual visible prompt remains complete and copy-ready");
   }
 
-  const desktop = await cards.evaluateAll((elements) => elements.map((element) => {
-    const card = element.getBoundingClientRect();
-    const prompt = element.querySelector("pre").getBoundingClientRect();
-
-    return { top: card.top, bottom: card.bottom, promptTop: prompt.top };
-  }));
-
-  for (const card of desktop.slice(1)) {
-    assert.ok(Math.abs(card.top - desktop[0].top) <= 1, "all three desktop cards begin on the same row");
-    assert.ok(Math.abs(card.bottom - desktop[0].bottom) <= 1, "unequal prompts retain equal desktop card heights");
-    assert.ok(Math.abs(card.promptTop - desktop[0].promptTop) <= 1, "copy-ready prompts align despite unequal explanation lengths");
+  for (const width of [1040, 760, 420]) {
+    await page.setViewportSize({ width, height: 1000 });
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      true,
+      `the single v3 prompt never introduces horizontal overflow at ${width}px`,
+    );
   }
-
-  await page.setViewportSize({ width: 1040, height: 1000 });
-
-  const tablet = await cards.evaluateAll((elements) => elements.map((element) => {
-    const box = element.getBoundingClientRect();
-
-    return { top: box.top, bottom: box.bottom };
-  }));
-
-  assert.ok(Math.abs(tablet[0].top - tablet[1].top) <= 1, "the first two tablet cards share a row");
-  assert.ok(Math.abs(tablet[0].bottom - tablet[1].bottom) <= 1, "tablet cards remain equal in height");
-  assert.ok(tablet[2].top > tablet[0].bottom, "the third tablet card wraps to its next row");
-
-  await page.setViewportSize({ width: 760, height: 1000 });
-
-  const mobile = await cards.evaluateAll((elements) => elements.map((element) => {
-    const box = element.getBoundingClientRect();
-
-    return { top: box.top, bottom: box.bottom };
-  }));
-
-  assert.ok(mobile[1].top > mobile[0].bottom, "the second mobile card wraps below the first");
-  assert.ok(mobile[2].top > mobile[1].bottom, "the third mobile card wraps below the second");
-  assert.equal(
-    await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
-    true,
-    "responsive cards never introduce horizontal page overflow",
-  );
 });
 
-test("unequal native and historical prompts remain complete, aligned, and separate from model guidance", () => {
+test("the current native v3 prompt remains complete and separate from model guidance", () => {
   const input = {
     skill: "qs-code-debug",
+    completionState: "continuation-required",
     outcome: "Diagnosed the observed full-height production regression.",
     nextSkills: [
       {
-        name: "qs-test-tdd",
-        reason: "Add a focused regression test.",
-        prompt: "Use $qs-test-tdd to prevent the confirmed viewport regression.",
-      },
-      {
         name: "qs-review-code",
         reason: "Review the actual fix against the reported regression, responsive layout, and historical readout boundaries without inventing additional work.",
-        prompt: "Use $qs-review-code to inspect the verified responsive production fix, preserved historical reports, and exact native skill prompt boundaries.",
-      },
-      {
-        name: "qs-design-architecture",
-        reason: "Inspect the verified architecture only if the failure recurs.",
-        prompt: "Use /qs-design-architecture to investigate the recorded viewport boundary.",
+        prompt: "Use $qs-skills:qs-review-code to inspect the verified responsive production fix, preserved historical reports, and exact native skill prompt boundaries.",
       },
     ],
   };
@@ -1583,7 +1547,7 @@ test("unequal native and historical prompts remain complete, aligned, and separa
     /<article class="next-card">([\s\S]*?)<\/article>/g,
   )];
 
-  assert.equal(cards.length, 3, "all three approved prompt cards remain visible");
+  assert.equal(cards.length, 1, "the single approved prompt card remains visible");
 
   for (const [index, card] of cards.entries()) {
     const item = report.nextSkills[index];
@@ -1591,7 +1555,7 @@ test("unequal native and historical prompts remain complete, aligned, and separa
 
     assert.ok(code, `${item.name} provides a complete copy-ready prompt`);
     assert.equal(code[1], item.prompt);
-    assert.ok(card[1].includes(`$${item.name}`), `${item.name} remains discoverable in the native skill picker`);
+    assert.ok(card[1].includes(codexSkillLiteral(item.name)), `${item.name} remains discoverable in the native skill picker`);
     assert.ok(card[1].includes(item.reason), `${item.name} explains why it is recommended`);
     assert.ok(
       card[1].indexOf(item.reason) < card[1].indexOf('<pre class="next-prompt-block">'),
@@ -1605,46 +1569,48 @@ test("unequal native and historical prompts remain complete, aligned, and separa
   }
 
   assert.match(cards[0][1], /RECOMMENDED/);
-  assert.match(cards[1][1], /ALTERNATIVE/);
-  assert.match(cards[2][1], /Use \/qs-design-architecture/);
+  assert.match(cards[0][1], /Use \$qs-skills:qs-review-code/);
+  assert.doesNotMatch(html, /ALTERNATIVE|qs-test-tdd|qs-design-architecture/);
 });
 
 test("production reports accept only the exact approved dollar or slash skill as the first action", () => {
   const input = {
     skill: "qs-code-debug",
-    outcome: "Preserve strict, backward-compatible first-action validation.",
+    completionState: "continuation-required",
+    outcome: "Preserve strict current-skill first-action validation.",
   };
 
   for (const prompt of [
-    "Use $qs-test-tdd to protect the actual reporting boundary.",
-    "Use /qs-test-tdd to protect the actual reporting boundary.",
-    "  USE   $qs-test-tdd to protect the actual reporting boundary.  ",
-    "  USE   /qs-test-tdd to protect the actual reporting boundary.  ",
+    "Use $qs-skills:qs-review-code to review the actual reporting boundary.",
+    "Use /qs-review-code to review the actual reporting boundary.",
+    "  USE   $qs-skills:qs-review-code to review the actual reporting boundary.  ",
+    "  USE   /qs-review-code to review the actual reporting boundary.  ",
   ]) {
     const report = normalizeSkillReadout({
       ...input,
-      nextSkills: [{ name: "qs-test-tdd", prompt }],
+      nextSkills: [{ name: "qs-review-code", prompt }],
     });
 
     assert.equal(report.nextSkills[0].prompt, prompt.trim());
   }
 
   for (const prompt of [
-    "Use $qs-test-tdd-extra to evade the approved skill.",
-    "Use /qs-test-tdd-extra to evade the approved skill.",
-    "Use $qs-test-tdd:extra to evade the approved skill.",
-    "Use /qs-test-tdd:extra to evade the approved skill.",
-    "Use $qs-review-code before $qs-test-tdd.",
-    "Use /qs-review-code before /qs-test-tdd.",
-    "Mention $qs-test-tdd and then implement something else.",
-    "Do not use /qs-test-tdd; use /qs-review-code instead.",
+    "Use $qs-skills:qs-review-code-extra to evade the approved skill.",
+    "Use /qs-review-code-extra to evade the approved skill.",
+    "Use $qs-skills:qs-review-code:extra to evade the approved skill.",
+    "Use /qs-review-code:extra to evade the approved skill.",
+    "Use $qs-skills:qs-code-build before $qs-skills:qs-review-code.",
+    "Use /qs-code-build before /qs-review-code.",
+    "Mention $qs-skills:qs-review-code and then implement something else.",
+    "Do not use /qs-review-code; use /qs-code-build instead.",
+    "Use $qs-review-code to evade the package-qualified literal.",
   ]) {
     assert.throws(
       () => normalizeSkillReadout({
         ...input,
-        nextSkills: [{ name: "qs-test-tdd", prompt }],
+        nextSkills: [{ name: "qs-review-code", prompt }],
       }),
-      /must explicitly invoke \/qs-test-tdd as its first action/i,
+      /must explicitly invoke .*\/qs-review-code as its first action/i,
       prompt,
     );
   }
@@ -1683,6 +1649,9 @@ test("all 19 v3 first-run summaries show honest preview states without invented 
 test("a failed recorded check leads the summary without hiding skipped checks or inventing progress", () => {
   const html = renderSkillReadout({
     skill: "qs-code-debug",
+    status: "Failed",
+    completionState: "failed",
+    report: "full",
     outcome: "Recorded the actual regression and its check outcomes.",
     findings: [{
       title: "A routine observation must not conceal a failed check",
@@ -1713,6 +1682,7 @@ test("blocked B reports count only observed exceptions and feature the most seve
   const html = renderSkillReadout({
     skill: "qs-code-debug",
     status: "Blocked",
+    report: "full",
     outcome: "Awaiting correction of an independently recorded production blocker.",
     findings: [
       { title: "Observed high-priority layout defect", priority: "P1" },
@@ -1782,6 +1752,9 @@ test("the full-height production Workbench preserves the leading B exception and
   const { directory, viewer } = await productionWorkbench(context);
   const report = await writeSkillReadout({
     skill: "qs-code-debug",
+    status: "Failed",
+    completionState: "failed",
+    report: "full",
     outcome: "Protect the actual full-height production report from recorded regressions.",
     generatedAt: "2026-07-27T15:00:00.000Z",
     projectIdentity: quickStarkProject,
@@ -1810,7 +1783,7 @@ test("the full-height production Workbench preserves the leading B exception and
   assert.match(selected[1], /aria-label="Five-second report summary"/);
   assert.match(selected[1], />P0</);
   assert.match(selected[1], /Later recorded P0 authorization regression/);
-  assert.match(selected[1], /Use \$qs-test-tdd/);
+  assert.doesNotMatch(selected[1], /qs-test-tdd|qs-design-architecture|qs-plan-interview/);
   assert.match(selected[1], /aria-label="Complete immutable skill readout"/);
   assert.ok(stylesheet, "the production Workbench remains a self-contained full-height application");
   assert.match(stylesheet[1], /\.workbench-page\s*\{[^}]*height\s*:\s*100dvh/);
@@ -1825,6 +1798,7 @@ test("production B keeps a profile-free historical readout readable without chan
   const { directory, viewer } = await productionWorkbench(context);
   const report = await writeSkillReadout({
     skill: "qs-code-build",
+    report: "full",
     outcome: "Preserve an existing historical production report.",
     generatedAt: "2026-07-26T15:00:00.000Z",
     projectIdentity: quickStarkProject,

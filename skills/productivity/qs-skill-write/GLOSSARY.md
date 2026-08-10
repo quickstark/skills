@@ -60,7 +60,7 @@ _Avoid_: dispatcher, menu, registry, index, router procedure
 
 ### Next Prompt
 
-A copy-ready continuation presented in its own prominent fenced code block. It embeds the catalog-approved skill needed for the next action and carries forward the preceding run's actual outcome, findings, decisions, artifacts, or checks. A muted callout underneath can suggest a suitable model and thinking level. It reduces **cognitive load** by showing what to ask, which skill to invoke, and where to start the next run. Model guidance is heuristic, never a measured performance claim or automatic configuration change. A recommendation is not an invocation; a completed request needs no continuation.
+A copy-ready continuation presented as a plain Markdown paragraph, never a fenced or indented code block. It embeds the catalog-approved skill needed for the next action using the exact installed literal (`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>` in Codex; `/<command>` in Claude) and carries forward the preceding run's actual outcome, findings, decisions, artifacts, or checks. A muted callout underneath can suggest a suitable model and thinking level. It reduces **cognitive load** by showing what to ask, which skill to invoke, and where to start the next run. Model guidance is heuristic, never a measured performance claim or automatic configuration change. A recommendation is not an invocation; a completed request needs no continuation.
 
 _Avoid_: next best skill, skill-only recommendation, generic template, claimed execution, compulsory follow-up
 
@@ -88,7 +88,7 @@ _Avoid_: structure, organization, layout
 
 ### Steps
 
-The ordered actions the agent performs — when a skill has them, the primary tier of its content, and the part that earns its place in SKILL.md. Not every skill has steps: a skill can be all steps (`qs-test-tdd`), all **reference** (a review), or both, independent of invocation. Every step ends on a **completion criterion**, clear or vague.
+The ordered actions the agent performs — when a skill has them, the primary tier of its content, and the part that earns its place in SKILL.md. Not every skill has steps: a skill can be all steps (`qs-code-build`), all **reference** (a review), or both, independent of invocation. Every step ends on a **completion criterion**, clear or vague.
 
 _Avoid_: workflow, instructions, choreography
 
