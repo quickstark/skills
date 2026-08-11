@@ -1913,9 +1913,26 @@ function finishNextPromptSentence(value) {
   return /[.!?…]$/.test(value) ? value : `${value}.`;
 }
 
-function createNextPrompt(name, context, reason) {
+function selectNextPromptEvidence(context) {
+  const candidates = [
+    ["Failed check", context.checks.find((item) => item.status === "failed")],
+    ["Critical finding", context.findings.find((item) => item.priority === "P0" || item.priority === "P1")],
+    ["Decision", context.decisions[0]],
+    ["Output", context.outputs[0]],
+    ["Finding", context.findings[0]],
+    ["Check", context.checks[0]],
+  ];
+
+  return candidates.find(([, item]) => item)?.map((value, index) => index
+    ? summarizeNextPromptText(value.title, 80)
+    : value) ?? null;
+}
+
+function createNextPrompt(recommendation, context, fallbackReason) {
+  const route = typeof recommendation === "string" ? { name: recommendation } : recommendation;
+  const { name } = route;
   const target = READOUT_SKILLS_BY_NAME.get(name);
-  const action = (target?.prompt ?? reason ?? "continue the recorded work")
+  const action = (route.instruction ?? `to ${target?.prompt ?? fallbackReason ?? "continue the recorded work"}`)
     .replace(/[.!?]+$/, "")
     .trim();
   const invocation = SKILLS_BY_NAME.has(name)
@@ -1923,29 +1940,14 @@ function createNextPrompt(name, context, reason) {
     : READOUT_SKILLS_BY_NAME.has(name)
       ? `$${name}`
       : `/${name}`;
-  const prompt = [
-    `Use ${invocation} to ${action.charAt(0).toLowerCase()}${action.slice(1)}.`,
-  ];
+  const prompt = [`Use ${invocation} ${action}.`];
 
   if (context.status === "Preview") return prompt[0];
 
-  prompt.push(
-    finishNextPromptSentence(
-      `Continue from the recorded outcome: ${summarizeNextPromptText(context.outcome, 280)}`,
-    ),
-  );
-
-  const evidence = [
-    ["decisions", context.decisions, (item) => item.title],
-    ["outputs", context.outputs, (item) => item.title],
-    ["findings", context.findings, (item) => item.title],
-    ["checks", context.checks, (item) => `${item.title} (${item.status})`],
-  ].flatMap(([label, items, summarize]) => items.length
-    ? [`${label}: ${items.slice(0, 2).map((item) => summarizeNextPromptText(summarize(item))).join("; ")}`]
-    : []);
-
-  if (evidence.length) {
-    prompt.push(finishNextPromptSentence(`Carry forward ${evidence.join("; ")}`));
+  prompt.push(finishNextPromptSentence(`Context: ${summarizeNextPromptText(context.outcome, 140)}`));
+  const evidence = selectNextPromptEvidence(context);
+  if (evidence) {
+    prompt.push(finishNextPromptSentence(`${evidence[0]}: ${evidence[1]}`));
   }
 
   return prompt.join(" ");
@@ -2039,7 +2041,11 @@ function normalizeRecommendations(skill, recommendations, context) {
   const allowed = context.v3
     ? NEXT_SKILLS_BY_NAME[skill.name]
     : LEGACY_NEXT_SKILLS_BY_NAME[skill.name];
-  const needsOne = ["continuation-required", "input-required"].includes(context.completionState);
+  const available = context.v3
+    ? allowed.filter((item) => context.completionState === "failed"
+      ? item.availability !== "success"
+      : item.availability !== "failure")
+    : allowed;
   const passedChecks = context.checks.some((check) => check.status === "passed")
     && !context.checks.some((check) => check.status === "failed");
   const reviewedWithoutFindings = !context.v3
@@ -2047,28 +2053,50 @@ function normalizeRecommendations(skill, recommendations, context) {
     && context.status === "Completed"
     && context.findings.length === 0
     && passedChecks;
-  const selected = recommendations === undefined
+  const requested = context.v3
+    && context.status !== "Preview"
+    && Array.isArray(recommendations)
+    && recommendations.length === 0
+    ? undefined
+    : recommendations;
+  const initial = requested === undefined
     ? context.v3
-      ? needsOne ? [allowed[0]] : []
+      ? context.completionState === "failed"
+        ? [...available].sort((left, right) => Number(right.recovery) - Number(left.recovery))
+        : available
       : reviewedWithoutFindings
         ? [...allowed].sort((left, right) =>
           Number(right.name === "qs-git-merge") - Number(left.name === "qs-git-merge"))
         : allowed
-    : recommendations;
+    : requested;
+  if (context.v3 && Array.isArray(initial) && initial.length > 3) {
+    throw new Error("A v3 root run can contain at most three ranked continuations.");
+  }
+  const selectedNames = new Set(Array.isArray(initial) ? initial.map((item) => {
+    const name = typeof item === "string" ? item : item?.name;
+    return typeof name === "string" ? name.replace(/^\//, "") : null;
+  }) : []);
+  const selected = context.v3 && Array.isArray(initial) && initial.length > 0
+    ? [
+      ...initial,
+      ...available.filter((item) => !selectedNames.has(item.name)),
+    ].slice(0, skill.continuation.defaultPrompts)
+    : initial;
 
-  const maximum = context.v3 ? 1 : 3;
+  const maximum = 3;
   if (!Array.isArray(selected) || selected.length > maximum) {
     throw new Error(context.v3
-      ? "A v3 root run can contain at most one deterministic continuation."
+      ? "A v3 root run can contain at most three ranked continuations."
       : "nextSkills must contain no more than three catalog recommendations.");
   }
 
-  if (context.v3 && needsOne && selected.length !== 1) {
-    throw new Error(`${context.completionState} requires exactly one continuation prompt.`);
-  }
-
-  if (context.v3 && context.completionState === "complete" && selected.length !== 0) {
-    throw new Error("A complete result cannot contain a continuation prompt.");
+  const requiredPromptCount = context.v3 ? skill.continuation.defaultPrompts : null;
+  if (context.v3 && selected.length !== requiredPromptCount) {
+    throw new Error(
+      requiredPromptCount
+        ? `/${skill.name} requires all three ranked continuation prompts.`
+        : `/${skill.name} is terminal and cannot contain continuation prompts.`,
+    );
   }
 
   const unique = new Set();
@@ -2083,7 +2111,7 @@ function normalizeRecommendations(skill, recommendations, context) {
     }
 
     const name = requireText(candidate.name, `nextSkills[${index}].name`).replace(/^\//, "");
-    const catalogRecommendation = allowed.find((item) => item.name === name);
+    const catalogRecommendation = available.find((item) => item.name === name);
 
     if (!catalogRecommendation) {
       throw new Error(`/${name} is not an approved next step for /${skill.name}.`);
@@ -2098,9 +2126,11 @@ function normalizeRecommendations(skill, recommendations, context) {
 
     return {
       name,
+      preferred: index === 0,
+      rank: index + 1,
       reason,
       prompt: candidate.prompt === undefined
-        ? createNextPrompt(name, context, reason)
+        ? createNextPrompt(catalogRecommendation, context)
         : normalizeNextPrompt(candidate.prompt, name, `nextSkills[${index}].prompt`),
       ...normalizeNextPromptModel(candidate, name, context, index),
     };

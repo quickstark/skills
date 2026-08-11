@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { codexSkillLiteral, SKILLS } from "./qs-skill-catalog.mjs";
+import { codexSkillLiteral, NEXT_SKILLS_BY_NAME, SKILLS } from "./qs-skill-catalog.mjs";
 
 export const SKILL_OUTPUT_HEADING = "## Completion report and next steps";
 export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
@@ -10,8 +10,14 @@ export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 export function renderSkillOutputContract(skill) {
-  const continuation = skill.continuation.approvedSkills[0];
-  const codexLiteral = codexSkillLiteral(continuation);
+  const routes = NEXT_SKILLS_BY_NAME[skill.name];
+  const continuations = routes.filter((item) => item.availability !== "failure").map((item) => item.name);
+  const failureContinuations = routes
+    .filter((item) => item.availability !== "success")
+    .sort((left, right) => Number(right.recovery) - Number(left.recovery))
+    .map((item) => item.name);
+  const terminal = routes.length === 0;
+  const codexLiterals = routes.map((item) => codexSkillLiteral(item.name));
   return [
     SKILL_OUTPUT_HEADING,
     "",
@@ -19,9 +25,13 @@ export function renderSkillOutputContract(skill) {
     "",
     "Normalize explicit flags first, then unambiguous natural-language intent, then defaults: `effort=quick|standard|deep` defaults to `standard`; `report=brief|full` defaults to `brief`. Effort changes evidence depth, not mutation scope or report length.",
     "",
-    "Produce one normalized result using `complete`, `continuation-required`, `input-required`, or `failed`. A complete result has no next prompt. Continuation-required and input-required have exactly one copy-ready prompt. Failed has at most one concrete recovery prompt. Failed required checks or actionable P0/P1 findings prohibit `complete`.",
+    terminal
+      ? "Produce one normalized result using `complete`, `continuation-required`, `input-required`, or `failed`. This release command is terminal and emits no next prompts. Failed required checks or actionable P0/P1 findings prohibit `complete`."
+      : "Produce one normalized result using `complete`, `continuation-required`, `input-required`, or `failed`. Every result emits three ranked copy-ready prompts: one opinionated preferred prompt followed by two alternatives. Failed required checks or actionable P0/P1 findings prohibit `complete`.",
     "",
-    `When a distinct workflow is genuinely required, the catalog-approved continuation is \`/${continuation}\`; tailor one prompt to the actual result instead of starting it.`,
+    terminal
+      ? "Do not invent a follow-on workflow after release. Report any release failure directly in this result."
+      : `The default ranked continuations are ${continuations.map((name) => `\`/${name}\``).join(", ")}. A failed result instead ranks ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Tailor each prompt to the actual result instead of starting it.`,
     "",
     "Create a small JSON input with the actual root `skill`, `effort`, `report`, `completionState`, concise `outcome`, and only real decisions, findings, outputs, checks, execution evidence, and continuation. List only the root public skill in `skillsUsed`; internal capabilities are evidence, not skills used. Follow the shared policy in `docs/skill-run-contract.md`.",
     "",
@@ -33,28 +43,45 @@ export function renderSkillOutputContract(skill) {
     "",
     "Present only the independently accepted `https://reports.quickstark.com/` URL. If authentication or hosted publication fails, state `Readout: Not created — <actual reason>` and preserve any private recovery artifact without exposing its path, localhost, or a private-IP URL.",
     "",
-    "Brief in-chat output contains Status, Outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, Readout, and the one continuation only when required. Full adds the evidence trail and alternatives but never extra prompts. Omit empty sections and routine successful detail.",
+    terminal
+      ? "Brief in-chat output contains Status, Outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, and Readout. Full adds the evidence trail. Omit empty sections and routine successful detail."
+      : "Brief in-chat output contains Status, Outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, Readout, one preferred prompt, and two alternatives. Full adds the evidence trail but never extra prompts. Omit empty sections and routine successful detail.",
     "",
     "Status: Complete | Continuation required | Input required | Failed",
     `Skills used: /${skill.name}`,
     "Outcome: Concise verified result.",
     "Readout: Verified https://reports.quickstark.com/ report URL only.",
-    "Top next prompt: None — the requested work is complete. | one copy-ready prompt in a fenced `text` block",
+    terminal
+      ? "Next prompts: None — release is terminal."
+      : "Preferred next prompt: one copy-ready prompt in a fenced `text` block",
+    ...(terminal ? [] : ["Alternative next prompts: two copy-ready prompts, each in its own fenced `text` block"]),
     "",
-    `When continuation is required, write \`Top next prompt:\` and place the single complete prompt beneath it in its own fenced \`text\` block beginning with the exact Codex skill literal ${codexLiteral}. Claude uses \`/${continuation}\`. The fence info string must be exactly \`text\` so the chat renders it as Plain text; never use \`markdown\`, \`bash\`, \`json\`, or another language. Put heuristic model/thinking guidance outside the fence in a muted blockquote beneath it. Never change the active model or reasoning setting.`,
+    terminal
+      ? "Never add a speculative prompt merely to keep the workflow moving."
+      : `Present prompts in normalized rank order. Label the first \`Preferred next prompt:\` and the remaining two \`Alternative next prompt:\`. Put each complete prompt in its own fenced \`text\` block beginning with its exact Codex skill literal (${codexLiterals.join(", ")}); Claude uses ${routes.map((item) => `\`/${item.name}\``).join(", ")}. The fence info string must be exactly \`text\` so the chat renders it as Plain text; never use \`markdown\`, \`bash\`, \`json\`, or another language. Keep every prompt concise and carry forward only the outcome plus the single highest-value evidence item. Put heuristic model/thinking guidance outside each fence in a muted blockquote. Never change the active model or reasoning setting.`,
   ].join("\n");
 }
 
 export function renderDocumentationOutputContract(skill) {
-  const continuation = skill.continuation.approvedSkills[0];
+  const routes = NEXT_SKILLS_BY_NAME[skill.name];
+  const continuations = routes.filter((item) => item.availability !== "failure").map((item) => item.name);
+  const failureContinuations = routes
+    .filter((item) => item.availability !== "success")
+    .sort((left, right) => Number(right.recovery) - Number(left.recovery))
+    .map((item) => item.name);
+  const terminal = routes.length === 0;
   return [
     DOCUMENTATION_OUTPUT_HEADING,
     "",
     `\`/${skill.name}\` produces one normalized root result and one authenticated hosted readout. It accepts independent \`effort=quick|standard|deep\` and \`report=brief|full\` modes, defaulting to \`standard\` and \`brief\`.`,
     "",
-    "Complete work emits no next prompt. A distinct required workflow or material user decision emits exactly one copy-ready continuation. Public skills are never executed automatically. Brief reports show only the decision-grade result; full reports add supporting evidence without adding continuations.",
+    terminal
+      ? "A completed release is terminal and emits no next prompts. Public skills are never executed automatically. Brief reports show only the decision-grade result; full reports add supporting evidence."
+      : "Every result emits three ranked copy-ready continuations: one preferred prompt and two alternatives. Public skills are never executed automatically. Brief reports show the decision-grade result and all three prompts; full reports add supporting evidence without adding prompts.",
     "",
-    `The catalog-approved continuation, only when the result requires it, is \`/${continuation}\`.`,
+    terminal
+      ? "The release command has no catalog-approved continuation."
+      : `The default ranked continuations are ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failed results instead rank ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}.`,
     "",
     "The hosted and in-chat views consume the same normalized result. Ordinary runs return only an authenticated `https://reports.quickstark.com/` URL; local viewers remain explicit diagnostic tools. See [the shared skill-run contract](../skill-run-contract.md).",
   ].join("\n");

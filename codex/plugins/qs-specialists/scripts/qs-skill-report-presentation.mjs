@@ -392,8 +392,9 @@ export function renderReadoutNextPrompts(report) {
     const invocation = SKILLS_BY_NAME.has(item.name)
       ? codexSkillLiteral(item.name)
       : `$${item.name}`;
-    const label = index === 0 ? "Top next prompt" : "Alternative prompt";
-    const recommendation = index === 0 ? "RECOMMENDED" : "ALTERNATIVE";
+    const preferred = item.preferred ?? index === 0;
+    const label = preferred ? "Preferred next prompt" : "Alternative prompt";
+    const recommendation = preferred ? "PREFERRED" : "ALTERNATIVE";
 
     return `<article class="next-card"><div class="presentation-next-top"><span class="presentation-next-rank">${String(index + 1).padStart(2, "0")}</span><span class="presentation-next-badge">${recommendation}</span></div><p class="eyebrow">${escape(label)}</p><h3>${escape(skill?.displayName ?? item.name)} <span class="presentation-native-skill" aria-label="${escape(invocation)}">${escape(invocation)}</span></h3>${item.reason ? `<p class="next-reason">${escape(item.reason)}</p>` : ""}<pre class="next-prompt-block"><code>${escape(item.prompt)}</code></pre><aside class="next-model-callout" aria-label="Heuristic model and thinking guidance"><span class="next-model-label">Suggested model <strong>${escape(item.model)}</strong></span><span class="next-model-label">Suggested thinking <strong>${escape(item.thinking)}</strong></span><p class="next-model-reason">Heuristic suggestion · ${escape(item.modelReason)} Choosing it does not change the active model or thinking level.</p></aside></article>`;
   }).join("")}</div>`;

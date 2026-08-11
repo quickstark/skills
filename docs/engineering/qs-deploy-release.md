@@ -25,8 +25,8 @@ This is lifecycle position 100 in the core projection and is installed through `
 
 `/qs-deploy-release` produces one normalized root result and one authenticated hosted readout. It accepts independent `effort=quick|standard|deep` and `report=brief|full` modes, defaulting to `standard` and `brief`.
 
-Complete work emits no next prompt. A distinct required workflow or material user decision emits exactly one copy-ready continuation. Public skills are never executed automatically. Brief reports show only the decision-grade result; full reports add supporting evidence without adding continuations.
+A completed release is terminal and emits no next prompts. Public skills are never executed automatically. Brief reports show only the decision-grade result; full reports add supporting evidence.
 
-The catalog-approved continuation, only when the result requires it, is `/qs-flow-handoff`.
+The release command has no catalog-approved continuation.
 
 The hosted and in-chat views consume the same normalized result. Ordinary runs return only an authenticated `https://reports.quickstark.com/` URL; local viewers remain explicit diagnostic tools. See [the shared skill-run contract](../skill-run-contract.md).

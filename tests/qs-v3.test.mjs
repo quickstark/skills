@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 import {
+  codexSkillLiteral,
+  NEXT_SKILLS_BY_NAME,
   READOUT_PROFILES_BY_NAME,
   SKILLS,
   V3_CORE_SKILLS,
@@ -33,6 +35,27 @@ const retiredNames = [
   "qs-plan-explore", "qs-plan-interview", "qs-plan-tickets", "qs-design-domain",
   "qs-design-modules", "qs-design-architecture", "qs-test-tdd",
 ];
+const expectedRoutes = {
+  "qs-help": ["qs-plan-clarify", "qs-flow-triage", "qs-setup"],
+  "qs-setup": ["qs-plan-clarify", "qs-flow-triage", "qs-plan-roadmap"],
+  "qs-plan-clarify": ["qs-plan-spec", "qs-plan-roadmap", "qs-flow-handoff"],
+  "qs-plan-roadmap": ["qs-plan-spec", "qs-plan-clarify", "qs-flow-handoff"],
+  "qs-plan-spec": ["qs-code-build", "qs-plan-clarify", "qs-flow-handoff"],
+  "qs-code-build": ["qs-review-code", "qs-code-debug", "qs-git-merge"],
+  "qs-code-debug": ["qs-review-code", "qs-code-build", "qs-flow-handoff"],
+  "qs-review-code": ["qs-git-merge", "qs-code-build", "qs-code-debug"],
+  "qs-git-merge": ["qs-deploy-release", "qs-review-code", "qs-flow-handoff"],
+  "qs-deploy-release": [],
+  "qs-flow-triage": ["qs-plan-roadmap", "qs-code-debug", "qs-code-build"],
+  "qs-flow-handoff": ["qs-help", "qs-code-build", "qs-plan-clarify"],
+  "qs-plan-research": ["qs-plan-spec", "qs-design-prototype", "qs-plan-clarify"],
+  "qs-design-prototype": ["qs-plan-spec", "qs-code-build", "qs-plan-clarify"],
+  "qs-code-document": ["qs-review-code", "qs-git-merge", "qs-flow-handoff"],
+  "qs-test-author": ["qs-test-verify", "qs-review-code", "qs-git-merge"],
+  "qs-test-verify": ["qs-git-merge", "qs-code-debug", "qs-review-code"],
+  "qs-learn-teach": ["qs-plan-research", "qs-design-prototype", "qs-skill-write"],
+  "qs-skill-write": ["qs-review-code", "qs-test-verify", "qs-git-merge"],
+};
 
 async function directories(path) {
   return (await readdir(path, { withFileTypes: true }))
@@ -92,7 +115,7 @@ test("retired commands are absent and all four internal capabilities are non-com
   }
 });
 
-test("normalized v3 results enforce modes, completion, and deterministic continuation", () => {
+test("normalized v3 results expose ranked continuations without changing completion", () => {
   const complete = normalizeSkillReadout({
     skill: "qs-code-build",
     completionState: "complete",
@@ -101,7 +124,9 @@ test("normalized v3 results enforce modes, completion, and deterministic continu
   assert.equal(complete.effort, "standard");
   assert.equal(complete.report, "brief");
   assert.equal(complete.completionState, "complete");
-  assert.deepEqual(complete.nextSkills, []);
+  assert.deepEqual(complete.nextSkills.map((item) => item.name), expectedRoutes["qs-code-build"]);
+  assert.equal(complete.nextSkills[0].preferred, true);
+  assert.ok(complete.nextSkills.slice(1).every((item) => item.preferred === false));
 
   const continuation = normalizeSkillReadout({
     skill: "qs-code-build",
@@ -111,7 +136,7 @@ test("normalized v3 results enforce modes, completion, and deterministic continu
     report: "full",
     outcome: "Implementation is ready for an independent review.",
   });
-  assert.equal(continuation.nextSkills.length, 1);
+  assert.equal(continuation.nextSkills.length, 3);
   assert.equal(continuation.nextSkills[0].name, "qs-review-code");
   assert.equal(continuation.effort, "deep");
   assert.equal(continuation.report, "full");
@@ -126,71 +151,106 @@ test("normalized v3 results enforce modes, completion, and deterministic continu
     skill: "qs-code-build",
     outcome: "Too many continuations.",
     completionState: "continuation-required",
-    nextSkills: ["qs-review-code", "qs-review-code"],
-  }), /at most one/i);
+    nextSkills: ["qs-review-code", "qs-code-debug", "qs-git-merge", "qs-flow-handoff"],
+  }), /at most three/i);
 });
 
-test("all active commands default to v3 and emit only their current deterministic prompt", () => {
+test("all non-release commands emit three concise ranked prompts in every completion state", () => {
   for (const skill of SKILLS) {
-    const complete = normalizeSkillReadout({
-      skill: skill.name,
-      outcome: `Completed the bounded ${skill.name} result.`,
-    });
-
-    assert.equal(complete.report, "brief", `${skill.name} must default to the v3 brief report`);
-    assert.equal(complete.completionState, "complete", `${skill.name} must default to v3 completion`);
-    assert.deepEqual(complete.nextSkills, [], `${skill.name} must not manufacture follow-on work`);
-
     for (const [status, completionState] of [
+      ["Completed", "complete"],
       ["Completed", "continuation-required"],
       ["Awaiting input", "input-required"],
+      ["Failed", "failed"],
     ]) {
       const result = normalizeSkillReadout({
         skill: skill.name,
         status,
         completionState,
-        outcome: `The bounded ${skill.name} result requires its approved continuation.`,
+        outcome: `Recorded the bounded ${skill.name} outcome. ${"Verified context ".repeat(30)}`,
+        decisions: [{ title: `Selected decision ${"with evidence ".repeat(20)}` }],
+        outputs: [{ title: `Recorded output ${"with detail ".repeat(20)}` }],
+        findings: [{
+          title: `Observed finding ${"with evidence ".repeat(20)}`,
+          ...(completionState === "failed" ? { priority: "P1" } : {}),
+        }],
+        checks: [{
+          title: `Required verification ${"with detail ".repeat(20)}`,
+          status: completionState === "failed" ? "failed" : "passed",
+        }],
       });
-      const approved = skill.continuation.approvedSkills[0];
-      const target = SKILLS.find((candidate) => candidate.name === approved);
-      const literal = `$${target.distribution === "core" ? "qs-skills" : "qs-specialists"}:${approved}`;
+      const expected = completionState === "failed"
+        ? NEXT_SKILLS_BY_NAME[skill.name]
+          .filter((item) => item.availability !== "success")
+          .sort((left, right) => Number(right.recovery) - Number(left.recovery))
+          .map((item) => item.name)
+        : expectedRoutes[skill.name];
 
-      assert.equal(result.nextSkills.length, 1, `${skill.name} must emit exactly one prompt`);
-      assert.equal(result.nextSkills[0].name, approved, `${skill.name} must use its catalog route`);
-      assert.match(
-        result.nextSkills[0].prompt,
-        new RegExp(`^Use \\${literal}\\b`),
-        `${skill.name} must emit the exact package-qualified Codex invocation`,
-      );
-      assert.doesNotMatch(
-        result.nextSkills[0].prompt,
-        new RegExp(`^Use \\$${approved}\\b`),
-        `${skill.name} must not emit an unqualified Codex invocation`,
-      );
-      for (const retired of retiredNames) {
-        assert.doesNotMatch(
-          result.nextSkills[0].prompt,
-          new RegExp(`[$/]${retired}\\b`),
-          `${skill.name} must not recommend retired ${retired}`,
-        );
+      assert.equal(result.report, "brief", `${skill.name} must default to the v3 brief report`);
+      assert.deepEqual(result.nextSkills.map((item) => item.name), expected);
+      assert.equal(result.nextSkills.length, skill.name === "qs-deploy-release" ? 0 : 3);
+      if (result.nextSkills.length) {
+        assert.equal(result.nextSkills[0].preferred, true, `${skill.name} must mark its first prompt preferred`);
+        assert.ok(result.nextSkills.slice(1).every((item) => item.preferred === false));
       }
+
+      for (const next of result.nextSkills) {
+        assert.match(next.prompt, new RegExp(`^Use \\${codexSkillLiteral(next.name)}\\b`));
+        assert.ok(next.prompt.length <= 420, `${skill.name} -> ${next.name} is ${next.prompt.length} characters`);
+        assert.match(next.prompt, /Context: Recorded the bounded/);
+        assert.doesNotMatch(next.prompt, /Continue from the recorded outcome|workflow workflow/i);
+        assert.equal(
+          ["Decision:", "Output:", "Finding:", "Check:", "Failed check:", "Critical finding:"]
+            .filter((label) => next.prompt.includes(label)).length,
+          1,
+          `${skill.name} -> ${next.name} must carry only one evidence item`,
+        );
+        for (const retired of retiredNames) {
+          assert.doesNotMatch(next.prompt, new RegExp(`[$/]${retired}\\b`));
+        }
+      }
+    }
+
+    assert.deepEqual(
+      NEXT_SKILLS_BY_NAME[skill.name]
+        .filter((item) => item.availability !== "failure")
+        .map((item) => item.name),
+      expectedRoutes[skill.name],
+    );
+    if (skill.distribution === "core") {
+      assert.ok(
+        NEXT_SKILLS_BY_NAME[skill.name].every((item) => SKILLS.find((target) => target.name === item.name)?.distribution === "core"),
+        `${skill.name} must not depend on an optional specialist`,
+      );
     }
   }
 });
 
 test("all active completion contracts present exact continuations in plain-text code blocks", async () => {
   for (const skill of SKILLS) {
-    const approved = skill.continuation.approvedSkills[0];
-    const target = SKILLS.find((candidate) => candidate.name === approved);
-    const literal = `$${target.distribution === "core" ? "qs-skills" : "qs-specialists"}:${approved}`;
     const contract = renderSkillOutputContract(skill);
+
+    if (skill.name === "qs-deploy-release") {
+      assert.match(contract, /release is terminal/i);
+      assert.match(contract, /Next prompts: None/);
+      assert.doesNotMatch(contract, /Preferred next prompt:/);
+      continue;
+    }
 
     assert.match(
       contract,
       /its own fenced `text` block/i,
       `${skill.name} must request the code-block format rendered as Plain text`,
     );
-    assert.match(contract, new RegExp(`\\${literal}\\b`), `${skill.name} must cite the exact Codex literal`);
+    assert.match(contract, /Preferred next prompt:.*fenced `text` block/i);
+    assert.match(contract, /Alternative next prompts: two copy-ready prompts/i);
+    for (const approved of skill.continuation.approvedSkills) {
+      assert.match(
+        contract,
+        new RegExp(`\\${codexSkillLiteral(approved)}\\b`),
+        `${skill.name} must cite the exact Codex literal for ${approved}`,
+      );
+    }
     assert.match(
       contract,
       /never use `markdown`, `bash`, `json`, or another language/i,
@@ -211,6 +271,8 @@ test("all active completion contracts present exact continuations in plain-text 
       /fenced `text` (?:code )?block/i,
       `${path} must document the code-block format rendered as Plain text`,
     );
+    assert.match(content, /preferred route|Preferred next prompt/i);
+    assert.match(content, /two (?:are )?alternatives|other two/i);
     assert.match(content, /never (?:use|`markdown`).*(?:another language|`json`)/i);
     assert.doesNotMatch(content, /plain Markdown paragraph|never (?:wrap|wrapped).*fenced/i);
   }
@@ -249,7 +311,8 @@ test("brief and full reports project different evidence from the same result", (
   assert.match(full, /Finding 4/);
   assert.doesNotMatch(brief, /Execution context/);
   assert.match(full, /Execution context/);
-  assert.doesNotMatch(brief, /<pre class="next-prompt-block">/);
+  assert.equal((brief.match(/<pre class="next-prompt-block">/g) ?? []).length, 3);
+  assert.equal((full.match(/<pre class="next-prompt-block">/g) ?? []).length, 3);
 });
 
 test("public skill validation rejects automatic public hops and accepts the repository", async () => {
@@ -303,24 +366,25 @@ test("testing specialists separate test mutation from read-only verification whi
   );
   assert.deepEqual(
     V3_SPECIALIST_SKILLS.find((skill) => skill.name === "qs-test-author")?.continuation.approvedSkills,
-    ["qs-code-build"],
+    ["qs-test-verify", "qs-review-code", "qs-git-merge", "qs-flow-handoff"],
   );
   assert.deepEqual(
     V3_SPECIALIST_SKILLS.find((skill) => skill.name === "qs-test-verify")?.continuation.approvedSkills,
-    ["qs-code-debug"],
+    ["qs-git-merge", "qs-code-debug", "qs-review-code", "qs-flow-handoff"],
   );
   const authorReadout = normalizeSkillReadout({
     skill: "qs-test-author",
     outcome: "Added focused tests for established behavior.",
   });
   assert.equal(authorReadout.completionState, "complete");
-  assert.deepEqual(authorReadout.nextSkills, []);
+  assert.deepEqual(authorReadout.nextSkills.map((item) => item.name), expectedRoutes["qs-test-author"]);
 
   const verifyContinuation = normalizeSkillReadout({
     skill: "qs-test-verify",
-    status: "Completed",
-    completionState: "continuation-required",
+    status: "Failed",
+    completionState: "failed",
     outcome: "Observed a reproducible verification failure.",
+    checks: [{ title: "Focused verification", status: "failed" }],
   });
   assert.equal(verifyContinuation.nextSkills[0].name, "qs-code-debug");
   assert.deepEqual(
