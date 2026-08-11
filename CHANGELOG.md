@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.2.2
+
+### Patch Changes
+
+- [`7985951`](https://github.com/quickstark/skills/commit/7985951627d530bf0a93f9324f4a01b9e8510252) Thanks [@quickstark](https://github.com/quickstark)! - Expose QuickStark `effort=quick|standard|deep` and `report=brief|full` mode syntax in every Codex picker prompt while keeping model selection task-level.
+
 ## 3.2.1
 
 ### Patch Changes
