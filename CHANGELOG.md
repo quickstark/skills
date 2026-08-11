@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.2.1
+
+### Patch Changes
+
+- [`e53c062`](https://github.com/quickstark/skills/commit/e53c062f690514b930ff1665583de5889aa56a95) Thanks [@quickstark](https://github.com/quickstark)! - Restore ticketing visibility in the core planner by presenting `qs-plan-spec` as **QS Plan: Specs & Tickets** without adding a command or changing internal ticket-decomposition ownership.
+
 ## 3.2.0
 
 ### Minor Changes
