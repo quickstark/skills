@@ -1,6 +1,6 @@
 interface:
   display_name: "QS Learn: Teach"
   short_description: "Learn a subject through a guided study plan"
-  default_prompt: "Use $qs-learn-teach to teach me this subject through a practical, guided study plan."
+  default_prompt: "Use $qs-learn-teach to teach me this subject through a practical, guided study plan. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
 policy:
   allow_implicit_invocation: false

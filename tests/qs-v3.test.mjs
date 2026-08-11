@@ -150,6 +150,36 @@ test("qs-plan-spec visibly owns specs and tickets without changing the v2 invent
   }
 });
 
+test("all public Codex picker prompts expose QuickStark invocation modes", async () => {
+  for (const skill of [...V3_CORE_SKILLS, ...V3_SPECIALIST_SKILLS]) {
+    const canonicalMetadata = await readFile(
+      join(root, "skills", skill.bucket, skill.name, "agents", "openai.yaml"),
+      "utf8",
+    );
+    const generatedMetadata = await readFile(
+      join(
+        root,
+        "codex",
+        "plugins",
+        skill.distribution === "core" ? "qs-skills" : "qs-specialists",
+        "skills",
+        skill.name,
+        "agents",
+        "openai.yaml",
+      ),
+      "utf8",
+    );
+
+    for (const metadata of [canonicalMetadata, generatedMetadata]) {
+      const defaultPrompt = metadata.match(/^\s*default_prompt:\s*"([^"]+)"\s*$/m)?.[1];
+      assert.ok(defaultPrompt, `${skill.name} omits its Codex default prompt`);
+      assert.match(defaultPrompt, /effort=quick\|standard\|deep/);
+      assert.match(defaultPrompt, /report=brief\|full/);
+      assert.doesNotMatch(defaultPrompt, /(?:model|thinking|reasoning_effort)=/i);
+    }
+  }
+});
+
 test("generated core and specialist packages are isolated and versioned together", async () => {
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
   const lock = JSON.parse(await readFile(join(root, "package-lock.json"), "utf8"));

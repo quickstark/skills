@@ -1,6 +1,6 @@
 interface:
   display_name: "QS Flow: Handoff"
   short_description: "Prepare a concise handoff for another session"
-  default_prompt: "Use $qs-flow-handoff to prepare a concise handoff so another session can continue this work."
+  default_prompt: "Use $qs-flow-handoff to prepare a concise handoff so another session can continue this work. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
 policy:
   allow_implicit_invocation: false

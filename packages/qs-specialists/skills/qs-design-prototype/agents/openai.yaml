@@ -1,4 +1,4 @@
 interface:
   display_name: "QS Design: Prototype"
   short_description: "Prototype an interface or design decision"
-  default_prompt: "Use $qs-design-prototype to build a focused prototype to answer this design question."
+  default_prompt: "Use $qs-design-prototype to build a focused prototype to answer this design question. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."

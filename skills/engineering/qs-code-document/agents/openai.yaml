@@ -1,4 +1,4 @@
 interface:
   display_name: "QS Code: Document"
   short_description: "Write accurate, verified project documentation"
-  default_prompt: "Use $qs-code-document to write or update accurate documentation for the actual project and its verified behavior."
+  default_prompt: "Use $qs-code-document to write or update accurate documentation for the actual project and its verified behavior. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."

@@ -1,6 +1,6 @@
 interface:
   display_name: "QS Flow: Triage"
   short_description: "Triage incoming issues into actionable work"
-  default_prompt: "Use $qs-flow-triage to triage these incoming issues into clear, actionable work."
+  default_prompt: "Use $qs-flow-triage to triage these incoming issues into clear, actionable work. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
 policy:
   allow_implicit_invocation: false

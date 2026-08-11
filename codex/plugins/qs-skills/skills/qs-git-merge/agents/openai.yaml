@@ -1,4 +1,4 @@
 interface:
   display_name: "QS Git: Merge"
   short_description: "Safely integrate and publish verified GitHub changes"
-  default_prompt: "Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication."
+  default_prompt: "Use $qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."

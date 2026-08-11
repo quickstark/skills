@@ -1,4 +1,4 @@
 interface:
   display_name: "QS Review: Code"
   short_description: "Review, improve, or refactor selected code safely"
-  default_prompt: "Use $qs-review-code to review, improve, or refactor the explicitly selected code scope safely."
+  default_prompt: "Use $qs-review-code to review, improve, or refactor the explicitly selected code scope safely. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."

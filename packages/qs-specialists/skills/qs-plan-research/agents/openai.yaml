@@ -1,4 +1,4 @@
 interface:
   display_name: "QS Plan: Research"
   short_description: "Research a question using reliable sources"
-  default_prompt: "Use $qs-plan-research to research this question and capture evidence-backed findings."
+  default_prompt: "Use $qs-plan-research to research this question and capture evidence-backed findings. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
