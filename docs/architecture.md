@@ -24,7 +24,7 @@ flowchart LR
 
 | Component | Authoritative source | Responsibility |
 | --- | --- | --- |
-| Skill identity and behavior | `scripts/qs-skill-catalog.mjs` | Twelve core commands, seven specialists, four internal capabilities, lifecycle order, invocation policy, report profile, and one approved continuation. |
+| Skill identity and behavior | `scripts/qs-skill-catalog.mjs` | Twelve core commands, seven specialists, four internal capabilities, lifecycle order, invocation policy, report profile, and ranked approved continuations. |
 | Engineering skills | `skills/engineering/` | Canonical engineering skill instructions and `agents/openai.yaml` metadata. |
 | Productivity skills | `skills/productivity/` | Canonical productivity skill instructions and `agents/openai.yaml` metadata. |
 | Claude distribution | `.claude-plugin/plugin.json`, `packages/qs-specialists/` | Isolated core and optional specialist projections. |

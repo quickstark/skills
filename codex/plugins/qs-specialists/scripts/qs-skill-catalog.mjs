@@ -463,34 +463,143 @@ export const READOUT_SKILLS_BY_NAME = new Map(
 );
 
 const V3_CORE_COMMAND_DEFINITIONS = Object.freeze([
-  ["qs-help", "help", 10, "qs-setup"],
-  ["qs-setup", "setup", 20, "qs-plan-clarify"],
-  ["qs-plan-clarify", "plan", 30, "qs-plan-spec"],
-  ["qs-plan-roadmap", "plan", 40, "qs-plan-spec"],
-  ["qs-plan-spec", "plan", 50, "qs-code-build"],
-  ["qs-code-build", "code", 60, "qs-review-code"],
-  ["qs-code-debug", "code", 70, "qs-review-code"],
-  ["qs-review-code", "review", 80, "qs-git-merge"],
-  ["qs-git-merge", "git", 90, "qs-deploy-release"],
-  ["qs-deploy-release", "deploy", 100, "qs-flow-handoff"],
-  ["qs-flow-triage", "flow", 110, "qs-plan-clarify"],
-  ["qs-flow-handoff", "flow", 120, "qs-help"],
+  ["qs-help", "help", 10],
+  ["qs-setup", "setup", 20],
+  ["qs-plan-clarify", "plan", 30],
+  ["qs-plan-roadmap", "plan", 40],
+  ["qs-plan-spec", "plan", 50],
+  ["qs-code-build", "code", 60],
+  ["qs-code-debug", "code", 70],
+  ["qs-review-code", "review", 80],
+  ["qs-git-merge", "git", 90],
+  ["qs-deploy-release", "deploy", 100],
+  ["qs-flow-triage", "flow", 110],
+  ["qs-flow-handoff", "flow", 120],
 ]);
 
 const V3_SPECIALIST_COMMAND_DEFINITIONS = Object.freeze([
-  ["qs-plan-research", "plan", 130, "qs-plan-spec"],
-  ["qs-design-prototype", "design", 140, "qs-plan-spec"],
-  ["qs-code-document", "code", 150, "qs-review-code"],
-  ["qs-test-author", "test", 160, "qs-code-build"],
-  ["qs-test-verify", "test", 170, "qs-code-debug"],
-  ["qs-learn-teach", "learn", 180, "qs-plan-research"],
-  ["qs-skill-write", "skill", 190, "qs-review-code"],
+  ["qs-plan-research", "plan", 130],
+  ["qs-design-prototype", "design", 140],
+  ["qs-code-document", "code", 150],
+  ["qs-test-author", "test", 160],
+  ["qs-test-verify", "test", 170],
+  ["qs-learn-teach", "learn", 180],
+  ["qs-skill-write", "skill", 190],
 ]);
+
+function defineV3Continuation(
+  name,
+  instruction,
+  reason,
+  { recovery = false, availability = "always" } = {},
+) {
+  return Object.freeze({ name, instruction, reason, recovery, availability });
+}
+
+const V3_CONTINUATIONS_BY_NAME = Object.freeze({
+  "qs-help": Object.freeze([
+    defineV3Continuation("qs-plan-clarify", "to clarify the selected work and record the decisions needed to proceed", "Best default when the next workflow still needs a bounded decision."),
+    defineV3Continuation("qs-flow-triage", "to classify the incoming work and choose its execution route", "Use for an issue or request that has not been routed yet."),
+    defineV3Continuation("qs-setup", "to configure QuickStark for this project before work begins", "Use when the project is not configured for QuickStark."),
+  ]),
+  "qs-setup": Object.freeze([
+    defineV3Continuation("qs-plan-clarify", "to clarify the first scoped change in the configured project", "Best default for starting bounded project work."),
+    defineV3Continuation("qs-flow-triage", "to triage the configured project's incoming work", "Use when a backlog or new request needs routing."),
+    defineV3Continuation("qs-plan-roadmap", "to map the configured project's larger initiative into decisions", "Use when the work spans several dependent decisions."),
+  ]),
+  "qs-plan-clarify": Object.freeze([
+    defineV3Continuation("qs-plan-spec", "to turn the resolved decisions into an implementation-ready specification", "Best default once the important decisions are settled."),
+    defineV3Continuation("qs-plan-roadmap", "to map the clarified work into ordered decisions and milestones", "Use when the clarified scope is still too large for one specification."),
+    defineV3Continuation("qs-flow-handoff", "to hand the clarified decisions to a fresh session", "Use when another session should continue from the decisions."),
+  ]),
+  "qs-plan-roadmap": Object.freeze([
+    defineV3Continuation("qs-plan-spec", "to specify the highest-priority resolved roadmap item", "Best default for moving the next ready item toward implementation."),
+    defineV3Continuation("qs-plan-clarify", "to resolve the roadmap's highest-impact open decision", "Use when a blocking decision remains unresolved."),
+    defineV3Continuation("qs-flow-handoff", "to hand the roadmap and its next decision to another session", "Use when execution will continue in a fresh session."),
+  ]),
+  "qs-plan-spec": Object.freeze([
+    defineV3Continuation("qs-code-build", "to implement the specification with focused tests", "Best default for an approved implementation-ready specification."),
+    defineV3Continuation("qs-plan-clarify", "to resolve a material ambiguity found in the specification", "Use when implementation would require guessing."),
+    defineV3Continuation("qs-flow-handoff", "to hand the specification to the implementation session", "Use when another session will perform the build."),
+  ]),
+  "qs-code-build": Object.freeze([
+    defineV3Continuation("qs-review-code", "with target=changes action=review to verify requirements, risks, and regressions", "Best default after a scoped implementation."),
+    defineV3Continuation("qs-code-debug", "to diagnose a failed check or regression in the implementation", "Use when the implementation still has a reproducible failure.", { recovery: true }),
+    defineV3Continuation("qs-git-merge", "to verify and integrate the completed change", "Use only after the change is reviewed and ready to publish.", { availability: "success" }),
+    defineV3Continuation("qs-flow-handoff", "to preserve the failed build evidence for another session", "Use when the failed build must be continued elsewhere.", { availability: "failure" }),
+  ]),
+  "qs-code-debug": Object.freeze([
+    defineV3Continuation("qs-review-code", "with target=changes action=review to inspect the fix and regression coverage", "Best default after the diagnosed failure is repaired."),
+    defineV3Continuation("qs-code-build", "to implement the smallest repair supported by the diagnosis", "Use when diagnosis is complete but the repair is not.", { recovery: true }),
+    defineV3Continuation("qs-flow-handoff", "to hand off the diagnosis, evidence, and remaining repair", "Use when another session must continue the repair."),
+  ]),
+  "qs-review-code": Object.freeze([
+    defineV3Continuation("qs-git-merge", "to verify and integrate the reviewed change", "Best default when review has no blocking findings.", { availability: "success" }),
+    defineV3Continuation("qs-code-build", "to resolve the actionable review findings", "Use when review found required implementation changes.", { recovery: true }),
+    defineV3Continuation("qs-code-debug", "to diagnose a failed check or reproducible regression from review", "Use when review exposed a concrete failure.", { recovery: true }),
+    defineV3Continuation("qs-flow-handoff", "to preserve blocking review findings for another session", "Use when another session must resolve the review findings.", { availability: "failure" }),
+  ]),
+  "qs-git-merge": Object.freeze([
+    defineV3Continuation("qs-deploy-release", "to run the documented release only when deployment is explicitly approved", "Preferred only when the documented deployment is explicitly approved.", { availability: "success" }),
+    defineV3Continuation("qs-review-code", "with target=changes action=review to inspect integration or conflict resolution", "Use when integration changed code or exposed uncertainty.", { recovery: true }),
+    defineV3Continuation("qs-flow-handoff", "to record the integration result and remaining operational work", "Use when publication is complete but follow-up remains."),
+    defineV3Continuation("qs-code-debug", "to diagnose a failed integration check", "Use when integration leaves a reproducible technical failure.", { recovery: true, availability: "failure" }),
+  ]),
+  "qs-deploy-release": Object.freeze([]),
+  "qs-flow-triage": Object.freeze([
+    defineV3Continuation("qs-plan-roadmap", "to map the highest-value large request into manageable decisions", "Best default for work that is larger than one bounded change."),
+    defineV3Continuation("qs-code-debug", "to reproduce and diagnose the highest-priority bug", "Use for a routed defect with reproducible symptoms.", { recovery: true }),
+    defineV3Continuation("qs-code-build", "to implement the highest-priority agent-ready issue", "Use for a clear issue with no unresolved decisions."),
+  ]),
+  "qs-flow-handoff": Object.freeze([
+    defineV3Continuation("qs-help", "to select the correct workflow from the recorded handoff", "Best default when the receiving session needs orientation."),
+    defineV3Continuation("qs-code-build", "to resume the implementation recorded in the handoff", "Use when the next implementation step is already clear."),
+    defineV3Continuation("qs-plan-clarify", "to resolve the decision recorded as blocking in the handoff", "Use when the handoff identifies an unresolved decision."),
+  ]),
+  "qs-plan-research": Object.freeze([
+    defineV3Continuation("qs-plan-spec", "to apply the verified findings to an actionable specification", "Best default when the research resolves the implementation question."),
+    defineV3Continuation("qs-design-prototype", "to test the most promising finding with a disposable prototype", "Use when evidence still needs practical validation."),
+    defineV3Continuation("qs-plan-clarify", "to settle the remaining decision using the research findings", "Use when stakeholders must choose among supported options."),
+  ]),
+  "qs-design-prototype": Object.freeze([
+    defineV3Continuation("qs-plan-spec", "to specify the validated prototype behavior for production", "Best default after the prototype answers the design question."),
+    defineV3Continuation("qs-code-build", "to implement the validated bounded design", "Use when the production boundary is already clear."),
+    defineV3Continuation("qs-plan-clarify", "to decide which prototype findings belong in production", "Use when the prototype leaves a material product decision."),
+  ]),
+  "qs-code-document": Object.freeze([
+    defineV3Continuation("qs-review-code", "with target=changes action=review to verify documentation accuracy", "Best default after documentation changes."),
+    defineV3Continuation("qs-git-merge", "to verify and integrate the reviewed documentation change", "Use when the documentation is reviewed and ready to publish.", { availability: "success" }),
+    defineV3Continuation("qs-flow-handoff", "to hand the documented operational knowledge to another session", "Use when the documentation supports pending follow-up work."),
+    defineV3Continuation("qs-code-debug", "to diagnose a failed documentation check or broken example", "Use when documentation verification exposes a reproducible failure.", { recovery: true, availability: "failure" }),
+  ]),
+  "qs-test-author": Object.freeze([
+    defineV3Continuation("qs-test-verify", "to run the relevant suites and report the result without changing code", "Best default after tests are added or improved."),
+    defineV3Continuation("qs-review-code", "with target=changes action=review to inspect test quality and scope", "Use when the tests need an independent quality review."),
+    defineV3Continuation("qs-git-merge", "to verify and integrate the reviewed test change", "Use when the tests are reviewed and passing.", { availability: "success" }),
+    defineV3Continuation("qs-flow-handoff", "to preserve failed test evidence for another session", "Use when another session must continue from the failed tests.", { availability: "failure" }),
+  ]),
+  "qs-test-verify": Object.freeze([
+    defineV3Continuation("qs-git-merge", "to integrate the already-reviewed change after verification passes", "Best default when every required verification passes.", { availability: "success" }),
+    defineV3Continuation("qs-code-debug", "to diagnose the first reproducible verification failure", "Use when any required verification fails.", { recovery: true }),
+    defineV3Continuation("qs-review-code", "with target=changes action=review to inspect residual risk before integration", "Use when verification passes but review is still required."),
+    defineV3Continuation("qs-flow-handoff", "to preserve failed verification evidence for another session", "Use when another session must continue from the failed verification.", { availability: "failure" }),
+  ]),
+  "qs-learn-teach": Object.freeze([
+    defineV3Continuation("qs-plan-research", "to answer the next learning question with primary sources", "Best default for the next evidence-backed learning objective."),
+    defineV3Continuation("qs-design-prototype", "to practice the learned concept in a focused prototype", "Use when hands-on validation will deepen understanding."),
+    defineV3Continuation("qs-skill-write", "to capture the learned repeatable workflow as a focused skill", "Use when the lesson should become reusable guidance."),
+  ]),
+  "qs-skill-write": Object.freeze([
+    defineV3Continuation("qs-review-code", "with target=changes action=review to inspect the skill and its tests", "Best default after creating or changing a skill."),
+    defineV3Continuation("qs-test-verify", "to run the skill's relevant behavior and projection checks", "Use when the skill needs read-only verification."),
+    defineV3Continuation("qs-git-merge", "to verify and integrate the reviewed skill change", "Use when the skill is reviewed and all checks pass.", { availability: "success" }),
+    defineV3Continuation("qs-flow-handoff", "to preserve failed skill checks for another session", "Use when another session must continue the skill repair.", { availability: "failure" }),
+  ]),
+});
 
 const V3_EFFORT_MODES = Object.freeze(["quick", "standard", "deep"]);
 const V3_REPORT_MODES = Object.freeze(["brief", "full"]);
-const V3_NO_PROMPT_STATES = Object.freeze(["complete"]);
-const V3_ONE_PROMPT_STATES = Object.freeze(["continuation-required", "input-required"]);
+const V3_PROMPT_STATES = Object.freeze(["complete", "continuation-required", "input-required", "failed"]);
 const V3_CODEX_PLUGIN_BY_DISTRIBUTION = Object.freeze({
   core: "qs-skills",
   specialist: "qs-specialists",
@@ -506,17 +615,13 @@ const V3_REPORT_POLICY = Object.freeze({
   default: "brief",
 });
 
-const V3_CONTINUATION_POLICY = Object.freeze({
-  maximumPrompts: 1,
-  automaticPublicSkillHops: false,
-  noPromptStates: V3_NO_PROMPT_STATES,
-  onePromptStates: V3_ONE_PROMPT_STATES,
-});
-
-function defineV3PublicCommand([name, group, position, approvedContinuation], distribution) {
+function defineV3PublicCommand([name, group, position], distribution) {
   const skill = READOUT_SKILLS_BY_NAME.get(name);
+  const continuations = V3_CONTINUATIONS_BY_NAME[name];
+  const promptCount = name === "qs-deploy-release" ? 0 : 3;
 
   if (!skill) throw new Error(`The v3 catalog references unknown public command ${name}.`);
+  if (!continuations) throw new Error(`The v3 catalog has no continuation policy for ${name}.`);
 
   return Object.freeze({
     ...skill,
@@ -527,8 +632,12 @@ function defineV3PublicCommand([name, group, position, approvedContinuation], di
     effort: V3_EFFORT_POLICY,
     report: V3_REPORT_POLICY,
     continuation: Object.freeze({
-      ...V3_CONTINUATION_POLICY,
-      approvedSkills: Object.freeze([approvedContinuation]),
+      maximumPrompts: promptCount,
+      defaultPrompts: promptCount,
+      preferredPromptIndex: promptCount ? 0 : null,
+      automaticPublicSkillHops: false,
+      promptStates: promptCount ? V3_PROMPT_STATES : Object.freeze([]),
+      approvedSkills: Object.freeze(continuations.map((item) => item.name)),
     }),
   });
 }
@@ -719,7 +828,7 @@ export function validateV3CatalogModel(model) {
       throw new Error(`The v3 public command ${command.name} is not in the active skill catalog.`);
     }
 
-    const [, expectedGroup, expectedPosition, expectedContinuation] = expectedDefinitions[index];
+    const [, expectedGroup, expectedPosition] = expectedDefinitions[index];
     if (command.lifecycle?.group !== expectedGroup || command.lifecycle.position !== expectedPosition) {
       throw new Error(`The v3 public command ${command.name} needs lifecycle metadata.`);
     }
@@ -744,21 +853,43 @@ export function validateV3CatalogModel(model) {
       throw new Error(`The v3 public command ${command.name} has an invalid Codex plugin literal.`);
     }
 
-    if (command.continuation?.maximumPrompts !== 1) {
-      throw new Error(`The v3 public command ${command.name} must allow at most one continuation prompt.`);
+    const expectedContinuations = V3_CONTINUATIONS_BY_NAME[command.name];
+    const expectedNames = expectedContinuations.map((item) => item.name);
+    const expectedPromptCount = command.name === "qs-deploy-release" ? 0 : 3;
+    if (expectedContinuations.length < expectedPromptCount
+      || expectedContinuations.length > expectedPromptCount + 1
+      || command.continuation?.maximumPrompts !== expectedPromptCount
+      || command.continuation?.defaultPrompts !== expectedPromptCount) {
+      throw new Error(`The v3 public command ${command.name} must expose its ranked prompt count.`);
     }
 
-    if (!hasExactValues(command.continuation.approvedSkills, [expectedContinuation])
-      || !publicNameSet.has(expectedContinuation)
-      || expectedContinuation === command.name) {
-      throw new Error(
-        `The v3 public command ${command.name} must designate exactly one approved public continuation.`,
-      );
+    if (!hasExactValues(command.continuation.approvedSkills, expectedNames)
+      || expectedNames.some((name) => !publicNameSet.has(name) || name === command.name)
+      || new Set(expectedNames).size !== expectedNames.length) {
+      throw new Error(`The v3 public command ${command.name} has invalid approved continuations.`);
+    }
+
+    if (command.distribution === "core" && expectedNames.some((name) => {
+      const target = publicCommands.find((candidate) => candidate.name === name);
+      return target?.distribution !== "core";
+    })) {
+      throw new Error(`The core command ${command.name} must not depend on a specialist continuation.`);
+    }
+
+    if (expectedContinuations.some((item) => item.reason.length > 100 || item.instruction.length > 120)) {
+      throw new Error(`The v3 public command ${command.name} has an overly wordy continuation.`);
+    }
+
+    if (expectedContinuations.some((item) => !["always", "success", "failure"].includes(item.availability))) {
+      throw new Error(`The v3 public command ${command.name} has invalid continuation availability.`);
     }
 
     if (command.continuation.automaticPublicSkillHops !== false
-      || !hasExactValues(command.continuation.noPromptStates, V3_NO_PROMPT_STATES)
-      || !hasExactValues(command.continuation.onePromptStates, V3_ONE_PROMPT_STATES)) {
+      || command.continuation.preferredPromptIndex !== (expectedPromptCount ? 0 : null)
+      || !hasExactValues(
+        command.continuation.promptStates,
+        expectedPromptCount ? V3_PROMPT_STATES : [],
+      )) {
       throw new Error(`The v3 public command ${command.name} has an invalid continuation policy.`);
     }
 
@@ -1248,16 +1379,13 @@ export const LEGACY_NEXT_SKILLS_BY_NAME = Object.freeze({
 
 export const NEXT_SKILLS_BY_NAME = Object.freeze(Object.fromEntries(
   V3_PUBLIC_COMMANDS.map((command) => {
-    const name = command.continuation.approvedSkills[0];
-    const target = SKILLS_BY_NAME.get(name);
-
-    if (!target) {
-      throw new Error(`/${command.name} recommends unavailable v3 command /${name}.`);
+    const continuations = V3_CONTINUATIONS_BY_NAME[command.name];
+    for (const continuation of continuations) {
+      if (!SKILLS_BY_NAME.has(continuation.name)) {
+        throw new Error(`/${command.name} recommends unavailable v3 command /${continuation.name}.`);
+      }
     }
 
-    return [command.name, Object.freeze([Object.freeze({
-      name,
-      reason: `Continue with /${name} only when the completed /${command.name} outcome requires a distinct ${target.shortDescription.toLowerCase()} workflow.`,
-    })])];
+    return [command.name, continuations];
   }),
 ));

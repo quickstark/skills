@@ -349,7 +349,11 @@ test("all promoted skill contracts use the concise bounded v3 result contract", 
       assert.match(contract, /report=brief\|full/, `${skill.name} ${name} documents report depth`);
       assert.match(contract, /one (?:normalized )?root|one root skill/i, `${skill.name} ${name} documents root ownership`);
       assert.match(contract, /never (?:executed|starts?|automatically invoke)/i, `${skill.name} ${name} rejects automatic public hops`);
-      assert.match(contract, /exactly one copy-ready|exactly one.*continuation/i, `${skill.name} ${name} bounds continuation`);
+      if (skill.name === "qs-deploy-release") {
+        assert.match(contract, /terminal|no next prompts/i, `${skill.name} ${name} remains terminal`);
+      } else {
+        assert.match(contract, /three ranked copy-ready|one preferred prompt and two alternatives/i, `${skill.name} ${name} ranks three prompts`);
+      }
       assert.match(contract, /https:\/\/reports\.quickstark\.com\//, `${skill.name} ${name} preserves authenticated hosted reporting`);
     }
   }
@@ -1007,7 +1011,7 @@ test("a completed clean code review recommends verified Git integration as its n
   assert.doesNotMatch(html, /Merged pull request|Published commit|Released version/);
 });
 
-test("a completed build uses the single v3 review continuation", () => {
+test("a completed build prefers the v3 review continuation", () => {
   const input = {
     skill: "qs-code-build",
     completionState: "continuation-required",
@@ -1053,7 +1057,12 @@ test("actionable reviews and failed checks never recommend merging an unready ch
   ]) {
     const report = normalizeSkillReadout(input);
 
-    assert.deepEqual(report.nextSkills, [], input.outcome);
+    assert.equal(report.nextSkills.length, 3, input.outcome);
+    assert.equal(report.nextSkills[0].preferred, true, input.outcome);
+    assert.ok(
+      report.nextSkills.every((item) => !["qs-git-merge", "qs-deploy-release"].includes(item.name)),
+      input.outcome,
+    );
   }
 });
 
@@ -1466,13 +1475,23 @@ test("GitHub verification rejects unsafe repository identities before making an 
   }
 });
 
-test("production B renders the single current v3 prompt with responsive readable typography", async (context) => {
+test("production B renders all ranked v3 prompts with responsive readable typography", async (context) => {
   const featuredDetail = "The full-height report keeps its recorded observation independently readable.";
   const nextSkills = [
     {
       name: "qs-review-code",
       reason: "Independently review the recorded report, sidebar, issue ownership, immutable history, verified issue totals, publication boundaries, and responsive presentation before treating the implementation as complete.",
       prompt: "Use $qs-skills:qs-review-code to independently inspect the full-height report, verified GitHub issue total, responsive presentation, complete native prompts, preserved immutable historical reports, and unlinked local Git artifacts.",
+    },
+    {
+      name: "qs-code-build",
+      reason: "Apply any actionable review findings without expanding the selected scope.",
+      prompt: "Use $qs-skills:qs-code-build to resolve the actionable findings while preserving the verified report boundaries.",
+    },
+    {
+      name: "qs-flow-handoff",
+      reason: "Hand the verified state and remaining work to a fresh session.",
+      prompt: "Use $qs-skills:qs-flow-handoff to preserve the verified state and the next bounded action.",
     },
   ];
   const browser = await chromium.launch({ headless: true });
@@ -1506,7 +1525,7 @@ test("production B renders the single current v3 prompt with responsive readable
 
   const cards = page.locator("article.next-card");
 
-  assert.equal(await cards.count(), 1);
+  assert.equal(await cards.count(), 3);
 
   for (const [index, next] of nextSkills.entries()) {
     const card = cards.nth(index);
@@ -1523,12 +1542,12 @@ test("production B renders the single current v3 prompt with responsive readable
     assert.equal(
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
       true,
-      `the single v3 prompt never introduces horizontal overflow at ${width}px`,
+      `the ranked v3 prompts never introduce horizontal overflow at ${width}px`,
     );
   }
 });
 
-test("the current native v3 prompt remains complete and separate from model guidance", () => {
+test("the current ranked native v3 prompts remain complete and separate from model guidance", () => {
   const input = {
     skill: "qs-code-debug",
     completionState: "continuation-required",
@@ -1539,6 +1558,8 @@ test("the current native v3 prompt remains complete and separate from model guid
         reason: "Review the actual fix against the reported regression, responsive layout, and historical readout boundaries without inventing additional work.",
         prompt: "Use $qs-skills:qs-review-code to inspect the verified responsive production fix, preserved historical reports, and exact native skill prompt boundaries.",
       },
+      { name: "qs-code-build" },
+      { name: "qs-flow-handoff" },
     ],
   };
   const report = normalizeSkillReadout(input);
@@ -1547,7 +1568,7 @@ test("the current native v3 prompt remains complete and separate from model guid
     /<article class="next-card">([\s\S]*?)<\/article>/g,
   )];
 
-  assert.equal(cards.length, 1, "the single approved prompt card remains visible");
+  assert.equal(cards.length, 3, "all approved prompt cards remain visible");
 
   for (const [index, card] of cards.entries()) {
     const item = report.nextSkills[index];
@@ -1568,9 +1589,10 @@ test("the current native v3 prompt remains complete and separate from model guid
     assert.doesNotMatch(code[1], /Suggested model|Suggested thinking|Heuristic suggestion/);
   }
 
-  assert.match(cards[0][1], /RECOMMENDED/);
+  assert.match(cards[0][1], /PREFERRED/);
   assert.match(cards[0][1], /Use \$qs-skills:qs-review-code/);
-  assert.doesNotMatch(html, /ALTERNATIVE|qs-test-tdd|qs-design-architecture/);
+  assert.equal((html.match(/ALTERNATIVE/g) ?? []).length, 2);
+  assert.doesNotMatch(html, /qs-test-tdd|qs-design-architecture/);
 });
 
 test("production reports accept only the exact approved dollar or slash skill as the first action", () => {
@@ -1588,7 +1610,7 @@ test("production reports accept only the exact approved dollar or slash skill as
   ]) {
     const report = normalizeSkillReadout({
       ...input,
-      nextSkills: [{ name: "qs-review-code", prompt }],
+      nextSkills: [{ name: "qs-review-code", prompt }, { name: "qs-code-build" }, { name: "qs-flow-handoff" }],
     });
 
     assert.equal(report.nextSkills[0].prompt, prompt.trim());
@@ -1608,7 +1630,7 @@ test("production reports accept only the exact approved dollar or slash skill as
     assert.throws(
       () => normalizeSkillReadout({
         ...input,
-        nextSkills: [{ name: "qs-review-code", prompt }],
+        nextSkills: [{ name: "qs-review-code", prompt }, { name: "qs-code-build" }, { name: "qs-flow-handoff" }],
       }),
       /must explicitly invoke .*\/qs-review-code as its first action/i,
       prompt,

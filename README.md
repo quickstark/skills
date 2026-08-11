@@ -71,7 +71,7 @@ Restart the host or begin a new task after changing installed plugins. A Git pul
 - `qs-review-code action=refactor target=<scope>` is the refactoring workflow. An unscoped whole-codebase request stays read-only until a target is selected.
 - Every invocation has one root skill and zero automatic public-skill hops.
 - `effort=quick|standard|deep` controls execution depth; `report=brief|full` independently controls presentation. Defaults are `standard` and `brief`.
-- Complete work has no next prompt. Work requiring a distinct workflow or user decision has exactly one.
+- Every non-release result has three ranked next prompts: one preferred route and two alternatives. Release is terminal and has none.
 
 See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
 

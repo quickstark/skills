@@ -43,7 +43,7 @@ _Avoid_: Effort mode, execution depth.
 **Completion state**: The root skill's explicit `complete`, `continuation-required`, or `input-required` disposition. It determines whether the readout contains a next prompt.
 _Avoid_: Skill status, inferred follow-up.
 
-**Next prompt**: A copy-ready continuation presented in its own fenced `text` code block that explicitly invokes a catalog-approved follow-on skill using the exact installed literal (`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>` in Codex; `/<command>` in Claude) and carries forward the preceding skill run's actual outcome and relevant observed evidence. The fence info string is always exactly `text`, which renders as Plain text in chat; it is never `markdown`, `bash`, `json`, or another language. A subdued callout underneath can suggest a model and thinking level. Model guidance is heuristic, never a measured result or automatic configuration change. A prompt suggests future work; it never claims its embedded skill has already run.
+**Next prompt**: One of three ranked copy-ready continuations emitted by every non-release command. The first is the opinionated preferred route and the other two are alternatives. Each appears in its own fenced `text` code block, explicitly invokes a catalog-approved follow-on skill using the exact installed literal (`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>` in Codex; `/<command>` in Claude), and carries forward the outcome plus only the single highest-value evidence item. The fence info string is always exactly `text`, which renders as Plain text in chat; it is never `markdown`, `bash`, `json`, or another language. A subdued callout underneath can suggest a model and thinking level. Model guidance is heuristic, never a measured result or automatic configuration change. A prompt suggests future work; it never claims its embedded skill has already run. Release is terminal and emits no prompts.
 _Avoid_: Skill-only recommendation, invented accomplishment, autonomous invocation, mandatory follow-up.
 
 **Execution context**: The automatically observed machine and platform that actually generated a skill readout, plus any independently verified deployments and repository-relative files modified by that specific run.
@@ -135,7 +135,7 @@ Optional specialists follow as a separate package: `qs-plan-research`, `qs-desig
 - A promoted skill is either a core skill or a specialist skill.
 - A skill run has one root skill, can use internal capabilities, and produces one immutable skill readout.
 - A public skill never automatically invokes another public skill; only the user can start the next root skill.
-- A skill readout contains exactly one next prompt when its completion state is `continuation-required` or `input-required`, and none when it is `complete`.
+- Every non-release skill readout contains three ranked next prompts in every completion state: one preferred route and two alternatives. A release readout is terminal and contains none.
 - Effort mode bounds execution while report mode independently controls presentation depth.
 - Every actual skill readout records its real execution machine; previews do not describe a run.
 - An execution context contains only deployments and project files actually verified for that run.

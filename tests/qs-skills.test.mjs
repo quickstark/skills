@@ -519,7 +519,11 @@ test("concurrent identical skill-readout submissions create only one report", as
   assert.equal(new Set(results.map((result) => result.url)).size, 1);
 
   const html = await (await fetch(viewer.url)).text();
-  assert.equal((html.match(/Publish an authenticated native skill readout/g) ?? []).length, 1);
+  assert.equal(
+    (html.match(/Publish an authenticated native skill readout/g) ?? []).length,
+    4,
+    "the outcome appears once in the report and once in each of its three copy-ready prompts",
+  );
 });
 
 test("readout ingestion rejects missing, invalid, and mismatched producer credentials", async (context) => {
@@ -3161,19 +3165,19 @@ test("the v3 catalog rejects invalid membership, ordering, modes, and continuati
       /report modes/i,
     ],
     [
-      "multiple continuation prompts",
+      "incorrect continuation prompt count",
       (model) => { model.publicCommands[0].continuation.maximumPrompts = 2; },
-      /at most one continuation prompt/i,
+      /ranked prompt count/i,
     ],
     [
       "multiple approved continuations",
       (model) => { model.publicCommands[0].continuation.approvedSkills.push("qs-plan-spec"); },
-      /exactly one approved public continuation/i,
+      /invalid approved continuations/i,
     ],
     [
       "internal capability continuation",
       (model) => { model.publicCommands[0].continuation.approvedSkills[0] = "qs-test-tdd"; },
-      /exactly one approved public continuation/i,
+      /invalid approved continuations/i,
     ],
   ];
 
@@ -3206,7 +3210,13 @@ test("every skill has valid, specific, non-circular next-step recommendations", 
     const nextSkills = NEXT_SKILLS_BY_NAME[skill.name];
 
     assert.ok(Array.isArray(nextSkills), `${skill.name} has no next-skill list`);
-    assert.ok(nextSkills.length >= 1 && nextSkills.length <= 3);
+    if (skill.name === "qs-deploy-release") {
+      assert.equal(nextSkills.length, 0);
+    } else {
+      assert.ok(nextSkills.length >= 3 && nextSkills.length <= 4);
+      assert.equal(nextSkills.filter((next) => next.availability !== "failure").length, 3);
+      assert.equal(nextSkills.filter((next) => next.availability !== "success").length, 3);
+    }
     assert.equal(
       new Set(nextSkills.map((next) => next.name)).size,
       nextSkills.length,
@@ -3218,6 +3228,11 @@ test("every skill has valid, specific, non-circular next-step recommendations", 
       assert.notEqual(next.name, skill.name, `${skill.name} recommends itself`);
       assert.equal(typeof next.reason, "string");
       assert.ok(next.reason.trim().length >= 20, `${skill.name} has a vague next-step reason`);
+      assert.ok(next.reason.length <= 100, `${skill.name} has a wordy next-step reason`);
+      assert.ok(next.instruction.length <= 120, `${skill.name} has a wordy prompt instruction`);
+      if (skill.distribution === "core") {
+        assert.equal(SKILLS_BY_NAME.get(next.name).distribution, "core", `${skill.name} depends on a specialist`);
+      }
     }
   }
 });
@@ -4297,9 +4312,9 @@ test("readouts distinguish actually employed skills from catalog recommendations
   );
 });
 
-test("top next prompts carry forward the actual run and explicitly invoke approved skills", () => {
+test("ranked next prompts carry forward only the highest-value evidence and invoke approved skills", () => {
   const input = {
-    skill: "qs-plan-explore",
+    skill: "qs-plan-clarify",
     outcome: "Agreed to replace skill-only suggestions with contextual continuation prompts.",
     findings: [{ title: "Keep the catalog as the routing source of truth" }],
     decisions: [{ title: "Embed the approved follow-on skill in every prompt" }],
@@ -4314,10 +4329,10 @@ test("top next prompts carry forward the actual run and explicitly invoke approv
   for (const next of report.nextSkills) {
     assert.ok(next.prompt.includes(codexSkillLiteral(next.name)), `${next.name} is not a Codex-native skill invocation`);
     assert.match(next.prompt, /replace skill-only suggestions with contextual continuation prompts/);
-    assert.match(next.prompt, /Keep the catalog as the routing source of truth/);
     assert.match(next.prompt, /Embed the approved follow-on skill in every prompt/);
-    assert.match(next.prompt, /Existing shared completion-report generator/);
-    assert.match(next.prompt, /Current recommendation contract \(passed\)/);
+    assert.doesNotMatch(next.prompt, /Keep the catalog as the routing source of truth/);
+    assert.doesNotMatch(next.prompt, /Existing shared completion-report generator/);
+    assert.doesNotMatch(next.prompt, /Current recommendation contract \(passed\)/);
     assert.ok(html.includes(next.prompt), `${next.name} omits its copy-ready prompt`);
     assert.equal(next.modelSource, "heuristic");
     assert.ok(html.includes(next.model), `${next.name} omits its suggested model`);
@@ -4353,15 +4368,19 @@ test("a run can preserve a more specific copy-ready prompt for its approved next
     }],
   });
 
-  assert.deepEqual(report.nextSkills, [{
+  assert.equal(report.nextSkills.length, 3);
+  assert.deepEqual(report.nextSkills[0], {
     name: "qs-review-code",
+    preferred: true,
+    rank: 1,
     reason: "Review the actual shared implementation and generated outputs.",
     prompt,
     model: MODEL_GUIDANCE_BY_NAME["qs-review-code"].model,
     thinking: MODEL_GUIDANCE_BY_NAME["qs-review-code"].thinking,
     modelReason: MODEL_GUIDANCE_BY_NAME["qs-review-code"].reason,
     modelSource: "heuristic",
-  }]);
+  });
+  assert.deepEqual(report.nextSkills.slice(1).map((item) => item.name), ["qs-test-verify", "qs-git-merge"]);
 });
 
 test("an observed critical finding increases the suggested model and thinking level", () => {
@@ -4518,21 +4537,21 @@ test("catalog preview prompts never claim that prior work actually happened", ()
   }
 });
 
-test("context-aware next prompts remain compact without inventing or losing observed evidence", () => {
+test("context-aware next prompts remain compact and carry only the highest-value evidence", () => {
   const longOutcome = `Observed outcome: ${"specific verified result ".repeat(30)}`;
   const longFinding = `Observed finding: ${"verified evidence ".repeat(20)}`;
   const report = normalizeSkillReadout({
-    skill: "qs-plan-explore",
+    skill: "qs-plan-clarify",
     outcome: longOutcome,
     findings: [{ title: longFinding }],
     checks: [{ title: "Optional browser check", status: "skipped" }],
   });
 
   for (const next of report.nextSkills) {
-    assert.ok(next.prompt.length < 1_000, `${next.name} produces an oversized continuation`);
+    assert.ok(next.prompt.length <= 420, `${next.name} produces an oversized continuation`);
     assert.match(next.prompt, /Observed outcome: specific verified result/);
     assert.match(next.prompt, /Observed finding: verified evidence/);
-    assert.match(next.prompt, /Optional browser check \(skipped\)/);
+    assert.doesNotMatch(next.prompt, /Optional browser check/);
     assert.match(next.prompt, /…/);
     assert.doesNotMatch(next.prompt, /Optional browser check \(passed\)/);
   }
@@ -4551,10 +4570,10 @@ test("awaiting-input prompts carry forward the actual unresolved decision", () =
   assert.doesNotMatch(report.nextSkills[0].prompt, /completed exploration|decision was resolved/i);
 });
 
-test("completed readouts can honestly report that no further skill is required", () => {
+test("completed release readouts remain terminal", () => {
   const html = renderSkillReadout({
-    skill: "qs-code-build",
-    outcome: "Completed the exact requested change.",
+    skill: "qs-deploy-release",
+    outcome: "Completed the approved release.",
     nextSkills: [],
   });
 

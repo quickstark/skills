@@ -5,6 +5,8 @@
 **Decision sources:** `CONTEXT.md` and ADR 0001
 **Implementation status:** Complete; release validation is recorded by the v3 test and package gates.
 
+> Continuation cardinality in this historical specification is superseded by ADR 0003. The one-root and no-automatic-hop boundaries remain active.
+
 ## Problem Statement
 
 QuickStark exposes too many user-facing commands for the number of distinct jobs users actually need to perform. Several commands represent techniques or intermediate phases rather than durable user intents. Users must understand internal workflow boundaries, choose among overlapping planning and design commands, and repeatedly approve or invoke follow-on skills to finish one outcome.
