@@ -248,6 +248,19 @@ const ALL_SKILL_DEFINITIONS = Object.freeze([
   ...V3_ONLY_SKILLS,
 ]);
 
+const V3_PUBLIC_METADATA_OVERRIDES = Object.freeze({
+  "qs-plan-spec": Object.freeze({
+    displayName: "QS Plan: Specs & Tickets",
+    shortDescription: "Turn agreed requirements into a spec or tickets",
+    prompt: "turn the agreed requirements into an actionable specification or dependency-aware implementation tickets",
+    documentationNotes: Object.freeze([
+      "The same root command can produce a specification, dependency-aware tickets, or both when requested.",
+      "Specification-only requests do not create tickets.",
+      "Ticket decomposition remains an internal capability of `/qs-plan-spec`; it is not another installable command.",
+    ]),
+  }),
+});
+
 function defineReadoutProfile(title, signal, visualization, sections, labels = {}) {
   return Object.freeze({
     title,
@@ -508,12 +521,12 @@ const V3_CONTINUATIONS_BY_NAME = Object.freeze({
     defineV3Continuation("qs-plan-roadmap", "to map the configured project's larger initiative into decisions", "Use when the work spans several dependent decisions."),
   ]),
   "qs-plan-clarify": Object.freeze([
-    defineV3Continuation("qs-plan-spec", "to turn the resolved decisions into an implementation-ready specification", "Best default once the important decisions are settled."),
+    defineV3Continuation("qs-plan-spec", "to turn the resolved decisions into an actionable specification or dependency-aware tickets", "Best default once the important decisions are settled."),
     defineV3Continuation("qs-plan-roadmap", "to map the clarified work into ordered decisions and milestones", "Use when the clarified scope is still too large for one specification."),
     defineV3Continuation("qs-flow-handoff", "to hand the clarified decisions to a fresh session", "Use when another session should continue from the decisions."),
   ]),
   "qs-plan-roadmap": Object.freeze([
-    defineV3Continuation("qs-plan-spec", "to specify the highest-priority resolved roadmap item", "Best default for moving the next ready item toward implementation."),
+    defineV3Continuation("qs-plan-spec", "to turn the highest-priority resolved roadmap item into a specification or dependency-aware tickets", "Best default for moving the next ready item toward implementation."),
     defineV3Continuation("qs-plan-clarify", "to resolve the roadmap's highest-impact open decision", "Use when a blocking decision remains unresolved."),
     defineV3Continuation("qs-flow-handoff", "to hand the roadmap and its next decision to another session", "Use when execution will continue in a fresh session."),
   ]),
@@ -557,12 +570,12 @@ const V3_CONTINUATIONS_BY_NAME = Object.freeze({
     defineV3Continuation("qs-plan-clarify", "to resolve the decision recorded as blocking in the handoff", "Use when the handoff identifies an unresolved decision."),
   ]),
   "qs-plan-research": Object.freeze([
-    defineV3Continuation("qs-plan-spec", "to apply the verified findings to an actionable specification", "Best default when the research resolves the implementation question."),
+    defineV3Continuation("qs-plan-spec", "to apply the verified findings to an actionable specification or dependency-aware tickets", "Best default when the research resolves the implementation question."),
     defineV3Continuation("qs-design-prototype", "to test the most promising finding with a disposable prototype", "Use when evidence still needs practical validation."),
     defineV3Continuation("qs-plan-clarify", "to settle the remaining decision using the research findings", "Use when stakeholders must choose among supported options."),
   ]),
   "qs-design-prototype": Object.freeze([
-    defineV3Continuation("qs-plan-spec", "to specify the validated prototype behavior for production", "Best default after the prototype answers the design question."),
+    defineV3Continuation("qs-plan-spec", "to turn the validated prototype behavior into a production specification or dependency-aware tickets", "Best default after the prototype answers the design question."),
     defineV3Continuation("qs-code-build", "to implement the validated bounded design", "Use when the production boundary is already clear."),
     defineV3Continuation("qs-plan-clarify", "to decide which prototype findings belong in production", "Use when the prototype leaves a material product decision."),
   ]),
@@ -617,6 +630,7 @@ const V3_REPORT_POLICY = Object.freeze({
 
 function defineV3PublicCommand([name, group, position], distribution) {
   const skill = READOUT_SKILLS_BY_NAME.get(name);
+  const metadata = V3_PUBLIC_METADATA_OVERRIDES[name] ?? {};
   const continuations = V3_CONTINUATIONS_BY_NAME[name];
   const promptCount = name === "qs-deploy-release" ? 0 : 3;
 
@@ -625,6 +639,7 @@ function defineV3PublicCommand([name, group, position], distribution) {
 
   return Object.freeze({
     ...skill,
+    ...metadata,
     distribution,
     codexPlugin: V3_CODEX_PLUGIN_BY_DISTRIBUTION[distribution],
     lifecycle: Object.freeze({ group, position }),

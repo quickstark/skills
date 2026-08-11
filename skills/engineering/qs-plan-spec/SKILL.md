@@ -1,12 +1,12 @@
 ---
 name: qs-plan-spec
-description: "Produce an actionable implementation specification, optionally including tickets."
+description: "Produce an actionable specification, dependency-aware tickets, or both."
 disable-model-invocation: true
 ---
 
-# Write an implementation specification
+# Write specs and tickets
 
-Turn confirmed requirements into one implementation-ready specification. Do not reopen settled product decisions unless project evidence exposes a contradiction.
+Turn confirmed requirements into an actionable specification, dependency-aware tickets, or both when explicitly requested. Do not reopen settled product decisions unless project evidence exposes a contradiction.
 
 ## Internal capabilities
 
@@ -28,7 +28,7 @@ Capability use remains part of this root run and produces no separate skill repo
 - Security, operational, compatibility, and rollout concerns when relevant.
 - Open questions only when they truly block implementation.
 
-Specification-only requests do not create tickets. When tickets are requested, create dependency-ordered, independently verifiable slices in the same run. Do not start implementation automatically.
+Specification-only requests do not create tickets. When tickets are requested, create dependency-ordered, independently verifiable slices in the same run. Give every ticket one outcome, explicit scope and exclusions, acceptance evidence, and dependencies. Do not start implementation automatically.
 
 ## Completion report and next steps
 

@@ -1,6 +1,6 @@
 interface:
-  display_name: "QS Plan: Specification"
-  short_description: "Turn agreed requirements into a clear spec"
-  default_prompt: "Use $qs-plan-spec to turn the agreed requirements into an actionable specification."
+  display_name: "QS Plan: Specs & Tickets"
+  short_description: "Turn agreed requirements into a spec or tickets"
+  default_prompt: "Use $qs-plan-spec to turn the agreed requirements into an actionable specification or dependency-aware implementation tickets."
 policy:
   allow_implicit_invocation: false

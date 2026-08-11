@@ -16,7 +16,7 @@ Inspect the request and available project evidence, then recommend the single be
 | 20 | `/qs-setup` | A project needs QuickStark configuration or verification. |
 | 30 | `/qs-plan-clarify` | Ambiguity, scope, constraints, or decisions remain. |
 | 40 | `/qs-plan-roadmap` | Confirmed outcomes need sequencing across phases. |
-| 50 | `/qs-plan-spec` | Confirmed work needs an actionable specification or tickets. |
+| 50 | `/qs-plan-spec` | Confirmed work needs an actionable spec or dependency-aware tickets. |
 | 60 | `/qs-code-build` | A scoped change is ready to implement. |
 | 70 | `/qs-code-debug` | A reproducible defect needs diagnosis and repair. |
 | 80 | `/qs-review-code` | Code or a change needs review, scoped improvement, or refactoring. |

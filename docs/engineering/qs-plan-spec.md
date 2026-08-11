@@ -1,4 +1,4 @@
-# QS Plan: Specification
+# QS Plan: Specs & Tickets
 
 Quickstart:
 
@@ -11,11 +11,17 @@ codex plugin add qs-skills@quickstark
 
 ## What it does
 
-`/qs-plan-spec` turn agreed requirements into a clear spec. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-plan-spec/SKILL.md).
+`/qs-plan-spec` turn agreed requirements into a spec or tickets. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-plan-spec/SKILL.md).
 
 ## When to reach for it
 
-Use `/qs-plan-spec` when the requested primary outcome is: turn the agreed requirements into an actionable specification. Choose another root command when that would be only an intermediate technique.
+Use `/qs-plan-spec` when the requested primary outcome is: turn the agreed requirements into an actionable specification or dependency-aware implementation tickets. Choose another root command when that would be only an intermediate technique.
+
+## Command behavior
+
+- The same root command can produce a specification, dependency-aware tickets, or both when requested.
+- Specification-only requests do not create tickets.
+- Ticket decomposition remains an internal capability of `/qs-plan-spec`; it is not another installable command.
 
 ## Where it fits
 

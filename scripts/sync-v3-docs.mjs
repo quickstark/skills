@@ -37,6 +37,12 @@ function render(skill) {
     "",
     `Use \`/${skill.name}\` when the requested primary outcome is: ${skill.prompt}. Choose another root command when that would be only an intermediate technique.`,
     "",
+    ...(skill.documentationNotes?.length ? [
+      "## Command behavior",
+      "",
+      ...skill.documentationNotes.map((note) => `- ${note}`),
+      "",
+    ] : []),
     "## Where it fits",
     "",
     `This is lifecycle position ${skill.lifecycle.position} in the ${skill.distribution} projection and is installed through \`${packageName}\`. It owns one bounded root run and never starts another public skill automatically.`,

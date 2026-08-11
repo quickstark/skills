@@ -10,6 +10,7 @@ import {
   codexSkillLiteral,
   NEXT_SKILLS_BY_NAME,
   READOUT_PROFILES_BY_NAME,
+  READOUT_SKILLS_BY_NAME,
   SKILLS,
   V3_CORE_SKILLS,
   V3_INTERNAL_CAPABILITIES,
@@ -86,6 +87,67 @@ test("v3 exposes the exact ordered core and specialist command surfaces", () => 
   assert.deepEqual(V3_INTERNAL_CAPABILITIES.map((item) => item.name), [
     "domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop",
   ]);
+});
+
+test("qs-plan-spec visibly owns specs and tickets without changing the v2 inventory", async () => {
+  const planner = V3_CORE_SKILLS.find((skill) => skill.name === "qs-plan-spec");
+  const legacyPlanner = READOUT_SKILLS_BY_NAME.get("qs-plan-spec");
+  const canonicalSkill = await readFile(
+    join(root, "skills", "engineering", "qs-plan-spec", "SKILL.md"),
+    "utf8",
+  );
+  const canonicalMetadata = await readFile(
+    join(root, "skills", "engineering", "qs-plan-spec", "agents", "openai.yaml"),
+    "utf8",
+  );
+  const generatedMetadata = await readFile(
+    join(root, "codex", "plugins", "qs-skills", "skills", "qs-plan-spec", "agents", "openai.yaml"),
+    "utf8",
+  );
+  const help = await readFile(join(root, "skills", "engineering", "qs-help", "SKILL.md"), "utf8");
+  const readme = await readFile(join(root, "README.md"), "utf8");
+  const documentation = await readFile(join(root, "docs", "engineering", "qs-plan-spec.md"), "utf8");
+
+  assert.equal(planner?.displayName, "QS Plan: Specs & Tickets");
+  assert.equal(planner?.shortDescription, "Turn agreed requirements into a spec or tickets");
+  assert.equal(
+    planner?.prompt,
+    "turn the agreed requirements into an actionable specification or dependency-aware implementation tickets",
+  );
+  assert.equal(legacyPlanner?.displayName, "QS Plan: Specification");
+  assert.equal(legacyPlanner?.shortDescription, "Turn agreed requirements into a clear spec");
+  assert.deepEqual(
+    V3_INTERNAL_CAPABILITIES.find((capability) => capability.name === "ticket-decomposition")?.owners,
+    ["qs-plan-spec"],
+  );
+  assert.equal(V3_CORE_SKILLS.length, 12);
+  assert.equal(V3_SPECIALIST_SKILLS.length, 7);
+
+  for (const metadata of [canonicalMetadata, generatedMetadata]) {
+    assert.match(metadata, /display_name: "QS Plan: Specs & Tickets"/);
+    assert.match(metadata, /short_description: "Turn agreed requirements into a spec or tickets"/);
+    assert.match(metadata, /actionable specification or dependency-aware implementation tickets/);
+  }
+  assert.match(canonicalSkill, /actionable specification, dependency-aware tickets, or both/i);
+  assert.match(canonicalSkill, /Specification-only requests do not create tickets/i);
+  assert.match(help, /actionable spec or dependency-aware tickets/i);
+  assert.match(readme, /actionable specifications or dependency-aware tickets/i);
+  assert.match(documentation, /^# QS Plan: Specs & Tickets$/m);
+  assert.match(documentation, /actionable specification or dependency-aware implementation tickets/i);
+  assert.match(
+    documentation,
+    /same root command can produce a specification, dependency-aware tickets, or both when requested/i,
+  );
+  assert.match(documentation, /Specification-only requests do not create tickets/i);
+  assert.match(documentation, /Ticket decomposition remains an internal capability/i);
+
+  const inboundRoutes = Object.values(NEXT_SKILLS_BY_NAME)
+    .flat()
+    .filter((route) => route.name === "qs-plan-spec");
+  assert.ok(inboundRoutes.length > 0);
+  for (const route of inboundRoutes) {
+    assert.match(route.instruction, /specification.*tickets|tickets.*specification/i);
+  }
 });
 
 test("generated core and specialist packages are isolated and versioned together", async () => {
