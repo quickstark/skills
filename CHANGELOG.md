@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.2.0
+
+### Minor Changes
+
+- [#38](https://github.com/quickstark/skills/pull/38) [`770d4d0`](https://github.com/quickstark/skills/commit/770d4d0109e4384a69e2406d1fa522be7ee06f14) Thanks [@quickstark](https://github.com/quickstark)! - Emit three concise ranked next prompts after every non-release command, promote safe recovery routes after failures, and keep release terminal.
+
 ## 3.1.0
 
 ### Minor Changes
