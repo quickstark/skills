@@ -26,6 +26,8 @@ Use internal module decomposition only when it improves the selected implementat
 5. Run the relevant full validation once the scoped change is complete.
 6. Inspect the final diff for scope, correctness, secrets, and unrelated files.
 
+Sequence work into independently verifiable units. Exercise the real artifact or caller path when feasible, migrate affected callers before deleting a legacy interface, and preserve enough evidence that another session can resume without reconstructing hidden state.
+
 Do not automatically invoke review, Git, deployment, or another public skill. Do not commit or publish unless the user included that authority in the request.
 
 ## Completion report and next steps

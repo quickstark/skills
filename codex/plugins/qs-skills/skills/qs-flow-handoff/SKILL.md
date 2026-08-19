@@ -11,6 +11,8 @@ Do not claim a receiving workflow has run. Provide one preferred copy-ready cont
 
 Keep the handoff concise enough to resume without rereading the full session. Never include credentials or private values.
 
+Include rerunnable commands, exact artifact identities, and the last proven boundary. Distinguish completed evidence from planned actions so resumption never depends on hidden transcript context.
+
 ## Completion report and next steps
 
 This invocation has one root skill: `/qs-flow-handoff`. Internal capabilities and bounded helpers remain part of this run; never automatically invoke another public skill or create another skill report.

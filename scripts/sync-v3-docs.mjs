@@ -1,18 +1,18 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { SKILLS, UPSTREAM_REPOSITORY } from "./qs-skill-catalog.mjs";
+import { UPSTREAM_REPOSITORY } from "./qs-skill-catalog.mjs";
+import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const check = process.argv.includes("--check");
 
 function render(skill) {
-  const packageName = skill.distribution === "core" ? "qs-skills" : "qs-specialists";
-  const install = skill.distribution === "core"
-    ? "codex plugin add qs-skills@quickstark"
-    : "codex plugin add qs-specialists@quickstark";
-  const source = `https://github.com/quickstark/skills/blob/main/skills/${skill.bucket}/${skill.name}/SKILL.md`;
+  const packageName = skill.collectionId;
+  const install = `codex plugin add ${packageName}@quickstark`;
+  const sourcePath = skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`;
+  const source = `https://github.com/quickstark/skills/blob/main/${sourcePath}/SKILL.md`;
   const upstream = skill.upstreamName
     ? ` · [Upstream inspiration](${UPSTREAM_REPOSITORY}/tree/main/skills/${skill.bucket}/${skill.upstreamName})`
     : "";
@@ -31,7 +31,7 @@ function render(skill) {
     "",
     "## What it does",
     "",
-    `\`/${skill.name}\` ${skill.shortDescription[0].toLowerCase()}${skill.shortDescription.slice(1)}. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/${skill.bucket}/${skill.name}/SKILL.md).`,
+    `\`/${skill.name}\` ${skill.shortDescription[0].toLowerCase()}${skill.shortDescription.slice(1)}. Its detailed scope and safety behavior live in the canonical [skill instructions](../../${sourcePath}/SKILL.md).`,
     "",
     "## When to reach for it",
     "",
@@ -45,7 +45,7 @@ function render(skill) {
     ] : []),
     "## Where it fits",
     "",
-    `This is lifecycle position ${skill.lifecycle.position} in the ${skill.distribution} projection and is installed through \`${packageName}\`. It owns one bounded root run and never starts another public skill automatically.`,
+    `This is lifecycle position ${skill.lifecycle.position} in the ${skill.distribution ?? "optional PS"} projection and is installed through \`${packageName}\`. It owns one bounded root run and never starts another public skill automatically.`,
     "",
     "## Output and next steps",
     "",
@@ -54,19 +54,25 @@ function render(skill) {
 }
 
 let updated = 0;
-for (const skill of SKILLS) {
-  const path = join(root, "docs", skill.bucket, `${skill.name}.md`);
+for (const skill of PUBLIC_COMMANDS) {
+  const path = join(root, skill.documentationPath ?? `docs/${skill.bucket}/${skill.name}.md`);
   const expected = render(skill);
-  const actual = await readFile(path, "utf8");
+  let actual = "";
+  try {
+    actual = await readFile(path, "utf8");
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
   const current = actual.slice(0, actual.indexOf("## Output and next steps"))
     + "## Output and next steps\n\n";
   if (current !== expected) {
     if (check) throw new Error(`v3 command documentation is stale: ${skill.name}.`);
+    await mkdir(dirname(path), { recursive: true });
     await writeFile(path, expected);
     updated += 1;
   }
 }
 
 console.log(check
-  ? `Verified concise v3 documentation for ${SKILLS.length} commands.`
+  ? `Verified concise v3 documentation for ${PUBLIC_COMMANDS.length} commands.`
   : `Synchronized ${updated} concise v3 command documentation pages.`);

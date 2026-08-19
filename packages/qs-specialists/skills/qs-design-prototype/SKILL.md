@@ -7,6 +7,8 @@ description: "Build a disposable prototype to answer one design question."
 
 This optional specialist creates the smallest disposable artifact that can answer the selected question. State the hypothesis, success evidence, time/scope bound, and what must not be mistaken for production quality.
 
+Explore materially different candidates before polishing one direction. Evaluate each against the same user outcome, constraints, and observable experience; preserve discarded alternatives and the decision rationale as evidence inside this run.
+
 Reuse safe existing assets when helpful, isolate prototype code from production paths, and validate the hypothesis directly. Report what the prototype demonstrated, failed to demonstrate, and which parts must be discarded. Do not promote prototype code or begin production implementation automatically.
 
 ## Completion report and next steps

@@ -5,7 +5,7 @@
 export function formatSkillForCodex(content, skill) {
   let normalized = content;
 
-  if (skill.userInvoked) {
+  if (skill.userInvoked || skill.disableModelInvocation) {
     normalized = normalized.replace(
       /^disable-model-invocation:\s*true\s*\r?\n/m,
       "",

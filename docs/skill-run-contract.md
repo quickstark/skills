@@ -19,7 +19,7 @@ Every non-release result emits three ranked copy-ready prompts regardless of com
 
 ## In-chat continuation format
 
-Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>`—and in Claude it begins with `/<command>`. Keep each prompt concise: carry forward the outcome and only the single highest-value evidence item. Model and thinking guidance remains outside the fence in a separate muted blockquote.
+Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—and in Claude it begins with `/<command>`. Keep each prompt concise: carry forward the outcome and only the single highest-value evidence item. Model and thinking guidance remains outside the fence in a separate muted blockquote.
 
 ## Normalized result
 
@@ -28,3 +28,5 @@ The result records the root skill, effort, report mode, completion state, concis
 ## Safety
 
 Effort never expands mutation scope, authorizes destructive work, permits publication, or turns monitoring into an indefinite loop. Only explicitly authorized roots edit files. Review defaults to read-only. Release and Git publication retain their independent approval and verification gates.
+
+When a run claims behavior, prefer proof through the real artifact or public seam. Temporary evidence and bounded helpers remain inside the root; any state needed for resumption must be recorded explicitly rather than assumed to exist in private transcript history.

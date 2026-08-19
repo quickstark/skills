@@ -2,15 +2,16 @@
 
 ## System at a glance
 
-QuickStark v3 is a versioned collection of twelve core commands and seven optional specialist commands for Codex and Claude Code. Four former command techniques are internal capabilities. One canonical catalog drives both package projections, lifecycle order, invocation policy, report profiles, and deterministic continuation.
+QuickStark v3 is a versioned collection of twelve core commands, seven optional specialist commands, and thirteen optional explicit-only PS commands for Codex and Claude Code. Four former command techniques are internal capabilities, and sixteen PS techniques are private capabilities. Collection catalogs feed one shared registry that drives package identity, literals, invocation policy, report profiles, and deterministic continuation.
 
 ```mermaid
 flowchart LR
-    catalog["Canonical skill catalog"] --> sources["Engineering and productivity skill sources"]
-    catalog --> contracts["Generated completion contracts"]
-    catalog --> claude["Core and specialist Claude packages"]
-    catalog --> codex["Core and specialist Codex packages"]
-    catalog --> renderer["Purpose-specific report renderer"]
+    catalog["QS and PS collection catalogs"] --> registry["Shared collection registry"]
+    registry --> sources["QS and PS canonical skill sources"]
+    registry --> contracts["Generated completion contracts"]
+    registry --> claude["Three isolated Claude packages"]
+    registry --> codex["Three isolated Codex packages"]
+    registry --> renderer["Collection-aware report renderer"]
     sources --> codex
     contracts --> sources
     renderer --> local["Private local or LAN readout"]
@@ -25,10 +26,14 @@ flowchart LR
 | Component | Authoritative source | Responsibility |
 | --- | --- | --- |
 | Skill identity and behavior | `scripts/qs-skill-catalog.mjs` | Twelve core commands, seven specialists, four internal capabilities, lifecycle order, invocation policy, report profile, and ranked approved continuations. |
+| PS identity and provenance | `scripts/ps-skill-catalog.mjs` | Thirteen explicit-only commands, sixteen capabilities, pinned pstack provenance, 72 dispositions, profiles, and continuations. |
+| Shared collection identity | `scripts/skill-collection-registry.mjs` | Unique public command identity, package ownership, and exact Codex and Claude literals across all three packages. |
 | Engineering skills | `skills/engineering/` | Canonical engineering skill instructions and `agents/openai.yaml` metadata. |
 | Productivity skills | `skills/productivity/` | Canonical productivity skill instructions and `agents/openai.yaml` metadata. |
+| PS skills and capabilities | `skills/pstack/commands/`, `skills/pstack/internal/` | Canonical optional PS commands and their non-installable host-neutral techniques. |
 | Claude distribution | `.claude-plugin/plugin.json`, `packages/qs-specialists/` | Isolated core and optional specialist projections. |
 | Codex distribution | `codex/plugins/qs-skills/skills/`, `codex/plugins/qs-specialists/skills/` | Generated isolated package snapshots; never edit independently. |
+| PS distribution | `packages/ps-skills/`, `codex/plugins/ps-skills/` | Generated isolated PS snapshots, capabilities, and third-party notice; never edit independently. |
 | Readout rendering and publishing | `scripts/qs-skill-readout.mjs` | Report normalization, project identity, bounded task-attributed Codex observations, HTML rendering, viewer, ingestion, publisher, migration, and retention. |
 | Report presentation, GitHub evidence, and user appearance | `scripts/qs-skill-report-presentation.mjs` | Approved B presentation, five-second summaries, signed user-bound Workbench preferences, native prompt cards, verified skill-run metrics, user-run commands, exact open-issue totals, and separate sampled-issue sidebars. |
 | Privileged Dashboard Settings | `scripts/qs-readout-settings.mjs` | Exact proxy identity, administrator authorization, report-style personal-settings and producer-token sidebar, safe token-table CRUD, cross-user-safe appearance, and one-time token-specific platform installation. |
@@ -45,7 +50,7 @@ The upstream `misc`, `personal`, `in-progress`, and `deprecated` directories rem
 
 The catalog records whether a skill must be explicitly requested or may also be selected automatically. Claude uses `disable-model-invocation: true` for explicitly invoked skills. Codex represents the same restriction in `agents/openai.yaml` using `policy.allow_implicit_invocation: false`. The Codex synchronizer removes Claude-only frontmatter while preserving the actual invocation policy.
 
-A public command has one canonical `SKILL.md`, matching agent metadata, lifecycle-ordered index entries, concise generated documentation, one package assignment, and one generated Codex snapshot. Core packages include the four internal capability references; specialist packages do not. Keep the package, lockfile, and all four plugin manifests on the same version.
+A public command has one canonical `SKILL.md`, matching agent metadata, lifecycle-ordered index entries, concise generated documentation, one package assignment, and generated host projections. Core packages include four QS capabilities, specialists include none, and PS includes only its sixteen capabilities plus its notice. Keep the package, lockfile, and all six plugin manifests on the same version.
 
 ## Readout lifecycle
 

@@ -7,6 +7,8 @@ description: "Write concise documentation from verified project behavior and int
 
 This optional specialist updates only the selected documentation scope. Inspect the implementation, configuration, commands, tests, and existing docs before writing.
 
+Write for the reader's next decision: lead with the outcome, use established project vocabulary, remove repetition and vague filler, and distinguish verified behavior from examples or inference. When a technical rule depends on an external standard, cite the primary specification rather than a secondary summary.
+
 Distinguish verified current behavior from planned behavior. Prefer the shortest explanation that lets the intended reader act correctly. Validate commands and links when safe, preserve project terminology, and identify any behavior that could not be verified. Do not change product behavior or start release work automatically.
 
 ## Completion report and next steps

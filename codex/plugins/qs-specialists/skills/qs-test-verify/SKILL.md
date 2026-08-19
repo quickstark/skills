@@ -7,6 +7,8 @@ description: "Run and report a selected software verification matrix without cha
 
 Execute and report one selected verification matrix. This is a read-only verification workflow: it does not diagnose or repair product failures and never changes expectations merely to obtain a passing result.
 
+Verify the real artifact, interface, or user-visible seam whenever practical. Record the exact command, environment, observed result, and limitations so the evidence is independently rerunnable; a mocked internal assertion alone does not prove an end-to-end claim.
+
 ## Inputs and matrix selection
 
 Accept a verification target such as a change set, component, package, application, suite, command, or named behavior. The user may also identify required suites, environments, platforms, browsers, services, allowed skips, retry policy, or required artifacts.

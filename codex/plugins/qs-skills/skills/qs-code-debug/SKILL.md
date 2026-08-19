@@ -16,6 +16,8 @@ Preserve diagnosis-first behavior. Do not guess at a fix before obtaining eviden
 5. Apply the smallest coherent repair.
 6. Re-run the reproducer, focused regression checks, and relevant wider validation.
 
+Repair the causal mechanism rather than only suppressing its visible symptom. When performance is involved, establish a measurement baseline and falsify competing explanations before changing behavior.
+
 If reproduction is impossible, report the missing evidence and one concrete input request. Do not convert an unverified hypothesis into a completed fix or broaden into architecture improvement automatically.
 
 ## Completion report and next steps

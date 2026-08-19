@@ -1,17 +1,17 @@
 # QuickStark skill collection
 
-QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills` and seven optional commands in `qs-specialists`. Canonical public skill sources live under `skills/engineering/` and `skills/productivity/`. Domain modeling, module decomposition, ticket decomposition, and TDD live under `skills/internal/` as non-command capabilities.
+QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills`, seven optional commands in `qs-specialists`, and thirteen explicit-only commands in the optional `ps-skills` package. Canonical QS sources live under `skills/engineering/` and `skills/productivity/`; canonical PS sources live under `skills/pstack/commands/`. QS and PS internal capabilities remain non-command references.
 
 Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
 
 ## Source of truth
 
-`scripts/qs-skill-catalog.mjs` owns public membership, package projection, lifecycle position, invocation policy, display metadata, report profile, and ranked approved continuations. Add or rename a public command there first.
+`scripts/qs-skill-catalog.mjs` and `scripts/ps-skill-catalog.mjs` own collection membership; `scripts/skill-collection-registry.mjs` owns shared identity and literal lookup. Add or rename a public command in its collection catalog first.
 
 Every public command has:
 
 - A matching canonical folder and `SKILL.md` frontmatter name.
-- Matching `agents/openai.yaml` display metadata and `$qs-...` prompt.
+- Matching `agents/openai.yaml` display metadata and exact package prompt.
 - Root and bucket index entries in lifecycle order.
 - A concise generated page under `docs/<bucket>/`.
 - A purpose-specific report profile.
@@ -21,15 +21,17 @@ Explicit commands use `disable-model-invocation: true` and `policy.allow_implici
 
 ## Packages
 
-The default core contains exactly twelve commands. The optional specialists package contains exactly research, prototyping, documentation, test authoring, test verification, teaching, and skill authoring. Core must operate without specialist assets. No removed v2 name may be an alias, wrapper, router, or installable command.
+The default core contains exactly twelve commands. The optional specialists package contains exactly seven commands. The optional PS package contains exactly thirteen explicit-only commands and sixteen private capabilities. Packages must operate without importing each other's skill bodies.
 
 - Claude core manifest: `.claude-plugin/plugin.json`
 - Claude specialist package: `packages/qs-specialists/`
 - Codex core package: `codex/plugins/qs-skills/`
 - Codex specialist package: `codex/plugins/qs-specialists/`
-- Claude and Codex marketplaces each expose both packages.
+- Claude PS package: `packages/ps-skills/`
+- Codex PS package: `codex/plugins/ps-skills/`
+- Claude and Codex marketplaces each expose all three packages.
 
-Codex and generated Claude specialist snapshots are generated outputs. Never edit them independently. Keep package, lockfile, both Claude manifests, and both Codex manifests on the same version.
+Codex and generated Claude package snapshots are generated outputs. Never edit them independently. Keep the package, lockfile, all three Claude manifests, and all three Codex manifests on the same version.
 
 After a public skill, capability, catalog, documentation, or plugin change, run:
 
@@ -39,16 +41,17 @@ npm run check:codex
 npm test
 ```
 
-When Claude Code is available, validate both package roots:
+When Claude Code is available, validate all three package roots:
 
 ```bash
 claude plugin validate . --strict
 claude plugin validate ./packages/qs-specialists --strict
+claude plugin validate ./packages/ps-skills --strict
 ```
 
 ## Root-run contract
 
-`skills/engineering/qs-help/SKILL.md` is the authoritative router. `docs/skill-run-contract.md` owns shared execution and presentation policy.
+`skills/engineering/qs-help/SKILL.md` and `skills/pstack/commands/ps-help/SKILL.md` are collection routers. `docs/skill-run-contract.md` owns shared execution and presentation policy.
 
 Every invocation has one public root, one bounded result, and one hosted readout. Public skills never automatically execute other public skills. Internal capabilities and bounded helpers remain inside the root run and do not produce their own readout, status, skill-used entry, or continuation.
 
@@ -66,4 +69,4 @@ Only explicitly requested diagnostic previews may start a private viewer. Never 
 
 ## Upstream
 
-`origin` is the personal fork at `https://github.com/quickstark/skills`. `upstream` is the read-only reference at `https://github.com/mattpocock/skills`. Preserve Matt Pocock's MIT license and attribution. Push personalized changes only to `origin`.
+`origin` is the personal fork at `https://github.com/quickstark/skills`. `upstream` is the read-only reference at `https://github.com/mattpocock/skills`. Preserve Matt Pocock's and Lauren Tan's MIT notices. Push personalized changes only to `origin`.

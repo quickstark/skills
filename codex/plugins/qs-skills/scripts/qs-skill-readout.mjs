@@ -10,15 +10,17 @@ import { promisify } from "node:util";
 
 import {
   COLLECTION_NAME,
-  codexSkillLiteral,
   LEGACY_NEXT_SKILLS_BY_NAME,
   MODEL_GUIDANCE_BY_NAME,
-  NEXT_SKILLS_BY_NAME,
-  READOUT_PROFILES_BY_NAME,
+  READOUT_PROFILES_BY_NAME as LEGACY_READOUT_PROFILES_BY_NAME,
   READOUT_SKILLS_BY_NAME,
-  SKILLS,
-  SKILLS_BY_NAME,
 } from "./qs-skill-catalog.mjs";
+import {
+  PUBLIC_COMMANDS,
+  PUBLIC_COMMANDS_BY_NAME,
+  SKILL_COLLECTIONS_BY_ID,
+  codexPublicSkillLiteral,
+} from "./skill-collection-registry.mjs";
 import {
   REPORT_PRESENTATION_STYLES,
   decodeReadoutPreferences,
@@ -104,7 +106,7 @@ const findingPriorities = new Set(["P0", "P1", "P2", "P3"]);
 const pullRequestStates = new Set(["open", "merged", "closed"]);
 const deploymentStatuses = new Set(["verified", "deployed", "failed", "pending"]);
 const fileChangeTypes = new Set(["added", "modified", "deleted", "renamed"]);
-const reportFilename = /^qs-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--(?:[a-f0-9]{8}|[a-z0-9][a-z0-9._-]{0,95}--[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\.html$/i;
+const reportFilename = /^(?:qs|ps)-[a-z0-9-]+--\d{4}-\d{2}-\d{2}T[\d-]+Z--(?:[a-f0-9]{8}|[a-z0-9][a-z0-9._-]{0,95}--[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\.html$/i;
 const viewerToken = /^[a-f0-9]{48}$/;
 const loopbackHosts = new Set(["127.0.0.1", "::1", "localhost"]);
 const accessModes = new Set(["auto", "local", "lan", "ssh"]);
@@ -119,6 +121,18 @@ const observedUtcTimestamp = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?
 const ingestionMaximumBytes = 256 * 1024;
 const execFileAsync = promisify(execFile);
 const observedGitContexts = new Map();
+
+function nativeCollectionIdentifier(skill) {
+  return `quickstark/${skill.collectionId}`;
+}
+
+function nativeCollectionDisplayName(skill) {
+  return SKILL_COLLECTIONS_BY_ID.get(skill.collectionId)?.displayName ?? COLLECTION_NAME;
+}
+
+function readoutProfileForSkill(skill) {
+  return skill?.readoutProfile ?? LEGACY_READOUT_PROFILES_BY_NAME[skill?.name] ?? null;
+}
 
 async function resolveMacosReadoutKeychain(environment, profileHome, { includeLegacy = true } = {}) {
   if (
@@ -1127,13 +1141,35 @@ function normalizeExecutionContext(value, status) {
   return { machine: actualMachine, deployments, files };
 }
 
-function normalizeItems(items, label, { checks = false } = {}) {
+function redactSensitiveEvidenceText(value) {
+  return value
+    .replace(/-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----[\s\S]*?-----END (?:[A-Z ]+ )?PRIVATE KEY-----/g, "[redacted private key]")
+    .replace(/\b(?:gh[pousr]_[a-z0-9_]{20,}|github_pat_[a-z0-9_]{20,}|sk-(?:proj-)?[a-z0-9_-]{20,}|AKIA[0-9A-Z]{16})\b/gi, "[redacted credential]")
+    .replace(/\b(?:api[_-]?key|access[_-]?token|auth[_-]?token|secret|password)\b\s*[:=]\s*["']?[a-z0-9][a-z0-9._~+/-]{11,}/gi, "[redacted credential]")
+    .replace(/\bbearer\s+[a-z0-9][a-z0-9._~+/-]{11,}/gi, "Bearer [redacted credential]")
+    .replace(/\b(https?):\/\/[^\s/@:]+:[^\s/@]{8,}@/gi, "$1://[redacted credential]@")
+    .replace(/(?:\/home|\/Users|\/private|\/tmp|\/root)\/[A-Za-z0-9._/-]+/g, "[redacted path]")
+    .replace(/[A-Za-z]:\\(?:Users\\[^\\\s]+|Windows\\Temp)(?:\\[^\\\s]+)*/g, "[redacted path]");
+}
+
+function normalizeEvidenceText(value, label, redactSensitiveEvidence) {
+  const text = requireText(value, label);
+  return redactSensitiveEvidence ? redactSensitiveEvidenceText(text) : text;
+}
+
+function normalizeItems(items, label, {
+  checks = false,
+  redactSensitiveEvidence = false,
+} = {}) {
   if (items === undefined) return [];
   if (!Array.isArray(items)) throw new Error(`${label} must be an array.`);
 
   return items.map((item, index) => {
     if (typeof item === "string") {
-      return { title: requireText(item, `${label}[${index}]`), detail: "" };
+      return {
+        title: normalizeEvidenceText(item, `${label}[${index}]`, redactSensitiveEvidence),
+        detail: "",
+      };
     }
 
     if (!item || typeof item !== "object" || Array.isArray(item)) {
@@ -1141,13 +1177,23 @@ function normalizeItems(items, label, { checks = false } = {}) {
     }
 
     const normalized = {
-      title: requireText(item.title ?? item.label, `${label}[${index}].title`),
-      detail: item.detail === undefined ? "" : requireText(item.detail, `${label}[${index}].detail`),
+      title: normalizeEvidenceText(
+        item.title ?? item.label,
+        `${label}[${index}].title`,
+        redactSensitiveEvidence,
+      ),
+      detail: item.detail === undefined
+        ? ""
+        : normalizeEvidenceText(item.detail, `${label}[${index}].detail`, redactSensitiveEvidence),
       href: item.href ?? item.url,
     };
 
     if (normalized.href !== undefined) {
-      normalized.href = requireText(normalized.href, `${label}[${index}].href`);
+      normalized.href = normalizeEvidenceText(
+        normalized.href,
+        `${label}[${index}].href`,
+        redactSensitiveEvidence,
+      );
     }
 
     if (item.axis !== undefined) {
@@ -1284,7 +1330,7 @@ function normalizeActionableCode(items, label) {
   });
 }
 
-function normalizeReportRelationships(value, items) {
+function normalizeReportRelationships(value, items, { redactSensitiveEvidence = false } = {}) {
   if (value === undefined) return [];
   if (!Array.isArray(value)) throw new Error("Report relationships must be an array.");
 
@@ -1297,8 +1343,8 @@ function normalizeReportRelationships(value, items) {
       throw new Error(`${label} must connect actual recorded report results.`);
     }
 
-    const from = requireText(item.from, `${label}.from`);
-    const to = requireText(item.to, `${label}.to`);
+    const from = normalizeEvidenceText(item.from, `${label}.from`, redactSensitiveEvidence);
+    const to = normalizeEvidenceText(item.to, `${label}.to`, redactSensitiveEvidence);
 
     if (!observed.has(from) || !observed.has(to)) {
       throw new Error(`${label} must connect actual recorded report results.`);
@@ -1307,9 +1353,49 @@ function normalizeReportRelationships(value, items) {
     return {
       from,
       to,
-      ...(item.label === undefined ? {} : { label: requireText(item.label, `${label}.label`) }),
+      ...(item.label === undefined ? {} : {
+        label: normalizeEvidenceText(item.label, `${label}.label`, redactSensitiveEvidence),
+      }),
     };
   });
+}
+
+function hasSubstantiveCompletionSection(section, evidence) {
+  if (section === "checks") {
+    return evidence.checks.some((check) => check.status === "passed" && check.detail.length > 0);
+  }
+  return evidence[section].some((item) => item.detail.length > 0 || item.href !== undefined);
+}
+
+function validateCompletionEvidence(skillName, requirement, evidence) {
+  const matches = requirement.requiredSections.map(
+    (section) => hasSubstantiveCompletionSection(section, evidence),
+  );
+  const satisfied = requirement.sectionMode === "all"
+    ? matches.every(Boolean)
+    : matches.some(Boolean);
+
+  if (!satisfied) {
+    const joiner = requirement.sectionMode === "all" ? " and " : " or ";
+    throw new Error(
+      `/${skillName} requires substantive completion evidence in ${requirement.requiredSections.join(joiner)}.`,
+    );
+  }
+
+  if (requirement.requiredCheckDetailFields.length > 0) {
+    const passedEvidence = evidence.checks
+      .filter((check) => check.status === "passed")
+      .map((check) => `${check.title}\n${check.detail}`)
+      .join("\n");
+    const missing = requirement.requiredCheckDetailFields.filter(
+      (field) => !new RegExp(`(?:^|[;\\s])${field}\\s*=\\s*[^;\\s]+`, "im").test(passedEvidence),
+    );
+    if (missing.length > 0) {
+      throw new Error(
+        `/${skillName} completion evidence must record ${requirement.requiredCheckDetailFields.join(", ")}.`,
+      );
+    }
+  }
 }
 
 function normalizeReadoutProducer(value) {
@@ -1512,7 +1598,7 @@ function extractCodexTaskObservation(events, expectedSkill, now) {
         ? payload.message
         : typeof payload.text === "string" ? payload.text : "";
       const mentionedSkills = new Set(
-        [...message.matchAll(/(?:^|[\s[(])(?:\$|\/)(?:qs-skills:)?(qs-[a-z0-9-]+)(?![a-z0-9._:-])/gi)]
+        [...message.matchAll(/(?:^|[\s[(])(?:\$|\/)(?:(?:qs-skills|qs-specialists|ps-skills):)?((?:qs|ps)-[a-z0-9-]+)(?![a-z0-9._:-])/gi)]
           .map((match) => match[1].toLowerCase()),
       );
 
@@ -1595,7 +1681,7 @@ export async function captureCodexSkillObservation(skill, {
   const expectedSkill = typeof skill === "string" ? skill.replace(/^\//, "").toLowerCase() : "";
 
   if (
-    !SKILLS_BY_NAME.has(expectedSkill)
+    !PUBLIC_COMMANDS_BY_NAME.has(expectedSkill)
     || !(now instanceof Date)
     || Number.isNaN(now.getTime())
   ) {
@@ -1931,12 +2017,12 @@ function selectNextPromptEvidence(context) {
 function createNextPrompt(recommendation, context, fallbackReason) {
   const route = typeof recommendation === "string" ? { name: recommendation } : recommendation;
   const { name } = route;
-  const target = READOUT_SKILLS_BY_NAME.get(name);
+  const target = PUBLIC_COMMANDS_BY_NAME.get(name) ?? READOUT_SKILLS_BY_NAME.get(name);
   const action = (route.instruction ?? `to ${target?.prompt ?? fallbackReason ?? "continue the recorded work"}`)
     .replace(/[.!?]+$/, "")
     .trim();
-  const invocation = SKILLS_BY_NAME.has(name)
-    ? codexSkillLiteral(name)
+  const invocation = PUBLIC_COMMANDS_BY_NAME.has(name)
+    ? codexPublicSkillLiteral(name)
     : READOUT_SKILLS_BY_NAME.has(name)
       ? `$${name}`
       : `/${name}`;
@@ -1956,8 +2042,8 @@ function createNextPrompt(recommendation, context, fallbackReason) {
 function normalizeNextPrompt(value, name, label) {
   const prompt = requireText(value, label);
   const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const invocation = SKILLS_BY_NAME.has(name)
-    ? codexSkillLiteral(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  const invocation = PUBLIC_COMMANDS_BY_NAME.has(name)
+    ? codexPublicSkillLiteral(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
     : null;
   const firstAction = invocation
     ? `(?:${invocation}|/${escapedName})`
@@ -1966,8 +2052,8 @@ function normalizeNextPrompt(value, name, label) {
       : `/${escapedName}`;
 
   if (!new RegExp(`^use\\s+${firstAction}(?![a-z0-9._:-])(?:\\s|$)`, "i").test(prompt)) {
-    const expected = SKILLS_BY_NAME.has(name)
-      ? `${codexSkillLiteral(name)} or /${name}`
+    const expected = PUBLIC_COMMANDS_BY_NAME.has(name)
+      ? `${codexPublicSkillLiteral(name)} or /${name}`
       : `/${name}`;
     throw new Error(`${label} must explicitly invoke ${expected} as its first action.`);
   }
@@ -2039,13 +2125,11 @@ function normalizeNextPromptModel(candidate, name, context, index) {
 
 function normalizeRecommendations(skill, recommendations, context) {
   const allowed = context.v3
-    ? NEXT_SKILLS_BY_NAME[skill.name]
+    ? context.completionState === "failed"
+      ? skill.continuation.failure
+      : skill.continuation.normal
     : LEGACY_NEXT_SKILLS_BY_NAME[skill.name];
-  const available = context.v3
-    ? allowed.filter((item) => context.completionState === "failed"
-      ? item.availability !== "success"
-      : item.availability !== "failure")
-    : allowed;
+  const available = allowed;
   const passedChecks = context.checks.some((check) => check.status === "passed")
     && !context.checks.some((check) => check.status === "failed");
   const reviewedWithoutFindings = !context.v3
@@ -2061,9 +2145,7 @@ function normalizeRecommendations(skill, recommendations, context) {
     : recommendations;
   const initial = requested === undefined
     ? context.v3
-      ? context.completionState === "failed"
-        ? [...available].sort((left, right) => Number(right.recovery) - Number(left.recovery))
-        : available
+      ? available
       : reviewedWithoutFindings
         ? [...allowed].sort((left, right) =>
           Number(right.name === "qs-git-merge") - Number(left.name === "qs-git-merge"))
@@ -2146,10 +2228,14 @@ export function normalizeSkillReadout(input) {
   // Public catalog membership selects the v3 contract. Optional result fields
   // refine that contract; their omission must never opt an active command back
   // into the retired v2 prompt graph.
-  const v3 = SKILLS_BY_NAME.has(skillName);
-  const skill = (v3 ? SKILLS_BY_NAME : READOUT_SKILLS_BY_NAME).get(skillName);
+  const v3 = PUBLIC_COMMANDS_BY_NAME.has(skillName);
+  const skill = (v3 ? PUBLIC_COMMANDS_BY_NAME : READOUT_SKILLS_BY_NAME).get(skillName);
 
   if (!skill) throw new Error(`/${skillName} is not a promoted QuickStark skill.`);
+  const collection = v3 ? nativeCollectionIdentifier(skill) : "quickstark/qs-skills";
+  if (input.collection !== undefined && input.collection !== collection) {
+    throw new Error(`/${skillName} does not match its native collection ${collection}.`);
+  }
 
   const suppliedStatus = input.status;
   const status = suppliedStatus ?? "Completed";
@@ -2194,7 +2280,7 @@ export function normalizeSkillReadout(input) {
   const used = suppliedSkills.map((name, index) => {
     const normalized = requireText(name, `skillsUsed[${index}]`).replace(/^\//, "");
 
-    if (!(v3 ? SKILLS_BY_NAME : READOUT_SKILLS_BY_NAME).has(normalized)) {
+    if (!(v3 ? PUBLIC_COMMANDS_BY_NAME : READOUT_SKILLS_BY_NAME).has(normalized)) {
       throw new Error(`/${normalized} is not a promoted QuickStark skill.`);
     }
 
@@ -2228,10 +2314,11 @@ export function normalizeSkillReadout(input) {
     throw new Error("Report identifier must be a valid UUID.");
   }
 
-  const findings = normalizeItems(input.findings, "findings");
-  const decisions = normalizeItems(input.decisions, "decisions");
-  const outputs = normalizeItems(input.outputs, "outputs");
-  const checks = normalizeItems(input.checks, "checks", { checks: true });
+  const redactSensitiveEvidence = v3 && skill.collectionId === "ps-skills";
+  const findings = normalizeItems(input.findings, "findings", { redactSensitiveEvidence });
+  const decisions = normalizeItems(input.decisions, "decisions", { redactSensitiveEvidence });
+  const outputs = normalizeItems(input.outputs, "outputs", { redactSensitiveEvidence });
+  const checks = normalizeItems(input.checks, "checks", { checks: true, redactSensitiveEvidence });
   const commands = normalizeActionableCode(input.commands, "commands");
   const keyCode = normalizeActionableCode(input.keyCode, "keyCode");
 
@@ -2246,13 +2333,16 @@ export function normalizeSkillReadout(input) {
   const execution = normalizeExecutionContext(input.execution, status);
   const observation = normalizeSkillObservation(input.observation, status, checks);
   const producer = normalizeReadoutProducer(input.ingestion);
+  if (producer && producer.collection !== collection) {
+    throw new Error(`/${skillName} does not match its native collection ${collection}.`);
+  }
   const provenance = normalizeDeliveryProvenance(input.provenance, projectIdentity);
   const relationships = normalizeReportRelationships(input.relationships, [
     findings,
     decisions,
     outputs,
     checks,
-  ]);
+  ], { redactSensitiveEvidence });
 
   if (
     status === "Preview"
@@ -2261,7 +2351,7 @@ export function normalizeSkillReadout(input) {
     throw new Error("A catalog preview cannot claim actual decisions, outputs, validation results, commands, or code.");
   }
 
-  const outcome = requireText(input.outcome, "outcome");
+  const outcome = normalizeEvidenceText(input.outcome, "outcome", redactSensitiveEvidence);
 
   if (
     v3 && completionState === "complete"
@@ -2273,8 +2363,14 @@ export function normalizeSkillReadout(input) {
     throw new Error("Failed required checks and actionable P0/P1 findings prohibit a complete result.");
   }
 
+  if (v3 && completionState === "complete" && skill.completionEvidence) {
+    const evidence = { findings, decisions, outputs, checks };
+    validateCompletionEvidence(skillName, skill.completionEvidence, evidence);
+  }
+
   return {
     skill,
+    collection,
     status,
     effort,
     report: reportMode,
@@ -2857,7 +2953,8 @@ export function renderSkillReadout(input) {
 function renderNormalizedSkillReadout(report) {
   const family = report.skill.name.split("-")[1];
   const theme = themes[family] ?? themes.help;
-  const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+  const profile = readoutProfileForSkill(report.skill);
+  const collectionDisplayName = nativeCollectionDisplayName(report.skill);
 
   if (!profile) throw new Error(`/${report.skill.name} does not have a cataloged report profile.`);
 
@@ -2865,6 +2962,7 @@ function renderNormalizedSkillReadout(report) {
   const metadata = [
     `<meta name="quickstark:skill" content="${escapeHtml(report.skill.name)}">`,
     `<meta name="quickstark:skill-display-name" content="${escapeHtml(report.skill.displayName)}">`,
+    `<meta name="quickstark:skill-collection" content="${escapeHtml(report.collection)}">`,
     `<meta name="quickstark:report-profile" content="${escapeHtml(profile.title)}">`,
     `<meta name="quickstark:status" content="${escapeHtml(report.status)}">`,
     `<meta name="quickstark:completion-state" content="${escapeHtml(report.completionState)}">`,
@@ -2914,7 +3012,6 @@ function renderNormalizedSkillReadout(report) {
     ...(report.producer ? [
       `<meta name="quickstark:producer" content="${escapeHtml(report.producer.producer)}">`,
       `<meta name="quickstark:harness" content="${escapeHtml(report.producer.harness.name)}">`,
-      `<meta name="quickstark:skill-collection" content="${escapeHtml(report.producer.collection)}">`,
       ...(report.producer.harness.version ? [
         `<meta name="quickstark:harness-version" content="${escapeHtml(report.producer.harness.version)}">`,
       ] : []),
@@ -2997,7 +3094,7 @@ function renderNormalizedSkillReadout(report) {
   const actionableCode = renderReadoutActionableCode(report);
 
   const body = `<main class="compact-readout">
-  <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(COLLECTION_NAME)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
+  <div class="topline"><div class="brand"><span class="brand-mark">Q</span><span>${escapeHtml(collectionDisplayName)}</span></div><span class="timestamp">${escapeHtml(formatTimestamp(report.generatedAt))}</span></div>
   <header class="hero"><div class="hero-heading"><div><p class="eyebrow">${escapeHtml(theme.label)}${report.project ? ` · ${escapeHtml(report.project)}` : ""}</p><h1>${escapeHtml(report.skill.displayName)}</h1><p class="profile-title">${escapeHtml(profile.title)}</p><span class="skill-command">/${escapeHtml(report.skill.name)}</span></div><span class="status status-${statusClass}">${escapeHtml(report.status)}</span></div><p class="outcome">${escapeHtml(report.outcome)}</p>${preview}${used}${renderReadoutProjectMetadata(report)}</header>
   ${summary}
   <section class="section"><div class="section-heading"><div><p class="eyebrow">Continue the actual work</p><h2>Top next prompts</h2></div><span class="section-count">${report.nextSkills.length}</span></div>${next}</section>
@@ -3011,7 +3108,7 @@ function renderNormalizedSkillReadout(report) {
   ${visualization}
   ${sections}
   ${githubIssues}
-  <footer class="footer"><span>Generated by ${escapeHtml(COLLECTION_NAME)}</span><span>Self-contained HTML · no external scripts or styles</span></footer>
+  <footer class="footer"><span>Generated by ${escapeHtml(collectionDisplayName)}</span><span>Self-contained HTML · no external scripts or styles</span></footer>
 </main>`;
 
   return renderDocument({
@@ -3047,7 +3144,7 @@ export async function writeReadoutVisualArtifact(input, options = {}) {
   }
 
   const skillName = requireText(input.skill, "Visual artifact skill").replace(/^\//, "");
-  const skill = SKILLS_BY_NAME.get(skillName);
+  const skill = PUBLIC_COMMANDS_BY_NAME.get(skillName);
 
   if (!skill) {
     throw new Error("A browser visual artifact requires a promoted QuickStark skill.");
@@ -3114,8 +3211,9 @@ export async function writeReadoutVisualArtifact(input, options = {}) {
   }
 
   const timestamp = generatedAt.toISOString().replaceAll(":", "-").replaceAll(".", "-");
-  const visualSkill = skill.name.replace(/^qs-(?:design-)?/, "");
-  const filename = "qs-visual-" + visualSkill + "--" + timestamp + "--"
+  const collectionPrefix = skill.collectionId === "ps-skills" ? "ps" : "qs";
+  const visualSkill = skill.name.replace(/^(?:qs|ps)-(?:design-)?/, "");
+  const filename = collectionPrefix + "-visual-" + visualSkill + "--" + timestamp + "--"
     + randomUUID().slice(0, 8) + ".html";
 
   await mkdir(directory, { recursive: true, mode: 0o700 });
@@ -3208,6 +3306,7 @@ export async function writeSkillReadout(input, options = {}) {
 
   return {
     skill: report.skill.name,
+    collection: report.collection,
     status: report.status,
     effort: report.effort,
     report: report.report,
@@ -3247,7 +3346,9 @@ export function normalizeExternalSkillReadout(input) {
 
   if (!producer) throw new Error("An external skill requires verified producer and harness metadata.");
 
-  if (producer.collection === "quickstark/qs-skills") {
+  if ([...SKILL_COLLECTIONS_BY_ID.keys()].some(
+    (collectionId) => producer.collection === `quickstark/${collectionId}`,
+  )) {
     throw new Error("An external skill cannot claim native QuickStark catalog membership.");
   }
 
@@ -3462,14 +3563,22 @@ export async function writeExternalSkillReadout(input, options = {}) {
 }
 
 export async function writeSkillGallery(options = {}) {
-  return Promise.all(SKILLS.map((skill) => writeSkillReadout({
+  const gallerySkills = options.collection === undefined
+    ? PUBLIC_COMMANDS.filter((skill) => skill.collectionId !== "ps-skills")
+    : PUBLIC_COMMANDS.filter((skill) => skill.collectionId === options.collection);
+
+  if (options.collection !== undefined && gallerySkills.length === 0) {
+    throw new Error(`Unknown or empty skill collection: ${options.collection}.`);
+  }
+
+  return Promise.all(gallerySkills.map((skill) => writeSkillReadout({
     skill: skill.name,
     status: "Preview",
     outcome: `${skill.shortDescription}. This page previews the readout format; the skill has not been run.`,
     skillsUsed: [],
     findings: [
       { title: "Purpose", detail: skill.shortDescription },
-      { title: "Invocation", detail: skill.userInvoked
+      { title: "Invocation", detail: skill.invocationPolicy === "explicit" || skill.userInvoked
         ? "Run explicitly when you choose this workflow."
         : "Run explicitly or allow the agent to select it when the task fits." },
     ],
@@ -3783,7 +3892,8 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
       const html = await readFile(path, "utf8");
       const skillName = decodeHtml(findMetadata(html, "skill"));
       const external = findMetadata(html, "report-origin") === "external";
-      const skill = READOUT_SKILLS_BY_NAME.get(skillName)
+      const skill = PUBLIC_COMMANDS_BY_NAME.get(skillName)
+        ?? READOUT_SKILLS_BY_NAME.get(skillName)
         ?? (external && externalSkillIdentifier.test(skillName) ? {
           name: skillName,
           displayName: decodeHtml(findMetadata(html, "skill-display-name")) || skillName,
@@ -3805,7 +3915,7 @@ async function discoverStoredReadouts(directory, { allowedProjects = null, maxDe
         status,
         generatedAt,
         profileTitle: decodeHtml(findMetadata(html, "report-profile"))
-          || READOUT_PROFILES_BY_NAME[skill.name]?.title
+          || readoutProfileForSkill(skill)?.title
           || "",
         outcome: decodeHtml(match?.[1] ?? ""),
         projectKey,
@@ -4227,7 +4337,7 @@ function allowedStoredReadoutSections(report) {
     "Top next prompts",
     "Next best skills",
   ]);
-  const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+  const profile = readoutProfileForSkill(report.skill);
   const capturedProfile = findMetadata(report.document, "report-profile");
   const commands = discoverStoredActionableCode(report.document, "user-command", "commands");
   const keyCode = discoverStoredActionableCode(report.document, "key-code", "keyCode");
@@ -4288,7 +4398,7 @@ function allowedStoredReadoutSections(report) {
 }
 
 function storedReadoutEvidenceSection(report, title) {
-  const profile = READOUT_PROFILES_BY_NAME[report.skill.name];
+  const profile = readoutProfileForSkill(report.skill);
 
   if (profile) {
     if (findMetadata(report.document, "report-profile")) {
@@ -5292,7 +5402,17 @@ async function acceptReadoutSubmission(envelope, {
     relationships: envelope.relationships,
     nextSkills: envelope.nextSkills,
   };
-  const external = envelope.collection !== "quickstark/qs-skills";
+  const registeredNativeSkill = PUBLIC_COMMANDS_BY_NAME.get(envelope.skill);
+  const legacyNativeSkill = registeredNativeSkill === undefined
+    ? READOUT_SKILLS_BY_NAME.get(envelope.skill)
+    : undefined;
+  const expectedNativeCollection = registeredNativeSkill
+    ? nativeCollectionIdentifier(registeredNativeSkill)
+    : legacyNativeSkill ? "quickstark/qs-skills" : null;
+  if (expectedNativeCollection && envelope.collection !== expectedNativeCollection) {
+    return { error: 422, code: "invalid_readout" };
+  }
+  const external = expectedNativeCollection === null;
   let normalized;
 
   try {
@@ -6321,7 +6441,7 @@ function parseOptions(arguments_) {
       continue;
     }
 
-    if (!["--input", "--data", "--skill", "--directory", "--target-directory", "--base-url", "--report-base-url", "--host", "--port", "--access", "--layout", "--project", "--retention-days", "--allowed-projects", "--publication-mode", "--endpoint", "--producers-file", "--max-bytes", "--max-requests-per-minute", "--max-attempts", "--retry-delay", "--timeout"].includes(argument)) {
+    if (!["--input", "--data", "--skill", "--collection", "--directory", "--target-directory", "--base-url", "--report-base-url", "--host", "--port", "--access", "--layout", "--project", "--retention-days", "--allowed-projects", "--publication-mode", "--endpoint", "--producers-file", "--max-bytes", "--max-requests-per-minute", "--max-attempts", "--retry-delay", "--timeout"].includes(argument)) {
       throw new Error(`Unknown readout option: ${argument}`);
     }
 
@@ -6348,7 +6468,7 @@ Usage:
   node scripts/qs-skill-readout.mjs render --input /absolute/readout.json
   node scripts/qs-skill-readout.mjs render --data '{"skill":"qs-help","completionState":"complete","outcome":"Selected the right workflow."}'
   node scripts/qs-skill-readout.mjs visual --skill qs-design-architecture --input /absolute/visual.html
-  node scripts/qs-skill-readout.mjs gallery
+  node scripts/qs-skill-readout.mjs gallery [--collection qs-skills|qs-specialists|ps-skills]
   node scripts/qs-skill-readout.mjs serve [--host 127.0.0.1] [--port 4173]
   node scripts/qs-skill-readout.mjs ingest --producers-file /secure/producers.json
   node scripts/qs-skill-readout.mjs publish --input /absolute/readout-envelope.json
@@ -6357,6 +6477,7 @@ Usage:
 
 Options:
   --skill NAME      Actual promoted skill that produced a browser visual.
+  --collection NAME Generate gallery previews for one registered collection.
   --directory PATH  Store or serve reports from a specific directory.
   --target-directory PATH  Optional durable destination for legacy migration.
   --layout MODE     Use flat compatibility or durable project-organized paths.
@@ -6429,6 +6550,10 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
 
   if (options.requireHosted && command !== "render") {
     throw new Error("The --require-hosted option applies only to the render command.");
+  }
+
+  if (options.collection !== undefined && command !== "gallery") {
+    throw new Error("The --collection option applies only to the gallery command.");
   }
 
   if (options.apply && options.dryRun) {
@@ -6526,7 +6651,7 @@ export async function runReadoutCli(arguments_ = process.argv.slice(2)) {
             version: process.env.QS_READOUT_HARNESS_VERSION,
           } : {}),
         },
-        collection: "quickstark/qs-skills",
+        collection: result.collection,
         project: result.projectIdentity,
         runId: result.reportId,
         generatedAt: result.generatedAt,

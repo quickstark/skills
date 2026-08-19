@@ -11,46 +11,110 @@ import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { formatSkillForCodex } from "./codex-skill-format.mjs";
-import { V3_CORE_SKILLS, V3_SPECIALIST_SKILLS } from "./qs-skill-catalog.mjs";
+import { PS_INTERNAL_CAPABILITIES } from "./ps-skill-catalog.mjs";
+import { assertGeneratedPackageRoot } from "./skill-package-projection.mjs";
+import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
-const check = process.argv.includes("--check");
 const supportFiles = Object.freeze([
   "qs-readout-portfolio.mjs",
+  "ps-skill-catalog.mjs",
   "qs-skill-catalog.mjs",
   "qs-skill-report-presentation.mjs",
   "qs-skill-readout.mjs",
+  "skill-collection-registry.mjs",
 ]);
-const capabilityFiles = Object.freeze([
+const qsCapabilityFiles = Object.freeze([
   "domain-modeling.md",
   "module-decomposition.md",
   "ticket-decomposition.md",
   "tdd-loop.md",
 ]);
+const psCapabilityFiles = Object.freeze(PS_INTERNAL_CAPABILITIES.map((capability) => `${capability.name}.md`));
+
+function commandsFor(collectionId) {
+  return PUBLIC_COMMANDS.filter((command) => command.collectionId === collectionId);
+}
 
 const packages = Object.freeze([
   {
     name: "qs-skills",
     displayName: "QuickStark Skills",
     description: "QuickStark's twelve-command core engineering workflow.",
-    projection: V3_CORE_SKILLS,
+    projection: commandsFor("qs-skills"),
     codexRoot: join(repositoryRoot, "codex", "plugins", "qs-skills"),
-    includeCapabilities: true,
+    capabilitySourceRoot: join(repositoryRoot, "skills", "internal"),
+    capabilityFiles: qsCapabilityFiles,
+    claudeMarketplaceSource: "./",
+    defaultPrompt: ["Help me choose the right QuickStark workflow", "Build and review this scoped change"],
+    keywords: ["quickstark", "engineering", "workflow"],
   },
   {
     name: "qs-specialists",
     displayName: "QuickStark Specialists",
     description: "Optional QuickStark research, prototyping, documentation, testing, teaching, and skill-authoring workflows.",
-    projection: V3_SPECIALIST_SKILLS,
+    projection: commandsFor("qs-specialists"),
     codexRoot: join(repositoryRoot, "codex", "plugins", "qs-specialists"),
     claudeRoot: join(repositoryRoot, "packages", "qs-specialists"),
-    includeCapabilities: false,
+    capabilityFiles: [],
+    claudeMarketplaceSource: "./packages/qs-specialists",
+    defaultPrompt: ["Use a focused QuickStark specialist workflow"],
+    keywords: ["quickstark", "engineering", "specialists"],
+  },
+  {
+    name: "ps-skills",
+    displayName: "Pstack Skills",
+    description: "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
+    projection: commandsFor("ps-skills"),
+    codexRoot: join(repositoryRoot, "codex", "plugins", "ps-skills"),
+    claudeRoot: join(repositoryRoot, "packages", "ps-skills"),
+    capabilitySourceRoot: join(repositoryRoot, "skills", "pstack", "internal"),
+    capabilityFiles: psCapabilityFiles,
+    noticeFiles: ["THIRD_PARTY_NOTICES.md"],
+    claudeMarketplaceSource: "./packages/ps-skills",
+    defaultPrompt: ["Use an explicit Pstack workflow for evidence-based analysis or operations"],
+    keywords: ["quickstark", "pstack", "engineering", "verification"],
   },
 ]);
 
-if (check) await verifyAll();
-else await syncAll();
+const cliArguments = process.argv.slice(2);
+
+if (cliArguments.includes("--check")) await verifyAll(parseCheckSelection(cliArguments));
+else {
+  if (cliArguments.length > 0) throw new Error(`Unknown projector option: ${cliArguments[0]}`);
+  await syncAll();
+}
+
+function optionValue(arguments_, name) {
+  const indexes = arguments_.flatMap((argument, index) => argument === name ? [index] : []);
+  if (indexes.length > 1) throw new Error(`Projector option ${name} may appear only once.`);
+  if (indexes.length === 0) return undefined;
+  const value = arguments_[indexes[0] + 1];
+  if (!value || value.startsWith("--")) throw new Error(`Projector option ${name} requires a value.`);
+  return value;
+}
+
+function parseCheckSelection(arguments_) {
+  const allowed = new Set(["--check", "--package", "--root", "--format"]);
+  for (let index = 0; index < arguments_.length; index += 1) {
+    const argument = arguments_[index];
+    if (!allowed.has(argument)) throw new Error(`Unknown projector option: ${argument}`);
+    if (argument !== "--check") index += 1;
+  }
+
+  const packageName = optionValue(arguments_, "--package");
+  const root = optionValue(arguments_, "--root");
+  const format = optionValue(arguments_, "--format");
+  if ([packageName, root, format].some((value) => value !== undefined)
+    && [packageName, root, format].some((value) => value === undefined)) {
+    throw new Error("A selected projector check requires --package, --root, and --format together.");
+  }
+  if (format !== undefined && format !== "claude" && format !== "codex") {
+    throw new Error("Projector format must be claude or codex.");
+  }
+  return packageName === undefined ? null : { packageName, root: resolve(root), format };
+}
 
 async function exists(path) {
   try {
@@ -88,7 +152,7 @@ function codexManifest(pkg) {
     author: { name: "QuickStark", url: "https://github.com/quickstark" },
     homepage: "https://github.com/quickstark/skills",
     license: "MIT",
-    keywords: ["quickstark", "engineering", pkg.name === "qs-skills" ? "workflow" : "specialists"],
+    keywords: pkg.keywords,
     skills: "./skills/",
     interface: {
       displayName: pkg.displayName,
@@ -98,9 +162,7 @@ function codexManifest(pkg) {
       category: "Coding",
       capabilities: ["Interactive", "Read", "Write"],
       websiteURL: "https://github.com/quickstark/skills",
-      defaultPrompt: pkg.name === "qs-skills"
-        ? ["Help me choose the right QuickStark workflow", "Build and review this scoped change"]
-        : ["Use a focused QuickStark specialist workflow"],
+      defaultPrompt: pkg.defaultPrompt,
     },
   };
 }
@@ -114,10 +176,10 @@ function claudeManifest(pkg, generated = false) {
     homepage: "https://github.com/quickstark/skills",
     repository: "https://github.com/quickstark/skills",
     license: "MIT",
-    keywords: ["quickstark", "engineering", pkg.name === "qs-skills" ? "workflow" : "specialists"],
+    keywords: pkg.keywords,
     skills: pkg.projection.map((skill) => generated
       ? `./skills/${skill.name}`
-      : `./skills/${skill.bucket}/${skill.name}`),
+      : `./${skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`}`),
   };
 }
 
@@ -128,10 +190,10 @@ function marketplace() {
     description: "QuickStark's focused, namespaced engineering and productivity skills.",
     plugins: packages.map((pkg) => ({
       name: pkg.name,
-      source: pkg.name === "qs-skills" ? "./" : "./packages/qs-specialists",
+      source: pkg.claudeMarketplaceSource,
       description: pkg.description,
       category: "engineering",
-      keywords: ["quickstark", "engineering", pkg.name === "qs-skills" ? "workflow" : "specialists"],
+      keywords: pkg.keywords,
     })),
   };
 }
@@ -162,13 +224,13 @@ async function writeProjection(pkg, root, { codex }) {
   }
 
   for (const skill of pkg.projection) {
-    const source = join(repositoryRoot, "skills", skill.bucket, skill.name);
+    const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
     const destination = join(skillsRoot, skill.name);
     if (!(await exists(join(source, "SKILL.md")))) {
       throw new Error(`Cannot package missing promoted skill /${skill.name}.`);
     }
     await cp(source, destination, { recursive: true, dereference: true });
-    if (codex && skill.userInvoked) {
+    if (codex && (skill.userInvoked || skill.disableModelInvocation)) {
       const path = join(destination, "SKILL.md");
       await writeFile(path, formatSkillForCodex(await readFile(path, "utf8"), skill));
     }
@@ -176,11 +238,15 @@ async function writeProjection(pkg, root, { codex }) {
 
   const capabilityRoot = join(root, "capabilities");
   await rm(capabilityRoot, { recursive: true, force: true });
-  if (pkg.includeCapabilities) {
+  if (pkg.capabilityFiles.length > 0) {
     await mkdir(capabilityRoot, { recursive: true });
-    for (const file of capabilityFiles) {
-      await cp(join(repositoryRoot, "skills", "internal", file), join(capabilityRoot, file));
+    for (const file of pkg.capabilityFiles) {
+      await cp(join(pkg.capabilitySourceRoot, file), join(capabilityRoot, file));
     }
+  }
+
+  for (const file of pkg.noticeFiles ?? []) {
+    await cp(join(repositoryRoot, file), join(root, file));
   }
 }
 
@@ -199,19 +265,24 @@ async function syncAll() {
   await writeFile(join(repositoryRoot, ".claude-plugin", "plugin.json"), json(claudeManifest(packages[0])));
   await writeFile(join(repositoryRoot, ".claude-plugin", "marketplace.json"), json(marketplace()));
   await writeFile(join(repositoryRoot, "codex", ".agents", "plugins", "marketplace.json"), json(codexMarketplace()));
-  console.log("Generated isolated QuickStark v3 core and specialist package projections.");
+  console.log("Generated isolated QuickStark v3 core, specialist, and PS package projections.");
 }
 
 async function expectedSkillFiles(pkg, { codex }) {
   const expected = [];
   for (const skill of pkg.projection) {
-    const source = join(repositoryRoot, "skills", skill.bucket, skill.name);
+    const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
     for (const file of await fileList(source)) expected.push(`${skill.name}/${file}`);
   }
   return expected.sort();
 }
 
 async function verifyProjection(pkg, root, { codex }) {
+  await assertGeneratedPackageRoot(root, {
+    manifestDirectory: codex ? ".codex-plugin" : ".claude-plugin",
+    includeCapabilities: pkg.capabilityFiles.length > 0,
+    noticeFiles: pkg.noticeFiles ?? [],
+  });
   const actualSkillFiles = await fileList(join(root, "skills"));
   const expected = await expectedSkillFiles(pkg, { codex });
   if (JSON.stringify(actualSkillFiles) !== JSON.stringify(expected)) {
@@ -219,7 +290,7 @@ async function verifyProjection(pkg, root, { codex }) {
   }
 
   for (const skill of pkg.projection) {
-    const sourceRoot = join(repositoryRoot, "skills", skill.bucket, skill.name);
+    const sourceRoot = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
     const targetRoot = join(root, "skills", skill.name);
     for (const file of await fileList(sourceRoot)) {
       const source = await readFile(join(sourceRoot, file));
@@ -243,9 +314,16 @@ async function verifyProjection(pkg, root, { codex }) {
   }
 
   const capabilityInventory = await fileList(join(root, "capabilities"));
-  const expectedCapabilities = pkg.includeCapabilities ? [...capabilityFiles].sort() : [];
+  const expectedCapabilities = [...pkg.capabilityFiles].sort();
   if (JSON.stringify(capabilityInventory) !== JSON.stringify(expectedCapabilities)) {
     throw new Error(`${pkg.name} has an invalid internal-capability projection.`);
+  }
+  for (const file of pkg.noticeFiles ?? []) {
+    const [source, actual] = await Promise.all([
+      readFile(join(repositoryRoot, file)),
+      readFile(join(root, file)),
+    ]);
+    if (!source.equals(actual)) throw new Error(`${pkg.name} has a stale notice: ${file}.`);
   }
 }
 
@@ -254,7 +332,20 @@ async function verifyJson(path, expected, label) {
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error(`${label} is stale.`);
 }
 
-async function verifyAll() {
+async function verifyAll(selection = null) {
+  if (selection) {
+    const pkg = packages.find((candidate) => candidate.name === selection.packageName);
+    if (!pkg) throw new Error(`Unknown generated package: ${selection.packageName}.`);
+    const codex = selection.format === "codex";
+    await verifyProjection(pkg, selection.root, { codex });
+    await verifyJson(
+      join(selection.root, codex ? ".codex-plugin" : ".claude-plugin", "plugin.json"),
+      codex ? codexManifest(pkg) : claudeManifest(pkg, true),
+      `${pkg.name} ${codex ? "Codex" : "Claude"} manifest`,
+    );
+    console.log(`Verified deterministic ${pkg.name} ${selection.format} package projection.`);
+    return;
+  }
   for (const pkg of packages) {
     await verifyProjection(pkg, pkg.codexRoot, { codex: true });
     await verifyJson(join(pkg.codexRoot, ".codex-plugin", "plugin.json"), codexManifest(pkg), `${pkg.name} Codex manifest`);
@@ -266,5 +357,5 @@ async function verifyAll() {
   await verifyJson(join(repositoryRoot, ".claude-plugin", "plugin.json"), claudeManifest(packages[0]), "core Claude manifest");
   await verifyJson(join(repositoryRoot, ".claude-plugin", "marketplace.json"), marketplace(), "Claude marketplace");
   await verifyJson(join(repositoryRoot, "codex", ".agents", "plugins", "marketplace.json"), codexMarketplace(), "Codex marketplace");
-  console.log("Verified deterministic QuickStark v3 core and specialist package projections.");
+  console.log("Verified deterministic QuickStark v3 core, specialist, and PS package projections.");
 }

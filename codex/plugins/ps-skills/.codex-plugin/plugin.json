@@ -1,0 +1,34 @@
+{
+  "name": "ps-skills",
+  "version": "3.2.2",
+  "description": "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "pstack",
+    "engineering",
+    "verification"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Pstack Skills",
+    "shortDescription": "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
+    "longDescription": "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
+    "developerName": "QuickStark",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/quickstark/skills",
+    "defaultPrompt": [
+      "Use an explicit Pstack workflow for evidence-based analysis or operations"
+    ]
+  }
+}

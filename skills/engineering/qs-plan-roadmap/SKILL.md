@@ -15,6 +15,7 @@ Organize confirmed outcomes into dependency-aware phases without inventing requi
 - Order work by real dependency, risk retirement, and independently verifiable value.
 - Identify explicit prerequisites, parallelizable work, stop conditions, and deferred scope.
 - Keep each phase bounded and give it observable completion evidence.
+- Compare materially different sequences before settling the critical path, and make shared-state ownership explicit before parallelizing work.
 
 Quick produces the critical path. Standard includes meaningful dependencies and risks. Deep evaluates alternative sequences and cross-team or release constraints. End with the roadmap only; do not start research, specification, or implementation automatically.
 

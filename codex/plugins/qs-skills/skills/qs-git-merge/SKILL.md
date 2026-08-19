@@ -18,6 +18,8 @@ Resolve the repository root, current branch, upstream, ahead/behind state, dirty
 
 Perform only the requested push, pull request, merge, rebase, or conflict resolution. Re-run the checks made relevant by integration and verify the remote/PR state afterward. End after Git integration; do not deploy automatically.
 
+Sequence integration into verifiable units. Migrate affected callers before removing legacy interfaces, and make each operation idempotent or explicitly detect already-completed remote state before retrying.
+
 Distinguish the actual cases explicitly: an ahead default branch may require an explicitly requested or approved `git push origin main`, with no branch merge required; a feature branch may require a pull request; an existing pull request may require merge; diverged branches may require merge or rebase conflict resolution. Never describe one case as another.
 
 ## Completion report and next steps

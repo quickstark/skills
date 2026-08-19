@@ -2,9 +2,9 @@
 
 ## Start from the source of truth
 
-Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` is the source of truth for core and specialist membership, lifecycle order, invocation policy, display metadata, report profile, and deterministic continuation.
+Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, `scripts/ps-skill-catalog.mjs` owns PS membership and dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
 
-Canonical public skill files live in `skills/engineering/` and `skills/productivity/`. Internal capabilities live in `skills/internal/`. Generated core and specialist package trees are not independent sources. Do not promote reference directories.
+Canonical QS files live in `skills/engineering/` and `skills/productivity/`; canonical PS files live in `skills/pstack/commands/`. Internal capabilities live in `skills/internal/` and `skills/pstack/internal/`. All generated package trees are projections, not independent sources.
 
 ## Install and verify
 
@@ -26,8 +26,8 @@ npx playwright-core install chromium
 
 ## Change a promoted skill
 
-1. Update `scripts/qs-skill-catalog.mjs` first when adding or renaming a skill, adjusting invocation mode, changing its report profile, or changing its valid next steps.
-2. Edit its canonical `skills/<bucket>/<skill-name>/SKILL.md` and matching `agents/openai.yaml`.
+1. Update the owning collection catalog first when adding or renaming a skill, adjusting invocation mode, changing its report profile, or changing its valid next steps.
+2. Edit its canonical QS or PS `SKILL.md` and matching `agents/openai.yaml`.
 3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `scripts/sync-v3-docs.mjs` owns concise command pages.
 4. Assign the command to one catalog package projection; generated manifests must not be hand-edited.
 5. Add behavior-focused tests to `tests/qs-skills.test.mjs`.
@@ -49,6 +49,7 @@ When Claude Code is installed and manifests changed, run both:
 ```bash
 claude plugin validate . --strict
 claude plugin validate ./packages/qs-specialists --strict
+claude plugin validate ./packages/ps-skills --strict
 ```
 
 Do not claim that a Claude validation ran if the CLI is unavailable.
@@ -61,6 +62,7 @@ Update the existing authoritative document before adding another page:
 - Use `docs/architecture.md` for component ownership and trust boundaries.
 - Use `docs/readout-operations.md` for authenticated reporting, producer configuration, and operational recovery.
 - Use `docs/engineering/` and `docs/productivity/` for promoted-skill reference pages.
+- Use `docs/pstack/` for generated PS command reference pages and its package index.
 - Use `CHANGELOG.md` for observed QuickStark version changes and preserved upstream history.
 - Use `/qs-code-document` to keep setup, architecture, deployment, module, API, and release documentation grounded in actual project sources.
 
@@ -84,13 +86,13 @@ npm run check:codex
 npm test
 ```
 
-Keep `package.json`, `package-lock.json`, the core and specialist Claude manifests, and the core and specialist Codex manifests synchronized. Publishing a commit, Git tag, plugin release, or deployed service is a separate, explicitly approved operation.
+Keep `package.json`, `package-lock.json`, all three Claude manifests, and all three Codex manifests synchronized. Publishing a commit, Git tag, plugin release, or deployed service is a separate, explicitly approved operation.
 
 Put active release changesets for the `qs-skills` package directly in `.changeset/`, and keep the Changesets GitHub configuration pointed at `quickstark/skills`. Matt Pocock's original `mattpocock-skills` changesets are preserved in `docs/upstream/changesets/` as MIT-licensed historical reference; do not place them in the active Changesets directory.
 
 ## Respect the upstream
 
-Matt Pocock's original MIT-licensed repository is the read-only upstream reference. Preserve its attribution, license, and original links.
+Matt Pocock's original repository and Lauren Tan's pstack are MIT-licensed upstream sources. Preserve both notices and original links; PS tests use the pinned inventory and never fetch upstream at test time.
 
 ```bash
 git fetch upstream

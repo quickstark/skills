@@ -27,6 +27,8 @@ Capability use remains part of this root run and produces no separate skill repo
 - Security, operational, compatibility, and rollout concerns when relevant.
 - Open questions only when they truly block implementation.
 
+Where architecture is unsettled, compare at least two viable boundaries against domain responsibilities, caller migration, failure isolation, and test seams. Prefer a design whose safety properties can be enforced structurally and whose legacy interfaces can be removed only after callers migrate.
+
 Specification-only requests do not create tickets. When tickets are requested, create dependency-ordered, independently verifiable slices in the same run. Give every ticket one outcome, explicit scope and exclusions, acceptance evidence, and dependencies. Do not start implementation automatically.
 
 ## Completion report and next steps

@@ -2,7 +2,11 @@ import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { codexSkillLiteral, NEXT_SKILLS_BY_NAME, SKILLS } from "./qs-skill-catalog.mjs";
+import {
+  PUBLIC_COMMANDS,
+  PUBLIC_COMMANDS_BY_NAME,
+  codexPublicSkillLiteral,
+} from "./skill-collection-registry.mjs";
 
 export const SKILL_OUTPUT_HEADING = "## Completion report and next steps";
 export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
@@ -10,14 +14,14 @@ export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 export function renderSkillOutputContract(skill) {
-  const routes = NEXT_SKILLS_BY_NAME[skill.name];
-  const continuations = routes.filter((item) => item.availability !== "failure").map((item) => item.name);
-  const failureContinuations = routes
-    .filter((item) => item.availability !== "success")
-    .sort((left, right) => Number(right.recovery) - Number(left.recovery))
-    .map((item) => item.name);
-  const terminal = routes.length === 0;
-  const codexLiterals = routes.map((item) => codexSkillLiteral(item.name));
+  const registered = PUBLIC_COMMANDS_BY_NAME.get(skill.name) ?? skill;
+  const routes = registered.continuation.normal;
+  const failureRoutes = registered.continuation.failure;
+  const continuations = routes.map((item) => item.name);
+  const failureContinuations = failureRoutes.map((item) => item.name);
+  const terminal = routes.length === 0 && failureRoutes.length === 0;
+  const allRoutes = [...new Map([...routes, ...failureRoutes].map((item) => [item.name, item])).values()];
+  const codexLiterals = allRoutes.map((item) => codexPublicSkillLiteral(item.name));
   return [
     SKILL_OUTPUT_HEADING,
     "",
@@ -58,18 +62,17 @@ export function renderSkillOutputContract(skill) {
     "",
     terminal
       ? "Never add a speculative prompt merely to keep the workflow moving."
-      : `Present prompts in normalized rank order. Label the first \`Preferred next prompt:\` and the remaining two \`Alternative next prompt:\`. Put each complete prompt in its own fenced \`text\` block beginning with its exact Codex skill literal (${codexLiterals.join(", ")}); Claude uses ${routes.map((item) => `\`/${item.name}\``).join(", ")}. The fence info string must be exactly \`text\` so the chat renders it as Plain text; never use \`markdown\`, \`bash\`, \`json\`, or another language. Keep every prompt concise and carry forward only the outcome plus the single highest-value evidence item. Put heuristic model/thinking guidance outside each fence in a muted blockquote. Never change the active model or reasoning setting.`,
+      : `Present prompts in normalized rank order. Label the first \`Preferred next prompt:\` and the remaining two \`Alternative next prompt:\`. Put each complete prompt in its own fenced \`text\` block beginning with its exact Codex skill literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}. The fence info string must be exactly \`text\` so the chat renders it as Plain text; never use \`markdown\`, \`bash\`, \`json\`, or another language. Keep every prompt concise and carry forward only the outcome plus the single highest-value evidence item. Put heuristic model/thinking guidance outside each fence in a muted blockquote. Never change the active model or reasoning setting.`,
   ].join("\n");
 }
 
 export function renderDocumentationOutputContract(skill) {
-  const routes = NEXT_SKILLS_BY_NAME[skill.name];
-  const continuations = routes.filter((item) => item.availability !== "failure").map((item) => item.name);
-  const failureContinuations = routes
-    .filter((item) => item.availability !== "success")
-    .sort((left, right) => Number(right.recovery) - Number(left.recovery))
-    .map((item) => item.name);
-  const terminal = routes.length === 0;
+  const registered = PUBLIC_COMMANDS_BY_NAME.get(skill.name) ?? skill;
+  const routes = registered.continuation.normal;
+  const failureRoutes = registered.continuation.failure;
+  const continuations = routes.map((item) => item.name);
+  const failureContinuations = failureRoutes.map((item) => item.name);
+  const terminal = routes.length === 0 && failureRoutes.length === 0;
   return [
     DOCUMENTATION_OUTPUT_HEADING,
     "",
@@ -103,9 +106,9 @@ export function withDocumentationOutputContract(content, skill) {
 
 export async function syncSkillOutputContracts({ check = false } = {}) {
   let updated = 0;
-  for (const skill of SKILLS) {
-    const skillPath = join(repositoryRoot, "skills", skill.bucket, skill.name, "SKILL.md");
-    const documentationPath = join(repositoryRoot, "docs", skill.bucket, `${skill.name}.md`);
+  for (const skill of PUBLIC_COMMANDS) {
+    const skillPath = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`, "SKILL.md");
+    const documentationPath = join(repositoryRoot, skill.documentationPath ?? `docs/${skill.bucket}/${skill.name}.md`);
     const [skillContent, documentation] = await Promise.all([
       readFile(skillPath, "utf8"),
       readFile(documentationPath, "utf8"),
@@ -124,7 +127,7 @@ export async function syncSkillOutputContracts({ check = false } = {}) {
     }
   }
   console.log(check
-    ? `Verified bounded v3 output contracts for all ${SKILLS.length} public commands.`
+    ? `Verified bounded v3 output contracts for all ${PUBLIC_COMMANDS.length} public commands.`
     : `Synchronized ${updated} bounded v3 skill and documentation output contracts.`);
 }
 

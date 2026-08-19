@@ -23,6 +23,8 @@ Accept two independent inputs:
 
 Assess correctness, maintainability, architecture, testability, security, and operational risk when relevant. Keep repository-standards and specification findings as separate axes. Prioritize findings by impact and confidence; actionable P0/P1 findings or failed required checks prohibit completion.
 
+Prefer subtractive improvements before adding abstractions. Reduce reader load, require callers to migrate before legacy interfaces disappear, and ask whether the type system or module boundary can make the repaired invariant structural.
+
 ## Scoped improvement and refactoring
 
 1. Establish behavior-preserving characterization tests when existing coverage is insufficient.

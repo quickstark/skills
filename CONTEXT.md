@@ -1,6 +1,6 @@
 # QuickStark Skills
 
-A personal collection of namespaced engineering and productivity skills for Codex and Claude Code, adapted from Matt Pocock's MIT-licensed upstream. Promoted commands share the `/qs-` prefix and are organized by purpose. `/qs-setup` emits per-project configuration; `/qs-help` explains the complete workflow.
+A personal collection of namespaced skills for Codex and Claude Code. The QS packages are adapted from Matt Pocock's MIT-licensed upstream; the optional explicit-only PS package adapts Lauren Tan's MIT-licensed pstack without Cursor-specific mechanisms.
 
 ## Language
 
@@ -19,6 +19,9 @@ _Avoid_: Default skill, bundled helper.
 
 **Specialist skill**: A promoted skill shipped in the optional `qs-specialists` plugin. Core skills never require a specialist skill to complete their work.
 _Avoid_: Extra skill, hidden skill.
+
+**PS skill**: One of thirteen explicit-only public commands shipped in the optional `ps-skills` plugin. Its exact Codex literal is `$ps-skills:<ps-command>`; it never starts another public skill automatically.
+_Avoid_: Cursor command, automatic router, bundled core skill.
 
 **Internal capability**: Non-command instructions or reference material used inside a root skill run. It never produces its own readout or invokes a public skill.
 _Avoid_: Internal skill, chained skill.
@@ -43,7 +46,7 @@ _Avoid_: Effort mode, execution depth.
 **Completion state**: The root skill's explicit `complete`, `continuation-required`, or `input-required` disposition. It determines whether the readout contains a next prompt.
 _Avoid_: Skill status, inferred follow-up.
 
-**Next prompt**: One of three ranked copy-ready continuations emitted by every non-release command. The first is the opinionated preferred route and the other two are alternatives. Each appears in its own fenced `text` code block, explicitly invokes a catalog-approved follow-on skill using the exact installed literal (`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>` in Codex; `/<command>` in Claude), and carries forward the outcome plus only the single highest-value evidence item. The fence info string is always exactly `text`, which renders as Plain text in chat; it is never `markdown`, `bash`, `json`, or another language. A subdued callout underneath can suggest a model and thinking level. Model guidance is heuristic, never a measured result or automatic configuration change. A prompt suggests future work; it never claims its embedded skill has already run. Release is terminal and emits no prompts.
+**Next prompt**: One of three ranked copy-ready continuations emitted by every non-release command. The first is the opinionated preferred route and the other two are alternatives. Each appears in its own fenced `text` code block, explicitly invokes a catalog-approved follow-on skill using the exact installed literal (`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>` in Codex; `/<command>` in Claude), and carries forward the outcome plus only the single highest-value evidence item. The fence info string is always exactly `text`, which renders as Plain text in chat; it is never `markdown`, `bash`, `json`, or another language. A subdued callout underneath can suggest a model and thinking level. Model guidance is heuristic, never a measured result or automatic configuration change. A prompt suggests future work; it never claims its embedded skill has already run. Release is terminal and emits no prompts.
 _Avoid_: Skill-only recommendation, invented accomplishment, autonomous invocation, mandatory follow-up.
 
 **Execution context**: The automatically observed machine and platform that actually generated a skill readout, plus any independently verified deployments and repository-relative files modified by that specific run.

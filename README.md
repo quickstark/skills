@@ -1,8 +1,8 @@
 # QuickStark Skills v3
 
-A focused engineering workflow for Codex and Claude Code. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds seven bounded specialist workflows.
+A focused engineering workflow for Codex and Claude Code. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds seven bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
 
-QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills). The upstream attribution and license are preserved.
+QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills), with an optional adaptation of [Lauren Tan's MIT-licensed pstack](https://github.com/cursor/plugins/tree/main/pstack). The upstream notices are preserved in [third-party notices](./THIRD_PARTY_NOTICES.md).
 
 To inspect upstream changes without publishing to it, use `git fetch upstream`; personalized changes are pushed only to `origin`.
 
@@ -26,12 +26,19 @@ Optional Codex specialists:
 codex plugin add qs-specialists@quickstark
 ```
 
+Optional Codex Pstack workflows:
+
+```bash
+codex plugin add ps-skills@quickstark
+```
+
 Claude Code core and optional specialists:
 
 ```bash
 claude plugin marketplace add .
 claude plugin install qs-skills@quickstark
 claude plugin install qs-specialists@quickstark
+claude plugin install ps-skills@quickstark
 ```
 
 Restart the host or begin a new task after changing installed plugins. A Git pull updates the checkout; it does not automatically refresh a cached installed plugin.
@@ -65,6 +72,10 @@ Restart the host or begin a new task after changing installed plugins. A Git pul
 | [`qs-learn-teach`](./skills/productivity/qs-learn-teach/SKILL.md) | Teach one bounded subject. |
 | [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
 
+## Optional Pstack workflows
+
+`ps-skills` contains thirteen explicit-only commands under the `ps-` namespace. It is additive, does not change QS membership, and never chains public commands automatically. See the [PS command index](./docs/pstack/index.md).
+
 ## v3 behavior
 
 - Domain modeling, module decomposition, ticket decomposition, and TDD are internal capabilities, not commands.
@@ -81,7 +92,7 @@ Actual promoted runs publish one authenticated immutable readout through `https:
 
 ## Development
 
-Update the source-of-truth catalog at `scripts/qs-skill-catalog.mjs` before changing promoted membership or order, then run:
+Update the relevant source-of-truth catalog (`scripts/qs-skill-catalog.mjs` or `scripts/ps-skill-catalog.mjs`) before changing promoted membership or order, then run:
 
 ```bash
 npm run sync:codex
@@ -93,6 +104,7 @@ When Claude Code is available:
 ```bash
 claude plugin validate . --strict
 claude plugin validate ./packages/qs-specialists --strict
+claude plugin validate ./packages/ps-skills --strict
 ```
 
 See [architecture](./docs/architecture.md), [contributing](./docs/contributing.md), and the [changelog](./CHANGELOG.md).

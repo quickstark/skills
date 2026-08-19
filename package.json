@@ -19,7 +19,8 @@
     "readouts:prototype": "node scripts/qs-skill-readout.prototype.mjs",
     "readouts:portfolio:refresh": "node scripts/qs-readout-portfolio.mjs refresh --directory /docker/appdata/quickstark-readouts --owners quickstark,quickstarkdemo",
     "readouts:serve": "node scripts/qs-skill-readout.mjs serve",
-    "test": "node --test tests/qs-v3.test.mjs tests/qs-skills.test.mjs tests/qs-readout-workbench.test.mjs tests/qs-readout-observation.test.mjs tests/qs-report-presentation.test.mjs tests/qs-readout-visual-artifact.test.mjs tests/qs-readout-settings.test.mjs tests/qs-readout-portfolio.test.mjs"
+    "test": "node scripts/qs-test-runner.mjs",
+    "test:preflight": "node scripts/qs-test-preflight.mjs"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",

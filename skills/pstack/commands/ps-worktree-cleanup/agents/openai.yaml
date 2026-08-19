@@ -1,0 +1,6 @@
+interface:
+  display_name: "PS Worktree Cleanup"
+  short_description: "Audit and remove confirmed worktrees"
+  default_prompt: "Use $ps-skills:ps-worktree-cleanup to audit reclaimable worktrees and remove only explicitly confirmed exact targets. Modes: effort=quick|standard|deep and report=brief|full."
+policy:
+  allow_implicit_invocation: false

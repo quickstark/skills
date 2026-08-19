@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## Unreleased
+
+- Add the optional `ps-skills` package with thirteen explicit-only, Cursor-neutral Pstack workflows and sixteen private internal capabilities.
+- Preserve the pinned 72-candidate disposition ledger (12 public, 16 internal, 30 merged into QS owners, 4 dependencies, and 10 omissions) and Lauren Tan's MIT notice.
+- Generalize collection identity, package projection, generated documentation, completion contracts, and hosted readouts across the 12 core, 7 specialist, and 13 PS commands without automatic public-skill chaining.
+
 ## 3.2.2
 
 ### Patch Changes

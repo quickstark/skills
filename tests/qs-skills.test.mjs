@@ -6132,10 +6132,12 @@ test("the Codex package is a curated, Codex-compatible snapshot of the canonical
 test("installed Codex skills receive the exact canonical catalog, portfolio, report presentation module, and HTML readout helper", async () => {
   const packagedSupport = join(repositoryRoot, "codex", "plugins", "qs-skills", "scripts");
   const expected = [
+    "ps-skill-catalog.mjs",
     "qs-readout-portfolio.mjs",
     "qs-skill-catalog.mjs",
     "qs-skill-report-presentation.mjs",
     "qs-skill-readout.mjs",
+    "skill-collection-registry.mjs",
   ].sort();
 
   assert.deepEqual(await listFiles(packagedSupport), expected);

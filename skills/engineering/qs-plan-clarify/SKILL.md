@@ -16,6 +16,8 @@ Resolve the decisions that materially change scope, behavior, risk, or acceptanc
 4. Ask one focused question at a time when user input is genuinely required; stop when the answer is sufficient.
 5. Record the confirmed problem, users, scope, exclusions, constraints, acceptance evidence, decisions, and material exceptions.
 
+Continue with safe, reversible, in-scope investigation when a reasonable assumption cannot change the requested outcome. If an unresolved choice would materially change scope, authority, behavior, or risk, name the evidence already gathered and request that decision instead of guessing or blocking on a low-value preference.
+
 Use the internal domain-modeling capability when vocabulary ambiguity blocks agreement. Do not invoke old explore, interview, or domain commands. Do not continue into specification or implementation automatically.
 
 ## Completion report and next steps

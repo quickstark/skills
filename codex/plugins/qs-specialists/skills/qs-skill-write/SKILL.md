@@ -9,6 +9,8 @@ This optional specialist defines one durable user intent, explicit invocation bo
 
 Inspect the host's current skill format and repository conventions. Keep instructions direct, eliminate overlapping commands and automatic public-skill chains, reuse shared policy instead of duplicating boilerplate, and add behavioral validation for routing and safety. Never claim installation or publication until verified.
 
+Treat authoring as interface design: define one observable outcome, encode recurring lessons in structure or tests, make operations rerunnable, and compare a variant with its control when a prompt change makes a performance claim. Prefer plain language and cite primary technical standards where they govern behavior.
+
 ## Completion report and next steps
 
 This invocation has one root skill: `/qs-skill-write`. Internal capabilities and bounded helpers remain part of this run; never automatically invoke another public skill or create another skill report.
