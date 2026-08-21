@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.4.0
+
+### Minor Changes
+
+- [`c451400`](https://github.com/quickstark/skills/commit/c451400fe99dd7c5e74564d0f41d1068403dcba7) Thanks [@quickstark](https://github.com/quickstark)! - Replace hosted QuickStark readouts with concise results in chat across the QS and PS packages, apply the shared internal clear-writing pass to every public skill, and retire the reporting runtime and deployment definition.
+
 ## 3.3.0
 
 ### Minor Changes
