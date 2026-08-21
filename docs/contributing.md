@@ -16,17 +16,11 @@ npm run check:codex
 npm test
 ```
 
-The project test suite checks all promoted skills, plugin versions, generated snapshots, documentation contracts, report rendering, viewer security, producer ingestion, cross-machine publishing, immutable retries, and credential rotation. Its pinned Playwright Core integration also uses actual Chromium to measure report typography, responsive card alignment, the separate GitHub issue sidebar, and full-height Workbench behavior.
-
-If Chromium is not already available in the local Playwright browser cache, install the browser matching the lockfile before running the suite:
-
-```bash
-npx playwright-core install chromium
-```
+The project test suite checks all promoted skills, plugin versions, generated snapshots, documentation contracts, direct-chat presentation, internal clear-writing, continuation routing, package isolation, and command-specific safety behavior.
 
 ## Change a promoted skill
 
-1. Update the owning collection catalog first when adding or renaming a skill, adjusting invocation mode, changing its report profile, or changing its valid next steps.
+1. Update the owning collection catalog first when adding or renaming a skill, adjusting invocation mode, or changing its valid next steps.
 2. Edit its canonical QS or PS `SKILL.md` and matching `agents/openai.yaml`.
 3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `scripts/sync-v3-docs.mjs` owns concise command pages.
 4. Assign the command to one catalog package projection; generated manifests must not be hand-edited.
@@ -44,7 +38,7 @@ npm run check:codex
 npm test
 ```
 
-When Claude Code is installed and manifests changed, run both:
+When Claude Code is installed and manifests changed, run all three:
 
 ```bash
 claude plugin validate . --strict
@@ -60,7 +54,7 @@ Update the existing authoritative document before adding another page:
 
 - Use `README.md` for installation, skill discovery, and the main workflow.
 - Use `docs/architecture.md` for component ownership and trust boundaries.
-- Use `docs/readout-operations.md` for authenticated reporting, producer configuration, and operational recovery.
+- Use `docs/skill-run-contract.md` for completion states, direct-chat presentation, clear writing, and continuation behavior.
 - Use `docs/engineering/` and `docs/productivity/` for promoted-skill reference pages.
 - Use `docs/pstack/` for generated PS command reference pages and its package index.
 - Use `CHANGELOG.md` for observed QuickStark version changes and preserved upstream history.
@@ -68,11 +62,11 @@ Update the existing authoritative document before adding another page:
 
 A repository version does not establish a published release. Record Git tags, GitHub releases, pull requests, deployment URLs, issue closures, and remote commits only after checking their actual state.
 
-## Preserve reporting security
+## Preserve result safety
 
-A skill readout can include only its actual execution machine, explicitly verified deployments, and files owned by that skill run. Never sweep pre-existing worktree changes into a report. Never record `.env` files, credentials, private keys, Git configuration, access tokens, internal source trees, or unapproved project data.
+A chat result contains only evidence relevant to its root run. Never sweep pre-existing worktree changes into the result or expose `.env` files, credentials, private keys, Git configuration, access tokens, full sensitive logs, private paths, internal source trees, or unapproved project data.
 
-Hosted publishing to the exact authenticated `https://reports.quickstark.com/api/v1/readouts` endpoint is mandatory for actual promoted skill completions; validate that canonical endpoint before sending producer credentials. Explicitly requested private preview galleries remain opt-in and must never replace a promoted skill's hosted report. Keep browser viewing, producer authentication, immutable storage, producer project grants, and the hosted project allowlist separate. Preserve a safely generated immutable local recovery report when hosted publication fails. Treat unknown external skills as external; do not add them to the QuickStark catalog merely to ingest a report.
+Apply the internal clear-writing pass only after facts, inferences, and uncertainties are separated. Clearer prose never substitutes for evidence or removes material qualifications. Treat unknown external skills as external; do not add them to the QuickStark catalog merely to recommend them.
 
 ## Release a version
 

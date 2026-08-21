@@ -4,7 +4,7 @@
 **Release boundary:** Additive QuickStark v3 minor release
 **Decision sources:** User-confirmed two-skill split, `CONTEXT.md`, ADR 0001, and the v3 skill-run contract
 
-> Continuation cardinality in this historical specification is superseded by ADR 0003. Testing ownership, package isolation, and TDD boundaries remain active.
+> Continuation cardinality is superseded by ADR 0003, and hosted-output acceptance is superseded by the direct-chat completion contract. Testing ownership, package isolation, and TDD boundaries remain active.
 
 ## Problem
 

@@ -1,5 +1,7 @@
 # Prototype: project-aware QuickStark report gallery
 
+> Historical record — superseded by the direct-chat completion contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). No active command, package, deployment, or service implements this design.
+
 Status: throwaway UI prototype; no DNS records, public routes, authentication policies, persistent report directories, or production renderer behavior have been changed.
 
 ## Question

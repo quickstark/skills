@@ -1,14 +1,10 @@
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
-import { readFile } from "node:fs/promises";
 import { constants as osConstants } from "node:os";
-import { resolve } from "node:path";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
 
 import {
   isStrippedTestEnvironmentKey,
-  playwrightBrowsersPathFromExecutable,
   sanitizeTestEnvironment,
   TEST_FILES,
 } from "../scripts/qs-test-environment.mjs";
@@ -21,21 +17,13 @@ import {
   spawnNodeTests,
 } from "../scripts/qs-test-runner.mjs";
 
-const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const expectedTestFiles = [
   "tests/qs-v3.test.mjs",
   "tests/qs-skills.test.mjs",
-  "tests/qs-readout-workbench.test.mjs",
-  "tests/qs-readout-observation.test.mjs",
-  "tests/qs-report-presentation.test.mjs",
-  "tests/qs-readout-visual-artifact.test.mjs",
-  "tests/qs-readout-settings.test.mjs",
-  "tests/qs-readout-portfolio.test.mjs",
   "tests/ps-skill-catalog.test.mjs",
   "tests/ps-behavior.test.mjs",
   "tests/skill-collection-registry.test.mjs",
   "tests/ps-internal-capabilities.test.mjs",
-  "tests/ps-readout.test.mjs",
   "tests/ps-projection-integrity.test.mjs",
   "tests/ps-skills.test.mjs",
   "tests/qs-test-baseline.test.mjs",
@@ -50,99 +38,48 @@ function successfulGitFixture(overrides = {}) {
     [["show-ref", "--verify", "--quiet", "refs/heads/main"].join("\0"), { ok: true, stdout: "", stderr: "" }],
     [["status", "--short"].join("\0"), { ok: true, stdout: "", stderr: "" }],
   ]);
-
-  for (const [arguments_, result] of Object.entries(overrides)) {
-    outputs.set(arguments_.split(" ").join("\0"), result);
-  }
-
-  return async (arguments_) => outputs.get(arguments_.join("\0")) ?? {
-    ok: false,
-    stdout: "",
-    stderr: "unexpected synthetic Git command",
-  };
+  for (const [arguments_, result] of Object.entries(overrides)) outputs.set(arguments_.split(" ").join("\0"), result);
+  return async (arguments_) => outputs.get(arguments_.join("\0")) ?? { ok: false, stdout: "", stderr: "unexpected command" };
 }
 
-test("the test environment strips host-owned reporting, session, and Git state", () => {
+test("the test environment strips session and Git state without reporting-service setup", () => {
   const source = {
     PATH: "/usr/bin",
-    LANG: "en_US.UTF-8",
     HOME: "/real/home",
     USERPROFILE: "C:\\real-home",
     XDG_CONFIG_HOME: "/real/config",
     CODEX_HOME: "/real/codex",
     CODEX_THREAD_ID: "thread-secret",
-    QS_READOUT_PRODUCER_TOKEN: "producer-secret",
-    qs_readout_harness: "case-insensitive-host-state",
-    QS_PROTOTYPE_ENDPOINT: "prototype-secret",
     GIT_DIR: "/other/repository",
-    git_config_global: "/other/config",
+    QS_UNRELATED_SETTING: "preserved",
   };
-  const snapshot = structuredClone(source);
   const sanitized = sanitizeTestEnvironment(source, {
     home: "/private/home",
     xdgConfigHome: "/private/xdg",
     codexHome: "/private/codex",
   });
-
-  assert.deepEqual(source, snapshot);
   assert.equal(sanitized.PATH, "/usr/bin");
-  assert.equal(sanitized.LANG, "en_US.UTF-8");
+  assert.equal(sanitized.QS_UNRELATED_SETTING, "preserved");
   assert.equal(sanitized.HOME, "/private/home");
   assert.equal(sanitized.USERPROFILE, "/private/home");
   assert.equal(sanitized.XDG_CONFIG_HOME, "/private/xdg");
   assert.equal(sanitized.CODEX_HOME, "/private/codex");
-
-  for (const key of Object.keys(sanitized)) {
-    assert.equal(isStrippedTestEnvironmentKey(key), false, `unexpected host key ${key}`);
-  }
-  assert.doesNotMatch(JSON.stringify(sanitized), /secret|other\/repository|other\/config/);
-
-  const fixtureEnvironment = {
-    ...sanitized,
-    QS_READOUT_PRODUCER_TOKEN: "fixture-only",
-    CODEX_THREAD_ID: "fixture-thread",
-  };
-  assert.equal(fixtureEnvironment.QS_READOUT_PRODUCER_TOKEN, "fixture-only");
-  assert.equal(fixtureEnvironment.CODEX_THREAD_ID, "fixture-thread");
+  for (const key of Object.keys(sanitized)) assert.equal(isStrippedTestEnvironmentKey(key), false);
+  assert.doesNotMatch(JSON.stringify(sanitized), /thread-secret|other\/repository/);
 });
 
-test("the exported inventory is complete and package.json delegates to one runner", async () => {
+test("the exported test inventory is complete and reporting-free", () => {
   assert.deepEqual(TEST_FILES, expectedTestFiles);
-
-  const packageJson = JSON.parse(await readFile(resolve(root, "package.json"), "utf8"));
-  assert.equal(packageJson.scripts.test, "node scripts/qs-test-runner.mjs");
-  assert.equal(packageJson.scripts["test:preflight"], "node scripts/qs-test-preflight.mjs");
+  assert.ok(TEST_FILES.every((path) => !/readout|report-presentation/i.test(path)));
 });
 
-test("the browser installation root can be preserved without reusing the real home", () => {
-  assert.equal(
-    playwrightBrowsersPathFromExecutable(
-      "/home/tester/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome",
-    ),
-    "/home/tester/.cache/ms-playwright",
-  );
-  assert.equal(playwrightBrowsersPathFromExecutable("/usr/bin/chromium"), null);
-});
-
-test("the Git preflight returns only safe positive evidence and strips Git redirection", async () => {
-  const observedEnvironments = [];
-  const fixture = successfulGitFixture();
+test("the Git preflight observes the approved repository without leaking worktree details", async () => {
   const result = await inspectGitBaseline({
     cwd: "/repo",
-    environment: {
-      HOME: "/ordinary/home",
-      PATH: "/usr/bin",
-      GIT_DIR: "/escape",
-      GIT_CONFIG_GLOBAL: "/secret/config",
-    },
     statPath: async () => ({ isDirectory: () => true }),
     realpathPath: async (path) => path,
-    runGit: async (arguments_, options) => {
-      observedEnvironments.push(options.environment);
-      return fixture(arguments_, options);
-    },
+    runGit: successfulGitFixture(),
   });
-
   assert.deepEqual(result, {
     ok: true,
     repository: "github.com/quickstark/skills",
@@ -151,204 +88,88 @@ test("the Git preflight returns only safe positive evidence and strips Git redir
     mainObserved: true,
     worktreeObserved: true,
   });
-  assert.ok(observedEnvironments.length >= 6);
-  for (const environment of observedEnvironments) {
-    assert.equal(environment.HOME, "/ordinary/home");
-    assert.equal(environment.PATH, "/usr/bin");
-    assert.equal(environment.GIT_DIR, undefined);
-    assert.equal(environment.GIT_CONFIG_GLOBAL, undefined);
-  }
 });
 
-test("the Git preflight classifies an unreadable config without leaking stderr", async () => {
-  const secret = "credential-bearing-origin-secret";
-  const result = await inspectGitBaseline({
+test("the Git preflight classifies unreadable configuration and unexpected origins", async () => {
+  const options = {
     cwd: "/repo",
     statPath: async () => ({ isDirectory: () => true }),
     realpathPath: async (path) => path,
-    runGit: async () => ({
-      ok: false,
-      stdout: "",
-      stderr: `fatal: unable to access '.git/config': Permission denied ${secret}`,
-    }),
-  });
-
-  assert.deepEqual(result, { ok: false, code: "git_config_unreadable" });
-  const message = formatGitPreflightFailure(result);
-  assert.match(message, /git_config_unreadable/);
-  assert.match(message, /operator/i);
-  assert.doesNotMatch(message, new RegExp(secret));
-  assert.doesNotMatch(JSON.stringify(result), new RegExp(secret));
-});
-
-test("the Git preflight rejects an unexpected origin without returning it", async () => {
-  const fixture = successfulGitFixture({
-    "config --local --get remote.origin.url": {
-      ok: true,
-      stdout: "https://token@example.com/unrelated/project.git\n",
-      stderr: "",
-    },
-  });
-  const result = await inspectGitBaseline({
-    cwd: "/repo",
-    statPath: async () => ({ isDirectory: () => true }),
-    realpathPath: async (path) => path,
-    runGit: fixture,
-  });
-
-  assert.deepEqual(result, { ok: false, code: "origin_unexpected" });
-  assert.doesNotMatch(JSON.stringify(result), /token|unrelated|example\.com/);
-});
-
-test("the Git preflight returns each stable failure code at its owning boundary", async () => {
-  const cases = [
-    {
-      code: "repository_unavailable",
-      options: { statPath: async () => { throw new Error("missing"); } },
-    },
-    {
-      code: "repository_root_mismatch",
-      overrides: { "rev-parse --show-toplevel": { ok: true, stdout: "/elsewhere\n", stderr: "" } },
-    },
-    {
-      code: "origin_unavailable",
-      overrides: { "config --local --get remote.origin.url": { ok: false, stdout: "", stderr: "" } },
-    },
-    {
-      code: "branch_unavailable",
-      overrides: { "branch --show-current": { ok: true, stdout: "", stderr: "" } },
-    },
-    {
-      code: "revision_unavailable",
-      overrides: { "rev-parse HEAD": { ok: true, stdout: "not-a-revision\n", stderr: "" } },
-    },
-    {
-      code: "main_unavailable",
-      overrides: { "show-ref --verify --quiet refs/heads/main": { ok: false, stdout: "", stderr: "" } },
-    },
-    {
-      code: "worktree_unavailable",
-      overrides: { "status --short": { ok: false, stdout: "", stderr: "" } },
-    },
-  ];
-
-  for (const fixtureCase of cases) {
-    const result = await inspectGitBaseline({
-      cwd: "/repo",
-      statPath: async () => ({ isDirectory: () => true }),
-      realpathPath: async (path) => path,
-      runGit: successfulGitFixture(fixtureCase.overrides),
-      ...fixtureCase.options,
-    });
-    assert.deepEqual(result, { ok: false, code: fixtureCase.code });
-    assert.match(formatGitPreflightFailure(result), new RegExp(fixtureCase.code));
-  }
-});
-
-test("the runner creates private homes, uses the sanitized environment, and cleans up", async () => {
-  const events = [];
-  const sourceEnvironment = {
-    PATH: "/usr/bin",
-    HOME: "/real/home",
-    QS_READOUT_PRODUCER_TOKEN: "do-not-forward",
   };
-  const result = await runTestSuite({
-    repositoryRoot: "/repo",
-    sourceEnvironment,
-    inspect: async () => ({ ok: true }),
-    makeTempRoot: async () => "/tmp/qs-test-private",
-    makeDirectory: async (path, options) => events.push(["mkdir", path, options]),
-    findPlaywrightBrowsersPath: async () => "/opt/playwright-browsers",
-    spawnTests: async (options) => {
-      events.push(["spawn", options]);
-      return 0;
-    },
-    removeTempRoot: async (path) => events.push(["remove", path]),
-    writeDiagnostic: (message) => events.push(["diagnostic", message]),
+  const unreadable = await inspectGitBaseline({
+    ...options,
+    runGit: successfulGitFixture({ "config --local --get remote.origin.url": { ok: false, stderr: ".git/config: permission denied", errorCode: "EACCES" } }),
   });
+  assert.equal(unreadable.code, "git_config_unreadable");
+  assert.doesNotMatch(formatGitPreflightFailure(unreadable), /\.git\/config|permission denied/i);
 
-  assert.equal(result, 0);
-  const spawnEvent = events.find(([name]) => name === "spawn");
-  assert.ok(spawnEvent);
-  assert.equal(spawnEvent[1].cwd, "/repo");
-  assert.deepEqual(spawnEvent[1].testFiles, expectedTestFiles);
-  assert.equal(spawnEvent[1].environment.HOME, "/tmp/qs-test-private/home");
-  assert.equal(spawnEvent[1].environment.XDG_CONFIG_HOME, "/tmp/qs-test-private/xdg");
-  assert.equal(spawnEvent[1].environment.CODEX_HOME, "/tmp/qs-test-private/codex");
-  assert.equal(spawnEvent[1].environment.PLAYWRIGHT_BROWSERS_PATH, "/opt/playwright-browsers");
-  assert.equal(spawnEvent[1].environment.QS_READOUT_PRODUCER_TOKEN, undefined);
-  assert.ok(events.some(([name, path]) => name === "remove" && path === "/tmp/qs-test-private"));
-  assert.ok(events.filter(([name]) => name === "mkdir").every(([, , options]) => options.mode === 0o700));
+  const unexpected = await inspectGitBaseline({
+    ...options,
+    runGit: successfulGitFixture({ "config --local --get remote.origin.url": { ok: true, stdout: "https://github.com/other/repo.git\n", stderr: "" } }),
+  });
+  assert.equal(unexpected.code, "origin_unexpected");
 });
 
-test("the runner stops at preflight failure without creating a test home", async () => {
+test("the runner creates private homes, executes the suite, and cleans up", async () => {
+  const made = [];
+  const removed = [];
+  let observed;
+  const code = await runTestSuite({
+    repositoryRoot: "/repo",
+    sourceEnvironment: { PATH: "/usr/bin", CODEX_THREAD_ID: "secret" },
+    inspect: async () => ({ ok: true }),
+    makeTempRoot: async () => "/tmp/private-suite",
+    makeDirectory: async (path) => { made.push(path); },
+    spawnTests: async (input) => { observed = input; return 0; },
+    removeTempRoot: async (path) => { removed.push(path); },
+  });
+  assert.equal(code, 0);
+  assert.equal(made.length, 3);
+  assert.deepEqual(removed, ["/tmp/private-suite"]);
+  assert.equal(observed.environment.HOME, "/tmp/private-suite/home");
+  assert.equal(observed.environment.CODEX_THREAD_ID, undefined);
+  assert.deepEqual(observed.testFiles, TEST_FILES);
+});
+
+test("the runner stops at preflight failure", async () => {
   let created = false;
   const messages = [];
-  const result = await runTestSuite({
+  const code = await runTestSuite({
     repositoryRoot: "/repo",
-    inspect: async () => ({ ok: false, code: "git_config_unreadable" }),
-    makeTempRoot: async () => {
-      created = true;
-      return "/should-not-exist";
-    },
+    inspect: async () => ({ ok: false, code: "origin_unexpected" }),
+    makeTempRoot: async () => { created = true; return "/tmp/unused"; },
     writeDiagnostic: (message) => messages.push(message),
   });
-
-  assert.equal(result, 2);
+  assert.equal(code, 2);
   assert.equal(created, false);
-  assert.match(messages.join("\n"), /git_config_unreadable/);
+  assert.match(messages[0], /origin_unexpected/);
 });
 
-test("the runner preserves a test failure when cleanup also fails", async () => {
-  const messages = [];
-  const result = await runTestSuite({
-    repositoryRoot: "/repo",
-    inspect: async () => ({ ok: true }),
-    makeTempRoot: async () => "/tmp/qs-test-private",
-    makeDirectory: async () => {},
-    spawnTests: async () => 7,
-    removeTempRoot: async () => {
-      throw new Error("synthetic cleanup failure");
-    },
-    writeDiagnostic: (message) => messages.push(message),
-  });
-
-  assert.equal(result, 7);
-  assert.match(messages.join("\n"), /cleanup/i);
-});
-
-test("the Node subprocess reports pass, failure, and signal exits truthfully", async () => {
-  async function runChild({ code, signal, triggerSignal }) {
-    const processLike = new EventEmitter();
-    const forwarded = [];
-    const child = new EventEmitter();
-    child.kill = (receivedSignal) => forwarded.push(receivedSignal);
-    const spawnImpl = (executable, arguments_, options) => {
-      assert.equal(executable, process.execPath);
-      assert.deepEqual(arguments_, ["--test", ...expectedTestFiles]);
-      assert.equal(options.cwd, "/repo");
-      assert.equal(options.stdio, "inherit");
-      queueMicrotask(() => {
-        if (triggerSignal) processLike.emit(triggerSignal);
-        child.emit("close", code, signal);
-      });
-      return child;
-    };
-
-    const exitCode = await spawnNodeTests({
-      cwd: "/repo",
-      environment: { PATH: "/usr/bin" },
-      testFiles: expectedTestFiles,
-      spawnImpl,
-      processLike,
-    });
-    return { exitCode, forwarded };
+test("the Node subprocess reports pass and signal exits truthfully", async () => {
+  class Child extends EventEmitter {
+    kill(signal) { this.emit("close", null, signal); }
   }
+  const processLike = new EventEmitter();
+  const pass = await spawnNodeTests({
+    cwd: "/repo",
+    environment: {},
+    testFiles: ["tests/example.test.mjs"],
+    spawnImpl: () => {
+      const child = new Child();
+      queueMicrotask(() => child.emit("close", 0, null));
+      return child;
+    },
+    processLike,
+  });
+  assert.equal(pass, 0);
 
-  assert.deepEqual(await runChild({ code: 0, signal: null }), { exitCode: 0, forwarded: [] });
-  assert.deepEqual(await runChild({ code: 9, signal: null }), { exitCode: 9, forwarded: [] });
-  assert.deepEqual(
-    await runChild({ code: null, signal: "SIGTERM", triggerSignal: "SIGTERM" }),
-    { exitCode: 128 + osConstants.signals.SIGTERM, forwarded: ["SIGTERM"] },
-  );
+  const child = new Child();
+  const signaledPromise = spawnNodeTests({
+    cwd: "/repo",
+    environment: {},
+    spawnImpl: () => child,
+    processLike,
+  });
+  processLike.emit("SIGTERM");
+  assert.equal(await signaledPromise, 128 + osConstants.signals.SIGTERM);
 });

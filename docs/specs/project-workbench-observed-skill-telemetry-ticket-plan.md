@@ -1,5 +1,7 @@
 # Ticket plan: Project Workbench and observed skill-run telemetry
 
+> Historical record — the Workbench, hosted-output, ingestion, and producer-credential portions are superseded by the direct-chat contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). They are not part of the active command, package, deployment, or test architecture.
+
 Status: approved, published, and verified; all 11 implementation tickets are open and labeled `ready-for-agent`.
 
 Parent: [Specification: Project Workbench and observed skill-run telemetry, issue #11](https://github.com/quickstark/skills/issues/11).

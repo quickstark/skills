@@ -8,4 +8,4 @@ Use only inside a root `qs-code-build` run when the requested behavior has a sta
 - Prefer proof through the real public seam or produced artifact over assertions coupled only to implementation details.
 - For existing code, add characterization coverage before mutation when behavior is insufficiently protected.
 - When test-first work is impractical, record and perform a credible alternative validation strategy; never manufacture a failing test.
-- Return all evidence to the owning root run. Do not emit a separate status, readout, or continuation.
+- Return all evidence to the owning root run. Do not emit a separate status, result, or continuation.

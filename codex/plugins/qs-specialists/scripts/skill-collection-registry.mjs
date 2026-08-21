@@ -1,6 +1,5 @@
 import {
   NEXT_SKILLS_BY_NAME,
-  READOUT_PROFILES_BY_NAME,
   V3_CORE_SKILLS,
   V3_SPECIALIST_SKILLS,
 } from "./qs-skill-catalog.mjs";
@@ -23,7 +22,6 @@ function defineQsCommand(command) {
     codexPlugin: collectionId,
     codexLiteral: `$${collectionId}:${command.name}`,
     claudeLiteral: `/${command.name}`,
-    readoutProfile: READOUT_PROFILES_BY_NAME[command.name],
     continuation: Object.freeze({
       ...command.continuation,
       normal: freezeRoutes(routes.filter((route) => route.availability !== "failure")),
@@ -192,9 +190,6 @@ export function validateSkillCollectionRegistryModel(model) {
     if (command.codexLiteral !== `$${command.codexPlugin}:${command.name}`
       || command.claudeLiteral !== `/${command.name}`) {
       throw new Error(`The public command ${command.name} has invalid package literals.`);
-    }
-    if (!command.readoutProfile?.title) {
-      throw new Error(`The public command ${command.name} has no readout profile.`);
     }
     for (const routeKind of ["normal", "failure"]) {
       requireArray(

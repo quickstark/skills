@@ -1,5 +1,7 @@
 # Specification: Cursor-neutral pstack incorporation as `ps-skills`
 
+> Historical implementation record — hosted-output requirements are superseded by the direct-chat completion contract. The fixed PS inventory, package isolation, explicit invocation, and safety boundaries remain applicable.
+
 Status: Implemented (2026-08-19)
 
 Release boundary: Add one optional package without changing the QuickStark core or specialist command counts. This document specifies the work; it does not implement or publish it.

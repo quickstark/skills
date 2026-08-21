@@ -6,6 +6,12 @@ function result(completionState, evidence, allowedMutations = []) {
   return { completionState, evidence, allowedMutations };
 }
 
+function sanitizeEvidence(value) {
+  return String(value)
+    .replace(/\b(?:ghp|github_pat)_[A-Za-z0-9_]+\b/g, "[redacted credential]")
+    .replace(/\/(?:Users|home)\/[^/\s]+/g, "[redacted home]");
+}
+
 export function runPsSafetyScenario(scenario) {
   const input = scenario.input ?? {};
 
@@ -16,7 +22,7 @@ export function runPsSafetyScenario(scenario) {
         : result("complete", "critical safety claim remains unproven");
 
     case "forensics": {
-      const evidence = String(input.evidence ?? "");
+      const evidence = sanitizeEvidence(input.evidence ?? "");
       return input.repairNeeded
         ? result("continuation-required", evidence)
         : result("complete", evidence);

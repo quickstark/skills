@@ -1,6 +1,6 @@
 # Optional Pstack skills
 
-`ps-skills` is an independently installable package of thirteen explicit-only, Cursor-neutral workflows. Every invocation owns one bounded result and one hosted readout; no command starts another public skill automatically.
+`ps-skills` is an independently installable package of thirteen explicit-only, Cursor-neutral workflows. Every invocation owns one bounded result presented directly in chat; no command starts another public skill automatically.
 
 Install it after adding the QuickStark marketplace:
 

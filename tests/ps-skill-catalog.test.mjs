@@ -99,15 +99,14 @@ test("PS-01 defines one pinned optional PS collection and thirteen explicit comm
   assert.throws(() => psCodexSkillLiteral("qs-help"), /not a PS public command/i);
 });
 
-test("PS-01 records display, report, and continuation metadata for every command", () => {
+test("PS-01 records display, chat-presentation, and continuation metadata for every command", () => {
   for (const command of PS_PUBLIC_COMMANDS) {
     assert.match(command.displayName, /^PS /);
     assert.ok(command.shortDescription.length > 10 && command.shortDescription.length <= 100);
     assert.ok(command.prompt.length > 10);
     assert.deepEqual(command.effort, { supported: ["quick", "standard", "deep"], default: "standard" });
     assert.deepEqual(command.report, { supported: ["brief", "full"], default: "brief" });
-    assert.ok(["flow", "matrix", "bars", "checks"].includes(command.readoutProfile.visualization));
-    assert.equal(command.readoutProfile.sections.length, 4);
+    assert.equal(command.readoutProfile, undefined);
     assert.deepEqual(
       command.continuation.normal.map((item) => item.name),
       continuationNames[command.name],

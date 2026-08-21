@@ -1,5 +1,7 @@
 # Specification: PS-00 hermetic test baseline and safe Git readability
 
+> Historical implementation record — its reporting-era test inventory and credential-isolation details are superseded by the current direct-chat test environment. The safe Git-readability and hermetic-test principles remain applicable.
+
 Status: Implemented (2026-08-19)
 
 Parent decision: [Cursor-neutral pstack incorporation](./pstack-skills-incorporation.md#pre-implementation-baseline-gate)

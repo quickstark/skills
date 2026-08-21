@@ -37,7 +37,7 @@ When no matrix is supplied, derive the smallest credible matrix from repository 
 - A failed required check prohibits completion.
 - Treat an unavailable check as skipped only when the acceptance contract permits it; otherwise report it as blocked or failed.
 - Keep product failures unfixed and classify infrastructure, credential, permission, runner, and environment failures separately.
-- Never include secrets, full sensitive logs, or credential values in the readout.
+- Never include secrets, full sensitive logs, private paths, or credential values in the chat result.
 
 A complete result executes every required feasible check in the agreed matrix, reports honest pass/fail/skipped evidence, leaves no unauthorized source mutation, and satisfies the stated acceptance requirements.
 
@@ -45,31 +45,22 @@ Do not automatically invoke debug, build, review, Git, deployment, or another pu
 
 ## Completion report and next steps
 
-This invocation has one root skill: `/qs-test-verify`. Internal capabilities and bounded helpers remain part of this run; never automatically invoke another public skill or create another skill report.
+This invocation has one root skill: `/qs-test-verify`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
 
-Normalize explicit flags first, then unambiguous natural-language intent, then defaults: `effort=quick|standard|deep` defaults to `standard`; `report=brief|full` defaults to `brief`. Effort changes evidence depth, not mutation scope or report length.
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
 
-Produce one normalized result using `complete`, `continuation-required`, `input-required`, or `failed`. Every result emits three ranked copy-ready prompts: one opinionated preferred prompt followed by two alternatives. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+Use `complete`, `continuation-required`, `input-required`, or `failed`. Emit exactly three ranked copy-ready prompts: one preferred route and two alternatives. Failed required checks or actionable P0/P1 findings prohibit `complete`.
 
-The default ranked continuations are `/qs-git-merge`, `/qs-code-debug`, `/qs-review-code`. A failed result instead ranks `/qs-code-debug`, `/qs-review-code`, `/qs-flow-handoff`. Tailor each prompt to the actual result instead of starting it.
+Default routes: `/qs-git-merge`, `/qs-code-debug`, `/qs-review-code`. Failure routes: `/qs-code-debug`, `/qs-review-code`, `/qs-flow-handoff`. Tailor every prompt to the completed work.
 
-Create a small JSON input with the actual root `skill`, `effort`, `report`, `completionState`, concise `outcome`, and only real decisions, findings, outputs, checks, execution evidence, and continuation. List only the root public skill in `skillsUsed`; internal capabilities are evidence, not skills used. Follow the shared policy in `docs/skill-run-contract.md`.
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
 
-Render the one authenticated report:
-
-```bash
-node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --require-hosted --input "<absolute-path-to-readout.json>"
-```
-
-Present only the independently accepted `https://reports.quickstark.com/` URL. If authentication or hosted publication fails, state `Readout: Not created — <actual reason>` and preserve any private recovery artifact without exposing its path, localhost, or a private-IP URL.
-
-Brief in-chat output contains Status, Outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, Readout, one preferred prompt, and two alternatives. Full adds the evidence trail but never extra prompts. Omit empty sections and routine successful detail.
+Brief output contains status, outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, and all three prompts. Full adds the evidence trail, never more prompts. Omit empty sections and routine success detail.
 
 Status: Complete | Continuation required | Input required | Failed
 Skills used: /qs-test-verify
 Outcome: Concise verified result.
-Readout: Verified https://reports.quickstark.com/ report URL only.
 Preferred next prompt: one copy-ready prompt in a fenced `text` block
 Alternative next prompts: two copy-ready prompts, each in its own fenced `text` block
 
-Present prompts in normalized rank order. Label the first `Preferred next prompt:` and the remaining two `Alternative next prompt:`. Put each complete prompt in its own fenced `text` block beginning with its exact Codex skill literal ($qs-skills:qs-git-merge, $qs-skills:qs-code-debug, $qs-skills:qs-review-code, $qs-skills:qs-flow-handoff); Claude uses `/qs-git-merge`, `/qs-code-debug`, `/qs-review-code`, `/qs-flow-handoff`. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. Keep every prompt concise and carry forward only the outcome plus the single highest-value evidence item. Put heuristic model/thinking guidance outside each fence in a muted blockquote. Never change the active model or reasoning setting.
+Label prompts `Preferred next prompt:` and `Alternative next prompt:`. Put each in its own fenced `text` block, beginning with its exact Codex literal ($qs-skills:qs-git-merge, $qs-skills:qs-code-debug, $qs-skills:qs-review-code, $qs-skills:qs-flow-handoff); Claude uses `/qs-git-merge`, `/qs-code-debug`, `/qs-review-code`, `/qs-flow-handoff`. Carry forward only the outcome and highest-value evidence. Keep model guidance outside the fence and never change the active model or reasoning setting.

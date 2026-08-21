@@ -31,7 +31,7 @@ test("PS-02 resolves QS core, QS specialist, and PS commands through registered 
   );
   assert.equal(codexPublicSkillLiteral("ps-how"), "$ps-skills:ps-how");
   assert.equal(resolvePublicCommand("ps-how").invocationPolicy, "explicit");
-  assert.equal(resolvePublicCommand("ps-how").readoutProfile.title, "Subsystem walkthrough");
+  assert.equal(resolvePublicCommand("ps-how").readoutProfile, undefined);
 });
 
 test("PS-02 rejects unknown commands, duplicate identities, and missing continuation targets", () => {
@@ -53,11 +53,11 @@ test("PS-02 rejects unknown commands, duplicate identities, and missing continua
   }
 });
 
-test("PS-02 retains package-local profiles, continuation metadata, and exact literals", () => {
+test("PS-02 retains package-local continuation metadata and exact literals", () => {
   for (const command of PUBLIC_COMMANDS) {
     assert.equal(command.codexLiteral, `$${command.codexPlugin}:${command.name}`);
     assert.equal(command.claudeLiteral, `/${command.name}`);
-    assert.ok(command.readoutProfile?.title);
+    assert.equal(command.readoutProfile, undefined);
     assert.ok(Array.isArray(command.continuation.normal));
     assert.ok(Array.isArray(command.continuation.failure));
     assert.ok(command.continuation.normal.every((route) => PUBLIC_COMMANDS.some(

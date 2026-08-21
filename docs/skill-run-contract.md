@@ -1,12 +1,12 @@
 # QuickStark v3 skill-run contract
 
-Every public invocation has one root skill, one bounded outcome, one normalized result, and one authenticated hosted readout. Public skills never automatically start another public skill. Internal capabilities and bounded helpers remain evidence inside the root run and never appear as independent skills used.
+Every public invocation has one root skill, one bounded outcome, and one normalized result presented directly in chat. Public skills never automatically start another public skill. Internal capabilities and bounded helpers remain evidence inside the root run and never appear as independent skills used.
 
 ## Modes
 
 `effort=quick|standard|deep` controls investigation and validation depth. `standard` is the default. Quick uses one focused evidence pass and targeted checks. Standard performs the normal evidence pass and permits one bounded repair/recheck cycle where mutation is authorized. Deep broadens evidence and checks while remaining bounded to the requested outcome and mutation scope.
 
-`report=brief|full` controls presentation independently. `brief` is the default and contains the status, outcome, at most three decision-grade findings or decisions, noteworthy failed checks, material outputs, hosted URL, one preferred next prompt, and two alternatives. `full` adds the evidence trail, complete applicable checks and outputs, and secondary findings. It never adds more prompts.
+`report=brief|full` controls chat presentation independently. `brief` is the default and contains status, outcome, at most three decision-grade findings or decisions, noteworthy failed checks, material outputs, one preferred next prompt, and two alternatives. `full` adds the evidence trail, complete applicable checks and outputs, and secondary findings. It never adds more prompts.
 
 ## Completion state
 
@@ -17,13 +17,36 @@ Every public invocation has one root skill, one bounded outcome, one normalized 
 
 Every non-release result emits three ranked copy-ready prompts regardless of completion state. The first is the opinionated preferred route; the remaining two are alternatives. A failed result promotes a catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompts.
 
-## In-chat continuation format
+## Clear-writing pass
 
-Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—and in Claude it begins with `/<command>`. Keep each prompt concise: carry forward the outcome and only the single highest-value evidence item. Model and thinking guidance remains outside the fence in a separate muted blockquote.
+Apply the internal clear-writing pass to every QS and PS result after facts, inferences, and uncertainties are separated:
 
-## Normalized result
+1. Lead with the outcome or finding.
+2. Use concrete nouns and verbs and remove empty intensifiers.
+3. Preserve necessary technical terms, citations, qualifications, and uncertainty labels.
+4. Remove repetition that does not change the reader's decision.
 
-The result records the root skill, effort, report mode, completion state, concise outcome, real decisions and findings, material outputs, checks actually performed, verified execution evidence, and its ranked prompt set. Failed required checks and actionable P0/P1 findings cannot normalize as complete. The renderer applies omission rules and projects both the in-chat summary and hosted report from this result.
+This is an internal synthesis step, not another public invocation. It never receives a separate status, skills-used entry, output, or continuation.
+
+## In-chat result
+
+Present the result directly in the current conversation. Create no secondary result artifact or external URL.
+
+Use these labels when their sections are present:
+
+```text
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /<root-command>
+Outcome: <concise verified result>
+```
+
+Omit empty sections and routine successful detail. A brief result shows no more than three important findings or decisions. A full result may add supporting evidence but must preserve the same outcome and prompt set.
+
+## Continuation format
+
+Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language.
+
+In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—and in Claude it begins with `/<command>`. Keep each prompt concise: carry forward the outcome and only the highest-value evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
 
 ## Safety
 

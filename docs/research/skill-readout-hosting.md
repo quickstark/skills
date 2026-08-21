@@ -1,5 +1,7 @@
 # Research: durable, browser-accessible QuickStark skill readouts
 
+> Historical record — superseded by the direct-chat completion contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). No active command, package, deployment, or service implements this design.
+
 Date: 2026-07-25
 
 Status: researched; no hosting, DNS, access policies, or deployment have been changed.

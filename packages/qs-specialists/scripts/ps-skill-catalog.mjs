@@ -207,22 +207,6 @@ const FAILURE_CONTINUATIONS = Object.freeze({
   "ps-worktree-cleanup": Object.freeze(["qs-flow-handoff", "ps-help", "qs-setup"]),
 });
 
-const READOUT_PROFILE_DEFINITIONS = Object.freeze({
-  "ps-help": Object.freeze(["Workflow recommendation", "flow", ["decisions", "findings", "outputs", "checks"]]),
-  "ps-how": Object.freeze(["Subsystem walkthrough", "flow", ["findings", "decisions", "outputs", "checks"]]),
-  "ps-why": Object.freeze(["Rationale evidence", "matrix", ["findings", "decisions", "checks", "outputs"]]),
-  "ps-blast-radius": Object.freeze(["Change impact map", "matrix", ["findings", "checks", "decisions", "outputs"]]),
-  "ps-runtime-forensics": Object.freeze(["Runtime diagnosis", "flow", ["findings", "checks", "decisions", "outputs"]]),
-  "ps-trace-forensics": Object.freeze(["Trace diagnosis", "bars", ["findings", "checks", "decisions", "outputs"]]),
-  "ps-create-verification-skill": Object.freeze(["Verification workflow creation", "checks", ["outputs", "checks", "decisions", "findings"]]),
-  "ps-maintain-verification-skill": Object.freeze(["Verification coverage maintenance", "matrix", ["findings", "outputs", "checks", "decisions"]]),
-  "ps-skill-eval": Object.freeze(["Blinded skill evaluation", "matrix", ["checks", "findings", "decisions", "outputs"]]),
-  "ps-hillclimb": Object.freeze(["Metric experiment ledger", "bars", ["checks", "findings", "decisions", "outputs"]]),
-  "ps-visual-parity": Object.freeze(["Visual parity matrix", "matrix", ["checks", "findings", "outputs", "decisions"]]),
-  "ps-pr-babysit": Object.freeze(["PR readiness", "checks", ["checks", "findings", "decisions", "outputs"]]),
-  "ps-worktree-cleanup": Object.freeze(["Cleanup audit", "checks", ["findings", "decisions", "checks", "outputs"]]),
-});
-
 function completionEvidence(requiredSections, {
   sectionMode = "any",
   requiredCheckDetailFields = [],
@@ -264,16 +248,6 @@ function defineContinuation(name, rank, failure) {
   });
 }
 
-function defineReadoutProfile(name) {
-  const [title, visualization, sections] = READOUT_PROFILE_DEFINITIONS[name];
-  return Object.freeze({
-    title,
-    visualization,
-    sections: Object.freeze([...sections]),
-    labels: Object.freeze({}),
-  });
-}
-
 function definePublicCommand(definition) {
   const normal = NORMAL_CONTINUATIONS[definition.name];
   const failure = FAILURE_CONTINUATIONS[definition.name];
@@ -299,7 +273,6 @@ function definePublicCommand(definition) {
       kind: definition.candidateId === null ? "repository-authored" : "upstream-adaptation",
       candidateId: definition.candidateId,
     }),
-    readoutProfile: defineReadoutProfile(definition.name),
     ...(COMPLETION_EVIDENCE_BY_NAME[definition.name]
       ? { completionEvidence: COMPLETION_EVIDENCE_BY_NAME[definition.name] }
       : {}),
@@ -552,13 +525,6 @@ export function validatePsCatalogModel(model) {
     if (command.provenance?.kind !== expectedProvenanceKind
       || command.provenance?.candidateId !== expected.candidateId) {
       throw new Error(`The PS command ${command.name} has invalid provenance.`);
-    }
-
-    const expectedProfile = READOUT_PROFILE_DEFINITIONS[command.name];
-    if (command.readoutProfile?.title !== expectedProfile[0]
-      || command.readoutProfile?.visualization !== expectedProfile[1]
-      || !hasExactValues(command.readoutProfile?.sections, expectedProfile[2])) {
-      throw new Error(`The PS command ${command.name} has invalid readout profile metadata.`);
     }
 
     const expectedCompletionEvidence = COMPLETION_EVIDENCE_BY_NAME[command.name];

@@ -86,9 +86,9 @@ Restart the host or begin a new task after changing installed plugins. A Git pul
 
 See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
 
-## Reports
+## Results in chat
 
-Actual promoted runs publish one authenticated immutable readout through `https://reports.quickstark.com/`. A missing or rejected producer credential fails clearly and never substitutes a local path or private URL. Operational details live in [readout operations](./docs/readout-operations.md).
+Every promoted run presents one concise result directly in the conversation. Brief output includes status, outcome, decision-grade evidence, material failures or outputs, and three ranked copy-ready next prompts; full output adds supporting evidence. An internal clear-writing pass applies to every QS and PS result, with no external output system or separate credentials.
 
 ## Development
 
@@ -96,6 +96,7 @@ Update the relevant source-of-truth catalog (`scripts/qs-skill-catalog.mjs` or `
 
 ```bash
 npm run sync:codex
+npm run check:codex
 npm test
 ```
 

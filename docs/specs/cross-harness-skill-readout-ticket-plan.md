@@ -1,5 +1,7 @@
 # Ticket plan: authenticated cross-harness skill readout ingestion
 
+> Historical record — superseded by the direct-chat completion contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). No active command, package, deployment, or service implements this design.
+
 Status: implementation plan for the authenticated cross-harness reporting delivered in QuickStark 2.4.0. The linked GitHub issues and dependency graph are historical planning references; inspect the actual tracker before claiming an issue is currently open, closed, released, or ready for an agent.
 
 Implementation evidence: `scripts/qs-skill-readout.mjs`, `deploy/readouts/compose.yaml`, and the cross-harness ingestion, publication, immutable-retry, producer-authorization, safe-rendering, and live credential-rotation behavior tests in `tests/qs-skills.test.mjs`.

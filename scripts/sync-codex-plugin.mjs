@@ -18,11 +18,8 @@ import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
 const supportFiles = Object.freeze([
-  "qs-readout-portfolio.mjs",
   "ps-skill-catalog.mjs",
   "qs-skill-catalog.mjs",
-  "qs-skill-report-presentation.mjs",
-  "qs-skill-readout.mjs",
   "skill-collection-registry.mjs",
 ]);
 const qsCapabilityFiles = Object.freeze([

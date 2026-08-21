@@ -1,5 +1,7 @@
 # Ticket plan: Cursor-neutral `ps-skills` incorporation
 
+> Historical implementation record — the hosted-output ticket is superseded by the direct-chat completion contract. The fixed PS inventory, package isolation, and safety boundaries remain applicable.
+
 Status: Implemented (2026-08-19)
 
 Source specification: [Cursor-neutral pstack incorporation as `ps-skills`](./pstack-skills-incorporation.md)

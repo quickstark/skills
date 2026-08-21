@@ -5,7 +5,6 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
-  playwrightBrowsersPathFromExecutable,
   sanitizeTestEnvironment,
   TEST_FILES,
 } from "./qs-test-environment.mjs";
@@ -18,11 +17,6 @@ async function createPrivateTempRoot() {
   const directory = await mkdtemp(join(tmpdir(), "qs-test-"));
   await chmod(directory, 0o700);
   return directory;
-}
-
-async function findInstalledPlaywrightBrowsersPath() {
-  const { chromium } = await import("playwright-core");
-  return playwrightBrowsersPathFromExecutable(chromium.executablePath());
 }
 
 function signalExitCode(signal) {
@@ -88,7 +82,6 @@ export async function runTestSuite({
   inspect = inspectGitBaseline,
   makeTempRoot = createPrivateTempRoot,
   makeDirectory = mkdir,
-  findPlaywrightBrowsersPath = findInstalledPlaywrightBrowsersPath,
   spawnTests = spawnNodeTests,
   removeTempRoot = (path) => rm(path, { recursive: true, force: true }),
   writeDiagnostic = (message) => process.stderr.write(`${message}\n`),
@@ -113,10 +106,8 @@ export async function runTestSuite({
       mode: 0o700,
     })));
 
-    const playwrightBrowsersPath = await findPlaywrightBrowsersPath();
     const environment = sanitizeTestEnvironment({
       ...sourceEnvironment,
-      ...(playwrightBrowsersPath ? { PLAYWRIGHT_BROWSERS_PATH: playwrightBrowsersPath } : {}),
     }, roots);
     exitCode = await spawnTests({
       cwd: checkoutRoot,

@@ -1,5 +1,7 @@
 # Specification: authenticated cross-harness skill readout ingestion
 
+> Historical record — superseded by the direct-chat completion contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). No active command, package, deployment, or service implements this design.
+
 Status: implemented in QuickStark 2.4.0. The original parent specification was published as GitHub issue [#1](https://github.com/quickstark/skills/issues/1).
 
 Implementation evidence: `scripts/qs-skill-readout.mjs`, `deploy/readouts/compose.yaml`, and the authenticated-ingestion, immutable-retry, producer-isolation, external-skill, credential-rotation, and portable-publisher tests in `tests/qs-skills.test.mjs`.

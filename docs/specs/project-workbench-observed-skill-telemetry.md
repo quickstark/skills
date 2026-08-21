@@ -1,5 +1,7 @@
 # Specification: Project Workbench and observed skill-run telemetry
 
+> Historical record — the Workbench, hosted-output, ingestion, and telemetry-service design is superseded by the direct-chat contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). It is not part of the active command, package, deployment, or test architecture.
+
 Status: implementation-ready specification.
 
 Approved design: Project Workbench, prototype A.

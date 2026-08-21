@@ -4,7 +4,6 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { normalizeSkillReadout } from "../scripts/qs-skill-readout.mjs";
 import { runPsSafetyScenario } from "./helpers/ps-safety-harness.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -45,12 +44,6 @@ function rootSkillForScenario(scenario) {
   return defaultRootSkillByKind[scenario.kind];
 }
 
-function readoutState(completionState) {
-  if (completionState === "input-required") return "Awaiting input";
-  if (completionState === "failed") return "Failed";
-  return "Completed";
-}
-
 test("PS-18 covers the complete required deterministic safety scenario matrix", () => {
   assert.deepEqual(scenarios.map((scenario) => scenario.id), requiredScenarioIds);
   assert.equal(new Set(requiredScenarioIds).size, requiredScenarioIds.length);
@@ -63,35 +56,9 @@ for (const scenario of scenarios) {
     if (scenario.allowedMutations) assert.deepEqual(observed.allowedMutations, scenario.allowedMutations);
 
     const skill = rootSkillForScenario(scenario);
-    const checkStatus = observed.completionState === "failed"
-      ? "failed"
-      : observed.completionState === "complete" ? "passed" : "info";
-    const decisions = skill === "ps-worktree-cleanup" && observed.completionState === "complete"
-      ? [{ title: "Cleanup scope", detail: observed.evidence }]
-      : undefined;
-    const normalized = normalizeSkillReadout({
-      skill,
-      status: readoutState(observed.completionState),
-      completionState: observed.completionState,
-      outcome: `Deterministic safety fixture ${scenario.id} produced ${observed.completionState}.`,
-      checks: [{ title: scenario.id, detail: observed.evidence, status: checkStatus }],
-      decisions,
-    });
-    const normalizedEvidence = normalized.checks[0].detail;
-    if (scenario.evidenceIncludes) assert.match(normalizedEvidence, new RegExp(scenario.evidenceIncludes.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-    for (const excluded of scenario.evidenceExcludes ?? []) assert.doesNotMatch(normalizedEvidence, new RegExp(excluded.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-    assert.deepEqual(normalized.skillsUsed, [skill]);
-    assert.equal(normalized.nextSkills.length, 3);
-
-    if (observed.completionState !== "complete") {
-      assert.throws(() => normalizeSkillReadout({
-        skill,
-        status: "Completed",
-        completionState: "complete",
-        outcome: `Unsafe completion claim for ${scenario.id}.`,
-        checks: [{ title: scenario.id, detail: observed.evidence, status: checkStatus }],
-        decisions,
-      }), /prohibit a complete result|substantive completion evidence|must record metric, tolerance, residual/i);
-    }
+    assert.match(skill, /^ps-/);
+    if (scenario.evidenceIncludes) assert.match(observed.evidence, new RegExp(scenario.evidenceIncludes.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    for (const excluded of scenario.evidenceExcludes ?? []) assert.doesNotMatch(observed.evidence, new RegExp(excluded.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.doesNotMatch(observed.evidence, /ghp_[A-Za-z0-9]+|\/Users\/[^/]+|\/home\/[^/]+/i);
   });
 }

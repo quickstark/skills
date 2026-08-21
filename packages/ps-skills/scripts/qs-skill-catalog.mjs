@@ -243,7 +243,7 @@ const V3_ONLY_SKILLS = Object.freeze([
   },
 ]);
 
-const ALL_SKILL_DEFINITIONS = Object.freeze([
+const ACTIVE_SKILL_DEFINITIONS = Object.freeze([
   ...LEGACY_V2_SKILLS,
   ...V3_ONLY_SKILLS,
 ]);
@@ -261,218 +261,12 @@ const V3_PUBLIC_METADATA_OVERRIDES = Object.freeze({
   }),
 });
 
-function defineReadoutProfile(title, signal, visualization, sections, labels = {}) {
-  return Object.freeze({
-    title,
-    signal,
-    visualization,
-    sections: Object.freeze([...sections]),
-    labels: Object.freeze({ ...labels }),
-  });
-}
+const LEGACY_V2_SKILLS_BY_NAME = new Map(
+  LEGACY_V2_SKILLS.map((skill) => [skill.name, skill]),
+);
 
-export const READOUT_PROFILES_BY_NAME = Object.freeze({
-  "qs-help": defineReadoutProfile(
-    "Workflow recommendation",
-    "Choose the right next workflow",
-    "brief",
-    ["decisions", "findings", "outputs", "checks"],
-    { decisions: "Recommended workflow", findings: "Selection rationale" },
-  ),
-  "qs-setup": defineReadoutProfile(
-    "Setup readiness",
-    "Verify actual project configuration",
-    "checks",
-    ["checks", "outputs", "decisions", "findings"],
-    { checks: "Configuration checks", outputs: "Configured artifacts" },
-  ),
-  "qs-plan-clarify": defineReadoutProfile(
-    "Decision brief",
-    "Make resolved decisions easy to scan",
-    "brief",
-    ["decisions", "findings", "outputs", "checks"],
-    { decisions: "Resolved decisions", findings: "Open questions" },
-  ),
-  "qs-plan-explore": defineReadoutProfile(
-    "Opportunity canvas",
-    "Compare real opportunities and concerns",
-    "bars",
-    ["findings", "decisions", "outputs", "checks"],
-    { findings: "Opportunities and constraints", decisions: "Promising directions" },
-  ),
-  "qs-plan-interview": defineReadoutProfile(
-    "Interview synthesis",
-    "Summarize answered and open decisions",
-    "brief",
-    ["decisions", "findings", "outputs", "checks"],
-    { decisions: "Answers and decisions", findings: "Questions to resolve" },
-  ),
-  "qs-plan-spec": defineReadoutProfile(
-    "Specification blueprint",
-    "Show verified requirements and boundaries",
-    "flow",
-    ["decisions", "outputs", "findings", "checks"],
-    { decisions: "Agreed requirements", outputs: "Specification artifacts" },
-  ),
-  "qs-plan-tickets": defineReadoutProfile(
-    "Implementation ticket board",
-    "Show actual implementation slices and dependencies",
-    "flow",
-    ["outputs", "decisions", "findings", "checks"],
-    { outputs: "Tracked implementation slices", decisions: "Ordering decisions" },
-  ),
-  "qs-plan-roadmap": defineReadoutProfile(
-    "Delivery roadmap",
-    "Summarize actual delivery decisions in sequence",
-    "flow",
-    ["decisions", "outputs", "findings", "checks"],
-    { decisions: "Decision sequence", outputs: "Roadmap artifacts" },
-  ),
-  "qs-plan-research": defineReadoutProfile(
-    "Research brief",
-    "Foreground observed evidence and conclusions",
-    "bars",
-    ["findings", "decisions", "outputs", "checks"],
-    { findings: "Evidence", decisions: "Evidence-backed conclusions", outputs: "Research artifacts" },
-  ),
-  "qs-design-prototype": defineReadoutProfile(
-    "Prototype comparison",
-    "Compare only designs that were actually explored",
-    "matrix",
-    ["outputs", "findings", "decisions", "checks"],
-    { outputs: "Prototype artifacts", findings: "Observed design trade-offs", decisions: "Selected direction" },
-  ),
-  "qs-design-domain": defineReadoutProfile(
-    "Domain model",
-    "Make resolved concepts and shared vocabulary visible",
-    "map",
-    ["findings", "decisions", "outputs", "checks"],
-    { findings: "Shared vocabulary", decisions: "Domain boundaries", outputs: "Domain artifacts" },
-  ),
-  "qs-design-modules": defineReadoutProfile(
-    "Module blueprint",
-    "Show documented module boundaries and interfaces",
-    "map",
-    ["decisions", "findings", "outputs", "checks"],
-    { decisions: "Module boundaries", findings: "Interface observations", outputs: "Design artifacts" },
-  ),
-  "qs-design-architecture": defineReadoutProfile(
-    "Architecture assessment",
-    "Surface real architectural risks and decisions",
-    "map",
-    ["findings", "decisions", "outputs", "checks"],
-    { findings: "Architectural observations", decisions: "Architecture decisions", outputs: "Architecture artifacts" },
-  ),
-  "qs-code-build": defineReadoutProfile(
-    "Delivery summary",
-    "Show actual deliverables and verified implementation",
-    "flow",
-    ["outputs", "checks", "decisions", "findings"],
-    { outputs: "Deliverables", checks: "Verification", decisions: "Implementation decisions" },
-  ),
-  "qs-code-document": defineReadoutProfile(
-    "Documentation coverage",
-    "Show verified documentation changes and accuracy checks",
-    "checks",
-    ["outputs", "checks", "findings", "decisions"],
-    {
-      outputs: "Documented artifacts",
-      checks: "Documentation validation",
-      findings: "Documentation coverage",
-      decisions: "Documentation decisions",
-    },
-  ),
-  "qs-code-debug": defineReadoutProfile(
-    "Diagnosis trace",
-    "Connect the observed failure to its verified fix",
-    "flow",
-    ["findings", "decisions", "checks", "outputs"],
-    { findings: "Observed failure", decisions: "Diagnosis and repair", checks: "Regression verification" },
-  ),
-  "qs-test-tdd": defineReadoutProfile(
-    "Test results",
-    "Summarize only tests and checks that actually ran",
-    "checks",
-    ["checks", "outputs", "findings", "decisions"],
-    { checks: "Verification", outputs: "Test artifacts", findings: "Observed behavior" },
-  ),
-  "qs-test-author": defineReadoutProfile(
-    "Test coverage change",
-    "Show the behavior covered and actual validation results",
-    "checks",
-    ["outputs", "checks", "decisions", "findings"],
-    {
-      outputs: "Test artifacts",
-      checks: "Test validation",
-      decisions: "Coverage decisions",
-      findings: "Observed gaps",
-    },
-  ),
-  "qs-test-verify": defineReadoutProfile(
-    "Verification matrix",
-    "Show actual pass, fail, skipped, and blocked results by target",
-    "matrix",
-    ["checks", "findings", "outputs", "decisions"],
-    {
-      checks: "Verification results",
-      findings: "Observed failures",
-      outputs: "Test artifacts",
-      decisions: "Matrix decisions",
-    },
-  ),
-  "qs-review-code": defineReadoutProfile(
-    "Review findings",
-    "Distinguish actual standards and specification findings",
-    "matrix",
-    ["findings", "checks", "decisions", "outputs"],
-    { findings: "Review matrix", checks: "Review verification", decisions: "Review decisions" },
-  ),
-  "qs-git-merge": defineReadoutProfile(
-    "GitHub integration",
-    "Show verified Git integration, publication, and conflict resolution",
-    "flow",
-    ["findings", "decisions", "checks", "outputs"],
-    { findings: "Git and GitHub state", decisions: "Integration decisions", checks: "Integration verification" },
-  ),
-  "qs-flow-triage": defineReadoutProfile(
-    "Issue triage",
-    "Group only issues that were actually assessed",
-    "matrix",
-    ["findings", "decisions", "outputs", "checks"],
-    { findings: "Assessed issues", decisions: "Triage decisions", outputs: "Tracked outcomes" },
-  ),
-  "qs-flow-handoff": defineReadoutProfile(
-    "Session handoff",
-    "Expose real current state and remaining work",
-    "brief",
-    ["decisions", "findings", "outputs", "checks"],
-    { decisions: "Continuation decisions", findings: "Current state", outputs: "Handoff artifacts" },
-  ),
-  "qs-learn-teach": defineReadoutProfile(
-    "Learning pathway",
-    "Show actual concepts and recommended learning sequence",
-    "flow",
-    ["findings", "decisions", "outputs", "checks"],
-    { findings: "Concepts and observations", decisions: "Learning sequence", outputs: "Learning materials" },
-  ),
-  "qs-skill-write": defineReadoutProfile(
-    "Skill authoring review",
-    "Highlight created skill artifacts and validation",
-    "checks",
-    ["outputs", "checks", "decisions", "findings"],
-    { outputs: "Authored skill artifacts", checks: "Skill validation", decisions: "Authoring decisions" },
-  ),
-  "qs-deploy-release": defineReadoutProfile(
-    "Release readiness",
-    "Surface the verified release gates and deployment result",
-    "checks",
-    ["checks", "outputs", "decisions", "findings"],
-    { checks: "Release gates", outputs: "Deployed artifacts", decisions: "Release decisions" },
-  ),
-});
-
-export const READOUT_SKILLS_BY_NAME = new Map(
-  ALL_SKILL_DEFINITIONS.map((skill) => [skill.name, skill]),
+const ACTIVE_SKILLS_BY_NAME = new Map(
+  ACTIVE_SKILL_DEFINITIONS.map((skill) => [skill.name, skill]),
 );
 
 const V3_CORE_COMMAND_DEFINITIONS = Object.freeze([
@@ -629,7 +423,7 @@ const V3_REPORT_POLICY = Object.freeze({
 });
 
 function defineV3PublicCommand([name, group, position], distribution) {
-  const skill = READOUT_SKILLS_BY_NAME.get(name);
+  const skill = ACTIVE_SKILLS_BY_NAME.get(name);
   const metadata = V3_PUBLIC_METADATA_OVERRIDES[name] ?? {};
   const continuations = V3_CONTINUATIONS_BY_NAME[name];
   const promptCount = name === "qs-deploy-release" ? 0 : 3;
@@ -839,7 +633,7 @@ export function validateV3CatalogModel(model) {
   ];
 
   for (const [index, command] of publicCommands.entries()) {
-    if (!READOUT_SKILLS_BY_NAME.has(command.name)) {
+    if (!ACTIVE_SKILLS_BY_NAME.has(command.name)) {
       throw new Error(`The v3 public command ${command.name} is not in the active skill catalog.`);
     }
 
@@ -858,7 +652,7 @@ export function validateV3CatalogModel(model) {
       throw new Error(`The v3 public command ${command.name} has invalid report modes.`);
     }
 
-    const currentSkill = READOUT_SKILLS_BY_NAME.get(command.name);
+    const currentSkill = ACTIVE_SKILLS_BY_NAME.get(command.name);
     const expectedInvocationPolicy = currentSkill.userInvoked ? "explicit" : "model";
     if (command.invocationPolicy !== expectedInvocationPolicy) {
       throw new Error(`The v3 public command ${command.name} has an invalid invocation policy.`);
@@ -919,7 +713,7 @@ export function validateV3CatalogModel(model) {
   }
 
   for (const capability of internalCapabilities) {
-    if (!READOUT_SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName)) {
+    if (!LEGACY_V2_SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName)) {
       throw new Error(`The v3 internal capability ${capability.name} must replace one non-public v2 skill.`);
     }
 

@@ -1,5 +1,7 @@
 # Draft ticket plan: private, project-aware QuickStark readouts
 
+> Historical record — superseded by the direct-chat completion contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). No active command, package, deployment, or service implements this design.
+
 Status: historical draft; these gallery implementation slices have not been independently verified as published issues. GitHub Issues and the `ready-for-agent` label are now enabled.
 
 Parent: the approved specification for private, project-aware QuickStark skill readouts.

@@ -23,10 +23,10 @@ This is lifecycle position 100 in the core projection and is installed through `
 
 ## Output and next steps
 
-`/qs-deploy-release` produces one normalized root result and one authenticated hosted readout. It accepts independent `effort=quick|standard|deep` and `report=brief|full` modes, defaulting to `standard` and `brief`.
+`/qs-deploy-release` produces one normalized root result directly in chat. It accepts independent `effort=quick|standard|deep` and `report=brief|full` modes, defaulting to `standard` and `brief`.
 
-A completed release is terminal and emits no next prompts. Public skills are never executed automatically. Brief reports show only the decision-grade result; full reports add supporting evidence.
+A completed release is terminal and emits no next prompts. Public skills are never executed automatically. Brief output shows only the decision-grade result; full output adds supporting evidence.
 
 The release command has no catalog-approved continuation.
 
-The hosted and in-chat views consume the same normalized result. Ordinary runs return only an authenticated `https://reports.quickstark.com/` URL; local viewers remain explicit diagnostic tools. See [the shared skill-run contract](../skill-run-contract.md).
+Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

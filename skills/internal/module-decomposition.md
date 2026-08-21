@@ -6,4 +6,4 @@ Use only inside a root `qs-plan-spec`, `qs-code-build`, or `qs-review-code` run 
 - Identify dependencies, invariants, ownership, and failure boundaries from actual evidence.
 - Compare viable decompositions, separate independent work before serializing shared state, and make caller migration part of the boundary design.
 - Avoid speculative abstractions and broad rewrites beyond the selected scope.
-- Return decisions to the owning root run. Do not emit a separate status, readout, or continuation.
+- Return decisions to the owning root run. Do not emit a separate status, result, or continuation.

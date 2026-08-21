@@ -1,5 +1,7 @@
 # Specification: private, project-aware QuickStark skill readouts
 
+> Historical record — superseded by the direct-chat completion contract in [`docs/skill-run-contract.md`](../skill-run-contract.md). No active command, package, deployment, or service implements this design.
+
 Status: implementation-ready historical specification; GitHub Issues and the `ready-for-agent` label are now enabled, but publication of this particular specification has not been independently verified.
 
 Owner: QuickStark Skills.

@@ -5,7 +5,7 @@
 **Decision sources:** `CONTEXT.md` and ADR 0001
 **Implementation status:** Complete; release validation is recorded by the v3 test and package gates.
 
-> Continuation cardinality in this historical specification is superseded by ADR 0003. The one-root and no-automatic-hop boundaries remain active.
+> Continuation cardinality is superseded by ADR 0003, and hosted-output requirements are superseded by the direct-chat completion contract. The one-root and no-automatic-hop boundaries remain active.
 
 ## Problem Statement
 

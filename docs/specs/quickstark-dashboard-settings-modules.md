@@ -1,5 +1,7 @@
 # QuickStark Dashboard Settings module design
 
+> Historical record — this settings, renderer, ingestion, and credential design is superseded by the direct-chat completion contract. It is not part of the active command, package, deployment, or test architecture.
+
 ## Decision
 
 Provide one authenticated Dashboard Settings experience without giving the read-only Project Workbench, immutable report renderer, or report ingestion interface the ability to generate producer credentials.

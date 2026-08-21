@@ -23,30 +23,21 @@ Failure before publication leaves the previous release available and must not be
 
 ## Completion report and next steps
 
-This invocation has one root skill: `/qs-deploy-release`. Internal capabilities and bounded helpers remain part of this run; never automatically invoke another public skill or create another skill report.
+This invocation has one root skill: `/qs-deploy-release`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
 
-Normalize explicit flags first, then unambiguous natural-language intent, then defaults: `effort=quick|standard|deep` defaults to `standard`; `report=brief|full` defaults to `brief`. Effort changes evidence depth, not mutation scope or report length.
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
 
-Produce one normalized result using `complete`, `continuation-required`, `input-required`, or `failed`. This release command is terminal and emits no next prompts. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+Use `complete`, `continuation-required`, `input-required`, or `failed`. This release command is terminal and emits no next prompts. Failed required checks or actionable P0/P1 findings prohibit `complete`.
 
-Do not invent a follow-on workflow after release. Report any release failure directly in this result.
+Do not invent a follow-on workflow after release. State any release failure in this result.
 
-Create a small JSON input with the actual root `skill`, `effort`, `report`, `completionState`, concise `outcome`, and only real decisions, findings, outputs, checks, execution evidence, and continuation. List only the root public skill in `skillsUsed`; internal capabilities are evidence, not skills used. Follow the shared policy in `docs/skill-run-contract.md`.
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
 
-Render the one authenticated report:
-
-```bash
-node "<QuickStark root>/scripts/qs-skill-readout.mjs" render --require-hosted --input "<absolute-path-to-readout.json>"
-```
-
-Present only the independently accepted `https://reports.quickstark.com/` URL. If authentication or hosted publication fails, state `Readout: Not created — <actual reason>` and preserve any private recovery artifact without exposing its path, localhost, or a private-IP URL.
-
-Brief in-chat output contains Status, Outcome, up to three important findings or decisions, noteworthy failed checks, material outputs, and Readout. Full adds the evidence trail. Omit empty sections and routine successful detail.
+Brief output contains status, outcome, up to three important findings or decisions, noteworthy failed checks, and material outputs. Full adds the evidence trail. Omit empty sections and routine success detail.
 
 Status: Complete | Continuation required | Input required | Failed
 Skills used: /qs-deploy-release
 Outcome: Concise verified result.
-Readout: Verified https://reports.quickstark.com/ report URL only.
 Next prompts: None — release is terminal.
 
 Never add a speculative prompt merely to keep the workflow moving.
