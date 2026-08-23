@@ -16,7 +16,11 @@
     "sync:codex": "node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs",
     "check:codex": "node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check",
     "test": "node scripts/qs-test-runner.mjs",
-    "test:preflight": "node scripts/qs-test-preflight.mjs"
+    "test:preflight": "node scripts/qs-test-preflight.mjs",
+    "skills:verify": "npm run check:codex && npm test && npm run personal-skills:verify -- --json",
+    "personal-skills:plan": "node scripts/sync-personal-skills.mjs plan",
+    "personal-skills:sync": "node scripts/sync-personal-skills.mjs sync",
+    "personal-skills:verify": "node scripts/sync-personal-skills.mjs verify"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",

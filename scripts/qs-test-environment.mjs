@@ -10,6 +10,7 @@ export const TEST_FILES = Object.freeze([
   "tests/ps-projection-integrity.test.mjs",
   "tests/ps-skills.test.mjs",
   "tests/qs-test-baseline.test.mjs",
+  "tests/personal-skills.test.mjs",
 ]);
 
 const STRIPPED_EXACT_KEYS = new Set(["CODEX_THREAD_ID"]);

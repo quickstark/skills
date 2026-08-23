@@ -27,6 +27,7 @@ const expectedTestFiles = [
   "tests/ps-projection-integrity.test.mjs",
   "tests/ps-skills.test.mjs",
   "tests/qs-test-baseline.test.mjs",
+  "tests/personal-skills.test.mjs",
 ];
 
 function successfulGitFixture(overrides = {}) {

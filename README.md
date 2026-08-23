@@ -6,6 +6,18 @@ QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.co
 
 To inspect upstream changes without publishing to it, use `git fetch upstream`; personalized changes are pushed only to `origin`.
 
+## Skill control plane
+
+This repository is the source of truth for QuickStark-owned plugin skills and
+for the pinned manifest of approved third-party skills. Installed global skill
+directories and plugin caches are machine projections; do not copy them back
+into Git.
+
+Use `npm run skills:verify` for the complete read-only gate. Third-party machine
+state is inspected with `personal-skills:plan`, changed only with an explicitly
+authorized `personal-skills:sync`, and confirmed with
+`personal-skills:verify`. See the [central skill control plane](./docs/personal-skills.md).
+
 ## Install
 
 ```bash
