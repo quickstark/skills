@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.5.0
+
+### Minor Changes
+
+- [`8756a5b`](https://github.com/quickstark/skills/commit/8756a5b25c4c287ca06036824f1264a5c68a4537) Thanks [@quickstark](https://github.com/quickstark)! - Add a central skill control plane that verifies QuickStark package projections and reconciles 18 pinned third-party skills across machines.
+
 ## 3.4.0
 
 ### Minor Changes
