@@ -1,5 +1,14 @@
 # QuickStark Skills changelog
 
+## 3.6.1
+
+### Patch Changes
+
+- [`e7f0d8c`](https://github.com/quickstark/skills/commit/e7f0d8c0301ad34c038d48b8a5fe38d7b3a98061) Thanks [@quickstark](https://github.com/quickstark)! - Make `skills:update` verify checkout HEAD against the live `origin/main` before
+  planning or mutation. Stale clean main checkouts receive an exact fast-forward
+  command, while dirty, detached, and non-main checkouts receive an isolated
+  worktree command that preserves local changes.
+
 ## 3.6.0
 
 ### Minor Changes
