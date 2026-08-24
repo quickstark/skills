@@ -37,6 +37,8 @@ const runFile = promisify(execFile);
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_MANIFEST = join(repositoryRoot, "config", "personal-skills.manifest.json");
 const INSTALLER_LOCK = join(repositoryRoot, "config", "personal-skills-installer-lock.json");
+const INSTALLER_RUNTIME_NAME = "qs-skills-installer-lock";
+const INSTALLER_RUNTIME_VERSION = "0.0.0";
 const SUPPORTED_AGENTS = new Set(["codex", "claude-code", "pi"]);
 
 function assertCondition(condition, message) {
@@ -253,6 +255,13 @@ export function verifyInstallerArchiveIntegrity(contents, expected) {
 
 export function validateInstallerLock(lock, manifest) {
   assertCondition(lock?.lockfileVersion === 3 && lock.packages && typeof lock.packages === "object", "Installer lock must use npm lockfile version 3.");
+  assertCondition(
+    lock.name === INSTALLER_RUNTIME_NAME
+      && lock.version === INSTALLER_RUNTIME_VERSION
+      && lock.packages[""]?.name === INSTALLER_RUNTIME_NAME
+      && lock.packages[""]?.version === INSTALLER_RUNTIME_VERSION,
+    "Installer lock root identity differs from the runtime package.",
+  );
   assertCondition(lock.packages[""]?.dependencies?.skills === manifest.installer.version, "Installer lock root does not pin the approved Skills CLI version.");
   for (const [path, entry] of Object.entries(lock.packages)) {
     if (path === "") continue;
@@ -271,7 +280,8 @@ async function resolvePinnedInstaller(manifest, stagingRoot) {
   await mkdir(runtime, { recursive: true });
   const lock = validateInstallerLock(JSON.parse(await readFile(INSTALLER_LOCK, "utf8")), manifest);
   await writeFile(join(runtime, "package.json"), `${JSON.stringify({
-    name: "qs-skills-installer-lock",
+    name: INSTALLER_RUNTIME_NAME,
+    version: INSTALLER_RUNTIME_VERSION,
     private: true,
     dependencies: { skills: manifest.installer.version },
   }, null, 2)}\n`, { mode: 0o600 });
@@ -281,11 +291,9 @@ async function resolvePinnedInstaller(manifest, stagingRoot) {
     "--ignore-scripts",
     "--no-audit",
     "--no-fund",
-    "--prefix",
-    runtime,
     "--cache",
     cache,
-  ]);
+  ], { cwd: runtime });
   const packageRoot = join(runtime, "node_modules", "skills");
   const packageMetadata = JSON.parse(await readFile(join(packageRoot, "package.json"), "utf8"));
   assertCondition(packageMetadata.version === PINNED_INSTALLER_VERSION && manifest.installer.integrity === PINNED_INSTALLER_INTEGRITY, "Extracted installer version is not approved.");

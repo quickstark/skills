@@ -1380,7 +1380,12 @@ test("installer integrity verification has a working positive and negative contr
 test("installer dependency lock pins every downloaded archive by exact version and integrity", async () => {
   const desired = normalizeManifest(JSON.parse(await readFile(v1ManifestPath, "utf8")));
   const lock = JSON.parse(await readFile(join(repositoryRoot, "config", "personal-skills-installer-lock.json"), "utf8"));
+  assert.equal(lock.packages[""].name, lock.name);
+  assert.equal(lock.packages[""].version, lock.version);
   assert.equal(validateInstallerLock(lock, desired), lock);
+  const missingRootIdentity = structuredClone(lock);
+  delete missingRootIdentity.packages[""].version;
+  assert.throws(() => validateInstallerLock(missingRootIdentity, desired), /root identity/i);
   const tampered = structuredClone(lock);
   delete tampered.packages["node_modules/yaml"].integrity;
   assert.throws(() => validateInstallerLock(tampered, desired), /integrity/i);
