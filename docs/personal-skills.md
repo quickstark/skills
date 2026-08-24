@@ -1,5 +1,9 @@
 # Central skill control plane
 
+This document covers administration, curation, and safety behavior. For normal
+machine setup and updates, use the
+[end-user installation and update guide](./install-and-update-skills.md).
+
 This repository controls two distinct skill sets without copying machine-owned
 payloads into Git.
 

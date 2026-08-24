@@ -18,7 +18,8 @@ approved-resource deployment, `npm run skills:sync -- --authorize` to execute
 that reviewed plan, and `npm run skills:verify` for the complete read-only
 gate. The lower-level `personal-skills:*` commands remain available for
 inventory, explicit adoption, and contributor-resource-only reconciliation.
-See the [central skill control plane](./docs/personal-skills.md).
+Start with the [end-user installation and update guide](./docs/install-and-update-skills.md).
+Maintainers can use the deeper [central skill control plane](./docs/personal-skills.md).
 
 ## Install
 
@@ -65,8 +66,9 @@ pi install ./pi/packages/ps-skills
 
 Restart the host or begin a new task after changing installed plugins. A Git pull updates the checkout; it does not automatically refresh a cached installed plugin.
 
-To install or update the maintained packages and approved contributor skills
-through one reviewed operation, select the harnesses explicitly:
+The direct package commands above install QuickStark only. To install or update
+both QuickStark and the approved contributor skills through one reviewed
+operation, select only the harnesses installed on that machine:
 
 ```bash
 npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
