@@ -17,6 +17,11 @@ The checked-out repository is the template. It contains two managed sets:
 | QuickStark maintained packages | 12 core commands, 7 specialists, and 13 PS commands | Installed through each harness's package manager |
 | Approved contributor skills | 18 pinned personal or third-party Agent Skills | Installed once in `~/.agents/skills` |
 
+Before `skills:update` trusts that template, it reads the current
+`origin/main` commit with a non-mutating remote query and requires the checkout
+HEAD to match it exactly. The check does not fetch, pull, change refs, or touch
+installed skills.
+
 A directly installed GitHub skill joins the template only after a maintainer
 records its immutable source and digest in
 `config/personal-skills.manifest.json`. Once approved there, `skills:update`
@@ -48,9 +53,13 @@ Use `skills:update` for normal installation and updates.
 | Direct `codex plugin`, `claude plugin`, or `pi install` | Yes | No | QuickStark-only manual installation |
 | `personal-skills:*` | No | Yes | Inventory, curation, or contributor-only repair |
 
-`skills:update` performs its own preflight and final verification. `skills:plan`
-and `skills:verify` are read-only. `skills:sync` remains available for the older
-review-then-authorize workflow.
+`skills:update` performs its own origin freshness preflight and final
+verification. A clean stale `main` checkout receives an exact
+`git pull --ff-only origin main` recovery command. A dirty, detached, or
+non-main checkout receives exact commands for an isolated detached worktree so
+local changes remain untouched. `skills:plan` and `skills:verify` are
+read-only. `skills:sync` remains available for the older review-then-authorize
+workflow.
 
 ## First-time setup
 
@@ -101,6 +110,11 @@ The plan is optional; it previews the exact work without changing the machine.
 Use the same `--agent` selections for plan and update. A Git pull updates
 the Pi local-package contents in place. Codex and Claude Code still use their
 package managers so their installed package caches can be refreshed safely.
+
+If another commit reaches GitHub after the pull, `skills:update` stops before
+planning or mutation and prints the exact safe recovery command. Rerun the
+update from the refreshed checkout or from the isolated worktree named in that
+message.
 
 Update installs missing approved content, transactionally replaces clean older
 approved GitHub skills, updates approved lock metadata, and creates requested
@@ -156,6 +170,15 @@ machine. For Codex, update also verifies
 that the `quickstark` marketplace points at the current checkout. It repoints a
 stale local registration and refreshes all three QuickStark packages before
 verification, so manual plugin removal is not required.
+
+### Checkout HEAD does not match origin/main
+
+The updater queried GitHub without changing the local repository and found that
+the selected template is not the current `origin/main`. Run the exact command
+printed in the error. It offers a fast-forward pull only for a clean `main`
+checkout. For dirty, detached, or non-main checkouts it creates a separate
+detached worktree at the observed remote commit, preserving the current
+checkout and its local changes.
 
 ### Verification reports a conflict
 

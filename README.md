@@ -76,11 +76,15 @@ npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
 npm run skills:update -- --agent codex --agent claude-code --agent pi
 ```
 
-The unified command uses the checked-out repository version as "latest",
-validates all nine generated package manifests, and verifies the installed
-package versions reported by each selected manager. Pi receives the three
-maintained QuickStark package projections through its native local-package
-manager; the 18 approved contributor skills remain portable Agent Skills.
+The unified command first verifies, without fetching or changing local refs,
+that checkout HEAD exactly matches GitHub's current `origin/main`. It then uses
+the checked-out repository version as "latest", validates all nine generated
+package manifests, and verifies the installed package versions reported by each
+selected manager. A stale clean `main` checkout receives an exact fast-forward
+pull command; other stale checkouts receive an isolated-worktree command so
+local changes are preserved. Pi receives the three maintained QuickStark
+package projections through its native local-package manager; the 18 approved
+contributor skills remain portable Agent Skills.
 
 ## Core commands
 

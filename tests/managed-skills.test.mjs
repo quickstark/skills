@@ -7,6 +7,7 @@ import test from "node:test";
 import {
   buildManagedSkillsPlan,
   executeManagedSkills,
+  verifyOriginMainFreshness,
   verifyManagedPackageInventory,
   validateMaintainedPackages,
 } from "../scripts/managed-skills.mjs";
@@ -23,6 +24,95 @@ async function temporaryHome() {
   await mkdir(join(home, ".claude"), { recursive: true });
   return home;
 }
+
+function gitFreshnessFixture({
+  head = "a".repeat(40),
+  remote = head,
+  branch = "main",
+  status = "",
+} = {}) {
+  const calls = [];
+  const responses = new Map([
+    [["rev-parse", "HEAD"].join("\0"), { stdout: `${head}\n` }],
+    [["symbolic-ref", "--quiet", "--short", "HEAD"].join("\0"), { stdout: `${branch}\n` }],
+    [["status", "--porcelain", "--untracked-files=all"].join("\0"), { stdout: status }],
+    [["ls-remote", "--exit-code", "origin", "refs/heads/main"].join("\0"), { stdout: `${remote}\trefs/heads/main\n` }],
+  ]);
+  return {
+    calls,
+    runGit: async (arguments_) => {
+      calls.push(arguments_);
+      const response = responses.get(arguments_.join("\0"));
+      if (!response) throw new Error(`Unexpected Git command: ${arguments_.join(" ")}`);
+      return response;
+    },
+  };
+}
+
+test("skills:update freshness accepts an exact origin/main checkout without mutation", async () => {
+  const fixture = gitFreshnessFixture();
+  const result = await verifyOriginMainFreshness({ repositoryRoot: "/workspace/skills", runGit: fixture.runGit });
+  assert.deepEqual(result, { head: "a".repeat(40), originMain: "a".repeat(40) });
+  assert.deepEqual(fixture.calls, [
+    ["rev-parse", "HEAD"],
+    ["symbolic-ref", "--quiet", "--short", "HEAD"],
+    ["status", "--porcelain", "--untracked-files=all"],
+    ["ls-remote", "--exit-code", "origin", "refs/heads/main"],
+  ]);
+});
+
+test("skills:update freshness rejects unsupported agents before querying Git", async () => {
+  const fixture = gitFreshnessFixture();
+  await assert.rejects(
+    verifyOriginMainFreshness({ repositoryRoot: "/workspace/skills", agents: ["unsafe;command"], runGit: fixture.runGit }),
+    /Unsupported managed skill target/,
+  );
+  assert.deepEqual(fixture.calls, []);
+});
+
+test("skills:update freshness gives an exact fast-forward command for a clean stale main", async () => {
+  const fixture = gitFreshnessFixture({ head: "a".repeat(40), remote: "b".repeat(40) });
+  await assert.rejects(
+    verifyOriginMainFreshness({ repositoryRoot: "/workspace/skills", runGit: fixture.runGit }),
+    /git -C '\/workspace\/skills' pull --ff-only origin main/,
+  );
+});
+
+test("skills:update freshness gives an isolated worktree command for dirty or non-main checkouts", async () => {
+  for (const state of [
+    { branch: "main", status: " M README.md\n" },
+    { branch: "feature", status: "" },
+  ]) {
+    const fixture = gitFreshnessFixture({ head: "a".repeat(40), remote: "b".repeat(40), ...state });
+    await assert.rejects(
+      verifyOriginMainFreshness({ repositoryRoot: "/workspace/skills", runGit: fixture.runGit }),
+      (error) => {
+        assert.doesNotMatch(error.message, /pull --ff-only/);
+        assert.match(error.message, /git -C '\/workspace\/skills' fetch origin main/);
+        assert.match(error.message, /git -C '\/workspace\/skills' worktree add --detach '\/workspace\/skills-origin-main-bbbbbbbbbbbb' FETCH_HEAD/);
+        return true;
+      },
+    );
+  }
+});
+
+test("skills:update freshness fails before plan or manager mutation", async () => {
+  let personalActions = 0;
+  let managerActions = 0;
+  await assert.rejects(
+    executeManagedSkills({
+      action: "update",
+      repositoryRoot,
+      homeDirectory: await temporaryHome(),
+      verifyRepositoryFreshness: async () => { throw new Error("checkout is stale"); },
+      runPersonalAction: async () => { personalActions += 1; },
+      runManagerCommand: async () => { managerActions += 1; },
+    }),
+    /checkout is stale/,
+  );
+  assert.equal(personalActions, 0);
+  assert.equal(managerActions, 0);
+});
 
 test("managed skills plan combines maintained package plan and approved resources without mutation", async () => {
   const homeDirectory = await temporaryHome();
@@ -86,6 +176,7 @@ test("managed skills update is the explicitly authorized one-command convergence
     repositoryRoot,
     homeDirectory: await temporaryHome(),
     agents: ["pi"],
+    verifyRepositoryFreshness: async () => {},
     runManagerCommand: async (_command, arguments_) => {
       installed.add(arguments_.at(-1).split("/").at(-1));
     },

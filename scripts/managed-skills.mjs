@@ -19,6 +19,76 @@ function assertCondition(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function quoteShellPath(path) {
+  return `'${path.replaceAll("'", `'\\''`)}'`;
+}
+
+async function defaultGitCommand(arguments_, { repositoryRoot }) {
+  try {
+    return await runFile("git", ["-C", repositoryRoot, ...arguments_], {
+      encoding: "utf8",
+      maxBuffer: 1024 * 1024,
+      timeout: 30_000,
+      env: { ...process.env, GIT_TERMINAL_PROMPT: "0" },
+    });
+  } catch (error) {
+    const detail = String(error.stderr || error.stdout || error.message).trim().slice(0, 1_600);
+    const failure = new Error(`git ${arguments_[0] ?? ""} failed: ${detail}`);
+    failure.exitCode = error.code;
+    throw failure;
+  }
+}
+
+export async function verifyOriginMainFreshness({
+  repositoryRoot = defaultRepositoryRoot,
+  agents = ["codex"],
+  runGit = defaultGitCommand,
+} = {}) {
+  assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
+  for (const agent of agents) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}.`);
+  let headResult;
+  let branchResult;
+  let statusResult;
+  let remoteResult;
+  try {
+    headResult = await runGit(["rev-parse", "HEAD"], { repositoryRoot });
+    branchResult = await runGit(["symbolic-ref", "--quiet", "--short", "HEAD"], { repositoryRoot })
+      .catch((error) => error.exitCode === 1 ? { stdout: "" } : Promise.reject(error));
+    statusResult = await runGit(["status", "--porcelain", "--untracked-files=all"], { repositoryRoot });
+    remoteResult = await runGit(["ls-remote", "--exit-code", "origin", "refs/heads/main"], { repositoryRoot });
+  } catch (error) {
+    throw new Error(`Unable to verify origin/main freshness before skills:update: ${error.message}`);
+  }
+
+  const head = headResult.stdout.trim();
+  const branch = branchResult.stdout.trim();
+  const dirty = statusResult.stdout.trim().length > 0;
+  const originMain = remoteResult.stdout.trim().split(/\s+/)[0] ?? "";
+  assertCondition(/^[0-9a-f]{40}$/i.test(head), "Unable to verify origin/main freshness before skills:update: local HEAD is invalid.");
+  assertCondition(/^[0-9a-f]{40}$/i.test(originMain), "Unable to verify origin/main freshness before skills:update: origin/main is unavailable.");
+  if (head === originMain) return { head, originMain };
+
+  const root = quoteShellPath(repositoryRoot);
+  const updateFlags = agents.map((agent) => `--agent ${agent}`).join(" ");
+  const rerun = `npm run skills:update -- ${updateFlags}`;
+  if (branch === "main" && !dirty) {
+    throw new Error([
+      `Checkout HEAD ${head} does not match origin/main ${originMain}.`,
+      "Refresh this clean main checkout, then rerun skills:update:",
+      `git -C ${root} pull --ff-only origin main`,
+      rerun,
+    ].join("\n"));
+  }
+
+  const worktree = join(dirname(repositoryRoot), `${basename(repositoryRoot)}-origin-main-${originMain.slice(0, 12)}`);
+  throw new Error([
+    `Checkout HEAD ${head} does not match origin/main ${originMain}.`,
+    "Preserve this checkout and run skills:update from an isolated clean worktree:",
+    `git -C ${root} fetch origin main && git -C ${root} worktree add --detach ${quoteShellPath(worktree)} FETCH_HEAD`,
+    `cd ${quoteShellPath(worktree)} && ${rerun}`,
+  ].join("\n"));
+}
+
 async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
 }
@@ -341,8 +411,10 @@ export async function executeManagedSkills({
   inspectManagedPackages = defaultInspectManagedPackages,
   runPersonalAction = defaultPersonalAction,
   onManagerAction = () => {},
+  verifyRepositoryFreshness = verifyOriginMainFreshness,
 } = {}) {
   assertCondition(["plan", "sync", "update", "verify"].includes(action), "Managed skills action must be plan, sync, update, or verify.");
+  if (action === "update") await verifyRepositoryFreshness({ repositoryRoot, agents });
   const plan = await buildManagedSkillsPlan({ repositoryRoot, homeDirectory, agents, manifestPath });
   if (action === "plan") return { action, ...plan };
   if (action === "verify") {
