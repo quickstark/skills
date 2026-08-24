@@ -29,4 +29,6 @@ A completed release is terminal and emits no next prompts. Public skills are nev
 
 The release command has no catalog-approved continuation.
 
+The result links every verified governing specification and previews the remaining build from those specs or their tracker. If no governing specification can be located, it says so instead of inventing a link or backlog.
+
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

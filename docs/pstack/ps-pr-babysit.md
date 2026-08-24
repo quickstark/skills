@@ -29,4 +29,6 @@ Every result emits three ranked copy-ready continuations: one preferred prompt a
 
 The default ranked continuations are `/qs-git-merge`, `/qs-code-debug`, `/qs-flow-handoff`. Failed results instead rank `/qs-code-debug`, `/qs-review-code`, `/qs-flow-handoff`.
 
+The result links every verified governing specification and previews the remaining build from those specs or their tracker. If no governing specification can be located, it says so instead of inventing a link or backlog.
+
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

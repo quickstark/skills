@@ -12,6 +12,18 @@ function freezeRoutes(routes) {
   return Object.freeze(routes.map((route) => Object.freeze({ ...route })));
 }
 
+export const SPEC_PROGRESS_COMMAND_NAMES = Object.freeze([
+  "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
+  "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
+  "qs-flow-triage", "qs-flow-handoff", "qs-plan-research", "qs-design-prototype",
+  "qs-code-document", "qs-test-author", "qs-test-verify", "qs-skill-write",
+  "ps-blast-radius", "ps-runtime-forensics", "ps-trace-forensics",
+  "ps-create-verification-skill", "ps-maintain-verification-skill",
+  "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit",
+  "ps-worktree-cleanup",
+]);
+const SPEC_PROGRESS_COMMAND_NAME_SET = new Set(SPEC_PROGRESS_COMMAND_NAMES);
+
 const PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND = Object.freeze({
   "qs-plan-spec": "build-review-test-merge",
   "qs-code-build": "review-test-merge",
@@ -33,6 +45,9 @@ function defineQsCommand(command) {
     codexPlugin: collectionId,
     codexLiteral: `$${collectionId}:${command.name}`,
     claudeLiteral: `/${command.name}`,
+    resultContext: Object.freeze({
+      specProgress: SPEC_PROGRESS_COMMAND_NAME_SET.has(command.name),
+    }),
     continuation: Object.freeze({
       ...command.continuation,
       normal: freezeRoutes(routes.filter((route) => route.availability !== "failure")),
@@ -52,6 +67,9 @@ function definePsCommand(command) {
     collectionId: PS_COLLECTION.packageName,
     codexLiteral: `$${PS_COLLECTION.codexPlugin}:${command.name}`,
     claudeLiteral: `/${command.name}`,
+    resultContext: Object.freeze({
+      specProgress: SPEC_PROGRESS_COMMAND_NAME_SET.has(command.name),
+    }),
     continuation: Object.freeze({
       ...command.continuation,
       ...(PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND[command.name]
@@ -272,6 +290,9 @@ export function validateSkillCollectionRegistryModel(model) {
     if (command.codexLiteral !== `$${command.codexPlugin}:${command.name}`
       || command.claudeLiteral !== `/${command.name}`) {
       throw new Error(`The public command ${command.name} has invalid package literals.`);
+    }
+    if (typeof command.resultContext?.specProgress !== "boolean") {
+      throw new Error(`The public command ${command.name} must define its spec-progress result contract.`);
     }
     for (const routeKind of ["normal", "failure"]) {
       requireArray(

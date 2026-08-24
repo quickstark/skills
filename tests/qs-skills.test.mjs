@@ -64,7 +64,7 @@ test("direct-chat output is self-contained and concise across the complete comma
   for (const command of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(command);
     const lines = contract.split("\n").length;
-    assert.ok(lines <= 24, `${command.name} completion contract is ${lines} lines`);
+    assert.ok(lines <= (command.resultContext.specProgress ? 29 : 24), `${command.name} completion contract is ${lines} lines`);
     assert.match(contract, /Status: Complete \| Continuation required \| Input required \| Failed/);
     assert.match(contract, /Outcome: Concise verified result/);
     assert.match(contract, /lead with the outcome/i);

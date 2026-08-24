@@ -24,6 +24,8 @@ This invocation has one root skill: `/qs-plan-roadmap`. Internal capabilities an
 
 Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
 
+Resolve governing specifications from explicit input, repository documentation, or a verified tracker. Every result includes `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Include `Remaining build:` with a known total when available and a preview of up to three highest-priority pending requirements or tickets. Write `None identified against linked specs` only after verifying completion against those specs.
+
 Use `complete`, `continuation-required`, `input-required`, or `failed`. Emit exactly three ranked copy-ready prompts: one preferred route and two alternatives. Failed required checks or actionable P0/P1 findings prohibit `complete`.
 
 Default routes: `/qs-plan-spec`, `/qs-plan-clarify`, `/qs-flow-handoff`. Failure routes: `/qs-plan-spec`, `/qs-plan-clarify`, `/qs-flow-handoff`. Tailor every prompt to the completed work.
@@ -35,6 +37,8 @@ Brief output contains status, outcome, up to three important findings or decisio
 Status: Complete | Continuation required | Input required | Failed
 Skills used: /qs-plan-roadmap
 Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Remaining build: concise verified preview
 Preferred next prompt: one copy-ready prompt in a fenced `text` block
 Alternative next prompts: two copy-ready prompts, each in its own fenced `text` block
 

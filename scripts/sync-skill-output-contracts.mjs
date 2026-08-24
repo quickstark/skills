@@ -26,6 +26,7 @@ export function renderSkillOutputContract(skill) {
   const codexLiterals = allRoutes.map((item) => codexPublicSkillLiteral(item.name));
   const piLiterals = allRoutes.map((item) => piPublicSkillLiteral(item.name));
   const preferredCompositeWorkflow = registered.continuation.preferredCompositeWorkflow;
+  const reportsSpecProgress = registered.resultContext?.specProgress === true;
   return [
     SKILL_OUTPUT_HEADING,
     "",
@@ -33,6 +34,10 @@ export function renderSkillOutputContract(skill) {
     "",
     "Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.",
     "",
+    ...(reportsSpecProgress ? [
+      "Resolve governing specifications from explicit input, repository documentation, or a verified tracker. Every result includes `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Include `Remaining build:` with a known total when available and a preview of up to three highest-priority pending requirements or tickets. Write `None identified against linked specs` only after verifying completion against those specs.",
+      "",
+    ] : []),
     terminal
       ? "Use `complete`, `continuation-required`, `input-required`, or `failed`. This release command is terminal and emits no next prompts. Failed required checks or actionable P0/P1 findings prohibit `complete`."
       : "Use `complete`, `continuation-required`, `input-required`, or `failed`. Emit exactly three ranked copy-ready prompts: one preferred route and two alternatives. Failed required checks or actionable P0/P1 findings prohibit `complete`.",
@@ -50,6 +55,10 @@ export function renderSkillOutputContract(skill) {
     "Status: Complete | Continuation required | Input required | Failed",
     `Skills used: /${skill.name}`,
     "Outcome: Concise verified result.",
+    ...(reportsSpecProgress ? [
+      "Specs: verified specification link(s) | Not located",
+      "Remaining build: concise verified preview",
+    ] : []),
     terminal
       ? "Next prompts: None — release is terminal."
       : "Preferred next prompt: one copy-ready prompt in a fenced `text` block",
@@ -68,6 +77,7 @@ export function renderDocumentationOutputContract(skill) {
   const continuations = routes.map((item) => item.name);
   const failureContinuations = failureRoutes.map((item) => item.name);
   const terminal = routes.length === 0 && failureRoutes.length === 0;
+  const reportsSpecProgress = registered.resultContext?.specProgress === true;
   return [
     DOCUMENTATION_OUTPUT_HEADING,
     "",
@@ -81,6 +91,10 @@ export function renderDocumentationOutputContract(skill) {
       ? "The release command has no catalog-approved continuation."
       : `The default ranked continuations are ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failed results instead rank ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}.`,
     "",
+    ...(reportsSpecProgress ? [
+      "The result links every verified governing specification and previews the remaining build from those specs or their tracker. If no governing specification can be located, it says so instead of inventing a link or backlog.",
+      "",
+    ] : []),
     "Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).",
   ].join("\n");
 }

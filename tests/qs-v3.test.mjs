@@ -18,6 +18,7 @@ import {
 } from "../scripts/qs-skill-catalog.mjs";
 import {
   PUBLIC_COMMANDS,
+  SPEC_PROGRESS_COMMAND_NAMES,
   codexPublicSkillLiteral,
 } from "../scripts/skill-collection-registry.mjs";
 import {
@@ -171,6 +172,39 @@ test("all 32 completion contracts present direct chat results and apply clear wr
     assert.match(contract, /Put each in its own fenced `text` block/i);
     for (const route of [...skill.continuation.normal, ...skill.continuation.failure]) {
       assert.match(contract, new RegExp(`\\${codexPublicSkillLiteral(route.name)}\\b`));
+    }
+  }
+});
+
+test("applicable engineering results link governing specs and preview remaining build work", () => {
+  const expected = [
+    "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
+    "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
+    "qs-flow-triage", "qs-flow-handoff", "qs-plan-research", "qs-design-prototype",
+    "qs-code-document", "qs-test-author", "qs-test-verify", "qs-skill-write",
+    "ps-blast-radius", "ps-runtime-forensics", "ps-trace-forensics",
+    "ps-create-verification-skill", "ps-maintain-verification-skill",
+    "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit",
+    "ps-worktree-cleanup",
+  ];
+  assert.deepEqual(SPEC_PROGRESS_COMMAND_NAMES, expected);
+
+  for (const command of PUBLIC_COMMANDS) {
+    const contract = renderSkillOutputContract(command);
+    const documentation = renderDocumentationOutputContract(command);
+    if (expected.includes(command.name)) {
+      assert.equal(command.resultContext.specProgress, true, command.name);
+      assert.match(contract, /^Specs: /m, command.name);
+      assert.match(contract, /^Remaining build: /m, command.name);
+      assert.match(contract, /clickable Markdown links/i, command.name);
+      assert.match(contract, /Not located/i, command.name);
+      assert.match(contract, /highest-priority pending/i, command.name);
+      assert.match(documentation, /governing specification/i, command.name);
+      assert.match(documentation, /remaining build/i, command.name);
+    } else {
+      assert.equal(command.resultContext.specProgress, false, command.name);
+      assert.doesNotMatch(contract, /^Specs: /m, command.name);
+      assert.doesNotMatch(contract, /^Remaining build: /m, command.name);
     }
   }
 });

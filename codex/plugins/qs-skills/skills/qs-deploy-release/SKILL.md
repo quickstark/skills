@@ -26,6 +26,8 @@ This invocation has one root skill: `/qs-deploy-release`. Internal capabilities 
 
 Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
 
+Resolve governing specifications from explicit input, repository documentation, or a verified tracker. Every result includes `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Include `Remaining build:` with a known total when available and a preview of up to three highest-priority pending requirements or tickets. Write `None identified against linked specs` only after verifying completion against those specs.
+
 Use `complete`, `continuation-required`, `input-required`, or `failed`. This release command is terminal and emits no next prompts. Failed required checks or actionable P0/P1 findings prohibit `complete`.
 
 Do not invent a follow-on workflow after release. State any release failure in this result.
@@ -37,6 +39,8 @@ Brief output contains status, outcome, up to three important findings or decisio
 Status: Complete | Continuation required | Input required | Failed
 Skills used: /qs-deploy-release
 Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Remaining build: concise verified preview
 Next prompts: None — release is terminal.
 
 Never add a speculative prompt merely to keep the workflow moving.

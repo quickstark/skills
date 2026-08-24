@@ -49,6 +49,23 @@ Outcome: <concise verified result>
 
 Omit empty sections and routine successful detail. A brief result shows no more than three important findings or decisions. A full result may add supporting evidence but must preserve the same outcome and prompt set.
 
+## Specifications and remaining build
+
+Engineering workflows that plan, implement, diagnose, review, test, integrate,
+release, or hand off tracked work add two fields to every result:
+
+- `Specs:` contains clickable Markdown links to the verified governing
+  specifications found in explicit input, repository documentation, or a
+  verified tracker. When none can be located, it says `Not located`; it never
+  invents a link.
+- `Remaining build:` gives a concise preview of up to three highest-priority
+  pending requirements or tickets and includes a known total when available.
+  It says `None identified against linked specs` only after verifying that
+  conclusion against the linked specifications.
+
+These fields summarize verified project state. They do not create a new spec,
+expand mutation authority, or turn unrelated local notes into backlog scope.
+
 ## Continuation format
 
 Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language.
