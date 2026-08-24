@@ -375,7 +375,7 @@ export async function execute(options, { write = writeOutput } = {}) {
   }
 
   assertCondition(!plan.conflicts.length, "Refusing to synchronize while reconciliation conflicts exist.");
-  const needsInstall = plan.operations.some((operation) => operation.kind === "install-agent-skill");
+  const needsInstall = plan.operations.some((operation) => ["install-agent-skill", "update-agent-skill"].includes(operation.kind));
   const staging = await mkdtemp(join(tmpdir(), "quickstark-personal-sync-"));
   const sourceCache = new Map();
   try {
@@ -401,7 +401,16 @@ export async function execute(options, { write = writeOutput } = {}) {
     });
     const final = await buildReconciliationPlan({ manifest, homeDirectory: options.homeDirectory, targets: options.agents });
     assertCondition(!final.operations.length && !final.conflicts.length, "Post-synchronization verification failed.");
-    const output = { ...summary, action: "sync", createdCount: result.created.length, externalActions: final.externalActions, externalActionCount: final.externalActions.length };
+    const output = {
+      ...summary,
+      action: "sync",
+      createdCount: result.created.length,
+      updatedCount: result.updated.length,
+      completedOperations: result.completedOperations,
+      cleanupErrors: result.cleanupErrors,
+      externalActions: final.externalActions,
+      externalActionCount: final.externalActions.length,
+    };
     write(output, options.json);
     return output;
   } finally {

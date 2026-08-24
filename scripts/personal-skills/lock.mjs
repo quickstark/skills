@@ -10,6 +10,7 @@ export function desiredLockFields(resource) {
     ref: resource.source.revision,
     skillPath: resource.source.upstreamPath,
     skillFolderHash: resource.source.upstreamTreeHash,
+    contentSha256: resource.source.contentSha256,
     ...(resource.source.pluginName ? { pluginName: resource.source.pluginName } : {}),
   };
 }

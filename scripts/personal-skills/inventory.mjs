@@ -71,6 +71,7 @@ function immutableLockProvenance(entry) {
     revision: entry.ref,
     upstreamPath: entry.skillPath,
     upstreamTreeHash: entry.skillFolderHash,
+    ...(/^[a-f0-9]{64}$/.test(entry.contentSha256 ?? "") ? { contentSha256: entry.contentSha256 } : {}),
   };
 }
 
@@ -199,7 +200,19 @@ async function scanSkillSurface({
     if (surface === "agent-skills") {
       if (desired) {
         if (inspection.contentSha256 !== desired.source.contentSha256) {
-          records.push({ ...common, classification: "conflict", drift: "content", reason: "Installed content differs from desired state." });
+          const provenance = immutableLockProvenance(lockSkills[entry.name]);
+          const matchesPreviousManagedContent = provenance
+            && (provenance.contentSha256 === inspection.contentSha256
+              || provenance.upstreamTreeHash === inspection.gitTreeHash);
+          records.push(matchesPreviousManagedContent
+            ? {
+                ...common,
+                classification: "outdated-managed",
+                drift: "version",
+                provenance,
+                reason: "Installed content matches an older managed GitHub revision.",
+              }
+            : { ...common, classification: "conflict", drift: "content", reason: "Installed content differs from desired state and its prior managed revision." });
         } else if (!lockEntryMatches(lockSkills[entry.name], desired)) {
           records.push({ ...common, classification: "conflict", drift: "metadata", reason: "Installed lock metadata differs from desired state." });
         } else {

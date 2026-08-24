@@ -16,20 +16,23 @@ payloads into Git.
 The checked-in manifest is desired state. A machine inventory is discovery
 evidence only and never grants approval by itself.
 
-## Unified deployment
+## One-way template update
 
-The top-level control plane plans and applies both ownership layers without
-mixing them:
+The repository is the template. Every Mac or Linux machine inventories itself,
+converges to that checked-out template, and verifies the result. Machines never
+copy skills from one another.
+
+The normal end-user command applies both ownership layers without mixing them:
 
 ```bash
 git pull --ff-only origin main
-npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
-npm run skills:sync -- --authorize --agent codex --agent claude-code --agent pi
-npm run skills:verify -- --agent codex --agent claude-code --agent pi
+npm run skills:update -- --agent codex --agent claude-code --agent pi
 ```
 
-`skills:plan` is always read-only. `skills:sync` refuses to run without the
-literal `--authorize` flag. It validates the current version and identity of
+`skills:update` is the explicit mutation command; it performs preflight and
+post-update verification in one run. `skills:plan` remains an optional read-only
+preview. The compatibility `skills:sync` command still requires the literal
+`--authorize` flag. The updater validates the current version and identity of
 the three Claude, three Codex, and three Pi package manifests, completes contributor-skill
 preflight, inspects installed package versions, and runs exact argument-vector
 package-manager commands without a shell. Current packages are skipped; Claude
@@ -41,9 +44,16 @@ mutation does not begin.
 Package managers remain responsible for their own installed state; the script
 does not attempt a destructive uninstall rollback.
 
+Approved GitHub Agent Skills are different: the reconciler installs missing
+resources and transactionally replaces an older version only when its current
+bytes match the previous managed lock identity. It restores the prior directory
+and exact lock contents if the transaction fails. Edited or unowned content
+remains a conflict.
+
 The selected checkout is the source of the maintained package version. Pull
-the desired commit first, inspect the JSON plan, and only then authorize sync.
-This avoids using a mutable remote "latest" lookup during reconciliation.
+the desired commit before running update. An optional JSON plan previews the
+same desired state. This avoids using a mutable remote "latest" lookup during
+reconciliation.
 
 ## Harness placement
 
@@ -162,14 +172,16 @@ npm run personal-skills:verify -- --json --agent codex --agent pi
 ```
 
 Add `--agent claude-code` only on a machine where `~/.claude` already exists.
-Synchronization installs missing portable content once in `~/.agents/skills`,
-updates only approved lock metadata, and creates only missing Claude links.
-It refuses modified content, occupied destinations, unrelated links, effective
-name collisions, stale state, symlink traversal, special files, and oversized
-trees. Preflight considers only selected harnesses. Mutation runs as one local
-transaction: canonical paths and the original lock file are journaled before an
-installer call, post-sync verification runs before completion, and a failed run
-restores current-run paths, empty roots, links, and exact prior lock contents.
+Synchronization installs missing portable content in `~/.agents/skills`,
+replaces clean older managed versions, updates approved lock metadata, and
+creates missing Claude links. It refuses modified content, occupied
+destinations, unrelated links, effective name collisions, stale state, symlink
+traversal, special files, and oversized trees. Preflight considers only selected
+harnesses. Mutation runs as one local transaction: canonical paths, older skill
+directories, and the original lock file are journaled before an installer call,
+post-sync verification runs before completion, and a failed run restores
+current-run paths, prior managed versions, empty roots, links, and exact prior
+lock contents.
 The error reports `rolled-back` only after complete compensation and
 `partial-reconciliation` when any restoration fails.
 
@@ -195,6 +207,7 @@ npm run personal-skills:adopt
 npm run personal-skills:plan
 npm run personal-skills:sync
 npm run personal-skills:verify
+npm run skills:update
 npm run skills:plan
 npm run skills:sync -- --authorize
 npm run skills:verify

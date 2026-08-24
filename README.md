@@ -13,11 +13,12 @@ for the pinned manifest of approved third-party skills. Installed global skill
 directories and plugin caches are machine projections; do not copy them back
 into Git.
 
-Use `npm run skills:plan` to inspect the complete maintained-package and
-approved-resource deployment, `npm run skills:sync -- --authorize` to execute
-that reviewed plan, and `npm run skills:verify` for the complete read-only
-gate. The lower-level `personal-skills:*` commands remain available for
-inventory, explicit adoption, and contributor-resource-only reconciliation.
+Use `npm run skills:update` to inspect, converge, and verify the complete
+maintained-package and approved-resource template on one machine. Optional
+`skills:plan` and `skills:verify` commands remain read-only; the compatibility
+`skills:sync -- --authorize` workflow remains available for a separately
+reviewed plan. The lower-level `personal-skills:*` commands remain available
+for inventory, explicit adoption, and contributor-resource-only reconciliation.
 Start with the [end-user installation and update guide](./docs/install-and-update-skills.md).
 Maintainers can use the deeper [central skill control plane](./docs/personal-skills.md).
 
@@ -72,8 +73,7 @@ operation, select only the harnesses installed on that machine:
 
 ```bash
 npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
-npm run skills:sync -- --authorize --agent codex --agent claude-code --agent pi
-npm run skills:verify -- --agent codex --agent claude-code --agent pi
+npm run skills:update -- --agent codex --agent claude-code --agent pi
 ```
 
 The unified command uses the checked-out repository version as "latest",

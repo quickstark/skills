@@ -40,6 +40,53 @@ function portableSkillName(contents, label) {
   return name;
 }
 
+function gitObjectHash(type, contents) {
+  return createHash("sha1")
+    .update(`${type} ${contents.length}\0`)
+    .update(contents)
+    .digest();
+}
+
+function portableGitTreeHash(files) {
+  const root = { directories: new Map(), files: new Map() };
+  for (const file of files) {
+    const segments = file.relativePath.split("/");
+    const name = segments.pop();
+    let directory = root;
+    for (const segment of segments) {
+      if (!directory.directories.has(segment)) {
+        directory.directories.set(segment, { directories: new Map(), files: new Map() });
+      }
+      directory = directory.directories.get(segment);
+    }
+    directory.files.set(name, file);
+  }
+
+  function hashDirectory(directory) {
+    const entries = [
+      ...[...directory.directories].map(([name, child]) => ({
+        name,
+        sortName: `${name}/`,
+        mode: "40000",
+        hash: hashDirectory(child),
+      })),
+      ...[...directory.files].map(([name, file]) => ({
+        name,
+        sortName: name,
+        mode: file.executable ? "100755" : "100644",
+        hash: gitObjectHash("blob", file.content),
+      })),
+    ].sort((first, second) => Buffer.compare(Buffer.from(first.sortName), Buffer.from(second.sortName)));
+    const contents = Buffer.concat(entries.flatMap((entry) => [
+      Buffer.from(`${entry.mode} ${entry.name}\0`),
+      entry.hash,
+    ]));
+    return gitObjectHash("tree", contents);
+  }
+
+  return hashDirectory(root).toString("hex");
+}
+
 export async function readPortableSkillName(root, limits = {}) {
   const maximum = normalizeLimits(limits).maximumSkillFileBytes;
   const path = join(root, "SKILL.md");
@@ -122,6 +169,7 @@ export async function inspectPortableDirectory(root, options = {}) {
         files.push({
           relativePath: relative(canonicalRoot, path).split("\\").join("/"),
           content: await readFile(path),
+          executable: Boolean(metadata.mode & 0o111),
         });
       }
     }
@@ -137,6 +185,7 @@ export async function inspectPortableDirectory(root, options = {}) {
     return {
       safe: true,
       contentSha256: digest.digest("hex"),
+      gitTreeHash: portableGitTreeHash(files),
       fileCount: files.length,
       byteCount: bytes,
     };
@@ -152,4 +201,10 @@ export async function calculatePortableDirectoryHash(root, options = {}) {
   const inspection = await inspectPortableDirectory(root, options);
   if (!inspection.safe) throw new Error(inspection.reason);
   return inspection.contentSha256;
+}
+
+export async function calculatePortableGitTreeHash(root, options = {}) {
+  const inspection = await inspectPortableDirectory(root, options);
+  if (!inspection.safe) throw new Error(inspection.reason);
+  return inspection.gitTreeHash;
 }

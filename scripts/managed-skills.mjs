@@ -186,6 +186,36 @@ function findInstalledPackage(inventory, name) {
   });
 }
 
+function findMarketplace(inventory, name) {
+  const marketplaces = Array.isArray(inventory?.marketplaces) ? inventory.marketplaces : [];
+  return marketplaces.find((marketplace) => marketplace?.name === name);
+}
+
+function marketplaceSource(marketplace) {
+  const source = marketplace?.marketplaceSource?.source ?? marketplace?.root;
+  return typeof source === "string" && source.length > 0 ? source : null;
+}
+
+function marketplaceMatchesLocalRoot(marketplace, expectedRoot) {
+  if (!marketplace) return false;
+  const sourceType = marketplace.marketplaceSource?.sourceType;
+  if (sourceType !== undefined && sourceType !== "local") return false;
+  return [marketplace.root, marketplaceSource(marketplace)]
+    .filter((value) => typeof value === "string")
+    .some((value) => resolve(value) === resolve(expectedRoot));
+}
+
+function verifyManagedMarketplace(agent, inventory, repositoryRoot) {
+  if (agent !== "codex" || !Array.isArray(inventory?.marketplaces)) return;
+  const expectedRoot = join(repositoryRoot, "codex");
+  const registration = findMarketplace(inventory, "quickstark");
+  const actualSource = marketplaceSource(registration) ?? "missing";
+  assertCondition(
+    marketplaceMatchesLocalRoot(registration, expectedRoot),
+    `Codex QuickStark marketplace is ${actualSource}; expected ${expectedRoot}.`,
+  );
+}
+
 export function verifyManagedPackageInventory(agent, inventory, packages) {
   const installed = installedPackageEntries(inventory);
   for (const package_ of packages) {
@@ -203,10 +233,8 @@ export function verifyManagedPackageInventory(agent, inventory, packages) {
 
 async function defaultInspectManagedPackages(agent, { homeDirectory }) {
   if (agent === "pi") throw new Error("Pi package inspection requires repository package context.");
-  const [command, arguments_] = agent === "codex"
-    ? ["codex", ["plugin", "list", "--json"]]
-    : ["claude", ["plugin", "list", "--json"]];
-  try {
+  const command = agent === "codex" ? "codex" : "claude";
+  const inspect = async (arguments_) => {
     const result = await runFile(command, arguments_, {
       encoding: "utf8",
       maxBuffer: 8 * 1024 * 1024,
@@ -219,6 +247,21 @@ async function defaultInspectManagedPackages(agent, { homeDirectory }) {
       },
     });
     return JSON.parse(result.stdout);
+  };
+  try {
+    if (agent === "codex") {
+      const [plugins, marketplaceInventory] = await Promise.all([
+        inspect(["plugin", "list", "--json"]),
+        inspect(["plugin", "marketplace", "list", "--json"]),
+      ]);
+      return {
+        ...plugins,
+        marketplaces: Array.isArray(marketplaceInventory?.marketplaces)
+          ? marketplaceInventory.marketplaces
+          : [],
+      };
+    }
+    return await inspect(["plugin", "list", "--json"]);
   } catch (error) {
     const detail = String(error.stderr || error.stdout || error.message).trim().slice(0, 1_600);
     throw new Error(`Unable to inspect ${agent} maintained packages: ${detail}`);
@@ -297,8 +340,9 @@ export async function executeManagedSkills({
   runManagerCommand = defaultManagerCommand,
   inspectManagedPackages = defaultInspectManagedPackages,
   runPersonalAction = defaultPersonalAction,
+  onManagerAction = () => {},
 } = {}) {
-  assertCondition(["plan", "sync", "verify"].includes(action), "Managed skills action must be plan, sync, or verify.");
+  assertCondition(["plan", "sync", "update", "verify"].includes(action), "Managed skills action must be plan, sync, update, or verify.");
   const plan = await buildManagedSkillsPlan({ repositoryRoot, homeDirectory, agents, manifestPath });
   if (action === "plan") return { action, ...plan };
   if (action === "verify") {
@@ -312,12 +356,13 @@ export async function executeManagedSkills({
     const installedPackageVerification = [];
     for (const agent of agents) {
       const inventory = await inspectPackages(agent, { homeDirectory, repositoryRoot, packages: plan.maintainedPackages }, inspectManagedPackages);
+      verifyManagedMarketplace(agent, inventory, repositoryRoot);
       installedPackageVerification.push(verifyManagedPackageInventory(agent, inventory, plan.maintainedPackages));
     }
     return { action, ...plan, personalVerification, installedPackageVerification };
   }
 
-  assertCondition(authorize, "Managed skill synchronization requires explicit --authorize after reviewing the plan.");
+  assertCondition(action === "update" || authorize, "Managed skill synchronization requires explicit --authorize after reviewing the plan.");
   assertCondition(plan.personalPlan.conflictCount === 0, "Refusing managed skill synchronization while contributor-skill conflicts exist.");
   const basePersonalOptions = {
     manifestPath,
@@ -335,11 +380,103 @@ export async function executeManagedSkills({
 
   let managerActionsCompleted = 0;
   let managerActionsAlreadySatisfied = 0;
+  const managerActionResults = [];
+  const recordManagerAction = (managerAction, status, operation, details = {}) => {
+    const result = {
+      agent: managerAction.agent,
+      kind: managerAction.kind,
+      ...(managerAction.package ? { package: managerAction.package, version: managerAction.version } : {}),
+      status,
+      operation,
+      ...details,
+    };
+    managerActionResults.push(result);
+    onManagerAction(result);
+  };
+  const refreshedMarketplaces = new Set();
   for (const managerAction of plan.managerActions) {
     const inventory = beforeManagerInventory.get(managerAction.agent);
+    if (managerAction.kind === "add-marketplace" && managerAction.agent === "codex") {
+      const expectedRoot = managerAction.arguments.at(-1);
+      const registration = findMarketplace(inventory, "quickstark");
+      if (marketplaceMatchesLocalRoot(registration, expectedRoot)) {
+        managerActionsAlreadySatisfied += 1;
+        recordManagerAction(managerAction, "already-satisfied", "marketplace-current");
+        continue;
+      }
+      const previousSource = marketplaceSource(registration);
+      if (registration && !previousSource) {
+        recordManagerAction(managerAction, "failed", "marketplace-repoint", { restoration: "unavailable" });
+        throw new Error("Cannot safely repoint the Codex QuickStark marketplace because its previous source is unavailable.");
+      }
+      if (registration) {
+        try {
+          await runManagerCommand("codex", ["plugin", "marketplace", "remove", "quickstark"], { homeDirectory });
+        } catch (error) {
+          let afterFailure;
+          try {
+            afterFailure = await inspectPackages(
+              "codex",
+              { homeDirectory, repositoryRoot, packages: plan.maintainedPackages },
+              inspectManagedPackages,
+            );
+          } catch (inspectionError) {
+            recordManagerAction(managerAction, "failed", "marketplace-removal", { restoration: "state-unknown" });
+            throw new Error(`${error.message} Unable to verify the previous marketplace after the failed removal: ${inspectionError.message}`);
+          }
+          const remaining = findMarketplace(afterFailure, "quickstark");
+          if (marketplaceMatchesLocalRoot(remaining, previousSource)) {
+            recordManagerAction(managerAction, "failed", "marketplace-removal", { restoration: "not-required" });
+            throw error;
+          }
+          if (remaining) {
+            recordManagerAction(managerAction, "failed", "marketplace-removal", { restoration: "state-unknown" });
+            throw new Error(`${error.message} QuickStark marketplace state changed unexpectedly after the failed removal.`);
+          }
+          try {
+            await runManagerCommand("codex", ["plugin", "marketplace", "add", previousSource], { homeDirectory });
+          } catch (restoreError) {
+            recordManagerAction(managerAction, "failed", "marketplace-removal", { restoration: "failed" });
+            throw new Error(`${error.message} The previous QuickStark marketplace could not be restored: ${restoreError.message}`);
+          }
+          recordManagerAction(managerAction, "failed", "marketplace-removal", { restoration: "completed" });
+          throw new Error(`${error.message} The previous QuickStark marketplace was restored.`);
+        }
+      }
+      try {
+        await runManagerCommand(managerAction.command, managerAction.arguments, { homeDirectory });
+        managerActionsCompleted += 1;
+        refreshedMarketplaces.add(managerAction.agent);
+        recordManagerAction(
+          managerAction,
+          "completed",
+          registration ? "marketplace-repointed" : "marketplace-registered",
+        );
+      } catch (error) {
+        if (registration && previousSource) {
+          try {
+            await runManagerCommand("codex", ["plugin", "marketplace", "add", previousSource], { homeDirectory });
+          } catch (restoreError) {
+            recordManagerAction(managerAction, "failed", "marketplace-repoint", { restoration: "failed" });
+            throw new Error(`${error.message} The previous QuickStark marketplace could not be restored: ${restoreError.message}`);
+          }
+          recordManagerAction(managerAction, "failed", "marketplace-repoint", { restoration: "completed" });
+          throw new Error(`${error.message} The previous QuickStark marketplace was restored.`);
+        }
+        const alreadyRegistered = /already (?:exists|added|configured|registered)|duplicate/i.test(error.message);
+        if (!alreadyRegistered) {
+          recordManagerAction(managerAction, "failed", "marketplace-registration");
+          throw error;
+        }
+        managerActionsAlreadySatisfied += 1;
+        recordManagerAction(managerAction, "already-satisfied", "marketplace-already-registered");
+      }
+      continue;
+    }
     if (managerAction.kind === "add-marketplace"
       && plan.maintainedPackages.some((package_) => findInstalledPackage(inventory, package_.name))) {
       managerActionsAlreadySatisfied += 1;
+      recordManagerAction(managerAction, "already-satisfied", "marketplace-current");
       continue;
     }
     const installed = managerAction.package
@@ -348,8 +485,10 @@ export async function executeManagedSkills({
     if (installed
       && installed.installed !== false
       && installed.enabled !== false
-      && installed.version === managerAction.version) {
+      && installed.version === managerAction.version
+      && !refreshedMarketplaces.has(managerAction.agent)) {
       managerActionsAlreadySatisfied += 1;
+      recordManagerAction(managerAction, "already-satisfied", "package-current");
       continue;
     }
     const arguments_ = managerAction.agent === "claude-code" && installed
@@ -358,16 +497,32 @@ export async function executeManagedSkills({
     try {
       await runManagerCommand(managerAction.command, arguments_, { homeDirectory });
       managerActionsCompleted += 1;
+      recordManagerAction(
+        managerAction,
+        "completed",
+        installed
+          ? (refreshedMarketplaces.has(managerAction.agent) ? "package-refreshed" : "package-updated")
+          : (managerAction.kind === "add-marketplace" ? "marketplace-registered" : "package-installed"),
+      );
     } catch (error) {
       const alreadyRegistered = managerAction.kind === "add-marketplace"
         && /already (?:exists|added|configured|registered)|duplicate/i.test(error.message);
-      if (!alreadyRegistered) throw error;
+      if (!alreadyRegistered) {
+        recordManagerAction(
+          managerAction,
+          "failed",
+          managerAction.kind === "add-marketplace" ? "marketplace-registration" : (installed ? "package-update" : "package-installation"),
+        );
+        throw error;
+      }
       managerActionsAlreadySatisfied += 1;
+      recordManagerAction(managerAction, "already-satisfied", "marketplace-already-registered");
     }
   }
   const installedPackageVerification = [];
   for (const agent of agents) {
     const inventory = await inspectPackages(agent, { homeDirectory, repositoryRoot, packages: plan.maintainedPackages }, inspectManagedPackages);
+    verifyManagedMarketplace(agent, inventory, repositoryRoot);
     installedPackageVerification.push(verifyManagedPackageInventory(agent, inventory, plan.maintainedPackages));
   }
   const personalSync = await runPersonalAction({ ...basePersonalOptions, action: "sync" });
@@ -378,6 +533,7 @@ export async function executeManagedSkills({
     repositoryVersion: plan.repositoryVersion,
     managerActionsCompleted,
     managerActionsAlreadySatisfied,
+    managerActionResults,
     installedPackageVerification,
     personalSync,
     personalVerification,
@@ -405,12 +561,34 @@ function parseArguments(arguments_) {
 
 const invokedDirectly = process.argv[1] !== undefined && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
 if (invokedDirectly) {
+  let options;
+  const managerActionResults = [];
   try {
-    const options = parseArguments(process.argv.slice(2));
-    const result = await executeManagedSkills(options);
+    options = parseArguments(process.argv.slice(2));
+    const result = await executeManagedSkills({
+      ...options,
+      onManagerAction: (result) => managerActionResults.push(result),
+    });
     process.stdout.write(`${options.json ? JSON.stringify(result) : JSON.stringify(result, null, 2)}\n`);
   } catch (error) {
-    process.stderr.write(`Managed skills failed: ${error.message}\n`);
+    if (options?.json) {
+      process.stderr.write(`${JSON.stringify({
+        action: options.action,
+        status: "failed",
+        error: error.message,
+        managerActionResults,
+      })}\n`);
+    } else {
+      if (managerActionResults.length > 0) {
+        process.stderr.write("Package-manager results before failure:\n");
+        for (const result of managerActionResults) {
+          const subject = result.package ?? "marketplace";
+          const restoration = result.restoration ? `; restoration ${result.restoration}` : "";
+          process.stderr.write(`- ${result.agent} ${subject}: ${result.status} (${result.operation}${restoration})\n`);
+        }
+      }
+      process.stderr.write(`Managed skills failed: ${error.message}\n`);
+    }
     process.exitCode = 1;
   }
 }

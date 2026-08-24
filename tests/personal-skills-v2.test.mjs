@@ -6,6 +6,7 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  readdir,
   rm,
   symlink,
   writeFile,
@@ -24,6 +25,7 @@ import {
 } from "../scripts/personal-skills/manifest.mjs";
 import {
   calculatePortableDirectoryHash,
+  calculatePortableGitTreeHash,
   inspectPortableDirectory,
 } from "../scripts/personal-skills/filesystem.mjs";
 import { inventoryMachine } from "../scripts/personal-skills/inventory.mjs";
@@ -120,6 +122,7 @@ async function writeSkill(path, name, body = name) {
 async function makeManagedSkill(root, name = "managed") {
   const path = join(root, ".agents", "skills", name);
   await writeSkill(path, name);
+  const hash = await calculatePortableDirectoryHash(path);
   await mkdir(join(root, ".agents"), { recursive: true });
   await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify({ version: 3, skills: {
     [name]: {
@@ -129,11 +132,12 @@ async function makeManagedSkill(root, name = "managed") {
       ref: "a".repeat(40),
       skillPath: `skills/${name}/SKILL.md`,
       skillFolderHash: "b".repeat(40),
+      contentSha256: hash,
     },
   } }));
   return {
     path,
-    hash: await calculatePortableDirectoryHash(path),
+    hash,
   };
 }
 
@@ -244,6 +248,16 @@ test("manifest migration preserves every v1 skill and immutable source field", a
   }
 });
 
+test("portable Git tree hashing matches the immutable upstream tree identity", async () => {
+  const root = await fixtureRoot();
+  try {
+    const git = await initializeGitSource(root, "tree-hash");
+    assert.equal(await calculatePortableGitTreeHash(join(git.source, "skills", "tree-hash")), git.tree);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test("schema-v2 manifest validation accepts new immutable resources and rejects unsafe placement", () => {
   const value = manifest([
     agentResource("example", "c".repeat(64)),
@@ -283,6 +297,7 @@ test("inventory classifies canonical and harness surfaces without promoting vend
           ref: "a".repeat(40),
           skillPath: "skills/managed/SKILL.md",
           skillFolderHash: "b".repeat(40),
+          contentSha256: managed.hash,
         },
         candidate: {
           source: "owner/candidate",
@@ -689,6 +704,213 @@ test("reconciliation plans canonical content and Claude links while Pi uses the 
   }
 });
 
+test("reconciliation plans an update for clean managed content pinned to an older GitHub revision", async () => {
+  const root = await fixtureRoot();
+  try {
+    const path = join(root, ".agents", "skills", "managed");
+    await writeSkill(path, "managed", "old body");
+    const oldTree = await calculatePortableGitTreeHash(path);
+    await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify({ version: 3, skills: {
+      managed: {
+        source: "owner/repository",
+        sourceType: "github",
+        sourceUrl: "https://github.com/owner/repository.git",
+        ref: "1".repeat(40),
+        skillPath: "skills/managed/SKILL.md",
+        skillFolderHash: oldTree,
+      },
+    } }));
+    const desired = agentResource("managed", skillDirectoryHash("managed", "new body"));
+    desired.source.revision = "2".repeat(40);
+    desired.source.upstreamTreeHash = "3".repeat(40);
+
+    const plan = await buildReconciliationPlan({ manifest: manifest([desired]), homeDirectory: root, targets: ["codex", "pi"] });
+
+    assert.deepEqual(plan.operations.map(({ kind, name }) => ({ kind, name })), [
+      { kind: "update-agent-skill", name: "managed" },
+    ]);
+    assert.deepEqual(plan.states.outdated, ["managed"]);
+    assert.equal(plan.conflicts.length, 0);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("reconciliation updates a clean legacy root-level GitHub skill from its tree proof", async () => {
+  const root = await fixtureRoot();
+  try {
+    const path = join(root, ".agents", "skills", "managed");
+    await writeSkill(path, "managed", "old body");
+    const oldTree = await calculatePortableGitTreeHash(path);
+    await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify({ version: 3, skills: {
+      managed: {
+        source: "owner/repository",
+        sourceType: "github",
+        sourceUrl: "https://github.com/owner/repository.git",
+        ref: "1".repeat(40),
+        skillPath: "SKILL.md",
+        skillFolderHash: oldTree,
+      },
+    } }));
+    const desired = agentResource("managed", skillDirectoryHash("managed", "new body"));
+    desired.source.revision = "2".repeat(40);
+    desired.source.upstreamPath = "SKILL.md";
+    desired.source.upstreamTreeHash = "2".repeat(40);
+
+    const plan = await buildReconciliationPlan({ manifest: manifest([desired]), homeDirectory: root, targets: ["codex"] });
+
+    assert.deepEqual(plan.operations.map(({ kind, name }) => ({ kind, name })), [
+      { kind: "update-agent-skill", name: "managed" },
+    ]);
+    assert.equal(plan.conflicts.length, 0);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("reconciliation upgrades a matching legacy lock without reinstalling skill content", async () => {
+  const root = await fixtureRoot();
+  try {
+    const path = join(root, ".agents", "skills", "managed");
+    await writeSkill(path, "managed");
+    const hash = await calculatePortableDirectoryHash(path);
+    await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify({ version: 3, skills: {
+      managed: {
+        source: "owner/repository",
+        sourceType: "github",
+        sourceUrl: "https://github.com/owner/repository.git",
+        ref: "a".repeat(40),
+        skillPath: "skills/managed/SKILL.md",
+        skillFolderHash: "b".repeat(40),
+      },
+    } }));
+
+    const plan = await buildReconciliationPlan({
+      manifest: manifest([agentResource("managed", hash)]),
+      homeDirectory: root,
+      targets: ["codex"],
+    });
+
+    assert.deepEqual(plan.operations.map(({ kind, name }) => ({ kind, name })), [
+      { kind: "update-agent-lock", name: "managed" },
+    ]);
+    assert.equal(plan.operations.some(({ kind }) => kind === "update-agent-skill"), false);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("reconciliation keeps locally edited managed content as a conflict", async () => {
+  const root = await fixtureRoot();
+  try {
+    const path = join(root, ".agents", "skills", "managed");
+    await writeSkill(path, "managed", "old body");
+    const oldTree = await calculatePortableGitTreeHash(path);
+    await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify({ version: 3, skills: {
+      managed: {
+        source: "owner/repository",
+        sourceType: "github",
+        ref: "1".repeat(40),
+        skillPath: "skills/managed/SKILL.md",
+        skillFolderHash: oldTree,
+      },
+    } }));
+    await writeSkill(path, "managed", "locally edited body");
+    const desired = agentResource("managed", skillDirectoryHash("managed", "new body"));
+    desired.source.revision = "2".repeat(40);
+    desired.source.upstreamTreeHash = "3".repeat(40);
+
+    const plan = await buildReconciliationPlan({ manifest: manifest([desired]), homeDirectory: root, targets: ["codex"] });
+
+    assert.equal(plan.operations.some(({ kind }) => kind === "update-agent-skill"), false);
+    assert.equal(plan.conflicts.some(({ identity }) => identity === "agent-skills:managed"), true);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("reconciliation transaction replaces a clean older GitHub skill", async () => {
+  const root = await fixtureRoot();
+  try {
+    const path = join(root, ".agents", "skills", "managed");
+    await writeSkill(path, "managed", "old body");
+    const oldTree = await calculatePortableGitTreeHash(path);
+    await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify({ version: 3, skills: {
+      managed: {
+        source: "owner/repository",
+        sourceType: "github",
+        ref: "1".repeat(40),
+        skillPath: "skills/managed/SKILL.md",
+        skillFolderHash: oldTree,
+      },
+    } }));
+    const desired = agentResource("managed", skillDirectoryHash("managed", "new body"));
+    desired.source.revision = "2".repeat(40);
+    desired.source.upstreamTreeHash = "3".repeat(40);
+    const plan = await buildReconciliationPlan({ manifest: manifest([desired]), homeDirectory: root, targets: ["codex"] });
+
+    const result = await applyHarnessProjections(plan, {
+      homeDirectory: root,
+      installAgentSkill: async () => writeSkill(path, "managed", "new body"),
+    });
+
+    assert.deepEqual(result.completedOperations, [{ kind: "update-agent-skill", name: "managed" }]);
+    assert.deepEqual(result.updated, [path]);
+    assert.match(await readFile(join(path, "SKILL.md"), "utf8"), /new body/);
+    const lock = JSON.parse(await readFile(join(root, ".agents", ".skill-lock.json"), "utf8"));
+    assert.equal(lock.skills.managed.ref, "2".repeat(40));
+    assert.equal((await readdir(join(root, ".agents"))).some((name) => name.startsWith(".quickstark-update-")), false);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("a later reconciliation failure restores the exact older skill and lock", async () => {
+  const root = await fixtureRoot();
+  try {
+    const path = join(root, ".agents", "skills", "first");
+    await writeSkill(path, "first", "old body");
+    const oldContents = await readFile(join(path, "SKILL.md"));
+    const oldTree = await calculatePortableGitTreeHash(path);
+    const originalLock = `${JSON.stringify({ version: 3, skills: {
+      first: {
+        source: "owner/repository",
+        sourceType: "github",
+        ref: "1".repeat(40),
+        skillPath: "skills/first/SKILL.md",
+        skillFolderHash: oldTree,
+      },
+    } })}\n`;
+    await writeFile(join(root, ".agents", ".skill-lock.json"), originalLock);
+    const first = agentResource("first", skillDirectoryHash("first", "new body"));
+    first.source.revision = "2".repeat(40);
+    first.source.upstreamTreeHash = "3".repeat(40);
+    const desired = manifest([first, agentResource("second", skillDirectoryHash("second"))]);
+    const plan = await buildReconciliationPlan({ manifest: desired, homeDirectory: root, targets: ["codex"] });
+
+    await assert.rejects(() => applyHarnessProjections(plan, {
+      homeDirectory: root,
+      beforeOperation: async (_operation, index) => { if (index === 1) throw new Error("simulated later failure"); },
+      installAgentSkill: async (resource) => writeSkill(
+        join(root, ".agents", "skills", resource.name),
+        resource.name,
+        "new body",
+      ),
+    }), (error) => {
+      assert.equal(error.reconciliation.outcome, "rolled-back");
+      assert.deepEqual(error.reconciliation.completedOperations, [{ kind: "update-agent-skill", name: "first" }]);
+      return true;
+    });
+
+    assert.deepEqual(await readFile(join(path, "SKILL.md")), oldContents);
+    assert.equal(await readFile(join(root, ".agents", ".skill-lock.json"), "utf8"), originalLock);
+    assert.equal(await lstat(join(root, ".agents", "skills", "second")).catch(() => null), null);
+    assert.equal((await readdir(join(root, ".agents"))).some((name) => name.startsWith(".quickstark-update-")), false);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test("reconciliation refuses an occupied Claude path and any effective-name collision before mutation", async () => {
   const root = await fixtureRoot();
   try {
@@ -825,6 +1047,7 @@ test("partial reconciliation compensates only links created by the current run",
     lock.skills.second = {
       source: "owner/repository", sourceType: "github", sourceUrl: "https://github.com/owner/repository.git",
       ref: "a".repeat(40), skillPath: "skills/second/SKILL.md", skillFolderHash: "b".repeat(40),
+      contentSha256: secondHash,
     };
     await writeFile(join(root, ".agents", ".skill-lock.json"), JSON.stringify(lock));
     await mkdir(join(root, ".claude"), { recursive: true });
@@ -1086,6 +1309,7 @@ test("inventory ignores an installed mutable Pi package that contributes no skil
 
 test("package commands expose inventory and adopt while aggregate verification stays read-only", async () => {
   const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
+  assert.equal(project.scripts["skills:update"], "node scripts/managed-skills.mjs update");
   assert.equal(project.scripts["personal-skills:inventory"], "node scripts/sync-personal-skills.mjs inventory");
   assert.equal(project.scripts["personal-skills:adopt"], "node scripts/sync-personal-skills.mjs adopt");
   assert.doesNotMatch(project.scripts["skills:verify"], /sync|adopt|install|add/);

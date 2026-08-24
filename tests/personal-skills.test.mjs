@@ -143,6 +143,7 @@ test("lock reconciliation preserves unrelated entries, unknown fields, and origi
         sourceType: "github",
         skillPath: "SKILL.md",
         skillFolderHash: skill.upstreamTreeHash,
+        contentSha256: skill.contentSha256,
         installedAt: "2026-01-01T00:00:00.000Z",
         updatedAt: "2026-01-01T00:00:00.000Z",
         preservedField: "yes",
@@ -183,7 +184,7 @@ test("plan reports missing skills, preserves matched skills, and rejects conflic
         { type: "agent-skill", name: "missing", source: { kind: "github", repository: "owner/repo", revision: "a".repeat(40), license: "MIT", licensePath: "LICENSE", upstreamPath: "missing/SKILL.md", upstreamTreeHash: "c".repeat(40), contentSha256: "d".repeat(64) }, placement: { canonical: "~/.agents/skills", targets: ["codex", "pi"] } },
       ],
     };
-    const lock = { version: 3, skills: { present: { source: "owner/repo", sourceType: "github", sourceUrl: "https://github.com/owner/repo.git", ref: "a".repeat(40), skillPath: "present/SKILL.md", skillFolderHash: "b".repeat(40) } } };
+    const lock = { version: 3, skills: { present: { source: "owner/repo", sourceType: "github", sourceUrl: "https://github.com/owner/repo.git", ref: "a".repeat(40), skillPath: "present/SKILL.md", skillFolderHash: "b".repeat(40), contentSha256: matching } } };
     const plan = await buildPlan(mini, { homeDirectory: root, lock });
 
     assert.deepEqual(plan.missing.map((entry) => entry.skill.name), ["missing"]);

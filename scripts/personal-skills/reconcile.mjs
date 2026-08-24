@@ -51,6 +51,8 @@ export async function buildReconciliationPlan({ manifest, homeDirectory, targets
     const canonical = byIdentity.get(`agent-skills:${resource.name}`);
     if (!canonical) {
       operations.push({ kind: "install-agent-skill", name: resource.name, resource });
+    } else if (canonical.classification === "outdated-managed") {
+      operations.push({ kind: "update-agent-skill", name: resource.name, resource, previous: canonical.provenance });
     } else if (canonical.classification === "conflict" && canonical.drift === "metadata") {
       operations.push({ kind: "update-agent-lock", name: resource.name, resource });
     } else if (canonical.classification !== "managed") {
@@ -97,10 +99,11 @@ export async function buildReconciliationPlan({ manifest, homeDirectory, targets
 
   const uniqueConflicts = [...new Map(conflicts.map((conflict) => [`${conflict.identity}:${conflict.reason}`, conflict])).values()]
     .sort((first, second) => first.identity.localeCompare(second.identity));
-  const priority = { "install-agent-skill": 1, "update-agent-lock": 2, "create-claude-link": 3 };
+  const priority = { "update-agent-skill": 1, "install-agent-skill": 2, "update-agent-lock": 3, "create-claude-link": 4 };
   operations.sort((first, second) => (priority[first.kind] - priority[second.kind]) || first.name.localeCompare(second.name));
   const states = {
     missing: operations.filter((operation) => operation.kind === "install-agent-skill").map((operation) => operation.name),
+    outdated: operations.filter((operation) => operation.kind === "update-agent-skill").map((operation) => operation.name),
     matching: inventory.resources.filter((resource) => resource.surface === "agent-skills" && resource.classification === "managed").map((resource) => resource.name),
     metadataDrifted: inventory.resources.filter((resource) => resource.drift === "metadata").map((resource) => resource.name),
     contentDrifted: inventory.resources.filter((resource) => resource.drift === "content").map((resource) => resource.name),
@@ -192,7 +195,7 @@ export async function applyHarnessProjections(plan, {
   if (plan.conflicts.length) throw new Error("Reconciliation has unresolved conflicts and cannot mutate any selected surface.");
   const current = await inventoryMachine({ manifest: plan.manifest, homeDirectory });
   if (current.stateToken !== plan.stateToken) throw new Error("Reconciliation plan is stale because machine skill state changed.");
-  if (plan.operations.length === 0) return { outcome: "complete", created: [], completedOperations: [], externalActions: plan.externalActions };
+  if (plan.operations.length === 0) return { outcome: "complete", created: [], updated: [], completedOperations: [], cleanupErrors: [], externalActions: plan.externalActions };
   const homeMetadata = await lstat(homeDirectory);
   if (!homeMetadata.isDirectory() || homeMetadata.isSymbolicLink()) throw new Error("Reconciliation home must be a real directory.");
   const transactionGuardPath = join(homeDirectory, ".quickstark-personal-skills-sync.lock");
@@ -201,15 +204,18 @@ export async function applyHarnessProjections(plan, {
     throw error;
   });
   const created = [];
+  const updated = [];
   const completedOperations = [];
   const attemptedOperations = [];
   const journal = [];
   const agentsRoot = join(homeDirectory, ".agents");
   const canonicalRoot = join(agentsRoot, "skills");
+  const updateBackupRoot = join(agentsRoot, `.quickstark-update-${process.pid}-${Date.now()}`);
+  let updateBackupRootCreated = false;
   let agentsRootExisted;
   let canonicalRootExisted;
   const lockPath = join(agentsRoot, ".skill-lock.json");
-  const mutatesLock = plan.operations.some((operation) => ["install-agent-skill", "update-agent-lock"].includes(operation.kind));
+  const mutatesLock = plan.operations.some((operation) => ["install-agent-skill", "update-agent-skill", "update-agent-lock"].includes(operation.kind));
   try {
     agentsRootExisted = Boolean(await optionalMetadata(agentsRoot));
     canonicalRootExisted = Boolean(await optionalMetadata(canonicalRoot));
@@ -238,6 +244,35 @@ export async function applyHarnessProjections(plan, {
         await assertCanonicalResource(homeDirectory, operation.resource);
         await writeAgentSkillLock(join(homeDirectory, ".agents", ".skill-lock.json"), [operation.resource]);
         created.push(destination);
+        completedOperations.push({ kind: operation.kind, name: operation.name });
+        continue;
+      }
+
+      if (operation.kind === "update-agent-skill") {
+        if (typeof installAgentSkill !== "function") throw new Error(`Updating ${operation.name} requires the authorized pinned installer adapter.`);
+        const destination = join(canonicalRoot, operation.name);
+        const existing = await lstat(destination).catch((error) => error?.code === "ENOENT" ? null : Promise.reject(error));
+        if (!existing?.isDirectory() || existing.isSymbolicLink()) throw new Error(`Managed skill update source is not a real directory: ${operation.name}.`);
+        if (!updateBackupRootCreated) {
+          await mkdir(updateBackupRoot, { mode: 0o700 });
+          updateBackupRootCreated = true;
+        }
+        const backup = join(updateBackupRoot, operation.name);
+        journal.push({
+          path: destination,
+          undo: async () => {
+            const backupMetadata = await optionalMetadata(backup);
+            if (!backupMetadata) return false;
+            await removeCreatedPath(destination);
+            await rename(backup, destination);
+            return true;
+          },
+        });
+        await rename(destination, backup);
+        await installAgentSkill(operation.resource);
+        await assertCanonicalResource(homeDirectory, operation.resource);
+        await writeAgentSkillLock(lockPath, [operation.resource]);
+        updated.push(destination);
         completedOperations.push({ kind: operation.kind, name: operation.name });
         continue;
       }
@@ -278,7 +313,13 @@ export async function applyHarnessProjections(plan, {
     }
     const verified = await buildReconciliationPlan({ manifest: plan.manifest, homeDirectory, targets: plan.targets });
     if (verified.operations.length || verified.conflicts.length) throw new Error("Post-synchronization verification failed inside the reconciliation transaction.");
-    return { outcome: "complete", created, completedOperations, externalActions: plan.externalActions };
+    const cleanupErrors = [];
+    if (updateBackupRootCreated) {
+      await rm(updateBackupRoot, { recursive: true, force: true }).catch((error) => {
+        cleanupErrors.push({ path: updateBackupRoot, reason: error.message });
+      });
+    }
+    return { outcome: "complete", created, updated, completedOperations, cleanupErrors, externalActions: plan.externalActions };
   } catch (error) {
     const compensatedPaths = [];
     const compensationErrors = [];
@@ -294,6 +335,13 @@ export async function applyHarnessProjections(plan, {
         if (await removeEmptyCreatedDirectory(path, existedBefore)) compensatedPaths.push(path);
       } catch (compensationError) {
         compensationErrors.push({ path, reason: compensationError.message });
+      }
+    }
+    if (updateBackupRootCreated) {
+      try {
+        if (await removeEmptyCreatedDirectory(updateBackupRoot, false)) compensatedPaths.push(updateBackupRoot);
+      } catch (compensationError) {
+        compensationErrors.push({ path: updateBackupRoot, reason: compensationError.message });
       }
     }
     error.reconciliation = {
