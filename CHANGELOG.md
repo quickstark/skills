@@ -1,5 +1,15 @@
 # QuickStark Skills changelog
 
+## 3.6.0
+
+### Minor Changes
+
+- Add transactional cross-machine skill reconciliation and a GitHub-template
+  updater for QuickStark, personal, and approved third-party skills across Codex,
+  Claude, and Pi. Include verified package-manager results, hermetic installer
+  runtime compatibility, and specification links with remaining-build previews
+  in applicable engineering skill results.
+
 ## 3.5.0
 
 ### Minor Changes

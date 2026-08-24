@@ -13,6 +13,8 @@ import {
 import { SKILL_COLLECTIONS } from "../scripts/skill-collection-registry.mjs";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
+const repositoryVersion = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8")).version;
+const repositoryVersionPattern = repositoryVersion.replaceAll(".", "\\.");
 
 async function temporaryHome() {
   const home = await mkdtemp(join(tmpdir(), "qs-managed-skills-test-"));
@@ -31,7 +33,7 @@ test("managed skills plan combines maintained package plan and approved resource
     agents: ["codex", "claude-code", "pi"],
   });
 
-  assert.equal(plan.repositoryVersion, "3.5.0");
+  assert.equal(plan.repositoryVersion, repositoryVersion);
   assert.deepEqual(plan.maintainedPackages.map(({ name }) => name), ["qs-skills", "qs-specialists", "ps-skills"]);
   assert.equal(plan.approvedResourceCount, 18);
   assert.deepEqual(plan.targets, ["codex", "claude-code", "pi"]);
@@ -122,9 +124,9 @@ test("managed skills apply executes reviewed manager commands and delegates cont
     inspectManagedPackages: async () => {
       inspection += 1;
       return { installed: inspection === 1 ? [] : [
-        { name: "qs-skills", version: "3.5.0", installed: true, enabled: true },
-        { name: "qs-specialists", version: "3.5.0", installed: true, enabled: true },
-        { name: "ps-skills", version: "3.5.0", installed: true, enabled: true },
+        { name: "qs-skills", version: repositoryVersion, installed: true, enabled: true },
+        { name: "qs-specialists", version: repositoryVersion, installed: true, enabled: true },
+        { name: "ps-skills", version: repositoryVersion, installed: true, enabled: true },
       ] };
     },
     runPersonalAction: async (options) => {
@@ -160,9 +162,9 @@ test("managed skills apply updates existing Claude packages and skips current on
     inspectManagedPackages: async () => {
       inspection += 1;
       return { installed: [
-        { name: "qs-skills", version: inspection === 1 ? "3.4.0" : "3.5.0", installed: true, enabled: true },
-        { name: "qs-specialists", version: "3.5.0", installed: true, enabled: true },
-        { name: "ps-skills", version: "3.5.0", installed: true, enabled: true },
+        { name: "qs-skills", version: inspection === 1 ? "3.4.0" : repositoryVersion, installed: true, enabled: true },
+        { name: "qs-specialists", version: repositoryVersion, installed: true, enabled: true },
+        { name: "ps-skills", version: repositoryVersion, installed: true, enabled: true },
       ] };
     },
     runPersonalAction: async () => ({ operationCount: 0, conflictCount: 0, externalActionCount: 0 }),
@@ -188,7 +190,7 @@ test("managed skills apply repoints a stale Codex marketplace before updating pa
     inspectManagedPackages: async () => ({
       installed: packageNames.map((name) => ({
         name,
-        version: marketplaceCurrent || name !== "qs-skills" ? "3.5.0" : "3.4.0",
+        version: marketplaceCurrent || name !== "qs-skills" ? repositoryVersion : "3.4.0",
         installed: true,
         enabled: true,
         marketplaceName: "quickstark",
@@ -212,7 +214,7 @@ test("managed skills apply repoints a stale Codex marketplace before updating pa
     ["codex", "plugin", "add", "qs-specialists@quickstark"],
     ["codex", "plugin", "add", "ps-skills@quickstark"],
   ]);
-  assert.equal(result.installedPackageVerification[0].version, "3.5.0");
+  assert.equal(result.installedPackageVerification[0].version, repositoryVersion);
 });
 
 test("managed skills restore a stale Codex marketplace when repointing fails", async () => {
@@ -367,7 +369,7 @@ test("managed sync retains completed package-manager results when final verifica
       onManagerAction: (result) => actionResults.push(result),
       runPersonalAction: async () => ({ operationCount: 0, conflictCount: 0, externalActionCount: 0 }),
     }),
-    /version 3\.4\.0; expected 3\.5\.0/i,
+    new RegExp(`version 3\\.4\\.0; expected ${repositoryVersionPattern}`, "i"),
   );
   assert.deepEqual(actionResults.map(({ status, operation }) => ({ status, operation })), [
     { status: "completed", operation: "marketplace-registered" },
@@ -378,18 +380,18 @@ test("managed sync retains completed package-manager results when final verifica
 });
 
 test("managed package inventory requires every selected package at the checked-out version", () => {
-  const packages = ["qs-skills", "qs-specialists", "ps-skills"].map((name) => ({ name, version: "3.5.0" }));
+  const packages = ["qs-skills", "qs-specialists", "ps-skills"].map((name) => ({ name, version: repositoryVersion }));
   assert.deepEqual(
     verifyManagedPackageInventory("codex", {
       installed: packages.map(({ name, version }) => ({ name, version, installed: true, enabled: true })),
     }, packages),
-    { agent: "codex", packageCount: 3, version: "3.5.0" },
+    { agent: "codex", packageCount: 3, version: repositoryVersion },
   );
   assert.throws(
     () => verifyManagedPackageInventory("codex", {
-      installed: packages.map(({ name }) => ({ name, version: name === "ps-skills" ? "3.4.0" : "3.5.0", installed: true, enabled: true })),
+      installed: packages.map(({ name }) => ({ name, version: name === "ps-skills" ? "3.4.0" : repositoryVersion, installed: true, enabled: true })),
     }, packages),
-    /ps-skills.*3\.4\.0.*3\.5\.0/i,
+    new RegExp(`ps-skills.*3\\.4\\.0.*${repositoryVersionPattern}`, "i"),
   );
   assert.throws(
     () => verifyManagedPackageInventory("codex", {
@@ -409,9 +411,9 @@ test("managed skills verify checks installed package versions as well as portabl
     inspectManagedPackages: async (agent) => {
       inspected.push(agent);
       return { installed: [
-        { name: "qs-skills", version: "3.5.0", installed: true, enabled: true },
-        { name: "qs-specialists", version: "3.5.0", installed: true, enabled: true },
-        { name: "ps-skills", version: "3.5.0", installed: true, enabled: true },
+        { name: "qs-skills", version: repositoryVersion, installed: true, enabled: true },
+        { name: "qs-specialists", version: repositoryVersion, installed: true, enabled: true },
+        { name: "ps-skills", version: repositoryVersion, installed: true, enabled: true },
       ] };
     },
     runPersonalAction: async () => ({ operationCount: 0, conflictCount: 0, externalActionCount: 0 }),
@@ -431,7 +433,7 @@ test("managed skills verify rejects a stale Codex marketplace even when package 
       inspectManagedPackages: async () => ({
         installed: packages.map((name) => ({
           name,
-          version: "3.5.0",
+          version: repositoryVersion,
           installed: true,
           enabled: true,
           marketplaceName: "quickstark",
@@ -463,9 +465,9 @@ test("existing marketplace registration is idempotent but other manager failures
     inspectManagedPackages: async () => {
       inspection += 1;
       return { installed: inspection === 1 ? [] : [
-        { name: "qs-skills", version: "3.5.0", installed: true, enabled: true },
-        { name: "qs-specialists", version: "3.5.0", installed: true, enabled: true },
-        { name: "ps-skills", version: "3.5.0", installed: true, enabled: true },
+        { name: "qs-skills", version: repositoryVersion, installed: true, enabled: true },
+        { name: "qs-specialists", version: repositoryVersion, installed: true, enabled: true },
+        { name: "ps-skills", version: repositoryVersion, installed: true, enabled: true },
       ] };
     },
     runPersonalAction: async (options) => {
@@ -479,7 +481,7 @@ test("existing marketplace registration is idempotent but other manager failures
 
 test("package registry validation rejects a stale generated package", async () => {
   const root = await mkdtemp(join(tmpdir(), "qs-managed-package-test-"));
-  await writeFile(join(root, "package.json"), JSON.stringify({ version: "3.5.0" }));
+  await writeFile(join(root, "package.json"), JSON.stringify({ version: repositoryVersion }));
   for (const collection of SKILL_COLLECTIONS) {
     const claudeDirectory = join(root, collection.claudePackageRoot, ".claude-plugin");
     const codexDirectory = join(root, collection.codexPackageRoot, ".codex-plugin");
@@ -488,14 +490,14 @@ test("package registry validation rejects a stale generated package", async () =
     await mkdir(codexDirectory, { recursive: true });
     await mkdir(piDirectory, { recursive: true });
     const skills = collection.publicCommands.map((name) => `./skills/${name}`);
-    await writeFile(join(claudeDirectory, "plugin.json"), JSON.stringify({ name: collection.packageName, version: "3.5.0", skills }));
+    await writeFile(join(claudeDirectory, "plugin.json"), JSON.stringify({ name: collection.packageName, version: repositoryVersion, skills }));
     await writeFile(join(codexDirectory, "plugin.json"), JSON.stringify({
       name: collection.packageName,
-      version: collection.id === "qs-skills" ? "3.4.0" : "3.5.0",
+      version: collection.id === "qs-skills" ? "3.4.0" : repositoryVersion,
     }));
     await writeFile(join(piDirectory, "package.json"), JSON.stringify({
       name: collection.packageName,
-      version: "3.5.0",
+      version: repositoryVersion,
       private: true,
       pi: { skills: ["./skills"] },
     }));
@@ -523,7 +525,7 @@ test("Pi managed sync registers missing local packages then verifies them", asyn
   const commands = [];
   let inspection = 0;
   const current = ["qs-skills", "qs-specialists", "ps-skills"].map((name) => ({
-    name, version: "3.5.0", installed: true, enabled: true, marketplaceName: "quickstark",
+    name, version: repositoryVersion, installed: true, enabled: true, marketplaceName: "quickstark",
   }));
   const result = await executeManagedSkills({
     action: "sync",
@@ -552,7 +554,7 @@ test("Pi managed verification reads exact local package settings without invokin
     agents: ["pi"],
     runPersonalAction: async () => ({ operationCount: 0, conflictCount: 0, externalActionCount: 0 }),
   });
-  assert.deepEqual(result.installedPackageVerification, [{ agent: "pi", packageCount: 3, version: "3.5.0" }]);
+  assert.deepEqual(result.installedPackageVerification, [{ agent: "pi", packageCount: 3, version: repositoryVersion }]);
 });
 
 test("Pi managed verification rejects selectors that disable projected commands", async () => {
