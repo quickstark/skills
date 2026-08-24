@@ -12,6 +12,17 @@ function freezeRoutes(routes) {
   return Object.freeze(routes.map((route) => Object.freeze({ ...route })));
 }
 
+const PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND = Object.freeze({
+  "qs-plan-spec": "build-review-test-merge",
+  "qs-code-build": "review-test-merge",
+  "qs-code-debug": "review-test-merge",
+  "qs-review-code": "test-merge",
+  "qs-test-author": "test-merge",
+  "ps-create-verification-skill": "review-test-merge",
+  "ps-hillclimb": "review-test-merge",
+  "ps-visual-parity": "review-test-merge",
+});
+
 function defineQsCommand(command) {
   const routes = NEXT_SKILLS_BY_NAME[command.name];
   const collectionId = command.distribution === "core" ? "qs-skills" : "qs-specialists";
@@ -28,6 +39,9 @@ function defineQsCommand(command) {
       failure: freezeRoutes(routes
         .filter((route) => route.availability !== "success")
         .sort((left, right) => Number(right.recovery) - Number(left.recovery))),
+      ...(PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND[command.name]
+        ? { preferredCompositeWorkflow: PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND[command.name] }
+        : {}),
     }),
   });
 }
@@ -38,6 +52,12 @@ function definePsCommand(command) {
     collectionId: PS_COLLECTION.packageName,
     codexLiteral: `$${PS_COLLECTION.codexPlugin}:${command.name}`,
     claudeLiteral: `/${command.name}`,
+    continuation: Object.freeze({
+      ...command.continuation,
+      ...(PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND[command.name]
+        ? { preferredCompositeWorkflow: PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND[command.name] }
+        : {}),
+    }),
   });
 }
 
@@ -55,6 +75,46 @@ export const PUBLIC_COMMANDS_BY_NAME = new Map(
   PUBLIC_COMMANDS.map((command) => [command.name, command]),
 );
 
+function defineCompositeWorkflow(id, steps) {
+  return Object.freeze({
+    id,
+    steps: Object.freeze(steps),
+    stopStatuses: Object.freeze(["continuation-required", "input-required", "failed"]),
+    perRootReports: true,
+    automaticPublicSkillHops: false,
+  });
+}
+
+export const COMPOSITE_WORKFLOWS = Object.freeze([
+  defineCompositeWorkflow("build-review-test-merge", ["qs-code-build", "qs-review-code", "qs-test-verify", "qs-git-merge"]),
+  defineCompositeWorkflow("review-test-merge", ["qs-review-code", "qs-test-verify", "qs-git-merge"]),
+  defineCompositeWorkflow("test-merge", ["qs-test-verify", "qs-git-merge"]),
+]);
+
+export const COMPOSITE_WORKFLOWS_BY_ID = new Map(
+  COMPOSITE_WORKFLOWS.map((workflow) => [workflow.id, workflow]),
+);
+
+export function renderCompositeWorkflowPrompt(id, { harness = "codex", context } = {}) {
+  const workflow = COMPOSITE_WORKFLOWS_BY_ID.get(id);
+  if (!workflow) throw new Error(`Unknown composite workflow: ${id}.`);
+  if (!["codex", "claude", "pi"].includes(harness)) throw new Error(`Unsupported composite workflow harness: ${harness}.`);
+  const literal = harness === "codex"
+    ? codexPublicSkillLiteral
+    : harness === "claude"
+      ? claudePublicSkillLiteral
+      : piPublicSkillLiteral;
+  const [first, ...remaining] = workflow.steps.map(literal);
+  const sequence = [first, ...remaining.map((item) => `then ${item}`)].join(", ");
+  return [
+    `${sequence}.`,
+    context ? `Shared objective: ${context}` : null,
+    "Treat every step as a separate public root with its own completion report and authority boundary.",
+    `Continue in this session only after a Complete result; stop on ${workflow.stopStatuses.join(", ")}.`,
+    "This combined prompt does not grant commit, merge, push, release, deployment, installation, or other mutation authority unless the shared objective explicitly grants that exact action.",
+  ].filter(Boolean).join(" ");
+}
+
 function defineCollection({
   id,
   displayName,
@@ -62,6 +122,7 @@ function defineCollection({
   codexPlugin,
   claudePackageRoot,
   codexPackageRoot,
+  piPackageRoot,
   canonicalRoot,
   documentationRoot,
   publicCommands,
@@ -73,6 +134,7 @@ function defineCollection({
     codexPlugin,
     claudePackageRoot,
     codexPackageRoot,
+    piPackageRoot,
     canonicalRoot,
     documentationRoot,
     publicCommands: Object.freeze(publicCommands.map((command) => command.name)),
@@ -87,6 +149,7 @@ export const SKILL_COLLECTIONS = Object.freeze([
     codexPlugin: "qs-skills",
     claudePackageRoot: ".",
     codexPackageRoot: "codex/plugins/qs-skills",
+    piPackageRoot: "pi/packages/qs-skills",
     canonicalRoot: "skills",
     documentationRoot: "docs",
     publicCommands: QS_CORE_COMMANDS,
@@ -98,6 +161,7 @@ export const SKILL_COLLECTIONS = Object.freeze([
     codexPlugin: "qs-specialists",
     claudePackageRoot: "packages/qs-specialists",
     codexPackageRoot: "codex/plugins/qs-specialists",
+    piPackageRoot: "pi/packages/qs-specialists",
     canonicalRoot: "skills",
     documentationRoot: "docs",
     publicCommands: QS_SPECIALIST_COMMANDS,
@@ -109,6 +173,7 @@ export const SKILL_COLLECTIONS = Object.freeze([
     codexPlugin: PS_COLLECTION.codexPlugin,
     claudePackageRoot: PS_COLLECTION.claudePackageRoot,
     codexPackageRoot: PS_COLLECTION.codexPackageRoot,
+    piPackageRoot: "pi/packages/ps-skills",
     canonicalRoot: PS_COLLECTION.canonicalRoot,
     documentationRoot: PS_COLLECTION.documentationRoot,
     publicCommands: PS_COMMANDS,
@@ -123,6 +188,7 @@ export const COLLECTION_REGISTRY = Object.freeze({
   schemaVersion: 1,
   collections: SKILL_COLLECTIONS,
   publicCommands: PUBLIC_COMMANDS,
+  compositeWorkflows: COMPOSITE_WORKFLOWS,
 });
 
 function requireArray(value, message) {
@@ -138,6 +204,7 @@ export function validateSkillCollectionRegistryModel(model) {
   }
   requireArray(model.collections, "The skill collection registry must contain collections.");
   requireArray(model.publicCommands, "The skill collection registry must contain public commands.");
+  requireArray(model.compositeWorkflows, "The skill collection registry must contain composite workflows.");
 
   const collectionIds = model.collections.map((collection) => collection.id);
   if (new Set(collectionIds).size !== collectionIds.length) {
@@ -154,6 +221,21 @@ export function validateSkillCollectionRegistryModel(model) {
   }
   if (model.publicCommands.length !== 32) {
     throw new Error("The registry must contain exactly 32 public commands.");
+  }
+
+  const workflowIds = model.compositeWorkflows.map((workflow) => workflow.id);
+  if (new Set(workflowIds).size !== workflowIds.length) {
+    throw new Error("Registered composite workflow identities must be unique.");
+  }
+  for (const workflow of model.compositeWorkflows) {
+    requireArray(workflow.steps, `Composite workflow ${workflow.id} must define steps.`);
+    requireArray(workflow.stopStatuses, `Composite workflow ${workflow.id} must define stop statuses.`);
+    if (workflow.steps.length < 2 || workflow.steps.some((name) => !commandNameSet.has(name))) {
+      throw new Error(`Composite workflow ${workflow.id} must contain at least two known public commands.`);
+    }
+    if (workflow.perRootReports !== true || workflow.automaticPublicSkillHops !== false) {
+      throw new Error(`Composite workflow ${workflow.id} must preserve the one-root reporting boundary.`);
+    }
   }
 
   const codexLiterals = model.publicCommands.map((command) => command.codexLiteral);
@@ -205,6 +287,10 @@ export function validateSkillCollectionRegistryModel(model) {
         }
       }
     }
+    if (command.continuation.preferredCompositeWorkflow
+      && !workflowIds.includes(command.continuation.preferredCompositeWorkflow)) {
+      throw new Error(`The public command ${command.name} references an unknown composite workflow.`);
+    }
   }
 
   return true;
@@ -224,4 +310,9 @@ export function codexPublicSkillLiteral(name) {
 
 export function claudePublicSkillLiteral(name) {
   return resolvePublicCommand(name).claudeLiteral;
+}
+
+export function piPublicSkillLiteral(name) {
+  resolvePublicCommand(name);
+  return `/skill:${name}`;
 }

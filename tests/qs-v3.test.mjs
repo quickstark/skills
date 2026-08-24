@@ -175,6 +175,23 @@ test("all 32 completion contracts present direct chat results and apply clear wr
   }
 });
 
+test("eligible completion contracts expose catalog-owned same-session workflow prompts", () => {
+  for (const name of ["qs-plan-spec", "qs-code-build", "qs-code-debug", "qs-review-code", "ps-hillclimb"]) {
+    const command = PUBLIC_COMMANDS.find((item) => item.name === name);
+    const contract = renderSkillOutputContract(command);
+    assert.match(contract, /catalog-approved composite workflow/i, name);
+    assert.match(contract, /separate public root/i, name);
+    assert.match(contract, /stop on a non-complete result/i, name);
+    assert.match(contract, /does not add mutation authority/i, name);
+  }
+});
+
+test("Pi continuation literals are included in every non-terminal completion contract", () => {
+  for (const command of PUBLIC_COMMANDS.filter((item) => item.name !== "qs-deploy-release")) {
+    assert.match(renderSkillOutputContract(command), /Pi uses `\/skill:/, command.name);
+  }
+});
+
 test("catalog continuation routes remain valid, ranked, and package-safe", () => {
   const names = new Set(PUBLIC_COMMANDS.map((command) => command.name));
   for (const command of PUBLIC_COMMANDS) {

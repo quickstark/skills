@@ -1,0 +1,24 @@
+{
+  "name": "ps-skills",
+  "version": "3.5.0",
+  "private": true,
+  "description": "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "pstack",
+    "engineering",
+    "verification",
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

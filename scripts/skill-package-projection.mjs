@@ -49,3 +49,24 @@ export async function assertGeneratedPackageRoot(root, {
 
   return true;
 }
+
+export async function assertGeneratedPiPackageRoot(root, { noticeFiles = [] } = {}) {
+  const rootMetadata = await lstat(root);
+  if (!rootMetadata.isDirectory() || rootMetadata.isSymbolicLink()) {
+    throw new Error("Generated Pi package root must be a real directory.");
+  }
+  const expectedEntries = ["package.json", "skills", ...noticeFiles].sort();
+  const entries = await readdir(root, { withFileTypes: true });
+  const actualEntries = entries.map((entry) => entry.name).sort();
+  if (!sameInventory(actualEntries, expectedEntries)) {
+    throw new Error("Generated Pi package has unexpected top-level entries or is missing declared entries.");
+  }
+  for (const entry of entries) {
+    const metadata = await lstat(join(root, entry.name));
+    if (metadata.isSymbolicLink()) throw new Error("Generated Pi package entries must not be symlinks.");
+    if (entry.name === "skills" ? !metadata.isDirectory() : !metadata.isFile()) {
+      throw new Error("Generated Pi package entries have invalid file types.");
+    }
+  }
+  return true;
+}

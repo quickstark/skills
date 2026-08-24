@@ -78,15 +78,20 @@ test("PS safety boundaries remain explicit", async () => {
   assert.match(maintain, /product behavior remains outside/i);
 });
 
-test("PS Claude and Codex projections are isolated and preserve notices", async () => {
+test("PS Claude, Codex, and Pi projections are isolated and preserve notices", async () => {
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
   const claude = JSON.parse(await readFile(join(root, "packages", "ps-skills", ".claude-plugin", "plugin.json"), "utf8"));
   const codex = JSON.parse(await readFile(join(root, "codex", "plugins", "ps-skills", ".codex-plugin", "plugin.json"), "utf8"));
+  const pi = JSON.parse(await readFile(join(root, "pi", "packages", "ps-skills", "package.json"), "utf8"));
   assert.equal(claude.version, project.version);
   assert.equal(codex.version, project.version);
+  assert.equal(pi.version, project.version);
+  assert.deepEqual(pi.pi.skills, ["./skills"]);
   assert.deepEqual((await readdir(join(root, "packages", "ps-skills", "skills"))).sort(), [...publicNames].sort());
   assert.deepEqual((await readdir(join(root, "codex", "plugins", "ps-skills", "skills"))).sort(), [...publicNames].sort());
+  assert.deepEqual((await readdir(join(root, "pi", "packages", "ps-skills", "skills"))).sort(), [...publicNames].sort());
   assert.equal((await readdir(join(root, "packages", "ps-skills", "capabilities"))).length, 16);
   assert.equal((await readdir(join(root, "codex", "plugins", "ps-skills", "capabilities"))).length, 16);
   assert.match(await readFile(join(root, "packages", "ps-skills", "THIRD_PARTY_NOTICES.md"), "utf8"), /Lauren Tan/i);
+  assert.match(await readFile(join(root, "pi", "packages", "ps-skills", "THIRD_PARTY_NOTICES.md"), "utf8"), /Lauren Tan/i);
 });

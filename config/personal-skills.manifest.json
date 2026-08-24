@@ -1,159 +1,416 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "installer": {
     "package": "skills",
-    "version": "1.5.23"
+    "version": "1.5.23",
+    "integrity": "sha512-+hMNBSi35yfX0sKD+ZcRm9y5or7u313OdkcvrRvJAsAzGCaA8wRTu2OmVdN0KRbk9ybqKby5dijkn6OVvNTUmw=="
   },
   "canonicalDirectory": "~/.agents/skills",
-  "sources": [
+  "resources": [
     {
-      "repository": "heygen-com/hyperframes",
-      "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
-      "license": "Apache-2.0",
-      "licensePath": "LICENSE",
-      "skills": [
-        {
-          "name": "hyperframes",
-          "upstreamPath": "skills/hyperframes/SKILL.md",
-          "upstreamTreeHash": "ea0e6aa5b3723a9426b232c046c96903271dad04",
-          "contentSha256": "3ff3805be0e98ad02ff502c6b5358c99f0b71c05539d69c069412d57b535635b",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-animation",
-          "upstreamPath": "skills/hyperframes-animation/SKILL.md",
-          "upstreamTreeHash": "94f8c91839d5bf9280b4dbe80a3fd1bbcab1917b",
-          "contentSha256": "dcb152706e225699c3a954e434c094fa8ae23a9061d62d49b0798b20a60b297e",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-audio",
-          "upstreamPath": "skills/hyperframes-audio/SKILL.md",
-          "upstreamTreeHash": "63107a7f9f0abeaff9966ba6482cfc6926426899",
-          "contentSha256": "8fc5b21a8e5dd07a20a7aa589b222b64b3b665c7007a5d20ba14d7f6efe5f100",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-cli",
-          "upstreamPath": "skills/hyperframes-cli/SKILL.md",
-          "upstreamTreeHash": "b862a63fdeb054cd85076fff559c60aaec050869",
-          "contentSha256": "397861778a28cf89aef03f2b56d1a7d7891202684259d643d5d7bb9130bb291d",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-core",
-          "upstreamPath": "skills/hyperframes-core/SKILL.md",
-          "upstreamTreeHash": "fe4c63fdd76ad9655e180eca4b407d0da8d11f80",
-          "contentSha256": "9ec9fb9d13920d0cf588a8b368f5bb52d57aabf99d9606bf63fa874d7bbf74b8",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-creative",
-          "upstreamPath": "skills/hyperframes-creative/SKILL.md",
-          "upstreamTreeHash": "fdd1567286e98928f85ccc19c64350bc52c1df86",
-          "contentSha256": "6da4fd1f681605c15aaab34829261fe10d7f3c81ac79bc0ef3b40ed9cd23ef4c",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-keyframes",
-          "upstreamPath": "skills/hyperframes-keyframes/SKILL.md",
-          "upstreamTreeHash": "96d3e2f95fa1c71886b54c7e5855086e7146bd27",
-          "contentSha256": "ca3056e210808e6382f96384dcfd83fac5f8b369635ab4ae06dae2dda5e2047f",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "hyperframes-registry",
-          "upstreamPath": "skills/hyperframes-registry/SKILL.md",
-          "upstreamTreeHash": "c9f76496706aa566ddf6d53429cc05473b2e10fc",
-          "contentSha256": "b0cb8f843e5b0302cebd68ea13e9e79bbd8f044e8af7b2a858aa956ce8c36f4d",
-          "pluginName": "core-skills"
-        },
-        {
-          "name": "media-use",
-          "upstreamPath": "skills/media-use/SKILL.md",
-          "upstreamTreeHash": "121f654a28ed2f9582091d9305cabaefbc7730f6",
-          "contentSha256": "6db9fd6e46127ca866a8b78a09a963e489e810b663fad2c3ec5b4786fd6c944f",
-          "pluginName": "core-skills"
-        }
-      ]
+      "type": "agent-skill",
+      "name": "design-taste-frontend",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/taste-skill/SKILL.md",
+        "upstreamTreeHash": "a6d128e53b4ec0238baee751dde33bf707adb5ec",
+        "contentSha256": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
     },
     {
-      "repository": "Leonxlnx/taste-skill",
-      "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
-      "license": "MIT",
-      "licensePath": "LICENSE",
-      "skills": [
-        {
-          "name": "design-taste-frontend",
-          "upstreamPath": "skills/taste-skill/SKILL.md",
-          "upstreamTreeHash": "a6d128e53b4ec0238baee751dde33bf707adb5ec",
-          "contentSha256": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
-        },
-        {
-          "name": "high-end-visual-design",
-          "upstreamPath": "skills/soft-skill/SKILL.md",
-          "upstreamTreeHash": "1b5943432ddd1b980206968c529a323cc992dbec",
-          "contentSha256": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
-        },
-        {
-          "name": "image-to-code",
-          "upstreamPath": "skills/image-to-code-skill/SKILL.md",
-          "upstreamTreeHash": "701b3cb89c061fcf98a98f639e0b0b5c0b492479",
-          "contentSha256": "58517b03b2a01f4c9ba65861559d03df931400871bbc200978c975b24bb92c73"
-        },
-        {
-          "name": "imagegen-frontend-mobile",
-          "upstreamPath": "skills/imagegen-frontend-mobile/SKILL.md",
-          "upstreamTreeHash": "9901fcde67e9506a706912107825fdfb72e01f30",
-          "contentSha256": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f"
-        },
-        {
-          "name": "imagegen-frontend-web",
-          "upstreamPath": "skills/imagegen-frontend-web/SKILL.md",
-          "upstreamTreeHash": "3b5117d349200e33f9c3399344681620079dcc18",
-          "contentSha256": "65f5ae59fa317567809438310b1c54f78cd133426deb43e4d3d4ca4c8f541628"
-        },
-        {
-          "name": "minimalist-ui",
-          "upstreamPath": "skills/minimalist-skill/SKILL.md",
-          "upstreamTreeHash": "5509c012862cda27e2ed7efae89ed940ecc53add",
-          "contentSha256": "08873a3131d3be27bef9bf3304b310b16b44ca6e3561aebe532797be3443f6bd"
-        },
-        {
-          "name": "redesign-existing-projects",
-          "upstreamPath": "skills/redesign-skill/SKILL.md",
-          "upstreamTreeHash": "d9cffe56d26d4af7687299e391a7be1cfaf46c1b",
-          "contentSha256": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726"
-        }
-      ]
+      "type": "agent-skill",
+      "name": "find-skills",
+      "source": {
+        "kind": "github",
+        "repository": "vercel-labs/skills",
+        "revision": "c6f69c631292444cc541ac6d91e2226b0ff247da",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/find-skills/SKILL.md",
+        "upstreamTreeHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+        "contentSha256": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
     },
     {
-      "repository": "Leonxlnx/unlazy",
-      "revision": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
-      "license": "MIT",
-      "licensePath": "LICENSE",
-      "skills": [
-        {
-          "name": "unlazy",
-          "upstreamPath": "SKILL.md",
-          "upstreamTreeHash": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
-          "contentSha256": "f93525f0a3dc840746eebeb6855b542862c4c92d3e5791b361ed3ed0fd1d7b85"
-        }
-      ]
+      "type": "agent-skill",
+      "name": "high-end-visual-design",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/soft-skill/SKILL.md",
+        "upstreamTreeHash": "1b5943432ddd1b980206968c529a323cc992dbec",
+        "contentSha256": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
     },
     {
-      "repository": "vercel-labs/skills",
-      "revision": "c6f69c631292444cc541ac6d91e2226b0ff247da",
-      "license": "MIT",
-      "licensePath": "LICENSE",
-      "skills": [
-        {
-          "name": "find-skills",
-          "upstreamPath": "skills/find-skills/SKILL.md",
-          "upstreamTreeHash": "76a98a285cb0434f3d39e1a873823556330e398b",
-          "contentSha256": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396"
-        }
-      ]
+      "type": "agent-skill",
+      "name": "hyperframes",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes/SKILL.md",
+        "upstreamTreeHash": "ea0e6aa5b3723a9426b232c046c96903271dad04",
+        "contentSha256": "3ff3805be0e98ad02ff502c6b5358c99f0b71c05539d69c069412d57b535635b",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-animation",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-animation/SKILL.md",
+        "upstreamTreeHash": "94f8c91839d5bf9280b4dbe80a3fd1bbcab1917b",
+        "contentSha256": "dcb152706e225699c3a954e434c094fa8ae23a9061d62d49b0798b20a60b297e",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-audio",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-audio/SKILL.md",
+        "upstreamTreeHash": "63107a7f9f0abeaff9966ba6482cfc6926426899",
+        "contentSha256": "8fc5b21a8e5dd07a20a7aa589b222b64b3b665c7007a5d20ba14d7f6efe5f100",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-cli",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-cli/SKILL.md",
+        "upstreamTreeHash": "b862a63fdeb054cd85076fff559c60aaec050869",
+        "contentSha256": "397861778a28cf89aef03f2b56d1a7d7891202684259d643d5d7bb9130bb291d",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-core",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-core/SKILL.md",
+        "upstreamTreeHash": "fe4c63fdd76ad9655e180eca4b407d0da8d11f80",
+        "contentSha256": "9ec9fb9d13920d0cf588a8b368f5bb52d57aabf99d9606bf63fa874d7bbf74b8",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-creative",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-creative/SKILL.md",
+        "upstreamTreeHash": "fdd1567286e98928f85ccc19c64350bc52c1df86",
+        "contentSha256": "6da4fd1f681605c15aaab34829261fe10d7f3c81ac79bc0ef3b40ed9cd23ef4c",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-keyframes",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-keyframes/SKILL.md",
+        "upstreamTreeHash": "96d3e2f95fa1c71886b54c7e5855086e7146bd27",
+        "contentSha256": "ca3056e210808e6382f96384dcfd83fac5f8b369635ab4ae06dae2dda5e2047f",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "hyperframes-registry",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/hyperframes-registry/SKILL.md",
+        "upstreamTreeHash": "c9f76496706aa566ddf6d53429cc05473b2e10fc",
+        "contentSha256": "b0cb8f843e5b0302cebd68ea13e9e79bbd8f044e8af7b2a858aa956ce8c36f4d",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "image-to-code",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/image-to-code-skill/SKILL.md",
+        "upstreamTreeHash": "701b3cb89c061fcf98a98f639e0b0b5c0b492479",
+        "contentSha256": "58517b03b2a01f4c9ba65861559d03df931400871bbc200978c975b24bb92c73"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "imagegen-frontend-mobile",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/imagegen-frontend-mobile/SKILL.md",
+        "upstreamTreeHash": "9901fcde67e9506a706912107825fdfb72e01f30",
+        "contentSha256": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "imagegen-frontend-web",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/imagegen-frontend-web/SKILL.md",
+        "upstreamTreeHash": "3b5117d349200e33f9c3399344681620079dcc18",
+        "contentSha256": "65f5ae59fa317567809438310b1c54f78cd133426deb43e4d3d4ca4c8f541628"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "media-use",
+      "source": {
+        "kind": "github",
+        "repository": "heygen-com/hyperframes",
+        "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+        "license": "Apache-2.0",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/media-use/SKILL.md",
+        "upstreamTreeHash": "121f654a28ed2f9582091d9305cabaefbc7730f6",
+        "contentSha256": "6db9fd6e46127ca866a8b78a09a963e489e810b663fad2c3ec5b4786fd6c944f",
+        "pluginName": "core-skills"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "minimalist-ui",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/minimalist-skill/SKILL.md",
+        "upstreamTreeHash": "5509c012862cda27e2ed7efae89ed940ecc53add",
+        "contentSha256": "08873a3131d3be27bef9bf3304b310b16b44ca6e3561aebe532797be3443f6bd"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "redesign-existing-projects",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/taste-skill",
+        "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "skills/redesign-skill/SKILL.md",
+        "upstreamTreeHash": "d9cffe56d26d4af7687299e391a7be1cfaf46c1b",
+        "contentSha256": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
+    },
+    {
+      "type": "agent-skill",
+      "name": "unlazy",
+      "source": {
+        "kind": "github",
+        "repository": "Leonxlnx/unlazy",
+        "revision": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "upstreamPath": "SKILL.md",
+        "upstreamTreeHash": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+        "contentSha256": "f93525f0a3dc840746eebeb6855b542862c4c92d3e5791b361ed3ed0fd1d7b85"
+      },
+      "placement": {
+        "canonical": "~/.agents/skills",
+        "targets": [
+          "claude-code",
+          "codex",
+          "pi"
+        ]
+      }
     }
   ]
 }

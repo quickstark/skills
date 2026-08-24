@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 import { formatSkillForCodex } from "./codex-skill-format.mjs";
 import { PS_INTERNAL_CAPABILITIES } from "./ps-skill-catalog.mjs";
-import { assertGeneratedPackageRoot } from "./skill-package-projection.mjs";
+import { assertGeneratedPackageRoot, assertGeneratedPiPackageRoot } from "./skill-package-projection.mjs";
 import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -41,6 +41,7 @@ const packages = Object.freeze([
     description: "QuickStark's twelve-command core engineering workflow.",
     projection: commandsFor("qs-skills"),
     codexRoot: join(repositoryRoot, "codex", "plugins", "qs-skills"),
+    piRoot: join(repositoryRoot, "pi", "packages", "qs-skills"),
     capabilitySourceRoot: join(repositoryRoot, "skills", "internal"),
     capabilityFiles: qsCapabilityFiles,
     claudeMarketplaceSource: "./",
@@ -53,6 +54,7 @@ const packages = Object.freeze([
     description: "Optional QuickStark research, prototyping, documentation, testing, teaching, and skill-authoring workflows.",
     projection: commandsFor("qs-specialists"),
     codexRoot: join(repositoryRoot, "codex", "plugins", "qs-specialists"),
+    piRoot: join(repositoryRoot, "pi", "packages", "qs-specialists"),
     claudeRoot: join(repositoryRoot, "packages", "qs-specialists"),
     capabilityFiles: [],
     claudeMarketplaceSource: "./packages/qs-specialists",
@@ -65,6 +67,7 @@ const packages = Object.freeze([
     description: "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
     projection: commandsFor("ps-skills"),
     codexRoot: join(repositoryRoot, "codex", "plugins", "ps-skills"),
+    piRoot: join(repositoryRoot, "pi", "packages", "ps-skills"),
     claudeRoot: join(repositoryRoot, "packages", "ps-skills"),
     capabilitySourceRoot: join(repositoryRoot, "skills", "pstack", "internal"),
     capabilityFiles: psCapabilityFiles,
@@ -107,8 +110,8 @@ function parseCheckSelection(arguments_) {
     && [packageName, root, format].some((value) => value === undefined)) {
     throw new Error("A selected projector check requires --package, --root, and --format together.");
   }
-  if (format !== undefined && format !== "claude" && format !== "codex") {
-    throw new Error("Projector format must be claude or codex.");
+  if (format !== undefined && !["claude", "codex", "pi"].includes(format)) {
+    throw new Error("Projector format must be claude, codex, or pi.");
   }
   return packageName === undefined ? null : { packageName, root: resolve(root), format };
 }
@@ -180,6 +183,20 @@ function claudeManifest(pkg, generated = false) {
   };
 }
 
+function piManifest(pkg) {
+  return {
+    name: pkg.name,
+    version: project.version,
+    private: true,
+    description: pkg.description,
+    author: { name: "QuickStark", url: "https://github.com/quickstark" },
+    homepage: "https://github.com/quickstark/skills",
+    license: "MIT",
+    keywords: [...pkg.keywords, "pi-package"],
+    pi: { skills: ["./skills"] },
+  };
+}
+
 function marketplace() {
   return {
     name: "quickstark",
@@ -247,6 +264,19 @@ async function writeProjection(pkg, root, { codex }) {
   }
 }
 
+async function writePiProjection(pkg) {
+  await rm(pkg.piRoot, { recursive: true, force: true });
+  const skillsRoot = join(pkg.piRoot, "skills");
+  await mkdir(skillsRoot, { recursive: true });
+  for (const skill of pkg.projection) {
+    const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+    if (!(await exists(join(source, "SKILL.md")))) throw new Error(`Cannot package missing Pi skill /${skill.name}.`);
+    await cp(source, join(skillsRoot, skill.name), { recursive: true, dereference: true });
+  }
+  for (const file of pkg.noticeFiles ?? []) await cp(join(repositoryRoot, file), join(pkg.piRoot, file));
+  await writeFile(join(pkg.piRoot, "package.json"), json(piManifest(pkg)));
+}
+
 async function syncAll() {
   for (const pkg of packages) {
     await writeProjection(pkg, pkg.codexRoot, { codex: true });
@@ -257,12 +287,13 @@ async function syncAll() {
       await mkdir(join(pkg.claudeRoot, ".claude-plugin"), { recursive: true });
       await writeFile(join(pkg.claudeRoot, ".claude-plugin", "plugin.json"), json(claudeManifest(pkg, true)));
     }
+    await writePiProjection(pkg);
   }
 
   await writeFile(join(repositoryRoot, ".claude-plugin", "plugin.json"), json(claudeManifest(packages[0])));
   await writeFile(join(repositoryRoot, ".claude-plugin", "marketplace.json"), json(marketplace()));
   await writeFile(join(repositoryRoot, "codex", ".agents", "plugins", "marketplace.json"), json(codexMarketplace()));
-  console.log("Generated isolated QuickStark v3 core, specialist, and PS package projections.");
+  console.log("Generated isolated QuickStark v3 core, specialist, and PS projections for Codex, Claude, and Pi.");
 }
 
 async function expectedSkillFiles(pkg, { codex }) {
@@ -324,6 +355,33 @@ async function verifyProjection(pkg, root, { codex }) {
   }
 }
 
+async function verifyPiProjection(pkg, root) {
+  await assertGeneratedPiPackageRoot(root, { noticeFiles: pkg.noticeFiles ?? [] });
+  const actualSkillFiles = await fileList(join(root, "skills"));
+  const expected = await expectedSkillFiles(pkg, { codex: false });
+  if (JSON.stringify(actualSkillFiles) !== JSON.stringify(expected)) {
+    throw new Error(`${pkg.name} has missing, extra, or stale projected Pi skill files.`);
+  }
+  for (const skill of pkg.projection) {
+    const sourceRoot = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+    const targetRoot = join(root, "skills", skill.name);
+    for (const file of await fileList(sourceRoot)) {
+      const [source, actual] = await Promise.all([
+        readFile(join(sourceRoot, file)),
+        readFile(join(targetRoot, file)),
+      ]);
+      if (!source.equals(actual)) throw new Error(`${pkg.name} Pi projection is stale: ${skill.name}/${file}.`);
+    }
+  }
+  for (const file of pkg.noticeFiles ?? []) {
+    const [source, actual] = await Promise.all([
+      readFile(join(repositoryRoot, file)),
+      readFile(join(root, file)),
+    ]);
+    if (!source.equals(actual)) throw new Error(`${pkg.name} has a stale Pi notice: ${file}.`);
+  }
+}
+
 async function verifyJson(path, expected, label) {
   const actual = JSON.parse(await readFile(path, "utf8"));
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error(`${label} is stale.`);
@@ -333,13 +391,18 @@ async function verifyAll(selection = null) {
   if (selection) {
     const pkg = packages.find((candidate) => candidate.name === selection.packageName);
     if (!pkg) throw new Error(`Unknown generated package: ${selection.packageName}.`);
-    const codex = selection.format === "codex";
-    await verifyProjection(pkg, selection.root, { codex });
-    await verifyJson(
-      join(selection.root, codex ? ".codex-plugin" : ".claude-plugin", "plugin.json"),
-      codex ? codexManifest(pkg) : claudeManifest(pkg, true),
-      `${pkg.name} ${codex ? "Codex" : "Claude"} manifest`,
-    );
+    if (selection.format === "pi") {
+      await verifyPiProjection(pkg, selection.root);
+      await verifyJson(join(selection.root, "package.json"), piManifest(pkg), `${pkg.name} Pi manifest`);
+    } else {
+      const codex = selection.format === "codex";
+      await verifyProjection(pkg, selection.root, { codex });
+      await verifyJson(
+        join(selection.root, codex ? ".codex-plugin" : ".claude-plugin", "plugin.json"),
+        codex ? codexManifest(pkg) : claudeManifest(pkg, true),
+        `${pkg.name} ${codex ? "Codex" : "Claude"} manifest`,
+      );
+    }
     console.log(`Verified deterministic ${pkg.name} ${selection.format} package projection.`);
     return;
   }
@@ -350,9 +413,11 @@ async function verifyAll(selection = null) {
       await verifyProjection(pkg, pkg.claudeRoot, { codex: false });
       await verifyJson(join(pkg.claudeRoot, ".claude-plugin", "plugin.json"), claudeManifest(pkg, true), `${pkg.name} Claude manifest`);
     }
+    await verifyPiProjection(pkg, pkg.piRoot);
+    await verifyJson(join(pkg.piRoot, "package.json"), piManifest(pkg), `${pkg.name} Pi manifest`);
   }
   await verifyJson(join(repositoryRoot, ".claude-plugin", "plugin.json"), claudeManifest(packages[0]), "core Claude manifest");
   await verifyJson(join(repositoryRoot, ".claude-plugin", "marketplace.json"), marketplace(), "Claude marketplace");
   await verifyJson(join(repositoryRoot, "codex", ".agents", "plugins", "marketplace.json"), codexMarketplace(), "Codex marketplace");
-  console.log("Verified deterministic QuickStark v3 core, specialist, and PS package projections.");
+  console.log("Verified deterministic QuickStark v3 core, specialist, and PS projections for Codex, Claude, and Pi.");
 }

@@ -17,6 +17,13 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 
 Every non-release result emits three ranked copy-ready prompts regardless of completion state. The first is the opinionated preferred route; the remaining two are alternatives. A failed result promotes a catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompts.
 
+When the catalog assigns a composite workflow to a root, the preferred prompt
+may explicitly name several public roots for the same session. This is one user
+authorization prompt, not an automatic skill hop: every root still emits its
+own result, the sequence stops after any non-`complete` status, and later roots
+receive no mutation, Git, installation, deployment, or publication authority
+unless the prompt grants that exact action.
+
 ## Clear-writing pass
 
 Apply the internal clear-writing pass to every QS and PS result after facts, inferences, and uncertainties are separated:
@@ -46,7 +53,7 @@ Omit empty sections and routine successful detail. A brief result shows no more 
 
 Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language.
 
-In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—and in Claude it begins with `/<command>`. Keep each prompt concise: carry forward the outcome and only the highest-value evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
+In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—in Claude it begins with `/<command>`, and in Pi it begins with `/skill:<command>`. Keep each prompt concise: carry forward the outcome and only the highest-value evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
 
 ## Safety
 

@@ -1,0 +1,6 @@
+interface:
+  display_name: "PS Visual Parity"
+  short_description: "Converge to an immutable baseline"
+  default_prompt: "Use $ps-skills:ps-visual-parity to converge this implementation toward its immutable visual baseline using a declared tolerance. Modes: effort=quick|standard|deep and report=brief|full."
+policy:
+  allow_implicit_invocation: false

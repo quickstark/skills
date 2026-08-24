@@ -8,7 +8,7 @@ This decision supersedes hosted-output requirements in ADR 0001, historical spec
 
 ## Consequences
 
-- Canonical skills, concise documentation, and generated Claude and Codex projections share one direct-chat completion contract.
+- Canonical skills, concise documentation, and generated Claude, Codex, and Pi projections share one direct-chat completion contract.
 - The reporting renderer, portfolio and settings helpers, browser prototypes, ingestion API description, deployment definition, operational guide, browser-only tests, and package support copies are removed.
 - Historical specifications and research remain available with explicit supersession notices.
 - Production service retirement is staged: release and verify the chat-only packages first, then stop the reporting containers and routes. Preserve historical report data and dormant producer configuration for rollback unless a later authorized cleanup removes them.

@@ -6,6 +6,8 @@ import {
   PUBLIC_COMMANDS,
   PUBLIC_COMMANDS_BY_NAME,
   codexPublicSkillLiteral,
+  piPublicSkillLiteral,
+  renderCompositeWorkflowPrompt,
 } from "./skill-collection-registry.mjs";
 
 export const SKILL_OUTPUT_HEADING = "## Completion report and next steps";
@@ -22,6 +24,8 @@ export function renderSkillOutputContract(skill) {
   const terminal = routes.length === 0 && failureRoutes.length === 0;
   const allRoutes = [...new Map([...routes, ...failureRoutes].map((item) => [item.name, item])).values()];
   const codexLiterals = allRoutes.map((item) => codexPublicSkillLiteral(item.name));
+  const piLiterals = allRoutes.map((item) => piPublicSkillLiteral(item.name));
+  const preferredCompositeWorkflow = registered.continuation.preferredCompositeWorkflow;
   return [
     SKILL_OUTPUT_HEADING,
     "",
@@ -35,7 +39,7 @@ export function renderSkillOutputContract(skill) {
     "",
     terminal
       ? "Do not invent a follow-on workflow after release. State any release failure in this result."
-      : `Default routes: ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Tailor every prompt to the completed work.`,
+      : `Default routes: ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Tailor every prompt to the completed work.${preferredCompositeWorkflow ? ` When the remaining objective fits, the preferred prompt may use this catalog-approved composite workflow: ${renderCompositeWorkflowPrompt(preferredCompositeWorkflow, { harness: "codex" })} This preserves each separate public root, must stop on a non-complete result, and does not add mutation authority.` : ""}`,
     "",
     "Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.",
     "",
@@ -53,7 +57,7 @@ export function renderSkillOutputContract(skill) {
     "",
     terminal
       ? "Never add a speculative prompt merely to keep the workflow moving."
-      : `Label prompts \`Preferred next prompt:\` and \`Alternative next prompt:\`. Put each in its own fenced \`text\` block, beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}. Carry forward only the outcome and highest-value evidence. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
+      : `Label prompts \`Preferred next prompt:\` and \`Alternative next prompt:\`. Put each in its own fenced \`text\` block, beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. Carry forward only the outcome and highest-value evidence. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
   ].join("\n");
 }
 

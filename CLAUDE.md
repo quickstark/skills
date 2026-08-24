@@ -29,9 +29,12 @@ The default core contains exactly twelve commands. The optional specialists pack
 - Codex specialist package: `codex/plugins/qs-specialists/`
 - Claude PS package: `packages/ps-skills/`
 - Codex PS package: `codex/plugins/ps-skills/`
+- Pi core package: `pi/packages/qs-skills/`
+- Pi specialist package: `pi/packages/qs-specialists/`
+- Pi PS package: `pi/packages/ps-skills/`
 - Claude and Codex marketplaces each expose all three packages.
 
-Codex and generated Claude package snapshots are generated outputs. Never edit them independently. Keep the package, lockfile, all three Claude manifests, and all three Codex manifests on the same version.
+Codex, generated Claude, and Pi package snapshots are generated outputs. Never edit them independently. Keep the package, lockfile, all three Claude manifests, all three Codex manifests, and all three Pi manifests on the same version.
 
 After a public skill, capability, catalog, documentation, or plugin change, run:
 

@@ -7,7 +7,6 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
-  APPROVED_SOURCES,
   buildInstallerArguments,
   buildPlan,
   calculateSkillDirectoryHash,
@@ -27,48 +26,52 @@ async function privateFixture() {
   return mkdtemp(join(tmpdir(), "qs-personal-skills-test-"));
 }
 
-test("personal skill manifest declares only approved immutable sources and all eighteen skills", async () => {
+test("personal skill manifest preserves the initial eighteen immutable skills while remaining extensible", async () => {
   const manifest = await manifestFixture();
   const normalized = validateManifest(manifest);
 
   assert.equal(normalized.installer.package, "skills");
   assert.equal(normalized.installer.version, "1.5.23");
   assert.equal(normalized.canonicalDirectory, "~/.agents/skills");
-  assert.equal(normalized.sources.length, 4);
-  assert.equal(normalized.sources.flatMap((source) => source.skills).length, 18);
-  assert.deepEqual(
-    normalized.sources.map((source) => source.repository).sort(),
-    Object.keys(APPROVED_SOURCES).sort(),
-  );
+  assert.equal(normalized.schemaVersion, 2);
+  assert.equal(normalized.resources.filter((resource) => resource.type === "agent-skill").length >= 18, true);
+  assert.equal(normalized.resources.every((resource) => resource.type !== "agent-skill" || (
+    resource.source.kind === "github"
+    && /^[a-f0-9]{40}$/.test(resource.source.revision)
+    && /^[a-f0-9]{40}$/.test(resource.source.upstreamTreeHash)
+    && /^[a-f0-9]{64}$/.test(resource.source.contentSha256)
+  )), true);
 });
 
 test("the aggregate skill gate remains verification-only", async () => {
   const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
   assert.equal(
     project.scripts["skills:verify"],
-    "npm run check:codex && npm test && npm run personal-skills:verify -- --json",
+    "npm run check:codex && npm test && node scripts/managed-skills.mjs verify --json",
   );
   assert.doesNotMatch(project.scripts["skills:verify"], /sync|install|add/);
+  assert.equal(project.scripts["skills:plan"], "node scripts/managed-skills.mjs plan");
+  assert.equal(project.scripts["skills:sync"], "node scripts/managed-skills.mjs sync");
 });
 
-test("manifest validation rejects unknown sources, duplicate names, mutable revisions, and hash drift", async () => {
+test("manifest validation rejects duplicate identities, mutable revisions, unsafe placement, and hash drift", async () => {
   const fixture = await manifestFixture();
 
-  const unknown = structuredClone(fixture);
-  unknown.sources[0].repository = "someone/unapproved";
-  assert.throws(() => validateManifest(unknown), /approved source/i);
-
   const duplicate = structuredClone(fixture);
-  duplicate.sources[1].skills[0].name = duplicate.sources[0].skills[0].name;
-  assert.throws(() => validateManifest(duplicate), /duplicate skill/i);
+  duplicate.resources[1].name = duplicate.resources[0].name;
+  assert.throws(() => validateManifest(duplicate), /duplicate manifest resource/i);
 
   const floating = structuredClone(fixture);
-  floating.sources[0].revision = "main";
-  assert.throws(() => validateManifest(floating), /immutable revision/i);
+  floating.resources[0].source.revision = "main";
+  assert.throws(() => validateManifest(floating), /immutable Git revision/i);
 
   const invalidHash = structuredClone(fixture);
-  invalidHash.sources[0].skills[0].contentSha256 = "not-a-hash";
+  invalidHash.resources[0].source.contentSha256 = "not-a-hash";
   assert.throws(() => validateManifest(invalidHash), /sha-256/i);
+
+  const unsafePlacement = structuredClone(fixture);
+  unsafePlacement.resources[0].placement.canonical = "~/.codex/skills";
+  assert.throws(() => validateManifest(unsafePlacement), /canonical/i);
 
   const wrongInstaller = structuredClone(fixture);
   wrongInstaller.installer.version = "1.5.22";
@@ -81,6 +84,7 @@ test("directory hashing matches installer localeCompare ordering and excludes Gi
     await mkdir(join(root, "nested"), { recursive: true });
     await mkdir(join(root, ".git"), { recursive: true });
     await mkdir(join(root, "node_modules"), { recursive: true });
+    await writeFile(join(root, "SKILL.md"), "---\nname: hash-test\ndescription: test\n---\n");
     await writeFile(join(root, "Zeta.md"), "z");
     await writeFile(join(root, "alpha.md"), "a");
     await writeFile(join(root, "nested", "Beta.md"), "b");
@@ -89,6 +93,7 @@ test("directory hashing matches installer localeCompare ordering and excludes Gi
 
     const files = [
       ["Zeta.md", "z"],
+      ["SKILL.md", "---\nname: hash-test\ndescription: test\n---\n"],
       ["alpha.md", "a"],
       ["nested/Beta.md", "b"],
     ].sort(([first], [second]) => first.localeCompare(second));
@@ -107,7 +112,7 @@ test("directory hashing matches installer localeCompare ordering and excludes Gi
 
 test("the Mac unlazy content hash reproduces the recorded installer-compatible digest", async () => {
   const manifest = await manifestFixture();
-  const entry = manifest.sources.flatMap((source) => source.skills).find((skill) => skill.name === "unlazy");
+  const entry = manifest.resources.find((resource) => resource.name === "unlazy").source;
 
   assert.equal(entry.contentSha256, "f93525f0a3dc840746eebeb6855b542862c4c92d3e5791b361ed3ed0fd1d7b85");
   assert.equal(entry.upstreamTreeHash, "754d9a68109e39b836cc72a39fb9a823f9d6b613");
@@ -115,8 +120,19 @@ test("the Mac unlazy content hash reproduces the recorded installer-compatible d
 
 test("lock reconciliation preserves unrelated entries, unknown fields, and original installation dates", async () => {
   const manifest = await manifestFixture();
-  const source = manifest.sources.find((entry) => entry.repository === "Leonxlnx/unlazy");
-  const skill = source.skills.find((entry) => entry.name === "unlazy");
+  const resource = manifest.resources.find((entry) => entry.name === "unlazy");
+  const source = {
+    repository: resource.source.repository,
+    revision: resource.source.revision,
+    license: resource.source.license,
+    licensePath: resource.source.licensePath,
+  };
+  const skill = {
+    name: resource.name,
+    upstreamPath: resource.source.upstreamPath,
+    upstreamTreeHash: resource.source.upstreamTreeHash,
+    contentSha256: resource.source.contentSha256,
+  };
   const original = {
     version: 3,
     customRoot: "keep",
@@ -152,18 +168,20 @@ test("plan reports missing skills, preserves matched skills, and rejects conflic
   try {
     const skillRoot = join(root, ".agents", "skills");
     await mkdir(join(skillRoot, "present"), { recursive: true });
-    await writeFile(join(skillRoot, "present", "SKILL.md"), "present");
+    await writeFile(join(skillRoot, "present", "SKILL.md"), "---\nname: present\ndescription: test\n---\n\npresent\n");
     const matching = await calculateSkillDirectoryHash(join(skillRoot, "present"));
     const mini = {
+      schemaVersion: 2,
+      installer: {
+        package: "skills",
+        version: "1.5.23",
+        integrity: "sha512-+hMNBSi35yfX0sKD+ZcRm9y5or7u313OdkcvrRvJAsAzGCaA8wRTu2OmVdN0KRbk9ybqKby5dijkn6OVvNTUmw==",
+      },
       canonicalDirectory: "~/.agents/skills",
-      sources: [{
-        repository: "owner/repo",
-        revision: "a".repeat(40),
-        skills: [
-          { name: "present", upstreamPath: "present/SKILL.md", upstreamTreeHash: "b".repeat(40), contentSha256: matching },
-          { name: "missing", upstreamPath: "missing/SKILL.md", upstreamTreeHash: "c".repeat(40), contentSha256: "d".repeat(64) },
-        ],
-      }],
+      resources: [
+        { type: "agent-skill", name: "present", source: { kind: "github", repository: "owner/repo", revision: "a".repeat(40), license: "MIT", licensePath: "LICENSE", upstreamPath: "present/SKILL.md", upstreamTreeHash: "b".repeat(40), contentSha256: matching }, placement: { canonical: "~/.agents/skills", targets: ["codex", "pi"] } },
+        { type: "agent-skill", name: "missing", source: { kind: "github", repository: "owner/repo", revision: "a".repeat(40), license: "MIT", licensePath: "LICENSE", upstreamPath: "missing/SKILL.md", upstreamTreeHash: "c".repeat(40), contentSha256: "d".repeat(64) }, placement: { canonical: "~/.agents/skills", targets: ["codex", "pi"] } },
+      ],
     };
     const lock = { version: 3, skills: { present: { source: "owner/repo", sourceType: "github", sourceUrl: "https://github.com/owner/repo.git", ref: "a".repeat(40), skillPath: "present/SKILL.md", skillFolderHash: "b".repeat(40) } } };
     const plan = await buildPlan(mini, { homeDirectory: root, lock });

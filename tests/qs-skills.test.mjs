@@ -51,7 +51,9 @@ test("every public command has matching source, metadata, documentation, and pac
 
     const collection = SKILL_COLLECTIONS.find((item) => item.id === command.collectionId);
     const codexCopy = join(root, collection.codexPackageRoot, "skills", command.name, "SKILL.md");
+    const piCopy = join(root, collection.piPackageRoot, "skills", command.name, "SKILL.md");
     assert.equal(await exists(codexCopy), true);
+    assert.equal(await exists(piCopy), true);
     if (collection.claudePackageRoot !== ".") {
       assert.equal(await exists(join(root, collection.claudePackageRoot, "skills", command.name, "SKILL.md")), true);
     }
@@ -114,7 +116,7 @@ test("reporting runtime, deployment, operational API, and browser dependency are
   assert.ok(Object.keys(project.scripts).every((name) => !name.startsWith("readouts:")));
 });
 
-test("package manifests and marketplaces expose exactly three same-version packages", async () => {
+test("package manifests and marketplaces expose exactly three same-version packages per harness", async () => {
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
   const claudeMarketplace = JSON.parse(await readFile(join(root, ".claude-plugin", "marketplace.json"), "utf8"));
   const codexMarketplace = JSON.parse(await readFile(join(root, "codex", ".agents", "plugins", "marketplace.json"), "utf8"));
@@ -129,6 +131,9 @@ test("package manifests and marketplaces expose exactly three same-version packa
     "codex/plugins/qs-skills/.codex-plugin/plugin.json",
     "codex/plugins/qs-specialists/.codex-plugin/plugin.json",
     "codex/plugins/ps-skills/.codex-plugin/plugin.json",
+    "pi/packages/qs-skills/package.json",
+    "pi/packages/qs-specialists/package.json",
+    "pi/packages/ps-skills/package.json",
   ]) {
     const manifest = JSON.parse(await readFile(join(root, path), "utf8"));
     assert.equal(manifest.version, project.version, path);

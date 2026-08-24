@@ -1,0 +1,23 @@
+{
+  "name": "qs-specialists",
+  "version": "3.5.0",
+  "private": true,
+  "description": "Optional QuickStark research, prototyping, documentation, testing, teaching, and skill-authoring workflows.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "engineering",
+    "specialists",
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

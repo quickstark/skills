@@ -2,7 +2,7 @@
 
 ## System at a glance
 
-QuickStark v3 exposes twelve core QS commands, seven optional QS specialist commands, and thirteen optional explicit-only PS commands for Codex and Claude Code. Four former QS commands and sixteen PS techniques remain internal capabilities.
+QuickStark v3 exposes twelve core QS commands, seven optional QS specialist commands, and thirteen optional explicit-only PS commands for Codex, Claude Code, and Pi. Four former QS commands and sixteen PS techniques remain internal capabilities.
 
 ```mermaid
 flowchart LR
@@ -12,9 +12,11 @@ flowchart LR
     registry --> docs["Generated command documentation"]
     registry --> claude["Three isolated Claude packages"]
     registry --> codex["Three isolated Codex packages"]
+    registry --> pi["Three isolated Pi packages"]
     contracts --> sources["Canonical skill sources"]
     sources --> claude
     sources --> codex
+    sources --> pi
 ```
 
 ## Sources of truth
@@ -23,12 +25,12 @@ flowchart LR
 | --- | --- | --- |
 | QS identity and behavior | `scripts/qs-skill-catalog.mjs` | Core and specialist membership, fixed v2 migration inventory, lifecycle order, invocation policy, effort/report modes, and ranked continuations. |
 | PS identity and provenance | `scripts/ps-skill-catalog.mjs` | Thirteen commands, sixteen private capabilities, pinned pstack provenance, fixed dispositions, completion evidence, and continuations. |
-| Shared collection identity | `scripts/skill-collection-registry.mjs` | Unique public command identity, package ownership, and exact Codex and Claude literals. |
+| Shared collection identity | `scripts/skill-collection-registry.mjs` | Unique public command identity, package ownership, and exact Codex, Claude, and Pi literals. |
 | Canonical QS sources | `skills/engineering/`, `skills/productivity/` | Public QS instructions and matching `agents/openai.yaml` metadata. |
 | Canonical PS sources | `skills/pstack/commands/`, `skills/pstack/internal/` | Public PS instructions and private host-neutral capabilities. |
 | Shared output policy | `docs/skill-run-contract.md`, `scripts/sync-skill-output-contracts.mjs` | Direct chat presentation, completion states, internal clear-writing pass, and exact next-prompt format. |
 | Documentation generator | `scripts/sync-v3-docs.mjs` | Concise command pages generated from registered metadata. |
-| Package projector | `scripts/sync-codex-plugin.mjs` | Deterministic Claude and Codex packages, manifests, capabilities, notices, and shared catalog metadata. |
+| Package projector | `scripts/sync-codex-plugin.mjs` | Deterministic Claude, Codex, and Pi packages, manifests, capabilities, notices, and shared catalog metadata. |
 | Behavioral verification | `tests/` | Public surface, routing, safety, direct-chat contracts, clear writing, and projection integrity. |
 
 Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
@@ -41,9 +43,9 @@ Each public command belongs to exactly one package:
 - `qs-specialists`: seven optional specialist commands.
 - `ps-skills`: thirteen explicit-only commands, sixteen private capabilities, and the Lauren Tan notice.
 
-Packages never import another package's skill bodies. Claude uses `disable-model-invocation: true` for explicit commands; Codex projects the same restriction through `agents/openai.yaml`. Generated package trees are snapshots and are never edited independently.
+Packages never import another package's skill bodies. Claude and Pi use canonical `disable-model-invocation: true` frontmatter for explicit commands; Codex projects the same restriction through `agents/openai.yaml`. Generated package trees are snapshots and are never edited independently.
 
-Keep `package.json`, `package-lock.json`, all three Claude manifests, and all three Codex manifests on the same version.
+Keep `package.json`, `package-lock.json`, all three Claude manifests, all three Codex manifests, and all three Pi manifests on the same version.
 
 ## Run lifecycle
 

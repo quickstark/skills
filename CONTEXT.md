@@ -1,10 +1,10 @@
 # QuickStark Skills context
 
-QuickStark is a personal collection of namespaced skills for Codex and Claude Code. The QS packages adapt Matt Pocock's MIT-licensed work; the optional PS package adapts Lauren Tan's MIT-licensed pstack without Cursor-specific mechanisms.
+QuickStark is a personal collection of namespaced skills for Codex, Claude Code, and Pi. The QS packages adapt Matt Pocock's MIT-licensed work; the optional PS package adapts Lauren Tan's MIT-licensed pstack without Cursor-specific mechanisms.
 
 ## Language
 
-**Promoted command**: A canonical public command registered in exactly one collection and projected into its assigned Claude and Codex plugins.
+**Promoted command**: A canonical public command registered in exactly one collection and projected into its assigned Claude, Codex, and Pi packages.
 
 **Core command**: One of twelve lifecycle-ordered commands in `qs-skills`.
 
@@ -28,7 +28,7 @@ QuickStark is a personal collection of namespaced skills for Codex and Claude Co
 
 **Clear-writing pass**: The internal final synthesis applied to every QS and PS result. It leads with the outcome, uses concrete language, preserves necessary qualifications, and removes repetition.
 
-**Next prompt**: One of three ranked copy-ready continuations emitted by every non-release command. The first is preferred and the other two are alternatives. Each appears in its own fenced `text` block and begins with the exact installed plugin literal in Codex or slash command in Claude. `/qs-deploy-release` is terminal and emits none.
+**Next prompt**: One of three ranked copy-ready continuations emitted by every non-release command. The first is preferred and the other two are alternatives. Each appears in its own fenced `text` block and begins with the exact installed plugin literal in Codex, slash command in Claude, or `/skill:<command>` in Pi. `/qs-deploy-release` is terminal and emits none.
 
 **Finding priority**: An explicitly assessed `P0`, `P1`, `P2`, or `P3`. Omit it when urgency was not assessed.
 
@@ -72,5 +72,5 @@ The PS catalog contains `ps-help`, `ps-how`, `ps-why`, `ps-blast-radius`, `ps-ru
 - Every non-release result has exactly three catalog-approved continuations in ranked order.
 - Every result receives the same internal clear-writing pass and appears directly in chat.
 - Commands return their results in the current conversation without an external output system or separate credentials.
-- Generated Claude and Codex package snapshots are never edited independently.
+- Generated Claude, Codex, and Pi package snapshots are never edited independently.
 - Personal changes publish only to `origin`; `upstream` remains read-only.

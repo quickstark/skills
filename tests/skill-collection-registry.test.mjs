@@ -2,9 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  COMPOSITE_WORKFLOWS,
   COLLECTION_REGISTRY,
   PUBLIC_COMMANDS,
   codexPublicSkillLiteral,
+  renderCompositeWorkflowPrompt,
   resolvePublicCommand,
   validateSkillCollectionRegistryModel,
 } from "../scripts/skill-collection-registry.mjs";
@@ -32,6 +34,56 @@ test("PS-02 resolves QS core, QS specialist, and PS commands through registered 
   assert.equal(codexPublicSkillLiteral("ps-how"), "$ps-skills:ps-how");
   assert.equal(resolvePublicCommand("ps-how").invocationPolicy, "explicit");
   assert.equal(resolvePublicCommand("ps-how").readoutProfile, undefined);
+});
+
+test("composite continuation renders an explicit build review test merge workflow prompt", () => {
+  const workflow = COMPOSITE_WORKFLOWS.find(({ id }) => id === "build-review-test-merge");
+  assert.deepEqual(workflow.steps, ["qs-code-build", "qs-review-code", "qs-test-verify", "qs-git-merge"]);
+  assert.deepEqual(workflow.stopStatuses, ["continuation-required", "input-required", "failed"]);
+  assert.equal(workflow.automaticPublicSkillHops, false);
+
+  const prompt = renderCompositeWorkflowPrompt(workflow.id, {
+    harness: "codex",
+    context: "Implement ticket QS-42.",
+  });
+  for (const literal of [
+    "$qs-skills:qs-code-build",
+    "$qs-skills:qs-review-code",
+    "$qs-specialists:qs-test-verify",
+    "$qs-skills:qs-git-merge",
+  ]) assert.match(prompt, new RegExp(literal.replace("$", "\\$&")));
+  assert.match(prompt, /separate public root/i);
+  assert.match(prompt, /stop.*continuation-required.*input-required.*failed/is);
+  assert.match(prompt, /does not grant.*commit.*merge.*push/is);
+});
+
+test("one-root boundary remains structural for composite workflow prompts", () => {
+  for (const workflow of COMPOSITE_WORKFLOWS) {
+    assert.equal(workflow.perRootReports, true);
+    assert.equal(workflow.automaticPublicSkillHops, false);
+    assert.ok(workflow.steps.length >= 2);
+  }
+  assert.match(
+    renderCompositeWorkflowPrompt("review-test-merge", { harness: "claude" }),
+    /^\/qs-review-code/,
+  );
+  assert.equal(resolvePublicCommand("qs-plan-spec").continuation.preferredCompositeWorkflow, "build-review-test-merge");
+  assert.equal(resolvePublicCommand("qs-code-build").continuation.preferredCompositeWorkflow, "review-test-merge");
+  assert.equal(resolvePublicCommand("qs-review-code").continuation.preferredCompositeWorkflow, "test-merge");
+  assert.equal(resolvePublicCommand("ps-hillclimb").continuation.preferredCompositeWorkflow, "review-test-merge");
+});
+
+test("Pi composite workflow uses exact skill literals and preserves stop boundaries", () => {
+  const prompt = renderCompositeWorkflowPrompt("build-review-test-merge", {
+    harness: "pi",
+    context: "Implement QS-42.",
+  });
+  assert.match(prompt, /^\/skill:qs-code-build/);
+  assert.match(prompt, /\/skill:qs-review-code/);
+  assert.match(prompt, /\/skill:qs-test-verify/);
+  assert.match(prompt, /\/skill:qs-git-merge/);
+  assert.match(prompt, /separate public root/i);
+  assert.match(prompt, /stop on continuation-required, input-required, failed/i);
 });
 
 test("PS-02 rejects unknown commands, duplicate identities, and missing continuation targets", () => {

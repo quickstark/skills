@@ -33,4 +33,4 @@ Outcome: Concise verified result.
 Preferred next prompt: one copy-ready prompt in a fenced `text` block
 Alternative next prompts: two copy-ready prompts, each in its own fenced `text` block
 
-Label prompts `Preferred next prompt:` and `Alternative next prompt:`. Put each in its own fenced `text` block, beginning with its exact Codex literal ($qs-skills:qs-help, $qs-skills:qs-code-build, $qs-skills:qs-plan-clarify); Claude uses `/qs-help`, `/qs-code-build`, `/qs-plan-clarify`. Carry forward only the outcome and highest-value evidence. Keep model guidance outside the fence and never change the active model or reasoning setting.
+Label prompts `Preferred next prompt:` and `Alternative next prompt:`. Put each in its own fenced `text` block, beginning with its exact Codex literal ($qs-skills:qs-help, $qs-skills:qs-code-build, $qs-skills:qs-plan-clarify); Claude uses `/qs-help`, `/qs-code-build`, `/qs-plan-clarify`; Pi uses `/skill:qs-help`, `/skill:qs-code-build`, `/skill:qs-plan-clarify`. Carry forward only the outcome and highest-value evidence. Keep model guidance outside the fence and never change the active model or reasoning setting.

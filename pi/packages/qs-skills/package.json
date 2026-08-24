@@ -1,0 +1,23 @@
+{
+  "name": "qs-skills",
+  "version": "3.5.0",
+  "private": true,
+  "description": "QuickStark's twelve-command core engineering workflow.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "engineering",
+    "workflow",
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

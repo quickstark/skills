@@ -17,7 +17,11 @@
     "check:codex": "node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check",
     "test": "node scripts/qs-test-runner.mjs",
     "test:preflight": "node scripts/qs-test-preflight.mjs",
-    "skills:verify": "npm run check:codex && npm test && npm run personal-skills:verify -- --json",
+    "skills:plan": "node scripts/managed-skills.mjs plan",
+    "skills:sync": "node scripts/managed-skills.mjs sync",
+    "skills:verify": "npm run check:codex && npm test && node scripts/managed-skills.mjs verify --json",
+    "personal-skills:inventory": "node scripts/sync-personal-skills.mjs inventory",
+    "personal-skills:adopt": "node scripts/sync-personal-skills.mjs adopt",
     "personal-skills:plan": "node scripts/sync-personal-skills.mjs plan",
     "personal-skills:sync": "node scripts/sync-personal-skills.mjs sync",
     "personal-skills:verify": "node scripts/sync-personal-skills.mjs verify"

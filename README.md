@@ -1,6 +1,6 @@
 # QuickStark Skills v3
 
-A focused engineering workflow for Codex and Claude Code. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds seven bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
+A focused engineering workflow for Codex, Claude Code, and Pi. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds seven bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
 
 QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills), with an optional adaptation of [Lauren Tan's MIT-licensed pstack](https://github.com/cursor/plugins/tree/main/pstack). The upstream notices are preserved in [third-party notices](./THIRD_PARTY_NOTICES.md).
 
@@ -13,10 +13,12 @@ for the pinned manifest of approved third-party skills. Installed global skill
 directories and plugin caches are machine projections; do not copy them back
 into Git.
 
-Use `npm run skills:verify` for the complete read-only gate. Third-party machine
-state is inspected with `personal-skills:plan`, changed only with an explicitly
-authorized `personal-skills:sync`, and confirmed with
-`personal-skills:verify`. See the [central skill control plane](./docs/personal-skills.md).
+Use `npm run skills:plan` to inspect the complete maintained-package and
+approved-resource deployment, `npm run skills:sync -- --authorize` to execute
+that reviewed plan, and `npm run skills:verify` for the complete read-only
+gate. The lower-level `personal-skills:*` commands remain available for
+inventory, explicit adoption, and contributor-resource-only reconciliation.
+See the [central skill control plane](./docs/personal-skills.md).
 
 ## Install
 
@@ -53,7 +55,30 @@ claude plugin install qs-specialists@quickstark
 claude plugin install ps-skills@quickstark
 ```
 
+Pi core and optional packages:
+
+```bash
+pi install ./pi/packages/qs-skills
+pi install ./pi/packages/qs-specialists
+pi install ./pi/packages/ps-skills
+```
+
 Restart the host or begin a new task after changing installed plugins. A Git pull updates the checkout; it does not automatically refresh a cached installed plugin.
+
+To install or update the maintained packages and approved contributor skills
+through one reviewed operation, select the harnesses explicitly:
+
+```bash
+npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
+npm run skills:sync -- --authorize --agent codex --agent claude-code --agent pi
+npm run skills:verify -- --agent codex --agent claude-code --agent pi
+```
+
+The unified command uses the checked-out repository version as "latest",
+validates all nine generated package manifests, and verifies the installed
+package versions reported by each selected manager. Pi receives the three
+maintained QuickStark package projections through its native local-package
+manager; the 18 approved contributor skills remain portable Agent Skills.
 
 ## Core commands
 
@@ -94,7 +119,7 @@ Restart the host or begin a new task after changing installed plugins. A Git pul
 - `qs-review-code action=refactor target=<scope>` is the refactoring workflow. An unscoped whole-codebase request stays read-only until a target is selected.
 - Every invocation has one root skill and zero automatic public-skill hops.
 - `effort=quick|standard|deep` controls execution depth; `report=brief|full` independently controls presentation. Defaults are `standard` and `brief`.
-- Every non-release result has three ranked next prompts: one preferred route and two alternatives. Release is terminal and has none.
+- Every non-release result has three ranked next prompts: one preferred route and two alternatives. Eligible preferred prompts may explicitly sequence catalog-approved roots in the same session, with one report per root and a stop on any non-complete result. Release is terminal and has none.
 
 See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
 
