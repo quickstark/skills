@@ -1,5 +1,15 @@
 # QuickStark Skills changelog
 
+## 3.6.2
+
+### Patch Changes
+
+- [`a588c3d`](https://github.com/quickstark/skills/commit/a588c3d78a1dc92ed17ec2ca7bcf6938c0e4de7e) Thanks [@quickstark](https://github.com/quickstark)! - Add host-aware inline review comments to `qs-review-code` and a practical PS
+  command chooser with clear workflow and authority boundaries.
+
+- [`26ecaa7`](https://github.com/quickstark/skills/commit/26ecaa7670e3a71b81d34c2913b9684d412f9173) Thanks [@quickstark](https://github.com/quickstark)! - Keep all explicit QuickStark and PS commands visible to Codex while preserving
+  their canonical, Claude, and Pi invocation policies.
+
 ## 3.6.1
 
 ### Patch Changes
