@@ -336,6 +336,7 @@ const V3_CONTINUATIONS_BY_NAME = Object.freeze({
   ]),
   "qs-code-debug": Object.freeze([
     defineV3Continuation("qs-git-merge", "to verify and integrate the repaired, internally reviewed defect", "Use only after the regression and wider checks pass.", { availability: "success" }),
+    defineV3Continuation("qs-code-build", "to implement the next verified separate agent-ready work item", "Use only after repair integration and when the readout names the exact item.", { availability: "success" }),
     defineV3Continuation("qs-flow-handoff", "to hand off the diagnosis, blocker evidence, and remaining repair", "Use only when another session must continue a blocked repair.", { recovery: true, availability: "failure" }),
   ]),
   "qs-review-code": Object.freeze([
@@ -347,7 +348,7 @@ const V3_CONTINUATIONS_BY_NAME = Object.freeze({
   "qs-git-merge": Object.freeze([
     defineV3Continuation("qs-deploy-release", "to run the documented release only when deployment is explicitly approved", "Preferred only when the documented deployment is explicitly approved.", { availability: "success" }),
     defineV3Continuation("qs-review-code", "with target=changes action=review to inspect integration or conflict resolution", "Use when integration changed code or exposed uncertainty.", { recovery: true }),
-    defineV3Continuation("qs-flow-handoff", "to record the integration result and remaining operational work", "Use when publication is complete but follow-up remains."),
+    defineV3Continuation("qs-code-build", "to implement the next verified separate agent-ready work item", "Use after integration when the readout names the exact item.", { availability: "success" }),
     defineV3Continuation("qs-code-debug", "to diagnose a failed integration check", "Use when integration leaves a reproducible technical failure.", { recovery: true, availability: "failure" }),
   ]),
   "qs-deploy-release": Object.freeze([]),

@@ -220,7 +220,9 @@ test("completion contract avoids circular prompts", () => {
     assert.equal(command.continuation.maximumPrompts, 1, command.name);
     assert.equal(command.continuation.defaultPrompts, 0, command.name);
     assert.match(contract, /at most one copy-ready next-work prompt/i, command.name);
-    assert.match(contract, /omit the prompt when.*complete.*no verified remaining work/i, command.name);
+    assert.match(contract, /current root.*complete.*does not.*project.*complete/i, command.name);
+    assert.match(contract, /always write `Next work prompt:`/i, command.name);
+    assert.match(contract, /do not replace the fenced block with inline prose/i, command.name);
     assert.match(contract, /do not recommend.*already completed.*without new evidence/i, command.name);
     assert.doesNotMatch(contract, /Alternative next prompt|exactly three|all three prompts/i, command.name);
   }
@@ -280,16 +282,24 @@ test("applicable engineering results link governing specs and summarize verified
     if (expected.includes(command.name)) {
       assert.equal(command.resultContext.specProgress, true, command.name);
       assert.match(contract, /^Specs: /m, command.name);
-      assert.match(contract, /^Work summary: /m, command.name);
+      assert.match(contract, /^Work summary:/m, command.name);
       assert.match(contract, /clickable Markdown links/i, command.name);
       assert.match(contract, /Not located/i, command.name);
       assert.match(contract, /highest-priority verified/i, command.name);
+      assert.match(contract, /never omit `Specs:` or `Work summary:`/i, command.name);
+      assert.match(contract, /Finished —/i, command.name);
+      assert.match(contract, /Next —/i, command.name);
+      assert.match(contract, /do not treat completion of the current root as proof/i, command.name);
+      if (command.name !== "qs-deploy-release") {
+        assert.match(contract, /when `Next` lists.*actionable.*fenced `text` prompt is required/i, command.name);
+      }
       assert.match(documentation, /governing specification/i, command.name);
       assert.match(documentation, /pending, and blocked work/i, command.name);
+      assert.match(documentation, /finished.*next/i, command.name);
     } else {
       assert.equal(command.resultContext.specProgress, false, command.name);
       assert.doesNotMatch(contract, /^Specs: /m, command.name);
-      assert.doesNotMatch(contract, /^Work summary: /m, command.name);
+      assert.doesNotMatch(contract, /^Work summary:/m, command.name);
     }
   }
 });
@@ -301,6 +311,17 @@ test("completion contracts do not chain same-session public workflow prompts", (
     assert.doesNotMatch(contract, /catalog-approved composite workflow/i, name);
     assert.doesNotMatch(contract, /then \$qs-/i, name);
   }
+});
+
+test("completed repair and integration can advance an exact separate build item", () => {
+  const debug = PUBLIC_COMMANDS.find((command) => command.name === "qs-code-debug");
+  const merge = PUBLIC_COMMANDS.find((command) => command.name === "qs-git-merge");
+
+  assert.deepEqual(debug.continuation.normal.map((route) => route.name), ["qs-git-merge", "qs-code-build"]);
+  assert.match(debug.continuation.normal[1].reason, /readout names the exact item/i);
+  assert.ok(merge.continuation.normal.some((route) => route.name === "qs-code-build"));
+  assert.ok(merge.continuation.failure.some((route) => route.name === "qs-code-debug"));
+  assert.ok(!merge.continuation.normal.some((route) => route.name === "qs-flow-handoff"));
 });
 
 test("Pi continuation literals are included in every non-terminal completion contract", () => {

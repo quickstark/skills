@@ -6,7 +6,7 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 
 `effort=quick|standard|deep` controls investigation and validation depth. `standard` is the default. Quick uses one focused evidence pass and targeted checks. Standard performs the normal evidence pass and permits one bounded repair/recheck cycle where mutation is authorized. Deep broadens evidence and checks while remaining bounded to the requested outcome and mutation scope.
 
-`report=brief|full` controls chat presentation independently. `brief` is the default and contains status, outcome, at most three decision-grade findings or decisions, noteworthy failed checks, material outputs, the applicable work summary, and at most one next-work prompt. `full` adds the evidence trail, complete applicable checks and outputs, and secondary findings. It never adds more prompts.
+`report=brief|full` controls chat presentation independently. `brief` is the default and contains status, outcome, at most three decision-grade findings or decisions, noteworthy failed checks, material outputs, the required work summary for tracked engineering work, and the next-work prompt label. `full` adds the evidence trail, complete applicable checks and outputs, and secondary findings. It never adds more prompts.
 
 ## Completion state
 
@@ -15,7 +15,7 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 - `input-required`: work requires one material user decision, permission, or unavailable input.
 - `failed`: execution or validation did not produce a usable outcome.
 
-A non-release result emits at most one copy-ready next-work prompt. Emit it only when a distinct, verified actionable item remains and the selected public root owns that unfinished work. A complete result with no verified remaining work emits none. A failed result promotes one catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompt.
+A non-release result emits at most one copy-ready next-work prompt. Completion of the current root does not prove that the larger project is complete. Emit a prompt when a distinct, verified actionable item remains and a catalog-approved public root owns that work, even when the current root completed successfully. A failed result promotes one catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompt.
 
 Do not chain several public roots into a generic re-evaluation pipeline. Build, Review with mutation authority, and Debug own the implementation, repair, review, testing, and validation required to finish their bounded outcome. A continuation must move to genuinely distinct work; it must not repeat planning, review, debugging, implementation, or verification that already succeeded without new evidence.
 
@@ -53,19 +53,21 @@ release, or hand off tracked work add two fields to every result:
   specifications found in explicit input, repository documentation, or a
   verified tracker. When none can be located, it says `Not located`; it never
   invents a link.
-- `Work summary:` records known done, pending, and blocked totals when
-  available, then outlines up to three highest-priority verified tickets,
+- `Work summary:` is a compact readout with `Finished —` naming the bounded
+  outcome, meaningful validation, and material outputs, followed by `Next —`
+  listing up to three highest-priority verified pending or blocked tickets,
   specifications, issues, or grouped work items as `linked id — state — next
-  action`. Group items only when they share the same state and next action. It
-  says `None identified against linked specs` only after verifying that
-  conclusion against the linked specifications.
+  action`. Resolve that state from explicit input, available task history,
+  repository specifications or ticket plans, and a configured tracker. Group
+  items only when they share the same state and next action. Say no work was
+  verified only after checking the available governing sources.
 
 These fields summarize verified project state. They do not create a new spec,
 expand mutation authority, or turn unrelated local notes into backlog scope.
 
 ## Continuation format
 
-Write the optional continuation beneath `Next work prompt:` in one fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. When no continuation is warranted, write `Next work prompt: None — no follow-on needed.`
+Always write the `Next work prompt:` label. When the `Next —` readout contains a distinct actionable item owned by an eligible route, write one copy-ready prompt in a fenced `text` code block even if the current root is complete. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. Do not replace the fence with inline prose, a bare command, or a link. When no eligible continuation is warranted after checking the governing sources, write `Next work prompt: None — no follow-on needed.`
 
 In Codex the prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—in Claude it begins with `/<command>`, and in Pi it begins with `/skill:<command>`. Name the exact verified ticket, specification, issue, or grouped work item it advances. Keep the prompt concise: carry forward the outcome and only decisive evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
 

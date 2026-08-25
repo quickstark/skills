@@ -29,6 +29,6 @@ A result emits at most one copy-ready next-work prompt when a distinct actionabl
 
 Eligible normal routes are `/qs-plan-spec`, `/qs-code-build`, `/qs-plan-clarify`. Failure routes are `/qs-plan-spec`, `/qs-code-build`, `/qs-plan-clarify`. Select at most one route that owns verified unfinished work.
 
-The result links every verified governing specification and summarizes verified done, pending, and blocked work from those specs or their tracker. It outlines up to three exact linked work items with state and next action. If no governing specification can be located, it says so instead of inventing a link or backlog.
+The result always links every verified governing specification and presents a compact work readout with what finished and what is next. It summarizes verified done, pending, and blocked work from explicit input, available task history, repository specifications or ticket plans, and a configured tracker. It outlines up to three exact linked work items with state and next action. If no governing specification or remaining work can be located, it says so instead of inventing a link or backlog.
 
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

@@ -1,5 +1,13 @@
 # QuickStark Skills changelog
 
+## 3.6.5
+
+### Patch Changes
+
+- Restore mandatory completion readouts with exact Finished and Next work, and
+  emit one fenced copy-ready skill prompt whenever a verified actionable item
+  remains.
+
 ## 3.6.4
 
 ### Patch Changes
