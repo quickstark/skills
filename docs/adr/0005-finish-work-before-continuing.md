@@ -6,4 +6,4 @@ Build, Review with mutation authority, and Debug finish their authorized impleme
 
 This replaces ADR 0003's fixed three-prompt rule and the corresponding continuation paragraph in ADR 0004. It preserves one-root reporting, mutation boundaries, terminal release behavior, and the rule that public skills never start automatically.
 
-The optional prompt remains a single fenced `text` block so a host can offer its normal Add or context action. Renderer behavior is host-owned and must not be claimed without evidence. Line-specific code-review findings continue to use the separate inline-comment directive contract.
+The optional prompt remains a single fenced `text` block as copy-ready text. Plain skill Markdown cannot request or guarantee a host Add or context action. Line-specific code-review findings continue to use the separate inline-comment directive contract only when the active client supplies it and the finding has a host-renderable file range.

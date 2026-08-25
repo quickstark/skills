@@ -69,7 +69,7 @@ Write the optional continuation beneath `Next work prompt:` in one fenced `text`
 
 In Codex the prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—in Claude it begins with `/<command>`, and in Pi it begins with `/skill:<command>`. Name the exact verified ticket, specification, issue, or grouped work item it advances. Keep the prompt concise: carry forward the outcome and only decisive evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
 
-A host may expose an Add action for the fenced prompt, but skill text cannot guarantee that renderer behavior. Review findings keep the separate host inline-comment contract for line-specific Add cards. Never claim that either Add surface rendered without host or user evidence.
+The fenced prompt is copy-ready only. Plain skill Markdown cannot request or guarantee an Add action. Line-specific review findings keep the separate host inline-comment contract when the active client supplies it and the finding has a host-renderable file range. Never repurpose that contract for tickets, specifications, continuation prompts, or generic references, and never claim that an inline card rendered without host or user evidence.
 
 ## Safety
 

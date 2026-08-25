@@ -233,6 +233,17 @@ test("completion contract avoids circular prompts", () => {
   }
 });
 
+test("generic continuation prompts never imply an Add button", () => {
+  for (const command of PUBLIC_COMMANDS) {
+    const contract = renderSkillOutputContract(command);
+    if (command.name === "qs-deploy-release") continue;
+
+    assert.match(contract, /fenced prompt is copy-ready only/i, command.name);
+    assert.match(contract, /plain skill Markdown cannot request or guarantee an Add action/i, command.name);
+    assert.doesNotMatch(contract, /host may (?:offer|expose) an Add action for the fenced prompt/i, command.name);
+  }
+});
+
 test("execution skills finish authorized code work", async () => {
   const read = (name) => readFile(join(root, "skills", "engineering", name, "SKILL.md"), "utf8");
   const [build, debug, review] = await Promise.all([

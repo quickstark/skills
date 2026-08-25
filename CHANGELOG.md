@@ -1,5 +1,14 @@
 # QuickStark Skills changelog
 
+## 3.6.4
+
+### Patch Changes
+
+- Correct the completion contract so ordinary continuation prompts are described
+  as copy-ready text, not as an Add-button surface. Preserve Add cards only for
+  line-specific review findings that satisfy the active client's rendering
+  contract.
+
 ## 3.6.3
 
 ### Patch Changes

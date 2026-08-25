@@ -63,7 +63,7 @@ export function renderSkillOutputContract(skill) {
     "",
     terminal
       ? "Never add a speculative prompt merely to keep the workflow moving."
-      : `Label the optional continuation \`Next work prompt:\`. When present, put it in one fenced \`text\` block beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. When absent, write \`Next work prompt: None — no follow-on needed.\` A host may offer an Add action for the fenced prompt, but never claim that it rendered. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
+      : `Label the optional continuation \`Next work prompt:\`. When present, put it in one fenced \`text\` block beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. When absent, write \`Next work prompt: None — no follow-on needed.\` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
   ].join("\n");
 }
 
