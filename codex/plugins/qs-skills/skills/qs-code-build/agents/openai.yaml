@@ -2,5 +2,3 @@ interface:
   display_name: "QS Code: Build"
   short_description: "Implement a specification or tracked ticket"
   default_prompt: "Use $qs-code-build to implement this specification or ticket with appropriate tests. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
-policy:
-  allow_implicit_invocation: false

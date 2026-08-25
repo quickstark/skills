@@ -10,7 +10,7 @@ import {
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { formatSkillForCodex } from "./codex-skill-format.mjs";
+import { formatMetadataForCodex, formatSkillForCodex } from "./codex-skill-format.mjs";
 import { PS_INTERNAL_CAPABILITIES } from "./ps-skill-catalog.mjs";
 import { assertGeneratedPackageRoot, assertGeneratedPiPackageRoot } from "./skill-package-projection.mjs";
 import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
@@ -245,8 +245,13 @@ async function writeProjection(pkg, root, { codex }) {
     }
     await cp(source, destination, { recursive: true, dereference: true });
     if (codex && (skill.userInvoked || skill.disableModelInvocation)) {
-      const path = join(destination, "SKILL.md");
-      await writeFile(path, formatSkillForCodex(await readFile(path, "utf8"), skill));
+      const skillPath = join(destination, "SKILL.md");
+      await writeFile(skillPath, formatSkillForCodex(await readFile(skillPath, "utf8"), skill));
+      const metadataPath = join(destination, "agents", "openai.yaml");
+      await writeFile(
+        metadataPath,
+        formatMetadataForCodex(await readFile(metadataPath, "utf8"), skill),
+      );
     }
   }
 
@@ -324,7 +329,9 @@ async function verifyProjection(pkg, root, { codex }) {
       const source = await readFile(join(sourceRoot, file));
       const expectedContent = codex && file === "SKILL.md"
         ? Buffer.from(formatSkillForCodex(source.toString("utf8"), skill))
-        : source;
+        : codex && file === join("agents", "openai.yaml")
+          ? Buffer.from(formatMetadataForCodex(source.toString("utf8"), skill))
+          : source;
       const actual = await readFile(join(targetRoot, file));
       if (!expectedContent.equals(actual)) throw new Error(`${pkg.name} is stale: ${skill.name}/${file}.`);
     }

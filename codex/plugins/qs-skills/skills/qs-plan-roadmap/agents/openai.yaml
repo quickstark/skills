@@ -2,5 +2,3 @@ interface:
   display_name: "QS Plan: Roadmap"
   short_description: "Map large projects into manageable decisions"
   default_prompt: "Use $qs-plan-roadmap to map this large project into a practical sequence of decisions. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
-policy:
-  allow_implicit_invocation: false

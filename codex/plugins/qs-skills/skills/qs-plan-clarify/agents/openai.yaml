@@ -2,5 +2,3 @@ interface:
   display_name: "QS Plan: Clarify"
   short_description: "Clarify a plan and capture durable decisions"
   default_prompt: "Use $qs-plan-clarify to clarify this project and document the resulting decisions. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
-policy:
-  allow_implicit_invocation: false

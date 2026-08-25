@@ -2,5 +2,3 @@ interface:
   display_name: "PS Skill Evaluation"
   short_description: "Compare blinded skill variants"
   default_prompt: "Use $ps-skills:ps-skill-eval to compare this skill or prompt variant with its control through blinded trials. Modes: effort=quick|standard|deep and report=brief|full."
-policy:
-  allow_implicit_invocation: false

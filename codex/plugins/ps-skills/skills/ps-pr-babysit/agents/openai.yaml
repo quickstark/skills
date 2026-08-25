@@ -2,5 +2,3 @@ interface:
   display_name: "PS PR Babysit"
   short_description: "Drive one PR toward readiness"
   default_prompt: "Use $ps-skills:ps-pr-babysit to assess and, only if authorized, repair this selected pull request without merging it. Modes: effort=quick|standard|deep and report=brief|full."
-policy:
-  allow_implicit_invocation: false

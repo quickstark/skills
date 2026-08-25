@@ -18,6 +18,7 @@ import {
 } from "../scripts/qs-skill-catalog.mjs";
 import {
   PUBLIC_COMMANDS,
+  SKILL_COLLECTIONS,
   SPEC_PROGRESS_COMMAND_NAMES,
   codexPublicSkillLiteral,
 } from "../scripts/skill-collection-registry.mjs";
@@ -100,6 +101,42 @@ test("all public Codex picker prompts expose invocation modes", async () => {
     assert.ok(defaultPrompt, `${skill.name} omits its Codex default prompt`);
     assert.match(defaultPrompt, /effort=quick\|standard\|deep/);
     assert.match(defaultPrompt, /report=brief\|full/);
+  }
+});
+
+test("Codex projections keep explicit commands visible without weakening other harness policies", async () => {
+  const explicitCommands = PUBLIC_COMMANDS.filter(
+    (command) => command.userInvoked || command.disableModelInvocation,
+  );
+  assert.equal(explicitCommands.length, 26);
+
+  for (const command of explicitCommands) {
+    const sourcePath = command.sourcePath ?? `skills/${command.bucket}/${command.name}`;
+    const sourceMetadata = await readFile(join(root, sourcePath, "agents", "openai.yaml"), "utf8");
+    assert.match(sourceMetadata, /^policy:\s*\n\s+allow_implicit_invocation:\s*false\s*$/m);
+
+    const collection = SKILL_COLLECTIONS.find((candidate) => candidate.id === command.collectionId);
+    assert.ok(collection, `${command.name} is missing its collection`);
+    const codexMetadata = await readFile(
+      join(root, collection.codexPackageRoot, "skills", command.name, "agents", "openai.yaml"),
+      "utf8",
+    );
+    assert.doesNotMatch(codexMetadata, /allow_implicit_invocation/);
+    assert.doesNotMatch(codexMetadata, /^policy:\s*$/m);
+
+    const piMetadata = await readFile(
+      join(root, collection.piPackageRoot, "skills", command.name, "agents", "openai.yaml"),
+      "utf8",
+    );
+    assert.match(piMetadata, /^policy:\s*\n\s+allow_implicit_invocation:\s*false\s*$/m);
+
+    if (collection.claudePackageRoot !== ".") {
+      const claudeMetadata = await readFile(
+        join(root, collection.claudePackageRoot, "skills", command.name, "agents", "openai.yaml"),
+        "utf8",
+      );
+      assert.match(claudeMetadata, /^policy:\s*\n\s+allow_implicit_invocation:\s*false\s*$/m);
+    }
   }
 });
 

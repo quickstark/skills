@@ -2,5 +2,3 @@ interface:
   display_name: "QS Plan: Specs & Tickets"
   short_description: "Turn agreed requirements into a spec or tickets"
   default_prompt: "Use $qs-plan-spec to turn the agreed requirements into an actionable specification or dependency-aware implementation tickets. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
-policy:
-  allow_implicit_invocation: false

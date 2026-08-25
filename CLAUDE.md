@@ -19,6 +19,8 @@ Every public command has:
 
 Explicit commands use `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked commands omit both.
 
+Canonical, Claude, and Pi metadata retain those explicit-only markers. Generated Codex projections omit both markers because current Codex clients otherwise remove the commands from the model-visible catalog, including explicit `$plugin:skill` requests. Keep that compatibility exception inside the projector; never weaken the canonical source or edit generated copies independently.
+
 ## Packages
 
 The default core contains exactly twelve commands. The optional specialists package contains exactly seven commands. The optional PS package contains exactly thirteen explicit-only commands and sixteen private capabilities. Packages must operate without importing each other's skill bodies.

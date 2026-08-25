@@ -2,5 +2,3 @@ interface:
   display_name: "PS Runtime Forensics"
   short_description: "Diagnose a live runtime symptom"
   default_prompt: "Use $ps-skills:ps-runtime-forensics to diagnose this live runtime symptom from measurements without repairing it. Modes: effort=quick|standard|deep and report=brief|full."
-policy:
-  allow_implicit_invocation: false

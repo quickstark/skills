@@ -2,5 +2,3 @@ interface:
   display_name: "PS Maintain Verification Skill"
   short_description: "Reconcile verification coverage"
   default_prompt: "Use $ps-skills:ps-maintain-verification-skill to reconcile this verification workflow with observed product behavior. Modes: effort=quick|standard|deep and report=brief|full."
-policy:
-  allow_implicit_invocation: false

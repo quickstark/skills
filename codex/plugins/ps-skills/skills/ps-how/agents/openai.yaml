@@ -2,5 +2,3 @@ interface:
   display_name: "PS How"
   short_description: "Explain how a subsystem works"
   default_prompt: "Use $ps-skills:ps-how to explain how this subsystem works from code and observed interfaces. Modes: effort=quick|standard|deep and report=brief|full."
-policy:
-  allow_implicit_invocation: false

@@ -2,5 +2,3 @@ interface:
   display_name: "PS Hillclimb"
   short_description: "Improve one metric experimentally"
   default_prompt: "Use $ps-skills:ps-hillclimb to improve one declared metric through bounded measured experiments. Modes: effort=quick|standard|deep and report=brief|full."
-policy:
-  allow_implicit_invocation: false
