@@ -53,7 +53,7 @@ Keep `package.json`, `package-lock.json`, all three Claude manifests, all three 
 2. Normalize `effort=quick|standard|deep` and `report=brief|full` independently.
 3. Perform only the root's authorized work. Internal capabilities remain inside that run.
 4. Determine one completion state: `complete`, `continuation-required`, `input-required`, or `failed`.
-5. Select the catalog-approved continuation set. Every non-release result has one preferred prompt and two alternatives; `/qs-deploy-release` is terminal.
+5. Select at most one catalog-approved continuation that owns verified unfinished work. Complete work with no follow-up emits no prompt; `/qs-deploy-release` is terminal.
 6. Apply the internal clear-writing pass after facts, inferences, and uncertainties are separated.
 7. Present the result directly in chat with status, outcome, decision-grade evidence, noteworthy failures, material outputs, and the ranked prompts.
 

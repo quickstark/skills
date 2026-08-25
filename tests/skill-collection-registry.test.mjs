@@ -57,7 +57,7 @@ test("composite continuation renders an explicit build review test merge workflo
   assert.match(prompt, /does not grant.*commit.*merge.*push/is);
 });
 
-test("one-root boundary remains structural for composite workflow prompts", () => {
+test("composite workflow helpers remain structural but are not assigned to completion prompts", () => {
   for (const workflow of COMPOSITE_WORKFLOWS) {
     assert.equal(workflow.perRootReports, true);
     assert.equal(workflow.automaticPublicSkillHops, false);
@@ -67,10 +67,9 @@ test("one-root boundary remains structural for composite workflow prompts", () =
     renderCompositeWorkflowPrompt("review-test-merge", { harness: "claude" }),
     /^\/qs-review-code/,
   );
-  assert.equal(resolvePublicCommand("qs-plan-spec").continuation.preferredCompositeWorkflow, "build-review-test-merge");
-  assert.equal(resolvePublicCommand("qs-code-build").continuation.preferredCompositeWorkflow, "review-test-merge");
-  assert.equal(resolvePublicCommand("qs-review-code").continuation.preferredCompositeWorkflow, "test-merge");
-  assert.equal(resolvePublicCommand("ps-hillclimb").continuation.preferredCompositeWorkflow, "review-test-merge");
+  for (const command of PUBLIC_COMMANDS) {
+    assert.equal(command.continuation.preferredCompositeWorkflow, undefined, command.name);
+  }
 });
 
 test("Pi composite workflow uses exact skill literals and preserves stop boundaries", () => {

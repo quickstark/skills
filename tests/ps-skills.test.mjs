@@ -43,17 +43,18 @@ test("PS command and capability sources remain host-neutral and package-safe", a
   }
 });
 
-test("PS direct-chat contracts retain completion modes and three ranked continuations", () => {
+test("PS direct-chat contracts retain completion modes and one conditional continuation", () => {
   for (const command of PS_PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(command);
     assert.match(contract, /effort=quick\|standard\|deep/);
     assert.match(contract, /report=brief\|full/);
     assert.match(contract, /Present the result directly in chat/i);
-    assert.match(contract, /Preferred next prompt/);
-    assert.match(contract, /Alternative next prompts: two/);
+    assert.match(contract, /Next work prompt/);
+    assert.doesNotMatch(contract, /Alternative next prompts/);
     assert.equal(command.continuation.normal.length, 3);
     assert.equal(command.continuation.failure.length, 3);
-    assert.equal(command.continuation.maximumPrompts, 3);
+    assert.equal(command.continuation.maximumPrompts, 1);
+    assert.equal(command.continuation.defaultPrompts, 0);
     assert.equal(command.continuation.automaticPublicSkillHops, false);
   }
 });

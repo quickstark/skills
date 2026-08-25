@@ -112,7 +112,8 @@ test("PS-01 records display, chat-presentation, and continuation metadata for ev
       continuationNames[command.name],
     );
     assert.equal(command.continuation.failure.length, 3);
-    assert.equal(command.continuation.maximumPrompts, 3);
+    assert.equal(command.continuation.maximumPrompts, 1);
+    assert.equal(command.continuation.defaultPrompts, 0);
     assert.equal(command.continuation.automaticPublicSkillHops, false);
   }
 });

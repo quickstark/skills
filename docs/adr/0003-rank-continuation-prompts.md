@@ -1,5 +1,7 @@
 # Rank continuation prompts after every non-release run
 
+> Superseded by [ADR 0005](./0005-finish-work-before-continuing.md). This file preserves the original v3 decision history.
+
 QuickStark v3 will emit three ranked, copy-ready next prompts after every non-release public run, including a completed run. The first prompt is the opinionated preferred route and the other two are alternatives. `qs-deploy-release` remains terminal and emits none.
 
 The catalog owns every route, its concise instruction, reason, availability, and recovery role. Core commands may recommend only core commands so the default package remains independent of `qs-specialists`. Failed runs exclude publication-only routes and promote a safe recovery route when one exists.

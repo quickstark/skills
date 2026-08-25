@@ -330,20 +330,18 @@ const V3_CONTINUATIONS_BY_NAME = Object.freeze({
     defineV3Continuation("qs-flow-handoff", "to hand the specification to the implementation session", "Use when another session will perform the build."),
   ]),
   "qs-code-build": Object.freeze([
-    defineV3Continuation("qs-review-code", "with target=changes action=review to verify requirements, risks, and regressions", "Best default after a scoped implementation."),
-    defineV3Continuation("qs-code-debug", "to diagnose a failed check or regression in the implementation", "Use when the implementation still has a reproducible failure.", { recovery: true }),
-    defineV3Continuation("qs-git-merge", "to verify and integrate the completed change", "Use only after the change is reviewed and ready to publish.", { availability: "success" }),
+    defineV3Continuation("qs-git-merge", "to verify and integrate the completed, internally reviewed change", "Use only after the build and required checks pass.", { availability: "success" }),
+    defineV3Continuation("qs-code-debug", "to diagnose a failed check that cannot be resolved inside the scoped build", "Use only when a concrete failure requires a distinct diagnosis.", { recovery: true, availability: "failure" }),
     defineV3Continuation("qs-flow-handoff", "to preserve the failed build evidence for another session", "Use when the failed build must be continued elsewhere.", { availability: "failure" }),
   ]),
   "qs-code-debug": Object.freeze([
-    defineV3Continuation("qs-review-code", "with target=changes action=review to inspect the fix and regression coverage", "Best default after the diagnosed failure is repaired."),
-    defineV3Continuation("qs-code-build", "to implement the smallest repair supported by the diagnosis", "Use when diagnosis is complete but the repair is not.", { recovery: true }),
-    defineV3Continuation("qs-flow-handoff", "to hand off the diagnosis, evidence, and remaining repair", "Use when another session must continue the repair."),
+    defineV3Continuation("qs-git-merge", "to verify and integrate the repaired, internally reviewed defect", "Use only after the regression and wider checks pass.", { availability: "success" }),
+    defineV3Continuation("qs-flow-handoff", "to hand off the diagnosis, blocker evidence, and remaining repair", "Use only when another session must continue a blocked repair.", { recovery: true, availability: "failure" }),
   ]),
   "qs-review-code": Object.freeze([
     defineV3Continuation("qs-git-merge", "to verify and integrate the reviewed change", "Best default when review has no blocking findings.", { availability: "success" }),
-    defineV3Continuation("qs-code-build", "to resolve the actionable review findings", "Use when review found required implementation changes.", { recovery: true }),
-    defineV3Continuation("qs-code-debug", "to diagnose a failed check or reproducible regression from review", "Use when review exposed a concrete failure.", { recovery: true }),
+    defineV3Continuation("qs-code-build", "to resolve actionable findings from an explicitly read-only review", "Use only when the review was not authorized to edit.", { recovery: true, availability: "failure" }),
+    defineV3Continuation("qs-code-debug", "to diagnose a failed check that cannot be resolved by the authorized improvement", "Use only when review exposes a distinct reproducible failure.", { recovery: true, availability: "failure" }),
     defineV3Continuation("qs-flow-handoff", "to preserve blocking review findings for another session", "Use when another session must resolve the review findings.", { availability: "failure" }),
   ]),
   "qs-git-merge": Object.freeze([
@@ -426,7 +424,7 @@ function defineV3PublicCommand([name, group, position], distribution) {
   const skill = ACTIVE_SKILLS_BY_NAME.get(name);
   const metadata = V3_PUBLIC_METADATA_OVERRIDES[name] ?? {};
   const continuations = V3_CONTINUATIONS_BY_NAME[name];
-  const promptCount = name === "qs-deploy-release" ? 0 : 3;
+  const promptCount = name === "qs-deploy-release" ? 0 : 1;
 
   if (!skill) throw new Error(`The v3 catalog references unknown public command ${name}.`);
   if (!continuations) throw new Error(`The v3 catalog has no continuation policy for ${name}.`);
@@ -442,7 +440,7 @@ function defineV3PublicCommand([name, group, position], distribution) {
     report: V3_REPORT_POLICY,
     continuation: Object.freeze({
       maximumPrompts: promptCount,
-      defaultPrompts: promptCount,
+      defaultPrompts: 0,
       preferredPromptIndex: promptCount ? 0 : null,
       automaticPublicSkillHops: false,
       promptStates: promptCount ? V3_PROMPT_STATES : Object.freeze([]),
@@ -664,11 +662,11 @@ export function validateV3CatalogModel(model) {
 
     const expectedContinuations = V3_CONTINUATIONS_BY_NAME[command.name];
     const expectedNames = expectedContinuations.map((item) => item.name);
-    const expectedPromptCount = command.name === "qs-deploy-release" ? 0 : 3;
+    const expectedPromptCount = command.name === "qs-deploy-release" ? 0 : 1;
     if (expectedContinuations.length < expectedPromptCount
-      || expectedContinuations.length > expectedPromptCount + 1
+      || expectedContinuations.length > (expectedPromptCount === 0 ? 0 : 4)
       || command.continuation?.maximumPrompts !== expectedPromptCount
-      || command.continuation?.defaultPrompts !== expectedPromptCount) {
+      || command.continuation?.defaultPrompts !== 0) {
       throw new Error(`The v3 public command ${command.name} must expose its ranked prompt count.`);
     }
 

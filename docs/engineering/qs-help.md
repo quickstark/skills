@@ -25,8 +25,8 @@ This is lifecycle position 10 in the core projection and is installed through `q
 
 `/qs-help` produces one normalized root result directly in chat. It accepts independent `effort=quick|standard|deep` and `report=brief|full` modes, defaulting to `standard` and `brief`.
 
-Every result emits three ranked copy-ready continuations: one preferred prompt and two alternatives. Public skills are never executed automatically. Brief output shows the decision-grade result and all three prompts; full output adds supporting evidence without adding prompts.
+A result emits at most one copy-ready next-work prompt when a distinct actionable item remains. A complete result with no verified remaining work emits none. Public skills are never executed automatically. Brief output shows the decision-grade result and optional prompt; full output adds supporting evidence without adding prompts.
 
-The default ranked continuations are `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Failed results instead rank `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`.
+Eligible normal routes are `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Failure routes are `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Select at most one route that owns verified unfinished work.
 
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

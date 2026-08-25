@@ -204,16 +204,53 @@ test("all 32 completion contracts present direct chat results and apply clear wr
       continue;
     }
 
-    assert.match(contract, /Preferred next prompt:.*fenced `text` block/i);
-    assert.match(contract, /Alternative next prompts: two copy-ready prompts/i);
-    assert.match(contract, /Put each in its own fenced `text` block/i);
+    assert.match(contract, /Next work prompt:.*fenced `text` block/i);
+    assert.match(contract, /one fenced `text` block/i);
     for (const route of [...skill.continuation.normal, ...skill.continuation.failure]) {
       assert.match(contract, new RegExp(`\\${codexPublicSkillLiteral(route.name)}\\b`));
     }
   }
 });
 
-test("applicable engineering results link governing specs and preview remaining build work", () => {
+test("completion contract avoids circular prompts", () => {
+  for (const command of PUBLIC_COMMANDS) {
+    const contract = renderSkillOutputContract(command);
+    if (command.name === "qs-deploy-release") continue;
+
+    assert.equal(command.continuation.maximumPrompts, 1, command.name);
+    assert.equal(command.continuation.defaultPrompts, 0, command.name);
+    assert.match(contract, /at most one copy-ready next-work prompt/i, command.name);
+    assert.match(contract, /omit the prompt when.*complete.*no verified remaining work/i, command.name);
+    assert.match(contract, /do not recommend.*already completed.*without new evidence/i, command.name);
+    assert.doesNotMatch(contract, /Alternative next prompt|exactly three|all three prompts/i, command.name);
+  }
+
+  for (const name of ["qs-code-build", "qs-code-debug", "qs-review-code"]) {
+    const command = PUBLIC_COMMANDS.find((item) => item.name === name);
+    const contract = renderSkillOutputContract(command);
+    assert.doesNotMatch(contract, /catalog-approved composite workflow/i, name);
+    assert.match(contract, /exact verified ticket, specification, issue, or grouped work item/i, name);
+  }
+});
+
+test("execution skills finish authorized code work", async () => {
+  const read = (name) => readFile(join(root, "skills", "engineering", name, "SKILL.md"), "utf8");
+  const [build, debug, review] = await Promise.all([
+    read("qs-code-build"), read("qs-code-debug"), read("qs-review-code"),
+  ]);
+
+  assert.match(build, /finish every in-scope acceptance requirement/i);
+  assert.match(build, /review and repair the resulting diff inside this root/i);
+  assert.match(debug, /diagnosis, repair, regression coverage, and validation are one owned outcome/i);
+  assert.match(debug, /do not stop after identifying the cause/i);
+  assert.match(review, /clear natural-language mutation intent/i);
+  assert.match(review, /resolve every in-scope actionable finding/i);
+  for (const [name, source] of [["build", build], ["debug", debug], ["review", review]]) {
+    assert.match(source, /Do not return `continuation-required` merely to ask another public skill/i, name);
+  }
+});
+
+test("applicable engineering results link governing specs and summarize verified work", () => {
   const expected = [
     "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
     "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
@@ -232,28 +269,26 @@ test("applicable engineering results link governing specs and preview remaining 
     if (expected.includes(command.name)) {
       assert.equal(command.resultContext.specProgress, true, command.name);
       assert.match(contract, /^Specs: /m, command.name);
-      assert.match(contract, /^Remaining build: /m, command.name);
+      assert.match(contract, /^Work summary: /m, command.name);
       assert.match(contract, /clickable Markdown links/i, command.name);
       assert.match(contract, /Not located/i, command.name);
-      assert.match(contract, /highest-priority pending/i, command.name);
+      assert.match(contract, /highest-priority verified/i, command.name);
       assert.match(documentation, /governing specification/i, command.name);
-      assert.match(documentation, /remaining build/i, command.name);
+      assert.match(documentation, /pending, and blocked work/i, command.name);
     } else {
       assert.equal(command.resultContext.specProgress, false, command.name);
       assert.doesNotMatch(contract, /^Specs: /m, command.name);
-      assert.doesNotMatch(contract, /^Remaining build: /m, command.name);
+      assert.doesNotMatch(contract, /^Work summary: /m, command.name);
     }
   }
 });
 
-test("eligible completion contracts expose catalog-owned same-session workflow prompts", () => {
+test("completion contracts do not chain same-session public workflow prompts", () => {
   for (const name of ["qs-plan-spec", "qs-code-build", "qs-code-debug", "qs-review-code", "ps-hillclimb"]) {
     const command = PUBLIC_COMMANDS.find((item) => item.name === name);
     const contract = renderSkillOutputContract(command);
-    assert.match(contract, /catalog-approved composite workflow/i, name);
-    assert.match(contract, /separate public root/i, name);
-    assert.match(contract, /stop on a non-complete result/i, name);
-    assert.match(contract, /does not add mutation authority/i, name);
+    assert.doesNotMatch(contract, /catalog-approved composite workflow/i, name);
+    assert.doesNotMatch(contract, /then \$qs-/i, name);
   }
 });
 
@@ -267,7 +302,8 @@ test("catalog continuation routes remain valid, ranked, and package-safe", () =>
   const names = new Set(PUBLIC_COMMANDS.map((command) => command.name));
   for (const command of PUBLIC_COMMANDS) {
     for (const routes of [command.continuation.normal, command.continuation.failure]) {
-      assert.equal(routes.length, command.name === "qs-deploy-release" ? 0 : 3);
+      if (command.name === "qs-deploy-release") assert.equal(routes.length, 0);
+      else assert.ok(routes.length >= 1 && routes.length <= 3, command.name);
       assert.equal(new Set(routes.map((route) => route.name)).size, routes.length);
       for (const route of routes) {
         assert.ok(names.has(route.name));
@@ -282,8 +318,8 @@ test("catalog continuation routes remain valid, ranked, and package-safe", () =>
 
   for (const skill of SKILLS) {
     assert.deepEqual(
-      NEXT_SKILLS_BY_NAME[skill.name].filter((route) => route.availability !== "failure").map((route) => route.name),
-      skill.continuation.approvedSkills.slice(0, skill.name === "qs-deploy-release" ? 0 : 3),
+      NEXT_SKILLS_BY_NAME[skill.name].map((route) => route.name),
+      skill.continuation.approvedSkills,
     );
   }
 });
@@ -333,6 +369,10 @@ test("qs-review-code conditionally emits truthful host inline comments", async (
   assert.match(review, /never fabricate a file or line range/i);
   assert.match(review, /generic references remain ordinary Markdown links/i);
   assert.match(review, /does not supply the contract, omit the directives/i);
+  assert.match(review, /active review diff/i);
+  assert.match(review, /existing file does not by itself make a line renderable/i);
+  assert.match(review, /native `\/review`/i);
+  assert.match(review, /never claim that a comment card or Add action rendered/i);
 
   for (const skill of SKILLS.filter((candidate) => candidate.name !== "qs-review-code")) {
     const path = skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`;

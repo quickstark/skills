@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.6.3
+
+### Patch Changes
+
+- Finish authorized Build, Review, and Debug work inside one root, replace circular three-prompt completions with one verified next-work prompt at most, summarize exact remaining work with state and next action, and harden inline review Add-card guidance against non-renderable anchors.
+
 ## 3.6.2
 
 ### Patch Changes

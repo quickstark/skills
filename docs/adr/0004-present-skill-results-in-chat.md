@@ -1,5 +1,7 @@
 # Present every QuickStark result in chat
 
+> The direct-chat decision remains active. Its three-prompt continuation rule is superseded by [ADR 0005](./0005-finish-work-before-continuing.md).
+
 QuickStark will present every QS and PS result directly in the current conversation. A public run returns one normalized result containing its status, outcome, decision-grade evidence, material failures or outputs, and catalog-approved continuation prompts. Non-release commands emit one preferred prompt and two alternatives; `qs-deploy-release` remains terminal.
 
 Before presentation, every public command applies the same internal clear-writing pass: lead with the outcome, use concrete language, preserve necessary technical terms and uncertainty, and remove repetition. This pass is part of the root run. It is never listed as another skill, given its own status, or exposed as a continuation.

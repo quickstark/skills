@@ -280,8 +280,8 @@ function definePublicCommand(definition) {
       normal: Object.freeze(normal.map((name, index) => defineContinuation(name, index + 1, false))),
       failure: Object.freeze(failure.map((name, index) => defineContinuation(name, index + 1, true))),
       approvedSkills: Object.freeze([...new Set([...normal, ...failure])]),
-      maximumPrompts: 3,
-      defaultPrompts: 3,
+      maximumPrompts: 1,
+      defaultPrompts: 0,
       preferredPromptIndex: 0,
       automaticPublicSkillHops: false,
       promptStates: Object.freeze(["complete", "continuation-required", "input-required", "failed"]),
@@ -547,8 +547,8 @@ export function validatePsCatalogModel(model) {
     }
 
     const continuation = command.continuation;
-    if (continuation?.maximumPrompts !== 3
-      || continuation?.defaultPrompts !== 3
+    if (continuation?.maximumPrompts !== 1
+      || continuation?.defaultPrompts !== 0
       || continuation?.preferredPromptIndex !== 0
       || continuation?.automaticPublicSkillHops !== false) {
       throw new Error(`The PS command ${command.name} must prohibit automatic public skill hops.`);

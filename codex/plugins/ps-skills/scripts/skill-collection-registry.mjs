@@ -24,16 +24,7 @@ export const SPEC_PROGRESS_COMMAND_NAMES = Object.freeze([
 ]);
 const SPEC_PROGRESS_COMMAND_NAME_SET = new Set(SPEC_PROGRESS_COMMAND_NAMES);
 
-const PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND = Object.freeze({
-  "qs-plan-spec": "build-review-test-merge",
-  "qs-code-build": "review-test-merge",
-  "qs-code-debug": "review-test-merge",
-  "qs-review-code": "test-merge",
-  "qs-test-author": "test-merge",
-  "ps-create-verification-skill": "review-test-merge",
-  "ps-hillclimb": "review-test-merge",
-  "ps-visual-parity": "review-test-merge",
-});
+const PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND = Object.freeze({});
 
 function defineQsCommand(command) {
   const routes = NEXT_SKILLS_BY_NAME[command.name];

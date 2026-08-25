@@ -125,7 +125,7 @@ contributor skills remain portable Agent Skills.
 - `qs-review-code action=refactor target=<scope>` is the refactoring workflow. An unscoped whole-codebase request stays read-only until a target is selected.
 - Every invocation has one root skill and zero automatic public-skill hops.
 - `effort=quick|standard|deep` controls execution depth; `report=brief|full` independently controls presentation. Defaults are `standard` and `brief`.
-- Every non-release result has three ranked next prompts: one preferred route and two alternatives. Eligible preferred prompts may explicitly sequence catalog-approved roots in the same session, with one report per root and a stop on any non-complete result. Release is terminal and has none.
+- Every non-release result has at most one next-work prompt, tied to an exact verified ticket, specification, issue, or grouped work item. Complete work with no follow-up emits none; release is terminal and always emits none. Build, Review-with-mutation, and Debug finish their authorized implementation, repair, testing, and validation inside one root instead of chaining re-evaluation skills.
 
 See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
 

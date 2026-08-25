@@ -6,7 +6,7 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 
 `effort=quick|standard|deep` controls investigation and validation depth. `standard` is the default. Quick uses one focused evidence pass and targeted checks. Standard performs the normal evidence pass and permits one bounded repair/recheck cycle where mutation is authorized. Deep broadens evidence and checks while remaining bounded to the requested outcome and mutation scope.
 
-`report=brief|full` controls chat presentation independently. `brief` is the default and contains status, outcome, at most three decision-grade findings or decisions, noteworthy failed checks, material outputs, one preferred next prompt, and two alternatives. `full` adds the evidence trail, complete applicable checks and outputs, and secondary findings. It never adds more prompts.
+`report=brief|full` controls chat presentation independently. `brief` is the default and contains status, outcome, at most three decision-grade findings or decisions, noteworthy failed checks, material outputs, the applicable work summary, and at most one next-work prompt. `full` adds the evidence trail, complete applicable checks and outputs, and secondary findings. It never adds more prompts.
 
 ## Completion state
 
@@ -15,14 +15,9 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 - `input-required`: work requires one material user decision, permission, or unavailable input.
 - `failed`: execution or validation did not produce a usable outcome.
 
-Every non-release result emits three ranked copy-ready prompts regardless of completion state. The first is the opinionated preferred route; the remaining two are alternatives. A failed result promotes a catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompts.
+A non-release result emits at most one copy-ready next-work prompt. Emit it only when a distinct, verified actionable item remains and the selected public root owns that unfinished work. A complete result with no verified remaining work emits none. A failed result promotes one catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompt.
 
-When the catalog assigns a composite workflow to a root, the preferred prompt
-may explicitly name several public roots for the same session. This is one user
-authorization prompt, not an automatic skill hop: every root still emits its
-own result, the sequence stops after any non-`complete` status, and later roots
-receive no mutation, Git, installation, deployment, or publication authority
-unless the prompt grants that exact action.
+Do not chain several public roots into a generic re-evaluation pipeline. Build, Review with mutation authority, and Debug own the implementation, repair, review, testing, and validation required to finish their bounded outcome. A continuation must move to genuinely distinct work; it must not repeat planning, review, debugging, implementation, or verification that already succeeded without new evidence.
 
 ## Clear-writing pass
 
@@ -58,9 +53,11 @@ release, or hand off tracked work add two fields to every result:
   specifications found in explicit input, repository documentation, or a
   verified tracker. When none can be located, it says `Not located`; it never
   invents a link.
-- `Remaining build:` gives a concise preview of up to three highest-priority
-  pending requirements or tickets and includes a known total when available.
-  It says `None identified against linked specs` only after verifying that
+- `Work summary:` records known done, pending, and blocked totals when
+  available, then outlines up to three highest-priority verified tickets,
+  specifications, issues, or grouped work items as `linked id — state — next
+  action`. Group items only when they share the same state and next action. It
+  says `None identified against linked specs` only after verifying that
   conclusion against the linked specifications.
 
 These fields summarize verified project state. They do not create a new spec,
@@ -68,9 +65,11 @@ expand mutation authority, or turn unrelated local notes into backlog scope.
 
 ## Continuation format
 
-Write the first continuation beneath `Preferred next prompt:` and the other two beneath `Alternative next prompt:`. Put each in its own fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language.
+Write the optional continuation beneath `Next work prompt:` in one fenced `text` code block. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. When no continuation is warranted, write `Next work prompt: None — no follow-on needed.`
 
-In Codex each prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—in Claude it begins with `/<command>`, and in Pi it begins with `/skill:<command>`. Keep each prompt concise: carry forward the outcome and only the highest-value evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
+In Codex the prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—in Claude it begins with `/<command>`, and in Pi it begins with `/skill:<command>`. Name the exact verified ticket, specification, issue, or grouped work item it advances. Keep the prompt concise: carry forward the outcome and only decisive evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
+
+A host may expose an Add action for the fenced prompt, but skill text cannot guarantee that renderer behavior. Review findings keep the separate host inline-comment contract for line-specific Add cards. Never claim that either Add surface rendered without host or user evidence.
 
 ## Safety
 
