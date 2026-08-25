@@ -2,6 +2,8 @@
 
 `ps-skills` is an independently installable package of thirteen explicit-only, Cursor-neutral workflows. Every invocation owns one bounded result presented directly in chat; no command starts another public skill automatically.
 
+For outcome-based selection, required inputs, and PS-to-QS handoff boundaries, start with [Using PS skills](./using-ps-skills.md).
+
 Install it after adding the QuickStark marketplace:
 
 ```bash

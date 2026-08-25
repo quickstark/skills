@@ -117,7 +117,7 @@ contributor skills remain portable Agent Skills.
 
 ## Optional Pstack workflows
 
-`ps-skills` contains thirteen explicit-only commands under the `ps-` namespace. It is additive, does not change QS membership, and never chains public commands automatically. See the [PS command index](./docs/pstack/index.md).
+`ps-skills` contains thirteen explicit-only commands under the `ps-` namespace. It is additive, does not change QS membership, and never chains public commands automatically. Start with [Using PS skills](./docs/pstack/using-ps-skills.md) for a practical command chooser, or browse the [PS command index](./docs/pstack/index.md) for individual references.
 
 ## v3 behavior
 

@@ -287,6 +287,23 @@ test("review and testing specialists retain their distinct boundaries", async ()
   assert.match(verify, /does not fix failures/i);
 });
 
+test("qs-review-code conditionally emits truthful host inline comments", async () => {
+  const review = await readFile(join(root, "skills", "engineering", "qs-review-code", "SKILL.md"), "utf8");
+
+  assert.match(review, /active client supplies the `::code-comment\{\.\.\.\}` inline-comment contract/i);
+  assert.match(review, /each reported actionable, line-specific finding/i);
+  assert.match(review, /supplements the readable report and never replaces it/i);
+  assert.match(review, /never fabricate a file or line range/i);
+  assert.match(review, /generic references remain ordinary Markdown links/i);
+  assert.match(review, /does not supply the contract, omit the directives/i);
+
+  for (const skill of SKILLS.filter((candidate) => candidate.name !== "qs-review-code")) {
+    const path = skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`;
+    const content = await readFile(join(root, path, "SKILL.md"), "utf8");
+    assert.doesNotMatch(content, /::code-comment\{/, `${skill.name} unexpectedly owns inline code comments`);
+  }
+});
+
 test("migration documentation accounts for every v2 command exactly once", async () => {
   const migration = await readFile(join(root, "docs", "quickstark-v3-migration.md"), "utf8");
   const rows = migration.split("\n").filter((line) => /^\| `qs-[^`]+` \|/.test(line));

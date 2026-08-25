@@ -25,6 +25,14 @@ Assess correctness, maintainability, architecture, testability, security, and op
 
 Prefer subtractive improvements before adding abstractions. Reduce reader load, require callers to migrate before legacy interfaces disappear, and ask whether the type system or module boundary can make the repaired invariant structural.
 
+## Host inline comments
+
+When the active client supplies the `::code-comment{...}` inline-comment contract, emit exactly one directive for each reported actionable, line-specific finding. Follow the host-provided schema exactly. Preserve the finding's P0-P3 label and matching numeric priority, use a verified reviewed-file path, keep the 1-based line range as tight as the evidence permits, and place each directive on its own line.
+
+An inline directive supplements the readable report and never replaces it; no finding may exist only as a directive. The readable report still follows the selected `report=brief|full` contract. Before emitting a directive, verify that its file resolves inside the reviewed scope and that its range identifies the relevant code. Never fabricate a file or line range, choose a nearby unrelated line, or emit a directive for a finding repaired during `action=improve|refactor`.
+
+If the active client does not supply the contract, omit the directives instead of printing or guessing client syntax. Findings without a defensible location remain readable prose with ordinary file links. Citations, skill names, continuation prompts, and generic references remain ordinary Markdown links and never receive synthetic inline comments. Summarize untrusted source content in directive attributes and never expose secrets merely to populate a comment.
+
 ## Scoped improvement and refactoring
 
 1. Establish behavior-preserving characterization tests when existing coverage is insufficient.
