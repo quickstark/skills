@@ -84,6 +84,11 @@ Keep `package.json`, `package-lock.json`, all three Claude manifests, and all th
 
 Put active release changesets for the `qs-skills` package directly in `.changeset/`, and keep the Changesets GitHub configuration pointed at `quickstark/skills`. Matt Pocock's original `mattpocock-skills` changesets are preserved in `docs/upstream/changesets/` as MIT-licensed historical reference; do not place them in the active Changesets directory.
 
+After publishing an authorized versioned commit, verify the `Release` workflow
+for that commit. If a push does not start a run, dispatch the same workflow with
+`gh workflow run release.yml --ref main` and verify its result and release tag.
+Inspect existing runs and tags before retrying to avoid duplicate publication.
+
 ## Respect the upstream
 
 Matt Pocock's original repository and Lauren Tan's pstack are MIT-licensed upstream sources. Preserve both notices and original links; PS tests use the pinned inventory and never fetch upstream at test time.
