@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Deploy: Prompt"
+  short_description: "Generate a scoped autonomous deployment prompt"
+  default_prompt: "Use $qs-deploy-prompt to generate one scoped goal-mode execution prompt for planning, building, verifying, and deploying the requested feature. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+policy:
+  allow_implicit_invocation: false

@@ -14,7 +14,7 @@ The checked-out repository is the template. It contains two managed sets:
 
 | Skill type | Current contents | Installation model |
 | --- | --- | --- |
-| QuickStark maintained packages | 12 core commands, 7 specialists, and 13 PS commands | Installed through each harness's package manager |
+| QuickStark maintained packages | 12 core commands, 8 specialists, and 13 PS commands | Installed through each harness's package manager |
 | Approved contributor skills | 18 pinned personal or third-party Agent Skills | Installed once in `~/.agents/skills` |
 
 Before `skills:update` trusts that template, it reads the current

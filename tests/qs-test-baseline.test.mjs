@@ -19,6 +19,9 @@ import {
 
 const expectedTestFiles = [
   "tests/qs-v3.test.mjs",
+  "tests/progress-reporting.test.mjs",
+  "tests/goal-workflow.test.mjs",
+  "tests/deploy-prompt.test.mjs",
   "tests/qs-skills.test.mjs",
   "tests/ps-skill-catalog.test.mjs",
   "tests/ps-behavior.test.mjs",

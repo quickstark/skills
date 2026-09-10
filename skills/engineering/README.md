@@ -21,5 +21,6 @@
 - [qs-code-document](./qs-code-document/SKILL.md)
 - [qs-test-author](./qs-test-author/SKILL.md)
 - [qs-test-verify](./qs-test-verify/SKILL.md)
+- [qs-deploy-prompt](./qs-deploy-prompt/SKILL.md)
 
 Domain modeling, module decomposition, ticket decomposition, and TDD are internal capabilities and are not user-invocable commands.

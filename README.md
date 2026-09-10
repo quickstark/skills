@@ -1,6 +1,6 @@
 # QuickStark Skills v3
 
-A focused engineering workflow for Codex, Claude Code, and Pi. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds seven bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
+A focused engineering workflow for Codex, Claude Code, and Pi. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds eight bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
 
 QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills), with an optional adaptation of [Lauren Tan's MIT-licensed pstack](https://github.com/cursor/plugins/tree/main/pstack). The upstream notices are preserved in [third-party notices](./THIRD_PARTY_NOTICES.md).
 
@@ -114,6 +114,7 @@ contributor skills remain portable Agent Skills.
 | [`qs-test-verify`](./skills/engineering/qs-test-verify/SKILL.md) | Run and report selected software verification. |
 | [`qs-learn-teach`](./skills/productivity/qs-learn-teach/SKILL.md) | Teach one bounded subject. |
 | [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
+| [`qs-deploy-prompt`](./skills/engineering/qs-deploy-prompt/SKILL.md) | Generate a scoped autonomous deployment prompt. |
 
 ## Optional Pstack workflows
 

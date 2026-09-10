@@ -8,7 +8,7 @@ QuickStark is a personal collection of namespaced skills for Codex, Claude Code,
 
 **Core command**: One of twelve lifecycle-ordered commands in `qs-skills`.
 
-**Specialist command**: One of seven optional commands in `qs-specialists`. Core commands never require this package to complete.
+**Specialist command**: One of eight optional commands in `qs-specialists`. Core commands never require this package to complete.
 
 **PS command**: One of thirteen explicit-only commands in `ps-skills`. Its Codex literal is `$ps-skills:<command>`.
 
@@ -57,7 +57,7 @@ The core catalog order is:
 11. `qs-flow-triage`
 12. `qs-flow-handoff`
 
-Optional specialists are `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-test-author`, `qs-test-verify`, `qs-learn-teach`, and `qs-skill-write`.
+Optional specialists are `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-test-author`, `qs-test-verify`, `qs-learn-teach`, `qs-skill-write`, and `qs-deploy-prompt`.
 
 The PS catalog contains `ps-help`, `ps-how`, `ps-why`, `ps-blast-radius`, `ps-runtime-forensics`, `ps-trace-forensics`, `ps-create-verification-skill`, `ps-maintain-verification-skill`, `ps-skill-eval`, `ps-hillclimb`, `ps-visual-parity`, `ps-pr-babysit`, and `ps-worktree-cleanup`.
 

@@ -31,7 +31,7 @@ async function filesRecursively(path) {
 }
 
 test("every public command has matching source, metadata, documentation, and package projection", async () => {
-  assert.equal(PUBLIC_COMMANDS.length, 32);
+  assert.equal(PUBLIC_COMMANDS.length, 33);
   for (const command of PUBLIC_COMMANDS) {
     const sourceRoot = join(root, command.sourcePath ?? `skills/${command.bucket}/${command.name}`);
     const documentation = join(root, command.documentationPath ?? `docs/${command.bucket}/${command.name}.md`);
@@ -64,7 +64,7 @@ test("direct-chat output is self-contained and concise across the complete comma
   for (const command of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(command);
     const lines = contract.split("\n").length;
-    assert.ok(lines <= (command.resultContext.specProgress ? 29 : 24), `${command.name} completion contract is ${lines} lines`);
+    assert.ok(lines <= (command.resultContext.specProgress ? 42 : 37), `${command.name} completion contract is ${lines} lines`);
     assert.match(contract, /Status: Complete \| Continuation required \| Input required \| Failed/);
     assert.match(contract, /Outcome: Concise verified result/);
     assert.match(contract, /lead with the outcome/i);

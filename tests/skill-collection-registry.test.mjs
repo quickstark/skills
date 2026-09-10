@@ -13,11 +13,11 @@ import {
 
 test("PS-02 resolves QS core, QS specialist, and PS commands through registered collections", () => {
   assert.equal(validateSkillCollectionRegistryModel(COLLECTION_REGISTRY), true);
-  assert.equal(PUBLIC_COMMANDS.length, 32);
+  assert.equal(PUBLIC_COMMANDS.length, 33);
 
   assert.deepEqual(
     COLLECTION_REGISTRY.collections.map((collection) => [collection.id, collection.publicCommands.length]),
-    [["qs-skills", 12], ["qs-specialists", 7], ["ps-skills", 13]],
+    [["qs-skills", 12], ["qs-specialists", 8], ["ps-skills", 13]],
   );
 
   assert.deepEqual(

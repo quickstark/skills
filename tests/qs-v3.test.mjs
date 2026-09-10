@@ -37,7 +37,7 @@ const coreNames = [
 ];
 const specialistNames = [
   "qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-test-author",
-  "qs-test-verify", "qs-learn-teach", "qs-skill-write",
+  "qs-test-verify", "qs-learn-teach", "qs-skill-write", "qs-deploy-prompt",
 ];
 const retiredNames = [
   "qs-plan-explore", "qs-plan-interview", "qs-plan-tickets", "qs-design-domain",
@@ -67,7 +67,7 @@ test("v3 exposes the exact ordered core and specialist command surfaces", () => 
   assert.deepEqual(V3_CORE_SKILLS.map((skill) => skill.name), coreNames);
   assert.deepEqual(V3_SPECIALIST_SKILLS.map((skill) => skill.name), specialistNames);
   assert.deepEqual(SKILLS.map((skill) => skill.name), [...coreNames, ...specialistNames]);
-  assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 19 }, (_, index) => (index + 1) * 10));
+  assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 20 }, (_, index) => (index + 1) * 10));
   assert.deepEqual(V3_INTERNAL_CAPABILITIES.map((item) => item.name), [
     "domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop",
   ]);
@@ -108,7 +108,7 @@ test("Codex projections keep explicit commands visible without weakening other h
   const explicitCommands = PUBLIC_COMMANDS.filter(
     (command) => command.userInvoked || command.disableModelInvocation,
   );
-  assert.equal(explicitCommands.length, 26);
+  assert.equal(explicitCommands.length, 27);
 
   for (const command of explicitCommands) {
     const sourcePath = command.sourcePath ?? `skills/${command.bucket}/${command.name}`;
@@ -182,7 +182,7 @@ test("retired commands remain absent and internal capabilities remain non-comman
   );
 });
 
-test("all 32 completion contracts present direct chat results and apply clear writing", () => {
+test("all 33 completion contracts present direct chat results and apply clear writing", () => {
   for (const skill of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(skill);
     const documentation = renderDocumentationOutputContract(skill);
@@ -268,7 +268,7 @@ test("applicable engineering results link governing specs and summarize verified
     "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
     "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
     "qs-flow-triage", "qs-flow-handoff", "qs-plan-research", "qs-design-prototype",
-    "qs-code-document", "qs-test-author", "qs-test-verify", "qs-skill-write",
+    "qs-code-document", "qs-test-author", "qs-test-verify", "qs-skill-write", "qs-deploy-prompt",
     "ps-blast-radius", "ps-runtime-forensics", "ps-trace-forensics",
     "ps-create-verification-skill", "ps-maintain-verification-skill",
     "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit",
@@ -290,7 +290,7 @@ test("applicable engineering results link governing specs and summarize verified
       assert.match(contract, /Finished —/i, command.name);
       assert.match(contract, /Next —/i, command.name);
       assert.match(contract, /do not treat completion of the current root as proof/i, command.name);
-      if (command.name !== "qs-deploy-release") {
+      if (command.name !== "qs-deploy-release" && command.outputKind !== "goal-workflow-prompt") {
         assert.match(contract, /when `Next` lists.*actionable.*fenced `text` prompt is required/i, command.name);
       }
       assert.match(documentation, /governing specification/i, command.name);
@@ -334,7 +334,7 @@ test("catalog continuation routes remain valid, ranked, and package-safe", () =>
   const names = new Set(PUBLIC_COMMANDS.map((command) => command.name));
   for (const command of PUBLIC_COMMANDS) {
     for (const routes of [command.continuation.normal, command.continuation.failure]) {
-      if (command.name === "qs-deploy-release") assert.equal(routes.length, 0);
+      if (command.name === "qs-deploy-release" || (command.outputKind === "goal-workflow-prompt" && routes === command.continuation.normal)) assert.equal(routes.length, 0);
       else assert.ok(routes.length >= 1 && routes.length <= 3, command.name);
       assert.equal(new Set(routes.map((route) => route.name)).size, routes.length);
       for (const route of routes) {

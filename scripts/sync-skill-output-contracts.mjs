@@ -9,6 +9,8 @@ import {
   piPublicSkillLiteral,
 } from "./skill-collection-registry.mjs";
 
+import { PUBLIC_PROGRESS_CONTRACT, syncProgressContracts } from "./progress-reporting-contract.mjs";
+
 export const SKILL_OUTPUT_HEADING = "## Completion report and next steps";
 export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
 
@@ -25,8 +27,12 @@ export function renderSkillOutputContract(skill) {
   const codexLiterals = allRoutes.map((item) => codexPublicSkillLiteral(item.name));
   const piLiterals = allRoutes.map((item) => piPublicSkillLiteral(item.name));
   const reportsSpecProgress = registered.resultContext?.specProgress === true;
+  const goalPrompt = registered.outputKind === "goal-workflow-prompt";
   return [
     SKILL_OUTPUT_HEADING,
+    "",
+    PUBLIC_PROGRESS_CONTRACT,
+    "A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.",
     "",
     `This invocation has one root skill: \`/${skill.name}\`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.`,
     "",
@@ -43,7 +49,7 @@ export function renderSkillOutputContract(skill) {
     "",
     terminal
       ? "Do not invent a follow-on workflow after release. State any release failure in this result."
-      : `Eligible next routes: ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`,
+      : `Eligible next routes: ${continuations.map((name) => `\`/${name}\``).join(", ") || "None — primary deliverable is the goal prompt"}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`,
     "",
     "Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.",
     "",
@@ -66,7 +72,9 @@ export function renderSkillOutputContract(skill) {
       ? "Next prompts: None — release is terminal."
       : "Next work prompt: None | one copy-ready prompt in a fenced `text` block",
     "",
-    terminal
+    goalPrompt
+      ? `Always write \`Next work prompt:\`. On success, write exactly one fenced \`text\` block containing the execution prompt under Next work prompt: beginning with the instruction to establish or resume the scoped goal before mutations. Include exact selected skill literals, scope, evidence, authorization, stage checks and deployment evidence. This is the primary deliverable, not an ordinary continuation; emit no second prompt. State: Prompt generated; execution has not started. On missing material inputs, use Input required and do not emit an executable deployment prompt; at most one eligible recovery prompt is allowed (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Do not replace the fenced block with inline prose. Name the exact verified ticket, specification, issue, or grouped work item.`
+      : terminal
       ? "Never add a speculative prompt merely to keep the workflow moving."
       : `Always write \`Next work prompt:\`. When a distinct verified actionable item exists, put one fenced \`text\` block beneath it beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. ${reportsSpecProgress ? "When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. " : ""}Only when no eligible actionable item remains, write \`Next work prompt: None — no follow-on needed.\` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
   ].join("\n");
@@ -80,6 +88,7 @@ export function renderDocumentationOutputContract(skill) {
   const failureContinuations = failureRoutes.map((item) => item.name);
   const terminal = routes.length === 0 && failureRoutes.length === 0;
   const reportsSpecProgress = registered.resultContext?.specProgress === true;
+  const goalPrompt = registered.outputKind === "goal-workflow-prompt";
   return [
     DOCUMENTATION_OUTPUT_HEADING,
     "",
@@ -91,12 +100,17 @@ export function renderDocumentationOutputContract(skill) {
     "",
     terminal
       ? "The release command has no catalog-approved continuation."
+      : goalPrompt
+        ? `The primary output is one goal execution prompt. Failure routes are ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}; missing prerequisites prevent execution-ready output.`
       : `Eligible normal routes are ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes are ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select at most one route that owns verified unfinished work.`,
     "",
     ...(reportsSpecProgress ? [
       "The result always links every verified governing specification and presents a compact work readout with what finished and what is next. It summarizes verified done, pending, and blocked work from explicit input, available task history, repository specifications or ticket plans, and a configured tracker. It outlines up to three exact linked work items with state and next action. If no governing specification or remaining work can be located, it says so instead of inventing a link or backlog.",
       "",
     ] : []),
+    "Every run keeps a conversation checklist, verifies completed stages, reports observed progress or waiting and needed input during long operations, and finishes with changes, checks, and remaining work. Helpers contribute evidence only to their parent.",
+    "",
+    ...(goalPrompt ? ["Successful generation produces exactly one self-contained goal execution prompt, beginning with goal establishment before mutations. It does not start a goal or deploy. Missing material inputs prevent execution-ready output; submission authorizes only the named sequence and operations within host controls.", ""] : []),
     "Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).",
   ].join("\n");
 }
@@ -116,6 +130,7 @@ export function withDocumentationOutputContract(content, skill) {
 }
 
 export async function syncSkillOutputContracts({ check = false } = {}) {
+  await syncProgressContracts({ check });
   let updated = 0;
   for (const skill of PUBLIC_COMMANDS) {
     const skillPath = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`, "SKILL.md");

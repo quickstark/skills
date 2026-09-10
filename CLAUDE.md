@@ -1,6 +1,6 @@
 # QuickStark skill collection
 
-QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills`, seven optional commands in `qs-specialists`, and thirteen explicit-only commands in the optional `ps-skills` package. Canonical QS sources live under `skills/engineering/` and `skills/productivity/`; canonical PS sources live under `skills/pstack/commands/`. QS and PS internal capabilities remain non-command references.
+QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills`, eight optional commands in `qs-specialists`, and thirteen explicit-only commands in the optional `ps-skills` package. Canonical QS sources live under `skills/engineering/` and `skills/productivity/`; canonical PS sources live under `skills/pstack/commands/`. QS and PS internal capabilities remain non-command references.
 
 Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
 
@@ -23,7 +23,7 @@ Canonical, Claude, and Pi metadata retain those explicit-only markers. Generated
 
 ## Packages
 
-The default core contains exactly twelve commands. The optional specialists package contains exactly seven commands. The optional PS package contains exactly thirteen explicit-only commands and sixteen private capabilities. Packages must operate without importing each other's skill bodies.
+The default core contains exactly twelve commands. The optional specialists package contains exactly eight commands. The optional PS package contains exactly thirteen explicit-only commands and sixteen private capabilities. Packages must operate without importing each other's skill bodies.
 
 - Claude core manifest: `.claude-plugin/plugin.json`
 - Claude specialist package: `packages/qs-specialists/`
@@ -58,7 +58,7 @@ claude plugin validate ./packages/ps-skills --strict
 
 `skills/engineering/qs-help/SKILL.md` and `skills/pstack/commands/ps-help/SKILL.md` are collection routers. `docs/skill-run-contract.md` owns shared execution and presentation policy.
 
-Every invocation has one public root and one bounded result presented directly in chat. Public skills never automatically execute other public skills. Internal capabilities and bounded helpers remain inside the root run and do not produce their own result, status, skill-used entry, or continuation.
+Every invocation has one public root and one bounded result presented directly in chat. Public skills never automatically execute other public skills. A user-submitted explicit goal workflow may coordinate successive authorized roots under the narrow exception in docs/skill-run-contract.md; generation alone never executes it. Internal capabilities and bounded helpers remain inside the root run and do not produce their own result, status, skill-used entry, or continuation.
 
 `effort=quick|standard|deep` controls evidence depth and defaults to `standard`. `report=brief|full` independently controls presentation and defaults to `brief`. Effort never expands mutation scope or authorizes publication.
 

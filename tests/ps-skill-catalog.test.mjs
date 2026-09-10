@@ -173,7 +173,7 @@ test("PS-01 classifies every candidate once with the confirmed 12/16/30/4/10 tot
 
 test("PS-01 validation rejects catalog drift without changing QS membership", () => {
   assert.equal(V3_CORE_SKILLS.length, 12);
-  assert.equal(V3_SPECIALIST_SKILLS.length, 7);
+  assert.equal(V3_SPECIALIST_SKILLS.length, 8);
 
   const invalidModels = [
     ["missing command", (model) => model.publicCommands.pop(), /thirteen ordered public commands/i],

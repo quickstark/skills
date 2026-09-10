@@ -16,7 +16,7 @@ export const SPEC_PROGRESS_COMMAND_NAMES = Object.freeze([
   "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
   "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
   "qs-flow-triage", "qs-flow-handoff", "qs-plan-research", "qs-design-prototype",
-  "qs-code-document", "qs-test-author", "qs-test-verify", "qs-skill-write",
+  "qs-code-document", "qs-test-author", "qs-test-verify", "qs-skill-write", "qs-deploy-prompt",
   "ps-blast-radius", "ps-runtime-forensics", "ps-trace-forensics",
   "ps-create-verification-skill", "ps-maintain-verification-skill",
   "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit",
@@ -228,8 +228,8 @@ export function validateSkillCollectionRegistryModel(model) {
   if (commandNameSet.size !== commandNames.length) {
     throw new Error("Registered public command names must be unique.");
   }
-  if (model.publicCommands.length !== 32) {
-    throw new Error("The registry must contain exactly 32 public commands.");
+  if (model.publicCommands.length !== 33) {
+    throw new Error("The registry must contain exactly 33 public commands.");
   }
 
   const workflowIds = model.compositeWorkflows.map((workflow) => workflow.id);
@@ -281,6 +281,13 @@ export function validateSkillCollectionRegistryModel(model) {
     if (command.codexLiteral !== `$${command.codexPlugin}:${command.name}`
       || command.claudeLiteral !== `/${command.name}`) {
       throw new Error(`The public command ${command.name} has invalid package literals.`);
+    }
+    if (command.outputKind !== undefined
+      && (command.outputKind !== "goal-workflow-prompt" || command.name !== "qs-deploy-prompt")) {
+      throw new Error(`The public command ${command.name} has an invalid output kind.`);
+    }
+    if (command.name === "qs-deploy-prompt" && command.outputKind !== "goal-workflow-prompt") {
+      throw new Error("The deployment prompt command must declare its goal-workflow output kind.");
     }
     if (typeof command.resultContext?.specProgress !== "boolean") {
       throw new Error(`The public command ${command.name} must define its spec-progress result contract.`);

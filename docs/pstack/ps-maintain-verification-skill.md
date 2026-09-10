@@ -31,4 +31,6 @@ Eligible normal routes are `/qs-review-code`, `/ps-create-verification-skill`, `
 
 The result always links every verified governing specification and presents a compact work readout with what finished and what is next. It summarizes verified done, pending, and blocked work from explicit input, available task history, repository specifications or ticket plans, and a configured tracker. It outlines up to three exact linked work items with state and next action. If no governing specification or remaining work can be located, it says so instead of inventing a link or backlog.
 
+Every run keeps a conversation checklist, verifies completed stages, reports observed progress or waiting and needed input during long operations, and finishes with changes, checks, and remaining work. Helpers contribute evidence only to their parent.
+
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

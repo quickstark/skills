@@ -2,6 +2,28 @@
 
 Every public invocation has one root skill, one bounded outcome, and one normalized result presented directly in chat. Public skills never automatically start another public skill. Internal capabilities and bounded helpers remain evidence inside the root run and never appear as independent skills used.
 
+## Conversation progress
+
+Keep a checklist in the conversation. During long operations, tell me the current stage, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.
+
+Use pending, active, verified, skipped, blocked, and failed stage states. Only verified stages receive completed checkboxes. Cite evidence for skipped work and reopen stages invalidated by later observations. Running processes and elapsed time alone do not prove progress. Aim for updates within sixty seconds while work is active when the host allows control to return; say when waiting and whether user input is needed. Read-only runs describe findings rather than claiming configuration. This applies independently of effort and report modes.
+
+All canonical skills receive this contract, including non-packaged reference skills. Internal capabilities contribute evidence to the parent's checklist without producing their own reports or status. Bounded managed sections preserve unrelated source content; generated packages remain projections.
+
+## Explicit goal workflow exception
+
+`qs-deploy-prompt` is a read-only generator. Its sole successful copy-ready output is an execution prompt beginning with an instruction to establish or resume the scoped goal before mutations. This output kind is declared explicitly in the catalog. Generating, displaying, or quoting it does not execute it or grant permissions. Missing material inputs produce Input required instead of an execution-ready prompt.
+
+Only user submission explicitly requesting the goal sequence activates the outer coordinator. Each stage remains a separate public root with its own authority and truthful report. Ordinary public skills never start other roots. Existing generic composite workflows keep their existing stop behavior.
+
+The goal coordinator advances only after verified bounded completion; a Continuation required result advances only when its verified bounded outcome and exact requested next skill match the next preauthorized stage. Failed checks, actionable P0/P1 findings, Failed and Input required prevent dependent stages. Authorized in-root repair can continue. Separate recovery workflows must already be authorized; otherwise request the missing decision. Suppress redundant copy-ready prompts only for already-scheduled work, preserving per-root reports.
+
+Carry the submitted scope's standing authorization forward without repeated confirmations. Bind it to repository, operations, branch/remote and selected environment, and honor changed targets, revocations and host controls. Do not manufacture permission from the words goal mode or implicit approvals. Check installed skills and real goal tools, read goal state, never replace an unrelated active goal, and verify goal establishment before mutation. Preserve only explicitly supplied budgets and follow host goal status/cancellation rules. Unsupported goal capability is an input blocker, not ordinary execution mislabeled as goal mode.
+
+Persist stage/revision evidence, authorization and remaining work in conversation for resumption. Inspect remote state before repeating publication or deployment. Changed artifacts invalidate relevant earlier checks. A terminal release result closes that root; the coordinator closes the goal only after all required stages pass and authoritative target, deployed artifact/version, and health evidence agree. Configured, queued, and command success alone are insufficient.
+
+Packages may contain generated routing metadata but never import another package's skill bodies. Missing required skills are reported without installation. Readiness depends on verified actual availability, not catalog membership alone.
+
 ## Modes
 
 `effort=quick|standard|deep` controls investigation and validation depth. `standard` is the default. Quick uses one focused evidence pass and targeted checks. Standard performs the normal evidence pass and permits one bounded repair/recheck cycle where mutation is authorized. Deep broadens evidence and checks while remaining bounded to the requested outcome and mutation scope.
@@ -15,7 +37,7 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 - `input-required`: work requires one material user decision, permission, or unavailable input.
 - `failed`: execution or validation did not produce a usable outcome.
 
-A non-release result emits at most one copy-ready next-work prompt. Completion of the current root does not prove that the larger project is complete. Emit a prompt when a distinct, verified actionable item remains and a catalog-approved public root owns that work, even when the current root completed successfully. A failed result promotes one catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompt.
+A non-release result emits at most one copy-ready next-work prompt. For `qs-deploy-prompt`, that single prompt is its generated goal workflow rather than an ordinary continuation. Completion of the current root does not prove that the larger project is complete. Emit a prompt when a distinct, verified actionable item remains and a catalog-approved public root owns that work, even when the current root completed successfully. A failed result promotes one catalog-approved recovery route when one exists. `/qs-deploy-release` is terminal and emits no next prompt.
 
 Do not chain several public roots into a generic re-evaluation pipeline. Build, Review with mutation authority, and Debug own the implementation, repair, review, testing, and validation required to finish their bounded outcome. A continuation must move to genuinely distinct work; it must not repeat planning, review, debugging, implementation, or verification that already succeeded without new evidence.
 

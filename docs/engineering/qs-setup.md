@@ -29,4 +29,6 @@ A result emits at most one copy-ready next-work prompt when a distinct actionabl
 
 Eligible normal routes are `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-plan-roadmap`. Failure routes are `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-plan-roadmap`. Select at most one route that owns verified unfinished work.
 
+Every run keeps a conversation checklist, verifies completed stages, reports observed progress or waiting and needed input during long operations, and finishes with changes, checks, and remaining work. Helpers contribute evidence only to their parent.
+
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

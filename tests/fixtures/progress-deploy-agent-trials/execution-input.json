@@ -1,0 +1,90 @@
+{
+  "objective": "Deliver CSV invoice export to staging",
+  "repository": "/fixture/ledger-app",
+  "deployment": {
+    "target": "staging",
+    "workflow": "/fixture/ledger-app/docs/deploy.md: npm run deploy:staging; check /health version and HTTP 200; rollback npm run rollback:staging",
+    "evidence": "Controlled fixture: deployment documentation inspected, credentials available"
+  },
+  "references": [
+    {
+      "path": "/fixture/ledger-app/docs/specs/export.md",
+      "evidence": "Controlled fixture: confirmed CSV header, escaping, current filter and existing screen requirements"
+    }
+  ],
+  "acceptanceCriteria": [
+    "CSV exports current filtered invoices with header and escaping",
+    "Existing invoice screen still works",
+    "Staging /health returns HTTP 200 and exact deployed version"
+  ],
+  "exclusions": [
+    "production",
+    "unrelated files"
+  ],
+  "authorization": [
+    {
+      "operation": "edit/build/test",
+      "target": "/fixture/ledger-app"
+    },
+    {
+      "operation": "commit/push",
+      "target": "origin/feature/export"
+    },
+    {
+      "operation": "deploy",
+      "target": "staging"
+    }
+  ],
+  "availableSkills": [
+    "qs-code-build",
+    "qs-git-merge",
+    "qs-deploy-release"
+  ],
+  "goalTools": {
+    "read": "get_goal",
+    "create": "create_goal",
+    "update": "update_goal"
+  },
+  "stages": [
+    {
+      "skill": "qs-code-build",
+      "reason": "Approved spec; CSV not implemented",
+      "verification": [
+        "CSV behavior cases and existing screen pass at current revision",
+        "Diff review passes"
+      ],
+      "operations": [
+        {
+          "operation": "edit/build/test",
+          "target": "/fixture/ledger-app"
+        }
+      ]
+    },
+    {
+      "skill": "qs-git-merge",
+      "reason": "User requests push of tested branch",
+      "verification": [
+        "origin/feature/export equals tested revision"
+      ],
+      "operations": [
+        {
+          "operation": "commit/push",
+          "target": "origin/feature/export"
+        }
+      ]
+    },
+    {
+      "skill": "qs-deploy-release",
+      "reason": "Staging delivery requested",
+      "verification": [
+        "Health/version matches artifact"
+      ],
+      "operations": [
+        {
+          "operation": "deploy",
+          "target": "staging"
+        }
+      ]
+    }
+  ]
+}

@@ -226,6 +226,21 @@ const V3_ONLY_SKILLS = Object.freeze([
   {
     bucket: "engineering",
     upstreamName: null,
+    name: "qs-deploy-prompt",
+    displayName: "QS Deploy: Prompt",
+    shortDescription: "Generate a scoped autonomous deployment prompt",
+    prompt: "generate one scoped goal-mode execution prompt for planning, building, verifying, and deploying the requested feature",
+    userInvoked: true,
+    outputKind: "goal-workflow-prompt",
+    documentationNotes: Object.freeze([
+      "Produces one copy-ready prompt; generation never starts a goal or deploys anything.",
+      "Submitting the prompt authorizes only its named operations and targets; host permissions remain in force.",
+      "Selected workflow skills and goal tools must be available before the prompt is ready for execution.",
+    ]),
+  },
+  {
+    bucket: "engineering",
+    upstreamName: null,
     name: "qs-test-author",
     displayName: "QS Test: Author",
     shortDescription: "Add focused tests for existing behavior",
@@ -292,6 +307,7 @@ const V3_SPECIALIST_COMMAND_DEFINITIONS = Object.freeze([
   ["qs-test-verify", "test", 170],
   ["qs-learn-teach", "learn", 180],
   ["qs-skill-write", "skill", 190],
+  ["qs-deploy-prompt", "deploy", 200],
 ]);
 
 function defineV3Continuation(
@@ -304,6 +320,10 @@ function defineV3Continuation(
 }
 
 const V3_CONTINUATIONS_BY_NAME = Object.freeze({
+  "qs-deploy-prompt": Object.freeze([
+    defineV3Continuation("qs-plan-clarify", "to resolve missing scope or deployment authorization", "Use when a material execution input is unresolved.", { availability: "failure", recovery: true }),
+    defineV3Continuation("qs-flow-handoff", "to preserve a verified missing execution prerequisite", "Use when host capabilities or credentials block execution readiness.", { availability: "failure", recovery: true }),
+  ]),
   "qs-help": Object.freeze([
     defineV3Continuation("qs-plan-clarify", "to clarify the selected work and record the decisions needed to proceed", "Best default when the next workflow still needs a bounded decision."),
     defineV3Continuation("qs-flow-triage", "to classify the incoming work and choose its execution route", "Use for an issue or request that has not been routed yet."),

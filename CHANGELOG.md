@@ -1,5 +1,15 @@
 # QuickStark Skills changelog
 
+## 3.7.0
+
+### Minor Changes
+
+- Add conversation checklists, evidence-backed stage completion, and progress updates
+  across all canonical skills and internal capabilities. Add `qs-deploy-prompt` as
+  the eighth specialist to generate a scoped, goal-mode feature-delivery prompt
+  with standing authorization, verified workflow stages, and deployment evidence.
+  Preserve package isolation and synchronize the Claude, Codex, and Pi projections.
+
 ## 3.6.5
 
 ### Patch Changes

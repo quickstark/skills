@@ -676,6 +676,6 @@ test("Pi managed verification rejects selectors that disable projected commands"
 test("portable boundary keeps maintained Pi packages outside approved contributor resources", async () => {
   const plan = await buildManagedSkillsPlan({ repositoryRoot, homeDirectory: await temporaryHome(), agents: ["pi"] });
   assert.equal(plan.approvedResourceCount, 18);
-  assert.equal(plan.maintainedPackages.reduce((sum, package_) => sum + package_.publicCommandCount, 0), 32);
+  assert.equal(plan.maintainedPackages.reduce((sum, package_) => sum + package_.publicCommandCount, 0), 33);
   assert.equal(plan.personalPlan.operations.every(({ name }) => !/^(?:qs|ps)-/.test(name)), true);
 });

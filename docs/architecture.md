@@ -2,7 +2,7 @@
 
 ## System at a glance
 
-QuickStark v3 exposes twelve core QS commands, seven optional QS specialist commands, and thirteen optional explicit-only PS commands for Codex, Claude Code, and Pi. Four former QS commands and sixteen PS techniques remain internal capabilities.
+QuickStark v3 exposes twelve core QS commands, eight optional QS specialist commands, and thirteen optional explicit-only PS commands for Codex, Claude Code, and Pi. Four former QS commands and sixteen PS techniques remain internal capabilities.
 
 ```mermaid
 flowchart LR
@@ -40,7 +40,7 @@ Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress
 Each public command belongs to exactly one package:
 
 - `qs-skills`: twelve lifecycle-ordered core commands and four private QS capabilities.
-- `qs-specialists`: seven optional specialist commands.
+- `qs-specialists`: eight optional specialist commands.
 - `ps-skills`: thirteen explicit-only commands, sixteen private capabilities, and the Lauren Tan notice.
 
 Packages never import another package's skill bodies. Claude and Pi use canonical `disable-model-invocation: true` frontmatter for explicit commands; Codex projects the same restriction through `agents/openai.yaml`. Generated package trees are snapshots and are never edited independently.
