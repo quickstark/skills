@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 3.7.1
+
+### Patch Changes
+
+- Publish a maintenance release with synchronized Claude, Codex, and Pi package versions. Skill content is unchanged from 3.7.0.
+
 ## 3.7.0
 
 ### Minor Changes
