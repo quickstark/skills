@@ -4,6 +4,7 @@ import {
   claudePublicSkillLiteral,
   piPublicSkillLiteral,
 } from "./skill-collection-registry.mjs";
+import { ESTIMATED_PROGRESS_CONTRACT } from "./progress-reporting-contract.mjs";
 
 const DELIVERY_ORDER = Object.freeze([
   "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
@@ -115,6 +116,7 @@ export function renderGoalWorkflowPrompt(input) {
     ...stages.map((stage, index) => `${index + 1}. ${literals[harness](stage.skill)}\n   Selection evidence: ${JSON.stringify(stage.reason)}\n   Verify: ${JSON.stringify(stage.verification)}\n   Authorized operations: ${JSON.stringify(stage.operations)}`),
     "Keep one concise checklist in the conversation with pending, active, verified, skipped, blocked, or failed stages. Only verified stages receive checked boxes. Explain skipped stages with evidence. Internal capabilities contribute evidence to this checklist and never create separate reports.",
     "During long operations, report the current stage, observed progress or waiting state, and whether user input is needed; aim for an update within sixty seconds when the host allows control to return. A running process alone does not establish progress. Verify each completed stage and reopen it if later evidence invalidates it.",
+    ESTIMATED_PROGRESS_CONTRACT,
     "The outer coordinator may advance only because this submitted prompt explicitly authorizes the goal workflow. Each skill remains one public root with its own scope, authority, and result. Advance after verified complete; a verified continuation-required result may advance only when its next skill matches the already-authorized next stage. Preserve each reported status. Do not emit duplicate continuation prompts for scheduled work.",
     "A failed or pending required check blocks dependent stages. Repair within the current root's authority; a separate recovery workflow requires existing explicit authorization or input. Never bypass failed checks to reach deployment or repeat completed reviews without new evidence.",
     "On resumption, inspect authoritative state and reuse only still-valid completed evidence for the same artifact revision. Check publication and deployment status before retrying so completed external actions are not duplicated. Changed code requires fresh relevant verification.",

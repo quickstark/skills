@@ -5,9 +5,11 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 
 import {
-  HELPER_PROGRESS_CONTRACT, PUBLIC_PROGRESS_CONTRACT, progressInventory,
+  ESTIMATED_PROGRESS_CONTRACT, HELPER_PROGRESS_CONTRACT, PUBLIC_PROGRESS_CONTRACT, progressInventory,
   syncProgressContracts, validateProgressInventory, withProgressContract,
 } from "../scripts/progress-reporting-contract.mjs";
+import { PUBLIC_COMMANDS } from "../scripts/skill-collection-registry.mjs";
+import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
 
 const original = '---\nname: preserved\ndescription: "Keep literal $HOME and `code`."\n---\n\n# Original\n\nText with trailing spaces.  \n\n## Completion report and next steps\n\nOriginal completion policy.\n';
 
@@ -28,6 +30,50 @@ test("repository inventory accounts for every canonical skill and internal refer
   assert.equal(inventory.publicSkills.length, 33, "twelve core, eight specialists, thirteen PS commands");
   assert.equal(inventory.publicSkills.length + inventory.standaloneSkills.length, 52);
   assert.equal(new Set(Object.values(inventory).flat()).size, inventory.publicSkills.length + 39);
+});
+
+test("every actual canonical skill and helper receives the correct progress contract", async () => {
+  const inventory = await validateProgressInventory();
+  for (const path of [...inventory.publicSkills, ...inventory.standaloneSkills]) {
+    const source = await readFile(new URL(`../${path}`, import.meta.url), "utf8");
+    assert.ok(source.includes(PUBLIC_PROGRESS_CONTRACT), path);
+  }
+  for (const path of inventory.internalReferences) {
+    const source = await readFile(new URL(`../${path}`, import.meta.url), "utf8");
+    assert.ok(source.includes(HELPER_PROGRESS_CONTRACT), path);
+    assert.ok(!source.includes(ESTIMATED_PROGRESS_CONTRACT), `${path}: helpers must not report independent percentages`);
+  }
+  for (const command of PUBLIC_COMMANDS) {
+    assert.ok(renderSkillOutputContract(command).includes(ESTIMATED_PROGRESS_CONTRACT), command.name);
+  }
+});
+
+test("estimation instructions retain scope, weighting, evidence, cadence and completion safeguards", () => {
+  // Structural policy coverage only. Recorded model trials separately exercise
+  // interpretation; these checks do not claim that prose enforces runtime math.
+  const required = [
+    /Stage estimate: ~<N>%.*Overall estimate: ~<N>%/,
+    /task start.*transitions.*blockers.*resumption.*completion/,
+    /sum\(weight × stage estimate\) \/ sum\(in-scope weights\)/,
+    /bounded root task.*entire authorized goal/,
+    /elapsed time, token consumption, or a running process alone/,
+    /without decimal precision.*low confidence/,
+    /out-of-scope work from the denominator without awarding credit/,
+    /previously satisfied in-scope work only with current verification evidence/,
+    /last defensible estimate while waiting or blocked/,
+    /scope, weights, estimates, and supporting revision\/evidence for resumption/,
+    /recalibration.*reopened checks.*decrease/,
+    /Never reset valid progress or count resumed work twice/,
+    /Reserve stage 100%.*overall 100%/,
+    /Cap unverified estimates at 95%/,
+    /Failed required checks.*unresolved acceptance criteria.*P0\/P1/,
+  ];
+  const verify = (source) => { for (const pattern of required) assert.match(source, pattern); };
+  verify(PUBLIC_PROGRESS_CONTRACT);
+  assert.match(PUBLIC_PROGRESS_CONTRACT, /within sixty seconds when the host allows control to return/);
+  // A missing independent safeguard must fail, even if all others remain.
+  assert.throws(() => verify(PUBLIC_PROGRESS_CONTRACT.replace("Cap unverified estimates at 95%", "Round freely")));
+  assert.match(HELPER_PROGRESS_CONTRACT, /do not.*independent public percentage/);
 });
 
 test("sync covers every standalone and helper, preserving public source and unrelated bytes", async (t) => {

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { renderGoalWorkflowPrompt, selectGoalWorkflowStages, transitionGoalWorkflow } from "../scripts/goal-workflow.mjs";
 import { renderCompositeWorkflowPrompt } from "../scripts/skill-collection-registry.mjs";
+import { ESTIMATED_PROGRESS_CONTRACT } from "../scripts/progress-reporting-contract.mjs";
 
 const availableSkills = ["qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build", "qs-review-code", "qs-test-author", "qs-test-verify", "qs-git-merge", "qs-deploy-release"];
 const deploy = { operation: "deploy", target: "staging" };
@@ -53,7 +54,9 @@ test("renderer produces a self-contained goal-first execution prompt, not an ord
 
 test("all harnesses render exact registered literals and invalid harnesses fail", () => {
   for (const [harness, literal] of [["codex", "$qs-skills:qs-code-build"], ["claude", "/qs-code-build"], ["pi", "/skill:qs-code-build"]]) {
-    assert.ok(renderGoalWorkflowPrompt({ ...promptInput(), harness }).includes(literal));
+    const rendered = renderGoalWorkflowPrompt({ ...promptInput(), harness });
+    assert.ok(rendered.includes(literal));
+    assert.ok(rendered.includes(ESTIMATED_PROGRESS_CONTRACT), "Fresh tasks need the complete estimation contract, not a reference");
   }
   assert.throws(() => renderGoalWorkflowPrompt({ ...promptInput(), harness: "unknown" }), /Unsupported/);
 });

@@ -1,5 +1,9 @@
 # Progress reporting and deployment-prompt acceptance evidence
 
+The original implementation evidence below is retained as history. The current
+percentage-reporting extension and its fresh trial records are described in the
+final section; current-source integrity checks bind to those new records.
+
 This implementation follows the conversation specification “QS progress reporting and deployment-prompt generation” (AC-01 through AC-12). The change adds the eighth specialist, `qs-deploy-prompt`, and applies progress reporting to all 52 canonical skills and 20 internal references. The 19 non-packaged skills remain non-packaged. Public packages contain 12 core, 8 specialist, and 13 PS commands. The implementation was verified with package versions aligned at 3.6.5 before the separately authorized 3.7.0 release. These trials do not publish or install an update.
 
 ## Architecture and reproducible structural checks
@@ -38,3 +42,70 @@ Initial responses remain in `generation-initial.json` and `execution-initial.jso
 ## Operational boundary
 
 Generation is read-only and returns one execution prompt. Submission authorizes only its named sequence, operations and targets; it cannot alter host controls or erase an unrelated goal. Changed scope, revoked grants, missing credentials/capabilities and unverified checks stop dependent work. No live goal or deployment is required to verify this generator change, and none was started by the trial agents. The implementation task itself uses the user's separately established active goal.
+
+## Stage and estimated percentage extension
+
+The in-chat specification for this local change defines AC1–AC8: exhaustive
+coverage; stage and overall estimates with update cadence; effort weighting;
+truthful waiting, reopening and completion; resumption; self-contained generated
+prompts; existing boundary preservation; and synchronized, verified local output.
+`GATES.md` records the acceptance audit. Publication and installed-plugin updates
+are outside this task. Package versions remain 3.7.1.
+
+The shared `ESTIMATED_PROGRESS_CONTRACT` is embedded in canonical public skills
+and actual rendered goal prompts. Helpers contribute evidence to their parent.
+The complete generation instructions also require the rules inside the sole
+copy-ready execution prompt. Coarse unverified estimates stop at 95%; only
+verified completion earns 100%. Estimates describe scoped work, not time elapsed
+or measured dashboard telemetry.
+
+`generation-percentage.json` and `execution-percentage.json` in
+`tests/fixtures/progress-deploy-agent-trials/` record fresh responses from two
+independent model responders. They received the current canonical generation
+source or rendered execution prompt and supplied fixture observations, without
+reading historical responses. Intended operations are data only; no fixture
+repository, goal, publication, or deployment was executed. The parent reviews the
+responses separately from the responders' input/hash/schema checks.
+
+The new records preserve the original six G scenarios and nine E scenarios and
+add ten percentage cases. Hash checks bind generation to the current canonical
+source, execution to the current rendered prompt, and standalone/helper trials to
+their current contracts. Historical records remain unchanged. Integrity tests
+also preserve the original scenario inputs so old authority cases cannot silently
+disappear from coverage.
+
+The first full regression run caught a compatibility issue: the new helper text
+used the noun “helper,” which the existing PS delegation-policy check treats as
+requiring optional-delegation guidance. The shared sentence now says “report an
+independent public percentage,” avoiding that unintended delegation implication
+without changing the reporting rule or weakening the policy test. The initial
+execution record is preserved in `execution-percentage-before-wording-fix.json`;
+only the affected P10 response is rerun against the revised helper contract. The
+goal prompt and public contract are unchanged, so the other responses remain
+bound to the same inputs.
+
+| Case | Observation checked | Expected result |
+| --- | --- | --- |
+| P1 | Build 50%, weights 60/10/30 | Overall 30% |
+| P2 | Same evidence, process live without new output | Retain stage 50%, overall 30%; poll existing process |
+| P3 | Prior verified build invalidated; observed build 50% | Reopen verification; explain decrease from 60% to 30% |
+| P4 | Resume valid build/Git; release 50% | Retain 85%; monitor existing J42 without redeploying |
+| P5 | Remove unrelated optional research weight 20 | Denominator 120 to 100; 25% to 30%, no research credit |
+| P6 | Skip already-satisfied in-scope build with current evidence | Retain build weight and verified credit; overall 60% |
+| P7 | Suggested 99.8%, required health pending | Stage/overall capped at 95%; no completion |
+| P8 | Build root complete, Git/release pending | Root 100%; goal 60% |
+| P9 | Standalone implementation/verification weights 70/30; verification 50% | Bounded-root overall 85%; no deployment invented |
+| P10 | Helper case invalidated while process remains live | Parent evidence only; three valid and five remaining cases, no public percentage |
+
+The automated numerical checks independently assert these fixture calculations;
+they do not implement a production progress calculator or prove arbitrary model
+behavior. Source coverage, managed-section preservation, malformed-input controls,
+idempotence, and deterministic package projection checks complement the trials.
+The full regression suite remains the required compatibility check.
+
+Limitations: these are controlled response trials, not timing benchmarks or live
+deployment observations. Scenarios without saved estimates produce explicitly
+provisional, low-confidence values; those values are not measured delivery
+percentages. No test establishes universal compliance across models or guarantees
+an update while a host tool prevents control from returning. Claude Code is
+unavailable here, so its three conditional CLI validations are skipped, not passed.

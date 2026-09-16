@@ -1,5 +1,19 @@
 # QuickStark Skills changelog
 
+## 3.8.0
+
+### Minor Changes
+
+- Report estimated current-stage and overall completion across all 52 canonical
+  skills, with 20 internal references contributing evidence to their parent.
+  Weight progress by scoped effort and observed work; preserve estimates while
+  waiting, explain decreases when checks reopen, and reserve 100% for verified
+  completion.
+- Include the complete reporting rules in generated deployment execution prompts,
+  covering skipped stages, resumption, and the distinction between prompt
+  generation and execution. Synchronize the Claude, Codex, and Pi packages while
+  preserving their existing command and authorization boundaries.
+
 ## 3.7.1
 
 ### Patch Changes

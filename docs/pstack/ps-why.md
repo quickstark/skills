@@ -29,6 +29,6 @@ A result emits at most one copy-ready next-work prompt when a distinct actionabl
 
 Eligible normal routes are `/qs-plan-clarify`, `/ps-how`, `/ps-blast-radius`. Failure routes are `/qs-plan-clarify`, `/qs-flow-handoff`, `/ps-how`. Select at most one route that owns verified unfinished work.
 
-Every run keeps a conversation checklist, verifies completed stages, reports observed progress or waiting and needed input during long operations, and finishes with changes, checks, and remaining work. Helpers contribute evidence only to their parent.
+Every run keeps a conversation checklist and reports its current stage, estimated stage and overall completion, observed progress or waiting, and needed input at the start, transitions, blockers, resumption, completion, and roughly every sixty seconds when control returns. Overall covers the root task or, in a submitted goal workflow, the entire authorized goal. Weight estimates by remaining effort and verified milestones, explain recalibration, retain defensible estimates while waiting, and reserve 100% for verified completion. Helpers contribute evidence only to their parent without double-counting. Finish with changes, checks, and remaining work.
 
 Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).

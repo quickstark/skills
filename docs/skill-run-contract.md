@@ -4,11 +4,56 @@ Every public invocation has one root skill, one bounded outcome, and one normali
 
 ## Conversation progress
 
-Keep a checklist in the conversation. During long operations, tell me the current stage, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.
+Keep a checklist in the conversation. Report the current stage, estimated stage and overall completion, observed progress or waiting, and needed input. Verify each completed stage. Finish with changes or findings, checks, and remaining work.
 
 Use pending, active, verified, skipped, blocked, and failed stage states. Only verified stages receive completed checkboxes. Cite evidence for skipped work and reopen stages invalidated by later observations. Running processes and elapsed time alone do not prove progress. Aim for updates within sixty seconds while work is active when the host allows control to return; say when waiting and whether user input is needed. Read-only runs describe findings rather than claiming configuration. This applies independently of effort and report modes.
 
 All canonical skills receive this contract, including non-packaged reference skills. Internal capabilities contribute evidence to the parent's checklist without producing their own reports or status. Bounded managed sections preserve unrelated source content; generated packages remain projections.
+
+### Estimated percentages
+
+Report at task start, meaningful stage transitions, material progress changes,
+blockers, resumption, and completion, as well as during long operations using the
+cadence above. Use this compact format:
+
+`Stage: Verification | Stage estimate: ~50% | Overall estimate: ~70% | Active — checking remaining cases. Input needed: none.`
+
+Overall covers the bounded root task for a standalone skill and the entire
+authorized goal for a submitted multi-stage workflow. Label a root's completion
+separately inside a goal; a finished build does not imply a finished deployment.
+
+Assign stages approximate effort weights initially. Compute overall as
+`sum(weight × stage estimate) / sum(in-scope weights)`. Base estimates on verified
+milestones, observed partial work, and remaining effort, not checklist item counts,
+elapsed time, token consumption, or the existence of a running process. Use coarse
+estimates without decimals and explain low confidence. Weights remain stable
+unless new evidence changes the work breakdown. Explain recalibration, added work,
+reopened checks, and decreases instead of forcing a monotonic percentage.
+
+Explain every skipped stage. Remove out-of-scope work from the denominator without
+awarding credit; previously satisfied in-scope work retains its weight and earns
+credit only with current verification evidence. A skipped label alone earns no
+credit. Helpers supply parent evidence without independent percentages or
+double-counting.
+
+Retain the last defensible estimate while waiting or blocked unless evidence
+changes it, and identify the needed input or external event. Preserve scope,
+weights, estimates, and revision-bound evidence for resumption. Reuse only valid
+evidence, reopen stale checks, and do not reset valid progress or count work twice.
+
+Stage 100% requires verified stage completion; overall 100% requires verified
+completion of the entire stated scope. Cap unverified estimates at 95% when
+rounding to coarse values. Failed required checks, unresolved acceptance criteria,
+and actionable P0/P1 findings prohibit completion regardless of percentages.
+Estimates never replace statuses or verification gates and do not promise a
+completion time. These are conversation estimates, not measured dashboard telemetry.
+
+The shared estimator text lives in `scripts/progress-reporting-contract.mjs` and
+is embedded in both public instructions and rendered goal prompts. Generated
+execution prompts must carry all these rules so a fresh task does not need the
+generating conversation. Generation reaching 100% proves only generation finished:
+“Prompt generated; execution has not started.” For a goal that deploys, 100% still
+requires verified deployed artifact/version, target, and health evidence.
 
 ## Explicit goal workflow exception
 
