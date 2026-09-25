@@ -1,6 +1,6 @@
 # Writing Agent Briefs
 
-An agent brief is a structured comment posted on a GitHub issue or PR when it moves to `ready-for-agent`. It is the authoritative specification that an AFK agent will work from. The original body and discussion are context — the agent brief is the contract.
+An agent brief is a draft acceptance contract for selected incoming work. Post it on a selected issue or PR only when that tracker mutation is authorized. It remains subordinate to user decisions and governing specifications; resolve a conflict instead of treating the newest brief as permission to discard them. Loading this format does not authorize implementation, publication or changing tracker state.
 
 The brief states **what the agent should do**, which stretches to both surfaces: for an issue, that's building the change from nothing; for a PR, it's what's left to do *to the existing diff* — finish it, close gaps, address review points. Same principles either way; the PR example below shows the difference.
 
@@ -12,8 +12,7 @@ The issue may sit in `ready-for-agent` for days or weeks. The codebase will chan
 
 - **Do** describe interfaces, types, and behavioral contracts
 - **Do** name specific types, function signatures, or config shapes that the agent should look for or modify
-- **Don't** reference file paths — they go stale
-- **Don't** reference line numbers
+- Include verified file paths or revision-bound lines when needed to locate evidence; distinguish these anchors from durable requirements. Revalidate them after changes.
 - **Don't** assume the current implementation structure will remain the same
 
 ### Behavioral, not procedural

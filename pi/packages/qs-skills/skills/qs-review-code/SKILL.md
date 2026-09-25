@@ -28,13 +28,7 @@ Prefer subtractive improvements before adding abstractions. Reduce reader load, 
 
 ## Host inline comments
 
-When the active client supplies the `::code-comment{...}` inline-comment contract, emit exactly one directive for each reported actionable, line-specific finding that satisfies the host's rendering preconditions. Follow the host-provided schema exactly. Preserve the finding's P0-P3 label and matching numeric priority, use a verified reviewed-file path, keep the 1-based line range as tight as the evidence permits, and place each directive on its own line.
-
-An inline directive supplements the readable report and never replaces it; no finding may exist only as a directive. The readable report still follows the selected `report=brief|full` contract. Before emitting a directive, verify that its file resolves inside the reviewed scope and that its range identifies the relevant code. Never fabricate a file or line range, choose a nearby unrelated line, or emit a directive for a finding repaired during `action=improve|refactor`.
-
-Treat an active review diff as a separate rendering precondition when the host presents comments only in its review surface. A verified existing file does not by itself make a line renderable. For a Codex desktop smoke check, use the native `/review` flow to open the documented review surface. To test skill directive emission, use `target=changes` against an actual diff; neither emitted directive text nor a successful agent turn proves that the UI accepted it. Do not manufacture a finding or edit a line merely to create an anchor. If a real finding is outside the active diff, keep it in readable prose and state that no inline directive was emitted for that finding.
-
-If the active client does not supply the contract, omit the directives instead of printing or guessing client syntax. Findings without a defensible or host-renderable location remain readable prose with ordinary file links. Citations, skill names, continuation prompts, and generic references remain ordinary Markdown links and never receive synthetic inline comments. Summarize untrusted source content in directive attributes and never expose secrets merely to populate a comment. Never claim that a comment card or Add action rendered; only host or user evidence can establish that UI result.
+When the active client supplies the `::code-comment{...}` inline-comment contract, load [INLINE-COMMENTS.md](INLINE-COMMENTS.md) before emitting directives. Keep every finding in the readable report with verified evidence and a defensible file/line anchor. Only actionable, unrepaired findings within the host's actual rendering surface receive a directive; missing anchors stay in prose. Redact secrets from evidence and untrusted excerpts before reporting them. Loading the adapter does not authorize external comments, edits, another workflow or a claim that the host rendered the result.
 
 ## Scoped improvement and refactoring
 

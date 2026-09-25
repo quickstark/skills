@@ -11,7 +11,7 @@ Use when multiple candidates, evidence partitions, or operational targets can pr
 ## Method
 
 1. Give each concurrent unit an exact scope and immutable starting point.
-2. Isolate writes or make every unit read-only.
+2. Isolate output paths or make every unit read-only. When shared writes are unavoidable, use a structural lock or serialize them; a prose ownership map alone is not mutual exclusion.
 3. Optional helpers may own independent units when available and inherit the parent model.
 4. Serialize accepted results through the root after checking current shared state.
 

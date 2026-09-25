@@ -1,0 +1,5109 @@
+{
+  "schemaVersion": 1,
+  "historicalSnapshots": [
+    {
+      "id": "pstack-0.14.1",
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+      "path": "tests/fixtures/pstack-0.14.1-inventory.json",
+      "sha256": "e013e4169de038b78eb14860d2f1f23a09b94bb3855dd9e2cc2f632f89b3e07e",
+      "candidateCount": 72,
+      "dispositions": [
+        {
+          "candidateId": "skill:architect",
+          "kind": "merge",
+          "target": [
+            "qs-plan-spec",
+            "module-decomposition"
+          ]
+        },
+        {
+          "candidateId": "skill:arena",
+          "kind": "internal",
+          "target": "multi-candidate-exploration"
+        },
+        {
+          "candidateId": "skill:automate-me",
+          "kind": "merge",
+          "target": [
+            "qs-skill-write"
+          ]
+        },
+        {
+          "candidateId": "skill:blast-radius",
+          "kind": "public",
+          "target": "ps-blast-radius"
+        },
+        {
+          "candidateId": "skill:bro",
+          "kind": "omit",
+          "target": "style-only prompt does not warrant a command"
+        },
+        {
+          "candidateId": "skill:create-verification-skill",
+          "kind": "public",
+          "target": "ps-create-verification-skill"
+        },
+        {
+          "candidateId": "skill:figure-it-out",
+          "kind": "merge",
+          "target": [
+            "qs-plan-roadmap",
+            "qs-plan-spec"
+          ]
+        },
+        {
+          "candidateId": "skill:how",
+          "kind": "public",
+          "target": "ps-how"
+        },
+        {
+          "candidateId": "skill:interrogate",
+          "kind": "merge",
+          "target": [
+            "qs-review-code"
+          ]
+        },
+        {
+          "candidateId": "skill:maintain-verification-skill",
+          "kind": "public",
+          "target": "ps-maintain-verification-skill"
+        },
+        {
+          "candidateId": "skill:no-comments",
+          "kind": "omit",
+          "target": "blanket comment removal conflicts with evidence-based review"
+        },
+        {
+          "candidateId": "skill:poteto-mode",
+          "kind": "omit",
+          "target": "persistent automatic router conflicts with one-root runs"
+        },
+        {
+          "candidateId": "skill:recall",
+          "kind": "dependency",
+          "target": "optional-history-adapter"
+        },
+        {
+          "candidateId": "skill:reflect",
+          "kind": "merge",
+          "target": [
+            "qs-skill-write"
+          ]
+        },
+        {
+          "candidateId": "skill:setup-pstack",
+          "kind": "omit",
+          "target": "model and provider configuration is host-specific"
+        },
+        {
+          "candidateId": "skill:show-me-your-work",
+          "kind": "internal",
+          "target": "decision-trail"
+        },
+        {
+          "candidateId": "skill:swarm",
+          "kind": "internal",
+          "target": "parallel-coverage"
+        },
+        {
+          "candidateId": "skill:tdd",
+          "kind": "merge",
+          "target": [
+            "tdd-loop",
+            "qs-code-build"
+          ]
+        },
+        {
+          "candidateId": "skill:teach",
+          "kind": "merge",
+          "target": [
+            "qs-learn-teach"
+          ]
+        },
+        {
+          "candidateId": "skill:technical-writing",
+          "kind": "merge",
+          "target": [
+            "qs-code-document",
+            "qs-skill-write"
+          ]
+        },
+        {
+          "candidateId": "skill:typescript-best-practices",
+          "kind": "internal",
+          "target": "typescript-discipline"
+        },
+        {
+          "candidateId": "skill:unslop",
+          "kind": "internal",
+          "target": "plain-writing"
+        },
+        {
+          "candidateId": "skill:why",
+          "kind": "public",
+          "target": "ps-why"
+        },
+        {
+          "candidateId": "principle:principle-boundary-discipline",
+          "kind": "internal",
+          "target": "boundary-discipline"
+        },
+        {
+          "candidateId": "principle:principle-build-the-lever",
+          "kind": "internal",
+          "target": "rerunnable-tooling"
+        },
+        {
+          "candidateId": "principle:principle-encode-lessons-in-structure",
+          "kind": "internal",
+          "target": "structural-enforcement"
+        },
+        {
+          "candidateId": "principle:principle-exhaust-the-design-space",
+          "kind": "merge",
+          "target": [
+            "qs-design-prototype"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-experience-first",
+          "kind": "internal",
+          "target": "experience-first"
+        },
+        {
+          "candidateId": "principle:principle-fix-root-causes",
+          "kind": "merge",
+          "target": [
+            "qs-code-debug"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-foundational-thinking",
+          "kind": "merge",
+          "target": [
+            "qs-plan-spec",
+            "module-decomposition"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-guard-the-context-window",
+          "kind": "internal",
+          "target": "context-discipline"
+        },
+        {
+          "candidateId": "principle:principle-laziness-protocol",
+          "kind": "internal",
+          "target": "minimal-change"
+        },
+        {
+          "candidateId": "principle:principle-make-operations-idempotent",
+          "kind": "internal",
+          "target": "idempotent-operations"
+        },
+        {
+          "candidateId": "principle:principle-migrate-callers-then-delete-legacy-apis",
+          "kind": "merge",
+          "target": [
+            "qs-review-code"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-minimize-reader-load",
+          "kind": "merge",
+          "target": [
+            "qs-review-code"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-model-the-domain",
+          "kind": "merge",
+          "target": [
+            "domain-modeling"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-never-block-on-the-human",
+          "kind": "merge",
+          "target": [
+            "qs-plan-clarify",
+            "safety-policy"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-outcome-oriented-execution",
+          "kind": "internal",
+          "target": "outcome-oriented-execution"
+        },
+        {
+          "candidateId": "principle:principle-prove-it-works",
+          "kind": "merge",
+          "target": [
+            "qs-test-verify",
+            "skill-run-contract"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-redesign-from-first-principles",
+          "kind": "merge",
+          "target": [
+            "qs-plan-spec",
+            "qs-review-code"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-separate-before-serializing-shared-state",
+          "kind": "internal",
+          "target": "concurrency-ownership"
+        },
+        {
+          "candidateId": "principle:principle-sequence-verifiable-units",
+          "kind": "merge",
+          "target": [
+            "qs-code-build",
+            "qs-git-merge"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-subtract-before-you-add",
+          "kind": "merge",
+          "target": [
+            "qs-review-code"
+          ]
+        },
+        {
+          "candidateId": "principle:principle-type-system-discipline",
+          "kind": "internal",
+          "target": "type-system-discipline"
+        },
+        {
+          "candidateId": "playbook:authoring-a-skill",
+          "kind": "merge",
+          "target": [
+            "qs-skill-write"
+          ]
+        },
+        {
+          "candidateId": "playbook:autonomous-run",
+          "kind": "internal",
+          "target": "bounded-autonomous-loop"
+        },
+        {
+          "candidateId": "playbook:autopilot-full",
+          "kind": "omit",
+          "target": "automatic publication and merge ownership exceed a bounded root"
+        },
+        {
+          "candidateId": "playbook:autopilot-stack",
+          "kind": "omit",
+          "target": "automatic stack construction and publication exceed a bounded root"
+        },
+        {
+          "candidateId": "playbook:babysit",
+          "kind": "public",
+          "target": "ps-pr-babysit"
+        },
+        {
+          "candidateId": "playbook:bug-fix",
+          "kind": "merge",
+          "target": [
+            "qs-code-debug"
+          ]
+        },
+        {
+          "candidateId": "playbook:eval",
+          "kind": "public",
+          "target": "ps-skill-eval"
+        },
+        {
+          "candidateId": "playbook:feature",
+          "kind": "merge",
+          "target": [
+            "qs-code-build"
+          ]
+        },
+        {
+          "candidateId": "playbook:hillclimb",
+          "kind": "public",
+          "target": "ps-hillclimb"
+        },
+        {
+          "candidateId": "playbook:investigation",
+          "kind": "omit",
+          "target": "redundant router over understanding and forensics roots"
+        },
+        {
+          "candidateId": "playbook:multi-phase-plan",
+          "kind": "merge",
+          "target": [
+            "qs-plan-roadmap",
+            "qs-plan-spec"
+          ]
+        },
+        {
+          "candidateId": "playbook:opening-a-pr",
+          "kind": "merge",
+          "target": [
+            "qs-git-merge"
+          ]
+        },
+        {
+          "candidateId": "playbook:orchestrate",
+          "kind": "omit",
+          "target": "standing multi-day coordinator conflicts with bounded root ownership"
+        },
+        {
+          "candidateId": "playbook:pause-safely",
+          "kind": "merge",
+          "target": [
+            "qs-flow-handoff"
+          ]
+        },
+        {
+          "candidateId": "playbook:perf-issue",
+          "kind": "merge",
+          "target": [
+            "qs-code-debug"
+          ]
+        },
+        {
+          "candidateId": "playbook:prototype",
+          "kind": "merge",
+          "target": [
+            "qs-design-prototype"
+          ]
+        },
+        {
+          "candidateId": "playbook:refactoring",
+          "kind": "merge",
+          "target": [
+            "qs-review-code"
+          ]
+        },
+        {
+          "candidateId": "playbook:runtime-forensics",
+          "kind": "public",
+          "target": "ps-runtime-forensics"
+        },
+        {
+          "candidateId": "playbook:session-pickup",
+          "kind": "merge",
+          "target": [
+            "qs-flow-handoff"
+          ]
+        },
+        {
+          "candidateId": "playbook:shipping",
+          "kind": "merge",
+          "target": [
+            "qs-git-merge"
+          ]
+        },
+        {
+          "candidateId": "playbook:trace-forensics",
+          "kind": "public",
+          "target": "ps-trace-forensics"
+        },
+        {
+          "candidateId": "playbook:visual-parity",
+          "kind": "public",
+          "target": "ps-visual-parity"
+        },
+        {
+          "candidateId": "playbook:worktree-cleanup",
+          "kind": "public",
+          "target": "ps-worktree-cleanup"
+        },
+        {
+          "candidateId": "agent:comment-sicko",
+          "kind": "omit",
+          "target": "blanket comment-removal agent is not a safe reusable boundary"
+        },
+        {
+          "candidateId": "agent:poteto-agent",
+          "kind": "omit",
+          "target": "persona and mode wrapper conflicts with host neutrality and one-root runs"
+        },
+        {
+          "candidateId": "benny-skill:setup-benny",
+          "kind": "dependency",
+          "target": "benny-issue-provider-and-scheduler-integration"
+        },
+        {
+          "candidateId": "benny-skill:triage-issue-reports",
+          "kind": "dependency",
+          "target": "benny-issue-provider-integration"
+        },
+        {
+          "candidateId": "benny-skill:reproduce-and-fix-issues",
+          "kind": "dependency",
+          "target": "benny-issue-verification-and-scheduler-integration"
+        }
+      ],
+      "dispositionsSha256": "0d7aa19ddebe3a3029eaeda8203e9ecc7e6801117bdbf3d6ccd8b86ea11a8ea8"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "qs:qs-help",
+      "collection": "qs",
+      "currentName": "qs-help",
+      "canonical": {
+        "owner": "qs-help",
+        "path": "skills/engineering/qs-help/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-help"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-help",
+        "ask-matt"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "ask-matt",
+          "originalPath": "skills/engineering/ask-matt/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-setup",
+      "collection": "qs",
+      "currentName": "qs-setup",
+      "canonical": {
+        "owner": "qs-setup",
+        "path": "skills/engineering/qs-setup/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-setup"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-setup",
+        "setup-matt-pocock-skills"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "setup-matt-pocock-skills",
+          "originalPath": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-plan-clarify",
+      "collection": "qs",
+      "currentName": "qs-plan-clarify",
+      "canonical": {
+        "owner": "qs-plan-clarify",
+        "path": "skills/engineering/qs-plan-clarify/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-clarify"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-plan-clarify",
+        "grill-with-docs",
+        "qs-plan-explore",
+        "qs-plan-interview",
+        "grill-me",
+        "grilling"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "grill-with-docs",
+          "originalPath": "skills/engineering/grill-with-docs/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-never-block-on-the-human",
+          "originalPath": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
+          "candidateId": "principle:principle-never-block-on-the-human",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "grill-me",
+          "originalPath": "skills/productivity/grill-me/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "grilling",
+          "originalPath": "skills/productivity/grilling/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-plan-roadmap",
+      "collection": "qs",
+      "currentName": "qs-plan-roadmap",
+      "canonical": {
+        "owner": "qs-plan-roadmap",
+        "path": "skills/engineering/qs-plan-roadmap/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-roadmap"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-plan-roadmap",
+        "wayfinder"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "wayfinder",
+          "originalPath": "skills/engineering/wayfinder/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "figure-it-out",
+          "originalPath": "pstack/skills/figure-it-out/SKILL.md",
+          "candidateId": "skill:figure-it-out",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "multi-phase-plan",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
+          "candidateId": "playbook:multi-phase-plan",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-plan-spec",
+      "collection": "qs",
+      "currentName": "qs-plan-spec",
+      "canonical": {
+        "owner": "qs-plan-spec",
+        "path": "skills/engineering/qs-plan-spec/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-spec"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-plan-spec",
+        "to-spec"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "to-spec",
+          "originalPath": "skills/engineering/to-spec/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "architect",
+          "originalPath": "pstack/skills/architect/SKILL.md",
+          "candidateId": "skill:architect",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "figure-it-out",
+          "originalPath": "pstack/skills/figure-it-out/SKILL.md",
+          "candidateId": "skill:figure-it-out",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-foundational-thinking",
+          "originalPath": "pstack/skills/principle-foundational-thinking/SKILL.md",
+          "candidateId": "principle:principle-foundational-thinking",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-redesign-from-first-principles",
+          "originalPath": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
+          "candidateId": "principle:principle-redesign-from-first-principles",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "multi-phase-plan",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
+          "candidateId": "playbook:multi-phase-plan",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-code-build",
+      "collection": "qs",
+      "currentName": "qs-code-build",
+      "canonical": {
+        "owner": "qs-code-build",
+        "path": "skills/engineering/qs-code-build/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-code-build"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-code-build",
+        "implement"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "implement",
+          "originalPath": "skills/engineering/implement/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "tdd",
+          "originalPath": "pstack/skills/tdd/SKILL.md",
+          "candidateId": "skill:tdd",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-sequence-verifiable-units",
+          "originalPath": "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+          "candidateId": "principle:principle-sequence-verifiable-units",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "feature",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/feature.md",
+          "candidateId": "playbook:feature",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-code-debug",
+      "collection": "qs",
+      "currentName": "qs-code-debug",
+      "canonical": {
+        "owner": "qs-code-debug",
+        "path": "skills/engineering/qs-code-debug/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-code-debug"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-code-debug",
+        "diagnosing-bugs"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "diagnosing-bugs",
+          "originalPath": "skills/engineering/diagnosing-bugs/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "adapted",
+            "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+            "note": "Group A selectively adopts debug redaction/capture guidance from this reviewed source; historical abbreviated body is not byte-identical."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-fix-root-causes",
+          "originalPath": "pstack/skills/principle-fix-root-causes/SKILL.md",
+          "candidateId": "principle:principle-fix-root-causes",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "bug-fix",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
+          "candidateId": "playbook:bug-fix",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "perf-issue",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
+          "candidateId": "playbook:perf-issue",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-attack-the-premise",
+          "originalPath": "pstack/skills/principle-attack-the-premise/SKILL.md",
+          "candidateId": null,
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Group A selectively adds premise reconsideration after repeated disproved fixes; no per-actor census mandate."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-review-code",
+      "collection": "qs",
+      "currentName": "qs-review-code",
+      "canonical": {
+        "owner": "qs-review-code",
+        "path": "skills/engineering/qs-review-code/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-review-code"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-review-code",
+        "code-review",
+        "qs-design-architecture",
+        "improve-codebase-architecture"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "code-review",
+          "originalPath": "skills/engineering/code-review/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "interrogate",
+          "originalPath": "pstack/skills/interrogate/SKILL.md",
+          "candidateId": "skill:interrogate",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-migrate-callers-then-delete-legacy-apis",
+          "originalPath": "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+          "candidateId": "principle:principle-migrate-callers-then-delete-legacy-apis",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-minimize-reader-load",
+          "originalPath": "pstack/skills/principle-minimize-reader-load/SKILL.md",
+          "candidateId": "principle:principle-minimize-reader-load",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-redesign-from-first-principles",
+          "originalPath": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
+          "candidateId": "principle:principle-redesign-from-first-principles",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-subtract-before-you-add",
+          "originalPath": "pstack/skills/principle-subtract-before-you-add/SKILL.md",
+          "candidateId": "principle:principle-subtract-before-you-add",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "refactoring",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/refactoring.md",
+          "candidateId": "playbook:refactoring",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "improve-codebase-architecture",
+          "originalPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-git-merge",
+      "collection": "qs",
+      "currentName": "qs-git-merge",
+      "canonical": {
+        "owner": "qs-git-merge",
+        "path": "skills/engineering/qs-git-merge/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-git-merge"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-git-merge",
+        "resolving-merge-conflicts"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "resolving-merge-conflicts",
+          "originalPath": "skills/engineering/resolving-merge-conflicts/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-sequence-verifiable-units",
+          "originalPath": "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
+          "candidateId": "principle:principle-sequence-verifiable-units",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "opening-a-pr",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
+          "candidateId": "playbook:opening-a-pr",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "shipping",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/shipping.md",
+          "candidateId": "playbook:shipping",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "pr",
+          "originalPath": "skills/in-progress/pr/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "adapted",
+            "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+            "note": "Selected observed before/after evidence, risks and rollback impact; not the upstream shape-of-change template. First reviewed source revision, not a historical ancestry assertion."
+          },
+          "digest": null,
+          "secondaryAttribution": [
+            {
+              "name": "Dex Horthy / Humanlayer show-me",
+              "reference": "https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/in-progress/pr/CREDITS.md",
+              "note": "Indirect source credit recorded by Matt. No direct Humanlayer source/template copied or independently adopted."
+            }
+          ]
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-deploy-release",
+      "collection": "qs",
+      "currentName": "qs-deploy-release",
+      "canonical": {
+        "owner": "qs-deploy-release",
+        "path": "skills/engineering/qs-deploy-release/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-deploy-release"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-deploy-release"
+      ],
+      "disposition": "repository-authored",
+      "sources": [],
+      "derivedDigest": null,
+      "adaptationNotes": "Repository-authored public workflow; source influences, when listed, do not invent an original upstream command.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-flow-triage",
+      "collection": "qs",
+      "currentName": "qs-flow-triage",
+      "canonical": {
+        "owner": "qs-flow-triage",
+        "path": "skills/engineering/qs-flow-triage/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-flow-triage"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-flow-triage",
+        "triage"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "triage",
+          "originalPath": "skills/engineering/triage/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-flow-handoff",
+      "collection": "qs",
+      "currentName": "qs-flow-handoff",
+      "canonical": {
+        "owner": "qs-flow-handoff",
+        "path": "skills/productivity/qs-flow-handoff/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-flow-handoff"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-flow-handoff",
+        "handoff"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "handoff",
+          "originalPath": "skills/productivity/handoff/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "pause-safely",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/pause-safely.md",
+          "candidateId": "playbook:pause-safely",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "session-pickup",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/session-pickup.md",
+          "candidateId": "playbook:session-pickup",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-plan-research",
+      "collection": "qs",
+      "currentName": "qs-plan-research",
+      "canonical": {
+        "owner": "qs-plan-research",
+        "path": "skills/engineering/qs-plan-research/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-research"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-plan-research",
+        "research"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "research",
+          "originalPath": "skills/engineering/research/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-design-prototype",
+      "collection": "qs",
+      "currentName": "qs-design-prototype",
+      "canonical": {
+        "owner": "qs-design-prototype",
+        "path": "skills/engineering/qs-design-prototype/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-design-prototype"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-design-prototype",
+        "prototype"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "prototype",
+          "originalPath": "skills/engineering/prototype/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "adapted",
+            "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+            "note": "Group A selectively adapts adjacent prototype/LOGIC.md valid/invalid/reset and standalone HTML guidance at this revision; historical body and local authority remain."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-exhaust-the-design-space",
+          "originalPath": "pstack/skills/principle-exhaust-the-design-space/SKILL.md",
+          "candidateId": "principle:principle-exhaust-the-design-space",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "prototype",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/prototype.md",
+          "candidateId": "playbook:prototype",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-code-document",
+      "collection": "qs",
+      "currentName": "qs-code-document",
+      "canonical": {
+        "owner": "qs-code-document",
+        "path": "skills/engineering/qs-code-document/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-code-document"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-code-document"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "technical-writing",
+          "originalPath": "pstack/skills/technical-writing/SKILL.md",
+          "candidateId": "skill:technical-writing",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Repository-authored public workflow; source influences, when listed, do not invent an original upstream command.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-test-author",
+      "collection": "qs",
+      "currentName": "qs-test-author",
+      "canonical": {
+        "owner": "qs-test-author",
+        "path": "skills/engineering/qs-test-author/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-test-author"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-test-author"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-test-behavior-not-implementation",
+          "originalPath": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+          "candidateId": null,
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Repository-authored command selectively adopts independent expectations/known-bad controls; invalid test-shape heuristic omitted."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Repository-authored public workflow; source influences, when listed, do not invent an original upstream command.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-test-verify",
+      "collection": "qs",
+      "currentName": "qs-test-verify",
+      "canonical": {
+        "owner": "qs-test-verify",
+        "path": "skills/engineering/qs-test-verify/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-test-verify"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-test-verify"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-prove-it-works",
+          "originalPath": "pstack/skills/principle-prove-it-works/SKILL.md",
+          "candidateId": "principle:principle-prove-it-works",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Repository-authored public workflow; source influences, when listed, do not invent an original upstream command.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-learn-teach",
+      "collection": "qs",
+      "currentName": "qs-learn-teach",
+      "canonical": {
+        "owner": "qs-learn-teach",
+        "path": "skills/productivity/qs-learn-teach/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-learn-teach"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-learn-teach",
+        "teach"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "teach",
+          "originalPath": "skills/productivity/teach/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "teach",
+          "originalPath": "pstack/skills/teach/SKILL.md",
+          "candidateId": "skill:teach",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-skill-write",
+      "collection": "qs",
+      "currentName": "qs-skill-write",
+      "canonical": {
+        "owner": "qs-skill-write",
+        "path": "skills/productivity/qs-skill-write/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-skill-write"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-skill-write",
+        "writing-great-skills"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "writing-great-skills",
+          "originalPath": "skills/productivity/writing-great-skills/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null,
+          "successors": [
+            {
+              "name": "writing-for-agents",
+              "path": "skills/productivity/writing-for-agents/SKILL.md",
+              "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7"
+            }
+          ]
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "automate-me",
+          "originalPath": "pstack/skills/automate-me/SKILL.md",
+          "candidateId": "skill:automate-me",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "reflect",
+          "originalPath": "pstack/skills/reflect/SKILL.md",
+          "candidateId": "skill:reflect",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "technical-writing",
+          "originalPath": "pstack/skills/technical-writing/SKILL.md",
+          "candidateId": "skill:technical-writing",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "authoring-a-skill",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
+          "candidateId": "playbook:authoring-a-skill",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "writing-for-agents",
+          "originalPath": "skills/productivity/writing-for-agents/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "adapted",
+            "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+            "note": "First reviewed revision of the successor; selectively adopted conditional pointers, model-relative trials and runtime lookup. Original writing-great-skills lineage remains separately recorded."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated QuickStark adaptation; retains distinct root outcome and authority. Original writing-great-skills identity is retained; writing-for-agents is the reviewed successor, not a historical rename of our source record.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs:qs-deploy-prompt",
+      "collection": "qs",
+      "currentName": "qs-deploy-prompt",
+      "canonical": {
+        "owner": "qs-deploy-prompt",
+        "path": "skills/engineering/qs-deploy-prompt/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-deploy-prompt"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-deploy-prompt"
+      ],
+      "disposition": "repository-authored",
+      "sources": [],
+      "derivedDigest": null,
+      "adaptationNotes": "Repository-authored public workflow; source influences, when listed, do not invent an original upstream command.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs-internal:domain-modeling",
+      "collection": "qs",
+      "currentName": "domain-modeling",
+      "canonical": {
+        "owner": "qs-plan-clarify",
+        "path": "skills/internal/domain-modeling.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-clarify",
+        "qs-plan-spec",
+        "qs-review-code"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "qs-design-domain",
+        "domain-modeling"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "domain-modeling",
+          "originalPath": "skills/engineering/domain-modeling/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-model-the-domain",
+          "originalPath": "pstack/skills/principle-model-the-domain/SKILL.md",
+          "candidateId": "principle:principle-model-the-domain",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private capability; listed owners retain their own mutation and completion boundaries.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs-internal:module-decomposition",
+      "collection": "qs",
+      "currentName": "module-decomposition",
+      "canonical": {
+        "owner": "qs-plan-spec",
+        "path": "skills/internal/module-decomposition.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-spec",
+        "qs-code-build",
+        "qs-review-code"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "qs-design-modules",
+        "codebase-design"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "codebase-design",
+          "originalPath": "skills/engineering/codebase-design/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "architect",
+          "originalPath": "pstack/skills/architect/SKILL.md",
+          "candidateId": "skill:architect",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-foundational-thinking",
+          "originalPath": "pstack/skills/principle-foundational-thinking/SKILL.md",
+          "candidateId": "principle:principle-foundational-thinking",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private capability; listed owners retain their own mutation and completion boundaries.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs-internal:ticket-decomposition",
+      "collection": "qs",
+      "currentName": "ticket-decomposition",
+      "canonical": {
+        "owner": "qs-plan-spec",
+        "path": "skills/internal/ticket-decomposition.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-plan-spec"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "qs-plan-tickets",
+        "to-tickets"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "to-tickets",
+          "originalPath": "skills/engineering/to-tickets/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "adapted",
+            "revision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+            "note": "Group A selectively adopts expand/migrate/contract and integration-branch guidance at this revision."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private capability; listed owners retain their own mutation and completion boundaries.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "qs-internal:tdd-loop",
+      "collection": "qs",
+      "currentName": "tdd-loop",
+      "canonical": {
+        "owner": "qs-code-build",
+        "path": "skills/internal/tdd-loop.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-code-build"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "qs-test-tdd",
+        "tdd"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/mattpocock/skills",
+          "originalName": "tdd",
+          "originalPath": "skills/engineering/tdd/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "ed37663cc5fbef691ddfecd080dff42f7e7e350d",
+          "reviewedRevision": "c55ee46073ed923f86ce59a5eb3b6d895095d1b7",
+          "adoption": {
+            "status": "unknown",
+            "revision": null,
+            "note": "Catalog proves historical adaptation; common ancestor is not an exact byte-adoption claim."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "tdd",
+          "originalPath": "pstack/skills/tdd/SKILL.md",
+          "candidateId": "skill:tdd",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-test-behavior-not-implementation",
+          "originalPath": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+          "candidateId": null,
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Group A selectively reinforces independent expectations/known-bad controls without blanket test-shape bans."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private capability; listed owners retain their own mutation and completion boundaries.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": []
+    },
+    {
+      "id": "ps:ps-help",
+      "collection": "ps",
+      "currentName": "ps-help",
+      "canonical": {
+        "owner": "ps-help",
+        "path": "skills/pstack/commands/ps-help/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-help"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-help"
+      ],
+      "disposition": "repository-authored",
+      "sources": [],
+      "derivedDigest": null,
+      "adaptationNotes": "Repository-authored routing; planned absorption does not activate or remove commands.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-help"
+      ]
+    },
+    {
+      "id": "ps:ps-how",
+      "collection": "ps",
+      "currentName": "ps-how",
+      "canonical": {
+        "owner": "ps-how",
+        "path": "skills/pstack/commands/ps-how/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-how"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-how",
+        "skill:how"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "how",
+          "originalPath": "pstack/skills/how/SKILL.md",
+          "candidateId": "skill:how",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-how"
+      ]
+    },
+    {
+      "id": "ps:ps-why",
+      "collection": "ps",
+      "currentName": "ps-why",
+      "canonical": {
+        "owner": "ps-why",
+        "path": "skills/pstack/commands/ps-why/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-why"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-why",
+        "skill:why"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "why",
+          "originalPath": "pstack/skills/why/SKILL.md",
+          "candidateId": "skill:why",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-why"
+      ]
+    },
+    {
+      "id": "ps:ps-blast-radius",
+      "collection": "ps",
+      "currentName": "ps-blast-radius",
+      "canonical": {
+        "owner": "ps-blast-radius",
+        "path": "skills/pstack/commands/ps-blast-radius/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-blast-radius"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-blast-radius",
+        "skill:blast-radius"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "blast-radius",
+          "originalPath": "pstack/skills/blast-radius/SKILL.md",
+          "candidateId": "skill:blast-radius",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-blast-radius"
+      ]
+    },
+    {
+      "id": "ps:ps-runtime-forensics",
+      "collection": "ps",
+      "currentName": "ps-runtime-forensics",
+      "canonical": {
+        "owner": "ps-runtime-forensics",
+        "path": "skills/pstack/commands/ps-runtime-forensics/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-runtime-forensics"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-runtime-forensics",
+        "playbook:runtime-forensics"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "runtime-forensics",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
+          "candidateId": "playbook:runtime-forensics",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-runtime-forensics"
+      ]
+    },
+    {
+      "id": "ps:ps-trace-forensics",
+      "collection": "ps",
+      "currentName": "ps-trace-forensics",
+      "canonical": {
+        "owner": "ps-trace-forensics",
+        "path": "skills/pstack/commands/ps-trace-forensics/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-trace-forensics"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-trace-forensics",
+        "playbook:trace-forensics"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "trace-forensics",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/trace-forensics.md",
+          "candidateId": "playbook:trace-forensics",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-trace-forensics"
+      ]
+    },
+    {
+      "id": "ps:ps-create-verification-skill",
+      "collection": "ps",
+      "currentName": "ps-create-verification-skill",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/commands/ps-create-verification-skill/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-create-verification-skill",
+        "skill:create-verification-skill"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "create-verification-skill",
+          "originalPath": "pstack/skills/create-verification-skill/SKILL.md",
+          "candidateId": "skill:create-verification-skill",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill"
+      ]
+    },
+    {
+      "id": "ps:ps-maintain-verification-skill",
+      "collection": "ps",
+      "currentName": "ps-maintain-verification-skill",
+      "canonical": {
+        "owner": "ps-maintain-verification-skill",
+        "path": "skills/pstack/commands/ps-maintain-verification-skill/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-maintain-verification-skill"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-maintain-verification-skill",
+        "skill:maintain-verification-skill"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "maintain-verification-skill",
+          "originalPath": "pstack/skills/maintain-verification-skill/SKILL.md",
+          "candidateId": "skill:maintain-verification-skill",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-maintain-verification-skill"
+      ]
+    },
+    {
+      "id": "ps:ps-skill-eval",
+      "collection": "ps",
+      "currentName": "ps-skill-eval",
+      "canonical": {
+        "owner": "ps-skill-eval",
+        "path": "skills/pstack/commands/ps-skill-eval/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-skill-eval"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-skill-eval",
+        "playbook:eval"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "eval",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/eval.md",
+          "candidateId": "playbook:eval",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-skill-eval"
+      ]
+    },
+    {
+      "id": "ps:ps-hillclimb",
+      "collection": "ps",
+      "currentName": "ps-hillclimb",
+      "canonical": {
+        "owner": "ps-hillclimb",
+        "path": "skills/pstack/commands/ps-hillclimb/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-hillclimb"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-hillclimb",
+        "playbook:hillclimb"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "hillclimb",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
+          "candidateId": "playbook:hillclimb",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-hillclimb"
+      ]
+    },
+    {
+      "id": "ps:ps-visual-parity",
+      "collection": "ps",
+      "currentName": "ps-visual-parity",
+      "canonical": {
+        "owner": "ps-visual-parity",
+        "path": "skills/pstack/commands/ps-visual-parity/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-visual-parity"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-visual-parity",
+        "playbook:visual-parity"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "visual-parity",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/visual-parity.md",
+          "candidateId": "playbook:visual-parity",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-visual-parity"
+      ]
+    },
+    {
+      "id": "ps:ps-pr-babysit",
+      "collection": "ps",
+      "currentName": "ps-pr-babysit",
+      "canonical": {
+        "owner": "ps-pr-babysit",
+        "path": "skills/pstack/commands/ps-pr-babysit/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-pr-babysit"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-pr-babysit",
+        "playbook:babysit"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "babysit",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/babysit.md",
+          "candidateId": "playbook:babysit",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-pr-babysit"
+      ]
+    },
+    {
+      "id": "ps:ps-worktree-cleanup",
+      "collection": "ps",
+      "currentName": "ps-worktree-cleanup",
+      "canonical": {
+        "owner": "ps-worktree-cleanup",
+        "path": "skills/pstack/commands/ps-worktree-cleanup/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-worktree-cleanup"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "ps-worktree-cleanup",
+        "playbook:worktree-cleanup"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "worktree-cleanup",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
+          "candidateId": "playbook:worktree-cleanup",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Abbreviated PS public outcome retained; model/provider/publication mandates are not adopted.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:multi-candidate-exploration",
+      "collection": "ps",
+      "currentName": "multi-candidate-exploration",
+      "canonical": {
+        "owner": "ps-skill-eval",
+        "path": "skills/pstack/internal/multi-candidate-exploration.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "skill:arena"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "arena",
+          "originalPath": "pstack/skills/arena/SKILL.md",
+          "candidateId": "skill:arena",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity"
+      ]
+    },
+    {
+      "id": "ps-internal:decision-trail",
+      "collection": "ps",
+      "currentName": "decision-trail",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/internal/decision-trail.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "skill:show-me-your-work"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "show-me-your-work",
+          "originalPath": "pstack/skills/show-me-your-work/SKILL.md",
+          "candidateId": "skill:show-me-your-work",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:parallel-coverage",
+      "collection": "ps",
+      "currentName": "parallel-coverage",
+      "canonical": {
+        "owner": "ps-how",
+        "path": "skills/pstack/internal/parallel-coverage.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-how",
+        "ps-why",
+        "ps-blast-radius",
+        "ps-skill-eval"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "skill:swarm"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "swarm",
+          "originalPath": "pstack/skills/swarm/SKILL.md",
+          "candidateId": "skill:swarm",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-skill-eval"
+      ]
+    },
+    {
+      "id": "ps-internal:typescript-discipline",
+      "collection": "ps",
+      "currentName": "typescript-discipline",
+      "canonical": {
+        "owner": "ps-help",
+        "path": "skills/pstack/internal/typescript-discipline.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-help",
+        "ps-how",
+        "ps-why",
+        "ps-blast-radius",
+        "ps-runtime-forensics",
+        "ps-trace-forensics",
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "skill:typescript-best-practices"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "typescript-best-practices",
+          "originalPath": "pstack/skills/typescript-best-practices/SKILL.md",
+          "candidateId": "skill:typescript-best-practices",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-help",
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-runtime-forensics",
+        "qs-trace-forensics",
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:plain-writing",
+      "collection": "ps",
+      "currentName": "plain-writing",
+      "canonical": {
+        "owner": "ps-help",
+        "path": "skills/pstack/internal/plain-writing.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-help",
+        "ps-how",
+        "ps-why",
+        "ps-blast-radius",
+        "ps-runtime-forensics",
+        "ps-trace-forensics",
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "skill:unslop"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "unslop",
+          "originalPath": "pstack/skills/unslop/SKILL.md",
+          "candidateId": "skill:unslop",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-help",
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-runtime-forensics",
+        "qs-trace-forensics",
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:boundary-discipline",
+      "collection": "ps",
+      "currentName": "boundary-discipline",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/internal/boundary-discipline.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-boundary-discipline"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-boundary-discipline",
+          "originalPath": "pstack/skills/principle-boundary-discipline/SKILL.md",
+          "candidateId": "principle:principle-boundary-discipline",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Substantial reinterpretation: upstream validates data/type boundaries; this local capability controls workflow authority. Language/type validation remains in separate type capabilities.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:rerunnable-tooling",
+      "collection": "ps",
+      "currentName": "rerunnable-tooling",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/internal/rerunnable-tooling.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval",
+        "ps-hillclimb"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-build-the-lever"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-build-the-lever",
+          "originalPath": "pstack/skills/principle-build-the-lever/SKILL.md",
+          "candidateId": "principle:principle-build-the-lever",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb"
+      ]
+    },
+    {
+      "id": "ps-internal:structural-enforcement",
+      "collection": "ps",
+      "currentName": "structural-enforcement",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/internal/structural-enforcement.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-encode-lessons-in-structure"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-encode-lessons-in-structure",
+          "originalPath": "pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
+          "candidateId": "principle:principle-encode-lessons-in-structure",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-test-behavior-not-implementation",
+          "originalPath": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
+          "candidateId": null,
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "New reviewed principle, selectively adapted in Group A. Baseline equals first reviewed source; not part of the original 72-candidate snapshot."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval"
+      ]
+    },
+    {
+      "id": "ps-internal:experience-first",
+      "collection": "ps",
+      "currentName": "experience-first",
+      "canonical": {
+        "owner": "ps-visual-parity",
+        "path": "skills/pstack/internal/experience-first.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-visual-parity",
+        "ps-hillclimb"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-experience-first"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-experience-first",
+          "originalPath": "pstack/skills/principle-experience-first/SKILL.md",
+          "candidateId": "principle:principle-experience-first",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-visual-parity",
+        "qs-hillclimb"
+      ]
+    },
+    {
+      "id": "ps-internal:context-discipline",
+      "collection": "ps",
+      "currentName": "context-discipline",
+      "canonical": {
+        "owner": "ps-how",
+        "path": "skills/pstack/internal/context-discipline.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-how",
+        "ps-why",
+        "ps-blast-radius",
+        "ps-runtime-forensics",
+        "ps-trace-forensics",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity",
+        "ps-pr-babysit"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-guard-the-context-window"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-guard-the-context-window",
+          "originalPath": "pstack/skills/principle-guard-the-context-window/SKILL.md",
+          "candidateId": "principle:principle-guard-the-context-window",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-runtime-forensics",
+        "qs-trace-forensics",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit"
+      ]
+    },
+    {
+      "id": "ps-internal:minimal-change",
+      "collection": "ps",
+      "currentName": "minimal-change",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/internal/minimal-change.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-laziness-protocol"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-laziness-protocol",
+          "originalPath": "pstack/skills/principle-laziness-protocol/SKILL.md",
+          "candidateId": "principle:principle-laziness-protocol",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        },
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-attack-the-premise",
+          "originalPath": "pstack/skills/principle-attack-the-premise/SKILL.md",
+          "candidateId": null,
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "New reviewed principle, selectively adapted in Group A. Baseline equals first reviewed source; not part of the original 72-candidate snapshot."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:idempotent-operations",
+      "collection": "ps",
+      "currentName": "idempotent-operations",
+      "canonical": {
+        "owner": "ps-create-verification-skill",
+        "path": "skills/pstack/internal/idempotent-operations.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-make-operations-idempotent"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-make-operations-idempotent",
+          "originalPath": "pstack/skills/principle-make-operations-idempotent/SKILL.md",
+          "candidateId": "principle:principle-make-operations-idempotent",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:outcome-oriented-execution",
+      "collection": "ps",
+      "currentName": "outcome-oriented-execution",
+      "canonical": {
+        "owner": "ps-hillclimb",
+        "path": "skills/pstack/internal/outcome-oriented-execution.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-hillclimb",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-outcome-oriented-execution"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-outcome-oriented-execution",
+          "originalPath": "pstack/skills/principle-outcome-oriented-execution/SKILL.md",
+          "candidateId": "principle:principle-outcome-oriented-execution",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-hillclimb",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:concurrency-ownership",
+      "collection": "ps",
+      "currentName": "concurrency-ownership",
+      "canonical": {
+        "owner": "ps-how",
+        "path": "skills/pstack/internal/concurrency-ownership.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-how",
+        "ps-why",
+        "ps-blast-radius",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-pr-babysit"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-separate-before-serializing-shared-state"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-separate-before-serializing-shared-state",
+          "originalPath": "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
+          "candidateId": "principle:principle-separate-before-serializing-shared-state",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-pr-babysit"
+      ]
+    },
+    {
+      "id": "ps-internal:type-system-discipline",
+      "collection": "ps",
+      "currentName": "type-system-discipline",
+      "canonical": {
+        "owner": "ps-how",
+        "path": "skills/pstack/internal/type-system-discipline.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-how",
+        "ps-why",
+        "ps-blast-radius",
+        "ps-runtime-forensics",
+        "ps-trace-forensics",
+        "ps-create-verification-skill",
+        "ps-maintain-verification-skill",
+        "ps-skill-eval",
+        "ps-hillclimb",
+        "ps-visual-parity",
+        "ps-pr-babysit",
+        "ps-worktree-cleanup"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "principle:principle-type-system-discipline"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "principle-type-system-discipline",
+          "originalPath": "pstack/skills/principle-type-system-discipline/SKILL.md",
+          "candidateId": "principle:principle-type-system-discipline",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+            "note": "Selected Group A detail restored or updated; not a wholesale upstream refresh."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-runtime-forensics",
+        "qs-trace-forensics",
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ]
+    },
+    {
+      "id": "ps-internal:bounded-autonomous-loop",
+      "collection": "ps",
+      "currentName": "bounded-autonomous-loop",
+      "canonical": {
+        "owner": "ps-hillclimb",
+        "path": "skills/pstack/internal/bounded-autonomous-loop.md",
+        "location": "repository"
+      },
+      "owners": [
+        "ps-hillclimb",
+        "ps-pr-babysit"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "playbook:autonomous-run"
+      ],
+      "disposition": "adapted",
+      "sources": [
+        {
+          "repository": "https://github.com/cursor/plugins",
+          "originalName": "autonomous-run",
+          "originalPath": "pstack/skills/poteto-mode/playbooks/autonomous-run.md",
+          "candidateId": "playbook:autonomous-run",
+          "license": "MIT",
+          "licensePaths": [
+            "pstack/LICENSE"
+          ],
+          "noticePaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ],
+          "baselineRevision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+          "reviewedRevision": "12d587dfb20741cafc376c42c696c5f6e2a64487",
+          "adoption": {
+            "status": "adapted",
+            "revision": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
+            "note": "Historical disposition records an adaptation at pstack 0.14.1; no byte identity is claimed."
+          },
+          "digest": null
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Private PS technique retained; canonical owners remain current until catalog migration.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-hillclimb",
+        "qs-pr-babysit"
+      ]
+    },
+    {
+      "id": "contributor:design-taste-frontend",
+      "collection": "contributor",
+      "currentName": "design-taste-frontend",
+      "canonical": {
+        "owner": "design-taste-frontend",
+        "path": "~/.agents/skills/design-taste-frontend/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "design-taste-frontend"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "design-taste-frontend"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "design-taste-frontend",
+          "originalPath": "skills/taste-skill/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "design-taste-frontend"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-frontend"
+      ]
+    },
+    {
+      "id": "contributor:find-skills",
+      "collection": "contributor",
+      "currentName": "find-skills",
+      "canonical": {
+        "owner": "find-skills",
+        "path": "~/.agents/skills/find-skills/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "find-skills"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "find-skills"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/vercel-labs/skills",
+          "originalName": "find-skills",
+          "originalPath": "skills/find-skills/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "c6f69c631292444cc541ac6d91e2226b0ff247da",
+          "reviewedRevision": "7407f3893ad4dceab546ac002c3ef806e4000c73",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "c6f69c631292444cc541ac6d91e2226b0ff247da",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "find-skills"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-help",
+        "qs-setup"
+      ]
+    },
+    {
+      "id": "contributor:high-end-visual-design",
+      "collection": "contributor",
+      "currentName": "high-end-visual-design",
+      "canonical": {
+        "owner": "high-end-visual-design",
+        "path": "~/.agents/skills/high-end-visual-design/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "high-end-visual-design"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "high-end-visual-design"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "high-end-visual-design",
+          "originalPath": "skills/soft-skill/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "high-end-visual-design"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-frontend"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes",
+      "collection": "contributor",
+      "currentName": "hyperframes",
+      "canonical": {
+        "owner": "hyperframes",
+        "path": "~/.agents/skills/hyperframes/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes",
+          "originalPath": "skills/hyperframes/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "3ff3805be0e98ad02ff502c6b5358c99f0b71c05539d69c069412d57b535635b",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-animation",
+      "collection": "contributor",
+      "currentName": "hyperframes-animation",
+      "canonical": {
+        "owner": "hyperframes-animation",
+        "path": "~/.agents/skills/hyperframes-animation/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-animation"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-animation"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-animation",
+          "originalPath": "skills/hyperframes-animation/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "dcb152706e225699c3a954e434c094fa8ae23a9061d62d49b0798b20a60b297e",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-animation"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-audio",
+      "collection": "contributor",
+      "currentName": "hyperframes-audio",
+      "canonical": {
+        "owner": "hyperframes-audio",
+        "path": "~/.agents/skills/hyperframes-audio/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-audio"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-audio"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-audio",
+          "originalPath": "skills/hyperframes-audio/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "8fc5b21a8e5dd07a20a7aa589b222b64b3b665c7007a5d20ba14d7f6efe5f100",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-audio"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-cli",
+      "collection": "contributor",
+      "currentName": "hyperframes-cli",
+      "canonical": {
+        "owner": "hyperframes-cli",
+        "path": "~/.agents/skills/hyperframes-cli/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-cli"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-cli"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-cli",
+          "originalPath": "skills/hyperframes-cli/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "397861778a28cf89aef03f2b56d1a7d7891202684259d643d5d7bb9130bb291d",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-cli"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-core",
+      "collection": "contributor",
+      "currentName": "hyperframes-core",
+      "canonical": {
+        "owner": "hyperframes-core",
+        "path": "~/.agents/skills/hyperframes-core/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-core"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-core"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-core",
+          "originalPath": "skills/hyperframes-core/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "9ec9fb9d13920d0cf588a8b368f5bb52d57aabf99d9606bf63fa874d7bbf74b8",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-core"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-creative",
+      "collection": "contributor",
+      "currentName": "hyperframes-creative",
+      "canonical": {
+        "owner": "hyperframes-creative",
+        "path": "~/.agents/skills/hyperframes-creative/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-creative"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-creative"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-creative",
+          "originalPath": "skills/hyperframes-creative/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "6da4fd1f681605c15aaab34829261fe10d7f3c81ac79bc0ef3b40ed9cd23ef4c",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-creative"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-keyframes",
+      "collection": "contributor",
+      "currentName": "hyperframes-keyframes",
+      "canonical": {
+        "owner": "hyperframes-keyframes",
+        "path": "~/.agents/skills/hyperframes-keyframes/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-keyframes"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-keyframes"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-keyframes",
+          "originalPath": "skills/hyperframes-keyframes/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "ca3056e210808e6382f96384dcfd83fac5f8b369635ab4ae06dae2dda5e2047f",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-keyframes"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:hyperframes-registry",
+      "collection": "contributor",
+      "currentName": "hyperframes-registry",
+      "canonical": {
+        "owner": "hyperframes-registry",
+        "path": "~/.agents/skills/hyperframes-registry/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "hyperframes-registry"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "hyperframes-registry"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "hyperframes-registry",
+          "originalPath": "skills/hyperframes-registry/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "b0cb8f843e5b0302cebd68ea13e9e79bbd8f044e8af7b2a858aa956ce8c36f4d",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "hyperframes-registry"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:image-to-code",
+      "collection": "contributor",
+      "currentName": "image-to-code",
+      "canonical": {
+        "owner": "image-to-code",
+        "path": "~/.agents/skills/image-to-code/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "image-to-code"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "image-to-code"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "image-to-code",
+          "originalPath": "skills/image-to-code-skill/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "58517b03b2a01f4c9ba65861559d03df931400871bbc200978c975b24bb92c73",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "image-to-code"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-image-to-code"
+      ]
+    },
+    {
+      "id": "contributor:imagegen-frontend-mobile",
+      "collection": "contributor",
+      "currentName": "imagegen-frontend-mobile",
+      "canonical": {
+        "owner": "imagegen-frontend-mobile",
+        "path": "~/.agents/skills/imagegen-frontend-mobile/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "imagegen-frontend-mobile"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "imagegen-frontend-mobile"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "imagegen-frontend-mobile",
+          "originalPath": "skills/imagegen-frontend-mobile/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "imagegen-frontend-mobile"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-image-mobile"
+      ]
+    },
+    {
+      "id": "contributor:imagegen-frontend-web",
+      "collection": "contributor",
+      "currentName": "imagegen-frontend-web",
+      "canonical": {
+        "owner": "imagegen-frontend-web",
+        "path": "~/.agents/skills/imagegen-frontend-web/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "imagegen-frontend-web"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "imagegen-frontend-web"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "imagegen-frontend-web",
+          "originalPath": "skills/imagegen-frontend-web/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "65f5ae59fa317567809438310b1c54f78cd133426deb43e4d3d4ca4c8f541628",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "imagegen-frontend-web"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-image-web"
+      ]
+    },
+    {
+      "id": "contributor:media-use",
+      "collection": "contributor",
+      "currentName": "media-use",
+      "canonical": {
+        "owner": "media-use",
+        "path": "~/.agents/skills/media-use/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "media-use"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "media-use"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/heygen-com/hyperframes",
+          "originalName": "media-use",
+          "originalPath": "skills/media-use/SKILL.md",
+          "license": "Apache-2.0",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "6db9fd6e46127ca866a8b78a09a963e489e810b663fad2c3ec5b4786fd6c944f",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "media-use"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-video"
+      ]
+    },
+    {
+      "id": "contributor:minimalist-ui",
+      "collection": "contributor",
+      "currentName": "minimalist-ui",
+      "canonical": {
+        "owner": "minimalist-ui",
+        "path": "~/.agents/skills/minimalist-ui/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "minimalist-ui"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "minimalist-ui"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "minimalist-ui",
+          "originalPath": "skills/minimalist-skill/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "08873a3131d3be27bef9bf3304b310b16b44ca6e3561aebe532797be3443f6bd",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "minimalist-ui"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-frontend"
+      ]
+    },
+    {
+      "id": "contributor:redesign-existing-projects",
+      "collection": "contributor",
+      "currentName": "redesign-existing-projects",
+      "canonical": {
+        "owner": "redesign-existing-projects",
+        "path": "~/.agents/skills/redesign-existing-projects/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "redesign-existing-projects"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "redesign-existing-projects"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/taste-skill",
+          "originalName": "redesign-existing-projects",
+          "originalPath": "skills/redesign-skill/SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "redesign-existing-projects"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-design-frontend"
+      ]
+    },
+    {
+      "id": "contributor:unlazy",
+      "collection": "contributor",
+      "currentName": "unlazy",
+      "canonical": {
+        "owner": "unlazy",
+        "path": "~/.agents/skills/unlazy/SKILL.md",
+        "location": "managed-standalone"
+      },
+      "owners": [
+        "unlazy"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "unlazy"
+      ],
+      "disposition": "upstream-pinned",
+      "sources": [
+        {
+          "repository": "https://github.com/Leonxlnx/unlazy",
+          "originalName": "unlazy",
+          "originalPath": "SKILL.md",
+          "license": "MIT",
+          "licensePaths": [
+            "LICENSE"
+          ],
+          "noticePaths": [],
+          "baselineRevision": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+          "reviewedRevision": "16671491f6679ad9378f52604d3bc2415b4120c7",
+          "adoption": {
+            "status": "byte-identical",
+            "revision": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+            "note": "The contributor manifest records this pinned complete upstream directory; latest reviewed revision is not adopted."
+          },
+          "digest": {
+            "algorithm": "sha256",
+            "kind": "portable-directory",
+            "value": "f93525f0a3dc840746eebeb6855b542862c4c92d3e5791b361ed3ed0fd1d7b85",
+            "authority": {
+              "path": "config/personal-skills.manifest.json",
+              "resource": "unlazy"
+            }
+          }
+        }
+      ],
+      "derivedDigest": null,
+      "adaptationNotes": "Unchanged upstream-managed payload. Planned owners require canonical adaptation, complete private dependencies, verified migration and license/notice preservation; they are not active.",
+      "validationEvidence": [
+        "docs/upstream/skill-review-2026-09-25.md",
+        "docs/specs/quickstark-upstream-adoption.md"
+      ],
+      "plannedOwners": [
+        "qs-unlazy"
+      ]
+    }
+  ]
+}

@@ -16,6 +16,9 @@ payloads into Git.
 The checked-in manifest is desired state. A machine inventory is discovery
 evidence only and never grants approval by itself.
 
+See the [upstream source index and review log](./upstream/README.md) for all
+tracked source repositories, their baselines, and pending update candidates.
+
 ## One-way template update
 
 The repository is the template. Every Mac or Linux machine inventories itself,

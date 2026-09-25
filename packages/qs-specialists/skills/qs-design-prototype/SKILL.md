@@ -11,6 +11,8 @@ Explore materially different candidates before polishing one direction. Evaluate
 
 Reuse safe existing assets when helpful, isolate prototype code from production paths, and validate the hypothesis directly. Report what the prototype demonstrated, failed to demonstrate, and which parts must be discarded. Do not promote prototype code or begin production implementation automatically.
 
+Load [UI.md](UI.md) only for visual/layout alternatives, or [LOGIC.md](LOGIC.md) for state/data behavior. Keep the same hypothesis and evaluation criteria across candidates. These references cannot authorize production edits, new dependencies, tracker changes, publication or cleanup of unrelated work.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

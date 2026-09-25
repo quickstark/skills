@@ -12,7 +12,7 @@ Use when the selected code-aware root inspects or changes a typed interface, dat
 
 1. Identify the invariant the type boundary should express.
 2. Distinguish trusted internal values from parsed external input.
-3. Prefer precise domain types over broad primitives when they reduce caller ambiguity.
+3. Prefer precise domain types over broad primitives when they reduce caller ambiguity. Derive types from an authoritative schema where one exists. Keep total operations simple; strengthen the type when a partial operation must represent an invalid or missing case, rather than maximizing precision everywhere.
 4. Verify affected callers and runtime validation as well as static checks.
 
 ## Stop conditions

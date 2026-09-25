@@ -29,6 +29,10 @@ installs it when missing and replaces a clean older managed version when the
 template advances. Local edits are reported as conflicts and are never
 overwritten.
 
+These updates apply approved pins; they do not automatically adopt upstream
+releases. The [upstream source index and review log](./upstream/README.md)
+documents sources and maintainer review decisions.
+
 Codex and Pi discover the approved contributor skills directly from
 `~/.agents/skills`. Claude Code receives links under `~/.claude/skills` only
 when `claude-code` is selected. Vendor-provided system skills, built-in skills,

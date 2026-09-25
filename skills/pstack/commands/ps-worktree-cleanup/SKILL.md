@@ -18,6 +18,8 @@ Default scope is Git worktrees only. Begin with a read-only audit and do not inf
 
 Simulator data, application state, package caches, and build caches are separate secondary scopes. Each requires an explicit user request, its own read-only audit, and separate exact-target confirmation; worktree approval never authorizes them. Cancellation or timeout produces an honest non-complete result.
 
+Check available host task ownership or explicitly selected user evidence: a clean merged worktree can still be active or pinned. Exclude active, pinned, or unresolved ownership from eligible targets. A path move, new untracked file or newly dirty state invalidates earlier confirmation until the exact safe target is re-established. Never turn a refused removal into force removal or a recursive-delete fallback.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

@@ -69,7 +69,7 @@ The reason should be durable. Avoid referencing temporary circumstances ("we're 
 
 ## When to check `.out-of-scope/`
 
-During triage (Step 1: Gather context), read all files in `.out-of-scope/`. When evaluating a new issue:
+When a potentially rejected enhancement is in scope, inspect relevant records in `.out-of-scope/` if it exists. Its absence does not authorize creating it. When evaluating a new issue:
 
 - Check if the request matches an existing out-of-scope concept
 - Matching is by concept similarity, not keyword — "night theme" matches `dark-mode.md`
@@ -78,7 +78,7 @@ During triage (Step 1: Gather context), read all files in `.out-of-scope/`. When
 The maintainer may:
 
 - **Confirm** — the new issue gets added to the existing file's "Prior requests" list, then closed
-- **Reconsider** — the out-of-scope file gets deleted or updated, and the issue proceeds through normal triage
+- **Reconsider** — record the superseding decision only when authorized; retain the previous rationale and proceed with the current triage assessment
 - **Disagree** — the issues are related but distinct, proceed with normal triage
 
 ## When to write to `.out-of-scope/`
@@ -87,7 +87,7 @@ Only when an **enhancement** (not a bug) is *rejected* as `wontfix`. This applie
 
 Do **not** write here when something is closed as `wontfix` because it's **already implemented**. That's a built feature, not a rejected one; recording it would poison the dedup checks with false rejections. Instead, the closing comment points to where the feature already lives.
 
-The flow:
+The following flow applies only when recording the decision and the exact tracker operations are authorized. Otherwise report the proposed disposition in chat without changing records:
 
 1. Maintainer decides a feature request is out of scope
 2. Check if a matching `.out-of-scope/` file already exists
@@ -100,6 +100,6 @@ The flow:
 
 If the maintainer changes their mind about a previously rejected concept:
 
-- Delete the `.out-of-scope/` file
+- When record changes are authorized, append the superseding decision and its evidence; preserve prior rationale and links. Delete only when deletion itself is explicitly selected and the necessary history remains available.
 - The skill does not need to reopen old issues — they're historical records
 - The new issue that triggered the reconsideration proceeds through normal triage

@@ -11,6 +11,10 @@ Inspect the host's current skill format and repository conventions. Keep instruc
 
 Treat authoring as interface design: define one observable outcome, encode recurring lessons in structure or tests, make operations rerunnable, and compare a variant with its control when a prompt change makes a performance claim. Prefer plain language and cite primary technical standards where they govern behavior.
 
+Keep universally required authority, outcome and failure rules inline. Put optional techniques behind a reference that names both its content and the exact condition for loading it; test each trigger and non-trigger branch. References stay inside the owning package and cannot authorize another root or mutation. Use [GLOSSARY.md](GLOSSARY.md) only when instruction terminology needs clarification.
+
+Prefer a runtime lookup of readily discoverable configuration over copying facts that can become stale. Preserve non-obvious rationale and expensive-to-recover knowledge. Evaluate instruction changes against the actual model and task with a fixed control, loaded-token accounting and fresh responses; source brevity alone is not proof of efficiency. Record original source identity, immutable reviewed/adopted revisions and adaptations, including a renamed upstream successor, without rewriting historical provenance.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

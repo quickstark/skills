@@ -9,7 +9,7 @@ This optional specialist answers one explicit question. Establish the decision t
 
 Prefer primary sources, distinguish observation from inference, record material uncertainty and disagreement, and stop when the requested decision has sufficient evidence. Quick uses a focused authoritative pass; standard triangulates the important claims; deep broadens source and counter-evidence coverage while remaining bounded to the question.
 
-Produce findings and citations without starting planning, prototyping, or implementation automatically.
+When comparing changing sources, record relevant publication/review dates and immutable revisions; distinguish published releases from unreleased code. For a larger review, keep a compact claim-to-source mapping within the requested result so confidence and conflicts remain attributable. Produce findings and citations without starting planning, prototyping, or implementation automatically.
 
 ## Completion report and next steps
 

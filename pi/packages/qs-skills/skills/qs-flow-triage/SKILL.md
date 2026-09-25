@@ -12,6 +12,8 @@ Record one disposition and one recommended root workflow. Update tracker state o
 
 Quick handles one clear item. Standard handles a bounded batch with normal evidence. Deep may reconcile wider dependencies and duplicates but still produces one route per item and no public-skill hops.
 
+When an item needs an implementation brief, use [AGENT-BRIEF.md](AGENT-BRIEF.md) to draft its bounded acceptance contract. For a potentially rejected enhancement, use [OUT-OF-SCOPE.md](OUT-OF-SCOPE.md) to inspect relevant prior decisions. Neither reference authorizes posting, labeling, closing, deleting records or creating tracker work; apply changes only within the user's selected mutation scope. Retain prior decisions and distinguish supersession from deletion.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

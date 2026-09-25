@@ -11,9 +11,9 @@ Use when the scope has independent evidence partitions, each partition has a cle
 ## Method
 
 1. Partition by evidence surface, never by vague requests to investigate everything.
-2. Assign each partition a bounded return shape and prohibit mutation.
+2. Assign each partition a bounded return shape, exact source revision or content hash, and prohibit mutation. Measurement briefs also specify sample count, sample definition, and execution order; returned evidence must record these same bindings.
 3. Optional helpers may run concurrently when available and inherit the parent model.
-4. The root validates overlaps, contradictions, and missing coverage before synthesis.
+4. The root validates returned bindings, overlaps, contradictions, and missing coverage before synthesis. Reject stale revisions, mismatched sampling methods or order, missing workers, and unsupported success claims as coverage gaps; rerun only within the declared budget. A gap is not a pass.
 
 ## Stop conditions
 

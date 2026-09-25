@@ -6,6 +6,9 @@ QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.co
 
 To inspect upstream changes without publishing to it, use `git fetch upstream`; personalized changes are pushed only to `origin`.
 
+The [upstream source index and review log](./docs/upstream/README.md) records all
+tracked skill sources, approved baselines, and improvements considered for adoption.
+
 ## Skill control plane
 
 This repository is the source of truth for QuickStark-owned plugin skills and

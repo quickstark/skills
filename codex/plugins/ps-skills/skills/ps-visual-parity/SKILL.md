@@ -13,6 +13,8 @@ Record baseline identity and hash, capture environment, comparison metric, itera
 
 Reuse an existing browser or screenshot harness through the verification-driver interface when available. Keep assets, fonts, viewport, scale, rendering engine, and environment stable. After each iteration, record the metric, declared tolerance, measured residual, and change. Never crop, rescale, regenerate, replace, or otherwise alter the baseline. Complete only when the measured residual is within tolerance; subjective inspection alone is not exact parity.
 
+Declare the UI state and viewport coverage before implementation. Freeze the comparison implementation and settings with the baseline, metric and approved tolerance. Confirm the comparator detects a known visual mismatch before relying on it. Never relax the tolerance to make a result pass. If the harness or renderer changes, invalidate prior comparisons and restore the agreed capture/comparison contract before continuing; do not alter the baseline. Migrate shared primitives before dependent components when required by the selected change. Record source revision or content hash and measured residual for every required state/viewport; missing coverage cannot count as parity.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

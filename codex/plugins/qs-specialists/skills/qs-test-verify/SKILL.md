@@ -27,7 +27,7 @@ When no matrix is supplied, derive the smallest credible matrix from repository 
 1. Inspect repository instructions, dirty state, documented verification commands, CI configuration, available runtimes, and the selected target.
 2. Resolve the requested or evidence-derived verification matrix before execution, marking checks as required, optional, or unavailable.
 3. Run non-destructive focused checks first and broaden only within the agreed matrix and authority.
-4. Record each suite or environment as passed, failed, skipped, or blocked with the actual command or observable interface and concise evidence.
+4. Record each suite or environment as passed, failed, skipped, or blocked with the actual command or observable interface, artifact identity/revision, environment and concise evidence. A changed artifact or environment invalidates affected prior passes; retain both records and reverify those checks.
 5. Do not rerun failures merely to obtain a pass. Retry only an identified transient condition within a declared bound and retain both attempts.
 6. Leave diagnosis and repair outside this run. Preserve the smallest reliable reproducer or failure boundary supported by the results for a separate `/qs-code-debug` workflow.
 7. Inspect post-run state for source mutations, unexpected artifacts, secrets, and incomplete cleanup before reporting the outcome.

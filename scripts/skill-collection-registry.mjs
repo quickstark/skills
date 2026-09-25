@@ -26,12 +26,20 @@ const SPEC_PROGRESS_COMMAND_NAME_SET = new Set(SPEC_PROGRESS_COMMAND_NAMES);
 
 const PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND = Object.freeze({});
 
+const PRIMARY_HELP_ROUTING = Object.freeze({
+  kind: "available-public-command",
+  referenceFile: "ROUTING.md",
+  availability: "observed-host-literal",
+  automaticInvocation: false,
+});
+
 function defineQsCommand(command) {
   const routes = NEXT_SKILLS_BY_NAME[command.name];
   const collectionId = command.distribution === "core" ? "qs-skills" : "qs-specialists";
   return Object.freeze({
     ...command,
     collectionId,
+    ...(command.name === "qs-help" ? { primaryRouting: PRIMARY_HELP_ROUTING } : {}),
     packageName: collectionId,
     codexPlugin: collectionId,
     codexLiteral: `$${collectionId}:${command.name}`,
@@ -289,6 +297,17 @@ export function validateSkillCollectionRegistryModel(model) {
     if (command.name === "qs-deploy-prompt" && command.outputKind !== "goal-workflow-prompt") {
       throw new Error("The deployment prompt command must declare its goal-workflow output kind.");
     }
+    if (command.name === "qs-help") {
+      const routing = command.primaryRouting;
+      if (routing?.kind !== PRIMARY_HELP_ROUTING.kind
+        || routing.referenceFile !== PRIMARY_HELP_ROUTING.referenceFile
+        || routing.availability !== PRIMARY_HELP_ROUTING.availability
+        || routing.automaticInvocation !== false) {
+        throw new Error("qs-help must preserve availability-checked primary routing without automatic invocation.");
+      }
+    } else if (command.primaryRouting !== undefined) {
+      throw new Error(`The public command ${command.name} cannot declare primary Help routing.`);
+    }
     if (typeof command.resultContext?.specProgress !== "boolean") {
       throw new Error(`The public command ${command.name} must define its spec-progress result contract.`);
     }
@@ -334,4 +353,40 @@ export function claudePublicSkillLiteral(name) {
 export function piPublicSkillLiteral(name) {
   resolvePublicCommand(name);
   return `/skill:${name}`;
+}
+
+/**
+ * Resolve a primary qs-help recommendation against observed host discovery.
+ * Supply exact literals from the active host; installed package names or catalog
+ * membership are insufficient evidence. This function neither invokes nor installs.
+ */
+export function resolvePrimaryHelpRoute(name, { harness = "codex", availableLiterals = [] } = {}) {
+  const command = resolvePublicCommand(name);
+  const literalByHarness = {
+    codex: codexPublicSkillLiteral,
+    claude: claudePublicSkillLiteral,
+    pi: piPublicSkillLiteral,
+  };
+  if (!Object.hasOwn(literalByHarness, harness)) {
+    throw new Error(`Unsupported primary Help routing harness: ${harness}.`);
+  }
+  if (!Array.isArray(availableLiterals)
+    || availableLiterals.some((literal) => typeof literal !== "string" || literal.trim() !== literal || !literal)) {
+    throw new Error("Primary Help routing requires an array of exact observed host literals.");
+  }
+  const literal = literalByHarness[harness](name);
+  const metadata = {
+    name: command.name,
+    collectionId: command.collectionId,
+    description: command.shortDescription,
+    harness,
+  };
+  if (!availableLiterals.includes(literal)) {
+    return Object.freeze({
+      ...metadata,
+      status: "input-required",
+      prerequisite: `Make ${command.collectionId} available in the active ${harness} host and verify discovery of ${name}. Installation or enabling requires user authority.`,
+    });
+  }
+  return Object.freeze({ ...metadata, status: "ready", literal });
 }

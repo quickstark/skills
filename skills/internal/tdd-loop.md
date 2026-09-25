@@ -6,6 +6,7 @@ Use only inside a root `qs-code-build` run when the requested behavior has a sta
 - Green: implement the smallest behavior that satisfies the test.
 - Refactor: improve structure while the focused test remains green.
 - Prefer proof through the real public seam or produced artifact over assertions coupled only to implementation details.
+- Derive expectations independently from the behavior contract, not by reusing the implementation's calculation. When a tautological pass is plausible, verify a known-bad control fails for the intended defect; retain legitimate absence, configuration and structural contract tests.
 - For existing code, add characterization coverage before mutation when behavior is insufficiently protected.
 - When test-first work is impractical, record and perform a credible alternative validation strategy; never manufacture a failing test.
 - Return all evidence to the owning root run. Do not emit a separate status, result, or continuation.

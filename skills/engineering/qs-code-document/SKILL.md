@@ -9,7 +9,7 @@ This optional specialist updates only the selected documentation scope. Inspect 
 
 Write for the reader's next decision: lead with the outcome, use established project vocabulary, remove repetition and vague filler, and distinguish verified behavior from examples or inference. When a technical rule depends on an external standard, cite the primary specification rather than a secondary summary.
 
-Distinguish verified current behavior from planned behavior. Prefer the shortest explanation that lets the intended reader act correctly. Validate commands and links when safe, preserve project terminology, and identify any behavior that could not be verified. Do not change product behavior or start release work automatically.
+Use the project's provenance records for origin claims, including multiple contributors and distinct reviewed/adopted revisions. Prefer a reference to discoverable configuration over duplicating facts that become stale. Distinguish verified current behavior from planned behavior. Prefer the shortest explanation that lets the intended reader act correctly. Validate commands and links when safe, preserve project terminology, and identify any behavior that could not be verified. Do not change product behavior or start release work automatically.
 
 ## Completion report and next steps
 

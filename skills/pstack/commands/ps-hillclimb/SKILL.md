@@ -14,6 +14,8 @@ Before editing, record the metric, credible baseline, target, experiment budget,
 
 For each bounded experiment, record the hypothesis, exact change, measurement, comparison, and keep/revert decision. Revert regressions safely, preserve failed or noisy trials, and stop at the target, exhausted budget, invalid measurement, or safety boundary. Never optimize an undeclared proxy or unrelated code.
 
+Choose a representative workload that reproduces the problem. Before editing, prove the harness distinguishes contrasting workloads and record a green regression gate. Freeze the measurement implementation, settings, sample definition/count, execution order and environment; bind trial results to the exact source revision or content hash. A changed harness invalidates prior comparisons and requires a new baseline. Accept a change only when improvement exceeds declared noise and the regression gate stays green; a faster regression is a rejection. After repeated failed fixes, revisit the shared causal premise and collect discriminating evidence before adding more machinery. Do not impose an arbitrary minimum iteration count when the declared predicate is already met.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

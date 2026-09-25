@@ -7,7 +7,7 @@ description: "Preserve verified state and ranked next actions for another operat
 
 Capture only verified current state: objective, completed work, governing decisions, changed and unrelated dirty files, checks, branch/commit/PR state, blockers, risks, and the exact remaining boundary.
 
-Do not claim a receiving workflow has run. Provide one preferred copy-ready continuation and two concise alternatives with the evidence needed to resume safely.
+Do not claim a receiving workflow has run. Provide at most one copy-ready continuation for the next verified actionable boundary, with the evidence needed to resume safely. Preserve current authority, cancellations, pending work, and revision-bound checks; a receiving session must revalidate changed evidence before continuing.
 
 Keep the handoff concise enough to resume without rereading the full session. Never include credentials or private values.
 

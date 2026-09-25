@@ -11,10 +11,11 @@ Update only the explicitly selected verification assets; product behavior remain
 ## Behavior
 
 1. Discover the existing driver, feature map, harness, and repository conventions.
-2. Execute current checks against real artifacts and classify drift as product, harness, feature-map, or environment drift.
-3. Reconcile stale setup, actions, observables, and checks with verified current behavior.
-4. Preserve still-valid coverage and make every operation rerunnable.
-5. Report product defects without repairing product source.
+2. Run doctor before driving a new session and after a surprising failure; reset or relaunch a wedged state that doctor cannot detect. Execute current checks against real artifacts and classify drift as product, harness, feature-map, or environment drift.
+3. Account for every mapped feature: exercise it, record a product failure, or report the attempted route and concrete unreachable prerequisite. An unreachable feature is not a passing behavior check.
+4. Reconcile stale setup, actions, observables, and checks with verified current behavior. Re-drive every harness correction against the real target before accepting it.
+5. Preserve still-valid coverage and make every operation rerunnable. Clean only owned resources after failed iterations and final driving; confirm captured evidence survives each cleanup at its named location.
+6. Report product defects without repairing product source or rewriting the map to conceal a regression.
 
 If no usable harness or verification workflow exists, stop with `input-required` or `continuation-required`; do not silently invent a host-specific replacement.
 

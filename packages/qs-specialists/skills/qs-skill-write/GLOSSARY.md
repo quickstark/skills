@@ -18,21 +18,15 @@ How a skill is reached — and the two loads you pay for the choice.
 
 ### Model-Invoked
 
-A skill that keeps its **description** field, so the agent can see it and fire it autonomously — and the human can still type its name, so model-invocation always _includes_ user reach. There is no model-only state: a description only ever _adds_ agent discovery, never removes the human's. Pays a permanent **context load** on every turn in exchange for that discoverability. Reachable by other skills, because the description that makes it agent-discoverable makes it invocable. A model-invoked skill whose content is all **reference** is also one home for shared reference: another skill can invoke it, so reference needed by several skills lives in one place. Pick model-invocation only when the agent must reach the skill on its own; if it never fires except by hand, drop the description and pay no context load.
-
-_Avoid_: ability, tool, capability
+A skill the host may select from its description when invocation metadata permits it. Keep metadata consistent with the host and repository conventions; discovery does not permit a public root to execute another public root automatically. In this collection, private references provide reusable detail without a separate invocation.
 
 ### User-Invoked
 
-A skill with its **description** stripped — invisible to the agent and reachable only by the human typing its name (user-_only_, where **model-invoked** is user-_and-agent_). Trades agent-discoverability for zero **context load**. Because it has no description, nothing but the human can reach it: no other skill can fire it.
-
-_Avoid_: procedure, workflow, command
+A skill selected explicitly by the user. Preserve the description and host-specific invocation metadata; do not strip required frontmatter to hide a command. Canonical explicit-only policy and the generated Codex compatibility projection are different layers.
 
 ### Description
 
-The skill's machine-readable trigger, and the one **context pointer** a **model-invoked** skill is forced to keep loaded at all times. Its mere presence _is_ the invocation axis: keep it and the skill is model-invoked (and reachable by other skills); delete it and the skill is **user-invoked**, reachable only by the human. The source of a model-invoked skill's **context load**.
-
-_Avoid_: frontmatter, summary
+A concise, machine-readable statement of a skill's outcome and relevant trigger conditions. It helps routing, but invocation policy comes from verified host behavior and metadata. A description is neither mutation authority nor proof that a package is installed.
 
 ### Context Pointer
 
@@ -42,9 +36,7 @@ _Avoid_: link, reference, import
 
 ### Context Load
 
-The cost a **model-invoked** skill imposes on the agent's context window — its **description**, always loaded, spending both tokens and attention. What **user-invoked** skills escape by having no description, and the brake on splitting into more model-invoked skills.
-
-_Avoid_: token cost, context bloat
+The instructions actually loaded for a run, including visible metadata, the selected root and any references. Measure that total when comparing variants; explicit-only invocation or moving text into a reference does not guarantee zero load.
 
 ### Cognitive Load
 
@@ -54,15 +46,11 @@ _Avoid_: human index, burden, overhead
 
 ### Router Skill
 
-A **user-invoked** skill whose job is to point at your other user-invoked skills — naming each and when to reach for it — so the human has one skill to remember instead of many. It can only hint, never fire them: user-invoked skills have no **description**, so nothing but the human can reach them. The cure for **cognitive load** when user-invoked skills multiply.
-
-_Avoid_: dispatcher, menu, registry, index, router procedure
+A public root that recommends one available workflow from its catalog metadata. It does not execute the recommendation. Missing installation is reported as a prerequisite; the router does not load another public body to simulate availability.
 
 ### Next Prompt
 
-One of three ranked copy-ready continuations emitted by every non-release command. The first is the opinionated preferred route and the other two are alternatives. Each appears in its own fenced `text` code block, embeds the catalog-approved skill needed for the next action using the exact installed literal (`$qs-skills:<core-command>` or `$qs-specialists:<specialist-command>` in Codex; `/<command>` in Claude), and carries forward the preceding run's outcome plus only the single highest-value evidence item. The fence info string is always exactly `text`, which renders as Plain text in chat; it is never `markdown`, `bash`, `json`, or another language. A muted callout underneath can suggest a suitable model and thinking level. It reduces **cognitive load** by showing what to ask, which skill to invoke, and where to start the next run. Model guidance is heuristic, never a measured performance claim or automatic configuration change. A recommendation is not an invocation. Release is terminal and emits no prompts.
-
-_Avoid_: next best skill, skill-only recommendation, generic template, claimed execution, compulsory follow-up
+At most one copy-ready continuation for a verified remaining item, using the exact available host literal and the owning root's eligible route. Include necessary resumption evidence. A recommendation is not execution; release is terminal. Deployment-prompt generation has its separately defined goal-prompt deliverable.
 
 ### Granularity
 
@@ -100,9 +88,7 @@ _Avoid_: supporting material, docs, background
 
 ### External Reference
 
-**Reference** that lives outside the skill system — a plain file, no **description**, no **steps**, not invocable — that any skill can point at. The home for shared reference that needn't fire on its own, and the only shared home two **user-invoked** skills can use, since neither has a description and so neither can fire the other.
-
-_Avoid_: doc, resource, knowledge base
+Non-command material reached through a conditional context pointer. A package must include its required private dependencies; references never bypass the root's authority, create a second report or automatically invoke a public workflow.
 
 ### Progressive Disclosure
 

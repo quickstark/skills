@@ -17,6 +17,12 @@ export const TEST_FILES = Object.freeze([
   "tests/personal-skills-v2.test.mjs",
   "tests/managed-skills.test.mjs",
   "tests/pi-package-projection.test.mjs",
+  "tests/skill-selection.test.mjs",
+  "tests/managed-skill-selection.test.mjs",
+  "tests/upstream-adoption-qs.test.mjs",
+  "tests/upstream-adoption-ps.test.mjs",
+  "tests/upstream-adoption-routing.test.mjs",
+  "tests/skill-provenance.test.mjs",
 ]);
 
 const STRIPPED_EXACT_KEYS = new Set(["CODEX_THREAD_ID"]);

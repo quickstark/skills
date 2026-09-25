@@ -1,4 +1,5 @@
 import { execFile } from "node:child_process";
+import { createHash } from "node:crypto";
 import { lstat, readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve } from "node:path";
@@ -6,6 +7,9 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 
 import { agentSkillResources } from "./personal-skills/manifest.mjs";
+import { inventoryMachine } from "./personal-skills/inventory.mjs";
+import { inferManagedSelection } from "./managed-skill-selection.mjs";
+import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from "./skill-selection.mjs";
 import { piSkillFilterAllows } from "./personal-skills/pi-discovery.mjs";
 import { buildReconciliationPlan } from "./personal-skills/reconcile.mjs";
 import { execute as executePersonalSkills, loadManifest } from "./sync-personal-skills.mjs";
@@ -192,6 +196,53 @@ function summarizePersonalPlan(plan) {
     externalActionCount: plan.externalActions.length,
     externalActions: plan.externalActions,
     states: plan.states,
+  };
+}
+
+// Foundation API: builds a selection-bound preview without changing a manager,
+// lock, selection record or discovery directory. Activation uses this same plan
+// only after staged payload and retirement checks have passed.
+export async function buildManagedSelectionPlan({
+  repositoryRoot = defaultRepositoryRoot,
+  homeDirectory = homedir(),
+  agents = ["codex"],
+  manifestPath = join(repositoryRoot, "config", "personal-skills.manifest.json"),
+  profile = null,
+  withPackages = [],
+  inspectManagedPackages = defaultInspectManagedPackages,
+} = {}) {
+  assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
+  const targets = [...new Set(agents)];
+  for (const agent of targets) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}.`);
+  const maintained = await validateMaintainedPackages({ repositoryRoot });
+  const manifest = await loadManifest(manifestPath);
+  const profiles = await readJson(join(repositoryRoot, "config", "skill-profiles.json"));
+  const selectionPath = selectionRecordPath(homeDirectory);
+  const saved = await readSelectionRecord(selectionPath);
+  const machine = await inventoryMachine({ manifest, homeDirectory });
+  const selections = {};
+  const personalPlans = {};
+  const managerStateTokens = {};
+  const actions = [];
+  for (const agent of targets) {
+    const inventory = await inspectPackages(agent, { homeDirectory, repositoryRoot, packages: maintained.packages }, inspectManagedPackages);
+    managerStateTokens[agent] = createHash("sha256").update(JSON.stringify(inventory)).digest("hex");
+    const legacy = inferManagedSelection({ agent, inventory, machine, packages: maintained.packages, resources: manifest.resources, repositoryRoot });
+    const result = resolveTargetSelection({ agent, profiles, packageNames: maintained.packages.map((item) => item.name),
+      resourceNames: manifest.resources.map((item) => item.name), savedRecord: saved.record, legacy, profile, withPackages });
+    assertCondition(result.selection.resources.every((name) => manifest.resources.some((item) => item.name === name && item.placement.targets.includes(agent))),
+      `Selected resource does not support ${agent}.`);
+    selections[agent] = result;
+    const selectedManifest = { ...manifest, resources: manifest.resources.filter((item) => result.selection.resources.includes(item.name)) };
+    personalPlans[agent] = summarizePersonalPlan(await buildReconciliationPlan({ manifest: selectedManifest, homeDirectory, targets: [agent] }));
+    actions.push(...managerActions(repositoryRoot, [agent], maintained.packages.filter((item) => result.selection.packages.includes(item.name))));
+  }
+  return {
+    schemaVersion: 1, repositoryVersion: maintained.version, targets, selections,
+    selectionPath, selectionFingerprint: saved.fingerprint, previousSelection: saved.record,
+    resourceStateToken: machine.stateToken, managerStateTokens, maintainedPackages: maintained.packages,
+    templateRevision: createHash("sha256").update(JSON.stringify({ profiles, manifest, maintained, collections: SKILL_COLLECTIONS })).digest("hex"),
+    managerActions: actions, personalPlans,
   };
 }
 

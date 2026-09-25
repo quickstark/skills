@@ -15,6 +15,8 @@ Use when at least two plausible approaches remain, the decision criterion is nam
 3. Evaluate each candidate through the same evidence path and record trade-offs.
 4. Select, combine, or reject candidates from the recorded evidence.
 
+Freeze common task grounding and the selection criterion before comparison. Inspect every completed candidate output and record dropouts as gaps; never select from partially written output or hide failed candidates.
+
 ## Stop conditions
 
 Stop when one candidate satisfies the criterion, the budget is exhausted, or new input is required to distinguish the remaining options.

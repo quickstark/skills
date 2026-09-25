@@ -24,6 +24,14 @@ Do not return `continuation-required` merely to ask another public skill to impl
 
 If reproduction is impossible, report the missing evidence and one concrete input request. Do not convert an unverified hypothesis into a completed fix or broaden into architecture improvement automatically.
 
+## Evidence handling
+
+Before displaying or sharing commands, traces, headers, cookies, signed URLs or logs, replace credential values with `<REDACTED>` and retain only diagnostic fields. Keep credentials in the existing environment or user-owned sign-in step; do not paste them into command text or capture prompts. Inspect redacted evidence before sharing: pattern matching cannot prove that every secret was removed.
+
+When reproduction needs a human action, adapt [scripts/hitl-loop.template.sh](scripts/hitl-loop.template.sh). Captured observations may be echoed to the agent; never capture sign-in values or raw auth-bearing errors. The template accepts only structured observations. If redaction removes the causal signal, request a safe diagnostic observation instead of revealing the credential.
+
+After repeated fixes disprove the same explanation, pause symptom edits and state the shared premise, observations that contradict it, and a discriminating check for competing causes. Reproduce the original failure after changing the hypothesis; a new plausible story is not evidence of repair.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

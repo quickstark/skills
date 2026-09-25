@@ -393,7 +393,9 @@ test("review and testing specialists retain their distinct boundaries", async ()
 });
 
 test("qs-review-code conditionally emits truthful host inline comments", async () => {
-  const review = await readFile(join(root, "skills", "engineering", "qs-review-code", "SKILL.md"), "utf8");
+  const reviewRoot = await readFile(join(root, "skills", "engineering", "qs-review-code", "SKILL.md"), "utf8");
+  assert.match(reviewRoot, /\]\(INLINE-COMMENTS\.md\)/);
+  const review = `${reviewRoot}\n${await readFile(join(root, "skills", "engineering", "qs-review-code", "INLINE-COMMENTS.md"), "utf8")}`;
 
   assert.match(review, /active client supplies the `::code-comment\{\.\.\.\}` inline-comment contract/i);
   assert.match(review, /each reported actionable, line-specific finding/i);

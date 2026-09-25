@@ -43,6 +43,8 @@ A complete result requires a scoped test change, no unauthorized production muta
 
 Do not automatically invoke review, build, debug, Git, deployment, or another public skill.
 
+Derive expected outcomes from the established contract independently of the implementation under test. When a test could agree with the same broken logic it exercises, run a known-bad control in an isolated fixture or reversible local mutation and confirm that the assertion fails for the intended defect. Retain legitimate absence, configuration and structural contract tests; test shape alone does not establish usefulness. Do not weaken an expectation to fit observed output.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

@@ -18,6 +18,8 @@ Own diagnosis only. Temporary, non-product evidence artifacts and existing instr
 
 If durable instrumentation or a product repair is needed, return `continuation-required` before changing tracked product source. Never include sensitive artifact contents, private paths, or credential values in the chat result.
 
+Bind measurements to the observed build/source revision, capture identity, environment and method (sample count, what one sample means, and execution order). If source identity is unavailable, report that uncertainty rather than assigning a guessed revision. Use paired captures or a discriminating observation when a causal claim depends on a comparison; distinguish correlation from a supported mechanism. Temporary collection must remain inside the authorized live target and time window.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.
