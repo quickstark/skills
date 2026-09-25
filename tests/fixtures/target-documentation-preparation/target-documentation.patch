@@ -1,0 +1,1051 @@
+--- a/README.md
++++ b/README.md
+@@ -1,93 +1,57 @@
+-# QuickStark Skills v3
++# QuickStark Skills
+ 
+-A focused engineering workflow for Codex, Claude Code, and Pi. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds eight bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
++QuickStark's target catalog has six packages and 38 public commands. The twelve
++core commands and eight specialists retain their names and package membership.
++Advanced, frontend, video and execution packages expose distinct optional outcomes.
++Fresh setup selects core only; ordinary updates preserve the saved selection.
+ 
+-QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills), with an optional adaptation of [Lauren Tan's MIT-licensed pstack](https://github.com/cursor/plugins/tree/main/pstack). The upstream notices are preserved in [third-party notices](./THIRD_PARTY_NOTICES.md).
++Package acceptance, release and installed-host rollout have separate evidence.
++Source presence or this document does not establish that those steps occurred.
+ 
+-To inspect upstream changes without publishing to it, use `git fetch upstream`; personalized changes are pushed only to `origin`.
++| Package | Public commands | Scope |
++| --- | ---: | --- |
++| `qs-skills` | 12 | Core lifecycle, including Help |
++| `qs-specialists` | 8 | Existing specialists, including reusable-skill and goal-prompt authoring |
++| `qs-advanced` | 12 | PS-derived evidence workflows, including dedicated visual parity |
++| `qs-frontend` | 4 | Frontend code, web images/prompts, mobile images/prompts, reference-to-code |
++| `qs-video` | 1 | Video operations backed by 21 private domains and workflows |
++| `qs-execution` | 1 | Substantial-work gates through `qs-unlazy` |
+ 
+-The [upstream source index and review log](./docs/upstream/README.md) records all
+-tracked skill sources, approved baselines, and improvements considered for adoption.
++Catalogs own membership, not this count. Every public root has one package owner;
++private references are not extra commands. Help can explain optional capabilities,
++but checks actual availability before offering an executable literal and never
++installs or starts another root automatically.
+ 
+-## Skill control plane
++## Install and update
+ 
+-This repository is the source of truth for QuickStark-owned plugin skills and
+-for the pinned manifest of approved third-party skills. Installed global skill
+-directories and plugin caches are machine projections; do not copy them back
+-into Git.
+-
+-Use `npm run skills:update` to inspect, converge, and verify the complete
+-maintained-package and approved-resource template on one machine. Optional
+-`skills:plan` and `skills:verify` commands remain read-only; the compatibility
+-`skills:sync -- --authorize` workflow remains available for a separately
+-reviewed plan. The lower-level `personal-skills:*` commands remain available
+-for inventory, explicit adoption, and contributor-resource-only reconciliation.
+-Start with the [end-user installation and update guide](./docs/install-and-update-skills.md).
+-Maintainers can use the deeper [central skill control plane](./docs/personal-skills.md).
+-
+-## Install
++Use the [installation guide](./docs/install-and-update-skills.md) from a verified
++checkout after target activation. The selected transactional updater supports
++Codex and Pi. Claude projections remain generated compatibility artifacts; a
++verified Claude native transaction adapter is not available.
+ 
+ ```bash
+ git clone https://github.com/quickstark/skills.git
+ cd skills
++npm ci
++codex plugin marketplace add ./codex
++npm run skills:plan -- --json --agent codex --agent pi
++npm run skills:update -- --agent codex --agent pi
+ ```
+ 
+-Codex core:
++Choose only installed hosts; omit the Codex bootstrap on a Pi-only machine.
++Register the existing local `./codex` directory only for first-time Codex setup.
++An existing marketplace identity/path mismatch needs a separate reviewed action;
++these instructions do not authorize automatically repointing it.
++With no selection flags, a fresh machine receives
++`qs-skills`; a managed machine retains its verified or saved capability selection.
++Add an optional package explicitly, for example `--with qs-frontend`, using the
++same flags for plan and update. New optional catalog entries never become selected
++merely because an ordinary update sees them. A Git pull does not prove a cached
++plugin was refreshed; installed discovery must pass verification.
+ 
+-```bash
+-codex plugin marketplace add ./codex
+-codex plugin add qs-skills@quickstark
+-```
+-
+-Optional Codex specialists:
+-
+-```bash
+-codex plugin add qs-specialists@quickstark
+-```
+-
+-Optional Codex Pstack workflows:
+-
+-```bash
+-codex plugin add ps-skills@quickstark
+-```
+-
+-Claude Code core and optional specialists:
+-
+-```bash
+-claude plugin marketplace add .
+-claude plugin install qs-skills@quickstark
+-claude plugin install qs-specialists@quickstark
+-claude plugin install ps-skills@quickstark
+-```
+-
+-Pi core and optional packages:
+-
+-```bash
+-pi install ./pi/packages/qs-skills
+-pi install ./pi/packages/qs-specialists
+-pi install ./pi/packages/ps-skills
+-```
+-
+-Restart the host or begin a new task after changing installed plugins. A Git pull updates the checkout; it does not automatically refresh a cached installed plugin.
+-
+-The direct package commands above install QuickStark only. To install or update
+-both QuickStark and the approved contributor skills through one reviewed
+-operation, select only the harnesses installed on that machine:
+-
+-```bash
+-npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
+-npm run skills:update -- --agent codex --agent claude-code --agent pi
+-```
+-
+-The unified command first verifies, without fetching or changing local refs,
+-that checkout HEAD exactly matches GitHub's current `origin/main`. It then uses
+-the checked-out repository version as "latest", validates all nine generated
+-package manifests, and verifies the installed package versions reported by each
+-selected manager. A stale clean `main` checkout receives an exact fast-forward
+-pull command; other stale checkouts receive an isolated-worktree command so
+-local changes are preserved. Pi receives the three maintained QuickStark
+-package projections through its native local-package manager; the 18 approved
+-contributor skills remain portable Agent Skills.
++The [control-plane guide](./docs/personal-skills.md) explains pinned resources,
++ownership checks, migration journals and recovery. Do not copy installed caches
++back into Git or synchronize machines with one another.
+ 
+ ## Core commands
+ 
+@@ -119,27 +83,47 @@
+ | [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
+ | [`qs-deploy-prompt`](./skills/engineering/qs-deploy-prompt/SKILL.md) | Generate a scoped autonomous deployment prompt. |
+ 
+-## Optional Pstack workflows
++## Advanced and creative outcomes
+ 
+-`ps-skills` contains thirteen explicit-only commands under the `ps-` namespace. It is additive, does not change QS membership, and never chains public commands automatically. Start with [Using PS skills](./docs/pstack/using-ps-skills.md) for a practical command chooser, or browse the [PS command index](./docs/pstack/index.md) for individual references.
++`qs-advanced` supplies `qs-how`, `qs-why`, `qs-blast-radius`,
++`qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`,
++`qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`,
++`qs-visual-parity`, `qs-pr-babysit` and `qs-worktree-cleanup`.
++Visual parity retains its immutable reference, selected tolerance and measured
++residual; it is not absorbed into general frontend implementation.
+ 
+-## v3 behavior
++`qs-frontend` separates `qs-design-frontend`, `qs-design-image-web`,
++`qs-design-image-mobile` and `qs-design-image-to-code`. Image roots also accept
++prompt-only work without generation or product edits. Reference-to-code preserves
++the selected visual authority. `qs-deploy-prompt` remains the separate
++goal-workflow-prompt author; generating a prompt never executes it.
+ 
+-- Domain modeling, module decomposition, ticket decomposition, and TDD are internal capabilities, not commands.
+-- `qs-review-code action=refactor target=<scope>` is the refactoring workflow. An unscoped whole-codebase request stays read-only until a target is selected.
+-- Every invocation has one root skill and zero automatic public-skill hops.
+-- `effort=quick|standard|deep` controls execution depth; `report=brief|full` independently controls presentation. Defaults are `standard` and `brief`.
+-- Every non-release result has at most one next-work prompt, tied to an exact verified ticket, specification, issue, or grouped work item. Complete work with no follow-up emits none; release is terminal and always emits none. Build, Review-with-mutation, and Debug finish their authorized implementation, repair, testing, and validation inside one root instead of chaining re-evaluation skills.
++`qs-video` retains 21 private resources, including ten specialized workflows,
++Figma input and Studio guidance. Its [runtime profile](./skills/video/qs-video/references/runtime-compatibility.md)
++documents exact tested local paths and unavailable provider routes. `qs-unlazy`
++has a separate [runtime profile](./skills/engineering/qs-unlazy/references/runtime-compatibility.md);
++optional hooks require their own authorization.
+ 
+-See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
++The retained `ps-skills` 3.8.0 payload is a [migration compatibility artifact](./docs/upstream/package-transition.md).
++It stays observable until verified withdrawal and is excluded from fresh target
++selection. Original PS names and contributor names remain provenance, not aliases.
+ 
+-## Results in chat
++## Results and authority
+ 
+-Every promoted run presents one concise result directly in the conversation. Brief output includes status, outcome, decision-grade evidence, material failures or outputs, and three ranked copy-ready next prompts; full output adds supporting evidence. An internal clear-writing pass applies to every QS and PS result, with no external output system or separate credentials.
++Every invocation owns one bounded result in chat. Public roots do not start other
++public roots automatically. Only an explicitly submitted authorized goal workflow
++may coordinate successive roots under the [shared contract](./docs/skill-run-contract.md).
++Effort controls evidence depth, not mutation or publication authority.
+ 
+-## Development
++Tracked results retain status, specs, a compact Work summary and at most one
++eligible copy-ready next-work prompt. Release is terminal. Failed required checks
++and actionable P0/P1 findings prohibit completion. Private helpers do not emit
++separate results or expand authority.
+ 
+-Update the relevant source-of-truth catalog (`scripts/qs-skill-catalog.mjs` or `scripts/ps-skill-catalog.mjs`) before changing promoted membership or order, then run:
++## Development and release
++
++Edit canonical sources and collection catalogs; regenerate package projections,
++command pages, output contracts and provenance instead of editing generated copies.
+ 
+ ```bash
+ npm run sync:codex
+@@ -147,12 +131,15 @@
+ npm test
+ ```
+ 
+-When Claude Code is available:
++The [release workflow](./.github/workflows/release.yml) currently runs
++`changeset version` and `changeset tag`; it does not synchronize or validate the
++generated manifests for a version bump. Before an intended release, synchronize
++the root package/lockfile and every active Claude, Codex and Pi manifest/projection,
++then run the checks above. Keep the pinned PS transition payload unchanged and
++outside active-version synchronization. A tag is not installed-host rollout evidence.
+ 
+-```bash
+-claude plugin validate . --strict
+-claude plugin validate ./packages/qs-specialists --strict
+-claude plugin validate ./packages/ps-skills --strict
+-```
+-
+-See [architecture](./docs/architecture.md), [contributing](./docs/contributing.md), and the [changelog](./CHANGELOG.md).
++QuickStark preserves the source identities and notices recorded in
++[provenance](./docs/upstream/provenance.md) and [third-party notices](./THIRD_PARTY_NOTICES.md).
++The [upstream log](./docs/upstream/README.md) distinguishes historical baselines,
++reviewed sources and accepted adoption. `upstream` is read-only reference;
++authorized personalized publication goes only to `origin`.
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -1,44 +1,50 @@
+ # QuickStark skill collection
+ 
+-QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills`, eight optional commands in `qs-specialists`, and thirteen explicit-only commands in the optional `ps-skills` package. Canonical QS sources live under `skills/engineering/` and `skills/productivity/`; canonical PS sources live under `skills/pstack/commands/`. QS and PS internal capabilities remain non-command references.
++The target consists of six QS packages and 38 public commands: core 12,
++specialists 8, advanced 12, frontend 4, video 1 and execution 1. Core and
++specialist names and membership are retained. Catalog membership is authoritative;
++the total is a checked consequence, not a policy cap.
+ 
+-Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
++Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`
++and `skills/deprecated/` is never promoted or packaged by implication.
+ 
+ ## Source of truth
+ 
+-`scripts/qs-skill-catalog.mjs` and `scripts/ps-skill-catalog.mjs` own collection membership; `scripts/skill-collection-registry.mjs` owns shared identity and literal lookup. Add or rename a public command in its collection catalog first.
++Collection catalogs are `scripts/qs-skill-catalog.mjs`,
++`scripts/advanced-skill-catalog.mjs`, `scripts/frontend-skill-catalog.mjs`,
++`scripts/video-skill-catalog.mjs` and `scripts/execution-skill-catalog.mjs`.
++`scripts/skill-collection-registry.mjs` owns active identity and exact host literals.
++The PS catalog preserves original identities and dispositions for provenance and
++migration; it does not create QS aliases. Add or rename a root in its catalog first.
+ 
+-Every public command has:
++Every public command has matching canonical `SKILL.md`, display metadata, exact
++package prompt, generated page and source-synchronized projection in its owning
++package for each generated host. Packages include their own private closure.
++Preserve all 21 video modules and the complete execution module/dependency index.
++Preserve original versus derived hashes, source revisions, notices, stable migration
++IDs and many-to-one provenance mappings when adapting content.
+ 
+-- A matching canonical folder and `SKILL.md` frontmatter name.
+-- Matching `agents/openai.yaml` display metadata and exact package prompt.
+-- Root and bucket index entries in lifecycle order.
+-- A concise generated page under `docs/<bucket>/`.
+-- The shared direct-chat completion contract.
+-- A source-synchronized copy in exactly one generated package projection.
++Explicit-only canonical, Claude and Pi metadata retain
++`disable-model-invocation: true` and `policy.allow_implicit_invocation: false`.
++Generated Codex projections omit those markers only in the existing projector
++compatibility exception. Never weaken canonical policy to repair host discovery.
+ 
+-Explicit commands use `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked commands omit both.
++## Packages and installation
+ 
+-Canonical, Claude, and Pi metadata retain those explicit-only markers. Generated Codex projections omit both markers because current Codex clients otherwise remove the commands from the model-visible catalog, including explicit `$plugin:skill` requests. Keep that compatibility exception inside the projector; never weaken the canonical source or edit generated copies independently.
++Fresh selection is core only. Ordinary update uses saved selection; optional
++packages require explicit selection and accepted replacement evidence. A known
++package, helper reference or source directory does not authorize installation.
++Target native transactions support Codex and Pi only. Generated Claude packaging
++does not establish a supported Claude transaction adapter.
+ 
+-## Packages
++Retain the PS 3.8.0 transition artifact, its marked marketplace visibility and exact
++recorded payload while old registrations need observation and safe withdrawal.
++It is excluded from target selection and active-version synchronization. Do not
++regenerate, remove or rename it as if it were a current QS package.
+ 
+-The default core contains exactly twelve commands. The optional specialists package contains exactly eight commands. The optional PS package contains exactly thirteen explicit-only commands and sixteen private capabilities. Packages must operate without importing each other's skill bodies.
+-
+-- Claude core manifest: `.claude-plugin/plugin.json`
+-- Claude specialist package: `packages/qs-specialists/`
+-- Codex core package: `codex/plugins/qs-skills/`
+-- Codex specialist package: `codex/plugins/qs-specialists/`
+-- Claude PS package: `packages/ps-skills/`
+-- Codex PS package: `codex/plugins/ps-skills/`
+-- Pi core package: `pi/packages/qs-skills/`
+-- Pi specialist package: `pi/packages/qs-specialists/`
+-- Pi PS package: `pi/packages/ps-skills/`
+-- Claude and Codex marketplaces each expose all three packages.
+-
+-Codex, generated Claude, and Pi package snapshots are generated outputs. Never edit them independently. Keep the package, lockfile, all three Claude manifests, all three Codex manifests, and all three Pi manifests on the same version.
+-
+-After a public skill, capability, catalog, documentation, or plugin change, run:
++Codex, Claude and Pi package snapshots and generated documentation are outputs.
++Never edit them independently. Root package and lockfile versions must match all
++active generated manifests. After source/catalog/documentation/plugin changes run:
+ 
+ ```bash
+ npm run sync:codex
+@@ -46,17 +52,19 @@
+ npm test
+ ```
+ 
+-When Claude Code is available, validate all three package roots:
++When Claude is available, validate `.`, `packages/qs-specialists`,
++`packages/qs-advanced`, `packages/qs-frontend`, `packages/qs-video` and
++`packages/qs-execution` using `claude plugin validate <root> --strict`.
++Packaging validation is separate from native install/migration acceptance.
+ 
+-```bash
+-claude plugin validate . --strict
+-claude plugin validate ./packages/qs-specialists --strict
+-claude plugin validate ./packages/ps-skills --strict
+-```
++The current Changesets workflow versions the root and tags; it does not run the
++required projection synchronization after versioning. Before any intended release,
++regenerate all active versioned outputs and run required checks. Do not infer
++publication, installed-host rollout or acceptance from a queued command or a tag.
+ 
+ ## Root-run contract
+ 
+-`skills/engineering/qs-help/SKILL.md` and `skills/pstack/commands/ps-help/SKILL.md` are collection routers. `docs/skill-run-contract.md` owns shared execution and presentation policy.
++`skills/engineering/qs-help/SKILL.md` is the target collection router. The retained PS Help source is historical compatibility material, not a target alias. `docs/skill-run-contract.md` owns shared execution and presentation policy.
+ 
+ Every invocation has one public root and one bounded result presented directly in chat. Public skills never automatically execute other public skills. A user-submitted explicit goal workflow may coordinate successive authorized roots under the narrow exception in docs/skill-run-contract.md; generation alone never executes it. Internal capabilities and bounded helpers remain inside the root run and do not produce their own result, status, skill-used entry, or continuation.
+ 
+@@ -68,8 +76,16 @@
+ 
+ ## Chat results
+ 
+-Every QS and PS result applies the internal clear-writing pass before it is shown: lead with the outcome, use concrete language, preserve necessary qualifications, and remove repetition. Present the result in the current conversation without a secondary artifact or external URL.
++Every public result applies the internal clear-writing pass before it is shown: lead with the outcome, use concrete language, preserve necessary qualifications, and remove repetition. Present the result in the current conversation without a secondary artifact or external URL.
+ 
+-## Upstream
++## Upstream and activation evidence
+ 
+-`origin` is the personal fork at `https://github.com/quickstark/skills`. `upstream` is the read-only reference at `https://github.com/mattpocock/skills`. Preserve Matt Pocock's and Lauren Tan's MIT notices. Push personalized changes only to `origin`.
++`origin` is the personal fork at `https://github.com/quickstark/skills`.
++`upstream` is the read-only reference at `https://github.com/mattpocock/skills`.
++Preserve all recorded MIT/Apache notices, including Matt Pocock and Lauren Tan.
++Push personalized changes only to `origin` when authorized.
++
++Source-body presence, generated projection success, behavior trials, runtime checks
++and installed-host acceptance prove different things. Keep unverified source/package
++acceptance explicit until independently verified. Documentation preparation never
++activates the registry.
+--- a/docs/install-and-update-skills.md
++++ b/docs/install-and-update-skills.md
+@@ -1,206 +1,124 @@
+ # Install and update QuickStark skills
+ 
+-This guide is for people who use QuickStark on one or more Macs or Linux
+-machines with Codex, Claude Code, or the Pi coding-agent harness. In this guide,
+-Pi means the coding-agent harness, not Raspberry Pi OS.
++This guide describes the six-package target updater. Selection options require
++the target registry; an older checkout using the legacy updater rejects
++`--profile`, `--with` and `--resume`. Do not use documentation alone as
++proof that a target package is accepted or installed.
+ 
+-## The update model
++The target native transaction supports Codex and Pi. Choose only installed hosts;
++Pi means the coding-agent harness. Claude package projections are generated, but
++the target updater rejects `--agent claude-code` until a separately verified native
++transaction adapter exists. It must not silently fall back to the legacy updater.
+ 
+-Updates flow in one direction: from this GitHub repository to the current
+-machine. Machines are never synchronized with each other, and an installed
+-machine is never treated as the source of truth.
++## Selection and the repository template
+ 
+-The checked-out repository is the template. It contains two managed sets:
++Updates move from a verified repository checkout to one machine. They do not copy
++installed caches back into Git, synchronize machines, or adopt upstream changes.
++The six packages are core `qs-skills` (12 roots), `qs-specialists` (8),
++`qs-advanced` (12), `qs-frontend` (4), `qs-video` (1) and `qs-execution` (1).
+ 
+-| Skill type | Current contents | Installation model |
+-| --- | --- | --- |
+-| QuickStark maintained packages | 12 core commands, 8 specialists, and 13 PS commands | Installed through each harness's package manager |
+-| Approved contributor skills | 18 pinned personal or third-party Agent Skills | Installed once in `~/.agents/skills` |
++| Situation | Selection |
++| --- | --- |
++| Fresh machine, no selection flags | `qs-skills` only; no standalone resources |
++| Saved machine, no selection flags | Saved packages and resources for each selected host |
++| Previously managed machine without saved selection | Verified ownership/capability migration preview; ambiguous or expanded exposure blocks |
++| `--with <package-id>` | Explicit addition to the current selection; repeat for multiple additions |
++| `--profile core` | Explicit desired core selection; reduction is not deletion authority |
+ 
+-Before `skills:update` trusts that template, it reads the current
+-`origin/main` commit with a non-mutating remote query and requires the checkout
+-HEAD to match it exactly. The check does not fetch, pull, change refs, or touch
+-installed skills.
++`--agent` selects a host independently of package selection; its default is Codex.
++The implemented addition flag is `--with`, not `--with-package`. Unknown IDs and
++duplicate additions fail. New optional packages do not join an ordinary update.
++The selection file is `~/.config/quickstark/skills-selection.json`; it is saved
++only after the transaction succeeds. Do not edit it to bypass a migration conflict.
+ 
+-A directly installed GitHub skill joins the template only after a maintainer
+-records its immutable source and digest in
+-`config/personal-skills.manifest.json`. Once approved there, `skills:update`
+-installs it when missing and replaces a clean older managed version when the
+-template advances. Local edits are reported as conflicts and are never
+-overwritten.
++## First setup
+ 
+-These updates apply approved pins; they do not automatically adopt upstream
+-releases. The [upstream source index and review log](./upstream/README.md)
+-documents sources and maintainer review decisions.
+-
+-Codex and Pi discover the approved contributor skills directly from
+-`~/.agents/skills`. Claude Code receives links under `~/.claude/skills` only
+-when `claude-code` is selected. Vendor-provided system skills, built-in skills,
+-plugin caches, and proprietary harness skills remain owned by their original
+-manager and are not copied between machines.
+-
+-QuickStark's Pi commands are separate native local packages under
+-`pi/packages/`. They do not replace or duplicate the 18 portable contributor
+-skills. Pi documents local packages and Agent Skill discovery in its
+-[package](https://pi.dev/docs/latest/packages) and
+-[skill](https://pi.dev/docs/latest/skills) references.
+-
+-## Choose the right command
+-
+-Use `skills:update` for normal installation and updates.
+-
+-| Command family | QuickStark packages | Approved contributor skills | Intended use |
+-| --- | --- | --- | --- |
+-| `skills:update` | Yes | Yes | Inspect, converge, and verify this machine against the checked-out template |
+-| `skills:plan` / `skills:verify` | Yes | Yes | Optional preview or read-only verification |
+-| `skills:sync` | Yes | Yes | Compatibility workflow requiring a separate `--authorize` flag |
+-| Direct `codex plugin`, `claude plugin`, or `pi install` | Yes | No | QuickStark-only manual installation |
+-| `personal-skills:*` | No | Yes | Inventory, curation, or contributor-only repair |
+-
+-`skills:update` performs its own origin freshness preflight and final
+-verification. A clean stale `main` checkout receives an exact
+-`git pull --ff-only origin main` recovery command. A dirty, detached, or
+-non-main checkout receives exact commands for an isolated detached worktree so
+-local changes remain untouched. `skills:plan` and `skills:verify` are
+-read-only. `skills:sync` remains available for the older review-then-authorize
+-workflow.
+-
+-## First-time setup
+-
+-Install Git, Node.js with npm, and the CLI for each harness you plan to use.
+-Keep the repository in a stable path because Pi records the absolute path of
+-each local QuickStark package.
++Use an existing supported Node/npm and the selected host CLI. Keep the checkout
++at a stable path because native package bindings include that path.
+ 
+ ```bash
+ git clone https://github.com/quickstark/skills.git
+ cd skills
+-git switch main
+-git pull --ff-only origin main
+-```
+-
+-Select only harnesses installed on that machine. Repeat `--agent` for each one:
+-
+-```bash
++npm ci
++codex plugin marketplace add ./codex
++npm run skills:plan -- --json --agent codex --agent pi
+ npm run skills:update -- --agent codex --agent pi
+ ```
+ 
+-For a machine with all three harnesses, use:
++For Codex, register the existing local marketplace directory before planning;
++the production input rejects an absent marketplace. Run the bootstrap from the
++checkout root, or use its absolute `/path/to/skills/codex` directory. Omit it on a
++Pi-only machine. An existing QuickStark registration with a different identity or
++path requires a separately reviewed correction; do not remove or repoint it blindly.
++
++The plan is read-only. Inspect its desired selection, ownership, retirement,
++acceptance and conflict evidence. Update is the mutation command and revalidates
++live state. A missing accepted package receipt, modified managed content,
++unexpected exposure or unsupported native state blocks mutation.
++
++## Normal update and explicit additions
++
++From the maintained checkout, refresh it without discarding local work, then use
++the same selected hosts for plan and update:
+ 
+ ```bash
+-npm run skills:update -- --agent codex --agent claude-code --agent pi
+-```
+-
+-For an optional preview, run `skills:plan` with the same `--agent` values before
+-the update. Expected manager actions name only the selected harnesses, the three
+-QuickStark packages, and the current checkout path. Stop if the contributor plan
+-reports a conflict or an unexpected path.
+-
+-Start a new harness task after package changes so the harness reloads its skill
+-inventory.
+-
+-## Update a machine
+-
+-Run the same sequence from the repository root on every Mac or Linux machine:
+-
+-```bash
+-cd /path/to/skills
+-git switch main
+ git pull --ff-only origin main
+ npm run skills:plan -- --json --agent codex --agent pi
+ npm run skills:update -- --agent codex --agent pi
+ ```
+ 
+-The plan is optional; it previews the exact work without changing the machine.
+-Use the same `--agent` selections for plan and update. A Git pull updates
+-the Pi local-package contents in place. Codex and Claude Code still use their
+-package managers so their installed package caches can be refreshed safely.
+-
+-If another commit reaches GitHub after the pull, `skills:update` stops before
+-planning or mutation and prints the exact safe recovery command. Rerun the
+-update from the refreshed checkout or from the isolated worktree named in that
+-message.
+-
+-Update installs missing approved content, transactionally replaces clean older
+-approved GitHub skills, updates approved lock metadata, and creates requested
+-Claude links. It does not prune unrelated skills, copy plugin caches, uninstall
+-packages, or replace locally edited or unowned content.
+-
+-## Understand the result
+-
+-- `managerActions` covers the three maintained QuickStark packages for each
+-  selected harness.
+-- `managerActionResults` says whether each package was installed, updated,
+-  refreshed, already current, or failed.
+-- `personalPlan` covers the approved contributor skills.
+-- `personalSync.completedOperations` identifies each approved GitHub skill that
+-  was installed, updated, or had its lock metadata repaired.
+-- `conflicts` must be empty before update mutation begins.
+-- A successful verification confirms package identity and version, portable
+-  skill digests, lock metadata, Claude links when selected, and Pi package
+-  settings when selected.
+-
+-Third-party Pi packages are treated differently from QuickStark's generated Pi
+-packages. A pinned third-party Pi package can produce an exact `pi install`
+-action, but the contributor reconciler does not execute it automatically. That
+-package remains separately authorized because third-party packages may include
+-executable extensions or lifecycle behavior.
+-
+-## Troubleshooting
+-
+-### npm reports a missing script
+-
+-Run the commands from the current repository root, not from an installed skill
+-directory or plugin cache:
++This preserves saved optional selections. To add frontend explicitly:
+ 
+ ```bash
+-pwd
+-git remote -v
+-git status --short --branch
+-npm run
++npm run skills:plan -- --json --agent codex --with qs-frontend
++npm run skills:update -- --agent codex --with qs-frontend
+ ```
+ 
+-`npm run` should list `skills:update`, `skills:plan`, `skills:sync`,
+-`skills:verify`, and the
+-`personal-skills:*` commands. If it does not, that checkout predates the control
+-plane or did not receive the latest `origin/main`. Update a clean checkout with
+-`git pull --ff-only origin main`. Do not discard local changes merely to make a
+-pull succeed; use a separate clean checkout when necessary.
++Repeat `--with` for other selected packages. Omit `--profile core` during an ordinary
++update unless you deliberately intend to replace the desired selection with core.
++Restart the host or begin a new task after changing discovery.
+ 
+-### A package is missing or stale
++Before mutation, `skills:update` queries the current `origin/main` without fetching
++or changing refs and requires exact checkout HEAD equality. A stale clean main
++checkout gets a fast-forward recovery command; a dirty, detached or non-main
++checkout gets an isolated-worktree recovery. Preserve local changes and use the
++printed recovery. A denied freshness request is an attempted request, not proof of
++zero network activity.
+ 
+-Run `skills:plan` with the same harness selection and inspect its exact manager
+-action. Then run `skills:update`. Do not copy a package cache from another
+-machine. For Codex, update also verifies
+-that the `quickstark` marketplace points at the current checkout. It repoints a
+-stale local registration and refreshes all three QuickStark packages before
+-verification, so manual plugin removal is not required.
++## Verification and recovery
+ 
+-### Checkout HEAD does not match origin/main
++`npm run skills:verify -- --agent codex --agent pi` runs repository checks/tests
++and then read-only selected-state verification. `node scripts/managed-skills.mjs
++verify --json --agent codex --agent pi` performs only the selected-state check.
++Verification checks accepted package bindings and requires selected legacy
++identities to have completed migration; a package version string alone is insufficient.
+ 
+-The updater queried GitHub without changing the local repository and found that
+-the selected template is not the current `origin/main`. Run the exact command
+-printed in the error. It offers a fast-forward pull only for a clean `main`
+-checkout. For dirty, detached, or non-main checkouts it creates a separate
+-detached worktree at the observed remote commit, preserving the current
+-checkout and its local changes.
++`skills:sync -- --authorize` remains the explicit review-then-authorize interface.
++Update/sync use an exclusive updater lock and a transaction journal. Preserve a
++failure's journal and backups. For an interrupted transaction, use its exact path:
+ 
+-### Verification reports a conflict
++```bash
++npm run skills:update -- --agent codex --resume /absolute/path/to/transaction.json
++```
+ 
+-Do not overwrite the reported path manually. A conflict means installed
+-content, a link, a package filter, or lock metadata differs from approved state.
+-Preserve the report and reconcile that specific ownership issue before running
+-update again.
++Ordinary resume continues the frozen forward plan using the journal's selection;
++do not add profile or package flags. Failed transactions retain their journal,
++backups and residuals. Restoring a prior release or journaled effects requires
++separately verified, transaction-specific recovery authority; no automatic rollback
++is promised.
++It must match the home, repository and release revision. A stale updater lock is
++never automatically stolen; investigate the recorded owner before explicit recovery.
++Never repair a conflict by deleting a cache or rewriting a lock blindly. A failed
++rollback must retain its residual paths and diagnostics rather than claim success.
+ 
+-### Pi reports an old checkout path
++The old `ps-skills` 3.8.0 payload remains a [transition artifact](./upstream/package-transition.md)
++while existing native registrations need observation and verified withdrawal. Its
++presence is not a new selection or an alias for a QS command. Unowned, edited,
++filtered or ambiguous state remains a conflict; migration does not grant arbitrary
++filesystem deletion or extra optional outcomes.
+ 
+-Pi local packages are tied to the repository path recorded in
+-`~/.pi/agent/settings.json`. Run the plan from the checkout you intend to keep.
+-It will report a stale QuickStark package path instead of silently registering a
+-second copy.
+-
+-## For maintainers
+-
+-End users should not adopt machine discoveries into the repository. Inventory,
+-candidate adoption, provenance rules, transactional rollback, and manifest
+-maintenance are documented in the
+-[central skill control plane](./personal-skills.md).
++Contributor curation, exact pins, portable resource placement and separately
++authorized third-party Pi manager actions are documented in the
++[control-plane guide](./personal-skills.md). Project video runtime/model acquisition,
++paid providers, publication, native settings changes outside the transaction and
++optional execution hooks require their own task authority.
+--- a/docs/personal-skills.md
++++ b/docs/personal-skills.md
+@@ -1,224 +1,116 @@
+ # Central skill control plane
+ 
+-This document covers administration, curation, and safety behavior. For normal
+-machine setup and updates, use the
+-[end-user installation and update guide](./install-and-update-skills.md).
++Use the [installation guide](./install-and-update-skills.md) for normal updates.
++The target updater applies a saved or explicitly selected set, not every package
++and resource in the repository. Source preparation is not an installed-state claim.
+ 
+-This repository controls two distinct skill sets without copying machine-owned
+-payloads into Git.
++## Ownership and selection
+ 
+-- QuickStark-owned skills live under `skills/` and continue through the
+-  generated Codex, Claude, and Pi packages.
+-- Approved personal and third-party resources live in
+-  `config/personal-skills.manifest.json`. Portable Agent Skills install once in
+-  `~/.agents/skills`; typed Pi packages retain Pi's native package manager.
++QuickStark canonical roots and private dependencies live in this repository;
++generated host packages are projections. Approved third-party resources are pinned
++in [the contributor manifest](../config/personal-skills.manifest.json). Installed
++machine inventory is evidence, never upstream approval or authority to adopt.
+ 
+-The checked-in manifest is desired state. A machine inventory is discovery
+-evidence only and never grants approval by itself.
++[Profiles](../config/skill-profiles.json) define fresh core-only selection.
++[Migrations](../config/skill-migrations.json) preserve stable original capability IDs
++and map accepted replacements. Machine selection lives at
++`~/.config/quickstark/skills-selection.json`. Ordinary updates preserve it;
++`--with <package-id>` adds explicitly and `--profile core` starts a new desired
++selection. Unknown packages, ambiguous ownership and capability expansion block.
++Dropping a selected name does not authorize deletion.
+ 
+-See the [upstream source index and review log](./upstream/README.md) for all
+-tracked source repositories, their baselines, and pending update candidates.
++Target transactions support Codex and Pi only. Claude projections and historical
++inventory/link support do not constitute a verified Claude native transaction.
++Do not pass Claude to the selected updater or fall back to its legacy all-package
++path. Portable selected resources remain under `~/.agents/skills`; native package
++state remains owned by Codex or Pi. Never copy system skills or plugin caches into
++the canonical tree.
+ 
+-## One-way template update
+-
+-The repository is the template. Every Mac or Linux machine inventories itself,
+-converges to that checked-out template, and verifies the result. Machines never
+-copy skills from one another.
+-
+-The normal end-user command applies both ownership layers without mixing them:
++## Plan, save and recover
+ 
+ ```bash
+-git pull --ff-only origin main
+-npm run skills:update -- --agent codex --agent claude-code --agent pi
++npm run skills:plan -- --json --agent codex --agent pi
++npm run skills:update -- --agent codex --agent pi
+ ```
+ 
+-`skills:update` is the explicit mutation command; it performs preflight and
+-post-update verification in one run. `skills:plan` remains an optional read-only
+-preview. The compatibility `skills:sync` command still requires the literal
+-`--authorize` flag. The updater validates the current version and identity of
+-the three Claude, three Codex, and three Pi package manifests, completes contributor-skill
+-preflight, inspects installed package versions, and runs exact argument-vector
+-package-manager commands without a shell. Current packages are skipped; Claude
+-uses its update command for an older installed package, while Pi's local package
+-paths update in place after the checkout changes. The script then
+-delegates portable-resource changes to the transactional reconciler and verifies
+-both layers. If a manager command or installed-version check fails, contributor
+-mutation does not begin.
+-Package managers remain responsible for their own installed state; the script
+-does not attempt a destructive uninstall rollback.
++The selected updater verifies the exact repository revision, active manifest
++versions, package acceptance receipts, native inventory, exposed names, paths,
++ownership and content identities before mutation. Update checks HEAD against a
++non-mutating `origin/main` query. Plan and verification do not converge state.
++The exclusive `.quickstark-skills-update.lock` protects mutation; journal and backup
++directories live under `~/.local/state/quickstark/`.
+ 
+-Approved GitHub Agent Skills are different: the reconciler installs missing
+-resources and transactionally replaces an older version only when its current
+-bytes match the previous managed lock identity. It restores the prior directory
+-and exact lock contents if the transaction fails. Edited or unowned content
+-remains a conflict.
++Accepted replacement payloads are staged and verified before retired discovery is
++withdrawn and replacements exposed. Selection and ownership state are saved only after
++verification. Failed transactions retain their journal, backups and exact residuals;
++they do not automatically compensate. Ordinary `--resume` continues the frozen
++forward plan against its verified home/repository/revision, without new selection
++flags. Restoring a prior release or journaled effects requires separately verified,
++transaction-specific recovery authority; no automatic rollback is promised.
++Do not steal a lock, delete an unrelated path or silently broaden packages to
++bypass a conflict.
+ 
+-The selected checkout is the source of the maintained package version. Pull
+-the desired commit before running update. An optional JSON plan previews the
+-same desired state. This avoids using a mutable remote "latest" lookup during
+-reconciliation.
++The [retained PS artifact](./upstream/package-transition.md) keeps old native
++registrations observable during migration. Its pinned 3.8.0 payload is excluded
++from active-version synchronization. Preserve source names, original revisions,
++notices, historical dispositions and many-to-one mappings; they are provenance,
++not invocation aliases.
+ 
+-## Harness placement
++## Contributor curation
+ 
+-| Resource | Canonical content or manager | Codex | Claude Code | Pi |
+-| --- | --- | --- | --- | --- |
+-| Portable Agent Skill | `~/.agents/skills/<name>` | Direct discovery | Opt-in link under `~/.claude/skills/<name>` | Direct discovery |
+-| QuickStark package | Generated harness packages | Codex plugin manager | Claude plugin manager | Pi local package manager |
+-| Third-party Pi package | Pinned `npm:` or `git:` package in Pi settings | Not copied | Not copied | Pi package manager |
++Manifest schema 2 supports `agent-skill` and `pi-package` resources. Agent skills
++bind immutable revision, license evidence, upstream tree and independent content
++SHA256. Pi packages bind an exact npm version plus SHA512 integrity, or an exact
++Git commit, together with license and contributed-skill path/hash evidence.
++Schema 1 is accepted through lossless in-memory migration. The separate Skills CLI
++installer remains integrity-pinned by [its lock](../config/personal-skills-installer-lock.json).
+ 
+-Pi officially scans both `~/.agents/skills/` and `~/.pi/agent/skills/`. Its
+-user package settings live in `~/.pi/agent/settings.json`; user npm and Git
+-packages install below `~/.pi/agent/npm/` and `~/.pi/agent/git/`. See the
+-[Pi Skills](https://pi.dev/docs/latest/skills) and
+-[Pi Packages](https://pi.dev/docs/latest/packages) documentation.
+-Maintained Pi commands use `/skill:<command>`; contributor Agent Skills keep
+-their own discovered names.
+-
+-## Desired state
+-
+-Schema version 2 uses typed resources:
+-
+-- `agent-skill` records an immutable GitHub revision, license evidence,
+-  upstream tree identity, independent content SHA-256, canonical placement,
+-  and compatible harness targets.
+-- `pi-package` records an exact npm version plus SHA-512 integrity or an exact
+-  Git commit, license evidence, contributed directory- or file-backed skill
+-  paths and hashes, and the Pi-only target.
+-
+-Schema-version-1 manifests remain accepted through lossless in-memory
+-migration. The pinned Skills CLI archive is `1.5.23`; synchronization verifies
+-its checked-in npm SHA-512 integrity before extracting or executing it.
+-
+-## Reference-machine inventory
+-
+-Inventory is deterministic and read-only:
++Inventory is read-only and reports managed, candidate, alias, conflict, ignored,
++separately-managed or unresolved state. It scans supported discovery/configured
++paths within the selected home, records a state token and omits unrelated settings
++and credentials. Native caches and built-ins are not adoption candidates.
+ 
+ ```bash
+-npm run personal-skills:inventory -- --json > personal-skill-inventory.json
++npm run personal-skills:inventory -- --json
+ ```
+ 
+-It inspects these user-global surfaces without invoking a harness package-list
+-command:
++Adoption requires one explicit live candidate and the current inventory state
++token. It re-inventories, validates the immutable source/license/content and changes
++only the manifest; it does not install the resource. Do not adopt a familiar name
++or a stale inventory report as ownership proof. For example:
+ 
+-- `~/.agents/skills` and `~/.agents/.skill-lock.json`
+-- user and system Codex skill roots plus the Codex plugin cache
+-- Claude Code user skills and plugin cache
+-- Pi user skills, configured `settings.json` skill paths, package settings, and
+-  installed npm or Git package skills
+-
+-Pi inventory follows package `pi.skills` selectors when present and otherwise
+-uses Pi's conventional `skills/` fallback. It discovers recursive `SKILL.md`
+-directories and supported Markdown skill files, evaluates glob and exclusion
+-filters without loading package code, and reports configured paths outside the
+-selected home as unresolved instead of reading across that boundary.
+-
+-Every discovered entry is classified as `managed`, `candidate`, `alias`,
+-`conflict`, `ignored`, `separately-managed`, or `unresolved`. Reports use
+-home-relative paths, omit unrelated settings and credentials, and include a
+-state token. Built-ins, system skills, plugin payloads, and QuickStark generated
+-packages are never adoption candidates.
+-
+-## Explicit adoption
+-
+-Adopt exactly one live candidate. Treat a saved report as an untrusted
+-selector: adoption re-inventories the machine and rejects a stale state token.
+-
+-Portable Agent Skill example:
+-
+-```bash
+-npm run personal-skills:adopt -- \
+-  --candidate agent-skills:example \
+-  --state-token <inventory-state-token> \
+-  --type agent-skill \
+-  --license MIT \
+-  --license-path LICENSE \
+-  --agent codex \
+-  --agent pi \
+-  --agent claude-code
++```text
++npm run personal-skills:adopt -- --candidate agent-skills:example --state-token <current-token> --type agent-skill --license MIT --license-path LICENSE --agent codex --agent pi
+ ```
+ 
+-The candidate must already have immutable GitHub provenance in the Agent
+-Skills lock. Adoption fetches that exact commit, verifies its license, Git tree,
+-and content digest, and changes only the manifest. It does not reinstall the
+-skill.
++Exact npm archives are staged with approved integrity and no lifecycle execution;
++unsafe paths, links, special entries and oversized payloads fail. Git sources use
++an immutable commit. Contributor selection is separate from provenance approval:
++an approved manifest entry does not automatically join an ordinary target update.
+ 
+-Pinned npm Pi package example:
++The lower-level `personal-skills:plan`, `personal-skills:sync` and
++`personal-skills:verify` operate on their selected manifest/resources and are
++contributor-only tools, not a substitute for the saved-selection migration.
++Do not run them as an all-resource repair of a target selection. The reconciler
++replaces only clean previously managed bytes, preserves edited/unowned content,
++and journals its canonical paths and exact lock before compensation.
+ 
+-```bash
+-npm run personal-skills:adopt -- \
+-  --candidate pi-package:@owner/package \
+-  --state-token <inventory-state-token> \
+-  --type pi-package \
+-  --license MIT \
+-  --license-path LICENSE \
+-  --integrity sha512-<approved-registry-integrity> \
+-  --agent pi
+-```
++Third-party Pi packages may carry executable extensions or lifecycle behavior.
++The resource reconciler proposes an exact pinned native action but does not execute
++it automatically. That action needs separate authorization; subsequent verification
++checks settings pin, package identity and all contributed hashes. Ordered filters
++and disabled approved skills remain explicit policy evidence, not permission to
++reenable them silently.
+ 
+-Adoption downloads the exact npm version into private staging, verifies the
+-approved archive integrity without lifecycle scripts, validates tar headers and
+-paths before extraction, rejects links and special entries, enforces compressed,
+-expanded, per-file, payload, and entry bounds, and records only the package's
+-verified skills. Git-backed Pi candidates use an immutable GitHub commit and a
+-clean staged worktree instead. Approval is manifest-driven: adding a verified
+-resource does not require a source-code allowlist or a fixed resource count.
++## Boundaries
+ 
+-## Destination reconciliation
++`skills:update` and authorized `skills:sync` mutate selected machine state;
++`personal-skills:sync` mutates its separately reviewed contributor scope. Inventory,
++plan and verify commands do not mutate discovery. Adoption changes repository
++desired state only. None of these commands authorizes fleet operations, arbitrary
++global packages, credentials/sessions, dotfiles, package-manager settings outside
++the journaled scope, provider acquisition or publication.
+ 
+-Inspect first, authorize synchronization separately, and verify afterward:
+-
+-```bash
+-git pull --ff-only origin main
+-npm run personal-skills:plan -- --json --agent codex --agent pi
+-npm run personal-skills:sync -- --agent codex --agent pi
+-npm run personal-skills:verify -- --json --agent codex --agent pi
+-```
+-
+-Add `--agent claude-code` only on a machine where `~/.claude` already exists.
+-Synchronization installs missing portable content in `~/.agents/skills`,
+-replaces clean older managed versions, updates approved lock metadata, and
+-creates missing Claude links. It refuses modified content, occupied
+-destinations, unrelated links, effective name collisions, stale state, symlink
+-traversal, special files, and oversized trees. Preflight considers only selected
+-harnesses. Mutation runs as one local transaction: canonical paths, older skill
+-directories, and the original lock file are journaled before an installer call,
+-post-sync verification runs before completion, and a failed run restores
+-current-run paths, prior managed versions, empty roots, links, and exact prior
+-lock contents.
+-The error reports `rolled-back` only after complete compensation and
+-`partial-reconciliation` when any restoration fails.
+-
+-For a missing Pi package, plan and sync return one exact manager action such as:
+-
+-```text
+-pi install npm:@owner/package@1.2.3
+-```
+-
+-That action requires separate authorization. The reconciler never invokes Pi
+-package installation because packages may execute lifecycle code or contain
+-extensions with full user access. After the operator runs the approved action,
+-verification checks the exact settings pin, installed package identity, and
+-every contributed skill digest. Package filters honor ordered glob exclusions
+-and exact `+path` or `-path` overrides; disabled approved skills remain a policy
+-conflict rather than producing an automatic manager action.
+-
+-## Compatibility commands
+-
+-```bash
+-npm run personal-skills:inventory
+-npm run personal-skills:adopt
+-npm run personal-skills:plan
+-npm run personal-skills:sync
+-npm run personal-skills:verify
+-npm run skills:update
+-npm run skills:plan
+-npm run skills:sync -- --authorize
+-npm run skills:verify
+-```
+-
+-`inventory`, both plan commands, and both verify commands are read-only.
+-`adopt` changes only desired state. The sync commands are the only commands
+-that change selected machine projections. Reconciliation is additive: removal, pruning, replacement
+-of an equivalent real Claude directory, remote fleet execution, credentials,
+-sessions, arbitrary global npm packages, Homebrew, apt, and dotfiles remain
+-outside this control plane.
++The [upstream record](./upstream/README.md) distinguishes reviewed, adopted, pinned
++and unknown status. New source bodies and successful fixture checks do not replace
++package acceptance or installed-host verification.
+--- a/docs/upstream/README.md
++++ b/docs/upstream/README.md
+@@ -1,6 +1,6 @@
+ # Upstream sources and review log
+ 
+-The generated [capability provenance index](provenance.md) tabulates every current public and private owner, original source identities, reviewed and adopted revisions, licenses, and planned replacements. Its source is [`config/skill-provenance.json`](../../config/skill-provenance.json); `npm run check:upstream` checks the record and generated document. Planned replacements do not activate packages.
++The generated [capability provenance index](provenance.md) preserves every baseline identity and tabulates target public and private owners, original source identities, reviewed and adopted revisions, licenses, and planned replacements. Its source is [`config/skill-provenance.json`](../../config/skill-provenance.json); `npm run check:upstream` checks the record and generated document. Planned replacements do not activate packages.
+ 
+ 
+ QuickStark keeps abbreviated, host-neutral workflows. Upstream changes are
+@@ -33,12 +33,61 @@
+ preserved capabilities, consolidation risks, and acceptance checks. It supersedes
+ earlier command-count proposals: frequently used workflows should have QS names;
+ distinct specialists need not disappear to meet an arbitrary total. Prompt
+-building and visual parity remain explicit capabilities. Proposed names and
+-groupings are not installed or implemented migrations.
++building and visual parity remain explicit capabilities. That dated review is historical evidence; target catalogs and transaction code now exist. Their presence does not prove activation or installation.
+ 
+ The [adoption specification](../specs/quickstark-upstream-adoption.md) defines
+ groups A–E, optional-package selection, capability mappings, migration safeguards
+-and acceptance evidence. Its implementation remains pending.
++and acceptance evidence. Source implementation, behavioral acceptance, activation and installed-host rollout remain distinct states.
++
++## Target ownership and acceptance status
++
++The target registry declares six packages and 38 public roots: unchanged core 12
++and specialists 8, advanced 12, frontend 4, video 1 and execution 1. The advanced
++mapping preserves visual parity as a dedicated root; frontend preserves separate
++prompt/image/code outcomes. Video retains all 21 private modules and execution
++retains the complete Unlazy module closure. Original public and contributor names
++remain source records, not QS aliases.
++
++The provenance schema keeps 71 baseline capability records and all 113 source
++records, including many-to-one origins, stable migration IDs, original revisions,
++notices and separate original/derived digests. Target owners are separate records.
++Reviewed is not adopted; a pinned baseline is not a claim about current upstream;
++unknown evidence remains unknown. Regenerate [provenance](provenance.md) from the
++record rather than manually editing its tables. Preserve the dated source/review
++sections below as history when recording later decisions.
++
++Source-body and package acceptance require their own recorded evidence; this
++documentation alone does not mark them complete. Local runtime evidence is bounded: HyperFrames 0.8.77
++with Linux x64/Node 24.21.0/Chrome 151/FFmpeg 6.1.1 supports the recorded local
++render/audio/seek and supplied-caption pipeline fixtures. It does not establish
++authenticated generation, speech-model accuracy, interactive Studio or other hosts.
++The CLI requires Node >=22 and an existing compatible Chromium plus full
++FFmpeg/FFprobe; media-use also needs those binaries on PATH. Audio carving resolves
++the separate `@hyperframes/core` 0.8.77 dependency, not the CLI's bundled copy.
++The caption helper preflights the exact ONNX cache/model rather than downloading
++missing resources. Denied runtime freshness/font fetch attempts remain recorded;
++successful local output does not mean zero attempted requests.
++
++The [video runtime profile](../../skills/video/qs-video/references/runtime-compatibility.md)
++also records the unavailable named animate-text dependency and unpinned local voice
++resolver branch. A missing selected capability blocks that outcome. The
++[execution profile](../../skills/engineering/qs-unlazy/references/runtime-compatibility.md)
++records Linux Node 16.20.2/24.21.0 checks against an unreleased upstream target,
++definition-hash limits, process-group containment limits and opt-in hooks.
++Windows integration is unverified. Definition hashes do not fingerprint every
++transitive artifact used by a check, and detached processes can escape a process
++group. Video browser launches retain the sandbox; the explicit isolated-fixture
++opt-in never becomes an automatic fallback for ordinary users.
++
++[PS transition metadata](../../config/skill-transition-packages.json) preserves
++the observed legacy 3.8.0 package while registrations are safely withdrawn.
++Its retained presence is not a seventh target package or an alias. Supported target
++native transactions are Codex and Pi; generated Claude packaging alone does not
++prove a supported Claude migration.
++
++Release preparation must synchronize all active manifests/projections after the
++root version changes. The current Changesets action versions and tags only;
++neither versioning nor this review log proves publication or installed rollout.
+ 
+ ## Source inventory
+ 
+@@ -172,8 +221,9 @@
+    overwrite local edits or edit an installed copy as the source of truth.
+ 5. Run `npm run sync:codex`, `npm run check:codex`, and `npm test` after repository
+    skill, catalog, capability, documentation, or plugin changes. When Claude is
+-   available, validate all three package roots with `claude plugin validate
+-   <root> --strict`: `.`, `./packages/qs-specialists`, and `./packages/ps-skills`.
++   available, validate every active generated Claude package root with
++   `claude plugin validate <root> --strict`. Retained transition payloads are
++   verified separately and are not regenerated as current packages.
+ 6. Update this review log. Publish only to `origin` when authorized. The
+    `upstream` Git remote is Matt Pocock's read-only reference. Contributor updates
+    reach machines through the [installation/update workflow](../install-and-update-skills.md)

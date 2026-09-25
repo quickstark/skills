@@ -1,0 +1,75 @@
+# QuickStark skill collection
+
+QuickStark v3 exposes twelve lifecycle-ordered core commands in `qs-skills`, eight optional commands in `qs-specialists`, and thirteen explicit-only commands in the optional `ps-skills` package. Canonical QS sources live under `skills/engineering/` and `skills/productivity/`; canonical PS sources live under `skills/pstack/commands/`. QS and PS internal capabilities remain non-command references.
+
+Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
+
+## Source of truth
+
+`scripts/qs-skill-catalog.mjs` and `scripts/ps-skill-catalog.mjs` own collection membership; `scripts/skill-collection-registry.mjs` owns shared identity and literal lookup. Add or rename a public command in its collection catalog first.
+
+Every public command has:
+
+- A matching canonical folder and `SKILL.md` frontmatter name.
+- Matching `agents/openai.yaml` display metadata and exact package prompt.
+- Root and bucket index entries in lifecycle order.
+- A concise generated page under `docs/<bucket>/`.
+- The shared direct-chat completion contract.
+- A source-synchronized copy in exactly one generated package projection.
+
+Explicit commands use `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`. Model-invoked commands omit both.
+
+Canonical, Claude, and Pi metadata retain those explicit-only markers. Generated Codex projections omit both markers because current Codex clients otherwise remove the commands from the model-visible catalog, including explicit `$plugin:skill` requests. Keep that compatibility exception inside the projector; never weaken the canonical source or edit generated copies independently.
+
+## Packages
+
+The default core contains exactly twelve commands. The optional specialists package contains exactly eight commands. The optional PS package contains exactly thirteen explicit-only commands and sixteen private capabilities. Packages must operate without importing each other's skill bodies.
+
+- Claude core manifest: `.claude-plugin/plugin.json`
+- Claude specialist package: `packages/qs-specialists/`
+- Codex core package: `codex/plugins/qs-skills/`
+- Codex specialist package: `codex/plugins/qs-specialists/`
+- Claude PS package: `packages/ps-skills/`
+- Codex PS package: `codex/plugins/ps-skills/`
+- Pi core package: `pi/packages/qs-skills/`
+- Pi specialist package: `pi/packages/qs-specialists/`
+- Pi PS package: `pi/packages/ps-skills/`
+- Claude and Codex marketplaces each expose all three packages.
+
+Codex, generated Claude, and Pi package snapshots are generated outputs. Never edit them independently. Keep the package, lockfile, all three Claude manifests, all three Codex manifests, and all three Pi manifests on the same version.
+
+After a public skill, capability, catalog, documentation, or plugin change, run:
+
+```bash
+npm run sync:codex
+npm run check:codex
+npm test
+```
+
+When Claude Code is available, validate all three package roots:
+
+```bash
+claude plugin validate . --strict
+claude plugin validate ./packages/qs-specialists --strict
+claude plugin validate ./packages/ps-skills --strict
+```
+
+## Root-run contract
+
+`skills/engineering/qs-help/SKILL.md` and `skills/pstack/commands/ps-help/SKILL.md` are collection routers. `docs/skill-run-contract.md` owns shared execution and presentation policy.
+
+Every invocation has one public root and one bounded result presented directly in chat. Public skills never automatically execute other public skills. A user-submitted explicit goal workflow may coordinate successive authorized roots under the narrow exception in docs/skill-run-contract.md; generation alone never executes it. Internal capabilities and bounded helpers remain inside the root run and do not produce their own result, status, skill-used entry, or continuation.
+
+`effort=quick|standard|deep` controls evidence depth and defaults to `standard`. `report=brief|full` independently controls presentation and defaults to `brief`. Effort never expands mutation scope or authorizes publication.
+
+Completion is one of `complete`, `continuation-required`, `input-required`, or `failed`. Tracked engineering results always include a compact `Work summary:` with `Finished —` and `Next —`; completion of the current root does not prove that the larger project is complete. A non-release result always shows `Next work prompt:` and emits at most one fenced copy-ready prompt for a verified actionable item that remains. Prompts name the exact ticket, specification, issue, or grouped work item they advance; they never prescribe a repeat review or validation without new evidence. Failed results promote a safe recovery route and exclude publication-only routes when the catalog defines them. `qs-deploy-release` is terminal and emits none. Failed required checks and actionable P0/P1 findings prohibit complete.
+
+Every public `SKILL.md` ends with `## Completion report and next steps`. Shared text is generated by `scripts/sync-skill-output-contracts.mjs`; concise documentation is generated by `scripts/sync-v3-docs.mjs`.
+
+## Chat results
+
+Every QS and PS result applies the internal clear-writing pass before it is shown: lead with the outcome, use concrete language, preserve necessary qualifications, and remove repetition. Present the result in the current conversation without a secondary artifact or external URL.
+
+## Upstream
+
+`origin` is the personal fork at `https://github.com/quickstark/skills`. `upstream` is the read-only reference at `https://github.com/mattpocock/skills`. Preserve Matt Pocock's and Lauren Tan's MIT notices. Push personalized changes only to `origin`.

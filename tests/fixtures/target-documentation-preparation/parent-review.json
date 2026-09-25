@@ -1,0 +1,17 @@
+{
+  "reviewer": "parent",
+  "patchSHA256": "455f9a3d724dd6b6e08c005e4ba192b3a2addb499ddfa2c8c1d5358ad1977fec",
+  "checks": {
+    "activeDocumentsUnchanged": 5,
+    "patchApplies": true,
+    "relativeLinksResolved": 55,
+    "agentsSymlinkPreserved": true,
+    "codexBootstrapBeforeFirstPlan": true,
+    "temporaryTrialApprovalProseExcluded": true,
+    "sourceDriftRequiringReview": [],
+    "noNativeOrModelOperation": true
+  },
+  "review": "Reviewed five proposed documents against catalog/spec/control plane. Corrected missing Codex marketplace bootstrap and ambiguous automatic compensation wording; preserved AGENTS symlink, saved selection, dedicated prompts/parity, runtime limits, original upstream history and explicit recovery authority.",
+  "status": "prepared-unapplied",
+  "pending": "Apply only with verified targetactivation and refreshed source bindings. Leaf49 extends target index generation; update generator ownership inventory after its review. No publication/installation implied."
+}
