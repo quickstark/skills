@@ -27,11 +27,11 @@ into supported claims while finalizing it.
 | Canonical completion sections and Help routing | `scripts/sync-skill-output-contracts.mjs`; keep exact literals derived from the registry |
 | Codex, Claude and Pi projections/manifests/marketplaces | `scripts/sync-codex-plugin.mjs`; preserve complete video/execution indices and unchanged transition payload |
 | `docs/upstream/provenance.md` | `scripts/sync-upstream-docs.mjs` from validated provenance records |
-| Bucket READMEs and historical PS indexes | No writer found in the existing scripts; parent must assign/extend generation before final target exposure, not handpatch them as generated outputs |
+| Bucket READMEs and historical PS indexes | `scripts/sync-v3-docs.mjs` now generates all five target indexes; regenerate against the activated registry |
 
-The index follow-up includes `skills/engineering/README.md`,
-`skills/productivity/README.md`, `docs/pstack/index.md` and
-`docs/pstack/using-ps-skills.md`, plus any new target bucket/package indexes.
+The generator owns `skills/engineering/README.md`,
+`skills/productivity/README.md`, `skills/video/README.md`, `docs/pstack/index.md`
+and `docs/pstack/using-ps-skills.md`.
 The PS material must be scoped as historical compatibility rather than a fresh
 target install recommendation. These paths are intentionally excluded from this
 patch. Source runtime-profile wording also belongs to its existing owners and
@@ -61,3 +61,11 @@ changing it), the missing first-time Codex marketplace bootstrap, the spec/CLI
 `--with-package` versus implemented `--with` difference, and incomplete index
 generator ownership. Pass 4 removed temporary approval prose from shipped drafts,
 made selection persistence say “saved,” and checked links and the revised patch.
+
+Parent follow-up reviewed the new index generator and its identity, drift,
+missing-source and symlink controls. Legacy generation retains its existing
+indexes; target generation produces all 38 public entries and the historical PS
+successor guides. Both dedicated prompt roles and visual parity remain explicit.
+The preparation verifier now exits unsuccessfully when any bound source changes;
+its initial negative check detected exactly the changed documentation generator.
+The source binding was refreshed only after reviewing that implementation.

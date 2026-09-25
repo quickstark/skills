@@ -1,0 +1,14 @@
+✔ target indexes expose exactly the independently expected 38 names in their lifecycle buckets (3.352557ms)
+✔ historical PS pages map every original identity to exact QS successor without fresh PS installation or alias recommendations (0.945048ms)
+✔ target generation checks real local identity and every index link, preserves completion tails, and detects missing or wrong links without writes (261.74955ms)
+✔ missing, mismatched, linked canonical sources and unsafe output paths block before any generated writes (78.851289ms)
+✔ malformed catalog identity and path controls reject rather than publish a private or misrouted root (5.253553ms)
+✔ legacy generation leaves its existing indexes and PS guides unchanged; importing never runs the generator (158.197209ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 586.115419

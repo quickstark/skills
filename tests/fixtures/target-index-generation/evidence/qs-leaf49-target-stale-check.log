@@ -1,0 +1,9 @@
+file:///tmp/qs-target-activation-probe-20260925/scripts/sync-v3-docs.mjs:175
+  if (check && changes.length) throw new Error(`v3 documentation is stale: ${changes.map(change => change.path).join(", ")}.`);
+                                     ^
+
+Error: v3 documentation is stale: skills/engineering/README.md, skills/productivity/README.md, skills/video/README.md, docs/pstack/index.md, docs/pstack/using-ps-skills.md.
+    at syncV3Documentation (file:///tmp/qs-target-activation-probe-20260925/scripts/sync-v3-docs.mjs:175:38)
+    at async file:///tmp/qs-target-activation-probe-20260925/scripts/sync-v3-docs.mjs:187:18
+
+Node.js v24.21.0

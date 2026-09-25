@@ -52,7 +52,7 @@
     "package.json": "87b69a0698a2cfeca3c8ea30bcfa63645c3761b66e08c80dacc3ec4095aed394",
     ".github/workflows/release.yml": "34102b4fc91e74ce8138e2a1419583cca4d4e31efa15531e75bd067ad7b8a3e3",
     ".changeset/config.json": "1b5b33a105a5c1ab67c81b9ae3d0ae2db2ed950f290dbd1537d7f98a4235ba6c",
-    "scripts/sync-v3-docs.mjs": "4eb5dbc7191d142557d3e8d7c1ba792d358dcf9fc88ab9d0a528c2bbc14a3b59",
+    "scripts/sync-v3-docs.mjs": "e157c60a87645782b4e630031a0a84417cc394592876f7a13fd71cd4009dfe16",
     "scripts/sync-skill-output-contracts.mjs": "1ad09041169f9e29b7684262c7e64ebf08b89e18168ba427c190e789d5ea59b4",
     "scripts/sync-codex-plugin.mjs": "3e9c8c68fc3bfab04f71da9073f4bfda3bc7f8c59918ad301cb0f92376f920b7",
     "scripts/sync-upstream-docs.mjs": "75660514930fbf2f0c183f814ef5d398efe4234dbd1d59e09230517fd8f5f8c3",
@@ -60,7 +60,6 @@
     "skills/engineering/qs-unlazy/references/runtime-compatibility.md": "943f4d82e53472ccb74ce3e9191145a9d25d26ce8362a2fb8bfc3ba367df91b1"
   },
   "pending": [
-    "Independent parent patch review",
     "Target source/package acceptance",
     "User approval for 66 frontend trials",
     "Video report repair validation",
@@ -82,5 +81,13 @@
     "Codex/Claude/Pi package projections and marketplaces",
     "Bucket and historical package indexes"
   ],
-  "patchSha256": "455f9a3d724dd6b6e08c005e4ba192b3a2addb499ddfa2c8c1d5358ad1977fec"
+  "patchSha256": "455f9a3d724dd6b6e08c005e4ba192b3a2addb499ddfa2c8c1d5358ad1977fec",
+  "reviewedSourceChanges": [
+    {
+      "path": "scripts/sync-v3-docs.mjs",
+      "previousSha256": "4eb5dbc7191d142557d3e8d7c1ba792d358dcf9fc88ab9d0a528c2bbc14a3b59",
+      "currentSha256": "e157c60a87645782b4e630031a0a84417cc394592876f7a13fd71cd4009dfe16",
+      "reason": "Reviewed target index generation and dedicated prompt roles; focused source/identity/drift/legacy controls pass. Final activation and release checks remain required."
+    }
+  ]
 }

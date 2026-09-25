@@ -28,3 +28,4 @@ for path in ['README.md','docs/install-and-update-skills.md']:
 changed_sources=[p for p,h in inventory['sourceBindings'].items() if sha((repo/p).read_bytes()) != h]
 result={'activeDocumentsUnchanged':len(inventory['files']),'patchApplies':True,'relativeLinksResolved':checked_links,'agentsSymlinkPreserved':True,'codexBootstrapBeforeFirstPlan':True,'temporaryTrialApprovalProseExcluded':True,'sourceDriftRequiringReview':changed_sources,'noNativeOrModelOperation':True}
 print(json.dumps(result,indent=2))
+assert not changed_sources, f'Source changes require review: {changed_sources}'
