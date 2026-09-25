@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T18:52:51.406Z",
+  "elapsedMs": 22163,
+  "promptSHA256": "759773cdcc4a3a31abc6a81b02eec34d08d509cad33e15eedfea46db5e3ce1fa",
+  "promptUtf8Bytes": 18368,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 85216,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 475,
+      "reasoning_output_tokens": 245
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "068e2fa0e8f840fb6c5765e13ffcce52840cc8bc0c10de73c93f190d0aed9676",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-response-fixture-gTMuXT",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"- [ ] blocked — Select an available prompt-authoring workflow (weight: 100%; matching route identified, availability prerequisite unmet).\\n\\nStage: Workflow routing | Stage estimate: ~50% | Overall estimate: ~50% | blocked — the required specialist is unavailable. Input needed: installation and discovery of `qs-specialists:qs-deploy-prompt`.\\n\\nStatus: Input required\\nSkills used: /qs-help\\nOutcome: The exact prerequisite is to install the optional `qs-specialists` package, then verify that `$qs-specialists:qs-deploy-prompt` appears in the active Codex command catalog before requesting the deployment execution prompt.\\n\\nThe supplied availability evidence confirms that the package is absent and the command is undiscoverable. `$qs-skills:qs-setup` handles project configuration; its availability does not satisfy this prerequisite. Nothing was installed, configured, or executed.\\n\\nNext work prompt: None — prompt authoring remains blocked until the specialist is installed and discoverable.\",\n  \"requestedActions\": [],\n  \"requestedReferences\": []\n}"
+  ]
+}

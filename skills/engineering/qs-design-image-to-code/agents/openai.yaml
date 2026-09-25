@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Design Image to Code"
+  short_description: "Implement a selected design reference as responsive code"
+  default_prompt: "Use $qs-frontend:qs-design-image-to-code to implement this authoritative design reference as responsive working code."
+policy:
+  allow_implicit_invocation: false

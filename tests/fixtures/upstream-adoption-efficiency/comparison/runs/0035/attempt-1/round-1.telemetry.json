@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:39:50.929Z",
+  "elapsedMs": 29972.511620000005,
+  "wallElapsedMs": 29973,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "71561dbfad26da41a131688fb43901f62dae92a40c102a89a005355b38f73a1d",
+  "promptUtf8Bytes": 9451,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25764,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 763,
+      "reasoning_output_tokens": 274
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "9fffd5d0351ffd36315862a4b1426f24cd746dc37b032531c42d38b6d2e55db1",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-dpcDml",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"- [ ] Build — failed, reopened at ~50%; weight 60.\\n- [ ] Git — blocked, 0%; weight 10.\\n- [ ] Release — blocked, 0%; weight 30.\\n\\nStatus: Failed\\nSkills used: /qs-code-build\\nOutcome: The current revision changes CSV escaping and fails a required test, invalidating the earlier Build completion.\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — current implementation and review milestones support partial progress, but required validation fails. Input needed: authoritative host goal-tool availability and matching goal state before execution.\\n\\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **30%**, down from 60%. Weights remain unchanged; valid partial progress is retained. These are coarse evidence-based estimates, not completion guarantees.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — Progress reassessment from supplied observations. Build is reopened; no operations were executed or artifacts produced in this response. Earlier verification no longer establishes completion at the changed revision.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — failed — first verify supported goal tools and inspect the matching goal with `get_goal`. After the goal gate and context recheck, repair escaping within Build, rerun CSV behavior and existing-screen checks, and review the changed diff. Git and Release remain blocked until Build is verified.\\n\\nGoal support and state have not been supplied. If support is unavailable, execution must stop with input required. No renewed authorization is needed for the already-authorized scope.\\n\\nNo deployment artifact/version or health evidence is supplied; staging delivery remains unverified.\\n\\nNext work prompt: None — repair belongs within the current Build root; Git and Release are already scheduled behind verification gates.\",\n  \"requestedActions\": [\n    \"Verify the host's supported goal-tool availability.\",\n    \"If supported, use get_goal to inspect authoritative state and identify the matching goal before any stage execution; preserve unrelated goals and require input if goal support is unavailable or an unrelated active goal blocks resumption.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

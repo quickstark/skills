@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:15:21.329Z",
+  "elapsedMs": 25511.902020000038,
+  "wallElapsedMs": 25512,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "28c046dc540be05ae79adfbcd9c0aa34ec17e4dfc413e1306d34a8117b3fca43",
+  "promptUtf8Bytes": 19069,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25629,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 659,
+      "reasoning_output_tokens": 234
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "3f10dbfd0fcde8b4e223991737d7a04fec382bd9df24a7411be970575bcdb864",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-zju2Tm",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-deploy-prompt\\nOutcome: An execution-ready prompt is blocked because the required implementation workflow, `$qs-skills:qs-code-build`, is not installed. Requirements are already complete; no further specification or clarification is needed.\\n\\n- [x] Verified — assessed the supplied repository, specification, deployment, authorization, and capability observations.\\n- [ ] Blocked — generate the execution prompt after the implementation workflow is available.\\n\\nStage: Prompt generation | Stage estimate: ~40% | Overall estimate: ~40% | blocked — inputs assessed; required implementation capability is missing. Input needed: verified availability of `$qs-skills:qs-code-build` in the execution host.\\n\\nThis bounded generation stage carries all effort weight; the estimate reflects input assessment only, not implementation progress.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. The specification covers filtered invoice export, a header row, CSV escaping, and preservation of the existing screen. Readiness failed on the missing build workflow. No commands, changes, installation, goal creation, or deployment occurred.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — provide an execution host with the required build workflow available, then regenerate the prompt.\\n\\nExisting authority remains limited to repository edits/build/tests, committing and pushing `feature/export` to `origin`, and staging deployment through [the documented workflow](/fixture/ledger-app/docs/deploy.md). Merge, production, unrelated changes, and rollback execution are not authorized. Credentials and goal tools are reported available; no active goal or token budget is specified.\\n\\nNext work prompt: None — the missing implementation workflow prevents an execution-ready deployment prompt. Execution has not started.\",\n  \"requestedActions\": [],\n  \"requestedReferences\": []\n}"
+  ]
+}

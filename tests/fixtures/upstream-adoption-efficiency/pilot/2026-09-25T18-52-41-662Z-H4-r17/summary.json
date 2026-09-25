@@ -1,0 +1,52 @@
+{
+  "kind": "infrastructure-pilot-not-adoption-evidence",
+  "runId": "2026-09-25T18-52-41-662Z-H4-r17",
+  "scenarioId": "H4",
+  "variant": "r17",
+  "planSHA256": "1b004369689a0ca049c9b8081e3d7c19fd2f8577864ccdd093027f7cca96a2a4",
+  "scenarioInputSHA256": "690b23ae1b313f9fd45e7937390bac32c88779d67fe62d249e9db0c6741271ed",
+  "sourceSHA256": "c0bd70c6e8192b00e8a0ae508b6a2b398938123598271c75414f2e8811ca1b05",
+  "referenceRequests": [
+    "ROUTING.md"
+  ],
+  "cwd": "/tmp/qs-response-fixture-gTMuXT",
+  "remainingFiles": [],
+  "configuredHost": {
+    "cli": "codex-cli 0.153.4",
+    "configuredModel": "gpt-6-astra",
+    "configuredReasoningEffort": "high",
+    "configuredSandbox": "workspace-write",
+    "configuredApproval": "on-request",
+    "overrides": [],
+    "effectiveRuntimeModel": "must be reported by runtime or remain unverified",
+    "context": "Global host instructions/tools may be injected; totals include this overhead, not claimed skill-only tokens."
+  },
+  "cliVersion": "codex-cli 0.153.4",
+  "cliVersionStderr": "",
+  "rounds": 2,
+  "tokenUsage": [
+    {
+      "input_tokens": 28073,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 47,
+      "reasoning_output_tokens": 25
+    },
+    {
+      "input_tokens": 85216,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 475,
+      "reasoning_output_tokens": 245
+    }
+  ],
+  "elapsedMs": 31891,
+  "failure": null,
+  "envelope": {
+    "response": "- [ ] blocked — Select an available prompt-authoring workflow (weight: 100%; matching route identified, availability prerequisite unmet).\n\nStage: Workflow routing | Stage estimate: ~50% | Overall estimate: ~50% | blocked — the required specialist is unavailable. Input needed: installation and discovery of `qs-specialists:qs-deploy-prompt`.\n\nStatus: Input required\nSkills used: /qs-help\nOutcome: The exact prerequisite is to install the optional `qs-specialists` package, then verify that `$qs-specialists:qs-deploy-prompt` appears in the active Codex command catalog before requesting the deployment execution prompt.\n\nThe supplied availability evidence confirms that the package is absent and the command is undiscoverable. `$qs-skills:qs-setup` handles project configuration; its availability does not satisfy this prerequisite. Nothing was installed, configured, or executed.\n\nNext work prompt: None — prompt authoring remains blocked until the specialist is installed and discoverable.",
+    "requestedActions": [],
+    "requestedReferences": []
+  },
+  "isolation": "Empty temporary CWD; unchanged host sandbox/settings; prompt forbids tools and supervisor stops on observed tool events. This detects behavior, not a proof of pre-execution hard isolation.",
+  "evaluatorReview": "pending independent review; pilot excluded from matched comparison"
+}

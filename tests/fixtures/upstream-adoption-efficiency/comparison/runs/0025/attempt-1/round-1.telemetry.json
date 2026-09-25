@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:35:32.843Z",
+  "elapsedMs": 26621.746470000002,
+  "wallElapsedMs": 26623,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "53ef724ce451426d22f08da130ba4ac45b765c044ed8af1231e5f558c364fe58",
+  "promptUtf8Bytes": 9866,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25834,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 665,
+      "reasoning_output_tokens": 248
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "685f9f74763bba5d5fb0e8de73d5dd44592653a93bf083a33cd123505908d7b4",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-ZjLSdJ",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-code-build\\nOutcome: The supplied `get_goal` result identifies “Migrate billing database,” not “Deliver CSV invoice export to staging.” Execution is blocked; no mutations are reported.\\n\\n- [ ] Build — blocked; ~50%; weight 60\\n- [ ] Git — pending; 0%; weight 10\\n- [ ] Release — pending; 0%; weight 30\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — preserving the supplied current-revision implementation and review milestones. Input needed: resolution of the unrelated active goal.\\n\\nOverall: `(60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%`. These coarse estimates remain unchanged while blocked; Build is not verified complete.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n- Finished — identified the goal mismatch from supplied evidence. No new validation results or material outputs.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — establish the matching goal before resuming Build. Required CSV, screen, and final diff checks remain unverified; publication and staging artifact/version/health verification remain pending.\\n\\nNext work prompt: None — scheduled stages remain gated by the goal conflict.\\n\\nHow should the active-goal conflict be resolved so the host can establish “Deliver CSV invoice export to staging” while preserving “Migrate billing database”?\\n\\nThe submitted workflow requires input for unrelated active goals and states: “Never replace an unrelated active goal.” Existing edit, push, and staging authorization remains in force.\",\n  \"requestedActions\": [\n    \"Request a user decision resolving the unrelated active-goal conflict before any goal mutation or stage execution; preserve the existing goal.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

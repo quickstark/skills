@@ -29,12 +29,13 @@ test("repository inventory accounts for every canonical skill and internal refer
   assert.equal(inventory.internalReferences.length, 20);
   assert.equal(inventory.publicSkills.length, 33, "twelve core, eight specialists, thirteen PS commands");
   assert.equal(inventory.publicSkills.length + inventory.standaloneSkills.length, 52);
-  assert.equal(new Set(Object.values(inventory).flat()).size, inventory.publicSkills.length + 39);
+  assert.equal(inventory.inactiveSkills.length, 18, "explicit candidates are inventoried without active exposure");
+  assert.equal(new Set(Object.values(inventory).flat()).size, inventory.publicSkills.length + inventory.inactiveSkills.length + 39);
 });
 
 test("every actual canonical skill and helper receives the correct progress contract", async () => {
   const inventory = await validateProgressInventory();
-  for (const path of [...inventory.publicSkills, ...inventory.standaloneSkills]) {
+  for (const path of [...inventory.publicSkills, ...inventory.inactiveSkills, ...inventory.standaloneSkills]) {
     const source = await readFile(new URL(`../${path}`, import.meta.url), "utf8");
     assert.ok(source.includes(PUBLIC_PROGRESS_CONTRACT), path);
   }
@@ -83,9 +84,9 @@ test("sync covers every standalone and helper, preserving public source and unre
   assert.equal(result.updated, 39);
   assert.equal(result.standaloneSkills, 19);
   assert.equal(result.internalReferences, 20);
-  for (const path of inventory.publicSkills) assert.equal(await readFile(join(root, path), "utf8"), original);
+  for (const path of [...inventory.publicSkills, ...inventory.inactiveSkills]) assert.equal(await readFile(join(root, path), "utf8"), original);
   for (const [kind, paths] of Object.entries(inventory)) {
-    if (kind === "publicSkills") continue;
+    if (kind === "publicSkills" || kind === "inactiveSkills") continue;
     for (const path of paths) {
       const actual = await readFile(join(root, path), "utf8");
       const insertAt = original.indexOf("## Completion report and next steps");
@@ -127,7 +128,7 @@ test("unknown public, standalone, internal, and new bucket sources cannot disapp
 });
 
 test("missing public, standalone, or helper source fails inventory before writes", async (t) => {
-  for (const kind of ["publicSkills", "standaloneSkills", "internalReferences"]) {
+  for (const kind of ["publicSkills", "inactiveSkills", "standaloneSkills", "internalReferences"]) {
     await t.test(kind, async (t) => {
       const root = await fixture(t);
       const missing = progressInventory()[kind][0];

@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:39:02.127Z",
+  "elapsedMs": 24399.704642999975,
+  "wallElapsedMs": 24399,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "977a7499611abdf856eccfb6d951297a3e96c705b6940d5dd62a4e3210932ad4",
+  "promptUtf8Bytes": 9896,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25854,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 560,
+      "reasoning_output_tokens": 233
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "131ac1c23968200b430d043156407c3a2c1054843bd3f9f03da019924deb44f0",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-8Qm1jp",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 remains live after 70 seconds without new output. Waiting for output or completion; liveness alone does not establish progress. Input needed: none.\\n\\n- [ ] Build — active, ~50%; weight 60.\\n- [ ] Git — pending, 0%; weight 10.\\n- [ ] Release — pending, 0%; weight 30.\\n\\nOverall remains (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Prior milestone evidence remains valid at the unchanged revision.\\n\\nSpecs: [CSV export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n- Finished — No additional completion or check results observed.\\n- Next — [CSV export](/fixture/ledger-app/docs/specs/export.md) — active, waiting — poll process 81 for output or completion. Git and staging deployment remain pending Build verification.\\n\\nNext work prompt: None — authorized later stages are already scheduled.\",\n  \"requestedActions\": [\n    \"Verify host goal-tool availability and inspect the matching goal with get_goal before further stage execution; preserve unrelated goals. If support is unavailable, report input-required.\",\n    \"Read-only poll the existing process 81 for output or completion, yielding within 60 seconds when supported. Do not restart it or advance dependent stages without verified results.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

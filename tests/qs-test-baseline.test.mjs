@@ -40,6 +40,17 @@ const expectedTestFiles = [
   "tests/upstream-adoption-ps.test.mjs",
   "tests/upstream-adoption-routing.test.mjs",
   "tests/skill-provenance.test.mjs",
+  "tests/adoption-projection.test.mjs",
+  "tests/advanced-candidates.test.mjs",
+  "tests/execution-candidate.test.mjs",
+  "tests/frontend-candidate.test.mjs",
+  "tests/migration-filesystem.test.mjs",
+  "tests/migration-native-packages.test.mjs",
+  "tests/migration-owned-paths.test.mjs",
+  "tests/migration-transaction.test.mjs",
+  "tests/skill-migrations.test.mjs",
+  "tests/video-candidate.test.mjs",
+  "tests/fixtures/upstream-adoption-efficiency/runner-lock.test.mjs",
 ];
 
 function successfulGitFixture(overrides = {}) {

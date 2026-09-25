@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 26,
+    "scenarioId": "E7",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "E7",
+  "inputSHA256": "c7c476e5e77101c42652159fa277efb612546a4383f4be853913fcc222994d4d",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-EID9Vo",
+  "startedAt": "2026-09-25T19:35:59.517Z",
+  "completedAt": "2026-09-25T19:36:25.181Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25735,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 601,
+      "reasoning_output_tokens": 169
+    }
+  ],
+  "elapsedMs": 25614.221653999997,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build (reporting only)\nOutcome: The supplied `get_goal` result identifies the unrelated active goal “Migrate billing database.” Execution is blocked until the matching goal is established. No product mutations have occurred.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — supplied implementation and review milestones remain credited. Input needed: resolve the active-goal mismatch while preserving the unrelated goal.\n\n- [ ] Build — blocked; 50%, weight 60.\n- [ ] Git — pending; 0%, weight 10.\n- [ ] Release — pending; 0%, weight 30.\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. These coarse estimates retain the supplied current-revision evidence; they do not establish completed validation.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — Identified the goal mismatch from supplied observations. No actions executed or artifacts produced; no completed test results, deployed version, or health evidence were supplied.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — establish the matching goal, verify authoritative state and revision evidence, then resume the already-authorized workflow.\n\nHow should the host resolve the active-goal conflict so “Deliver CSV invoice export to staging” can be established without replacing “Migrate billing database”? The submitted execution contract explicitly requires input for an unrelated active goal; this is not a request to reauthorize the workflow.\n\nNext work prompt: None — the scheduled workflow remains blocked on goal resolution.",
+    "requestedActions": [
+      "Request the user's decision on resolving the unrelated active-goal conflict while preserving “Migrate billing database”; do not mutate goal or product state or execute stages before resolution."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

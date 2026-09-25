@@ -1,0 +1,50 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 20,
+    "scenarioId": "E4",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "E4",
+  "inputSHA256": "0f5cfd735d68fc684f7b255f922c2b9caedbc47a6016dc6d92e99107b865e56a",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-J5zwuf",
+  "startedAt": "2026-09-25T19:22:54.549Z",
+  "completedAt": "2026-09-25T19:23:24.710Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25828,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 813,
+      "reasoning_output_tokens": 396
+    }
+  ],
+  "elapsedMs": 30111.27545299998,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build (supplied result)\nOutcome: Build remains verified at `abc123`, with root status `continuation-required` and `nextSkill=qs-git-merge`. Push authorization was revoked, so Git and deployment cannot advance. The matching goal remains unfinished.\n\nStage: Git | Stage estimate: ~0% | Overall estimate: ~60% | blocked — push authorization revoked. Input needed: renewed authorization to push to `origin/feature/export`, or a decision to leave the workflow paused.\n\n- [x] Build — verified at `abc123`; 100%; weight 60.\n- [ ] Git — blocked by revoked push authorization; 0%; weight 10.\n- [ ] Release — blocked by Git dependency; 0%; weight 30.\n\nOverall: `(60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%`. The supplied verified build completion supersedes the earlier 50% build milestone. Weights remain unchanged; revocation does not erase verified work or earn credit for blocked stages.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — supplied verified build result at `abc123`, including required build validation and diff review. No new execution occurred in this response.\n- Next — [CSV export delivery](/fixture/ledger-app/docs/specs/export.md) — blocked — resolve push authorization, then verify publication before advancing to staging. No deployed artifact/version or HTTP 200 health evidence is supplied.\n\nNext work prompt: None — the scheduled continuation is paused pending authorization.\n\nShould push authorization to `origin/feature/export` be restored, or should the workflow remain paused? This decision is needed because the supplied request explicitly revoked the earlier grant.",
+    "requestedActions": [],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

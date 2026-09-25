@@ -1,0 +1,24 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 73,
+    "scenarioId": "R5",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 2,
+  "scenarioId": "R5",
+  "inputSHA256": "67267c45e7b95460a33caf8b0b124f8246a03357fb186e817d82d82ca83c71e0",
+  "sourceSHA256": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-gY9RcR",
+  "startedAt": "2026-09-25T19:26:06.273Z"
+}

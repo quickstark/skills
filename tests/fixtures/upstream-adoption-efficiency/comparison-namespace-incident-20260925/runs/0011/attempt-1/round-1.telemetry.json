@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:18:40.224Z",
+  "elapsedMs": 22377.29597800004,
+  "wallElapsedMs": 22377,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "6b551193420ead3f6bc8202a993ac4f7fb9b7359d984ced24f0f37e3c53abdb9",
+  "promptUtf8Bytes": 19137,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25640,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 568,
+      "reasoning_output_tokens": 247
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "f38ed33a536fa0763683f85733f8703763ebfe958aaf472d1a5a0e250c1035fe",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-0KBWVn",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-deploy-prompt\\nOutcome: The host exposes no goal tools. An execution-ready goal prompt cannot be generated until real goal capabilities are available. Execution has not started.\\n\\n- [ ] Blocked — generate the CSV invoice export/staging goal prompt.\\n\\nStage: Prompt generation | Stage estimate: ~50% | Overall estimate: ~50% | blocked — supplied scope and authorization are resolved; required goal capability is absent. Input needed: a host exposing tools to read, establish, and update goal state.\\n\\nOne stage, weight 100%; the estimate reflects resolved inputs, with low confidence about remaining capability verification.\\n\\nSpecs: Not located\\n\\nWork summary:\\n- Finished — assessed supplied readiness evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. No executable prompt or secondary artifact produced; no commands or product actions performed.\\n- Next — [CSV invoice export/staging workflow](/fixture/ledger-app/docs/deploy.md) — blocked — provide a goal-capable host, then resume prompt generation. Filtered invoices, headers, escaping, screen preservation, staging, credentials availability, and edit/build/test/commit/push authorization are already settled.\\n\\nReadiness blocker: required goal tools are unavailable. Ordinary execution cannot substitute for goal support. No additional scope clarification is needed.\\n\\nNext work prompt: None — required goal capability is missing.\",\n  \"requestedActions\": [],\n  \"requestedReferences\": []\n}"
+  ]
+}

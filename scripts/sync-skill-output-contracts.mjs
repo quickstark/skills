@@ -16,16 +16,20 @@ export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-export function renderSkillOutputContract(skill) {
-  const registered = PUBLIC_COMMANDS_BY_NAME.get(skill.name) ?? skill;
+export function renderSkillOutputContract(skill, { commandsByName = PUBLIC_COMMANDS_BY_NAME } = {}) {
+  const registered = commandsByName.get(skill.name) ?? skill;
   const routes = registered.continuation.normal;
   const failureRoutes = registered.continuation.failure;
   const continuations = routes.map((item) => item.name);
   const failureContinuations = failureRoutes.map((item) => item.name);
   const terminal = routes.length === 0 && failureRoutes.length === 0;
   const allRoutes = [...new Map([...routes, ...failureRoutes].map((item) => [item.name, item])).values()];
-  const codexLiterals = allRoutes.map((item) => codexPublicSkillLiteral(item.name));
-  const piLiterals = allRoutes.map((item) => piPublicSkillLiteral(item.name));
+  const codexLiterals = allRoutes.map((item) => {
+    const command = commandsByName.get(item.name);
+    if (!command) throw new Error(`Unknown continuation: ${item.name}.`);
+    return command.codexLiteral;
+  });
+  const piLiterals = allRoutes.map((item) => `/skill:${item.name}`);
   const reportsSpecProgress = registered.resultContext?.specProgress === true;
   const goalPrompt = registered.outputKind === "goal-workflow-prompt";
   const primaryHelp = registered.primaryRouting?.kind === "available-public-command";
@@ -123,7 +127,7 @@ export function renderDocumentationOutputContract(skill) {
   ].join("\n");
 }
 
-export function renderHelpRoutingReference() {
+export function renderHelpRoutingReference(commands = PUBLIC_COMMANDS) {
   const cell = (value) => String(value).replace(/\|/g, "\\|").replace(/[\r\n]+/g, " ");
   return [
     "# QuickStark primary routing metadata",
@@ -136,7 +140,7 @@ export function renderHelpRoutingReference() {
     "",
     "| Command | Package | Outcome | Codex | Claude | Pi |",
     "| --- | --- | --- | --- | --- | --- |",
-    ...PUBLIC_COMMANDS.map((command) => `| ${cell(command.name)} | ${cell(command.collectionId)} | ${cell(command.shortDescription)} | \`${command.codexLiteral}\` | \`${command.claudeLiteral}\` | \`${piPublicSkillLiteral(command.name)}\` |`),
+    ...commands.map((command) => `| ${cell(command.name)} | ${cell(command.collectionId)} | ${cell(command.shortDescription)} | \`${command.codexLiteral}\` | \`${command.claudeLiteral}\` | \`/skill:${command.name}\` |`),
     "",
   ].join("\n");
 }

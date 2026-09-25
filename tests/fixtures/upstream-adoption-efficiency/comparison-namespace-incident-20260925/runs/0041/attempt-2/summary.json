@@ -1,0 +1,38 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 41,
+    "scenarioId": "P6",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 2,
+  "scenarioId": "P6",
+  "inputSHA256": "507929b7af58ff4d6652d308616e8025a74e3dad4b171bb167476b2964748cfc",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-JsbztP",
+  "startedAt": "2026-09-25T19:25:47.784Z",
+  "completedAt": "2026-09-25T19:25:48.017Z",
+  "failure": "CLI infrastructure failure/timeout/interruption; raw evidence retained.",
+  "infrastructureFailure": true,
+  "modelOutputObserved": false,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [],
+  "elapsedMs": 183.87818700000025,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": null,
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

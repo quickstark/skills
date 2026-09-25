@@ -1,0 +1,1307 @@
+{
+  "kind": "infrastructure-incident-audit",
+  "checkedAt": "2026-09-25T19:28:40.508Z",
+  "incident": "Sandbox PID namespace treated invisible host PID as dead; duplicate check retired live lock, false interrupted summary collided with original success.",
+  "originalSupervisor": {
+    "session": 64977,
+    "outcome": "exit 1 EEXIST summary at run24"
+  },
+  "duplicateSupervisor": {
+    "session": 14325,
+    "pid": 3332892,
+    "outcome": "targeted host SIGTERM; authoritative session exit1 interruption"
+  },
+  "hostProcessCheck": {
+    "remainingTrialProcesses": [],
+    "observerNamespace": "pid:[4026531836]"
+  },
+  "cleanCompletedRuns": 23,
+  "noOutputAttempts": 134,
+  "affected": [
+    {
+      "run": 24,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 4,
+          "modelOutput": true,
+          "turnCompletions": 1,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 25,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 26,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 27,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 28,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 29,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 30,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 31,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 32,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 33,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 34,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 35,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 36,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 37,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 38,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 39,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 40,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 41,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 42,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 43,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 44,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 45,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 46,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 47,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 48,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 49,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 50,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 51,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 52,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 53,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 54,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 55,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 56,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 57,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 58,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 59,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 60,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 61,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 62,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 63,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 64,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 65,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 66,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 67,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 68,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 69,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 70,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 71,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 72,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 73,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 74,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 75,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 76,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 77,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 78,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 79,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 80,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 81,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 82,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 83,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 84,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 85,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 86,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 87,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 88,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 89,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 90,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        },
+        {
+          "attempt": "attempt-2",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 1
+        }
+      ]
+    },
+    {
+      "run": 91,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "events": 0,
+          "modelOutput": false,
+          "turnCompletions": 0,
+          "telemetryFiles": 0
+        }
+      ]
+    }
+  ]
+}

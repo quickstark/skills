@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:40:21.001Z",
+  "elapsedMs": 27098.84675700002,
+  "wallElapsedMs": 27099,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "e66a3370be5957f74b4a1e85bd6d79cd84c0a4ccd86c2da1755c4caac1b1e2b4",
+  "promptUtf8Bytes": 9961,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25849,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 704,
+      "reasoning_output_tokens": 248
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "f4c187eb9c59b92b9c7ec177adfb0fcac70e5de333ba075901a940d611546a51",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-UadjBO",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Failed\\nSkills used: /qs-code-build (supplied instructions)\\nOutcome: Build is reopened: the current CSV escaping change fails a required test. Git and Release remain blocked.\\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — current-revision evidence invalidates earlier Build completion. Input needed: none for this report; host goal support and matching goal state must be verified before execution.\\n\\n- [ ] Build — failed, reopened; ~50%; weight 60.\\n- [ ] Git — blocked, not started; 0%; weight 10.\\n- [ ] Release — blocked, not started; 0%; weight 30.\\n\\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **30%**. The decrease from 60% reflects invalidated verification, with weights unchanged. Still-valid implementation and review milestones support Build’s remaining 50% credit.\\n\\nWork summary:\\n\\n- Finished — Reassessed progress from supplied observations. No operations were executed or artifacts produced; no deployed version or health evidence is supplied.\\n- Next — [CSV export](/fixture/ledger-app/docs/specs/export.md) — failed — first verify goal-tool availability and inspect the matching goal. Then, within the authorized Build scope, repair escaping and rerun relevant CSV cases, existing-screen checks, and diff review at the resulting revision. Publication and deployment remain gated on verified completion. If goal support is unavailable, stop with Input required.\\n\\nNext work prompt: None — repair belongs to the current Build root; later stages are already scheduled.\",\n  \"requestedActions\": [\n    \"Verify the host’s supported goal tools, then use get_goal to inspect authoritative state for the matching CSV export staging goal. Do not replace an unrelated active goal; stop with input-required if goal support is unavailable. Reconcile the reopened Build failure under the host’s actual goal-state contract before any repair.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

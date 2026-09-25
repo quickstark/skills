@@ -1,0 +1,651 @@
+{
+  "kind": "comparison-closed-inconclusive-retain-baseline",
+  "observedAt": "2026-09-25T19:51:23.679219+00:00",
+  "requiredMatchedRuns": 222,
+  "completedRecords": 45,
+  "interruptedRun": 46,
+  "reason": "Helper-owned supervisor ended during handoff. Host namespace observation confirms recorded supervisor3422275 and child3526782 absent. Run46 has no completed response/telemetry and exhausted its single incident-amendment attempt. No further retries or semantic substitutions.",
+  "adoptionDecision": "retain-post-A-baseline",
+  "qualifyingComparison": false,
+  "efficiencyImprovementClaim": false,
+  "nextScheduledTrials": "not executed: complete matched adoption comparison is no longer available under the recorded attempt budget",
+  "earlierIncident": "namespace-incident-audit.json; all134 original initialization failures preserved in immutable archive",
+  "limitations": [
+    "Incomplete matched repetitions; no fixed-workload comparison or quality conclusion.",
+    "Runtime input usage contains opaque host context and does not isolate authored instructions.",
+    "Effective runtime model identity unavailable; configured model is a separate observation.",
+    "Review context completeness correction supplements unchanged raw bundles and rubric."
+  ],
+  "records": [
+    {
+      "run": {
+        "run": 1,
+        "scenarioId": "G1",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "51441e8c981865a3ed75ae9f939a1531a495168b8d3b573baaadf8abe15e00f0",
+      "summarySHA256": "a420b403161ead982d018a33382ad607bae5f20872891f0bb2ff7dc4cf0200dd",
+      "inputTokens": 25917,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 2,
+        "scenarioId": "G1",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "ecce183adef550d0a50c66ba509efd48c818a30c1ddba77735c3977ccbb55de3",
+      "summarySHA256": "d6ae48f3922d7206fed803d70cc5f61f7427ad8380f284a21bded1ac4a9c83f7",
+      "inputTokens": 25717,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 3,
+        "scenarioId": "G2",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "a639290edde88c636a654247d418c8ff09727f7503ea21d8e393b77151f3b491",
+      "summarySHA256": "60da5003e5d0af40a0a083a71138aebcdff9815527ee3173def8709bd8eb0676",
+      "inputTokens": 25639,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 4,
+        "scenarioId": "G2",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "830fb00b3e57173e586ea8d53a4cf42b026dea5fb50471088c54f1c121847ac7",
+      "summarySHA256": "445b25e28e5d16dd316330f9dfcbf7e81d47ab9966127649937a5488f104375e",
+      "inputTokens": 25825,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 5,
+        "scenarioId": "G3",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "63f233462111e7d2e2a4fde1838795de2f7f0fe0ac3396a731beba80b51af645",
+      "summarySHA256": "31d4b734e41f619638c6a1c812e1d37efcc53b016bdc877049af1cc633e1c6ff",
+      "inputTokens": 25806,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 6,
+        "scenarioId": "G3",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "be4782a9eb8a7b34bfa384adb409716a4e9be0ba7114d9c159b6d2e9a5723526",
+      "summarySHA256": "559454bd46f942c7f006ae65e946d7601ff7aefab2b7b84d74ba3972107d2e3c",
+      "inputTokens": 25606,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 7,
+        "scenarioId": "G4",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "4398d83ffd2adbf0588d084dc4eab78cbcd11cf2470bbc2e7fbd9af3182664f9",
+      "summarySHA256": "7392032693982af419acab7beae5e58d602cb7645e3d0ac963ebdd2148ca88c1",
+      "inputTokens": 25629,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 8,
+        "scenarioId": "G4",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "0095939eda29958299e03f6563580a9c49a7c5b79afbec295de877b0bb73ee8d",
+      "summarySHA256": "b4d4d7e58a68c427223659d7abd5e8bf2b80ffe66fab15abadd651f923cee370",
+      "inputTokens": 25836,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 9,
+        "scenarioId": "G5",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "f011777d1ffea456a857778e379f1f16b0be7f6254af542c933f02a98f039b0d",
+      "summarySHA256": "fe4520834dbdc6fd978b51b9f934ca747814e0215b95151abd0f6dac163e48ae",
+      "inputTokens": 25814,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 10,
+        "scenarioId": "G5",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "b68b71c760f650c91fb945b9cea388264523e70e031fa4f73b5c6003e6ff6745",
+      "summarySHA256": "b7964a5faf4c1a67d392292a3457adb13ab0101257615b291cebbf0996c55cce",
+      "inputTokens": 25614,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 11,
+        "scenarioId": "G6",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "0633583fb635b9b84b9544d4973860e8afa92aca04b1b442f16b8d743f5606b4",
+      "summarySHA256": "57f1ca490e4d26785da1db0b81173edec8431a13b347a8cf1a60c1927625c29e",
+      "inputTokens": 25640,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 12,
+        "scenarioId": "G6",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "c27784fecb431217c0b099673cddaae3c583c0aafdc042741be5fc94dadc8901",
+      "summarySHA256": "8fb40e2079afdd3121f6ba7e90ab50daeb7676f81f4f11e9b3f88626a9e0edb0",
+      "inputTokens": 25840,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 13,
+        "scenarioId": "E1",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "2df1f56c0b86e7eed039ee4eaaf3ffb394bb28eaf42528d02fd4aa1e20d387ea",
+      "summarySHA256": "d66eb8d787f9ba457a47575d5b3cfa947ae648dd2dc8dabaef66aca64acc3ead",
+      "inputTokens": 25844,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 14,
+        "scenarioId": "E1",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "0836d77337ef9132b45eaca0dc9f3165aaf4fd6649ec09d252f5e5c3f9029ce6",
+      "summarySHA256": "37cd144017cefa7dd6f406f2174977734f8c565140de9467fbd82f971d9b547e",
+      "inputTokens": 25752,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 15,
+        "scenarioId": "E2",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "d6f79fac6ef5bd600be40b30737536b42a188441b3c73b4d9b963f22fa1b88f7",
+      "summarySHA256": "666f975e5b9e636a2ff572d9e83a2596793f4a53c236a8864eeaaee66a677afd",
+      "inputTokens": 25745,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 16,
+        "scenarioId": "E2",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "e980183d0883141d2403922876e099174d71e3936fe36b8da7d52efae9f591d1",
+      "summarySHA256": "8295854933544aef7fd71f522ee0763a724d09a3b93feb77a4001de5ff5cd939",
+      "inputTokens": 25830,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 17,
+        "scenarioId": "E3",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "aaddd9547d235561d733aed241d1b9d722b0057ec7d865713edc923526b2b1f6",
+      "summarySHA256": "aa7a421c92ab6dae586de0874fb139184939ca53ef98164e2cf36e6d0faa3566",
+      "inputTokens": 25853,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 18,
+        "scenarioId": "E3",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "2460655c7c82af956609db6a270f92656ce1c106f5371cb9fc7e07d352802f80",
+      "summarySHA256": "afb9083a475582f6c668eeaa5e18d5aaf34a169a2bd9d3e75cc8d6ed5f52e5ea",
+      "inputTokens": 25754,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 19,
+        "scenarioId": "E4",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "c9120c72da07a990017db6f486d55812bd8c7d39d5299e78a221f2ba0628f160",
+      "summarySHA256": "75e3db182175cb58f09c593d1eb50f843e2ac1e0abe6eb8c33076f7dcbf62198",
+      "inputTokens": 25729,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 20,
+        "scenarioId": "E4",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "112afbd620499665eb707ee53b27ef96f987aae99262e0bc8393640edd991099",
+      "summarySHA256": "3a785952f06d0255751e40106712b70e4a0f3a4aa88e60fbdbc91a969a4b1225",
+      "inputTokens": 25828,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 21,
+        "scenarioId": "E5",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "25e26fe28bbc60b5701e76c552b0949732eb7b2371f5abe3df10efe983f47159",
+      "summarySHA256": "1d8d2b67fbeb56e6fe09050a4a84e17210db299d58a30c155473ac64ed0c7207",
+      "inputTokens": 25842,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 22,
+        "scenarioId": "E5",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "16b436cc54e8c0f4464deab2e89fe1bfa3a275274304e57c2703caa641d84460",
+      "summarySHA256": "ec057986702a667e8d9c9939531b54ec0cebdd9d9e4a2666a7b4668129bcddcc",
+      "inputTokens": 25750,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 23,
+        "scenarioId": "E6",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "b0de8d20b879b3b421b27c4e941117ffc85263627ee8a9120f1fbd9619f0db7c",
+      "summarySHA256": "6883d997c2d93b5946f07cf5a7ae312045be9fd6d03c6bb935c0eeafe6cf5320",
+      "inputTokens": 25764,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 24,
+        "scenarioId": "E6",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "0733b6048f4904b5ea06daa9f646bf9ae15946fe79b7f03930405c50f21f892b",
+      "summarySHA256": "8073e28a5bde18e09c37d21fe70793233133028dc0a4f07bf4e46de83ef2ce16",
+      "inputTokens": 25849,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": true
+    },
+    {
+      "run": {
+        "run": 25,
+        "scenarioId": "E7",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "4fefb088b49ed7fc4d10bac43778088763aeefca584b440c97ba31a08df47a36",
+      "summarySHA256": "f42c3b900dfbd07fb8787bf6319516edc3e3669010d2391559285a9bd65a8687",
+      "inputTokens": 25834,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 26,
+        "scenarioId": "E7",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "80391f35ed4b8d2e37e13a5ef4c3aa07ed5d3a5c7f4b5772cf1c575fe51703b5",
+      "summarySHA256": "bef0b1ca52524b996f2fc32850fe8f8744d5190292bb2c412da5dff1c639e3f2",
+      "inputTokens": 25735,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 27,
+        "scenarioId": "E8",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "3c2d62eb79246f99049ef59f3d13a201642a87ce3ffa59abe43c22c3d5b65432",
+      "summarySHA256": "b5b82dc717867ae17fa92d2b7e76e4664fc53937751be55a94840d87cd4707b4",
+      "inputTokens": 25727,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 28,
+        "scenarioId": "E8",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "7eaa2a60ccf7e13644fb028f177f3ba6777df811642278a5c64bdfac4063e7df",
+      "summarySHA256": "d6f6778c18df431e70d7879fa52c70df84ef246a47ff9e62874a076108f48452",
+      "inputTokens": 25819,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 29,
+        "scenarioId": "E9",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "ff7f12ffd93bc5e03ed670fc5a805ed025554ced2621668118eb470f62d9836a",
+      "summarySHA256": "42e8b77e9c9b006085cf971e8010113b95c0aacc7518fffa6202714b837c62f2",
+      "inputTokens": 25835,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 30,
+        "scenarioId": "E9",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "5573000a18d9b5796fb1f78a36093ed3c2bf1e134dffea7835e4e8940dad3f43",
+      "summarySHA256": "2c5e9abcadb0b2fd7b417597a5e222c9d4c1be5593a8bce9c4adffcd7ad598c9",
+      "inputTokens": 25736,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 31,
+        "scenarioId": "P1",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "98da3e92b87a6f2a714aec1bc3cf3991991f9bfd72713c3669b5bb4a52790f5a",
+      "summarySHA256": "7f20e9196c7cb96facf64989bf8e38eb5c63979f84109ac9e955307c608a405b",
+      "inputTokens": 25746,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 32,
+        "scenarioId": "P1",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "ab97b297902a84d85bbfaf5686e8e8b9eea248852fa2fd7fbc8ab8e96d792e2c",
+      "summarySHA256": "6c2f0c97f4c5c60362df3af3193ce956351ea6b7894c446e1d3ed7c10bff4531",
+      "inputTokens": 25845,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 33,
+        "scenarioId": "P2",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "735c0baa5b6f6d649ed3e4a66caf77f1318b29b0a1a7d5a00666a0838fc95df9",
+      "summarySHA256": "5c784f1366d5a178dfda12bc951730f05de8dc6d3211813d3ee8443949306165",
+      "inputTokens": 25854,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 34,
+        "scenarioId": "P2",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "3725914d79a953e568deeb9e905fceac414a9337fd6639740bd3ccb310807f3a",
+      "summarySHA256": "3368b4cdd59e2ca361b5b05d9b4d1c2b59eccd9db00f39a8bd5dae47b20a7999",
+      "inputTokens": 25755,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 35,
+        "scenarioId": "P3",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "864fed70af63292368c84cfcc844e5e2b79889c5532a6af875b74d714c659af5",
+      "summarySHA256": "d481d4a7b3b5000120d2874ee5cce1c1c9ce0f7e5a154492119c519810e05f1b",
+      "inputTokens": 25764,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 36,
+        "scenarioId": "P3",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "18d77680122bf23c74895676af513e732122aac04e4a8431e9c34281434fbf28",
+      "summarySHA256": "681d4ae36fae7aabbd549560fb2930efcb165514e6d3941fc38a35e14699319b",
+      "inputTokens": 25849,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 37,
+        "scenarioId": "P4",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "40a09237141ef340e3f0c3afc3d7161797782e898c9878e3d8dc0cc6a7f33cf8",
+      "summarySHA256": "eec200917ba580d81c3a0489d13deeee0716f7bb97f0a80b1710b4a925d3f3d2",
+      "inputTokens": 25863,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 38,
+        "scenarioId": "P4",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "01bd78baa601f11d1312665fe70b99fec6504a1319e9349ea90534afab3b46e3",
+      "summarySHA256": "67ed1e9099259acaadfa3bf76d9c138dcd3300633b87e9b2a22cd74b291ad95f",
+      "inputTokens": 25771,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 39,
+        "scenarioId": "P5",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "0b5084d4f4c650aa1534767c22cf75072da6c34b0690f203b62f79133f6b3ba2",
+      "summarySHA256": "f8dfe41faeb1dbfa5e9341863d32ae879cb5b6d5f35bc082e0d5208b06df2e71",
+      "inputTokens": 25770,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 40,
+        "scenarioId": "P5",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "8b4b253813b3355c79dd876756dedcbd472b0c826c82405143b3adbe80573ca4",
+      "summarySHA256": "8d2a093c131ffb097a0e75f4f4af702ae87c7a7ffe5ae3ff06c333621eb6c349",
+      "inputTokens": 25869,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 41,
+        "scenarioId": "P6",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "8b753bd33a666dd2a7783b6b33ff122b40ba2b9ccfdfcd786b75a8b54ec9c3b0",
+      "summarySHA256": "a8ae0eca3c7e08cf32cb113b5936c38ca74541db20fdd9bf2c2e33757570f8af",
+      "inputTokens": 25858,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 42,
+        "scenarioId": "P6",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "849b3d906c8025f7d0d606af75842182f7ca2132d82be73ce6da652cf188deaf",
+      "summarySHA256": "d05a84c0e719e901927c71b7f2d7453ba003dd8e0b5f4cc47f751d3a8ee28aaf",
+      "inputTokens": 25766,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 43,
+        "scenarioId": "P7",
+        "repetition": 1,
+        "variant": "r42"
+      },
+      "resultSHA256": "696c008c084e459cb1324782837d7badfb51c809cef89cfd873c3d19041fa900",
+      "summarySHA256": "d74b92e2ffe7366de7f23a288c9e6754d3a74202b395a6220fa0041dbc55ed9c",
+      "inputTokens": 25757,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 44,
+        "scenarioId": "P7",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "c3331b3b32e41b3632121ec7a6deaee70d12bb08a155e9ae542c54a92a70b486",
+      "summarySHA256": "35fb36cf4f1712999b508cfcb810b03793c5a70108730b73c372043ce93f818e",
+      "inputTokens": 25856,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    },
+    {
+      "run": {
+        "run": 45,
+        "scenarioId": "P8",
+        "repetition": 1,
+        "variant": "r17"
+      },
+      "resultSHA256": "1e5b635846db239086575887909baed79f45d5b283f2f81289ffcb858a77cb01",
+      "summarySHA256": "f2c34c1984433d47d67043313bd8458160fd4d017d66ced818444d6a1ede0a78",
+      "inputTokens": 25842,
+      "referenceLoads": 0,
+      "failure": null,
+      "reconstructed": false
+    }
+  ]
+}

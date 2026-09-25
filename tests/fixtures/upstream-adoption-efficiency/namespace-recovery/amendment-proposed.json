@@ -1,0 +1,14 @@
+{
+  "status": "proposed; parent review required before any resumed trial",
+  "incidentAudit": "namespace-incident-audit.json",
+  "sourcePlanSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "sourceRunnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "repairedRunnerSHA256": "5bfcaecc239c721e826c866cef595747d4a75136e3264489381b21c8ca20df22",
+  "scope": "Original37 cases,2 variants,3 matched actual-response repetitions; unchanged prompts, sources, references, model/settings, interleaved order and predeclared variance rule.",
+  "preservation": "Keep old comparison tree byte-for-byte in an incident archive with file digests; copy clean1–23 records, add recovered24 from original completed events; retain original failed summary and all134 initialization failures.",
+  "retryBudgetProposal": "Exception for this identified supervisor/environment incident only: allow one corrected-context actual initialization for rows25–91, recording the134 prior no-output attempts. No further retries for these rows and no retry for semantic failures. Original normal retry policy remains for92 onward.",
+  "alternative": "Without an explicit incident budget amendment, retain affected failed cells and baseline; do not silently resubmit exhausted cells.",
+  "controlRepair": "Existing locks and incomplete attempts always fail closed; verified explicit operator recovery only. Negative tests use independent tmp fixtures and never the live comparison.",
+  "limitations": "Runs1–24 use prior runner supervisor. Response prompt builder unchanged, verified by original payload hashes. Effective runtime model identity remains unavailable and aggregate input usage contains opaque host context.",
+  "resumeState": "paused; no live trial processes"
+}

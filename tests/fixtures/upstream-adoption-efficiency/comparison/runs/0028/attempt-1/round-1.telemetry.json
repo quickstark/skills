@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:36:50.677Z",
+  "elapsedMs": 26429.186143,
+  "wallElapsedMs": 26429,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "3db322143f38e266cc88c25f2dae43c8476f305a6461405246ea021e664b3847",
+  "promptUtf8Bytes": 9850,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25819,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 637,
+      "reasoning_output_tokens": 211
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "d86c317ec3ec9e60a2c5f3e9b86de2b9368f43d79ed881c70f820e0d849a6a9b",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-YhvSR8",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-code-build\\nOutcome: The deployment target changed to production, which the submitted authorization explicitly excludes. Dependent work is paused pending a target decision; the matching goal remains incomplete.\\n\\n- [ ] Build — paused at ~50%; current-revision implementation and review milestones remain valid. Weight: 60.\\n- [ ] Git — pending at 0%; requires verified Build completion. Weight: 10.\\n- [ ] Release — blocked at 0%; production is unauthorized. Weight: 30.\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — preserving valid progress while the target conflict is resolved. Input needed: restore staging, or explicitly revise the scope and authorization to include production and supply its documented deployment workflow.\\n\\nOverall estimate: (60 × 50 + 10 × 0 + 30 × 0) / 100 = 30%. Weights and valid evidence are unchanged.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — Supplied evidence supports partial implementation and review progress only. No actions were executed in this response; no completed validation, publication, deployed version, or health result is established.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — resolve the target conflict, then finish remaining Build checks before the scheduled Git and Release stages.\\n\\nNext work prompt: None — downstream stages are already scheduled and remain gated.\\n\\nShould the target return to authorized staging, or should the scope and grants be explicitly revised for production? This decision is required because your workflow contract requires input for changed targets and currently excludes production.\",\n  \"requestedActions\": [\n    \"Request a target decision: restore authorized staging, or explicitly revise the production exclusion and deployment grant and supply the documented production workflow before dependent work resumes.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

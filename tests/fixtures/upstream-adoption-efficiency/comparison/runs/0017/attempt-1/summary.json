@@ -1,0 +1,55 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 17,
+    "scenarioId": "E3",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "E3",
+  "inputSHA256": "c76e549654755800c4d2d8432b3c2c1d198a996701787e882c97678d47b766c8",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-1UTYox",
+  "startedAt": "2026-09-25T19:21:22.994Z",
+  "completedAt": "2026-09-25T19:21:54.716Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25853,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 841,
+      "reasoning_output_tokens": 208
+    }
+  ],
+  "elapsedMs": 31670.0930639999,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Continuation required\nSkills used: /qs-code-build\nOutcome: Supplied evidence verifies the bounded CSV implementation, diff review, and required tests at `abc123`. The build root is finished; Git publication and staging delivery remain.\n\nStage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified — All required build checks pass at `abc123`; the reported next skill is `qs-git-merge`. Input needed: none.\n\n- [x] Build — verified at `abc123`; reported status: continuation-required.\n- [ ] Git — pending; publish and verify `origin/feature/export` against `abc123`.\n- [ ] Release — pending; depends on verified publication, then staging deployment and health/version verification.\n\nWeights remain Build 60, Git 10, Release 30. The new completion evidence raises Build from 50% to 100%, moving overall progress from 30% to `(60 × 100 + 10 × 0 + 30 × 0) / 100 = 60%`.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — The supplied build result verifies CSV export and existing-screen checks, required validation, and diff review at `abc123`. No failed required checks are reported.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — pending — advance to the authorized Git stage after goal and repository preflight; verify remote publication before release.\n- Next — [Staging deployment](/fixture/ledger-app/docs/deploy.md) — pending — deploy the verified published artifact and confirm `/health` returns HTTP 200 with its exact version. Deployment and health evidence are not yet supplied.\n\nNext work prompt: None — Git and Release are already scheduled by the authorized coordinator. No operational actions were executed in this response.",
+    "requestedActions": [
+      "Verify supported goal tools and use get_goal to inspect the confirmed matching goal; preserve its identity and stop before execution if goal support is unavailable or the state conflicts.",
+      "Use update_goal according to the host contract to record the supplied Build verification at abc123, preserve its continuation-required result and the 60/10/30 weights, and verify the resulting goal state without marking the overall goal complete.",
+      "Enter qs-git-merge under the standing commit/push grant. Recheck repository instructions, selected target, available skill, references, authorization, current revision, dirty files, branch/upstream, ahead/behind state, commits, checks, and relevant PR/publication state before mutation.",
+      "If preflight confirms the tested revision abc123 and authorized target origin/feature/export, perform only the necessary authorized publication and verify the remote equals abc123. Detect already-completed publication before retrying; require fresh relevant verification if code changes. Record Git completion only after remote verification."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 22,
+    "scenarioId": "E5",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "E5",
+  "inputSHA256": "d30179bc5e8cb3e87ff87760039d6d0cbfadb76ff412495e8689bae0c0dd7db8",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-VO39BK",
+  "startedAt": "2026-09-25T19:24:01.639Z",
+  "completedAt": "2026-09-25T19:24:32.410Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25750,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 817,
+      "reasoning_output_tokens": 337
+    }
+  ],
+  "elapsedMs": 30719.23134900001,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-release\nOutcome: Build and Git evidence remain valid at `abc123`. Staging job `J42` is queued for `export:abc123`, but `/health` still serves the previous version. Deployment is not verified.\n\n- [x] Build — verified at `abc123`; supplied implementation, validation, and review evidence remains valid.\n- [x] Git — verified; authoritative `origin/feature/export=abc123`.\n- [ ] Release — blocked pending goal-tool verification; existing job `J42` awaits deployment and health verification.\n\nStage: Release | Stage estimate: ~0% | Overall estimate: ~70% | blocked — queued deployment provides no verified delivery progress. Input needed: supported goal-tool availability and authoritative `get_goal` state for the resumed matching goal.\n\nWeights remain Build 60, Git 10, Release 30. Overall = `(60 × 100 + 10 × 100 + 30 × 0) / 100 = 70%`. The newer revision-bound evidence advances Build and Git; Release retains its last defensible estimate. Its estimate is conservative because no deployment milestone beyond queuing is supplied.\n\nSpecs: [CSV export requirements](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — supplied evidence establishes completed Build and Git work at `abc123`; no actions were executed in this response.\n- Next — [Staging release](/fixture/ledger-app/docs/deploy.md) — blocked — verify the matching goal through supported host tools, then observe existing job `J42` without repeating publication or deployment. Require authoritative evidence linking staging to `export:abc123` and `/health` returning HTTP 200 with the exact deployed version before completing the goal. HTTP status is not supplied; the observed version does not yet match.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify availability of the host's supported goal tools and their state/completion contract.",
+      "If supported, use get_goal to inspect the resumed matching goal and confirm its identity and authoritative state before further stage execution; otherwise retain input-required status."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

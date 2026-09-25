@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:19:32.719Z",
+  "elapsedMs": 21757.314408999984,
+  "wallElapsedMs": 21757,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "5438815d4b94ce432403b01ae6e1e180a255bf0f69b86c88fff912da23452b23",
+  "promptUtf8Bytes": 9881,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25844,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 536,
+      "reasoning_output_tokens": 194
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "6a732c99f96c656b5be025b9b43798e1459ee0c12bb84b11b580124b90762686",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-1oiQI5",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 remains live; its last output was “124/180 tests passed” 70 seconds ago. No new progress is confirmed. Input needed: none.\\n\\n- [ ] Build — active, ~50%; validation remains pending.\\n- [ ] Git — pending, 0%; awaits verified Build completion.\\n- [ ] Release — pending, 0%; awaits verified Git completion.\\n\\nKeeping the observed milestone estimates and weights unchanged: (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Process liveness and elapsed time do not increase completion or establish failure.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — Observed implementation and review milestones support Build’s partial estimate; the last test output reports 124/180 passed. Build completion is unverified.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — active — check process 81 for new output or completion, then finish required validation. Publication and staging artifact/version/health verification remain pending.\\n\\nNext work prompt: None — authorized later stages are already scheduled and remain gated on verification.\",\n  \"requestedActions\": [\n    \"Poll existing process 81 for new output or completion with a bounded wait of at most 60 seconds; preserve the current estimates unless new evidence supports a change.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

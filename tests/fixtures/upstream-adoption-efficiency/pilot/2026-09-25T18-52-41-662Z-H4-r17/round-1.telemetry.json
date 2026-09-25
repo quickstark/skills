@@ -1,0 +1,36 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T18:52:41.677Z",
+  "elapsedMs": 9728,
+  "promptSHA256": "6844ebbe74ff11ab3e0d758a0a684c8688dc83c0d1c73d55d15c1a1015f59469",
+  "promptUtf8Bytes": 11990,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 28073,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 47,
+      "reasoning_output_tokens": 25
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "3b3c078cc00b8a11b290c51e8463927886312949586e084a3b57f93015e292d1",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-response-fixture-gTMuXT",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\"response\":\"\",\"requestedActions\":[],\"requestedReferences\":[\"ROUTING.md\"]}"
+  ]
+}

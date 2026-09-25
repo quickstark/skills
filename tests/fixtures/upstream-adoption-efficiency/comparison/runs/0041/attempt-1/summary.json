@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 41,
+    "scenarioId": "P6",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "P6",
+  "inputSHA256": "507929b7af58ff4d6652d308616e8025a74e3dad4b171bb167476b2964748cfc",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-vDe7yL",
+  "startedAt": "2026-09-25T19:42:36.156Z",
+  "completedAt": "2026-09-25T19:43:02.302Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25858,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 675,
+      "reasoning_output_tokens": 204
+    }
+  ],
+  "elapsedMs": 26093.201723999984,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Complete (Build root); Input required before workflow execution resumes.\nSkills used: /qs-code-build\nOutcome: Build is verified complete from supplied current-artifact tests and review. Overall progress is ~60%.\n\nStage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified — already satisfied; repeat execution skipped. Input needed: host goal-tool availability and authoritative matching goal state before Git execution.\n\n- [x] Build — verified, 100%; weight 60. Current artifact-specific CSV behavior, existing-screen tests, and diff review pass.\n- [ ] Git — pending, 0%; weight 10.\n- [ ] Release — pending, 0%; weight 30.\n\nCalculation: `(60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%`. Build remains in scope and retains its weight. The supplied completion evidence supersedes the earlier 50% Build observation, raising overall progress from 30% to 60%.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — supplied evidence verifies CSV export implementation, behavior tests, existing-screen compatibility, and review. No operations were performed for this report.\n- Next — [Invoice export publication](/fixture/ledger-app/docs/specs/export.md) — pending — after goal-state verification, publish the tested revision to `origin/feature/export` and verify equality.\n- Next — [Staging delivery](/fixture/ledger-app/docs/deploy.md) — pending — after Git verification, deploy and verify `/health` returns HTTP 200 and the exact deployed version. No deployed version or health result is supplied.\n\nNext work prompt: None — Git and Release are already scheduled by the authorized coordinator.",
+    "requestedActions": [
+      "Verify host goal-tool availability, then use get_goal to inspect authoritative state. Resume the matching goal, or create_goal only if no matching goal exists and no unrelated active goal would be replaced. Verify the resulting state before stage execution; if support is unavailable, report input-required."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

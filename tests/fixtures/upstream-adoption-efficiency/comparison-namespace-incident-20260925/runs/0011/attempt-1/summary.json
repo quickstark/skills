@@ -1,0 +1,50 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 11,
+    "scenarioId": "G6",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "G6",
+  "inputSHA256": "ffb002ccf7b77c15e14f1c0cd030cf4bc82ea99cc15ee07d989fbb0fd2554775",
+  "sourceSHA256": "9d38c8433311a4730dc5a3c916c900614a90008874a8d4a47f37ae6288963e69",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-0KBWVn",
+  "startedAt": "2026-09-25T19:18:40.175Z",
+  "completedAt": "2026-09-25T19:19:02.601Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25640,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 568,
+      "reasoning_output_tokens": 247
+    }
+  ],
+  "elapsedMs": 22377.29597800004,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-prompt\nOutcome: The host exposes no goal tools. An execution-ready goal prompt cannot be generated until real goal capabilities are available. Execution has not started.\n\n- [ ] Blocked — generate the CSV invoice export/staging goal prompt.\n\nStage: Prompt generation | Stage estimate: ~50% | Overall estimate: ~50% | blocked — supplied scope and authorization are resolved; required goal capability is absent. Input needed: a host exposing tools to read, establish, and update goal state.\n\nOne stage, weight 100%; the estimate reflects resolved inputs, with low confidence about remaining capability verification.\n\nSpecs: Not located\n\nWork summary:\n- Finished — assessed supplied readiness evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. No executable prompt or secondary artifact produced; no commands or product actions performed.\n- Next — [CSV invoice export/staging workflow](/fixture/ledger-app/docs/deploy.md) — blocked — provide a goal-capable host, then resume prompt generation. Filtered invoices, headers, escaping, screen preservation, staging, credentials availability, and edit/build/test/commit/push authorization are already settled.\n\nReadiness blocker: required goal tools are unavailable. Ordinary execution cannot substitute for goal support. No additional scope clarification is needed.\n\nNext work prompt: None — required goal capability is missing.",
+    "requestedActions": [],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

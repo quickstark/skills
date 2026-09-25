@@ -159,7 +159,7 @@ test("generated packages are isolated, synchronized, and free of reporting runti
   assert.deepEqual(await directories(join(root, "codex", "plugins", "qs-specialists", "skills")), [...specialistNames].sort());
   await assert.rejects(stat(join(root, "codex", "plugins", "qs-specialists", "capabilities")), /ENOENT/);
 
-  const expectedSupport = ["ps-skill-catalog.mjs", "qs-skill-catalog.mjs", "skill-collection-registry.mjs"];
+  const expectedSupport = ["advanced-skill-catalog.mjs", "execution-skill-catalog.mjs", "frontend-skill-catalog.mjs", "optional-command-definition.mjs", "ps-skill-catalog.mjs", "qs-skill-catalog.mjs", "skill-collection-registry.mjs", "video-skill-catalog.mjs"];
   for (const packageRoot of [
     "codex/plugins/qs-skills", "codex/plugins/qs-specialists", "codex/plugins/ps-skills",
     "packages/qs-specialists", "packages/ps-skills",
@@ -424,5 +424,5 @@ test("migration documentation accounts for every v2 command exactly once", async
 
 test("package projections are deterministic and synchronized", async () => {
   const { stdout } = await execFileAsync(process.execPath, ["scripts/sync-codex-plugin.mjs", "--check"], { cwd: root });
-  assert.match(stdout, /Verified deterministic QuickStark v3/);
+  assert.match(stdout, /Verified deterministic active projections for 3 packages across Codex, Claude, and Pi/);
 });

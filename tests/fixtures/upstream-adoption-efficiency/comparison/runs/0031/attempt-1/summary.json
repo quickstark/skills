@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 31,
+    "scenarioId": "P1",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "P1",
+  "inputSHA256": "1a0c782b832f187b7cd7efab063758bf2fe08d6eb64864be1384dbb5e9f9c650",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-RSLrUS",
+  "startedAt": "2026-09-25T19:38:16.428Z",
+  "completedAt": "2026-09-25T19:38:38.794Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25746,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 560,
+      "reasoning_output_tokens": 156
+    }
+  ],
+  "elapsedMs": 22317.642492999992,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: Build is ~50% complete; the overall staging-delivery goal is ~30% complete, based on supplied observations.\n\n- [ ] Build — blocked before further execution; ~50%, weight 60. Observed implementation and review milestones support this estimate.\n- [ ] Git — pending; 0%, weight 10.\n- [ ] Release — pending; 0%, weight 30.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — progress retained; host goal-tool availability and matching goal state are not supplied. Input needed: verified goal-tool availability and authoritative matching goal state before execution resumes.\n\nCalculation: **(60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%**. Weights remain unchanged. These are coarse milestone estimates, not completion evidence.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — Progress calculation from supplied current-revision observations. No actions were executed or artifacts produced in this response. Final CSV, existing-screen, and diff-review check results are not supplied.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — verify matching goal state, then finish implementation and required validation. Git publication and staging deployment remain scheduled after their prerequisite gates pass. No deployed version or health evidence is supplied.\n\nNext work prompt: None — subsequent stages are already scheduled by the authorized workflow.",
+    "requestedActions": [
+      "Verify host goal-tool availability and inspect authoritative state with get_goal before further execution; create_goal only if no matching goal exists and doing so would not replace an unrelated active goal."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

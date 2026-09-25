@@ -1,0 +1,62 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 24,
+    "scenarioId": "E6",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "E6",
+  "inputSHA256": "1d6d6c0bcea003f5dc16efcb369611f6ec646da4e26b0da2bedf529d09366877",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-ahLl4J",
+  "startedAt": "2026-09-25T19:25:09.748Z",
+  "completedAt": null,
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25849,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1025,
+      "reasoning_output_tokens": 516
+    }
+  ],
+  "elapsedMs": 36893.47462200001,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required — host goal finalization; release root: Complete.\nSkills used: /qs-deploy-release\nOutcome: Supplied evidence verifies CSV invoice export delivered to staging at `abc123`. No actions were executed in this response.\n\nStage: Release | Stage estimate: ~100% | Overall estimate: ~100% | verified — J42 completed on staging; `/health` returned HTTP 200 with version `export:abc123`. Input needed: supported goal tools and current authoritative goal state to finalize tracking.\n\n- [x] Build — verified complete at `abc123`; required tests and diff review passed. Weight: 60.\n- [x] Git — verified complete; supplied current evidence confirms the tested revision on `origin/feature/export`. Weight: 10.\n- [x] Release — verified complete; deployment, health/version, CSV smoke, and rollback readiness confirmed. Weight: 30.\n\nThe resumed evidence supersedes the earlier Build 50% milestone: overall progress advances from `(60×50 + 10×0 + 30×0)/100 = 30%` to `(60×100 + 10×100 + 30×100)/100 = 100%`. This measures verified delivery; host goal closure remains unconfirmed.\n\nSpecs: [CSV export requirements](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — CSV export, required build/review/tests including the existing screen, and staging delivery are verified by supplied observations. CSV smoke confirms filters, header, and escaping; J42 identifies healthy artifact `export:abc123`. No failed checks were reported.\n- Next — Confirm supported goal tools, inspect the resumed matching goal, and record completion under the host’s actual contract. No further implementation, push, deployment, or rollback is needed.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify availability and contracts of the host's goal tools; if unavailable, report input-required without mutations.",
+      "Use get_goal to inspect the resumed matching goal for Deliver CSV invoice export to staging; do not create a duplicate or replace an unrelated goal.",
+      "If the authoritative goal matches and its contract permits completion, use update_goal to record the supplied verified abc123 and J42 staging evidence, then verify the resulting goal state."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; recovered capture only",
+  "recovery": {
+    "observedAt": "2026-09-25T19:29:13.855Z",
+    "basis": "Original immutable CLI events plus telemetry demonstrate one complete response; exact prompt/source/input/raw hashes verified. Original post-process summary collided with namespace-blind false interruption. No new response requested.",
+    "cwdFilesObservation": "Measured now during recovery, not claimed as original post-response observation.",
+    "originalCompletedAt": "Unavailable; not inferred from monotonic elapsed",
+    "originalSummary": "comparison/runs/0024/attempt-1/summary.json",
+    "telemetrySHA256": "2b6694f81e4cc83551f42aa9323f90c28bfdc2ac22381c8e8fadeb544d022959"
+  }
+}
