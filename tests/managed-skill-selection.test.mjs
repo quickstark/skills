@@ -13,6 +13,7 @@ import { execute as executePersonalSkills, loadManifest, selectManifestResources
 const repositoryRoot = resolve(import.meta.dirname, "..");
 const maintained = await validateMaintainedPackages({ repositoryRoot });
 const packages = maintained.packages;
+const optionalPackage = packages.find((entry) => !["qs-skills", "qs-specialists"].includes(entry.name)).name;
 const packageEntry = (name, agent = "codex", overrides = {}) => ({
   name, pluginId: `${name}@quickstark`, marketplaceName: "quickstark", installed: true, enabled: true,
   version: maintained.version,
@@ -37,14 +38,14 @@ test("selection-bound plan proposes only core on a fresh home and writes nothing
   assert.deepEqual(await readdir(options.homeDirectory), []);
 });
 
-test("observed legacy packages remain per host and exclude newly available packages", async (t) => {
+test("observed managed packages remain per host and exclude newly available packages", async (t) => {
   const options = await fixture(t);
   const plan = await buildManagedSelectionPlan({ ...options, agents: ["codex", "pi"],
-    inspectManagedPackages: async (agent) => ({ installed: [packageEntry(agent === "pi" ? "qs-specialists" : "ps-skills", agent)] }) });
-  assert.deepEqual(plan.selections.codex.selection.packages, ["ps-skills"]);
+    inspectManagedPackages: async (agent) => ({ installed: [packageEntry(agent === "pi" ? "qs-specialists" : optionalPackage, agent)] }) });
+  assert.deepEqual(plan.selections.codex.selection.packages, [optionalPackage]);
   assert.deepEqual(plan.selections.pi.selection.packages, ["qs-specialists"]);
   assert.deepEqual(plan.managerActions.filter((item) => item.package).map((item) => [item.agent, item.package]), [
-    ["codex", "ps-skills"], ["pi", "qs-specialists"],
+    ["codex", optionalPackage], ["pi", "qs-specialists"],
   ]);
 });
 
@@ -63,9 +64,9 @@ test("saved selection drives reinstall without opting in other packages", async 
 test("explicit profile and addition produce retirement preview without deleting legacy state", async (t) => {
   const options = await fixture(t);
   const plan = await buildManagedSelectionPlan({ ...options, profile: "core", withPackages: ["qs-specialists"],
-    inspectManagedPackages: async () => ({ installed: [packageEntry("ps-skills")] }) });
+    inspectManagedPackages: async () => ({ installed: [packageEntry(optionalPackage)] }) });
   assert.deepEqual(plan.selections.codex.selection.packages, ["qs-skills", "qs-specialists"]);
-  assert.deepEqual(plan.selections.codex.retirements.packages, ["ps-skills"]);
+  assert.deepEqual(plan.selections.codex.retirements.packages, [optionalPackage]);
   assert.deepEqual(await readdir(options.homeDirectory), []);
 });
 

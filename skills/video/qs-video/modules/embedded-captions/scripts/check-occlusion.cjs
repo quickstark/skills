@@ -9,30 +9,9 @@ const fs = require("fs");
 const os = require("os");
 const cp = require("child_process");
 
-function hfResolve(pkg) {
-  const roots = [
-    process.env.HYPERFRAMES_ROOT,
-    path.resolve(__dirname, "..", "..", ".."),
-    path.join(os.homedir(), "Downloads", "hyperframes"),
-  ].filter(Boolean);
-  for (const root of roots) {
-    const cands = [path.join(root, "node_modules", pkg)];
-    const bun = path.join(root, "node_modules", ".bun");
-    try {
-      if (fs.existsSync(bun))
-        for (const d of fs.readdirSync(bun))
-          if (d.startsWith(pkg + "@")) cands.push(path.join(bun, d, "node_modules", pkg));
-    } catch {}
-    for (const c of cands) {
-      try {
-        if (fs.existsSync(c)) return require(c);
-      } catch {}
-    }
-  }
-  console.error(`[v2] cannot find ${pkg} — set HYPERFRAMES_ROOT`);
-  process.exit(3);
-}
-const sharp = hfResolve("sharp");
+const captionRuntime = require("../../../scripts/caption-runtime.cjs");
+captionRuntime.runtime(process.argv[2]);
+const sharp = captionRuntime.dependency("sharp");
 
 function ensureLayoutMeasured(project, force) {
   const lp = path.join(project, "_layout.json"),
@@ -89,6 +68,8 @@ async function main() {
     wordWarn = argf("--word-warn", 0.35),
     capFail = argf("--cap-fail", 0.5);
   const layout = ensureLayoutMeasured(project, process.argv.includes("--remeasure"));
+  if (!Array.isArray(layout.samples) || !layout.samples.length)
+    throw new Error("Occlusion inconclusive: no measured layout samples");
   const framesDir = path.join(project, "frames_fg");
   if (!fs.existsSync(framesDir)) {
     console.error(`[v2] missing ${framesDir}`);
@@ -118,7 +99,7 @@ async function main() {
   for (const sample of layout.samples) {
     const png = path.join(framesDir, `f_${String(sample.frame_idx).padStart(4, "0")}.png`);
     const mask = await loadAlphaMask(png);
-    if (!mask) continue;
+    if (!mask) throw new Error(`Occlusion inconclusive: missing sampled matte ${png}`);
     for (const cap of sample.caps) {
       const entry = (capStats[cap.id] ||= { layer: cap.layer || planLayer, samples: [] });
       const wordsData = [];
@@ -156,6 +137,10 @@ async function main() {
     }
   }
 
+  for (const group of [...(plan.groups || []), ...(plan.crown_group ? [plan.crown_group] : [])]) {
+    if (group.words?.length && !capStats[group.id])
+      throw new Error(`Occlusion inconclusive: caption ${group.id} was never measured`);
+  }
   const failures = [];
   console.log(
     `[v2] ${path.basename(project)}  word-fail≥${(wordFail * 100).toFixed(0)}%  cap-fail≥${(capFail * 100).toFixed(0)}%`,

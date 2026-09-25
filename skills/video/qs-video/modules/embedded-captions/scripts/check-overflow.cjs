@@ -17,38 +17,9 @@ const path = require("path");
 const fs = require("fs");
 const os = require("os");
 
-const HF_ROOTS = [
-  process.env.HYPERFRAMES_ROOT,
-  path.resolve(__dirname, "../../.."),
-  path.join(os.homedir(), "Downloads", "hyperframes"),
-].filter(Boolean);
-let puppeteer = null;
-for (const root of HF_ROOTS) {
-  const cands = [path.join(root, "node_modules", "puppeteer")];
-  const bunDir = path.join(root, "node_modules", ".bun");
-  try {
-    if (fs.existsSync(bunDir)) {
-      for (const d of fs.readdirSync(bunDir))
-        if (d.startsWith("puppeteer@"))
-          cands.push(path.join(bunDir, d, "node_modules", "puppeteer"));
-    }
-  } catch {
-    /* ignore */
-  }
-  for (const p of cands) {
-    try {
-      if (fs.existsSync(p)) {
-        puppeteer = require(p);
-        break;
-      }
-    } catch {}
-  }
-  if (puppeteer) break;
-}
-if (!puppeteer) {
-  console.error("[overflow] puppeteer not found");
-  process.exit(3);
-}
+const captionRuntime = require("../../../scripts/caption-runtime.cjs");
+captionRuntime.runtime(process.argv[2]);
+const puppeteer = captionRuntime.dependency("puppeteer-core");
 
 async function main() {
   const projectDir = process.argv[2];
@@ -72,19 +43,20 @@ async function main() {
     process.platform === "darwin"
       ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
       : "/usr/bin/google-chrome";
-  const browser = await puppeteer.launch({
+  const browser = await puppeteer.launch(captionRuntime.browserOptions({
     headless: "new",
-    executablePath: fs.existsSync(exe) ? exe : undefined,
+    executablePath: captionRuntime.browserPath(),
     args: [
       "--disable-web-security",
       "--allow-file-access-from-files",
       `--window-size=${W},${H}`,
       "--disable-dev-shm-usage",
     ],
-  });
+  }));
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: Math.round(W), height: Math.round(H), deviceScaleFactor: 1 });
+    await captionRuntime.preparePage(page);
     const waitTL = async () => {
       const t0 = Date.now();
       while (Date.now() - t0 < 12000) {
@@ -107,8 +79,7 @@ async function main() {
         "[overflow] ⚠ timeline did not register (GSAP CDN blocked?) — overflow check " +
           "INCONCLUSIVE; eyeball the render for off-frame captions.",
       );
-      await browser.close();
-      process.exit(0);
+      throw new Error("Overflow layout inconclusive: timeline missing");
     }
     await page.evaluate(async () => {
       try {

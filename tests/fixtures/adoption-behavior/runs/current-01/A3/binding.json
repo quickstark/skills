@@ -1,0 +1,24 @@
+{
+  "id": "A3",
+  "cwd": "/tmp/qs-behavior-task-tnBy3f",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-flow-triage/SKILL.md",
+      "sourceSHA256": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c",
+      "derivedSHA256": "4a652b6e2b85512573be5b33f29aca9dc67cdf68bddf0077f874ac86a592ff52",
+      "bytes": 9431
+    }
+  ]
+}

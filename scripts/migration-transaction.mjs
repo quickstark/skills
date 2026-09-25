@@ -95,7 +95,8 @@ export function validateMigrationTransactionPlan(plan, journalPath) {
     state(step.before); state(step.after);
     require(hash(step.before) !== hash(step.after), 'Each step must describe an observable state transition.');
   }
-  require(PHASES.every((phase) => plan.steps.some((step) => step.phase === phase)), 'Migration requires all five explicit phases.');
+  // Fresh installs have nothing to withdraw or retire. Keep phase ordering above,
+  // but require only real, content-bound transitions rather than invented effects.
   for (const first of plan.steps) for (const second of plan.steps) {
     const shared = first.ownedTargets.some((target) => second.ownedTargets.some((other) => other.path === target.path));
     require(!shared || footprint(first) === footprint(second), 'Shared step footprints must match exactly; partial target overlap is ambiguous.');

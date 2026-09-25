@@ -1,0 +1,52 @@
+[
+  {
+    "case": "X1",
+    "operation": [
+      "run"
+    ],
+    "exitCode": 0,
+    "artifactCount": 4,
+    "checks": "passed",
+    "evidencePreservedAfterChildCleanup": true
+  },
+  {
+    "case": "X1",
+    "operation": [
+      "run"
+    ],
+    "exitCode": 0,
+    "artifactCount": 4,
+    "checks": "passed",
+    "evidencePreservedAfterChildCleanup": true
+  },
+  {
+    "case": "X2",
+    "operation": [
+      "--doctor"
+    ],
+    "exitCode": 0,
+    "artifactCount": 1,
+    "checks": "passed",
+    "evidencePreservedAfterChildCleanup": true
+  },
+  {
+    "case": "X2",
+    "operation": [
+      "run"
+    ],
+    "exitCode": 1,
+    "artifactCount": 1,
+    "checks": "passed",
+    "evidencePreservedAfterChildCleanup": true
+  },
+  {
+    "case": "X2",
+    "operation": [
+      "run"
+    ],
+    "exitCode": 1,
+    "artifactCount": 1,
+    "checks": "passed",
+    "evidencePreservedAfterChildCleanup": true
+  }
+]

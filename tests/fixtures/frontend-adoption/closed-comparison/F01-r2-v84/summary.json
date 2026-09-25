@@ -1,0 +1,49 @@
+{
+  "run": {
+    "trialId": "F01-r2-v84",
+    "scenarioId": "F01",
+    "repetition": 2,
+    "variant": "v84",
+    "attemptType": "first-attempt"
+  },
+  "cwd": "/tmp/qs-frontend-trial-7Os9cs",
+  "failure": null,
+  "before": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "2c1a0d1b33ad58f64deb2409fd88522dbe7f120d3c58a158c6005b2de49f4d62",
+      "bytes": 544
+    },
+    "evidence/narrow.png": {
+      "sha256": "659534ec848d3992bed9b11935ec7244dec32a4dacb5162ca9bd3c87256ea93b",
+      "bytes": 84435
+    },
+    "evidence/wide.png": {
+      "sha256": "d406fab8523c4bea70e123e7e1c11ebca031e8bd32a346e2224c5b727dc9065f",
+      "bytes": 103795
+    },
+    "index.html": {
+      "sha256": "101af8b9560b0f54901bac0119ba897432f163bee596e2d67180fdb44c64bce6",
+      "bytes": 3714
+    },
+    "styles.css": {
+      "sha256": "aaedc6044d25410d2ccb23c86aca3caa9f4686f0deeda2af0f50ea518cfd0dc6",
+      "bytes": 6690
+    }
+  },
+  "filesChanged": true,
+  "browserStatus": "observed",
+  "browserError": null,
+  "requiredImageEvidence": "No generated images requested.",
+  "independentReview": "pending",
+  "completeness": "Execution evidence only; adoption requires all rubric and scenario checks."
+}

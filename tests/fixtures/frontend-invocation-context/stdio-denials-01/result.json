@@ -1,0 +1,48 @@
+{
+  "command": [
+    "strace",
+    "-f",
+    "-e",
+    "trace=%file",
+    "-e",
+    "status=failed",
+    "-o",
+    "/tmp/qs-native-discovery-uf0_rszr/failed-file-syscalls.txt",
+    "--",
+    "codex",
+    "app-server",
+    "--listen",
+    "stdio://",
+    "-c",
+    "sqlite_home=\"/tmp/qs-native-discovery-uf0_rszr/runtime\"",
+    "-c",
+    "log_dir=\"/tmp/qs-native-discovery-uf0_rszr/logs\""
+  ],
+  "workspace": "/tmp/qs-native-discovery-uf0_rszr",
+  "modelRequests": 0,
+  "requests": [
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "clientInfo": {
+          "name": "qs-native-discovery-probe",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "responses": [],
+  "stderr": [
+    "WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)"
+  ],
+  "otherMessages": [],
+  "status": "failed",
+  "error": "no response for id 1",
+  "exitCode": -15,
+  "deniedFileOperations": [
+    "7     chmod(\"/home/djn12313/.codex/tmp/arg0\", 0700) = -1 EROFS (Read-only file system)"
+  ],
+  "workspaceRemoved": true
+}

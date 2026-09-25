@@ -39,52 +39,8 @@ function withPreviewGsapSri(html, gsapSource) {
   );
 }
 
-const HF_ROOTS = [
-  process.env.HYPERFRAMES_ROOT,
-  path.resolve(__dirname, "../../.."),
-  path.join(os.homedir(), "Downloads", "hyperframes"),
-].filter(Boolean);
-function findInBun(root, pkg, sub) {
-  const cands = [path.join(root, "node_modules", pkg)];
-  const bunDir = path.join(root, "node_modules", ".bun");
-  try {
-    if (fs.existsSync(bunDir))
-      for (const d of fs.readdirSync(bunDir))
-        if (d.startsWith(pkg + "@")) cands.push(path.join(bunDir, d, "node_modules", pkg));
-  } catch {}
-  for (const c of cands) {
-    const p = sub ? path.join(c, sub) : c;
-    if (fs.existsSync(p)) return p;
-  }
-  return null;
-}
-let puppeteer = null,
-  sharp = null,
-  gsapSource = null;
-for (const r of HF_ROOTS) {
-  if (!puppeteer) {
-    const p = findInBun(r, "puppeteer");
-    if (p)
-      try {
-        puppeteer = require(p);
-      } catch {}
-  }
-  if (!sharp) {
-    const p = findInBun(r, "sharp");
-    if (p)
-      try {
-        sharp = require(p);
-      } catch {}
-  }
-  if (!gsapSource) {
-    const g = findInBun(r, "gsap", path.join("dist", "gsap.min.js"));
-    if (g) gsapSource = fs.readFileSync(g);
-  }
-}
-if (require.main === module && (!puppeteer || !sharp)) {
-  console.error("[preview] need puppeteer+sharp — set HYPERFRAMES_ROOT");
-  process.exit(0);
-}
+const captionRuntime = require("../../../scripts/caption-runtime.cjs");
+let puppeteer, sharp, gsapSource;
 
 async function shotAt(browser, file, W, H, t) {
   const page = await browser.newPage();
@@ -147,6 +103,10 @@ async function shotAt(browser, file, W, H, t) {
 }
 
 async function main() {
+  captionRuntime.runtime(process.argv[2]);
+  puppeteer = captionRuntime.dependency("puppeteer-core");
+  sharp = captionRuntime.dependency("sharp");
+  gsapSource = captionRuntime.gsapSource();
   const project = path.resolve(process.argv[2] || "");
   if (!process.argv[2]) {
     console.error("usage: preview-frames.cjs <project-dir> [times...]");
@@ -224,11 +184,11 @@ async function main() {
     process.platform === "darwin"
       ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
       : "/usr/bin/google-chrome";
-  const browser = await puppeteer.launch({
+  const browser = await puppeteer.launch(captionRuntime.browserOptions({
     headless: "new",
-    executablePath: fs.existsSync(exe) ? exe : undefined,
+    executablePath: captionRuntime.browserPath(),
     args: ["--disable-web-security", "--allow-file-access-from-files", "--disable-dev-shm-usage"],
-  });
+  }));
   const outs = [];
   try {
     for (const t of times) {

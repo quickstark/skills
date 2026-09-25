@@ -1,0 +1,23 @@
+{
+  "runId": "2026-09-25T21-09-18-846Z",
+  "hashes": {
+    "README.md": "bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d",
+    "app.cjs": "5aefc49aa630d232e1712bf174a49b22c3353b3064e82a21f4bf032688550d8b",
+    "verification/run.cjs": "fa8344e7ac1c0de6ce7eb24f0bc08a5bf4a61b66ce9b2fa049b4925a02541ff8",
+    "verification/features.json": "ba529ba5063bff9d220944b78ef25d5a63ecae1ee3da728b6915474d28e26766"
+  },
+  "doctor": {
+    "node": "v24.21.0",
+    "fetchAvailable": true,
+    "checks": [
+      {
+        "file": "app.cjs",
+        "status": 0
+      },
+      {
+        "file": "verification/run.cjs",
+        "status": 0
+      }
+    ]
+  }
+}

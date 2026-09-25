@@ -1,0 +1,67 @@
+{
+  "run": {
+    "trialId": "F01-r1-v31",
+    "scenarioId": "F01",
+    "repetition": 1,
+    "variant": "v31",
+    "attemptType": "parent-authorized-infrastructure-replacement",
+    "replacesIncompleteEvidence": "/tmp/qs-frontend-comparison-20260925/F01-r1-v31",
+    "replacementAuthority": "Parent /root explicitly authorized ONE infrastructure replacement of incomplete F01 baseline in a new complete 66-row amended comparison after sampler fixes and controls, before any candidate result existed. All other 65 rows are first attempts. No further retries, source/rubric/model/quality budget changes, or semantic-result selection."
+  },
+  "cwd": "/tmp/qs-frontend-trial-LMGCAx",
+  "failure": null,
+  "before": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "c9fb3e1c9f5dcb10651dd5e29dd1d656b356a1f9098750be4e1782bade7a8727",
+      "bytes": 1078
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "b083fdaf18c882bf7c88195265a2bff39e44cfefa452433aeab7aebb686a5bf9",
+      "bytes": 2145
+    },
+    "evidence/narrow-dark.png": {
+      "sha256": "68789f8a0d8dbfd33f90abee972abc908ce0dd2c9fe5e32108cbcb2fb3963d47",
+      "bytes": 82299
+    },
+    "evidence/narrow-success-dark.png": {
+      "sha256": "9f1921b503cc1d5e0ec20f5c784f51b71e02b5f4e63ddd97994589ba5728609e",
+      "bytes": 88432
+    },
+    "evidence/narrow.png": {
+      "sha256": "e273ea53f95975c6f5ab7648acc339b1092f2c85625d8082393584e8760d740d",
+      "bytes": 81860
+    },
+    "evidence/wide-dark.png": {
+      "sha256": "34e2b339167314481d640b68fa5b80e11f4c227afe14d4efc2d4d6b6fbf0bc97",
+      "bytes": 92320
+    },
+    "evidence/wide.png": {
+      "sha256": "1f2997decbd45122c93aca8e38b28c93a958c096f53928a14a6d89a5eb90d2e2",
+      "bytes": 91969
+    },
+    "index.html": {
+      "sha256": "02f79dd2168e078b3268d06ef4febd9df801ab13819d7b87eda8050caa1eb45d",
+      "bytes": 3578
+    },
+    "styles.css": {
+      "sha256": "861d535bab0ef82dfcc0a2ec893af968f7a85e94c18cf2244f702793b7c3d71f",
+      "bytes": 7141
+    }
+  },
+  "filesChanged": true,
+  "browserStatus": "observed",
+  "browserError": null,
+  "requiredImageEvidence": "No generated images requested.",
+  "independentReview": "pending",
+  "completeness": "Execution evidence only; adoption requires all rubric and scenario checks."
+}

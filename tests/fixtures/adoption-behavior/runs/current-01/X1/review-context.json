@@ -1,0 +1,262 @@
+{
+  "case": {
+    "references": [
+      "skills/advanced/internal/decision-trail.md",
+      "skills/advanced/internal/rerunnable-tooling.md",
+      "skills/advanced/internal/structural-enforcement.md"
+    ],
+    "mode": "execution",
+    "timeoutMs": 600000,
+    "criteria": [
+      "AC-07",
+      "AC-12"
+    ],
+    "id": "X1",
+    "skill": "qs-create-verification-skill",
+    "source": "skills/engineering/qs-create-verification-skill/SKILL.md",
+    "files": {
+      "app.cjs": "const http=require('node:http');const server=http.createServer((req,res)=>{const u=new URL(req.url,'http://localhost');res.setHeader('content-type','application/json');if(u.pathname==='/health'){res.end(JSON.stringify({ready:true}));return;}if(u.pathname==='/sum'){const a=Number(u.searchParams.get('a')),b=Number(u.searchParams.get('b'));res.end(JSON.stringify({result:a+b}));return;}res.statusCode=404;res.end(JSON.stringify({error:'not found'}));});server.listen(0,'127.0.0.1',()=>console.log(JSON.stringify({port:server.address().port})));process.on('SIGTERM',()=>server.close(()=>process.exit(0)));\n",
+      "README.md": "Synthetic local calculator. Start: node app.cjs. It prints a JSON port on stdout and binds only127.0.0.1. GET /health -> {ready:true}. GET /sum?a=7&b=5 -> {result:12}. SIGTERM stops server. Export is mapped but currently unavailable and should return404. No dependencies. Product file app.cjs is read-only. Verification belongs in verification/.\n"
+    },
+    "request": "Create a rerunnable verification workflow and feature map under verification/ for this local calculator. Only verification/ edits, local loopback app launch and evidence capture are authorized. Do not edit app.cjs or README.md. Exercise launch, readiness, sum7+5=12, capture evidence and cleanup; repeat once to prove rerun safety. Keep evidence after cleanup. Node built-ins and the documented loopback server are the entire harness; no browser or installation is needed.",
+    "expected": [
+      "Create real runnable verification assets and map",
+      "Actual launch/doctor/sum/evidence/cleanup twice",
+      "Product bytes unchanged and evidence survives",
+      "No owned residual process or false complete"
+    ]
+  },
+  "before": {
+    "README.md": {
+      "sha256": "bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d",
+      "bytes": 346
+    },
+    "app.cjs": {
+      "sha256": "e5e46d1ee0870fe4ca9a0358bbe24fbaf14ff0d9051c63cb9169e518d4287e5d",
+      "bytes": 604
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d",
+      "bytes": 346
+    },
+    "app.cjs": {
+      "sha256": "e5e46d1ee0870fe4ca9a0358bbe24fbaf14ff0d9051c63cb9169e518d4287e5d",
+      "bytes": 604
+    },
+    "verification/README.md": {
+      "sha256": "221c625c386b7d44f4d5c5e1f6e79c8a5679500651188a78c0b06c04e92d0931",
+      "bytes": 3180
+    },
+    "verification/evidence/run-6779vs/observations.json": {
+      "sha256": "d2109736847466d42959e480e4f6a036b0f179f8b0b5ecefef254764fe9cdd0c",
+      "bytes": 484
+    },
+    "verification/evidence/run-6779vs/report.json": {
+      "sha256": "26278ffb9cec889952c224b119ac9fed856a562712ea977adfe247e4482b109a",
+      "bytes": 1499
+    },
+    "verification/evidence/run-6779vs/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "verification/evidence/run-6779vs/stdout.log": {
+      "sha256": "10e1f865250ad77f0358f8ad9c3383f734a72c1dfc40400ebf8921344649cfcc",
+      "bytes": 15
+    },
+    "verification/evidence/run-KDPxw5/observations.json": {
+      "sha256": "d2109736847466d42959e480e4f6a036b0f179f8b0b5ecefef254764fe9cdd0c",
+      "bytes": 484
+    },
+    "verification/evidence/run-KDPxw5/report.json": {
+      "sha256": "ea8021c14d389b9b32578577a674ece21f39de24caa53edc85dead30f4c79eb4",
+      "bytes": 1500
+    },
+    "verification/evidence/run-KDPxw5/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "verification/evidence/run-KDPxw5/stdout.log": {
+      "sha256": "e777589ed47e22dcdf21763a163f9fc027323996bdf7475b7772890f670b70ce",
+      "bytes": 15
+    },
+    "verification/evidence/run-Vtblhp/observations.json": {
+      "sha256": "d2109736847466d42959e480e4f6a036b0f179f8b0b5ecefef254764fe9cdd0c",
+      "bytes": 484
+    },
+    "verification/evidence/run-Vtblhp/report.json": {
+      "sha256": "40b815a9aa0afe303cde1b25d400fe43cb00743b668c86ef2cef2a6e7fcd95e7",
+      "bytes": 1499
+    },
+    "verification/evidence/run-Vtblhp/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "verification/evidence/run-Vtblhp/stdout.log": {
+      "sha256": "8539248ee815fb90dd6431da63e269f99c5022ceede26be342de8ba40586ca67",
+      "bytes": 15
+    },
+    "verification/evidence/run-hH9C6j/observations.json": {
+      "sha256": "d2109736847466d42959e480e4f6a036b0f179f8b0b5ecefef254764fe9cdd0c",
+      "bytes": 484
+    },
+    "verification/evidence/run-hH9C6j/report.json": {
+      "sha256": "80bf9e107b6b5f08f000394c52305e885abc158424cc6874b6526aee853f05b0",
+      "bytes": 1500
+    },
+    "verification/evidence/run-hH9C6j/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "verification/evidence/run-hH9C6j/stdout.log": {
+      "sha256": "603f972451a5799a616bbcfac3849af0d072a08627af4d017c6642a95e223de2",
+      "bytes": 15
+    },
+    "verification/features.json": {
+      "sha256": "5b1980e876f84c152dcd194331a26fbc6461509f36ea33e762ad54661716015f",
+      "bytes": 1329
+    },
+    "verification/run.cjs": {
+      "sha256": "eab654919e326b954a8fb0973fe43cc037c70f43f27b25cbae89c035529dd148",
+      "bytes": 7361
+    }
+  },
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 238515.57348700007,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 348004,
+        "cached_input_tokens": 318848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6835,
+        "reasoning_output_tokens": 814
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [
+      {
+        "id": "item_1",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc \"pwd; rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!*.env*'\"' -g '\"'!secrets*'\"' -g '\"'!credentials*'\"' -g '\"'!.git'\"' -g '\"'!**/.git/**'\"' -g 'AGENTS.md' -g 'README.md' -g 'app.cjs' -g '*spec*' -g 'verification/**' -g '.agents/**' -g '.codex/**' -g 'package.json' -g '\"'!**/secrets/**'\"'\"",
+        "aggregated_output": "/tmp/qs-behavior-task-kRpc7q\nREADME.md\napp.cjs\n",
+        "exit_code": 0,
+        "status": "completed"
+      },
+      {
+        "id": "item_2",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc \"node - <<'NODE'\nconst fs = require('node:fs');\nconst crypto = require('node:crypto');\nfor (const p of ['/AGENTS.md','/tmp/AGENTS.md','/tmp/qs-behavior-task-kRpc7q/AGENTS.md']) {\n if(fs.existsSync(p)) console.log(p+'\\\\n'+fs.readFileSync(p,'utf8'));\n}\nconsole.log('Root entries:', fs.readdirSync('.', {withFileTypes:true}).map(e=>e.name+(e.isDirectory()?'/':'')).join(', '));\nfor(const p of ['README.md','app.cjs']) {\n const b=fs.readFileSync(p); console.log('\\\\n'+p+' sha256='+crypto.createHash('sha256').update(b).digest('hex')+'\\\\n'+b);\n}\nNODE\"",
+        "aggregated_output": "Root entries: .agents/, .codex/, .git/, README.md, app.cjs\n\nREADME.md sha256=bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d\nSynthetic local calculator. Start: node app.cjs. It prints a JSON port on stdout and binds only127.0.0.1. GET /health -> {ready:true}. GET /sum?a=7&b=5 -> {result:12}. SIGTERM stops server. Export is mapped but currently unavailable and should return404. No dependencies. Product file app.cjs is read-only. Verification belongs in verification/.\n\n\napp.cjs sha256=e5e46d1ee0870fe4ca9a0358bbe24fbaf14ff0d9051c63cb9169e518d4287e5d\nconst http=require('node:http');const server=http.createServer((req,res)=>{const u=new URL(req.url,'http://localhost');res.setHeader('content-type','application/json');if(u.pathname==='/health'){res.end(JSON.stringify({ready:true}));return;}if(u.pathname==='/sum'){const a=Number(u.searchParams.get('a')),b=Number(u.searchParams.get('b'));res.end(JSON.stringify({result:a+b}));return;}res.statusCode=404;res.end(JSON.stringify({error:'not found'}));});server.listen(0,'127.0.0.1',()=>console.log(JSON.stringify({port:server.address().port})));process.on('SIGTERM',()=>server.close(()=>process.exit(0)));\n\n",
+        "exit_code": 0,
+        "status": "completed"
+      },
+      {
+        "id": "item_3",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc \"rg --files --hidden .agents .codex -g 'AGENTS.md' -g 'SKILL.md' -g '*verification*' -g '\"'!**/.env*'\"'; git status --short; git rev-parse --verify HEAD\"",
+        "aggregated_output": "fatal: not a git repository (or any of the parent directories): .git\nfatal: not a git repository (or any of the parent directories): .git\n",
+        "exit_code": 128,
+        "status": "failed"
+      },
+      {
+        "id": "item_5",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/tmp/qs-behavior-task-kRpc7q/verification/README.md",
+            "kind": "add"
+          },
+          {
+            "path": "/tmp/qs-behavior-task-kRpc7q/verification/features.json",
+            "kind": "add"
+          },
+          {
+            "path": "/tmp/qs-behavior-task-kRpc7q/verification/run.cjs",
+            "kind": "add"
+          }
+        ],
+        "status": "completed"
+      },
+      {
+        "id": "item_6",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc 'node verification/run.cjs'",
+        "aggregated_output": "{\"passed\":true,\"evidence\":\"/tmp/qs-behavior-task-kRpc7q/verification/evidence/run-6779vs/report.json\",\"checks\":[\"readiness\",\"known-bad sum rejected\",\"sum7+5\",\"export\"],\"cleanup\":{\"ownedProcessStopped\":true,\"evidencePreserved\":true}}\n",
+        "exit_code": 0,
+        "status": "completed"
+      },
+      {
+        "id": "item_8",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc 'node verification/run.cjs'",
+        "aggregated_output": "{\"passed\":true,\"evidence\":\"/tmp/qs-behavior-task-kRpc7q/verification/evidence/run-Vtblhp/report.json\",\"checks\":[\"readiness\",\"known-bad sum rejected\",\"sum7+5\",\"export\"],\"cleanup\":{\"ownedProcessStopped\":true,\"evidencePreserved\":true}}\n",
+        "exit_code": 0,
+        "status": "completed"
+      },
+      {
+        "id": "item_9",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc \"node - <<'NODE'\nconst fs = require('node:fs');\nconst crypto = require('node:crypto');\nconst assert = require('node:assert/strict');\nconst hash = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');\nassert.equal(hash('app.cjs'), 'e5e46d1ee0870fe4ca9a0358bbe24fbaf14ff0d9051c63cb9169e518d4287e5d');\nassert.equal(hash('README.md'), 'bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d');\nfor (const id of ['run-6779vs', 'run-Vtblhp']) {\n const dir = 'verification/evidence/' + id;\n const r = JSON.parse(fs.readFileSync(dir + '/report.json'));\n assert.equal(r.passed, true);\n assert.equal(r.cleanup.ownedProcessStopped, true);\n assert.deepEqual(r.exit, {code: 0, signal: null});\n assert.throws(() => process.kill(r.pid, 0), {code: 'ESRCH'});\n assert.equal(r.observations['sum7+5'].body.result, 12);\n assert.equal(r.observations.export.status, 404);\n assert.equal(r.observations.readiness.body.ready, true);\n for (const [file, digest] of Object.entries(r.hashes)) assert.equal(hash(file), digest);\n for (const file of ['stdout.log', 'stderr.log', 'observations.json', 'report.json']) assert.ok(fs.statSync(dir + '/' + file).isFile());\n assert.deepEqual(JSON.parse(fs.readFileSync(dir + '/observations.json')), r.observations);\n console.log(JSON.stringify({run:id, pid:r.pid, stopped:true, evidenceIntact:true, sourceAndWorkflowHashesMatch:true}));\n}\nassert.deepEqual(fs.readdirSync('.').sort(), ['.agents','.codex','.git','README.md','app.cjs','verification'].sort());\nconsole.log('Verified: both runs passed; all evidence retained; product files unchanged; root additions limited to verification/.');\nNODE\"",
+        "aggregated_output": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: Missing expected exception.\n    at [stdin]:13:9\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [stdin]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_stdin:51:5\n    at ReadStream.<anonymous> (node:internal/process/execution:205:5)\n    at ReadStream.emit (node:events:514:28) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: undefined,\n  expected: { code: 'ESRCH' },\n  operator: 'throws',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n",
+        "exit_code": 1,
+        "status": "failed"
+      },
+      {
+        "id": "item_10",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc \"node - <<'NODE'\nconst fs=require('node:fs');\nconsole.log('Audit process PID:',process.pid);\nfor (const id of ['run-6779vs','run-Vtblhp']) {\n const r=JSON.parse(fs.readFileSync('verification/evidence/'+id+'/report.json'));\n console.log(JSON.stringify({run:id,pid:r.pid,exit:r.exit,cleanup:r.cleanup,checks:r.checks,passed:r.passed}));\n try {\n  const stat=fs.readFileSync('/proc/'+r.pid+'/stat','utf8');\n  const tail=stat.slice(stat.lastIndexOf(')')+2).split(' ');\n  console.log(JSON.stringify({pid:r.pid,comm:stat.slice(stat.indexOf('(')+1,stat.lastIndexOf(')')),state:tail[0],parent:tail[1],startTicks:tail[19]}));\n } catch(e) {console.log(e.code);}\n}\nNODE\"",
+        "aggregated_output": "Audit process PID: 2\n{\"run\":\"run-6779vs\",\"pid\":9,\"exit\":{\"code\":0,\"signal\":null},\"cleanup\":{\"ownedProcessStopped\":true,\"evidencePreserved\":true},\"checks\":[\"readiness\",\"known-bad sum rejected\",\"sum7+5\",\"export\"],\"passed\":true}\n{\"pid\":9,\"comm\":\"libuv-worker\",\"state\":\"S\",\"parent\":\"1\",\"startTicks\":\"261209799\"}\n{\"run\":\"run-Vtblhp\",\"pid\":9,\"exit\":{\"code\":0,\"signal\":null},\"cleanup\":{\"ownedProcessStopped\":true,\"evidencePreserved\":true},\"checks\":[\"readiness\",\"known-bad sum rejected\",\"sum7+5\",\"export\"],\"passed\":true}\n{\"pid\":9,\"comm\":\"libuv-worker\",\"state\":\"S\",\"parent\":\"1\",\"startTicks\":\"261209799\"}\n",
+        "exit_code": 0,
+        "status": "completed"
+      },
+      {
+        "id": "item_12",
+        "type": "command_execution",
+        "command": "/usr/bin/zsh -lc \"node - <<'NODE'\nconst fs = require('node:fs');\nconst crypto = require('node:crypto');\nconst { spawnSync } = require('node:child_process');\nconst assert = require('node:assert/strict');\nconst hash = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');\nconst runs = [];\nfor (let iteration = 1; iteration <= 2; iteration++) {\n const child = spawnSync(process.execPath, ['verification/run.cjs'], {encoding:'utf8',env:{},timeout:20000});\n assert.equal(child.status, 0, child.stderr || child.stdout);\n const output = JSON.parse(child.stdout);\n const r = JSON.parse(fs.readFileSync(output.evidence));\n assert.equal(r.passed, true);\n assert.deepEqual(r.exit, {code:0,signal:null});\n assert.throws(() => process.kill(r.pid, 0), {code:'ESRCH'});\n runs.push(output.evidence);\n console.log(JSON.stringify({iteration,evidence:output.evidence,pid:r.pid,stoppedInSameExecutionContext:true,checks:r.checks}));\n}\nassert.notEqual(runs[0],runs[1]);\nfor (const id of fs.readdirSync('verification/evidence')) {\n const dir = 'verification/evidence/' + id;\n const r = JSON.parse(fs.readFileSync(dir + '/report.json'));\n assert.equal(r.passed, true);\n assert.equal(r.cleanup.ownedProcessStopped, true);\n assert.deepEqual(r.exit, {code:0,signal:null});\n assert.equal(r.observations['sum7+5'].body.result,12);\n assert.equal(r.observations.export.status,404);\n assert.equal(r.observations.readiness.body.ready,true);\n for (const [file,digest] of Object.entries(r.hashes)) assert.equal(hash(file),digest);\n for (const file of ['stdout.log','stderr.log','observations.json','report.json']) assert.ok(fs.statSync(dir+'/'+file).isFile());\n assert.deepEqual(JSON.parse(fs.readFileSync(dir+'/observations.json')),r.observations);\n}\nassert.equal(hash('app.cjs'),'e5e46d1ee0870fe4ca9a0358bbe24fbaf14ff0d9051c63cb9169e518d4287e5d');\nassert.equal(hash('README.md'),'bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d');\nassert.deepEqual(fs.readdirSync('.').sort(),['.agents','.codex','.git','README.md','app.cjs','verification'].sort());\nconsole.log('PASS: two runs and PID absence verified within one execution context; all four evidence sets intact; source hashes unchanged; only verification/ added.');\nNODE\"",
+        "aggregated_output": "{\"iteration\":1,\"evidence\":\"/tmp/qs-behavior-task-kRpc7q/verification/evidence/run-hH9C6j/report.json\",\"pid\":20,\"stoppedInSameExecutionContext\":true,\"checks\":[\"readiness\",\"known-bad sum rejected\",\"sum7+5\",\"export\"]}\n{\"iteration\":2,\"evidence\":\"/tmp/qs-behavior-task-kRpc7q/verification/evidence/run-KDPxw5/report.json\",\"pid\":34,\"stoppedInSameExecutionContext\":true,\"checks\":[\"readiness\",\"known-bad sum rejected\",\"sum7+5\",\"export\"]}\nPASS: two runs and PID absence verified within one execution context; all four evidence sets intact; source hashes unchanged; only verification/ added.\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    ],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 2383,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 9,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "Named matches are a lower bound; inspect raw events/commands for indirect or unidentified image calls.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "45288368f9245460e907c51f4be4f72a2f4c3155530bdb9fc6a0e45196737b76",
+    "promptUtf8Bytes": 20092,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-kRpc7q",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "8ad21edc55c58dc841955db9eb541924e376bb505ce77b67223a5ceec97ca7e2",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

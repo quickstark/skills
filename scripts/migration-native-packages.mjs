@@ -195,8 +195,9 @@ export async function observeNativePackages(input) {
   }
   const allNames = [...active.flatMap((item) => item.publicNames), ...unrelated.flatMap((item) => item.observedPublicNames ?? [])];
   check(new Set(allNames).size === allNames.length, 'Duplicate native public identities are exposed.');
-  const data = { host, scope: 'native-packages-only', configPath, config, unrelatedDiscoveryComplete, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources: sourcePayloads, caches, unrelatedHash: digest(unrelated) };
-  return { state: { snapshotHash: digest(data), ...data }, evidence: { configSnapshot, rawConfigSha256: sha(bytes) } };
+  const unrelatedPublicNames = [...new Set(unrelated.flatMap((item) => item.observedPublicNames ?? []))].sort();
+  const data = { host, scope: 'native-packages-only', configPath, config, unrelatedDiscoveryComplete, unrelatedPublicNames, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources: sourcePayloads, caches, unrelatedHash: digest(unrelated) };
+  return { state: { snapshotHash: digest(data), ...data }, evidence: { configSnapshot, rawConfigSha256: sha(bytes), unrelatedPublicNames, unrelatedDiscoveryComplete } };
 }
 
 /** Predict only the supported one-package registration transition. Actual native
@@ -211,7 +212,7 @@ export function predictNativePackageTransition(before, { packageId, phase, packa
   state.native.packages = state.native.packages.filter((entry) => entry.id !== packageId);
   if (adding) state.native.packages.push({ id: packageId, source: pkg.source, version: source.version, publicNames: source.publicNames });
   state.native.packages.sort((a, b) => a.id.localeCompare(b.id));
-  const names = state.native.packages.flatMap((entry) => entry.publicNames); check(new Set(names).size === names.length, 'Predicted transition duplicates public identities.');
+  const names = [...state.native.packages.flatMap((entry) => entry.publicNames), ...(state.unrelatedPublicNames ?? [])]; check(new Set(names).size === names.length, 'Predicted transition duplicates public identities.');
   if (state.host === 'codex') {
     const key = `${pkg.name}@${pkg.marketplace}`;
     check(!adding || !Object.hasOwn(state.config.selected, key), 'An existing package version must be withdrawn before same-selector exposure.');
@@ -276,7 +277,7 @@ export function createNativePackageAdapter(input) {
     check(adding ? !present : present, 'Native operation disagrees with observed registration.');
     if (adding) {
       if (options.host === 'codex') check(!Object.hasOwn(before.config.selected, selector(options, pkg)), 'Same-selector package must be withdrawn before replacement exposure.');
-      const occupied = before.native.packages.flatMap((entry) => entry.publicNames);
+      const occupied = [...before.native.packages.flatMap((entry) => entry.publicNames), ...(before.unrelatedPublicNames ?? [])];
       check(pkg.publicNames.every((name) => !occupied.includes(name)), 'Replacement would duplicate native public identities.');
     }
     const args = options.host === 'codex' ? ['plugin', adding ? 'add' : 'remove', selector(options, pkg), '--json'] : [adding ? 'install' : 'remove', pkg.source];

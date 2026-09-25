@@ -1,0 +1,50 @@
+[inject-fonts] index.html: embedded inter
+project: timing OK ✓ (3 transcript words)
+[measure] wrote /tmp/qs-embedded-caption/run-03/project/_layout.json (4 sample frames, 4 cap measurements)
+[v2] project  word-fail≥65%  cap-fail≥50%
+  identity  bg  avg 0%  peak 0%  OK  
+[render] caption_layer=bg
+[render] snapshot → history/index-20260925-153209.html
+[render] hyperframes render @ 6fps
+
+◆  Rendering project → /tmp/qs-embedded-caption/run-03/project/bg_plus_caps.mp4
+   6fps · standard · auto workers (16 cores detected)
+   GPU: browser GPU (auto-detect)
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: env
+[?25h
+  Lint: 1 error(s), 1 warning(s) — run with --lint-verbose for full output.
+  Continuing render despite lint issues. Use --strict to block errors.
+
+  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+[BrowserManager] Browser launched (HeadlessChrome/151.0.7922.34, beginframe, gl=--use-gl=angle --use-angle=swiftshader, headlessShell=true, platform=linux)
+[initSession:beginframe] warmup loop started (0ms)
+[initSession:beginframe] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":6,"source":"render-options","rawFpsSource":"render-options","rawFps":6}
+[initSession:beginframe] page.goto complete (209ms)
+[initSession:beginframe] GSAP proxy flush complete (213ms)
+[initSession:beginframe] pollHfReady complete (315ms)
+[initSession:beginframe] pollSubCompositionTimelines complete (ready) (317ms)
+[initSession:beginframe] applyVideoMetadataHints complete (317ms)
+[initSession:beginframe] media + fonts + tailwind ready (320ms)
+[initSession:beginframe] static-frame dedup: disabled (capture mode beginframe, not screenshot) (356ms)
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Checking browser GPU
+  ██████░░░░░░░░░░░░░░░░░░░  27%  Streaming frame 1/24
+  █████████████░░░░░░░░░░░░  55%  Streaming frame 13/24
+  ████████████████████░░░░░  80%  Streaming frame 24/24
+  ██████████████████████░░░  90%  Assembling final video
+  █████████████████████████  100%  Render complete
+
+◇  /tmp/qs-embedded-caption/run-03/project/bg_plus_caps.mp4
+   604.3 KB · 4.0s video · rendered in 2.9s
+   beginframe capture · software gpu · compile 1.2s · extract 0.1s · audio 0.3s · probe 0.9s · setup 0.0s · capture 0.7s · encode (during capture) 0.7s · assemble 0.5s
+[render] clamp output to source/matte length: 4.000s
+[render] bg mode — overlay matte (640x360)
+[render] ── gates ──
+[render]   timing            PASS (strict)
+[render]   occlusion+overflow PASS
+[render] done → /tmp/qs-embedded-caption/run-03/project/final.mp4

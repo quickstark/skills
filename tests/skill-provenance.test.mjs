@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, mkdirSync, cpSync, writeFileSync, unlinkSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import { assertSkillProvenance, getProvenanceInventory, readSkillProvenance, renderSkillProvenanceMarkdown, validateSkillProvenance } from '../scripts/skill-provenance.mjs';
@@ -137,4 +139,123 @@ test('rendering is deterministic, read-only and exposes revision distinctions', 
   assert.match(rendered, /Indirect credit: \[Dex Horthy \/ Humanlayer show-me\]/);
   assert.match(rendered, /not a derived-content digest/);
   assert.match(rendered, /72 candidate dispositions/);
+});
+
+test('baseline identities and all original113 sources survive target mapping unchanged', () => {
+  assert.equal(baseline.capabilities.length, 71);
+  assert.equal(baseline.capabilities.filter(entry => entry.role === 'private').length, 20);
+  assert.equal(baseline.capabilities.reduce((sum, entry) => sum + entry.sources.length, 0), 113);
+  assert.equal(createHash('sha256').update(JSON.stringify(baseline.capabilities)).digest('hex'), '8cabb127d00e5f0c3c4233bad9586335dd2d982d2eb8980f134e2ff3c4316da0');
+  assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'public').length, 38);
+  assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'private').length, 51);
+  const help = baseline.target.capabilities.find(entry => entry.name === 'qs-help');
+  assert.deepEqual(help.baselineIds, ['contributor:find-skills', 'ps:ps-help', 'qs:qs-help']);
+  const frontend = baseline.target.capabilities.find(entry => entry.name === 'qs-design-frontend');
+  assert.equal(frontend.baselineIds.length, 4);
+  assert.equal(baseline.target.capabilities.every(entry => entry.decision.status === 'pending'), true);
+});
+
+test('target catalog omissions, duplicates and owner loss are rejected', () => {
+  rejects(doc => { delete doc.target; }, /target: mappings required/);
+  rejects(doc => { doc.target.capabilities.pop(); }, /target coverage: missing/);
+  rejects(doc => { doc.target.capabilities.push(structuredClone(doc.target.capabilities[0])); }, /duplicate target identity/);
+  rejects(doc => { doc.target.capabilities[0].owners = []; }, /owners: expected nonempty/);
+  rejects(doc => { doc.target.capabilities[0].owners = ['qs-invented']; }, /target owner coverage differs/);
+  rejects(doc => { doc.target.capabilities[0].baselineIds.pop(); }, /baseline origin coverage differs/);
+  rejects(doc => { doc.target.capabilities[0].baselineIds.push('nonexistent:origin'); }, /unknown baseline stable ID/);
+});
+
+test('pending, unknown, reviewed, retained and adopted decisions remain distinct', () => {
+  for (const status of ['pending', 'unknown']) {
+    const doc = structuredClone(baseline); doc.target.capabilities[0].decision.status = status;
+    assert.equal(validateSkillProvenance(doc, { checkFiles: false }).valid, true);
+    doc.target.capabilities[0].decision.revision = 'a'.repeat(40);
+    assert.match(validateSkillProvenance(doc, { checkFiles: false }).errors.join('\n'), /decision revision/);
+  }
+  for (const status of ['reviewed', 'retained-baseline', 'adopted']) {
+    rejects(doc => { doc.target.capabilities[0].decision.status = status; }, /decision evidence|decision revision/);
+    const doc = structuredClone(baseline);
+    doc.target.capabilities[0].decision = { status, revision: 'a'.repeat(40), evidence: ['docs/specs/quickstark-upstream-adoption.md'], note: 'Schema-only synthetic decision; not persisted or an acceptance decision.' };
+    assert.equal(validateSkillProvenance(doc, { checkFiles: false }).valid, true);
+    assert.deepEqual(doc.capabilities, baseline.capabilities, 'decision never rewrites baseline source adoption');
+  }
+});
+
+test('target and closure digests reject stale bytes independently of upstream pins', () => {
+  rejects(doc => { doc.target.capabilities[0].derivedDigest.value = 'e'.repeat(64); }, /target derived digest mismatch/);
+  rejects(doc => { doc.target.closures[0].sha256 = 'e'.repeat(64); }, /closure digest mismatch/);
+  rejects(doc => { doc.target.closures[0].reviewedRevision = 'e'.repeat(40); }, /reviewed closure pin/);
+  rejects(doc => { doc.target.closures[0].adoptedRevision = doc.target.closures[0].reviewedRevision; }, /not an adopted revision/);
+  rejects(doc => { doc.target.closures = []; }, /missing closure/);
+  rejects(doc => { doc.target.closures.push(structuredClone(doc.target.closures[0])); }, /duplicate closure owner/);
+  rejects(doc => { doc.target.closures[0].owner = 'qs-invented'; }, /ownerless closure/);
+});
+
+test('malformed target records return diagnostics', () => {
+  for (const change of [
+    doc => { doc.target.capabilities = [null]; },
+    doc => { doc.target.capabilities[0].decision = null; },
+    doc => { doc.target.capabilities[0].derivedDigest = null; },
+    doc => { doc.target.capabilities[0].owners = {}; },
+    doc => { doc.target.closures = [null]; },
+  ]) assert.equal(mutate(change).valid, false);
+});
+
+test('complete private closure rejects missing, duplicate, changed and unindexed resources', () => {
+  const temporary = mkdtempSync(path.join(tmpdir(), 'qs-provenance-'));
+  try {
+    for (const relative of ['config/personal-skills.manifest.json', 'config/skill-migrations.json', 'skills/engineering/qs-unlazy', 'skills/video/qs-video']) {
+      mkdirSync(path.dirname(path.join(temporary, relative)), { recursive: true });
+      cpSync(path.join(root, relative), path.join(temporary, relative), { recursive: true });
+    }
+    const liveManifestPath = path.join(temporary, 'config/personal-skills.manifest.json');
+    const liveManifest = JSON.parse(readFileSync(liveManifestPath));
+    liveManifest.resources = []; writeFileSync(liveManifestPath, JSON.stringify(liveManifest));
+    assert.equal(getProvenanceInventory(temporary).length, 71, 'retired live manifest must not erase baseline identities');
+    assert.equal(validateSkillProvenance(baseline, { root: temporary, checkFiles: false }).valid, true, 'historical source digest authority survives live manifest retirement');
+    const initialErrors = validateSkillProvenance(baseline, { root: temporary }).errors;
+    assert.equal(initialErrors.filter(error => error.startsWith('qs-unlazy:') || error.startsWith('qs-video:')).length, 0, 'copied closure starts valid before controls');
+    const indexPath = 'skills/engineering/qs-unlazy/references/dependency-index.json';
+    const original = readFileSync(path.join(temporary, indexPath));
+    const rewrite = change => {
+      const doc = structuredClone(baseline), index = JSON.parse(original); change(index);
+      const bytes = JSON.stringify(index); writeFileSync(path.join(temporary, indexPath), bytes);
+      doc.target.closures.find(entry => entry.owner === 'qs-unlazy').sha256 = createHash('sha256').update(bytes).digest('hex');
+      return validateSkillProvenance(doc, { root: temporary }).errors.join('\n');
+    };
+    assert.match(rewrite(index => { index.localFiles = {}; }), /localFiles must be an array/);
+    assert.match(rewrite(index => { index.files = null; }), /closure files required/);
+    assert.match(rewrite(index => { index.files.pop(); }), /unindexed or nonregular private resource/);
+    assert.match(rewrite(index => { index.files.push(index.files[0]); }), /duplicate original source|duplicate\/unsafe destination/);
+    assert.match(rewrite(index => { index.files[0].sourceSha256 = 'invalid'; }), /original source digest record/);
+    assert.match(rewrite(index => { index.files[0].derivedSha256 = 'e'.repeat(64); }), /closure derived digest mismatch/);
+    writeFileSync(path.join(temporary, indexPath), original);
+    const entry = path.join(temporary, 'skills/engineering/qs-unlazy/modules/unlazy/instructions.md');
+    writeFileSync(entry, 'changed private bytes');
+    assert.match(validateSkillProvenance(baseline, { root: temporary }).errors.join('\n'), /closure derived digest mismatch instructions.md|closure derived digest mismatch modules\/unlazy\/instructions.md/);
+    unlinkSync(entry);
+    assert.match(validateSkillProvenance(baseline, { root: temporary }).errors.join('\n'), /missing file .*instructions.md/);
+  } finally { rmSync(temporary, { recursive: true, force: true }); }
+});
+
+test('generated document includes target ownership and matches the checked-in file', () => {
+  const rendered = renderSkillProvenanceMarkdown(baseline);
+  assert.equal(rendered, readFileSync(path.join(root, 'docs/upstream/provenance.md'), 'utf8'));
+  const reversed = structuredClone(baseline); reversed.target.capabilities.reverse(); reversed.target.closures.reverse();
+  assert.equal(renderSkillProvenanceMarkdown(reversed), rendered);
+  assert.match(rendered, /Owner-context/);
+  assert.match(rendered, /pending \(no revision claimed\)/);
+});
+
+test('target notices and explicit closure adoption cannot disappear or be inferred', () => {
+  rejects(doc => { doc.target.notices.pop(); }, /notice coverage differs/);
+  rejects(doc => { doc.target.notices.push(structuredClone(doc.target.notices[0])); }, /notice coverage differs/);
+  rejects(doc => { doc.target.notices[0].sha256 = 'b'.repeat(64); }, /notice digest mismatch/);
+  rejects(doc => { const closure = doc.target.closures[0]; closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; }, /adoption evidence|adopted owner decision/);
+  const doc = structuredClone(baseline), closure = doc.target.closures[0];
+  const evidence = ['docs/specs/quickstark-upstream-adoption.md'];
+  closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; closure.adoptionEvidence = evidence;
+  doc.target.capabilities.find(entry => entry.role === 'public' && entry.name === closure.owner).decision = { status: 'adopted', revision: 'a'.repeat(40), evidence, note: 'Synthetic schema test only; never persisted as adoption.' };
+  assert.equal(validateSkillProvenance(doc, { checkFiles: false }).valid, true);
+  assert.deepEqual(doc.capabilities, baseline.capabilities);
 });

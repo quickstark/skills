@@ -1,0 +1,56 @@
+[
+  {
+    "attempt": 1,
+    "intervention": "initial failure",
+    "request": {
+      "method": "PATCH",
+      "headers": {
+        "Authorization": "Bearer fixture-private-token-1-9d734cd110",
+        "Cookie": "session=fixture-private-session-1-fb759cad21"
+      },
+      "signedUrl": "https://invalid.example/preferences?signature=fixture-private-signature-1-f16bb105"
+    },
+    "response": {
+      "status": 204,
+      "body": "",
+      "serverAuthAccepted": true
+    },
+    "userVisible": "Sign-in required"
+  },
+  {
+    "attempt": 2,
+    "intervention": "credential refreshed",
+    "request": {
+      "method": "PATCH",
+      "headers": {
+        "Authorization": "Bearer fixture-private-token-2-9d734cd110",
+        "Cookie": "session=fixture-private-session-2-fb759cad21"
+      },
+      "signedUrl": "https://invalid.example/preferences?signature=fixture-private-signature-2-f16bb105"
+    },
+    "response": {
+      "status": 204,
+      "body": "",
+      "serverAuthAccepted": true
+    },
+    "userVisible": "Sign-in required"
+  },
+  {
+    "attempt": 3,
+    "intervention": "session cleared and recreated",
+    "request": {
+      "method": "PATCH",
+      "headers": {
+        "Authorization": "Bearer fixture-private-token-3-9d734cd110",
+        "Cookie": "session=fixture-private-session-3-fb759cad21"
+      },
+      "signedUrl": "https://invalid.example/preferences?signature=fixture-private-signature-3-f16bb105"
+    },
+    "response": {
+      "status": 204,
+      "body": "",
+      "serverAuthAccepted": true
+    },
+    "userVisible": "Sign-in required"
+  }
+]

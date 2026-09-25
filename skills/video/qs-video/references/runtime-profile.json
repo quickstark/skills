@@ -18,5 +18,18 @@
     "ffmpeg": "6.1.1-3ubuntu5",
     "gsap": "3.14.2"
   },
-  "coverage": "Local deterministic runtime fixtures only; provider and installed-package gates remain separate."
+  "coverage": "Local deterministic runtime fixtures only; provider and installed-package gates remain separate.",
+  "embeddedCaptionProfile": {
+    "sharp": "0.35.4",
+    "puppeteer-core": "25.12.0",
+    "onnxruntime-node": "1.21.1",
+    "onnxIntegrity": "sha512-YThL/YYeGAeytecOvRcTKUORTIE2f8/iSo/JZgHFawWrV4zOY7fWLEaNuscgjmY5C5/VE/Wr7tm+ucSsc/AysQ==",
+    "model": "u2net_human_seg",
+    "modelSha256": "01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c",
+    "modelUpstreamMd5": "c09ddc2e0104f800e3e1bb4652583d1f",
+    "modelSource": "https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_human_seg.onnx",
+    "modelLicense": "Apache-2.0",
+    "onnxLicense": "MIT",
+    "scope": "Linux CPU matting + supplied editorial captions, cream compilation, preview/layout/gates, render and composite. No speech model or all-identities/provider coverage."
+  }
 }

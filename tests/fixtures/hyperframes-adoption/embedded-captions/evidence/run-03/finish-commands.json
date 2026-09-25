@@ -1,0 +1,205 @@
+[
+  {
+    "label": "compile",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/make-composition.cjs",
+      "/tmp/qs-embedded-caption/run-03/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "fonts",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/inject-fonts.cjs",
+      "/tmp/qs-embedded-caption/run-03/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "preview",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/preview-frames.cjs",
+      "/tmp/qs-embedded-caption/run-03/project",
+      "0.25",
+      "1.8",
+      "3.5"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "layout",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/measure-layout.cjs",
+      "/tmp/qs-embedded-caption/run-03/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "timing",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-timing.cjs",
+      "/tmp/qs-embedded-caption/run-03/project",
+      "--strict"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "occlusion",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-occlusion.cjs",
+      "/tmp/qs-embedded-caption/run-03/project",
+      "--strict"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "overflow",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-overflow.cjs",
+      "/tmp/qs-embedded-caption/run-03/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "render-composite",
+    "argv": [
+      "bash",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/render-and-composite.sh",
+      "/tmp/qs-embedded-caption/run-03/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "final-probe",
+    "argv": [
+      "ffprobe",
+      "-v",
+      "error",
+      "-show_streams",
+      "-show_format",
+      "-of",
+      "json",
+      "/tmp/qs-embedded-caption/run-03/project/final.mp4"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "final-frame",
+    "argv": [
+      "ffmpeg",
+      "-y",
+      "-v",
+      "error",
+      "-ss",
+      "1.8",
+      "-i",
+      "/tmp/qs-embedded-caption/run-03/project/final.mp4",
+      "-frames:v",
+      "1",
+      "/tmp/qs-embedded-caption/run-03/final-frame.png"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "decoded-output-oracles",
+    "argv": [
+      "node",
+      "/github/skills/tests/fixtures/hyperframes-adoption/embedded-captions/verify-output.cjs",
+      "/tmp/qs-embedded-caption/run-03/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "bad-timing-compile",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/make-composition.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-bad-timing"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "bad-timing-gate",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-timing.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-bad-timing",
+      "--strict"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "occluded-text-compile",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/make-composition.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-occluded-text"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "occluded-text-gate",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-occlusion.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-occluded-text",
+      "--strict"
+    ],
+    "exit": 2
+  },
+  {
+    "label": "overflow-compile",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/make-composition.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-overflow"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "overflow-gate",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-occlusion.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-overflow",
+      "--strict"
+    ],
+    "exit": 2
+  },
+  {
+    "label": "missing-matte-gate",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-occlusion.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-missing-matte",
+      "--strict"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "missing-caption-compile",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/make-composition.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-missing-caption"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "missing-caption-gate",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-03/relocated-skill/modules/embedded-captions/scripts/check-occlusion.cjs",
+      "/tmp/qs-embedded-caption/run-03/negative-missing-caption",
+      "--strict"
+    ],
+    "exit": 1
+  }
+]

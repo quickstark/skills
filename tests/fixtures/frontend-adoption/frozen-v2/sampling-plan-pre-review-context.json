@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-09-25T20:10:38.762Z",
+  "runnerSHA256": "e5deafcfeceff0a6cdd84b7599cdca41f58b6e5e85741a0a44f183639e80b9c5",
+  "fileHashes": {
+    "README.md": "3349d7dbf13b7abf695979c443da1857c0a3c80bff46bd269bd3a9f644755a0c",
+    "assets/empty/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+    "assets/project/app.js": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+    "assets/project/index.html": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+    "assets/project/style.css": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+    "assets/reference.html": "6e80fb11f6fabe263e558bd69c08ccd063ee4c3690abd86c5c5d573a94ea2d81",
+    "assets/reference.png": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+    "browser-observe.mjs": "42cef9a10c7252fcc387ded469a6f4b4d76022b90d895ad2056c65a84ef70791",
+    "common-scope.json": "0f635f57d5ea05f44c90bbe4bac419e8723af826125b942ab232fb696b24ae75",
+    "harness.test.mjs": "807661313fe3092ddc1d1061cf9551d9c91d54cdc57b6d65bcbf0ebe8a4e0d1f",
+    "operator-mapping.json": "28fbf70c92f124a96362f8f8877f9e3dfca1973727aefb7a2897e42b5312cc45",
+    "rubric.json": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+    "scenarios.json": "116ed1e6bc3c744b5422051503e76bc1eecb8886fb44f49e1a214f93b9cf56b5",
+    "schedule.json": "5f93b668fa74a664306e9e6dc7478bb3d0bada7d81e175672f851727957802b5",
+    "sources/index.json": "495e08ba2b5831f5e30ac8c7e997e654c7d8397bac198cfe90b195c4b914fe53",
+    "sources/local-qs-design-frontend.md": "bda53c25490ca9d151e1b5d0947a4c1f28bbe2e8bc8c9098918d0c569892276a",
+    "sources/local-qs-design-image-mobile.md": "975e607ff9b78f23938a60735afe218cc3663220f1292e5c943529f1ec9743a8",
+    "sources/local-qs-design-image-to-code.md": "1a70f2e32edab4c4a5b849327e280d540adaaad72050d9ac58edfd0eb3090d39",
+    "sources/local-qs-design-image-web.md": "d00f4e540f6c0df7ddc652cc1d6e6d4244b02d1f15a9ce9be9e80b292bd199e5",
+    "sources/original-design-taste-frontend.md": "aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89",
+    "sources/original-high-end-visual-design.md": "e1e32f5e2d420872c6c7332b53d5ff7721946766b78c4822b424c2d512c8fdbc",
+    "sources/original-image-to-code.md": "4c060a8064a8b13380bc2ef3d6e6a1d0b1e316aa093cd9807d0ce9e4eeb037fa",
+    "sources/original-imagegen-frontend-mobile.md": "8a33389979f3074fa0926678e266ad2eb9234624472254469fc1ad916b9caa24",
+    "sources/original-imagegen-frontend-web.md": "6b5c2256522fdba1e3313eafa3d743b960a7b13ec029d3e6586e04b23327c1f8",
+    "sources/original-minimalist-ui.md": "36bc7328f085405f43b476938e62460fa573bf7e984e949e072bcf014831a44c",
+    "sources/original-redesign-existing-projects.md": "98ad3e5b051bfb71b2795f7e8a6aa0d32b51ee095606c098a4b2822ac07926c9",
+    "sources/private-brief.md": "345512810e4a4d721429c7516ead1f6b16cd5b928d9077a1f06a8efaace87e53",
+    "sources/private-design-direction.md": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386",
+    "sources/private-dimensional-style.md": "f47bdc0ad77bed396f0fabd77f285f31eae2d6f8f5519b8afa65a6c2925b42ee",
+    "sources/private-implementation.md": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5",
+    "sources/private-mobile-images.md": "172b8fe046e4ac4dce7a2b7fbafaed350d5437863d54aeae409062fddcc35c36",
+    "sources/private-prompt-construction.md": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+    "sources/private-redesign.md": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76",
+    "sources/private-restrained-style.md": "f045ec15981c732f9210704060a4520f7841277828eace9a181a225c294bba90",
+    "sources/private-web-images.md": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b"
+  },
+  "host": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Use emitted runtime model if present; otherwise unverified. Configured defaults do not prove actual runtime model."
+  },
+  "comparison": {
+    "repetitions": 3,
+    "trials": 66,
+    "order": "schedule.json",
+    "retryPolicy": "Never retry attempted trials; interrupted/incomplete rows stay incomplete.",
+    "reviewer": "Independent reviewer; no author-run self-grading.",
+    "metrics": "Whole-turn runtime tokens include host overhead; skill-only bytes are measured separately. Unknown telemetry remains null."
+  },
+  "pilot": {
+    "scenarioId": "F10",
+    "variant": "v84",
+    "maximumRuns": 1,
+    "purpose": "Infrastructure only; excluded from comparison and quality adoption."
+  },
+  "isolation": "Fresh temporary CWD, unchanged host settings, scoped prompt and post-observation event supervisor. Not a pre-execution security boundary. No detached handoff; parent launches and supervises full comparison.",
+  "capabilityLimits": [
+    "Image tool availability and actual image file paths must be observed per trial; prompt responses cannot substitute for image output.",
+    "Browser observation requires explicit existing executable/module paths. Missing paths leave required rendered evidence unverified.",
+    "All selected private references are preloaded equally by scenario for candidate; no demand-loading or reference-efficiency claim.",
+    "Model identity and image-call classification are unverified when not exposed by events.",
+    "Independent rubric judgments are required; technical observations never self-certify visual quality."
+  ],
+  "amendedAt": "2026-09-25T20:16:15.275Z",
+  "amendmentId": "frontend-authority-alignment-1",
+  "originalPlanSHA256": "68dd5e17fff60b61034a4713e79b22702241088ec7c75de5660cf79153c066fb",
+  "originalRunnerSnapshot": "frozen-v1/frontend-adoption-trials.mjs",
+  "authorityAmendment": "Before any model response, parent /root requested alignment of the harness prohibition with F09 authorization: exempt only the specifically requested existing image-generation tool within the existing call budget; permit that tool to save its own returned primary images at tool-managed paths. Manual/product edits stay within workspace. No general web, downloads, installs, uploads, substitute images, extra generations or other external-service permission.",
+  "preservation": "Original plan, runner snapshot, candidate/baseline bodies, private references, common facts, rubric, schedule, first pilot marker and all failed-pilot bytes remain unchanged. Original plan remains the archival record; this append-only active plan binds the authority-corrected runner. No model output existed before this correction.",
+  "correctedPilotInterface": {
+    "path": "infrastructure-amendment.mjs",
+    "sha256": "00559f24df37e1d0bddfe719188e4e48cddc41d7c4a10c1aa3c8ed7cdaaad91a",
+    "amendmentPath": "infrastructure-amendment.json",
+    "amendmentSHA256": "db836f3b67e0cc44a714261e42ecc006c41f704efd2edde214182a2445dc40af"
+  },
+  "execution": "Only parent may launch the one corrected pilot using the existing infrastructure-amendment interface through exec_command require_escalated. Full comparison remains unstarted. Runtime telemetry additionally binds the exact active runner hash.",
+  "samplingAmendedAt": "2026-09-25T20:37:11.178Z",
+  "samplingAmendmentId": "frontend-bounded-observer-1",
+  "parentPlanSHA256": "bf734abe08080cd6b3eaefc6f11f0c08295f12fb55113b73c86fe2d17ea9b3f9",
+  "priorRunnerSnapshot": "frozen-v2/frontend-adoption-trials.mjs",
+  "priorPlanSnapshot": "frozen-v2/amended-plan.json",
+  "processObservation": "One sampler pass in flight; overlapping ticks skipped. No full-host /proc enumeration. Traverse only observed owned process/task child lists with count/time guards, retain scan/cleanup failures as incomplete, and clean only identities still matching observed ownership.",
+  "preservedAttempt": {
+    "directory": "/tmp/qs-frontend-comparison-20260925",
+    "manifest": {
+      "F01-r1-v31/before/README.md": {
+        "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+        "bytes": 180
+      },
+      "F01-r1-v31/binding.json": {
+        "sha256": "0fc7f1b39532d99e79aaed6cc0751a15b0d21479ded2de615daf7fd3afd08ce8",
+        "bytes": 1213
+      },
+      "F01-r1-v31/events.jsonl": {
+        "sha256": "f4d767f1164a10c4e23e41837b077b68d4594c54dcb0b1ba64ed672f585e61d1",
+        "bytes": 6684
+      },
+      "F01-r1-v31/process.json": {
+        "sha256": "c682ccdf472c6721cc5ee90f8c4453a1bb993a61300029175fad2a8bdd45e337",
+        "bytes": 318
+      },
+      "F01-r1-v31/prompt.txt": {
+        "sha256": "e430bbedec32854a0a3e98f176057bd87b2f83aeced470e0f906a62ae16687f7",
+        "bytes": 93987
+      },
+      "F01-r1-v31/stderr.txt": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "closed-infrastructure-failure.json": {
+        "sha256": "b1bbd65fec88a71d8350c87593a2f0c55698c33844cfa8a3db90baef53e459f3",
+        "bytes": 1488
+      },
+      "parent-force-stop-receipt.json": {
+        "sha256": "a9a265fa0a526dfe54b26844f0ad0881e8d0256821cd92d64042515777b8fc49",
+        "bytes": 824
+      },
+      "parent-stop-receipt.json": {
+        "sha256": "7e903598f93a1c3f7d702bfa4b652d6218eb628f0109ffcb711b112cecb73e83",
+        "bytes": 611
+      },
+      "supervisor-lock.json": {
+        "sha256": "80cb7ad666459600e168b4c9e4b3933633319f5ae5abb3592fde738e0f387bb4",
+        "bytes": 233
+      }
+    },
+    "supervisorLog": {
+      "path": "/tmp/qs-frontend-comparison-supervisor.log",
+      "sha256": "54b56429ff44fc42af3c56a95cf168dd20f18262470b65504c4b85d9690ffdfc"
+    },
+    "workspace": {
+      "path": "/tmp/qs-frontend-trial-5MCbBc",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "app.js": {
+          "sha256": "5439de21d662fa4d7d901b27737c552421f8b19243905251dbdce9d7d99e32c6",
+          "bytes": 1075
+        },
+        "artifacts/browser-observations.json": {
+          "sha256": "a2ad622056f56a7f66d9c3780df88b9ca87bf8883c8d6986d3ef39221ec79a85",
+          "bytes": 1586
+        },
+        "artifacts/check.cjs": {
+          "sha256": "443d6db910560ce7a889c7150dd6be6a131774df0c93ef87c80e28d950c66fa4",
+          "bytes": 3219
+        },
+        "artifacts/narrow-dark.png": {
+          "sha256": "0959b9b7f80f669d9a038f50d358ddd138eb7c49a17ad0e574618b18e43d27e4",
+          "bytes": 79786
+        },
+        "artifacts/narrow.png": {
+          "sha256": "0788f466d2702313e268c55e16620e7524a3617e4827b05dcbfe9607ee40d14e",
+          "bytes": 78746
+        },
+        "artifacts/wide-dark.png": {
+          "sha256": "6346ac5741c25b1505fc2910991909c616dd18c3eceb02b373d05e2492b2f153",
+          "bytes": 89414
+        },
+        "artifacts/wide.png": {
+          "sha256": "a592be538ba4671223e9f8b3672f6af786209da51fe974882974cdf493ce230e",
+          "bytes": 88326
+        },
+        "index.html": {
+          "sha256": "48b8805a87b0b67fbde1b874867457f4dd37e6475ca31eb38b3ef6e8a53ebdab",
+          "bytes": 3392
+        },
+        "styles.css": {
+          "sha256": "626ad55fc7818b4dadd2e4d1411f30de320b4f651dcf15325f08981653789791",
+          "bytes": 6537
+        }
+      }
+    },
+    "status": "attempted-incomplete-infrastructure-failure; retained without quality grade"
+  },
+  "continuation": {
+    "kind": "one-complete-matched-infrastructure-replacement",
+    "maximumRuns": 1,
+    "outputDirectory": "/tmp/qs-frontend-comparison-sampling-amended-20260925",
+    "replacementTrialIds": [
+      "F01-r1-v31"
+    ],
+    "authority": "Parent /root explicitly authorized ONE infrastructure replacement of incomplete F01 baseline in a new complete 66-row amended comparison after sampler fixes and controls, before any candidate result existed. All other 65 rows are first attempts. No further retries, source/rubric/model/quality budget changes, or semantic-result selection.",
+    "rationale": "The known harness queued unbounded whole-host process scans; child exited but supervisor could not finalize telemetry/summary. Parent stopped its exact identified supervisor and preserved raw events, partial workspace and receipts. This replacement repairs infrastructure before candidate evidence, not selection of a preferred semantic response.",
+    "adoptionEligibility": "No current adoption result. The old attempted row remains incomplete and excluded from the new complete matched run. The parent assesses whether the new 66-row run and all independent checks satisfy the original rubric; missing or failed new rows cannot be replaced automatically."
+  },
+  "preservationRule": "All prior plans/runner snapshots, frozen sources, common scope, rubric and schedule are byte-bound and unchanged. Active model prompts are byte-identical to the previous authority-amended runner for the same paths. Runtime defaults remain unchanged. Parent launches and supervises; helper invokes no model."
+}

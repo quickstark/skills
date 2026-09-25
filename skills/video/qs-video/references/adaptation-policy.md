@@ -51,3 +51,12 @@ reference, incorrect output or the entire upstream compatibility matrix.
 Existing session authorization satisfies a matching review/render checkpoint. Do not ask again solely because an upstream autonomous workflow keeps a final question. Collaborative checkpoints remain when the user selected them or necessary input is unresolved. Files containing dispatch or worker briefs are optional private mechanics, not authority to spawn agents.
 
 Audio helpers require `QS_VIDEO_VERIFIED_LOCAL_PROVIDERS` for local model routes (comma-separated `kokoro`, `whisper`, `whisperx`, `parakeet`, `musicgen`). Set an entry only after checking the complete existing tool/model/cache for the chosen runtime. This records evidence, never grants setup authority. The tested profile currently has none of these local generation prerequisites; report them as blocked. Offline environment switches prevent HuggingFace fetches but do not prove every third-party runtime respects them.
+
+Embedded-caption matting is a separate deterministic local segmentation route.
+Its installed adapter requires the pinned existing model and ONNX cache before
+calling the CLI; see runtime compatibility for exact paths/digests. Neither
+`QS_VIDEO_CLI` nor a supplied transcript authorizes missing model/package/browser
+installation. Preview/layout resolve `puppeteer-core`, sharp and GSAP through that
+selected CLI, and require an explicitly selected existing browser. Preserve the
+browser's normal sandbox unless the owning trusted isolated test explicitly opts
+into the documented process-local container exception; never change host settings.

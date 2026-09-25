@@ -1,0 +1,302 @@
+{
+  "trialId": "F01-r1-v31",
+  "task": {
+    "id": "F01",
+    "title": "greenfield marketing page",
+    "mode": "implementation",
+    "projectFixture": "empty",
+    "input": "Build a polished static membership page for Northstar Museum from the supplied facts. Include an introduction, Family membership details, and museum facts. Use the existing brand, a clear membership-details link and a local join form. No image generation is needed. Deliver working responsive files, not just recommendations.",
+    "requiredChecks": [
+      "requested-sections",
+      "brand-and-facts",
+      "working-local-form",
+      "narrow-and-keyboard",
+      "zero-image-calls",
+      "no-publication"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "inputManifest": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "actualArtifactManifest": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "c9fb3e1c9f5dcb10651dd5e29dd1d656b356a1f9098750be4e1782bade7a8727",
+      "bytes": 1078
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "b083fdaf18c882bf7c88195265a2bff39e44cfefa452433aeab7aebb686a5bf9",
+      "bytes": 2145
+    },
+    "evidence/narrow-dark.png": {
+      "sha256": "68789f8a0d8dbfd33f90abee972abc908ce0dd2c9fe5e32108cbcb2fb3963d47",
+      "bytes": 82299
+    },
+    "evidence/narrow-success-dark.png": {
+      "sha256": "9f1921b503cc1d5e0ec20f5c784f51b71e02b5f4e63ddd97994589ba5728609e",
+      "bytes": 88432
+    },
+    "evidence/narrow.png": {
+      "sha256": "e273ea53f95975c6f5ab7648acc339b1092f2c85625d8082393584e8760d740d",
+      "bytes": 81860
+    },
+    "evidence/wide-dark.png": {
+      "sha256": "34e2b339167314481d640b68fa5b80e11f4c227afe14d4efc2d4d6b6fbf0bc97",
+      "bytes": 92320
+    },
+    "evidence/wide.png": {
+      "sha256": "1f2997decbd45122c93aca8e38b28c93a958c096f53928a14a6d89a5eb90d2e2",
+      "bytes": 91969
+    },
+    "index.html": {
+      "sha256": "02f79dd2168e078b3268d06ef4febd9df801ab13819d7b87eda8050caa1eb45d",
+      "bytes": 3578
+    },
+    "styles.css": {
+      "sha256": "861d535bab0ef82dfcc0a2ec893af968f7a85e94c18cf2244f702793b7c3d71f",
+      "bytes": 7141
+    }
+  },
+  "rawToolItems": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!.*'\"'\"",
+      "aggregated_output": "/tmp/qs-frontend-trial-LMGCAx\nREADME.md\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'ls -la && cat README.md'",
+      "aggregated_output": "total 168\ndrwx------    5 djn12313 djn12313   4096 Sep 25 15:43 .\ndrwxrwxrwt 1900 nobody   nogroup  159744 Sep 25 15:43 ..\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:43 .agents\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:43 .codex\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:43 .git\n-rw-rw-r--    1 djn12313 djn12313    180 Sep 25 15:43 README.md\nThis fixture has no build system or external dependencies. Use static HTML/CSS/JavaScript. Serve only on loopback if a local preview is needed; do not install packages or publish.\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_3",
+      "type": "file_change",
+      "changes": [
+        {
+          "path": "/tmp/qs-frontend-trial-LMGCAx/app.js",
+          "kind": "add"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-LMGCAx/index.html",
+          "kind": "add"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-LMGCAx/styles.css",
+          "kind": "add"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"mkdir -p evidence && node --input-type=module <<'NODE'\nimport puppeteer from '/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';\nimport { writeFile } from 'node:fs/promises';\nconst browser = await puppeteer.launch({executablePath:'/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell',headless:true,args:['--no-sandbox','--disable-background-networking']});\nconst results = {layouts:[],errors:[],blockedRequests:[]};\ntry {\nconst page = await browser.newPage();\nawait page.setRequestInterception(true);\npage.on('request', req => {if (req.url().startsWith('file:') || req.url().startsWith('data:')) req.continue(); else {results.blockedRequests.push(req.url()); req.abort();}});\npage.on('pageerror', error => results.errors.push(error.message));\nfor (const [name,width,height,theme] of [['wide',1280,900,'light'],['narrow',390,844,'light'],['wide-dark',1280,900,'dark'],['narrow-dark',390,844,'dark']]) {\n await page.setViewport({width,height});\n await page.emulateMediaFeatures([{name:'prefers-color-scheme',value:theme},{name:'prefers-reduced-motion',value:'reduce'}]);\n await page.goto('file:///tmp/qs-frontend-trial-LMGCAx/index.html');\n await page.screenshot({path:\"'`evidence/${name}.png`,fullPage:true});\n results.layouts.push(await page.evaluate((name)=>({name,width:innerWidth,documentWidth:document.documentElement.scrollWidth,headerHeight:document.querySelector('\"'header').getBoundingClientRect().height,headline:document.querySelector('h1').textContent,buttonBottom:document.querySelector('button').getBoundingClientRect().bottom,detailsLink:document.querySelector('#details-link').getAttribute('href'),sections:document.querySelectorAll('main section').length}),name));\n}\nawait page.click('#join-button');\nresults.empty = await page.evaluate(()=>({invalid:document.querySelector('#member-email').getAttribute('aria-invalid'),error:document.querySelector('#email-error').textContent,focused:document.activeElement.id,events:window.__events || []}));\nawait page.type('#member-email','invalid');\nawait page.click('#join-button');\nresults.invalid = await page.evaluate(()=>({error:document.querySelector('#email-error').textContent,events:window.__events || []}));\nawait page.\"'$eval('\"'#member-email', el => {el.value='family@example.com';el.dispatchEvent(new Event('input',{bubbles:true}));});\nawait page.focus('#member-email');\nawait page.keyboard.press('Tab');\nresults.keyboardSubmitFocus = await page.evaluate(()=>document.activeElement.id);\nawait page.keyboard.press('Enter');\nresults.valid = await page.evaluate(()=>({message:document.querySelector('#form-message').textContent,visible:\"'!document.querySelector('\"'#form-message').hidden,events:window.__events,url:location.href}));\nawait page.screenshot({path:'evidence/narrow-success-dark.png',fullPage:true});\nawait page.reload();\nawait page.keyboard.press('Tab');\nresults.firstTab = await page.evaluate(()=>({text:document.activeElement.textContent,outline:getComputedStyle(document.activeElement).outlineStyle}));\nconst expectedIds=['site-header','site-footer','membership-panel','membership-title','price','member-count','annual-visits','founded','join-form','member-email','join-button','form-message','details-link'];\nresults.ids = await page.evaluate(ids=>ids.every(id=>document.querySelectorAll('#'+id).length===1),expectedIds);\nresults.noForbiddenDashes = await page.evaluate(()=>\"'!/[—–]/.test(document.body.innerText));\nawait writeFile('\"'evidence/browser-observations.json',JSON.stringify(results,null,2));\nconsole.log(JSON.stringify(results,null,2));\n} finally {await browser.close();}\nNODE\"",
+      "aggregated_output": "{\n  \"layouts\": [\n    {\n      \"name\": \"wide\",\n      \"width\": 1280,\n      \"documentWidth\": 1280,\n      \"headerHeight\": 80,\n      \"headline\": \"Make roomfor wonder.\",\n      \"buttonBottom\": 608.59375,\n      \"detailsLink\": \"/membership/family\",\n      \"sections\": 3\n    },\n    {\n      \"name\": \"narrow\",\n      \"width\": 390,\n      \"documentWidth\": 390,\n      \"headerHeight\": 104,\n      \"headline\": \"Make roomfor wonder.\",\n      \"buttonBottom\": 893,\n      \"detailsLink\": \"/membership/family\",\n      \"sections\": 3\n    },\n    {\n      \"name\": \"wide-dark\",\n      \"width\": 1280,\n      \"documentWidth\": 1280,\n      \"headerHeight\": 80,\n      \"headline\": \"Make roomfor wonder.\",\n      \"buttonBottom\": 608.59375,\n      \"detailsLink\": \"/membership/family\",\n      \"sections\": 3\n    },\n    {\n      \"name\": \"narrow-dark\",\n      \"width\": 390,\n      \"documentWidth\": 390,\n      \"headerHeight\": 104,\n      \"headline\": \"Make roomfor wonder.\",\n      \"buttonBottom\": 893,\n      \"detailsLink\": \"/membership/family\",\n      \"sections\": 3\n    }\n  ],\n  \"errors\": [],\n  \"blockedRequests\": [],\n  \"empty\": {\n    \"invalid\": \"true\",\n    \"error\": \"Enter your email address to continue.\",\n    \"focused\": \"member-email\",\n    \"events\": []\n  },\n  \"invalid\": {\n    \"error\": \"Enter a valid email address, such as you@example.com.\",\n    \"events\": []\n  },\n  \"keyboardSubmitFocus\": \"join-button\",\n  \"valid\": {\n    \"message\": \"Ready to continue with Family membership.\",\n    \"visible\": true,\n    \"events\": [\n      {\n        \"name\": \"join_started\",\n        \"plan\": \"family\"\n      }\n    ],\n    \"url\": \"file:///tmp/qs-frontend-trial-LMGCAx/index.html\"\n  },\n  \"firstTab\": {\n    \"text\": \"Skip to content\",\n    \"outline\": \"solid\"\n  },\n  \"ids\": true,\n  \"noForbiddenDashes\": true\n}\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_6",
+      "type": "file_change",
+      "changes": [
+        {
+          "path": "/tmp/qs-frontend-trial-LMGCAx/index.html",
+          "kind": "update"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-LMGCAx/styles.css",
+          "kind": "update"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "item_7",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"node --input-type=module <<'NODE'\nimport puppeteer from '/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';\nimport {readFile,writeFile} from 'node:fs/promises';\nconst browser = await puppeteer.launch({executablePath:'/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell',headless:true,args:['--no-sandbox','--disable-background-networking']});\ntry {\n const report = JSON.parse(await readFile('evidence/browser-observations.json','utf8'));\n const page=await browser.newPage();\n await page.setRequestInterception(true);\n page.on('request',r=>r.url().startsWith('file:')?r.continue():r.abort());\n report.layouts=[];\n for(const [name,width,height,theme] of [['wide',1280,900,'light'],['narrow',390,844,'light'],['wide-dark',1280,900,'dark'],['narrow-dark',390,844,'dark']]){\n  await page.setViewport({width,height});\n  await page.emulateMediaFeatures([{name:'prefers-color-scheme',value:theme}]);\n  await page.goto('file:///tmp/qs-frontend-trial-LMGCAx/index.html');\n  await page.screenshot({path:\"'`evidence/${name}.png`,fullPage:true});\n  report.layouts.push(await page.evaluate(name=>{\n   function luminance(hex){const a=hex.trim().replace('\"'#','').match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return a[0]*.2126+a[1]*.7152+a[2]*.0722;}\n   const css=getComputedStyle(document.documentElement);\n   function contrast(a,b){const l=[a,b].map(x=>luminance(css.getPropertyValue(x))).sort((a,b)=>b-a);return Number(((l[0]+.05)/(l[1]+.05)).toFixed(2));}\n   return {name,width:innerWidth,documentWidth:document.documentElement.scrollWidth,headline:document.querySelector('h1').textContent,headerHeight:document.querySelector('header').getBoundingClientRect().height,buttonBottom:document.querySelector('button').getBoundingClientRect().bottom,buttonContrast:contrast('--accent','--button-text'),helperContrast:contrast('--muted','--surface'),linkContrast:contrast('--accent','--surface'),placeholderContrast:contrast('--muted','--input')};\n  },name));\n }\n await page.type('#member-email','family@example.com');await page.focus('#join-button');await page.keyboard.press('Enter');\n await page.screenshot({path:'evidence/narrow-success-dark.png',fullPage:true});\n report.finalFormCheck=await page.evaluate(()=>({events:window.__events,message:document.querySelector('#form-message').textContent}));\n await writeFile('evidence/browser-observations.json',JSON.stringify(report,null,2));\n console.log(JSON.stringify(report.layouts,null,2));\n} finally {await browser.close();}\nNODE\"",
+      "aggregated_output": "[\n  {\n    \"name\": \"wide\",\n    \"width\": 1280,\n    \"documentWidth\": 1280,\n    \"headline\": \"Make room for wonder.\",\n    \"headerHeight\": 80,\n    \"buttonBottom\": 608.59375,\n    \"buttonContrast\": 5.84,\n    \"helperContrast\": 5.54,\n    \"linkContrast\": 5.46,\n    \"placeholderContrast\": 6.25\n  },\n  {\n    \"name\": \"narrow\",\n    \"width\": 390,\n    \"documentWidth\": 390,\n    \"headline\": \"Make room for wonder.\",\n    \"headerHeight\": 104,\n    \"buttonBottom\": 893,\n    \"buttonContrast\": 5.84,\n    \"helperContrast\": 5.54,\n    \"linkContrast\": 5.46,\n    \"placeholderContrast\": 6.25\n  },\n  {\n    \"name\": \"wide-dark\",\n    \"width\": 1280,\n    \"documentWidth\": 1280,\n    \"headline\": \"Make room for wonder.\",\n    \"headerHeight\": 80,\n    \"buttonBottom\": 608.59375,\n    \"buttonContrast\": 8.39,\n    \"helperContrast\": 7.62,\n    \"linkContrast\": 7.43,\n    \"placeholderContrast\": 8.92\n  },\n  {\n    \"name\": \"narrow-dark\",\n    \"width\": 390,\n    \"documentWidth\": 390,\n    \"headline\": \"Make room for wonder.\",\n    \"headerHeight\": 104,\n    \"buttonBottom\": 893,\n    \"buttonContrast\": 8.39,\n    \"helperContrast\": 7.62,\n    \"linkContrast\": 7.43,\n    \"placeholderContrast\": 8.92\n  }\n]\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "execution": {
+    "exitCode": 0,
+    "timedOut": false,
+    "stopReason": null,
+    "completedTurn": true,
+    "processObservation": {
+      "passes": 2484,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "observedOwnedResidualProcesses": []
+  },
+  "browserStatus": "observed",
+  "rubric": {
+    "schemaVersion": 1,
+    "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+    "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+    "scores": {
+      "0": "Missing or unusable requested outcome",
+      "1": "Major task, readability or consistency failures",
+      "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+      "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+      "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+    },
+    "dimensions": [
+      "brief-and-content-fidelity",
+      "visual-hierarchy-and-readability",
+      "interaction-or-screen-flow-clarity",
+      "brand-and-platform-consistency",
+      "scope-and-evidence-honesty"
+    ],
+    "floor": 3,
+    "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+    "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+    "notAutomatic": [
+      "Source-string matching cannot establish behavior.",
+      "Browser metrics are observations for independent review, not aesthetic grades.",
+      "A screenshot cannot prove keyboard behavior.",
+      "An image prompt is not an image.",
+      "A response-only pilot cannot certify rendered or generated-image quality."
+    ],
+    "reviewSchema": {
+      "trialId": "string",
+      "reviewer": "independent identity",
+      "checks": [
+        {
+          "id": "scenario required check",
+          "result": "pass|fail|unverified",
+          "rationale": "cite response/artifact/event/observation"
+        }
+      ],
+      "dimensions": {
+        "dimension": "0..4 or not-applicable with reason"
+      },
+      "overall": "pass|fail|unverified",
+      "rationale": "evidence-backed explanation"
+    }
+  },
+  "reviewStatus": "Pending independent reviewer. Do not infer image/render quality from prose or source matching. Source names may remain visible in raw responses; blinding is partial."
+}

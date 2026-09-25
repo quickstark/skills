@@ -139,3 +139,47 @@ test('caption adapter runs exact injected CLI with explicit engine and normalize
  writeFileSync(join(project,'package.json'),JSON.stringify({devDependencies:{hyperframes:'0.8.77'}}));rmSync(join(cache,'ggml-small.bin'));
  const missing=spawnSync(process.execPath,[script,project,'small','es'],{env,encoding:'utf8'});assert.notEqual(missing.status,0);assert.match(missing.stderr,/Whisper cached model/);assert(!existsSync(join(project,'transcript.json')));
 }));
+
+test('installed caption helpers reject missing CLI and browser before adopting input',()=>fixture(dir=>{
+ const project=join(dir,'project');mkdirSync(project);writeFileSync(join(project,'input.mp4'),'source');
+ for(const file of ['matte.cjs','safe-zones.cjs','measure-layout.cjs','check-occlusion.cjs','check-overflow.cjs','preview-frames.cjs']) {
+  const result=spawnSync(process.execPath,[join(root,'modules/embedded-captions/scripts',file),project],{env:{...process.env,QS_VIDEO_CLI:''},encoding:'utf8'});
+  assert.notEqual(result.status,0,file);assert.match(result.stderr,/QS_VIDEO_CLI/);
+  assert.deepEqual(readdirSync(project),['input.mp4']);
+ }
+ const adapter=join(root,'scripts/caption-runtime.cjs');
+ const result=spawnSync(process.execPath,['-e',`require(${JSON.stringify(adapter)}).browserPath()`],{env:{...process.env,HYPERFRAMES_BROWSER_PATH:join(dir,'missing-browser')},encoding:'utf8'});
+ assert.notEqual(result.status,0);assert.match(result.stderr,/HYPERFRAMES_BROWSER_PATH/);
+}));
+
+test('matte missing or corrupt cached model cannot call download-capable CLI command',()=>fixture(dir=>{
+ const project=join(dir,'project'),user=join(dir,'user');mkdirSync(project);mkdirSync(user);
+ writeFileSync(join(project,'input.mp4'),'must remain untouched');
+ const pkg=join(dir,'node_modules/sharp');mkdirSync(pkg,{recursive:true});writeFileSync(join(pkg,'index.js'),'module.exports = {};');
+ const log=join(dir,'cli-calls.jsonl'),cli=join(dir,'cli.mjs');
+ writeFileSync(cli,`#!/usr/bin/env node\nimport fs from 'node:fs';const args=process.argv.slice(2);fs.appendFileSync(${JSON.stringify(log)},JSON.stringify(args)+'\\n');if(args[0]==='--version')console.log('0.8.77');else throw new Error('download-capable command must never run');`,{mode:0o755});
+ const env={...process.env,QS_VIDEO_CLI:cli,HF_TEST_USER_DIRECTORY:user,HF_TEST_NETWORK_LOG:join(dir,'network.jsonl'),NODE_OPTIONS:'--import='+resolve('tests/fixtures/hyperframes-adoption/isolated-runtime.mjs')};
+ const script=join(root,'modules/embedded-captions/scripts/matte.cjs');
+ const missing=spawnSync(process.execPath,[script,project],{env,encoding:'utf8'});
+ assert.notEqual(missing.status,0);assert.match(missing.stderr,/Cached u2net_human_seg model/);
+ const model=join(user,'.cache/hyperframes/background-removal/models/u2net_human_seg.onnx');mkdirSync(dirname(model),{recursive:true});writeFileSync(model,'corrupt');
+ const corrupt=spawnSync(process.execPath,[script,project],{env,encoding:'utf8'});
+ assert.notEqual(corrupt.status,0);assert.match(corrupt.stderr,/digest mismatch/);
+ assert.deepEqual(readFileSync(log,'utf8').trim().split('\n').map(JSON.parse),[['--version'],['--version']]);
+ assert.deepEqual(readdirSync(project),['input.mp4']);assert(!existsSync(join(dir,'network.jsonl')));
+ // A project pin is authoritative even when a compatible CLI is supplied.
+ writeFileSync(join(project,'package.json'),'{"devDependencies":{"hyperframes":"0.8.76"}}');
+ const incompatible=spawnSync(process.execPath,[script,project],{env,encoding:'utf8'});
+ assert.notEqual(incompatible.status,0);assert.match(incompatible.stderr,/pin 0.8.76/);
+ assert.equal(readFileSync(log,'utf8').trim().split('\n').length,2);
+}));
+
+test('caption render timeout fails despite stale output and cleans its own child group',()=>fixture(dir=>{
+ const cli=join(dir,'cli.mjs'),childPid=join(dir,'child.pid'),stale=join(dir,'result.mp4');
+ writeFileSync(stale,'preexisting artifact is not success');
+ writeFileSync(cli,`#!/usr/bin/env node\nimport fs from 'node:fs';import {spawn} from 'node:child_process';if(process.argv[2]==='--version'){console.log('0.8.77');process.exit(0);}const child=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{stdio:'ignore'});fs.writeFileSync(${JSON.stringify(childPid)},String(child.pid));setInterval(()=>{},1000);`,{mode:0o755});
+ const probe=join(dir,'probe.cjs');
+ writeFileSync(probe,`const fs=require('node:fs');const a=require(${JSON.stringify(join(root,'scripts/caption-runtime.cjs'))});a.runCli(['render'],{timeoutMs:400}).then(()=>process.exit(10)).catch(async e=>{if(!/timed out/.test(e.message))throw e;await new Promise(r=>setTimeout(r,100));const pid=Number(fs.readFileSync(${JSON.stringify(childPid)},'utf8'));try{process.kill(pid,0);if(process.platform==='linux' && fs.readFileSync('/proc/'+pid+'/stat','utf8').split(' ')[2]==='Z')return;process.exitCode=11;}catch(e){if(e.code!=='ESRCH')throw e;}});`);
+ const result=spawnSync(process.execPath,[probe],{env:{...process.env,QS_VIDEO_CLI:cli},encoding:'utf8',timeout:5000});
+ assert.equal(result.status,0,result.stderr);assert.equal(readFileSync(stale,'utf8'),'preexisting artifact is not success');
+}));

@@ -1,0 +1,48 @@
+{
+  "kind": "partial-baseline-review-effective-index",
+  "batchRecordCount": 20,
+  "effectiveReviewFiles": [
+    "/github/skills/tests/fixtures/upstream-adoption-efficiency-review/baseline/batch-0020-context-correction.json"
+  ],
+  "supersededReviewFiles": [
+    {
+      "path": "/github/skills/tests/fixtures/upstream-adoption-efficiency-review/baseline/batch-0020.json",
+      "sha256": "71977dd9d568ebeb390e8ea02368b487d46ffb1d7f04fea82fa424d8da7a6d42",
+      "status": "historical-preliminary-do-not-aggregate",
+      "reason": "Exporter omitted fixture context actually supplied to responders; corrected with verified neutral supplement."
+    }
+  ],
+  "effectiveReviewSha256": "3cd6a2409e63d9b175250c59b1c1d80dd70b1d8fbc4f6da8d2d32efd50bb35ea",
+  "originalBundleSha256": "18696b4bc815a1cdee65985d398acdc01378cc26420156b9cfd71f2a3eaa1bd9",
+  "contextSupplementSha256": "f5ce1c7a9fe11281c9335216f4fd77e65a0395df9d3b6225babaad4a8fd62896",
+  "summary": {
+    "reviewed": 20,
+    "allHardGateDecisionCounts": {
+      "pass": 18,
+      "fail": 2
+    },
+    "caseDecisionCounts": {
+      "pass": 18,
+      "fail": 2
+    },
+    "qualityFloorFailures": [
+      "E5"
+    ],
+    "qualityTotal": 210,
+    "qualityPossible": 240,
+    "hardGateFailedScenarios": [
+      "G3",
+      "E5"
+    ],
+    "ambiguityScenarios": [
+      "G3",
+      "E6"
+    ],
+    "status": "partial-baseline-only",
+    "adoptionDecision": "not-assessed",
+    "finalVarianceConclusion": "not-assessed"
+  },
+  "aggregationRule": "Use only effectiveReviewFiles. Do not count superseded preliminary records. Later batches must preserve immutable earlier rows and identify any context-driven corrections explicitly.",
+  "candidateAdoption": "not-assessed",
+  "finalVarianceConclusion": "not-assessed"
+}

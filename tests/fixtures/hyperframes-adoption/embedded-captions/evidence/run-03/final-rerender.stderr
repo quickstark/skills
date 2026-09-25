@@ -1,0 +1,121 @@
+[INFO] [Render] Pipeline started {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","platform":"linux","arch":"x64","nodeVersion":"v24.21.0","fps":{"num":6,"den":1},"format":"mp4","quality":"standard","browserGpuMode":"auto","forceScreenshot":false,"protocolTimeout":300000,"browserTimeout":120000,"pageNavigationTimeout":60000,"playerReadyTimeout":45000}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"pipeline","status":"checkpoint","elapsedMs":3,"message":"started","format":"mp4","quality":"standard","browserGpuMode":"auto","forceScreenshot":false,"protocolTimeoutMs":300000,"pageNavigationTimeoutMs":60000,"playerReadyTimeoutMs":45000,"requestedWorkers":"auto"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"compile","status":"start","elapsedMs":5,"needsAlpha":false}
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] Compiled composition metadata {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","entryFile":"index.html","staticDuration":4,"width":640,"height":360,"videoCount":1,"audioCount":1,"renderModeHints":{"recommendScreenshot":false,"reasons":[]}}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"compile","status":"end","elapsedMs":258,"durationMs":253,"needsAlpha":false}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"compile","status":"checkpoint","elapsedMs":259,"message":"composition metadata resolved","width":640,"height":360,"videoCount":1,"audioCount":1,"imageCount":0,"deviceScaleFactor":1,"forceScreenshot":false,"compositionHash":"2dedcb958cc977da"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"browser_probe","status":"start","elapsedMs":259,"forceScreenshot":false,"stagePhase":"calibrating"}
+[INFO] Launching browser for composition probe... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","reasons":["auto-start video(s)"]}
+[INFO] Creating capture session... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","attempt":1,"maxAttempts":2}
+[WARN] [Compiler] WARNING: Video "a-roll" has sparse keyframes (max interval: 4s). This causes seek failures and frame freezing. Re-encode with: ffmpeg -i "source.mp4" -c:v libx264 -r 30 -g 30 -keyint_min 30 -movflags +faststart -c:a copy output.mp4
+[hyperframes] browserGpuMode probe → software (WebGL renderer vendor="Google Inc. (Mesa)" renderer="ANGLE (Mesa, llvmpipe (LLVM 20.1.2 256 bits), OpenGL ES 3.2)")
+[INFO] Waiting for composition to initialize... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","attempt":1}
+[INFO] Composition ready {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","attempt":1,"initMs":780}
+[INFO] BeginFrame liveness probe passed {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","probeMs":1}
+[INFO] Using static duration from data-duration attribute {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","duration":4}
+[INFO] Discovering media assets from browser DOM... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f"}
+[INFO] Discovering audio volume automation... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","audioCount":1}
+[INFO] Discovering video visibility windows... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","videoCount":1}
+[INFO] [Probe] Runtime video discovery: a-roll visible 0.00s–3.99s {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"browser_probe","status":"end","elapsedMs":1150,"durationMs":891,"forceScreenshot":false,"stagePhase":"calibrating"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"browser_probe","status":"checkpoint","elapsedMs":1151,"message":"duration resolved","durationSeconds":4,"totalFrames":24,"compositionHash":"2dedcb958cc977da","beginFrameStalled":false}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"video_extract","status":"start","elapsedMs":1151,"videoCount":1}
+[INFO] Probing video color spaces... {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","videoCount":1}
+[INFO] Extracting frames from video 1/1 {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","sourceType":"local"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"video_extract","status":"end","elapsedMs":1156,"durationMs":5,"videoCount":1}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"video_extract","status":"checkpoint","elapsedMs":1157,"message":"frames resolved","videoCount":1,"extractedVideoCount":1,"totalFramesExtracted":24,"maxFramesPerVideo":24,"avgFramesPerExtractedVideo":24,"vfrPreflightCount":0,"vfrPreflightMs":0,"cacheHits":1,"cacheMisses":0,"transientRetries":0,"minVideoFrameCoverageRatio":1,"authoredTimedClipCount":3}
+[INFO] [Render] No HDR sources detected — rendering SDR {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"hdr_detection","status":"checkpoint","elapsedMs":1158,"message":"resolved","requestedHdrMode":"auto","effectiveHdr":"sdr","nativeHdrVideoCount":0,"nativeHdrImageCount":0}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"audio_process","status":"start","elapsedMs":1158,"audioCount":1}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"audio_process","status":"end","elapsedMs":1430,"durationMs":272,"audioCount":1}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"file_server","status":"checkpoint","elapsedMs":1430,"message":"reused probe file server"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"capture_calibration","status":"checkpoint","elapsedMs":1434,"message":"skipped","requestedWorkers":"auto","totalFrames":24,"htmlInCanvasDetected":false,"lowMemoryMode":false,"deInversionEligible":false,"deParallelRouterEligible":false}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"worker_resolution","status":"checkpoint","elapsedMs":1437,"message":"resolved","workerCount":1}
+[INFO] streaming-encode gate {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","enabled":true,"reason":"single_worker","configFlag":true,"durationCapEnabled":false,"outputFormat":"mp4","workerCount":1,"durationSeconds":4,"maxDurationSeconds":240}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"capture_strategy","status":"checkpoint","elapsedMs":1437,"message":"resolved","workerCount":1,"forceScreenshot":false,"captureBeyondViewport":true,"useStreamingEncode":true,"useLayeredComposite":false,"usePageSideCompositing":false,"hasHdrContent":false,"hasShaderTransitions":false,"isPngSequence":false}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"capture_streaming","status":"start","elapsedMs":1438,"stagePhase":"capturing","workerCount":1,"forceScreenshot":false,"totalFrames":24,"framesCompleted":0,"captureMode":"beginframe","captureOperation":"beginFrame"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"capture_streaming","status":"end","elapsedMs":2043,"durationMs":605,"stagePhase":"capturing","workerCount":1,"forceScreenshot":false,"totalFrames":24,"framesCompleted":24,"captureMode":"beginframe","captureOperation":"encode"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"assemble","status":"start","elapsedMs":2044,"stagePhase":"capturing","hasAudio":true,"workerCount":1,"forceScreenshot":false,"totalFrames":24,"framesCompleted":24,"captureMode":"beginframe","captureOperation":"encode"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"assemble","status":"end","elapsedMs":2542,"durationMs":498,"stagePhase":"capturing","hasAudio":true,"workerCount":1,"forceScreenshot":false,"totalFrames":24,"framesCompleted":24,"captureMode":"beginframe","captureOperation":"encode"}
+[INFO] [Render:trace] {"renderJobId":"335fb455-715c-486b-b388-e9ced8f5310f","phase":"pipeline","status":"checkpoint","elapsedMs":2618,"message":"artifact validated","totalElapsedMs":2617}
+ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 13 (Ubuntu 13.2.0-23ubuntu3)
+  configuration: --prefix=/usr --extra-version=3ubuntu5 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --disable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared
+  libavutil      58. 29.100 / 58. 29.100
+  libavcodec     60. 31.102 / 60. 31.102
+  libavformat    60. 16.100 / 60. 16.100
+  libavdevice    60.  3.100 / 60.  3.100
+  libavfilter     9. 12.100 /  9. 12.100
+  libswscale      7.  5.100 /  7.  5.100
+  libswresample   4. 12.100 /  4. 12.100
+  libpostproc    57.  3.100 / 57.  3.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/qs-embedded-caption/run-03/project/bg_plus_caps.mp4':
+  Metadata:
+    minor_version   : 512
+    major_brand     : isom
+    compatible_brands: isomiso2avc1mp41
+    hyperframes_version: 0.8.77
+    hyperframes_renderer: hyperframes
+    encoder         : Lavf60.16.100
+  Duration: 00:00:04.00, start: 0.000000, bitrate: 1236 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 640x360 [SAR 1:1 DAR 16:9], 1087 kb/s, 6 fps, 6 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc60.31.102 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 142 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Input #1, image2, from '/tmp/qs-embedded-caption/run-03/project/frames_fg/f_%04d.png':
+  Duration: 00:00:04.00, start: 0.000000, bitrate: N/A
+  Stream #1:0: Video: png, rgba(pc, gbr/unknown/unknown), 640x360, 6 fps, 6 tbr, 6 tbn
+Stream mapping:
+  Stream #0:0 (h264) -> overlay
+  Stream #1:0 (png) -> scale:default
+  overlay:default -> Stream #0:0 (libx264)
+  Stream #0:1 -> #0:1 (copy)
+Press [q] to stop, [?] for help
+[in#1/image2 @ 0x557577ccb3c0] Thread message queue blocking; consider raising the thread_queue_size option (current value: 8)
+[libx264 @ 0x557578fcab80] using SAR=1/1
+[libx264 @ 0x557578fcab80] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0x557578fcab80] profile High, level 2.2, 4:2:0, 8-bit
+[libx264 @ 0x557578fcab80] 264 - core 164 r3108 31e19f9 - H.264/MPEG-4 AVC codec - Copyleft 2003-2023 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=11 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=6 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=12.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/tmp/qs-embedded-caption/run-03/project/final.mp4':
+  Metadata:
+    minor_version   : 512
+    major_brand     : isom
+    compatible_brands: isomiso2avc1mp41
+    hyperframes_version: 0.8.77
+    hyperframes_renderer: hyperframes
+    encoder         : Lavf60.16.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 640x360 [SAR 1:1 DAR 16:9], q=2-31, 6 fps, 12288 tbn
+    Metadata:
+      encoder         : Lavc60.31.102 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 142 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:02.49 bitrate=   0.2kbits/s speed=80.4x    [out#0/mp4 @ 0x557578fc9900] video:362kB audio:70kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.630456%
+frame=   24 fps=0.0 q=-1.0 Lsize=     435kB time=00:00:03.98 bitrate= 893.0kbits/s speed=21.8x    
+[libx264 @ 0x557578fcab80] frame I:1     Avg QP: 5.42  size: 48266
+[libx264 @ 0x557578fcab80] frame P:6     Avg QP: 7.47  size: 31256
+[libx264 @ 0x557578fcab80] frame B:17    Avg QP:10.80  size:  7913
+[libx264 @ 0x557578fcab80] consecutive B-frames:  4.2%  0.0% 12.5% 83.3%
+[libx264 @ 0x557578fcab80] mb I  I16..4: 13.3% 52.5% 34.2%
+[libx264 @ 0x557578fcab80] mb P  I16..4:  2.8% 10.3%  8.2%  P16..4: 26.7% 17.4% 17.5%  0.0%  0.0%    skip:17.1%
+[libx264 @ 0x557578fcab80] mb B  I16..4:  0.2%  0.8%  0.4%  B16..8: 32.0% 11.2%  6.7%  direct: 8.5%  skip:40.3%  L0:42.8% L1:43.8% BI:13.4%
+[libx264 @ 0x557578fcab80] 8x8 transform intra:50.9% inter:57.5%
+[libx264 @ 0x557578fcab80] coded y,uvDC,uvAC intra: 75.4% 74.2% 66.9% inter: 32.0% 33.8% 22.1%
+[libx264 @ 0x557578fcab80] i16 v,h,dc,p: 47% 32% 18%  2%
+[libx264 @ 0x557578fcab80] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 25% 30% 21%  3%  3%  4%  4%  5%  5%
+[libx264 @ 0x557578fcab80] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 31% 23% 12%  5%  6%  6%  5%  6%  6%
+[libx264 @ 0x557578fcab80] i8c dc,h,v,p: 45% 27% 20%  8%
+[libx264 @ 0x557578fcab80] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x557578fcab80] ref P L0: 69.4%  8.2% 17.3%  5.1%
+[libx264 @ 0x557578fcab80] ref B L0: 86.1% 10.6%  3.3%
+[libx264 @ 0x557578fcab80] ref B L1: 93.7%  6.3%
+[libx264 @ 0x557578fcab80] kb/s:740.64

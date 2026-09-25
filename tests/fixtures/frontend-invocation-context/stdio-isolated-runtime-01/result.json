@@ -1,0 +1,35 @@
+{
+  "command": [
+    "codex",
+    "app-server",
+    "--listen",
+    "stdio://",
+    "-c",
+    "sqlite_home=\"/tmp/qs-native-discovery-l421tdfp/runtime\"",
+    "-c",
+    "log_dir=\"/tmp/qs-native-discovery-l421tdfp/logs\""
+  ],
+  "workspace": "/tmp/qs-native-discovery-l421tdfp",
+  "modelRequests": 0,
+  "requests": [
+    {
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "clientInfo": {
+          "name": "qs-native-discovery-probe",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "responses": [],
+  "stderr": [
+    "WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)"
+  ],
+  "otherMessages": [],
+  "status": "failed",
+  "error": "no response for id 1",
+  "exitCode": -15,
+  "workspaceRemoved": true
+}

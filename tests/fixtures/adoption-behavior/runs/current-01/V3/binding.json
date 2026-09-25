@@ -1,0 +1,36 @@
+{
+  "id": "V3",
+  "cwd": "/tmp/qs-behavior-task-JjLy7G",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/video/qs-video/SKILL.md",
+      "sourceSHA256": "c0daedb734d21979f3e89150fbb7bac17b1992e62fe0971c3bc7fd9faa9202df",
+      "derivedSHA256": "732ab669e01a68843ad93757ce777b21e0fbd3a63c86cf73f0ba596d63600f73",
+      "bytes": 11873
+    },
+    {
+      "path": "skills/video/qs-video/references/runtime-compatibility.md",
+      "sourceSHA256": "8c12e3b39d2eb8cd1e8cb243c568cbc157c1d1af34c500f2b001c5528f828699",
+      "derivedSHA256": "8c12e3b39d2eb8cd1e8cb243c568cbc157c1d1af34c500f2b001c5528f828699",
+      "bytes": 6289
+    },
+    {
+      "path": "skills/video/qs-video/references/adaptation-policy.md",
+      "sourceSHA256": "4157a04da5b83251e69ec9d9c4b99a35001de632b23b79e1877c57e3069f0fc3",
+      "derivedSHA256": "4157a04da5b83251e69ec9d9c4b99a35001de632b23b79e1877c57e3069f0fc3",
+      "bytes": 5182
+    }
+  ]
+}

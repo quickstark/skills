@@ -1,0 +1,54 @@
+{
+  "run": {
+    "trialId": "corrected-pilot-F10-v84",
+    "scenarioId": "F10",
+    "variant": "v84",
+    "repetition": null
+  },
+  "cwd": "/tmp/qs-frontend-corrected-pilot-Zq6jfR",
+  "configuredHost": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Use emitted runtime model if present; otherwise unverified. Configured defaults do not prove actual runtime model."
+  },
+  "originalPlanSHA256": "68dd5e17fff60b61034a4713e79b22702241088ec7c75de5660cf79153c066fb",
+  "amendmentSHA256": "db836f3b67e0cc44a714261e42ecc006c41f704efd2edde214182a2445dc40af",
+  "instructions": [
+    {
+      "key": "qs-design-image-web",
+      "sha256": "d00f4e540f6c0df7ddc652cc1d6e6d4244b02d1f15a9ce9be9e80b292bd199e5",
+      "bytes": 9499
+    },
+    {
+      "key": "brief",
+      "sha256": "345512810e4a4d721429c7516ead1f6b16cd5b928d9077a1f06a8efaace87e53",
+      "bytes": 1703
+    },
+    {
+      "key": "prompt-construction",
+      "sha256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+      "bytes": 1792
+    },
+    {
+      "key": "web-images",
+      "sha256": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b",
+      "bytes": 1251
+    },
+    {
+      "key": "design-direction",
+      "sha256": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386",
+      "bytes": 1873
+    }
+  ],
+  "loadedInstructionUtf8Bytes": 16118,
+  "commonScopeSHA256": "96fa60509c2675d770e434e9661f01212d512007fce3a4f12ea450e157b08c4d",
+  "comparisonExcluded": true
+}

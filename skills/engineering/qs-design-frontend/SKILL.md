@@ -21,6 +21,11 @@ that treatment fits the selected brief; they are alternatives.
 
 Preserve factual content, including legitimate round metrics and repeated dates.
 Brand and accessibility override preset fonts, icons, spacing and motion. Do not
+interpret an explicit brand token as a loose visual cue: carry its font, color,
+radius and other supplied values into relevant components, including form
+controls. Use secondary variants only when the brief or existing system defines
+them. Check rendered values and states, not just the presence of CSS variables.
+Do not
 apply a marketing-page recipe to a dashboard or multistep product flow. Use its
 actual task, state and project requirements; private advice never launches another
 public root or authorizes publication. Verify changed behavior and responsive,

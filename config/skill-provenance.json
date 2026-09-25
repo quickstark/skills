@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "historicalSnapshots": [
     {
       "id": "pstack-0.14.1",
@@ -5105,5 +5105,2580 @@
         "qs-unlazy"
       ]
     }
-  ]
+  ],
+  "target": {
+    "schemaVersion": 1,
+    "note": "Separate target catalog mappings; decisions are pending. Baseline records remain historical installation provenance. Owner-context links describe lineage scope, not direct copying from every origin.",
+    "capabilities": [
+      {
+        "id": "target:public:qs-help",
+        "package": "qs-skills",
+        "name": "qs-help",
+        "role": "public",
+        "path": "skills/engineering/qs-help/SKILL.md",
+        "owners": [
+          "qs-help"
+        ],
+        "baselineIds": [
+          "contributor:find-skills",
+          "ps:ps-help",
+          "qs:qs-help"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "c0bd70c6e8192b00e8a0ae508b6a2b398938123598271c75414f2e8811ca1b05"
+        }
+      },
+      {
+        "id": "target:public:qs-setup",
+        "package": "qs-skills",
+        "name": "qs-setup",
+        "role": "public",
+        "path": "skills/engineering/qs-setup/SKILL.md",
+        "owners": [
+          "qs-setup"
+        ],
+        "baselineIds": [
+          "contributor:find-skills",
+          "qs:qs-setup"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "75adcdbd2819030d47f36444fbdb3b17eb0e99b5e4ef3ae94a0944473e65aa25"
+        }
+      },
+      {
+        "id": "target:public:qs-plan-clarify",
+        "package": "qs-skills",
+        "name": "qs-plan-clarify",
+        "role": "public",
+        "path": "skills/engineering/qs-plan-clarify/SKILL.md",
+        "owners": [
+          "qs-plan-clarify"
+        ],
+        "baselineIds": [
+          "qs:qs-plan-clarify"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "3c4f852074ea24094b915b0ebf3e1f4a35b4726f0d9244672c1e1326cc1fdb59"
+        }
+      },
+      {
+        "id": "target:public:qs-plan-roadmap",
+        "package": "qs-skills",
+        "name": "qs-plan-roadmap",
+        "role": "public",
+        "path": "skills/engineering/qs-plan-roadmap/SKILL.md",
+        "owners": [
+          "qs-plan-roadmap"
+        ],
+        "baselineIds": [
+          "qs:qs-plan-roadmap"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "297ae556099ed823dc96320c6bea88a922cda96af0c019d899554a082d951ce9"
+        }
+      },
+      {
+        "id": "target:public:qs-plan-spec",
+        "package": "qs-skills",
+        "name": "qs-plan-spec",
+        "role": "public",
+        "path": "skills/engineering/qs-plan-spec/SKILL.md",
+        "owners": [
+          "qs-plan-spec"
+        ],
+        "baselineIds": [
+          "qs:qs-plan-spec"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "7b7eb93a4ccd7d69165c895c57a4edb39d105dfe9582ead936b1d98378c1a286"
+        }
+      },
+      {
+        "id": "target:public:qs-code-build",
+        "package": "qs-skills",
+        "name": "qs-code-build",
+        "role": "public",
+        "path": "skills/engineering/qs-code-build/SKILL.md",
+        "owners": [
+          "qs-code-build"
+        ],
+        "baselineIds": [
+          "qs:qs-code-build"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "842ef1ed20769a70ce4bc26a6bbe83e4edab8310b108079d21df4fd43aa042ed"
+        }
+      },
+      {
+        "id": "target:public:qs-code-debug",
+        "package": "qs-skills",
+        "name": "qs-code-debug",
+        "role": "public",
+        "path": "skills/engineering/qs-code-debug/SKILL.md",
+        "owners": [
+          "qs-code-debug"
+        ],
+        "baselineIds": [
+          "qs:qs-code-debug"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "0d0de6416b837ba3ba43195aa78269239e074b4dee11cbef1ee2b00a172c9368"
+        }
+      },
+      {
+        "id": "target:public:qs-review-code",
+        "package": "qs-skills",
+        "name": "qs-review-code",
+        "role": "public",
+        "path": "skills/engineering/qs-review-code/SKILL.md",
+        "owners": [
+          "qs-review-code"
+        ],
+        "baselineIds": [
+          "qs:qs-review-code"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "3d42997336e2dd4a7a20122062b8c3b339211c1c6451b997a48b7bb0fd219e46"
+        }
+      },
+      {
+        "id": "target:public:qs-git-merge",
+        "package": "qs-skills",
+        "name": "qs-git-merge",
+        "role": "public",
+        "path": "skills/engineering/qs-git-merge/SKILL.md",
+        "owners": [
+          "qs-git-merge"
+        ],
+        "baselineIds": [
+          "qs:qs-git-merge"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "005db639a8c79e7d1beacdacd28cbeb0db86c3dcee2b2b428142cd191c4023e1"
+        }
+      },
+      {
+        "id": "target:public:qs-deploy-release",
+        "package": "qs-skills",
+        "name": "qs-deploy-release",
+        "role": "public",
+        "path": "skills/engineering/qs-deploy-release/SKILL.md",
+        "owners": [
+          "qs-deploy-release"
+        ],
+        "baselineIds": [
+          "qs:qs-deploy-release"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "555fa341aa92685db3e10527301b67a2ffcb279c5a721d08e8a00ee39a1fbec6"
+        }
+      },
+      {
+        "id": "target:public:qs-flow-triage",
+        "package": "qs-skills",
+        "name": "qs-flow-triage",
+        "role": "public",
+        "path": "skills/engineering/qs-flow-triage/SKILL.md",
+        "owners": [
+          "qs-flow-triage"
+        ],
+        "baselineIds": [
+          "qs:qs-flow-triage"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c"
+        }
+      },
+      {
+        "id": "target:public:qs-flow-handoff",
+        "package": "qs-skills",
+        "name": "qs-flow-handoff",
+        "role": "public",
+        "path": "skills/productivity/qs-flow-handoff/SKILL.md",
+        "owners": [
+          "qs-flow-handoff"
+        ],
+        "baselineIds": [
+          "qs:qs-flow-handoff"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "fc0dacf3623229441101944ab22539b99498e2eee4a0e375825453a38da22cda"
+        }
+      },
+      {
+        "id": "target:public:qs-plan-research",
+        "package": "qs-specialists",
+        "name": "qs-plan-research",
+        "role": "public",
+        "path": "skills/engineering/qs-plan-research/SKILL.md",
+        "owners": [
+          "qs-plan-research"
+        ],
+        "baselineIds": [
+          "qs:qs-plan-research"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "8eb6610801d9a8c308bc99bcb8234e8a22ba32e6018f32be06a7283cacb8561a"
+        }
+      },
+      {
+        "id": "target:public:qs-design-prototype",
+        "package": "qs-specialists",
+        "name": "qs-design-prototype",
+        "role": "public",
+        "path": "skills/engineering/qs-design-prototype/SKILL.md",
+        "owners": [
+          "qs-design-prototype"
+        ],
+        "baselineIds": [
+          "qs:qs-design-prototype"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "b5d9a5026af618680795dde028a7cdf7a1b64c2d037207ebfde3586a41321916"
+        }
+      },
+      {
+        "id": "target:public:qs-code-document",
+        "package": "qs-specialists",
+        "name": "qs-code-document",
+        "role": "public",
+        "path": "skills/engineering/qs-code-document/SKILL.md",
+        "owners": [
+          "qs-code-document"
+        ],
+        "baselineIds": [
+          "qs:qs-code-document"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "93c09e3101520d7510040d26b36abb9d7d21dbd47f1aaa666f4c0c8271094e08"
+        }
+      },
+      {
+        "id": "target:public:qs-test-author",
+        "package": "qs-specialists",
+        "name": "qs-test-author",
+        "role": "public",
+        "path": "skills/engineering/qs-test-author/SKILL.md",
+        "owners": [
+          "qs-test-author"
+        ],
+        "baselineIds": [
+          "qs:qs-test-author"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "5cd7f5b58b71b858b701a673fa275a7869974c69d0dd61e0254a82f2d1ec6632"
+        }
+      },
+      {
+        "id": "target:public:qs-test-verify",
+        "package": "qs-specialists",
+        "name": "qs-test-verify",
+        "role": "public",
+        "path": "skills/engineering/qs-test-verify/SKILL.md",
+        "owners": [
+          "qs-test-verify"
+        ],
+        "baselineIds": [
+          "qs:qs-test-verify"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "b4220aba301e0a78bd48f1fe5a5a9e5ab01849578410cc9af42ff376a513c472"
+        }
+      },
+      {
+        "id": "target:public:qs-learn-teach",
+        "package": "qs-specialists",
+        "name": "qs-learn-teach",
+        "role": "public",
+        "path": "skills/productivity/qs-learn-teach/SKILL.md",
+        "owners": [
+          "qs-learn-teach"
+        ],
+        "baselineIds": [
+          "qs:qs-learn-teach"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "895e87a75411e308fbb30595bcc73b06de94731587862de8c4ff86c8e644e786"
+        }
+      },
+      {
+        "id": "target:public:qs-skill-write",
+        "package": "qs-specialists",
+        "name": "qs-skill-write",
+        "role": "public",
+        "path": "skills/productivity/qs-skill-write/SKILL.md",
+        "owners": [
+          "qs-skill-write"
+        ],
+        "baselineIds": [
+          "qs:qs-skill-write"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "f12cc8a7a329d1ada1f9b47e28b6419d6b7f41e444d25ac8da3cfd617ef37572"
+        }
+      },
+      {
+        "id": "target:public:qs-deploy-prompt",
+        "package": "qs-specialists",
+        "name": "qs-deploy-prompt",
+        "role": "public",
+        "path": "skills/engineering/qs-deploy-prompt/SKILL.md",
+        "owners": [
+          "qs-deploy-prompt"
+        ],
+        "baselineIds": [
+          "qs:qs-deploy-prompt"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "f47e615e43d47daa26ea1f313d83a901c2b476356e360e4cae33604e2804763c"
+        }
+      },
+      {
+        "id": "target:public:qs-how",
+        "package": "qs-advanced",
+        "name": "qs-how",
+        "role": "public",
+        "path": "skills/engineering/qs-how/SKILL.md",
+        "owners": [
+          "qs-how"
+        ],
+        "baselineIds": [
+          "ps:ps-how"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "91a6ffac699d2986902b57f78ff82c12577e60a0a989e300e84a832fa483987a"
+        }
+      },
+      {
+        "id": "target:public:qs-why",
+        "package": "qs-advanced",
+        "name": "qs-why",
+        "role": "public",
+        "path": "skills/engineering/qs-why/SKILL.md",
+        "owners": [
+          "qs-why"
+        ],
+        "baselineIds": [
+          "ps:ps-why"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "2848f1d428f6d7d340c0df243cd467de914e3f00eb8a8b36b09cc271ecc184aa"
+        }
+      },
+      {
+        "id": "target:public:qs-blast-radius",
+        "package": "qs-advanced",
+        "name": "qs-blast-radius",
+        "role": "public",
+        "path": "skills/engineering/qs-blast-radius/SKILL.md",
+        "owners": [
+          "qs-blast-radius"
+        ],
+        "baselineIds": [
+          "ps:ps-blast-radius"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "3a5b67e49098784ce29d87bf11e68e399eba25427949f2b7824427783ff7188a"
+        }
+      },
+      {
+        "id": "target:public:qs-runtime-forensics",
+        "package": "qs-advanced",
+        "name": "qs-runtime-forensics",
+        "role": "public",
+        "path": "skills/engineering/qs-runtime-forensics/SKILL.md",
+        "owners": [
+          "qs-runtime-forensics"
+        ],
+        "baselineIds": [
+          "ps:ps-runtime-forensics"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "1dad80fc2a7f6e7b4fe4b0141eb763ff8d3da436be850edf770c096b4a1b6540"
+        }
+      },
+      {
+        "id": "target:public:qs-trace-forensics",
+        "package": "qs-advanced",
+        "name": "qs-trace-forensics",
+        "role": "public",
+        "path": "skills/engineering/qs-trace-forensics/SKILL.md",
+        "owners": [
+          "qs-trace-forensics"
+        ],
+        "baselineIds": [
+          "ps:ps-trace-forensics"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "b8c5a6f0e2c2af2e3d79ab95e15c61364901870b852e5a7c0b757b49c0e93d91"
+        }
+      },
+      {
+        "id": "target:public:qs-create-verification-skill",
+        "package": "qs-advanced",
+        "name": "qs-create-verification-skill",
+        "role": "public",
+        "path": "skills/engineering/qs-create-verification-skill/SKILL.md",
+        "owners": [
+          "qs-create-verification-skill"
+        ],
+        "baselineIds": [
+          "ps:ps-create-verification-skill"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "3639bbeed911ed03be93fbb7aa481e73e7ad64af476fb1c21b3c4b03bc509d2c"
+        }
+      },
+      {
+        "id": "target:public:qs-maintain-verification-skill",
+        "package": "qs-advanced",
+        "name": "qs-maintain-verification-skill",
+        "role": "public",
+        "path": "skills/engineering/qs-maintain-verification-skill/SKILL.md",
+        "owners": [
+          "qs-maintain-verification-skill"
+        ],
+        "baselineIds": [
+          "ps:ps-maintain-verification-skill"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "1994f25aae8ea00bbc6bb7157461fbbea0cf128d1ff998783912071e93d18ed4"
+        }
+      },
+      {
+        "id": "target:public:qs-skill-eval",
+        "package": "qs-advanced",
+        "name": "qs-skill-eval",
+        "role": "public",
+        "path": "skills/engineering/qs-skill-eval/SKILL.md",
+        "owners": [
+          "qs-skill-eval"
+        ],
+        "baselineIds": [
+          "ps:ps-skill-eval"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925"
+        }
+      },
+      {
+        "id": "target:public:qs-hillclimb",
+        "package": "qs-advanced",
+        "name": "qs-hillclimb",
+        "role": "public",
+        "path": "skills/engineering/qs-hillclimb/SKILL.md",
+        "owners": [
+          "qs-hillclimb"
+        ],
+        "baselineIds": [
+          "ps:ps-hillclimb"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "07533f0af9a1685b1f56e895e2d4d0b0786f81b0582ce73fd8c847a5508678a4"
+        }
+      },
+      {
+        "id": "target:public:qs-visual-parity",
+        "package": "qs-advanced",
+        "name": "qs-visual-parity",
+        "role": "public",
+        "path": "skills/engineering/qs-visual-parity/SKILL.md",
+        "owners": [
+          "qs-visual-parity"
+        ],
+        "baselineIds": [
+          "ps:ps-visual-parity"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "74535751a793bc2b386a4f4d8cf5c8e55d0ed33613a479601051a373370486d1"
+        }
+      },
+      {
+        "id": "target:public:qs-pr-babysit",
+        "package": "qs-advanced",
+        "name": "qs-pr-babysit",
+        "role": "public",
+        "path": "skills/engineering/qs-pr-babysit/SKILL.md",
+        "owners": [
+          "qs-pr-babysit"
+        ],
+        "baselineIds": [
+          "ps:ps-pr-babysit"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "0c4197b8b29c83bce0536e895028bde24604746a304cd3bafb305634eb8634b7"
+        }
+      },
+      {
+        "id": "target:public:qs-worktree-cleanup",
+        "package": "qs-advanced",
+        "name": "qs-worktree-cleanup",
+        "role": "public",
+        "path": "skills/engineering/qs-worktree-cleanup/SKILL.md",
+        "owners": [
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps:ps-worktree-cleanup"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "c095fe61be030d07ae23f900b5e4616365b1a8fbf1aed0911cf1e0afbef9dc12"
+        }
+      },
+      {
+        "id": "target:public:qs-design-frontend",
+        "package": "qs-frontend",
+        "name": "qs-design-frontend",
+        "role": "public",
+        "path": "skills/engineering/qs-design-frontend/SKILL.md",
+        "owners": [
+          "qs-design-frontend"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "0e509af5790b68e1bec779390d6966de760badd28f0ccc90c73aeb570179f41c"
+        }
+      },
+      {
+        "id": "target:public:qs-design-image-web",
+        "package": "qs-frontend",
+        "name": "qs-design-image-web",
+        "role": "public",
+        "path": "skills/engineering/qs-design-image-web/SKILL.md",
+        "owners": [
+          "qs-design-image-web"
+        ],
+        "baselineIds": [
+          "contributor:imagegen-frontend-web"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "d00f4e540f6c0df7ddc652cc1d6e6d4244b02d1f15a9ce9be9e80b292bd199e5"
+        }
+      },
+      {
+        "id": "target:public:qs-design-image-mobile",
+        "package": "qs-frontend",
+        "name": "qs-design-image-mobile",
+        "role": "public",
+        "path": "skills/engineering/qs-design-image-mobile/SKILL.md",
+        "owners": [
+          "qs-design-image-mobile"
+        ],
+        "baselineIds": [
+          "contributor:imagegen-frontend-mobile"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "975e607ff9b78f23938a60735afe218cc3663220f1292e5c943529f1ec9743a8"
+        }
+      },
+      {
+        "id": "target:public:qs-design-image-to-code",
+        "package": "qs-frontend",
+        "name": "qs-design-image-to-code",
+        "role": "public",
+        "path": "skills/engineering/qs-design-image-to-code/SKILL.md",
+        "owners": [
+          "qs-design-image-to-code"
+        ],
+        "baselineIds": [
+          "contributor:image-to-code"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "1a70f2e32edab4c4a5b849327e280d540adaaad72050d9ac58edfd0eb3090d39"
+        }
+      },
+      {
+        "id": "target:public:qs-video",
+        "package": "qs-video",
+        "name": "qs-video",
+        "role": "public",
+        "path": "skills/video/qs-video/SKILL.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "c0daedb734d21979f3e89150fbb7bac17b1992e62fe0971c3bc7fd9faa9202df"
+        }
+      },
+      {
+        "id": "target:public:qs-unlazy",
+        "package": "qs-execution",
+        "name": "qs-unlazy",
+        "role": "public",
+        "path": "skills/engineering/qs-unlazy/SKILL.md",
+        "owners": [
+          "qs-unlazy"
+        ],
+        "baselineIds": [
+          "contributor:unlazy"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "ae7d589e487bca25ba7b0958a1397ea75be856aef808d9a197906e6371de2200"
+        }
+      },
+      {
+        "id": "target:private:qs-skills:domain-modeling",
+        "package": "qs-skills",
+        "name": "domain-modeling",
+        "role": "private",
+        "path": "skills/internal/domain-modeling.md",
+        "owners": [
+          "qs-plan-clarify",
+          "qs-plan-spec",
+          "qs-review-code"
+        ],
+        "baselineIds": [
+          "qs-internal:domain-modeling"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "e33aa7e54cdd19e28826ea70f0f416d904ec7ee710a1157bbac4d4dac356d514"
+        }
+      },
+      {
+        "id": "target:private:qs-skills:module-decomposition",
+        "package": "qs-skills",
+        "name": "module-decomposition",
+        "role": "private",
+        "path": "skills/internal/module-decomposition.md",
+        "owners": [
+          "qs-plan-spec",
+          "qs-code-build",
+          "qs-review-code"
+        ],
+        "baselineIds": [
+          "qs-internal:module-decomposition"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "44312e22b94b88c5845b5237946746cdcb9d7b70d6d4eb523847fc6eacf31eff"
+        }
+      },
+      {
+        "id": "target:private:qs-skills:ticket-decomposition",
+        "package": "qs-skills",
+        "name": "ticket-decomposition",
+        "role": "private",
+        "path": "skills/internal/ticket-decomposition.md",
+        "owners": [
+          "qs-plan-spec"
+        ],
+        "baselineIds": [
+          "qs-internal:ticket-decomposition"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "1a1da20d3a46773b0f73e80366c3463e567721f200e1ba64fc8df600c0bee56e"
+        }
+      },
+      {
+        "id": "target:private:qs-skills:tdd-loop",
+        "package": "qs-skills",
+        "name": "tdd-loop",
+        "role": "private",
+        "path": "skills/internal/tdd-loop.md",
+        "owners": [
+          "qs-code-build"
+        ],
+        "baselineIds": [
+          "qs-internal:tdd-loop"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "39a5db34c28914ce00eef828bb5ca2cfc4a668789c01d5b0db69b68ee7a43206"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:multi-candidate-exploration",
+        "package": "qs-advanced",
+        "name": "multi-candidate-exploration",
+        "role": "private",
+        "path": "skills/advanced/internal/multi-candidate-exploration.md",
+        "owners": [
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity"
+        ],
+        "baselineIds": [
+          "ps-internal:multi-candidate-exploration"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:decision-trail",
+        "package": "qs-advanced",
+        "name": "decision-trail",
+        "role": "private",
+        "path": "skills/advanced/internal/decision-trail.md",
+        "owners": [
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:decision-trail"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:parallel-coverage",
+        "package": "qs-advanced",
+        "name": "parallel-coverage",
+        "role": "private",
+        "path": "skills/advanced/internal/parallel-coverage.md",
+        "owners": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-skill-eval"
+        ],
+        "baselineIds": [
+          "ps-internal:parallel-coverage"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:typescript-discipline",
+        "package": "qs-advanced",
+        "name": "typescript-discipline",
+        "role": "private",
+        "path": "skills/advanced/internal/typescript-discipline.md",
+        "owners": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-runtime-forensics",
+          "qs-trace-forensics",
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:typescript-discipline"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:plain-writing",
+        "package": "qs-advanced",
+        "name": "plain-writing",
+        "role": "private",
+        "path": "skills/advanced/internal/plain-writing.md",
+        "owners": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-runtime-forensics",
+          "qs-trace-forensics",
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:plain-writing"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:boundary-discipline",
+        "package": "qs-advanced",
+        "name": "boundary-discipline",
+        "role": "private",
+        "path": "skills/advanced/internal/boundary-discipline.md",
+        "owners": [
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:boundary-discipline"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "8a29185206d30cfc8448f088a819ccea8ce82401d65b5f345da9460125f68b30"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:rerunnable-tooling",
+        "package": "qs-advanced",
+        "name": "rerunnable-tooling",
+        "role": "private",
+        "path": "skills/advanced/internal/rerunnable-tooling.md",
+        "owners": [
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb"
+        ],
+        "baselineIds": [
+          "ps-internal:rerunnable-tooling"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:structural-enforcement",
+        "package": "qs-advanced",
+        "name": "structural-enforcement",
+        "role": "private",
+        "path": "skills/advanced/internal/structural-enforcement.md",
+        "owners": [
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval"
+        ],
+        "baselineIds": [
+          "ps-internal:structural-enforcement"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:experience-first",
+        "package": "qs-advanced",
+        "name": "experience-first",
+        "role": "private",
+        "path": "skills/advanced/internal/experience-first.md",
+        "owners": [
+          "qs-visual-parity",
+          "qs-hillclimb"
+        ],
+        "baselineIds": [
+          "ps-internal:experience-first"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "4f9dad609131b739d1d212912f14ec5017bfb91f50452c34a3d3f152455e53d3"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:context-discipline",
+        "package": "qs-advanced",
+        "name": "context-discipline",
+        "role": "private",
+        "path": "skills/advanced/internal/context-discipline.md",
+        "owners": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-runtime-forensics",
+          "qs-trace-forensics",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit"
+        ],
+        "baselineIds": [
+          "ps-internal:context-discipline"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:minimal-change",
+        "package": "qs-advanced",
+        "name": "minimal-change",
+        "role": "private",
+        "path": "skills/advanced/internal/minimal-change.md",
+        "owners": [
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:minimal-change"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:idempotent-operations",
+        "package": "qs-advanced",
+        "name": "idempotent-operations",
+        "role": "private",
+        "path": "skills/advanced/internal/idempotent-operations.md",
+        "owners": [
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:idempotent-operations"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "9c29ecdf99581fab33154e2588962e60b70ec87db1163643e57bd564f9ee2450"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:outcome-oriented-execution",
+        "package": "qs-advanced",
+        "name": "outcome-oriented-execution",
+        "role": "private",
+        "path": "skills/advanced/internal/outcome-oriented-execution.md",
+        "owners": [
+          "qs-hillclimb",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:outcome-oriented-execution"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "89f297b35fc0a87de59b74f0acf028e17a5a7a5083a7249a65b8fe13dc533d9d"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:concurrency-ownership",
+        "package": "qs-advanced",
+        "name": "concurrency-ownership",
+        "role": "private",
+        "path": "skills/advanced/internal/concurrency-ownership.md",
+        "owners": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-pr-babysit"
+        ],
+        "baselineIds": [
+          "ps-internal:concurrency-ownership"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:type-system-discipline",
+        "package": "qs-advanced",
+        "name": "type-system-discipline",
+        "role": "private",
+        "path": "skills/advanced/internal/type-system-discipline.md",
+        "owners": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-runtime-forensics",
+          "qs-trace-forensics",
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "baselineIds": [
+          "ps-internal:type-system-discipline"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd"
+        }
+      },
+      {
+        "id": "target:private:qs-advanced:bounded-autonomous-loop",
+        "package": "qs-advanced",
+        "name": "bounded-autonomous-loop",
+        "role": "private",
+        "path": "skills/advanced/internal/bounded-autonomous-loop.md",
+        "owners": [
+          "qs-hillclimb",
+          "qs-pr-babysit"
+        ],
+        "baselineIds": [
+          "ps-internal:bounded-autonomous-loop"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "5c12167948aa8e52c9d3287a0b3d1d4fd11f0c7b02626bd1c365dd45b098dec0"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:brief",
+        "package": "qs-frontend",
+        "name": "brief",
+        "role": "private",
+        "path": "skills/frontend/internal/brief.md",
+        "owners": [
+          "qs-design-frontend",
+          "qs-design-image-web",
+          "qs-design-image-mobile",
+          "qs-design-image-to-code"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:image-to-code",
+          "contributor:imagegen-frontend-mobile",
+          "contributor:imagegen-frontend-web",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:design-direction",
+        "package": "qs-frontend",
+        "name": "design-direction",
+        "role": "private",
+        "path": "skills/frontend/internal/design-direction.md",
+        "owners": [
+          "qs-design-frontend",
+          "qs-design-image-web",
+          "qs-design-image-to-code"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:image-to-code",
+          "contributor:imagegen-frontend-web",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:redesign",
+        "package": "qs-frontend",
+        "name": "redesign",
+        "role": "private",
+        "path": "skills/frontend/internal/redesign.md",
+        "owners": [
+          "qs-design-frontend"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:dimensional-style",
+        "package": "qs-frontend",
+        "name": "dimensional-style",
+        "role": "private",
+        "path": "skills/frontend/internal/dimensional-style.md",
+        "owners": [
+          "qs-design-frontend"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "f47bdc0ad77bed396f0fabd77f285f31eae2d6f8f5519b8afa65a6c2925b42ee"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:restrained-style",
+        "package": "qs-frontend",
+        "name": "restrained-style",
+        "role": "private",
+        "path": "skills/frontend/internal/restrained-style.md",
+        "owners": [
+          "qs-design-frontend"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "f045ec15981c732f9210704060a4520f7841277828eace9a181a225c294bba90"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:implementation",
+        "package": "qs-frontend",
+        "name": "implementation",
+        "role": "private",
+        "path": "skills/frontend/internal/implementation.md",
+        "owners": [
+          "qs-design-frontend",
+          "qs-design-image-to-code"
+        ],
+        "baselineIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:image-to-code",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:prompt-construction",
+        "package": "qs-frontend",
+        "name": "prompt-construction",
+        "role": "private",
+        "path": "skills/frontend/internal/prompt-construction.md",
+        "owners": [
+          "qs-design-image-web",
+          "qs-design-image-mobile",
+          "qs-design-image-to-code"
+        ],
+        "baselineIds": [
+          "contributor:image-to-code",
+          "contributor:imagegen-frontend-mobile",
+          "contributor:imagegen-frontend-web"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:web-images",
+        "package": "qs-frontend",
+        "name": "web-images",
+        "role": "private",
+        "path": "skills/frontend/internal/web-images.md",
+        "owners": [
+          "qs-design-image-web"
+        ],
+        "baselineIds": [
+          "contributor:imagegen-frontend-web"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b"
+        }
+      },
+      {
+        "id": "target:private:qs-frontend:mobile-images",
+        "package": "qs-frontend",
+        "name": "mobile-images",
+        "role": "private",
+        "path": "skills/frontend/internal/mobile-images.md",
+        "owners": [
+          "qs-design-image-mobile"
+        ],
+        "baselineIds": [
+          "contributor:imagegen-frontend-mobile"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "172b8fe046e4ac4dce7a2b7fbafaed350d5437863d54aeae409062fddcc35c36"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes",
+        "package": "qs-video",
+        "name": "hyperframes",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "c23d24ce2325b73448c3c7285b3f71718ab886fa884fc0a21c14fb6cdcc71c4e"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-core",
+        "package": "qs-video",
+        "name": "hyperframes-core",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-core/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "d35d54e56048dc1443e7c5c33c3579cb7fd8a2b52c28d9588b2d109ea72c3c39"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-animation",
+        "package": "qs-video",
+        "name": "hyperframes-animation",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-animation/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "70833c689813bbb5ea4bf3466e1daf65b527694f77ab59f0d974491bd39dbdea"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-keyframes",
+        "package": "qs-video",
+        "name": "hyperframes-keyframes",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-keyframes/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "7573099d3cab329a9b59b4d8b10ec602f3d461502572360997f0abb183919f8b"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-creative",
+        "package": "qs-video",
+        "name": "hyperframes-creative",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-creative/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "aa4fd7ff497d1486e85fd6eea837710ae3878ec6aaeaa262525dd999c21105df"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-audio",
+        "package": "qs-video",
+        "name": "hyperframes-audio",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-audio/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "119dda694fbe77ef2fa6888ca06ad80c126df800beb8d529adc17a3689f3f56f"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-cli",
+        "package": "qs-video",
+        "name": "hyperframes-cli",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-cli/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "486ff4085b7b4e6c3ac5ac7e4d441efd6000b3254fea0ed824771d3779d4c190"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-registry",
+        "package": "qs-video",
+        "name": "hyperframes-registry",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-registry/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "9bd275e8744712b8061dbd19dd75706c2b81dddca151f7aa458798611fbc1a9f"
+        }
+      },
+      {
+        "id": "target:private:qs-video:media-use",
+        "package": "qs-video",
+        "name": "media-use",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/media-use/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "cca7d0f8a20551069254bf85965655990b0083e35e0547d0ae1deeaac74857e4"
+        }
+      },
+      {
+        "id": "target:private:qs-video:remotion-to-hyperframes",
+        "package": "qs-video",
+        "name": "remotion-to-hyperframes",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/remotion-to-hyperframes/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "5e3180003f13b5b254c5e2fc78e788682fe4c8a426c484af72775f151f28c0ef"
+        }
+      },
+      {
+        "id": "target:private:qs-video:slideshow",
+        "package": "qs-video",
+        "name": "slideshow",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/slideshow/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "05eef35954efae05db01607eacaf2a7d6fee19e6a23ec2e39dc4823109e9f04a"
+        }
+      },
+      {
+        "id": "target:private:qs-video:embedded-captions",
+        "package": "qs-video",
+        "name": "embedded-captions",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/embedded-captions/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "b629a2ae2b5409944516b28a4d45ab102a5c0fc7d5899ad9d1db989ef6122477"
+        }
+      },
+      {
+        "id": "target:private:qs-video:talking-head-recut",
+        "package": "qs-video",
+        "name": "talking-head-recut",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/talking-head-recut/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "d791ca254c89f5164d4c7be101534fc091f8164d8fd58b16de4a3dcdbaf433df"
+        }
+      },
+      {
+        "id": "target:private:qs-video:music-to-video",
+        "package": "qs-video",
+        "name": "music-to-video",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/music-to-video/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "b7df5fb615e800a848a78237ae849c4bfb408ecfebbfded6e29637215f8594e0"
+        }
+      },
+      {
+        "id": "target:private:qs-video:motion-graphics",
+        "package": "qs-video",
+        "name": "motion-graphics",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/motion-graphics/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "f16c0368bbf4b051b7eab259abf9c6386f323b4bf9b46208604d6f70868fd4fc"
+        }
+      },
+      {
+        "id": "target:private:qs-video:pr-to-video",
+        "package": "qs-video",
+        "name": "pr-to-video",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/pr-to-video/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "9418204479764ff497b48d0fddb166e98685ea58bfd821722da1c6e0f7dc2bcb"
+        }
+      },
+      {
+        "id": "target:private:qs-video:product-launch-video",
+        "package": "qs-video",
+        "name": "product-launch-video",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/product-launch-video/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "35974d7379707badbd69294a94e2a36a0394f399bec1b30a21f784337b4a6fdd"
+        }
+      },
+      {
+        "id": "target:private:qs-video:faceless-explainer",
+        "package": "qs-video",
+        "name": "faceless-explainer",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/faceless-explainer/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "da62a49899960fee39af17aa92a36828bcae61fa104e2ca9b61406620027b00a"
+        }
+      },
+      {
+        "id": "target:private:qs-video:general-video",
+        "package": "qs-video",
+        "name": "general-video",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/general-video/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "fd7ee0bdfc16f5ed85bc2371fbd937e9abd7705c315a01ea4055e3250310557a"
+        }
+      },
+      {
+        "id": "target:private:qs-video:figma",
+        "package": "qs-video",
+        "name": "figma",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/figma/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "d96c338e60bce03457c20620a9a2a901c941877da69c9d72e96516f793e1a86e"
+        }
+      },
+      {
+        "id": "target:private:qs-video:hyperframes-studio",
+        "package": "qs-video",
+        "name": "hyperframes-studio",
+        "role": "private",
+        "path": "skills/video/qs-video/modules/hyperframes-studio/instructions.md",
+        "owners": [
+          "qs-video"
+        ],
+        "baselineIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "541cd06b89b76cc2aff88544d01d44e6c4b163252c0b6a41cc65726f31ab6012"
+        }
+      },
+      {
+        "id": "target:private:qs-execution:unlazy",
+        "package": "qs-execution",
+        "name": "unlazy",
+        "role": "private",
+        "path": "skills/engineering/qs-unlazy/modules/unlazy/instructions.md",
+        "owners": [
+          "qs-unlazy"
+        ],
+        "baselineIds": [
+          "contributor:unlazy"
+        ],
+        "originScope": "owner-context",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Target acceptance decision has not been recorded; neither registry activation nor adoption is implied."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "cb7c311fba787902cf0c87bfdc34c82dbb6223cac14b330d0e840533e5a8523c"
+        }
+      }
+    ],
+    "closures": [
+      {
+        "owner": "qs-video",
+        "path": "skills/video/qs-video/references/dependency-index.json",
+        "sha256": "e3f40e839433a31128bdbb1107ee2ecf1c33a792039871769f5dbc79cc5c0136",
+        "reviewedRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+        "adoptedRevision": null,
+        "adoptionStatus": "unknown",
+        "adoptionEvidence": []
+      },
+      {
+        "owner": "qs-unlazy",
+        "path": "skills/engineering/qs-unlazy/references/dependency-index.json",
+        "sha256": "e033e16d0082d2a35900d5bd9a0b178104147ae8ee2be5fc400807200c7e221c",
+        "reviewedRevision": "16671491f6679ad9378f52604d3bc2415b4120c7",
+        "adoptedRevision": null,
+        "adoptionStatus": "unknown",
+        "adoptionEvidence": []
+      }
+    ],
+    "notices": [
+      {
+        "package": "qs-advanced",
+        "path": "skills/advanced/THIRD_PARTY_NOTICES.md",
+        "sha256": "3f709489e4b23f7c8a3384a704c0d4bbf4673c5767e00715c9a95bb7de29918f"
+      },
+      {
+        "package": "qs-frontend",
+        "path": "skills/frontend/THIRD_PARTY_NOTICES.md",
+        "sha256": "75cdc713ad103e7befd44288e4aacf9f8a8bd7718f28459e610df06231c67c62"
+      },
+      {
+        "package": "qs-video",
+        "path": "skills/video/qs-video/LICENSE",
+        "sha256": "4259155fb06f127687ee7b0a8a3682d45132db0f2da26cbc0b7a2d1e796436b8"
+      },
+      {
+        "package": "qs-video",
+        "path": "skills/video/qs-video/NOTICE",
+        "sha256": "bd8279d7e77a7be9ef99c089f8f0384d67a0c01eed98c5f807ff230319583c75"
+      },
+      {
+        "package": "qs-execution",
+        "path": "skills/engineering/qs-unlazy/modules/unlazy/LICENSE",
+        "sha256": "4575a543ab88dad12ccea7d97e563d0bce5b448b06072e65d3264497dad326df"
+      }
+    ]
+  }
 }

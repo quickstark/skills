@@ -1,0 +1,45 @@
+{
+  "run": {
+    "trialId": "F02-r1-v84",
+    "scenarioId": "F02",
+    "repetition": 1,
+    "variant": "v84",
+    "attemptType": "first-attempt"
+  },
+  "cwd": "/tmp/qs-frontend-trial-GoKXm8",
+  "configuredHost": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Use emitted runtime model if present; otherwise unverified. Configured defaults do not prove actual runtime model."
+  },
+  "originalPlanSHA256": "68dd5e17fff60b61034a4713e79b22702241088ec7c75de5660cf79153c066fb",
+  "activePlanSHA256": "c085d200dc169554a6355e3a1e31edb882fa9afc1a8027ce8f6f67b7f6a1d812",
+  "instructions": [
+    {
+      "key": "qs-design-frontend",
+      "sha256": "bda53c25490ca9d151e1b5d0947a4c1f28bbe2e8bc8c9098918d0c569892276a",
+      "bytes": 9524
+    },
+    {
+      "key": "brief",
+      "sha256": "345512810e4a4d721429c7516ead1f6b16cd5b928d9077a1f06a8efaace87e53",
+      "bytes": 1703
+    },
+    {
+      "key": "redesign",
+      "sha256": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76",
+      "bytes": 1347
+    }
+  ],
+  "loadedInstructionUtf8Bytes": 12574,
+  "commonScopeSHA256": "96fa60509c2675d770e434e9661f01212d512007fce3a4f12ea450e157b08c4d",
+  "referencePolicy": "Scenario-relevant private references preloaded; no demand-loading efficiency claim."
+}

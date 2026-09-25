@@ -197,3 +197,38 @@ test('shared consumers and rollback prerequisites survive a pure repeatable prev
   assert.equal(first.migrations[0].rollback.executionAuthority, 'separate-from-planning');
   assert.deepEqual(first.deletePaths, []);
 });
+
+test('exact canonical and supported host aliases retain complete ownership checks', () => {
+  const directories = { codex: '.codex/skills', 'claude-code': '.claude/skills', pi: '.pi/agent/skills' };
+  for (const [agent, directory] of Object.entries(directories)) for (const alias of [false, true]) {
+    const args = input({ resources: ['unlazy'] }); args.agent = agent;
+    args.packages.forEach(pkg => { pkg.evidence.agent = agent; });
+    const observed = args.observations[0]; observed.agent = agent; observed.consumers = [agent];
+    if (alias) { observed.path = `${homeDirectory}/${directory}/unlazy`; observed.linkTarget = observed.canonicalPath; }
+    observed.ownership.expected = structuredClone(Object.fromEntries(['path', 'canonicalPath', 'linkTarget', 'version', 'revision', 'digest'].map(field => [field, observed[field]])));
+    assert.equal(planSkillMigrations(args).status, 'ready-to-stage', `${agent}: ${alias ? 'alias' : 'canonical'}`);
+    for (const mutate of [
+      entry => { entry.path = entry.ownership.expected.path = `${homeDirectory}/foreign/unlazy`; },
+      entry => { entry.path = entry.ownership.expected.path = `${homeDirectory}/${directory}/other`; },
+      entry => { entry.linkTarget = entry.ownership.expected.linkTarget = `${homeDirectory}/foreign`; },
+      entry => { entry.path += '-changed'; },
+      entry => { entry.digest.value = 'f'.repeat(64); },
+    ]) { const bad = structuredClone(args); mutate(bad.observations[0]); assert.equal(planSkillMigrations(bad).status, 'blocked'); }
+    const otherHost = Object.values(directories).find(value => value !== directory);
+    const crossHost = structuredClone(args); crossHost.observations[0].path = crossHost.observations[0].ownership.expected.path = `${homeDirectory}/${otherHost}/unlazy`;
+    crossHost.observations[0].linkTarget = crossHost.observations[0].ownership.expected.linkTarget = observed.canonicalPath;
+    assert.ok(conflicts(planSkillMigrations(crossHost)).includes('outside-managed-location'));
+  }
+});
+
+test('declared Codex and Pi alias locations must use exact surface, identity and target', () => {
+  for (const [surface, directory] of [['codex-link', '.codex/skills'], ['pi-link', '.pi/agent/skills']]) {
+    const doc = structuredClone(document), entry = doc.migrations.flatMap(m => m.legacy).find(e => e.identity === 'unlazy');
+    const location = { surface, path: `~/${directory}/unlazy`, linkTarget: '~/.agents/skills/unlazy' }; entry.ownedLocations.push(location);
+    assert.equal(validateSkillMigrations(doc).valid, true);
+    for (const change of [{ path: `~/${directory}/unlazy/../other` }, { linkTarget: '~/.agents/skills/foreign' }, { surface: 'arbitrary-link' }]) {
+      const bad = structuredClone(doc); Object.assign(bad.migrations.flatMap(m => m.legacy).find(e => e.identity === 'unlazy').ownedLocations.at(-1), change);
+      assert.equal(validateSkillMigrations(bad).valid, false);
+    }
+  }
+});

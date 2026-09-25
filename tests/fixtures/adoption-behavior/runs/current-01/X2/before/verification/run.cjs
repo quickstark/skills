@@ -1,0 +1,1 @@
+const cp=require('node:child_process');const p=cp.spawn(process.execPath,['app.cjs'],{stdio:['ignore','pipe','inherit']});p.stdout.once('data',async b=>{try{const {port}=JSON.parse(b);const r=await fetch('http://127.0.0.1:'+port+'/sum?a=7&b=5');console.log('sum request returned',r.status);if(r.status!==200)process.exitCode=1;}finally{p.kill('SIGTERM');}});

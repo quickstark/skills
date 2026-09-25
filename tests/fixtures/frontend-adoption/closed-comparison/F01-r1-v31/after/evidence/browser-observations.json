@@ -1,0 +1,91 @@
+{
+  "layouts": [
+    {
+      "name": "wide",
+      "width": 1280,
+      "documentWidth": 1280,
+      "headline": "Make room for wonder.",
+      "headerHeight": 80,
+      "buttonBottom": 608.59375,
+      "buttonContrast": 5.84,
+      "helperContrast": 5.54,
+      "linkContrast": 5.46,
+      "placeholderContrast": 6.25
+    },
+    {
+      "name": "narrow",
+      "width": 390,
+      "documentWidth": 390,
+      "headline": "Make room for wonder.",
+      "headerHeight": 104,
+      "buttonBottom": 893,
+      "buttonContrast": 5.84,
+      "helperContrast": 5.54,
+      "linkContrast": 5.46,
+      "placeholderContrast": 6.25
+    },
+    {
+      "name": "wide-dark",
+      "width": 1280,
+      "documentWidth": 1280,
+      "headline": "Make room for wonder.",
+      "headerHeight": 80,
+      "buttonBottom": 608.59375,
+      "buttonContrast": 8.39,
+      "helperContrast": 7.62,
+      "linkContrast": 7.43,
+      "placeholderContrast": 8.92
+    },
+    {
+      "name": "narrow-dark",
+      "width": 390,
+      "documentWidth": 390,
+      "headline": "Make room for wonder.",
+      "headerHeight": 104,
+      "buttonBottom": 893,
+      "buttonContrast": 8.39,
+      "helperContrast": 7.62,
+      "linkContrast": 7.43,
+      "placeholderContrast": 8.92
+    }
+  ],
+  "errors": [],
+  "blockedRequests": [],
+  "empty": {
+    "invalid": "true",
+    "error": "Enter your email address to continue.",
+    "focused": "member-email",
+    "events": []
+  },
+  "invalid": {
+    "error": "Enter a valid email address, such as you@example.com.",
+    "events": []
+  },
+  "keyboardSubmitFocus": "join-button",
+  "valid": {
+    "message": "Ready to continue with Family membership.",
+    "visible": true,
+    "events": [
+      {
+        "name": "join_started",
+        "plan": "family"
+      }
+    ],
+    "url": "file:///tmp/qs-frontend-trial-LMGCAx/index.html"
+  },
+  "firstTab": {
+    "text": "Skip to content",
+    "outline": "solid"
+  },
+  "ids": true,
+  "noForbiddenDashes": true,
+  "finalFormCheck": {
+    "events": [
+      {
+        "name": "join_started",
+        "plan": "family"
+      }
+    ],
+    "message": "Ready to continue with Family membership."
+  }
+}

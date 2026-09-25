@@ -1,0 +1,24 @@
+{
+  "id": "E5",
+  "cwd": "/tmp/qs-behavior-task-zdh4fu",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-runtime-forensics/SKILL.md",
+      "sourceSHA256": "1dad80fc2a7f6e7b4fe4b0141eb763ff8d3da436be850edf770c096b4a1b6540",
+      "derivedSHA256": "9b1a6efabf1f7eaeb1d49f5e91aa9974c580ca7ddd417ef22d0adf62ac8d3c75",
+      "bytes": 10195
+    }
+  ]
+}

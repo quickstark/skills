@@ -48,6 +48,11 @@ test('isolated projections expose only public roots, preserve private dependenci
   const output = join(await temporary(t), 'candidate');
   await invoke(output);
   await invoke(output, ['--check']);
+  const market = await json(join(output, 'codex/.agents/plugins/marketplace.json'));
+  assert.deepEqual(market.plugins.map((entry) => entry.name), [...TARGET_SKILL_COLLECTIONS.map((entry) => entry.id), 'ps-skills']);
+  assert.equal(TARGET_PUBLIC_COMMANDS.some((entry) => entry.collectionId === 'ps-skills'), false);
+  const retained = await json(join(output, 'pi/packages/ps-skills/package.json'));
+  assert.equal(retained.version, '3.8.0', 'Transition payload is immutable, outside current version synchronization');
   const version = (await json(join(repository, 'package.json'))).version;
   for (const collection of TARGET_SKILL_COLLECTIONS) {
     for (const [format, path] of [['codex', 'codex/plugins'], ['claude', 'packages'], ['pi', 'pi/packages']]) {

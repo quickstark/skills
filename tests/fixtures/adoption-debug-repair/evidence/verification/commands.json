@@ -1,0 +1,50 @@
+[
+  {
+    "label": "before-oracle",
+    "command": [
+      "node",
+      "--test",
+      "/github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs"
+    ],
+    "cwd": "/tmp/qs-debug-repair-capture-20260925/before",
+    "exitCode": 1
+  },
+  {
+    "label": "after-oracle",
+    "command": [
+      "node",
+      "--test",
+      "/github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs"
+    ],
+    "cwd": "/tmp/qs-debug-repair-capture-20260925/after",
+    "exitCode": 0
+  },
+  {
+    "label": "before-repro",
+    "command": [
+      "node",
+      "diagnostics/reproduce.mjs"
+    ],
+    "cwd": "/tmp/qs-debug-repair-capture-20260925/before",
+    "exitCode": 1
+  },
+  {
+    "label": "after-repro",
+    "command": [
+      "node",
+      "diagnostics/reproduce.mjs"
+    ],
+    "cwd": "/tmp/qs-debug-repair-capture-20260925/after",
+    "exitCode": 0
+  },
+  {
+    "label": "after-model-tests",
+    "command": [
+      "node",
+      "--test",
+      "test/preferences.test.mjs"
+    ],
+    "cwd": "/tmp/qs-debug-repair-capture-20260925/after",
+    "exitCode": 0
+  }
+]

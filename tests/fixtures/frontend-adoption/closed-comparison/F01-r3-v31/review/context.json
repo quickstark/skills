@@ -1,0 +1,330 @@
+{
+  "trialId": "F01-r3-v31",
+  "task": {
+    "id": "F01",
+    "title": "greenfield marketing page",
+    "mode": "implementation",
+    "projectFixture": "empty",
+    "input": "Build a polished static membership page for Northstar Museum from the supplied facts. Include an introduction, Family membership details, and museum facts. Use the existing brand, a clear membership-details link and a local join form. No image generation is needed. Deliver working responsive files, not just recommendations.",
+    "requiredChecks": [
+      "requested-sections",
+      "brand-and-facts",
+      "working-local-form",
+      "narrow-and-keyboard",
+      "zero-image-calls",
+      "no-publication"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "inputManifest": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "actualArtifactManifest": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "02d1f0711d23829dbdbf4240d09a16f3566b19b460589e9aa61c31378fca90cc",
+      "bytes": 1066
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "37c30eacc3a6f4d1985a98e1134ae1a62a109110d5bce34caac17d703f6c9b26",
+      "bytes": 3865
+    },
+    "evidence/check.cjs": {
+      "sha256": "551968b252fc9523f716c0598fb57c8c0eebff0c040dfc5c8bb13dfcc28d6ac9",
+      "bytes": 4958
+    },
+    "evidence/contrast-check.json": {
+      "sha256": "443de3dd0fa764c6ab161c660c0437cb47fdb12bb7fa4c5ef266b4bac6561f65",
+      "bytes": 1374
+    },
+    "evidence/narrow-confirmation.png": {
+      "sha256": "85254e3f357287997cca79914d7192c06a7a4517e48fbf7a005b8a0dc14bebbb",
+      "bytes": 98318
+    },
+    "evidence/narrow-dark.png": {
+      "sha256": "19cd3361ac5e5b4b855d69009b376c9ab7889ef22d98b4e85e0bc4cac169c0ec",
+      "bytes": 93650
+    },
+    "evidence/narrow-light.png": {
+      "sha256": "42c8d9ae0454aa19e52e37190b97c10960b4ad31ef2a27ceb0e3b00b3c6745bb",
+      "bytes": 91533
+    },
+    "evidence/wide-dark.png": {
+      "sha256": "5b7cc0b6699b7b2203f0d118302c377e92bd463d20ba569b0bea18cd67d80ca7",
+      "bytes": 108836
+    },
+    "evidence/wide-light.png": {
+      "sha256": "7080ee49003c9fc6a030867ec36533eab04f1714fd60ea7ccfc293b90daad6bd",
+      "bytes": 107217
+    },
+    "index.html": {
+      "sha256": "153741bc7da695fdca98cfe74e4fed639ab242a30afedde7924bb56a5d617d46",
+      "bytes": 3604
+    },
+    "styles.css": {
+      "sha256": "e0cd89c8d7c8e8e72f818d04a3aa8a4de39c4edf8f300b500913ea92898fff60",
+      "bytes": 6667
+    }
+  },
+  "rawToolItems": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!.*'\"'\"",
+      "aggregated_output": "/tmp/qs-frontend-trial-slrOCi\nREADME.md\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'cat README.md && ls -la'",
+      "aggregated_output": "This fixture has no build system or external dependencies. Use static HTML/CSS/JavaScript. Serve only on loopback if a local preview is needed; do not install packages or publish.\ntotal 168\ndrwx------    5 djn12313 djn12313   4096 Sep 25 15:58 .\ndrwxrwxrwt 1941 nobody   nogroup  159744 Sep 25 15:58 ..\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:58 .agents\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:58 .codex\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:58 .git\n-rw-rw-r--    1 djn12313 djn12313    180 Sep 25 15:58 README.md\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'find . -name AGENTS.md -print'",
+      "aggregated_output": "",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_4",
+      "type": "file_change",
+      "changes": [
+        {
+          "path": "/tmp/qs-frontend-trial-slrOCi/app.js",
+          "kind": "add"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-slrOCi/index.html",
+          "kind": "add"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-slrOCi/styles.css",
+          "kind": "add"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "item_6",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'mkdir -p evidence'",
+      "aggregated_output": "",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_7",
+      "type": "file_change",
+      "changes": [
+        {
+          "path": "/tmp/qs-frontend-trial-slrOCi/evidence/check.cjs",
+          "kind": "add"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "item_8",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'node evidence/check.cjs'",
+      "aggregated_output": "Passed: four responsive/theme layouts, keyboard, email validation, confirmation, analytics; no external page requests or runtime errors.\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_9",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'cat evidence/browser-observations.json'",
+      "aggregated_output": "{\n  \"observations\": [\n    {\n      \"name\": \"wide-light\",\n      \"pageWidth\": 1280,\n      \"viewportWidth\": 1280,\n      \"header\": {\n        \"x\": 56,\n        \"y\": 0,\n        \"width\": 1168,\n        \"height\": 80,\n        \"bottom\": 80\n      },\n      \"introduction\": {\n        \"x\": 56,\n        \"y\": 80,\n        \"width\": 1168,\n        \"height\": 326.28125,\n        \"bottom\": 406.28125\n      },\n      \"button\": {\n        \"x\": 739.28125,\n        \"y\": 641.28125,\n        \"width\": 440.71875,\n        \"height\": 48,\n        \"bottom\": 689.28125\n      },\n      \"detailsHref\": \"/membership/family\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"tokens\": {\n        \"--paper\": \"#f7f5ef\",\n        \"--ink\": \"#182d2a\",\n        \"--accent\": \"#086b64\",\n        \"--panel\": \"#e7ede6\",\n        \"--muted\": \"#4b605a\",\n        \"--field\": \"#fcfbf8\",\n        \"--button-text\": \"#f7f5ef\",\n        \"--error\": \"#9b2929\"\n      },\n      \"hasForbiddenDashes\": false\n    },\n    {\n      \"name\": \"narrow-light\",\n      \"pageWidth\": 390,\n      \"viewportWidth\": 390,\n      \"header\": {\n        \"x\": 20,\n        \"y\": 0,\n        \"width\": 350,\n        \"height\": 80,\n        \"bottom\": 80\n      },\n      \"introduction\": {\n        \"x\": 20,\n        \"y\": 80,\n        \"width\": 350,\n        \"height\": 355.15625,\n        \"bottom\": 435.15625\n      },\n      \"button\": {\n        \"x\": 44,\n        \"y\": 986.34375,\n        \"width\": 302,\n        \"height\": 48,\n        \"bottom\": 1034.34375\n      },\n      \"detailsHref\": \"/membership/family\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"tokens\": {\n        \"--paper\": \"#f7f5ef\",\n        \"--ink\": \"#182d2a\",\n        \"--accent\": \"#086b64\",\n        \"--panel\": \"#e7ede6\",\n        \"--muted\": \"#4b605a\",\n        \"--field\": \"#fcfbf8\",\n        \"--button-text\": \"#f7f5ef\",\n        \"--error\": \"#9b2929\"\n      },\n      \"hasForbiddenDashes\": false\n    },\n    {\n      \"name\": \"wide-dark\",\n      \"pageWidth\": 1280,\n      \"viewportWidth\": 1280,\n      \"header\": {\n        \"x\": 56,\n        \"y\": 0,\n        \"width\": 1168,\n        \"height\": 80,\n        \"bottom\": 80\n      },\n      \"introduction\": {\n        \"x\": 56,\n        \"y\": 80,\n        \"width\": 1168,\n        \"height\": 326.28125,\n        \"bottom\": 406.28125\n      },\n      \"button\": {\n        \"x\": 739.28125,\n        \"y\": 641.28125,\n        \"width\": 440.71875,\n        \"height\": 48,\n        \"bottom\": 689.28125\n      },\n      \"detailsHref\": \"/membership/family\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"tokens\": {\n        \"--paper\": \"#142724\",\n        \"--ink\": \"#f7f5ef\",\n        \"--accent\": \"#80d4c8\",\n        \"--panel\": \"#213a35\",\n        \"--muted\": \"#bfd0c7\",\n        \"--field\": \"#182d2a\",\n        \"--button-text\": \"#182d2a\",\n        \"--error\": \"#ffb5ad\"\n      },\n      \"hasForbiddenDashes\": false\n    },\n    {\n      \"name\": \"narrow-dark\",\n      \"pageWidth\": 390,\n      \"viewportWidth\": 390,\n      \"header\": {\n        \"x\": 20,\n        \"y\": 0,\n        \"width\": 350,\n        \"height\": 80,\n        \"bottom\": 80\n      },\n      \"introduction\": {\n        \"x\": 20,\n        \"y\": 80,\n        \"width\": 350,\n        \"height\": 355.15625,\n        \"bottom\": 435.15625\n      },\n      \"button\": {\n        \"x\": 44,\n        \"y\": 986.34375,\n        \"width\": 302,\n        \"height\": 48,\n        \"bottom\": 1034.34375\n      },\n      \"detailsHref\": \"/membership/family\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"tokens\": {\n        \"--paper\": \"#142724\",\n        \"--ink\": \"#f7f5ef\",\n        \"--accent\": \"#80d4c8\",\n        \"--panel\": \"#213a35\",\n        \"--muted\": \"#bfd0c7\",\n        \"--field\": \"#182d2a\",\n        \"--button-text\": \"#182d2a\",\n        \"--error\": \"#ffb5ad\"\n      },\n      \"hasForbiddenDashes\": false\n    }\n  ],\n  \"checks\": {\n    \"keyboard\": \"passed\",\n    \"emptyEmail\": \"passed\",\n    \"invalidEmail\": \"passed\",\n    \"validEmail\": \"passed\",\n    \"analyticsPayload\": \"passed\",\n    \"localOnly\": \"passed\"\n  },\n  \"externalRequests\": [],\n  \"errors\": []\n}",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_10",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"node - <<'NODE'\nconst fs = require('node:fs');\nconst data = JSON.parse(fs.readFileSync('evidence/browser-observations.json'));\nconst luminance = hex => {\n  const rgb = hex.slice(1).match(/../g).map(x => parseInt(x, 16) / 255).map(x => x <= .04045 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4);\n  return rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;\n};\nconst pairs = [['--ink','--paper'],['--muted','--panel'],['--muted','--field'],['--accent','--paper'],['--accent','--panel'],['--button-text','--accent'],['--error','--panel']];\nconst results = data.observations.filter(x => x.name.startsWith('wide')).map(({name,tokens}) => ({name, ratios: pairs.map(([fg,bg]) => {\n const a = luminance(tokens[fg]), b = luminance(tokens[bg]);\n const ratio = (Math.max(a,b)+.05)/(Math.min(a,b)+.05);\n if(ratio < 4.5) throw new Error(\"'`${name}: ${fg}/${bg} fails AA`);\n return {fg,bg,ratio: Number(ratio.toFixed(2))};\n})}));\nfs.writeFileSync('\"'evidence/contrast-check.json', JSON.stringify(results, null, 2));\nconsole.log(JSON.stringify(results, null, 2));\nNODE\"",
+      "aggregated_output": "[\n  {\n    \"name\": \"wide-light\",\n    \"ratios\": [\n      {\n        \"fg\": \"--ink\",\n        \"bg\": \"--paper\",\n        \"ratio\": 13.31\n      },\n      {\n        \"fg\": \"--muted\",\n        \"bg\": \"--panel\",\n        \"ratio\": 5.66\n      },\n      {\n        \"fg\": \"--muted\",\n        \"bg\": \"--field\",\n        \"ratio\": 6.5\n      },\n      {\n        \"fg\": \"--accent\",\n        \"bg\": \"--paper\",\n        \"ratio\": 5.84\n      },\n      {\n        \"fg\": \"--accent\",\n        \"bg\": \"--panel\",\n        \"ratio\": 5.35\n      },\n      {\n        \"fg\": \"--button-text\",\n        \"bg\": \"--accent\",\n        \"ratio\": 5.84\n      },\n      {\n        \"fg\": \"--error\",\n        \"bg\": \"--panel\",\n        \"ratio\": 6.44\n      }\n    ]\n  },\n  {\n    \"name\": \"wide-dark\",\n    \"ratios\": [\n      {\n        \"fg\": \"--ink\",\n        \"bg\": \"--paper\",\n        \"ratio\": 14.32\n      },\n      {\n        \"fg\": \"--muted\",\n        \"bg\": \"--panel\",\n        \"ratio\": 7.59\n      },\n      {\n        \"fg\": \"--muted\",\n        \"bg\": \"--field\",\n        \"ratio\": 9.02\n      },\n      {\n        \"fg\": \"--accent\",\n        \"bg\": \"--paper\",\n        \"ratio\": 9.04\n      },\n      {\n        \"fg\": \"--accent\",\n        \"bg\": \"--panel\",\n        \"ratio\": 7.07\n      },\n      {\n        \"fg\": \"--button-text\",\n        \"bg\": \"--accent\",\n        \"ratio\": 8.41\n      },\n      {\n        \"fg\": \"--error\",\n        \"bg\": \"--panel\",\n        \"ratio\": 7.24\n      }\n    ]\n  }\n]\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "execution": {
+    "exitCode": 0,
+    "timedOut": false,
+    "stopReason": null,
+    "completedTurn": true,
+    "processObservation": {
+      "passes": 2366,
+      "skippedTicks": 2,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "observedOwnedResidualProcesses": []
+  },
+  "browserStatus": "observed",
+  "rubric": {
+    "schemaVersion": 1,
+    "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+    "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+    "scores": {
+      "0": "Missing or unusable requested outcome",
+      "1": "Major task, readability or consistency failures",
+      "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+      "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+      "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+    },
+    "dimensions": [
+      "brief-and-content-fidelity",
+      "visual-hierarchy-and-readability",
+      "interaction-or-screen-flow-clarity",
+      "brand-and-platform-consistency",
+      "scope-and-evidence-honesty"
+    ],
+    "floor": 3,
+    "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+    "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+    "notAutomatic": [
+      "Source-string matching cannot establish behavior.",
+      "Browser metrics are observations for independent review, not aesthetic grades.",
+      "A screenshot cannot prove keyboard behavior.",
+      "An image prompt is not an image.",
+      "A response-only pilot cannot certify rendered or generated-image quality."
+    ],
+    "reviewSchema": {
+      "trialId": "string",
+      "reviewer": "independent identity",
+      "checks": [
+        {
+          "id": "scenario required check",
+          "result": "pass|fail|unverified",
+          "rationale": "cite response/artifact/event/observation"
+        }
+      ],
+      "dimensions": {
+        "dimension": "0..4 or not-applicable with reason"
+      },
+      "overall": "pass|fail|unverified",
+      "rationale": "evidence-backed explanation"
+    }
+  },
+  "reviewStatus": "Pending independent reviewer. Do not infer image/render quality from prose or source matching. Source names may remain visible in raw responses; blinding is partial."
+}

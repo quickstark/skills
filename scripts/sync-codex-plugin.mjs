@@ -17,6 +17,7 @@ import { PS_INTERNAL_CAPABILITIES } from "./ps-skill-catalog.mjs";
 import { assertGeneratedPackageRoot, assertGeneratedPiPackageRoot } from "./skill-package-projection.mjs";
 import { PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS_BY_NAME, REGISTRY_STATE } from "./skill-collection-registry.mjs";
 import { renderSkillOutputContract, renderHelpRoutingReference } from "./sync-skill-output-contracts.mjs";
+import { copyTransitionPayloads, verifyTransitionPayloads } from "./skill-transition-packages.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
@@ -252,13 +253,13 @@ function marketplace() {
     name: "quickstark",
     owner: { name: "QuickStark", url: "https://github.com/quickstark" },
     description: "QuickStark's focused, namespaced engineering and productivity skills.",
-    plugins: packages.map((pkg) => ({
+    plugins: [...packages.map((pkg) => ({
       name: pkg.name,
       source: pkg.claudeMarketplaceSource,
       description: pkg.description,
       category: "engineering",
       keywords: pkg.keywords,
-    })),
+    })), ...(targetRegistry ? [{ name: "ps-skills", source: "./packages/ps-skills", description: "Legacy migration compatibility only. New installations use the QS catalog; retained for existing native consumers.", category: "engineering", keywords: ["quickstark", "legacy", "migration"] }] : [])],
   };
 }
 
@@ -266,12 +267,12 @@ function codexMarketplace() {
   return {
     name: "quickstark",
     interface: { displayName: "QuickStark Skills" },
-    plugins: packages.map((pkg) => ({
+    plugins: [...packages.map((pkg) => ({
       name: pkg.name,
       source: { source: "local", path: `./plugins/${pkg.name}` },
       policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
       category: "Coding",
-    })),
+    })), ...(targetRegistry ? [{ name: "ps-skills", source: { source: "local", path: "./plugins/ps-skills" }, policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" }, category: "Coding" }] : [])],
   };
 }
 
@@ -378,6 +379,7 @@ function coreClaudeManifest() {
 }
 
 async function syncAll() {
+  if (targetRegistry && !candidate) await verifyTransitionPayloads(repositoryRoot);
   await mkdir(join(outputRoot, ".claude-plugin"), { recursive: true });
   await mkdir(join(outputRoot, "codex", ".agents", "plugins"), { recursive: true });
   for (const pkg of packages) {
@@ -392,6 +394,7 @@ async function syncAll() {
     await writePiProjection(pkg);
   }
 
+  if (targetRegistry && candidate) await copyTransitionPayloads(repositoryRoot, outputRoot);
   await writeFile(join(outputRoot, ".claude-plugin", "plugin.json"), json(coreClaudeManifest()));
   await writeFile(join(outputRoot, ".claude-plugin", "marketplace.json"), json(marketplace()));
   await writeFile(join(outputRoot, "codex", ".agents", "plugins", "marketplace.json"), json(codexMarketplace()));
@@ -512,6 +515,7 @@ async function verifyAll(selection = null) {
     await verifyPiProjection(pkg, pkg.piRoot);
     await verifyJson(join(pkg.piRoot, "package.json"), piManifest(pkg), `${pkg.name} Pi manifest`);
   }
+  if (targetRegistry) await verifyTransitionPayloads(repositoryRoot, outputRoot);
   await verifyJson(join(outputRoot, ".claude-plugin", "plugin.json"), coreClaudeManifest(), "core Claude manifest");
   await verifyJson(join(outputRoot, ".claude-plugin", "marketplace.json"), marketplace(), "Claude marketplace");
   await verifyJson(join(outputRoot, "codex", ".agents", "plugins", "marketplace.json"), codexMarketplace(), "Codex marketplace");

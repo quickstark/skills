@@ -16,6 +16,11 @@ const hash = (value) => createHash('sha256').update(JSON.stringify(value)).diges
 const sameNames = (a, b) => names(a) && names(b) && [...a].sort().join('\0') === [...b].sort().join('\0');
 const sorted = (values) => [...new Set(values)].sort();
 const key = (entry) => `${entry.kind}:${entry.identity}`;
+const resourceAliases = {
+  'claude-code': { surface: 'claude-link', directory: '.claude/skills' },
+  codex: { surface: 'codex-link', directory: '.codex/skills' },
+  pi: { surface: 'pi-link', directory: '.pi/agent/skills' },
+};
 const requirementNames = [
   'fresh-path-link-version-digest-revalidation', 'complete-selected-capability-proof',
   'replacement-package-closure-and-notices', 'no-old-new-duplicate-discovery',
@@ -72,7 +77,7 @@ export function validateSkillMigrations(document, { manifest } = {}) {
         require(object(location) && (entry.kind === 'package'
           ? location.surface === 'native-manager' && location.packageId === entry.identity && location.marketplace === 'quickstark'
           : location.surface === 'shared-canonical' && location.path === `~/.agents/skills/${entry.identity}`
-            || location.surface === 'claude-link' && location.path === `~/.claude/skills/${entry.identity}` && location.linkTarget === `~/.agents/skills/${entry.identity}`), `${entry.identity}: unknown or unsafe owned location.`);
+            || Object.values(resourceAliases).some((alias) => location.surface === alias.surface && location.path === `~/${alias.directory}/${entry.identity}` && location.linkTarget === `~/.agents/skills/${entry.identity}`)), `${entry.identity}: unknown or unsafe owned location.`);
       }
       require(Array.isArray(entry.replacements) && entry.replacements.length > 0, `${entry.identity}: replacement coverage required.`);
       const replacementKeys = new Set();
@@ -112,8 +117,8 @@ function observationConflicts(entry, observed, agent, homeDirectory) {
   if (observed.linkTarget !== null && !safeAbsolute(observed.linkTarget)) failures.push('unsafe-link-target');
   if (entry.kind === 'resource') {
     const canonical = path.join(homeDirectory, '.agents', 'skills', entry.identity);
-    const claudeLink = path.join(homeDirectory, '.claude', 'skills', entry.identity);
-    if (observed.canonicalPath !== canonical || !(observed.path === canonical && observed.linkTarget === null || agent === 'claude-code' && observed.path === claudeLink && observed.linkTarget === canonical)) failures.push('outside-managed-location');
+    const alias = path.join(homeDirectory, resourceAliases[agent].directory, entry.identity);
+    if (observed.canonicalPath !== canonical || !(observed.path === canonical && observed.linkTarget === null || observed.path === alias && observed.linkTarget === canonical)) failures.push('outside-managed-location');
     if (!entry.acceptedPrior.some((prior) => prior.revision === observed.revision && prior.digest.value === observed.digest?.value)) failures.push('unaccepted-prior-pin-or-digest');
     if (!names(observed.consumers) || observed.consumers.some((consumer) => !['codex', 'claude-code', 'pi'].includes(consumer)) || !observed.consumers.includes(agent)) failures.push('unproven-shared-consumers');
   } else {

@@ -1,0 +1,24 @@
+{
+  "kind": "inactive-candidate-foundation-checkpoint",
+  "baseRevision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+  "registry": "legacy",
+  "tests": {
+    "passed": 455,
+    "failed": 0,
+    "skipped": 0
+  },
+  "priorFullRun": {
+    "passed": 453,
+    "failed": 2,
+    "cause": "Frontend shared-brief derived dependency hash not refreshed after source repair; corrected metadata, source-preservation and corruption controls remain."
+  },
+  "limits": "Not final activated package/release acceptance. Frontend and selected behavior cases pending. No publication or actual machine update.",
+  "logs": {
+    "qs-adoption-verified-foundation-sync.log": "f689aaa649068c7ec544ed40e7acef8dd2d19ef7abc7ce43f2e4d2c321ad1f50",
+    "qs-adoption-verified-foundation-check.log": "d2c30dd51dca120b19c36f052a6984396e94f7a05b445ee912f1e2b8a830f8a1",
+    "qs-adoption-verified-foundation-full-tests.log": "463da56f673a44c1a213d4a192e2dde221299f95d4873694318d71eac5b48a4e",
+    "qs-parent-updater-ps-final-tests.log": "7603ce4502e411a383fb8713bf89494fc2fecdedaab78ff25b42123e825eeaad",
+    "qs-parent-selection-obligation-tests.log": "49003df631738554780776e7b400a9525fd7fc6166f2bc615d8869e32f2c2586",
+    "qs-adoption-post-foundation-full-tests.log": "440baeb3cc0cc6444a569558893089c354110d40b929b8482e94be4c9d2b4204"
+  }
+}

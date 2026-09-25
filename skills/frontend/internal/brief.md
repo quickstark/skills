@@ -19,6 +19,12 @@ round metrics, dates, prices, names and claims exactly; never randomize them to
 look less generic. For a new concept, label draft copy and illustrative data.
 Missing real content must not become an invented factual claim.
 
+Carry explicit brand tokens into the components they govern. A declared font or
+radius is not permission to invent a secondary face or smaller control radius.
+Retain existing documented component variants; otherwise use the supplied values
+consistently, including inputs and buttons. Verify computed styles at the target
+sizes so browser defaults and later overrides cannot silently change the brand.
+
 Do not turn this schema into a compulsory interview. Resolve routine choices from
 evidence. Ask only when a missing choice materially changes the authorized result.
 Prompt-only means no image calls, code edits or deployment. Audit-only means no

@@ -1,0 +1,80 @@
+{
+  "case": {
+    "id": "V2",
+    "skill": "qs-video",
+    "source": "skills/video/qs-video/SKILL.md",
+    "references": [
+      "skills/video/qs-video/references/runtime-compatibility.md",
+      "skills/video/qs-video/references/adaptation-policy.md"
+    ],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Existing project has BRIEF approved:4second caption-only edit, retain source footage/audio. package.json pins hyperframes0.8.76. Available CLI is0.8.77. Supplied source is local source.mp4; no model cache or ONNX dependency exists. Tell me what can proceed and what is missing. No upgrade/install/model download or external provider authorized.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-19",
+      "AC-20"
+    ],
+    "expected": [
+      "Preserve existing pin and brief",
+      "Exact matting/runtime prerequisite scoped to selected path",
+      "No implicit install/pin upgrade, no successful render claim",
+      "No re-interview or silent provider substitution"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 33975.46928399999,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 25180,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 947,
+        "reasoning_output_tokens": 306
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 340,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "1715d5dc6aede9c61fc948123673a65a5064a0ba58d25e9ef5a06642be71f867",
+    "promptUtf8Bytes": 24560,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-TJ1V75",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "05c8f78378ba97908e858c09e5b1190f41ffb37537df7eb7bf9399f3456b62c5",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

@@ -1,0 +1,28 @@
+{
+  "run": {
+    "trialId": "pilot-F10-v84",
+    "scenarioId": "F10",
+    "repetition": null,
+    "variant": "v84"
+  },
+  "cwd": "/tmp/qs-frontend-trial-jEADlw",
+  "failure": "Runtime incomplete, disallowed event or owned process residual; see raw evidence.",
+  "before": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "filesChanged": false,
+  "browserStatus": "not-applicable",
+  "browserError": null,
+  "requiredImageEvidence": "No generated images requested.",
+  "independentReview": "pending",
+  "completeness": "Execution evidence only; adoption requires all rubric and scenario checks."
+}

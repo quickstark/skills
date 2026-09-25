@@ -1,0 +1,170 @@
+{
+  "observations": [
+    {
+      "name": "wide-light",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "header": {
+        "x": 56,
+        "y": 0,
+        "width": 1168,
+        "height": 80,
+        "bottom": 80
+      },
+      "introduction": {
+        "x": 56,
+        "y": 80,
+        "width": 1168,
+        "height": 326.28125,
+        "bottom": 406.28125
+      },
+      "button": {
+        "x": 739.28125,
+        "y": 641.28125,
+        "width": 440.71875,
+        "height": 48,
+        "bottom": 689.28125
+      },
+      "detailsHref": "/membership/family",
+      "background": "rgba(0, 0, 0, 0)",
+      "tokens": {
+        "--paper": "#f7f5ef",
+        "--ink": "#182d2a",
+        "--accent": "#086b64",
+        "--panel": "#e7ede6",
+        "--muted": "#4b605a",
+        "--field": "#fcfbf8",
+        "--button-text": "#f7f5ef",
+        "--error": "#9b2929"
+      },
+      "hasForbiddenDashes": false
+    },
+    {
+      "name": "narrow-light",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "header": {
+        "x": 20,
+        "y": 0,
+        "width": 350,
+        "height": 80,
+        "bottom": 80
+      },
+      "introduction": {
+        "x": 20,
+        "y": 80,
+        "width": 350,
+        "height": 355.15625,
+        "bottom": 435.15625
+      },
+      "button": {
+        "x": 44,
+        "y": 986.34375,
+        "width": 302,
+        "height": 48,
+        "bottom": 1034.34375
+      },
+      "detailsHref": "/membership/family",
+      "background": "rgba(0, 0, 0, 0)",
+      "tokens": {
+        "--paper": "#f7f5ef",
+        "--ink": "#182d2a",
+        "--accent": "#086b64",
+        "--panel": "#e7ede6",
+        "--muted": "#4b605a",
+        "--field": "#fcfbf8",
+        "--button-text": "#f7f5ef",
+        "--error": "#9b2929"
+      },
+      "hasForbiddenDashes": false
+    },
+    {
+      "name": "wide-dark",
+      "pageWidth": 1280,
+      "viewportWidth": 1280,
+      "header": {
+        "x": 56,
+        "y": 0,
+        "width": 1168,
+        "height": 80,
+        "bottom": 80
+      },
+      "introduction": {
+        "x": 56,
+        "y": 80,
+        "width": 1168,
+        "height": 326.28125,
+        "bottom": 406.28125
+      },
+      "button": {
+        "x": 739.28125,
+        "y": 641.28125,
+        "width": 440.71875,
+        "height": 48,
+        "bottom": 689.28125
+      },
+      "detailsHref": "/membership/family",
+      "background": "rgba(0, 0, 0, 0)",
+      "tokens": {
+        "--paper": "#142724",
+        "--ink": "#f7f5ef",
+        "--accent": "#80d4c8",
+        "--panel": "#213a35",
+        "--muted": "#bfd0c7",
+        "--field": "#182d2a",
+        "--button-text": "#182d2a",
+        "--error": "#ffb5ad"
+      },
+      "hasForbiddenDashes": false
+    },
+    {
+      "name": "narrow-dark",
+      "pageWidth": 390,
+      "viewportWidth": 390,
+      "header": {
+        "x": 20,
+        "y": 0,
+        "width": 350,
+        "height": 80,
+        "bottom": 80
+      },
+      "introduction": {
+        "x": 20,
+        "y": 80,
+        "width": 350,
+        "height": 355.15625,
+        "bottom": 435.15625
+      },
+      "button": {
+        "x": 44,
+        "y": 986.34375,
+        "width": 302,
+        "height": 48,
+        "bottom": 1034.34375
+      },
+      "detailsHref": "/membership/family",
+      "background": "rgba(0, 0, 0, 0)",
+      "tokens": {
+        "--paper": "#142724",
+        "--ink": "#f7f5ef",
+        "--accent": "#80d4c8",
+        "--panel": "#213a35",
+        "--muted": "#bfd0c7",
+        "--field": "#182d2a",
+        "--button-text": "#182d2a",
+        "--error": "#ffb5ad"
+      },
+      "hasForbiddenDashes": false
+    }
+  ],
+  "checks": {
+    "keyboard": "passed",
+    "emptyEmail": "passed",
+    "invalidEmail": "passed",
+    "validEmail": "passed",
+    "analyticsPayload": "passed",
+    "localOnly": "passed"
+  },
+  "externalRequests": [],
+  "errors": []
+}

@@ -1,0 +1,36 @@
+{
+  "id": "A6",
+  "cwd": "/tmp/qs-behavior-task-H5C7GZ",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-plan-spec/SKILL.md",
+      "sourceSHA256": "7b7eb93a4ccd7d69165c895c57a4edb39d105dfe9582ead936b1d98378c1a286",
+      "derivedSHA256": "caec6ea745adc2898ed3870b02da9cdb735e045ffeb5a1a4d60080eae68eeaad",
+      "bytes": 10194
+    },
+    {
+      "path": "skills/internal/ticket-decomposition.md",
+      "sourceSHA256": "1a1da20d3a46773b0f73e80366c3463e567721f200e1ba64fc8df600c0bee56e",
+      "derivedSHA256": "1a1da20d3a46773b0f73e80366c3463e567721f200e1ba64fc8df600c0bee56e",
+      "bytes": 2610
+    },
+    {
+      "path": "skills/internal/tdd-loop.md",
+      "sourceSHA256": "39a5db34c28914ce00eef828bb5ca2cfc4a668789c01d5b0db69b68ee7a43206",
+      "derivedSHA256": "39a5db34c28914ce00eef828bb5ca2cfc4a668789c01d5b0db69b68ee7a43206",
+      "bytes": 2602
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+/* Native editorial design. Brand typography and colors come from the brief.
+   One 12px radius for surfaces and controls; z-index 1 is the skip-link layer. */
+:root {
+  color-scheme: light dark;
+  --paper: #f7f5ef;
+  --ink: #182d2a;
+  --accent: #086b64;
+  --panel: #e7ede6;
+  --muted: #4b605a;
+  --line: #bac7be;
+  --field: #fcfbf8;
+  --button-text: #f7f5ef;
+  --error: #9b2929;
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; text-underline-offset: 5px; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+.wrap { width: min(1168px, calc(100% - 80px)); margin-inline: auto; }
+.skip-link { position: absolute; top: 10px; left: 16px; padding: 12px; background: var(--paper); z-index: 1; transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+.site-header { min-height: 80px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); gap: 24px; }
+.wordmark { font-size: 25px; line-height: .98; text-decoration: none; letter-spacing: -.8px; }
+.wordmark span { display: block; font-size: 15px; letter-spacing: .8px; margin-top: 5px; }
+nav { display: flex; gap: 32px; align-items: center; }
+nav a { font-family: Arial, sans-serif; font-size: 14px; text-decoration: none; padding-block: 10px; }
+nav a[aria-current] { color: var(--accent); text-decoration: underline; }
+nav a:hover, .text-link:hover { text-decoration: underline; }
+.introduction { padding: 56px 0 52px; display: grid; grid-template-columns: 1.4fr 1fr; align-items: end; gap: 48px; }
+.eyebrow { font: 11px/1.5 Arial, sans-serif; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 20px; color: var(--accent); }
+h1 { font-weight: 400; font-size: clamp(58px, 7.1vw, 90px); line-height: 1.01; letter-spacing: -4px; margin: 0; }
+.intro-aside { padding: 0 0 7px 30px; }
+.intro-aside p { font-size: 28px; line-height: 1.35; max-width: 330px; margin: 0 0 28px; }
+.text-link { display: inline-flex; gap: 24px; align-items: center; font: 14px/1.5 Arial, sans-serif; font-weight: 600; color: var(--accent); text-decoration: underline; }
+.text-link span { font-size: 22px; font-weight: 400; }
+.membership-panel { background: var(--panel); border-radius: 12px; padding: 38px 44px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; scroll-margin-top: 20px; }
+h2 { font-size: 29px; font-weight: 400; letter-spacing: -.6px; margin: 0; }
+.price { font-size: 70px; letter-spacing: -3px; line-height: 1.1; margin: 22px 0 14px; }
+.price span { font-size: 20px; letter-spacing: 0; color: var(--muted); }
+.benefit { font-size: 18px; line-height: 1.5; max-width: 340px; margin: 0 0 16px; }
+.effective { font: 12px/1.5 Arial, sans-serif; color: var(--muted); margin: 18px 0 0; }
+.join-area { border-left: 1px solid var(--line); padding-left: 44px; }
+h3 { font-size: 27px; font-weight: 400; letter-spacing: -.5px; margin: 0 0 8px; }
+.form-intro { font: 14px/1.5 Arial, sans-serif; margin: 0 0 22px; color: var(--muted); }
+form { font-family: Arial, sans-serif; }
+label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 9px; }
+input { width: 100%; min-height: 48px; border: 1px solid #7b9188; border-radius: 12px; padding: 12px 14px; color: var(--ink); background: var(--field); font-size: 16px; }
+input::placeholder { color: var(--muted); opacity: 1; }
+.helper, .privacy, .local-note, .error { font: 12px/1.5 Arial, sans-serif; color: var(--muted); }
+.helper { margin: 8px 0 16px; }
+.error { color: var(--error); margin: 0 0 14px; }
+input[aria-invalid="true"] { border-color: var(--error); }
+button { border: 0; border-radius: 12px; background: var(--accent); color: var(--button-text); min-height: 48px; padding: 12px 18px; width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 15px; cursor: pointer; white-space: nowrap; }
+button span { font-size: 22px; line-height: 1; }
+button:hover { opacity: .9; }
+button:active { transform: scale(.98); }
+.privacy { margin: 12px 0 0; }
+.local-note { margin: 16px 0 0; max-width: 340px; }
+.form-message:empty { display: none; }
+.form-message { font-size: 14px; line-height: 1.5; color: var(--accent); border-top: 1px solid var(--line); padding-top: 14px; margin-bottom: 0; }
+.museum-facts { padding: 64px 0; }
+.museum-facts h2 { font-size: 34px; }
+.facts-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin: 34px 0 0; gap: 32px; }
+.facts-grid div { display: flex; flex-direction: column-reverse; gap: 9px; }
+.facts-grid dt { font: 14px/1.5 Arial, sans-serif; color: var(--muted); }
+.facts-grid dd { font-size: 54px; letter-spacing: -2px; margin: 0; }
+.site-footer { border-top: 1px solid var(--line); padding-block: 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.site-footer p { margin: 0; font-size: 18px; }
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #142724; --ink: #f7f5ef; --accent: #80d4c8; --panel: #213a35; --muted: #bfd0c7; --line: #526b62; --field: #182d2a; --button-text: #182d2a; --error: #ffb5ad; }
+}
+@media (max-width: 767px) {
+  .wrap { width: calc(100% - 40px); }
+  .site-header { gap: 16px; min-height: 80px; }
+  .wordmark { font-size: 21px; }
+  .wordmark span { font-size: 12px; }
+  nav { gap: 14px; }
+  nav a { font-size: 12px; }
+  .introduction { grid-template-columns: 1fr; gap: 28px; padding: 36px 0; }
+  .eyebrow { font-size: 10px; margin-bottom: 16px; letter-spacing: 1.6px; }
+  h1 { font-size: clamp(49px, 14.7vw, 78px); letter-spacing: -2.6px; }
+  .intro-aside { padding: 0; }
+  .intro-aside p { font-size: 22px; margin-bottom: 16px; max-width: 320px; }
+  .membership-panel { grid-template-columns: 1fr; padding: 28px 24px; gap: 28px; }
+  h2 { font-size: 26px; }
+  .price { font-size: 62px; margin-top: 18px; }
+  .join-area { padding: 28px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+  .museum-facts { padding: 42px 0; }
+  .museum-facts h2 { font-size: 30px; max-width: 280px; }
+  .facts-grid { grid-template-columns: 1fr; gap: 24px; margin-top: 28px; }
+  .facts-grid div { flex-direction: row-reverse; justify-content: space-between; align-items: baseline; }
+  .facts-grid dd { font-size: 42px; }
+  .site-footer { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .site-footer nav { gap: 24px; }
+}
+@media (max-width: 359px) {
+  .wrap { width: calc(100% - 32px); }
+  nav { gap: 9px; }
+  nav a { font-size: 11px; }
+}

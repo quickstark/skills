@@ -1,0 +1,245 @@
+{
+  "trialId": "F02-r1-v31",
+  "task": {
+    "id": "F02",
+    "title": "audit only",
+    "mode": "audit",
+    "projectFixture": "project",
+    "input": "Audit this membership flow for the most important usability and accessibility problems. Give prioritized findings with concrete evidence and fixes. Do not edit files or redesign it yet.",
+    "requiredChecks": [
+      "zero-file-mutation",
+      "specific-observed-findings",
+      "prioritized-impact",
+      "no-claimed-implementation",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": false,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "unchanged-input-files"
+    ],
+    "qualityFloor": 3
+  },
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "inputManifest": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "actualArtifactManifest": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "rawToolItems": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"pwd; rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!yarn.lock'\"' -g '\"'!'\"\\\\.git'\"",
+      "aggregated_output": "/tmp/qs-frontend-trial-9YI09c\nindex.html\nstyle.css\napp.js\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'ls -la; sha256sum index.html style.css app.js; cat index.html style.css app.js'",
+      "aggregated_output": "total 176\ndrwx------    5 djn12313 djn12313   4096 Sep 25 16:06 .\ndrwxrwxrwt 1967 nobody   nogroup  159744 Sep 25 16:06 ..\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 16:06 .agents\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 16:06 .codex\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 16:06 .git\n-rw-rw-r--    1 djn12313 djn12313    447 Sep 25 16:05 app.js\n-rw-rw-r--    1 djn12313 djn12313   2049 Sep 25 16:05 index.html\n-rw-rw-r--    1 djn12313 djn12313   1266 Sep 25 16:05 style.css\ne7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f  index.html\ndde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3  style.css\n3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41  app.js\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Northstar Museum membership</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>\n<header id=\"site-header\"><a class=\"wordmark\" href=\"/\">Northstar Museum</a><nav aria-label=\"Main\"><a href=\"/visit\">Visit</a><a href=\"/collections\">Collections</a><a href=\"/membership\" aria-current=\"page\">Membership</a></nav></header>\n<main><section class=\"intro\"><p class=\"eyebrow\">A place for curiosity</p><h1>Make room for wonder.</h1><p>Family membership keeps discovery close to home.</p></section>\n<section id=\"membership-panel\" aria-labelledby=\"membership-title\"><div><p class=\"eyebrow\">Family membership</p><h2 id=\"membership-title\">A year of discovery</h2><p>Unlimited entry for two adults and children under 18.</p><p class=\"price\" id=\"price\">$100 <span>/ year</span></p><ul><li>Unlimited gallery visits</li><li>Member preview evenings</li><li>10% off the museum shop</li></ul><a id=\"details-link\" href=\"/membership/family\">View membership details</a></div>\n<form id=\"join-form\" action=\"/join/checkout?plan=family\"><h3>Your next visit starts here</h3><p>Enter your email to continue.</p><input id=\"member-email\" name=\"email\" type=\"email\" placeholder=\"Email address\" required><div id=\"join-button\" class=\"button\" data-event=\"join_started\">Continue with family membership</div><p id=\"form-message\" role=\"status\"></p><p>By continuing, you accept our <a href=\"/privacy\">privacy notice</a>.</p></form></section>\n<section class=\"metrics\" aria-label=\"Museum facts\"><p><strong id=\"member-count\" class=\"pulse\">10,000</strong> members</p><p><strong id=\"annual-visits\">50,000</strong> annual visits</p><p><strong id=\"founded\">2020</strong> founded</p><p>Membership pricing effective <time datetime=\"2025-01-01\">January 1, 2025</time>.</p></section></main>\n<footer id=\"site-footer\"><p>Northstar Museum</p><a href=\"/accessibility\">Accessibility</a><a href=\"/privacy\">Privacy</a></footer><script src=\"app.js\"></script></body></html>\n:root{--brand:#086b64;--paper:#f7f5ef;--ink:#182d2a;--radius:12px}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,serif}header,footer{display:flex;justify-content:space-between;gap:24px;padding:28px 40px;background:white}a{color:var(--brand)}nav{display:flex;gap:20px}.wordmark{font-size:24px;font-weight:bold;text-decoration:none}main{padding:32px 40px;min-width:960px}.intro{max-width:740px;margin-bottom:24px}h1{font-size:56px;margin:12px 0;line-height:1.1}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:13px}#membership-panel{display:grid;grid-template-columns:1fr 1fr;gap:40px;background:white;border-radius:var(--radius);padding:32px}.price{font-size:48px;margin:20px 0}.price span{font-size:16px}.button{display:block;background:var(--brand);color:white;padding:16px;cursor:pointer;border-radius:var(--radius);margin-top:16px}input{width:100%;padding:14px;border:1px solid #9baea9;border-radius:var(--radius);font:inherit}a:focus,input:focus{outline:none}.metrics{display:flex;gap:32px;margin-top:32px;align-items:center}.metrics strong{font-size:24px}.pulse{display:inline-block;animation:gentle-pulse 2s infinite}footer{margin-top:20px}@keyframes gentle-pulse{50%{transform:scale(1.04)}}\nwindow.__events=[];\nconst form=document.getElementById('join-form');\nfunction submitMembership(event){event.preventDefault();if(!form.reportValidity())return;window.__events.push({name:'join_started',plan:'family'});document.getElementById('form-message').textContent='Ready to continue with Family membership.';}\nform.addEventListener('submit',submitMembership);\ndocument.getElementById('join-button').addEventListener('click',submitMembership);\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"node <<'NODE'\nconst fs = require('fs');\nconst puppeteer = require('/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js');\n(async()=>{\n let browser;\n try {\n browser=await puppeteer.launch({executablePath:'/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell',headless:true,args:['--no-sandbox','--disable-background-networking','--disable-component-update','--no-first-run']});\n const page=await browser.newPage();\n await page.setRequestInterception(true);\n page.on('request',r=>{const path=new URL(r.url()).pathname; const file={'/':'index.html','/style.css':'style.css','/app.js':'app.js'}[path];if(r.url().startsWith('http://fixture.local/')&&file)r.respond({status:200,contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':'text/html',body:fs.readFileSync(file)});else r.abort();});\n for(const size of [{width:1280,height:900},{width:390,height:844}]){\n await page.setViewport(size); await page.goto('http://fixture.local/',{waitUntil:'load'});\n console.log(JSON.stringify({viewport:size,layout:await page.evaluate(()=>({viewport:innerWidth,documentWidth:document.documentElement.scrollWidth,elements:Object.fromEntries(['main','#membership-panel','#join-form','#member-email','#join-button','nav'].map(s=>{const e=document.querySelector(s),r=e.getBoundingClientRect();return [s,{x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}]}))}))}));\n }\n await page.setViewport({width:1280,height:900});await page.goto('http://fixture.local/',{waitUntil:'load'});\n const tabStops=[];for(let i=0;i<9;i++){await page.keyboard.press('Tab');tabStops.push(await page.evaluate(()=>{const e=document.activeElement,s=getComputedStyle(e);return {tag:e.tagName,id:e.id,text:e.textContent.trim().slice(0,50),outline:s.outline,boxShadow:s.boxShadow,border:s.border}}));}console.log(JSON.stringify({tabStops}));\n const client=await page.createCDPSession();const ax=await client.send('Accessibility.getFullAXTree');console.log(JSON.stringify({accessibility:ax.nodes.filter(n=>['textbox','button'].includes(n.role?.value)).map(n=>({role:n.role.value,name:n.name?.value,properties:n.properties}))}));\n await page.click('#join-button'); console.log(JSON.stringify({emptyClick:await page.evaluate(()=>({events:window.__events,message:document.querySelector('#form-message').textContent,invalid:\"'!document.querySelector('\"'input').validity.valid}))}));\n await page.type('#member-email','not-an-email');await page.click('#join-button');console.log(JSON.stringify({invalidClick:await page.evaluate(()=>({events:window.__events,message:document.querySelector('#form-message').textContent,validation:document.querySelector('input').validationMessage}))}));\n await page.\"'$eval('\"'#member-email',e=>e.value='');await page.type('#member-email','visitor@example.test');await page.click('#join-button');console.log(JSON.stringify({validClick:await page.evaluate(()=>({events:window.__events,message:document.querySelector('#form-message').textContent,url:location.href}))}));\n await page.reload({waitUntil:'load'});await page.type('#member-email','visitor@example.test');await page.keyboard.press('Enter');console.log(JSON.stringify({validEnter:await page.evaluate(()=>({events:window.__events,message:document.querySelector('#form-message').textContent}))}));\n await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);console.log(JSON.stringify({reducedMotion:await page.\"'$eval('\"'.pulse',e=>({animation:getComputedStyle(e).animation,preference:matchMedia('(prefers-reduced-motion: reduce)').matches}))}));\n } finally {if(browser)await browser.close();}\n})().catch(e=>{console.error(e);process.exitCode=1;});\nNODE\"",
+      "aggregated_output": "{\"viewport\":{\"width\":1280,\"height\":900},\"layout\":{\"viewport\":1280,\"documentWidth\":1280,\"elements\":{\"main\":{\"x\":0,\"y\":83,\"width\":1280,\"height\":677.40625,\"right\":1280},\"#membership-panel\":{\"x\":40,\"y\":276.59375,\"width\":1200,\"height\":360.8125,\"right\":1240},\"#join-form\":{\"x\":660,\"y\":308.59375,\"width\":548,\"height\":296.8125,\"right\":1208},\"#member-email\":{\"x\":660,\"y\":402.03125,\"width\":548,\"height\":48,\"right\":1208},\"#join-button\":{\"x\":660,\"y\":466.03125,\"width\":548,\"height\":50,\"right\":1208},\"nav\":{\"x\":1016.078125,\"y\":28,\"width\":223.921875,\"height\":27,\"right\":1240}}}}\n{\"viewport\":{\"width\":390,\"height\":844},\"layout\":{\"viewport\":390,\"documentWidth\":960,\"elements\":{\"main\":{\"x\":0,\"y\":110,\"width\":960,\"height\":677.40625,\"right\":960},\"#membership-panel\":{\"x\":40,\"y\":303.59375,\"width\":880,\"height\":360.8125,\"right\":920},\"#join-form\":{\"x\":500,\"y\":335.59375,\"width\":388,\"height\":296.8125,\"right\":888},\"#member-email\":{\"x\":500,\"y\":429.03125,\"width\":388,\"height\":48,\"right\":888},\"#join-button\":{\"x\":500,\"y\":493.03125,\"width\":388,\"height\":50,\"right\":888},\"nav\":{\"x\":164.875,\"y\":28,\"width\":223.921875,\"height\":54,\"right\":388.796875}}}}\n{\"tabStops\":[{\"tag\":\"A\",\"id\":\"\",\"text\":\"Northstar Museum\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"A\",\"id\":\"\",\"text\":\"Visit\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"A\",\"id\":\"\",\"text\":\"Collections\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"A\",\"id\":\"\",\"text\":\"Membership\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"A\",\"id\":\"details-link\",\"text\":\"View membership details\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"INPUT\",\"id\":\"member-email\",\"text\":\"\",\"outline\":\"rgb(0, 0, 0) none 3px\",\"boxShadow\":\"none\",\"border\":\"1px solid rgb(155, 174, 169)\"},{\"tag\":\"A\",\"id\":\"\",\"text\":\"privacy notice\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"A\",\"id\":\"\",\"text\":\"Accessibility\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"},{\"tag\":\"A\",\"id\":\"\",\"text\":\"Privacy\",\"outline\":\"rgb(8, 107, 100) none 3px\",\"boxShadow\":\"none\",\"border\":\"0px none rgb(8, 107, 100)\"}]}\n{\"accessibility\":[{\"role\":\"textbox\",\"name\":\"Email address\",\"properties\":[{\"name\":\"invalid\",\"value\":{\"type\":\"token\",\"value\":\"false\"}},{\"name\":\"focusable\",\"value\":{\"type\":\"booleanOrUndefined\",\"value\":true}},{\"name\":\"editable\",\"value\":{\"type\":\"token\",\"value\":\"plaintext\"}},{\"name\":\"settable\",\"value\":{\"type\":\"booleanOrUndefined\",\"value\":true}},{\"name\":\"multiline\",\"value\":{\"type\":\"boolean\",\"value\":false}},{\"name\":\"readonly\",\"value\":{\"type\":\"boolean\",\"value\":false}},{\"name\":\"required\",\"value\":{\"type\":\"boolean\",\"value\":true}}]}]}\n{\"emptyClick\":{\"events\":[],\"message\":\"\",\"invalid\":true}}\n{\"invalidClick\":{\"events\":[],\"message\":\"\",\"validation\":\"Please include an '@' in the email address. 'not-an-email' is missing an '@'.\"}}\n{\"validClick\":{\"events\":[{\"name\":\"join_started\",\"plan\":\"family\"}],\"message\":\"Ready to continue with Family membership.\",\"url\":\"http://fixture.local/\"}}\n{\"validEnter\":{\"events\":[{\"name\":\"join_started\",\"plan\":\"family\"}],\"message\":\"Ready to continue with Family membership.\"}}\n{\"reducedMotion\":{\"animation\":\"2s infinite gentle-pulse\",\"preference\":true}}\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"sha256sum index.html style.css app.js; rg --files --hidden -g '\"'!'\"\\\\.git/**' -g '\"'!'\"\\\\.agents/**' -g '\"'!'\"\\\\.codex/**'\"",
+      "aggregated_output": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f  index.html\ndde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3  style.css\n3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41  app.js\nindex.html\nstyle.css\napp.js\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "execution": {
+    "exitCode": 0,
+    "timedOut": false,
+    "stopReason": null,
+    "completedTurn": true,
+    "processObservation": {
+      "passes": 1202,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "observedOwnedResidualProcesses": []
+  },
+  "browserStatus": "not-applicable",
+  "rubric": {
+    "schemaVersion": 1,
+    "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+    "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+    "scores": {
+      "0": "Missing or unusable requested outcome",
+      "1": "Major task, readability or consistency failures",
+      "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+      "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+      "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+    },
+    "dimensions": [
+      "brief-and-content-fidelity",
+      "visual-hierarchy-and-readability",
+      "interaction-or-screen-flow-clarity",
+      "brand-and-platform-consistency",
+      "scope-and-evidence-honesty"
+    ],
+    "floor": 3,
+    "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+    "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+    "notAutomatic": [
+      "Source-string matching cannot establish behavior.",
+      "Browser metrics are observations for independent review, not aesthetic grades.",
+      "A screenshot cannot prove keyboard behavior.",
+      "An image prompt is not an image.",
+      "A response-only pilot cannot certify rendered or generated-image quality."
+    ],
+    "reviewSchema": {
+      "trialId": "string",
+      "reviewer": "independent identity",
+      "checks": [
+        {
+          "id": "scenario required check",
+          "result": "pass|fail|unverified",
+          "rationale": "cite response/artifact/event/observation"
+        }
+      ],
+      "dimensions": {
+        "dimension": "0..4 or not-applicable with reason"
+      },
+      "overall": "pass|fail|unverified",
+      "rationale": "evidence-backed explanation"
+    }
+  },
+  "reviewStatus": "Pending independent reviewer. Do not infer image/render quality from prose or source matching. Source names may remain visible in raw responses; blinding is partial."
+}

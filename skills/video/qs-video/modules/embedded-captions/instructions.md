@@ -95,6 +95,15 @@ Read the samples. Refuse if:
 
 ## Installed transcription prerequisites
 
+Use the owning root's [installed runtime contract](../../references/runtime-compatibility.md)
+for matte, preview, layout, gates and render as well. They resolve the exact existing
+`QS_VIDEO_CLI`, its `puppeteer-core`/sharp/GSAP dependencies, and existing
+`HYPERFRAMES_BROWSER_PATH`; no built checkout is required. Matting verifies the
+existing u2net model digest and the CLI's exact cached optional ONNX package before
+launch. Missing resources block this selected route without installation/download.
+The isolated supplied-caption fixture proves the local cream pipeline, not all
+identities, speech recognition, or other provider paths.
+
 The private `scripts/transcribe.cjs` accepts an existing normalized transcript without regenerating it. Otherwise it requires exact existing `QS_VIDEO_CLI`0.8.77 and preserves any incompatible project pin by stopping. Set the selected verified local engine in `QS_VIDEO_VERIFIED_LOCAL_PROVIDERS`; Whisper additionally requires an existing executable `HYPERFRAMES_WHISPER_PATH` and the selected cached model. CLI calls explicitly select `--engine whisper`. Existing verified WhisperX can use `QS_VIDEO_WHISPERX`; no uvx/package fetch is performed. Missing tools/models stop before transcription. This adapter's injected-command/output checks do not establish speech accuracy or readiness of the separate matte/render pipeline.
 
 ## Pipeline — 5 steps

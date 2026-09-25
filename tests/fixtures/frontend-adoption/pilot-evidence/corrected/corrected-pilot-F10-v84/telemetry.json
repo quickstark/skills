@@ -1,0 +1,43 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 41693.377387,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [
+    {
+      "input_tokens": 24992,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 434,
+      "reasoning_output_tokens": 112
+    }
+  ],
+  "completedTurn": true,
+  "responsePresent": true,
+  "toolItems": [],
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+  "runnerSHA256": "e525f4e48d0e0b0d6d1be193da171d28d65020dd9987acabaea2f35728f8e929",
+  "promptSHA256": "796eb4b6e7449df78b0e8cbc9f5ecdd39c8a9fe9c5071fb5d203cce8e74fd140",
+  "promptUtf8Bytes": 22369,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-frontend-corrected-pilot-Zq6jfR",
+    "--json",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "c82c0342f7fa65f638173951112e7b0d206701468be0ea2aefd0108b76f748ed",
+    "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

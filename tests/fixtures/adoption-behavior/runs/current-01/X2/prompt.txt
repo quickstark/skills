@@ -1,0 +1,221 @@
+Perform one bounded task using the supplied root and private instructions as task guidance. Do not invoke any public skill, create goals, contact external services, install dependencies, inspect secrets, publish, or change model/reasoning/sandbox/approval settings. No delegation. Fixture facts below are synthetic authoritative observations for this task, not claims about real external systems.
+
+Task workspace: /tmp/qs-behavior-task-DzKA79. Only local tools and edits explicitly named in the request are authorized. Preserve product and unrelated files. Do not leave running processes. Existing Node built-ins suffice; no dependencies or network beyond your own loopback fixture.
+
+<user_request>
+
+Maintain the existing verification/ workflow against the documented calculator. Product behavior is read-only. Correct the verifier to check actual documented results and readiness, drive every mapped feature, capture evidence under verification/evidence/, and clean your own processes. If sum or export is broken/unreachable, report that product gap without modifying app.cjs, deleting map entries or weakening expectations. Existing Node loopback harness is sufficient; do not install dependencies.
+
+</user_request>
+
+<instruction>
+
+---
+name: qs-maintain-verification-skill
+description: "Reconcile an existing verification workflow with observed product behavior."
+disable-model-invocation: true
+---
+
+# Maintain a verification workflow
+
+Update only the explicitly selected verification assets; product behavior remains outside this command's mutation scope.
+
+## Behavior
+
+1. Discover the existing driver, feature map, harness, and repository conventions.
+2. Run doctor before driving a new session and after a surprising failure; reset or relaunch a wedged state that doctor cannot detect. Execute current checks against real artifacts and classify drift as product, harness, feature-map, or environment drift.
+3. Account for every mapped feature: exercise it, record a product failure, or report the attempted route and concrete unreachable prerequisite. An unreachable feature is not a passing behavior check.
+4. Reconcile stale setup, actions, observables, and checks with verified current behavior. Re-drive every harness correction against the real target before accepting it.
+5. Preserve still-valid coverage and make every operation rerunnable. Clean only owned resources after failed iterations and final driving; confirm captured evidence survives each cleanup at its named location.
+6. Report product defects without repairing product source or rewriting the map to conceal a regression.
+
+If no usable harness or verification workflow exists, stop with `input-required` or `continuation-required`; do not silently invent a host-specific replacement.
+
+## Internal capabilities
+
+Load only the relevant private references for the current question and evidence. They stay inside this root and never authorize another public invocation.
+
+- [decision-trail](../../advanced/internal/decision-trail.md)
+- [typescript-discipline](../../advanced/internal/typescript-discipline.md)
+- [plain-writing](../../advanced/internal/plain-writing.md)
+- [boundary-discipline](../../advanced/internal/boundary-discipline.md)
+- [rerunnable-tooling](../../advanced/internal/rerunnable-tooling.md)
+- [structural-enforcement](../../advanced/internal/structural-enforcement.md)
+- [minimal-change](../../advanced/internal/minimal-change.md)
+- [idempotent-operations](../../advanced/internal/idempotent-operations.md)
+- [type-system-discipline](../../advanced/internal/type-system-discipline.md)
+
+## Completion report and next steps
+
+Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.
+
+Start with a concise checklist of meaningful stages; one stage is enough for a short task. Label stages pending, active, verified, skipped, blocked, or failed. Only verified stages receive completed checkboxes; explain skipped stages. Verify each stage against relevant artifacts, command results, sources, or observable behavior before checking it off. A failing required check prevents completion; reopen a verified stage when later evidence invalidates it.
+
+During long operations, aim for updates within sixty seconds when the host allows control to return. State the current stage, observed progress or waiting state, and whether user input is needed. Distinguish a process that is running from confirmed progress; elapsed time alone proves neither progress nor completion. Finish with what changed or was configured, checks passed or failed, and remaining work. Read-only runs describe findings without implying mutations. Apply this contract regardless of effort or report mode; brief output may compress evidence but retains blockers and failed checks.
+
+Report at task start, meaningful stage transitions, material progress changes, blockers, resumption, and completion. Use: `Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>`. Overall means the bounded root task for a standalone skill, or the entire authorized goal for a submitted multi-stage workflow. Within a goal, label a root's own completion separately; finishing one root does not make the goal 100% complete.
+
+Assign meaningful stages approximate effort weights at the start and compute overall progress as sum(weight × stage estimate) / sum(in-scope weights). Base stage estimates on verified milestones, observed partial work, and remaining effort; checklist item counts, elapsed time, token consumption, or a running process alone are not progress. Use coarse estimates without decimal precision and explain low confidence. Keep weights stable unless evidence changes the work breakdown; explain recalibration, added work, reopened checks, and any decrease. Explain skipped stages: remove out-of-scope work from the denominator without awarding credit, and credit previously satisfied in-scope work only with current verification evidence; a skipped label alone earns nothing. Helpers contribute evidence to their parent's estimate without separate public reports or double-counting.
+
+Keep the last defensible estimate while waiting or blocked unless evidence changes it; state the required input or external event. Preserve the scope, weights, estimates, and supporting revision/evidence for resumption; reuse only still-valid evidence and reopen invalidated checks. Never reset valid progress or count resumed work twice. Reserve stage 100% for verified stage completion and overall 100% for verified completion of the whole stated scope. Cap unverified estimates at 95% when rounding to coarse values so rounding cannot imply completion. Failed required checks, unresolved acceptance criteria, or actionable P0/P1 findings prohibit completion regardless of the estimate. Percentages never override status or verification gates.
+A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.
+
+This invocation has one root skill: `/qs-maintain-verification-skill`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
+
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
+
+Resolve governing work context from explicit input, referenced task history available in the host, repository specifications or ticket plans, and a verified tracker when configured. Do not treat completion of the current root as proof that the larger project is complete. Every result must include `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Never omit `Specs:` or `Work summary:`.
+Write `Work summary:` as a compact readout with `Finished —` naming the bounded outcome, meaningful validation, and material outputs, followed by `Next —` outlining up to three highest-priority verified pending or blocked tickets, specifications, issues, or grouped work items as `linked id — state — next action`. Group items only when they share the same state and next action. When no remaining item can be verified, write `Next — None verified after checking the linked specs, available task history, and tracker context.`
+
+Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+
+Eligible next routes: `/qs-review-code`, `/qs-create-verification-skill`, `/qs-flow-handoff`. Failure routes: `/qs-create-verification-skill`, `/qs-code-debug`, `/qs-flow-handoff`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
+
+Brief output always contains status, outcome, specs, the compact work summary with Finished and Next entries, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required readout fields.
+
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /qs-maintain-verification-skill
+Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Work summary:
+- Finished — exact bounded outcome, meaningful validation, and material outputs
+- Next — up to three linked pending or blocked items with state and next action | None verified after checking available sources
+Next work prompt: None | one copy-ready prompt in a fenced `text` block
+
+Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-review-code, $qs-advanced:qs-create-verification-skill, $qs-skills:qs-flow-handoff, $qs-skills:qs-code-debug); Claude uses `/qs-review-code`, `/qs-create-verification-skill`, `/qs-flow-handoff`, `/qs-code-debug`; Pi uses `/skill:qs-review-code`, `/skill:qs-create-verification-skill`, `/skill:qs-flow-handoff`, `/skill:qs-code-debug`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+
+</instruction>
+
+<instruction>
+
+# Decision trail capability
+
+## Purpose
+
+Preserve enough reasoning to explain why each material mutation was kept, revised, or rejected.
+
+## Entry conditions
+
+Use when the owning root may change files, external state, or a measured implementation candidate.
+
+## Method
+
+1. Record run identity and source revision or content hash with the decision point and the evidence available at that moment. Read existing entries before resuming; append a new run boundary when another run has written since.
+2. Name the chosen action and the alternatives actually considered.
+3. Attach a resolvable evidence pointer and the check that accepted or rejected the action. Append corrections linked to earlier entries; never truncate or rewrite prior evidence. Reverify this run's claims and any earlier claims invalidated by its changes.
+4. Keep sensitive or temporary evidence private and summarize only what the result needs.
+
+## Stop conditions
+
+Stop recording when the root reaches its declared outcome or a required decision cannot be made safely.
+
+## Evidence
+
+Return a concise chronological ledger of material decisions as part of the owning root run.
+
+## Owners
+
+`qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup`.
+
+<!-- qs-progress:start -->
+## Progress reporting
+
+Contribute stage status and verification evidence to the parent skill's conversation checklist. Report the current stage, observed progress or waiting state, and any required user input to the parent during long operations, aiming for updates within sixty seconds when the host allows control to return. Distinguish running from confirmed progress; elapsed time alone is not evidence.
+
+Supply relevant artifacts, command results, sources, or observable behavior before the parent checks off a stage. Identify failed checks, skipped work and reasons, blockers, and later evidence that requires reopening a verified stage. Supply findings or changes, passed and failed checks, and remaining work for the parent's final explanation. Never imply configuration in a read-only run. Do not create a separate checklist, completion report, skills-used entry, or continuation. Remain inside the public root regardless of effort or report mode.
+
+Contribute observed partial work, remaining effort, uncertainty, and revision-bound evidence for the parent's stage and overall estimates. Waiting, elapsed time, token consumption, or a running process alone earns no progress. Flag invalidated evidence so the parent can lower estimates and reopen checks. Preserve valid evidence for resumption; do not count the same work twice or report an independent public percentage. Only the parent computes weighted progress and verifies 100% completion.
+<!-- qs-progress:end -->
+
+
+</instruction>
+
+<instruction>
+
+# Rerunnable tooling capability
+
+## Purpose
+
+Turn repeated evidence collection into a deterministic project-local command or fixture when that reduces future error.
+
+## Entry conditions
+
+Use when the same multi-step measurement must run more than once and the repository has an appropriate tooling location.
+
+## Method
+
+1. Define inputs, outputs, exit behavior, and cleanup before writing the tool.
+2. Keep the tool inside the owning root's mutation scope.
+3. Make repeated runs safe and ensure cleanup preserves evidence.
+4. Execute the tool once through its real entrypoint before accepting it.
+
+## Stop conditions
+
+Stop when the workflow is reproducible or when creating tooling would cost more than the bounded task warrants.
+
+## Evidence
+
+Return the command, observed result, and cleanup behavior as part of the owning root run.
+
+## Owners
+
+`qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`.
+
+<!-- qs-progress:start -->
+## Progress reporting
+
+Contribute stage status and verification evidence to the parent skill's conversation checklist. Report the current stage, observed progress or waiting state, and any required user input to the parent during long operations, aiming for updates within sixty seconds when the host allows control to return. Distinguish running from confirmed progress; elapsed time alone is not evidence.
+
+Supply relevant artifacts, command results, sources, or observable behavior before the parent checks off a stage. Identify failed checks, skipped work and reasons, blockers, and later evidence that requires reopening a verified stage. Supply findings or changes, passed and failed checks, and remaining work for the parent's final explanation. Never imply configuration in a read-only run. Do not create a separate checklist, completion report, skills-used entry, or continuation. Remain inside the public root regardless of effort or report mode.
+
+Contribute observed partial work, remaining effort, uncertainty, and revision-bound evidence for the parent's stage and overall estimates. Waiting, elapsed time, token consumption, or a running process alone earns no progress. Flag invalidated evidence so the parent can lower estimates and reopen checks. Preserve valid evidence for resumption; do not count the same work twice or report an independent public percentage. Only the parent computes weighted progress and verifies 100% completion.
+<!-- qs-progress:end -->
+
+
+</instruction>
+
+<instruction>
+
+# Structural enforcement capability
+
+## Purpose
+
+Encode durable workflow requirements in schemas, tests, or generated structure instead of relying on reminders.
+
+## Entry conditions
+
+Use when a verified lesson is stable, repeatable, and enforceable at a repository boundary.
+
+## Method
+
+1. Name the failure the structure must prevent.
+2. Choose the smallest enforceable seam: schema, validation, fixture, generator, or test.
+3. Derive expected behavior independently of the implementation and demonstrate that the seam rejects the known violation. Use a known-bad control when a tautological check could otherwise pass; retain valid absence, configuration, and contract checks instead of banning test shapes.
+4. Keep policy text aligned with the executable constraint.
+
+## Stop conditions
+
+Stop when the known violation fails deterministically or when the rule remains too contextual for safe automation.
+
+## Evidence
+
+Record the protected invariant and its failing and passing examples as part of the owning root run.
+
+## Owners
+
+`qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`.
+
+<!-- qs-progress:start -->
+## Progress reporting
+
+Contribute stage status and verification evidence to the parent skill's conversation checklist. Report the current stage, observed progress or waiting state, and any required user input to the parent during long operations, aiming for updates within sixty seconds when the host allows control to return. Distinguish running from confirmed progress; elapsed time alone is not evidence.
+
+Supply relevant artifacts, command results, sources, or observable behavior before the parent checks off a stage. Identify failed checks, skipped work and reasons, blockers, and later evidence that requires reopening a verified stage. Supply findings or changes, passed and failed checks, and remaining work for the parent's final explanation. Never imply configuration in a read-only run. Do not create a separate checklist, completion report, skills-used entry, or continuation. Remain inside the public root regardless of effort or report mode.
+
+Contribute observed partial work, remaining effort, uncertainty, and revision-bound evidence for the parent's stage and overall estimates. Waiting, elapsed time, token consumption, or a running process alone earns no progress. Flag invalidated evidence so the parent can lower estimates and reopen checks. Preserve valid evidence for resumption; do not count the same work twice or report an independent public percentage. Only the parent computes weighted progress and verifies 100% completion.
+<!-- qs-progress:end -->
+
+
+</instruction>

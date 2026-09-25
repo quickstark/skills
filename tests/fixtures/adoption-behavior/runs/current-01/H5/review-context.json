@@ -1,0 +1,75 @@
+{
+  "case": {
+    "id": "H5",
+    "skill": "qs-flow-handoff",
+    "source": "skills/productivity/qs-flow-handoff/SKILL.md",
+    "references": [],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Supplied host catalog: $qs-skills:qs-code-build, $qs-specialists:qs-deploy-prompt, $qs-advanced:qs-visual-parity, $qs-skills:qs-flow-handoff are available. Hand off SPEC-17. Supplied verified state: branch codex/spec-17 HEAD abc111; parser fix in src/parser.js; parser tests passed at abc111; subsequent user edit src/ui.js is unrelated and untested. Implementation still needs escaping handling in parser. User cancelled deployment; preserve cancellation. Produce the handoff now from these facts.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-03"
+    ],
+    "expected": [
+      "One continuation for remaining implementation",
+      "Preserve unrelated edit, check revision, cancellation and escaping gap",
+      "No deployment authority inferred"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 25316.163822999995,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 31843,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 627,
+        "reasoning_output_tokens": 78
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 253,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "5e44ec04e7ce8c247d8a56b0ffae41caa3a026ad9060faa82b93a9bdf26f9bb8",
+    "promptUtf8Bytes": 10542,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-O9G08I",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "bf75d170795642d8045fa8ecd2f20742accbb497fb3f1f3077fd848f1db52870",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

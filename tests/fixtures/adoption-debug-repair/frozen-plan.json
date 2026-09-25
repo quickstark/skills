@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-09-25T21:14:00Z",
+  "acceptance": "AC-05",
+  "attempts": 1,
+  "retries": 0,
+  "timeoutMs": 360000,
+  "workspace": "/tmp/qs-debug-repair-workspace-20260925",
+  "captureDirectory": "/tmp/qs-debug-repair-capture-20260925",
+  "preflightDirectory": "/tmp/qs-debug-repair-preflight-20260925",
+  "executable": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+  "executableSHA256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "runtime": {
+    "codexVersion": "codex-cli 0.153.4",
+    "nodeVersion": "v24.21.0",
+    "platform": "Linux",
+    "machine": "x86_64",
+    "configuredControls": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    }
+  },
+  "files": {
+    "oracle.mjs": "dfe20047de8b6dbab574ce9383414fd0580a2c7d6c6aebc08e2f0f8f42a36460",
+    "project/INCIDENT.md": "0ec28fb427eea47a0242c566a167425df09798390ccbb210507d6d7faa9225e4",
+    "project/diagnostics/auth-traces.json": "d4956db950237e5acd26a3565c3b856a73fcf1e609934a9b9c0a106db5c74a6a",
+    "project/diagnostics/inspect.mjs": "f3b3c2fbe4f3c1f2c4ae965c41bdb4291807002b699ea227e2509ee081e284db",
+    "project/diagnostics/reproduce.mjs": "47d92abdbb5d5e754b92f5f2e002d2cbe06cf4d67f78ca06a196accc079cf8f2",
+    "project/guidance/debug.md": "0d0de6416b837ba3ba43195aa78269239e074b4dee11cbef1ee2b00a172c9368",
+    "project/guidance/scripts/hitl-loop.template.sh": "de737f1ff0798cdb430e43fcb54fb1919cc7c7376694690bf5fb5fcc6711d672",
+    "project/package.json": "0724259b31af41648d7e4db3c950b1e3376d5fcf5cfcdcc1d3ef55f53bea0254",
+    "project/src/preferences.mjs": "af6c7f2e7b1c455e323c7445ece997d98ad9014f2e6871da0c6dc5b1c60a94be",
+    "project/test/preferences.test.mjs": "9bb6222c37db71965c174c9bb771d9204dca1f817a048fe8240bbbd59c243949",
+    "prompt.txt": "530e2cca933c88c20e34a2be264b5500b614822e675847c0b6c98f0b2048b426",
+    "rubric.json": "5ddf4fb4aab0b4f84411ad77e28cc4a10dff6b96a4a57146d8df793b1c73a282",
+    "run.mjs": "66aca8a6737a7deb8a451d1a12ae2bbfb1a37357d83cfaad129c3f122ec5f630",
+    "../../../scripts/frontend-adoption-trials.mjs": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "../../../skills/engineering/qs-code-debug/SKILL.md": "0d0de6416b837ba3ba43195aa78269239e074b4dee11cbef1ee2b00a172c9368",
+    "../../../skills/engineering/qs-code-debug/scripts/hitl-loop.template.sh": "de737f1ff0798cdb430e43fcb54fb1919cc7c7376694690bf5fb5fcc6711d672",
+    "../../../docs/specs/quickstark-upstream-adoption.md": "6c4ed3edaaafd573dc1b0cfa841e89844071f5a59e5fd982faa4b8532f942994"
+  },
+  "scope": "Local fixture only; immutable inputs; modify only src/preferences.mjs and test/. Normal existing CLI runtime state initialization needs host execution; no setting overrides.",
+  "review": "Parent independently grades frozen rubric and reruns held-out oracle; no self-grading or automatic AC acceptance."
+}

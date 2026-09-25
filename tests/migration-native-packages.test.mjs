@@ -202,3 +202,24 @@ test('malformed configuration never includes sensitive contents in diagnostics',
   const args = await fixture(t, 'pi'); await writeFile(args.configPath, '{"private":"fixture-secret-value", INVALID');
   await assert.rejects(observeNativePackages(args.options), (error) => error.message.includes('contents withheld') && !error.message.includes('fixture-secret-value'));
 });
+
+test('observed unrelated public names block a future conflicting exposure before any native mutation', async (t) => {
+  const args=await fixture(t,'pi');
+  const vendor=path.join(args.base,'unrelated-package');await mkdir(path.join(vendor,'skills/qs-probe'),{recursive:true});
+  await writeFile(path.join(vendor,'package.json'),JSON.stringify({name:'unrelated-package',version:'1.0.0',pi:{skills:['./skills']}}));
+  await writeFile(path.join(vendor,'skills/qs-probe/SKILL.md'),'---\nname: qs-probe\ndescription: Separately owned command.\n---\nUnrelated.\n');
+  const settings=JSON.parse(await readFile(args.configPath));settings.packages.push(vendor);await writeFile(args.configPath,JSON.stringify(settings));
+  const before=await captureMigrationPath(args.options.homeDirectory), vendorBefore=await captureMigrationPath(vendor);
+  const observation=await observeNativePackages(args.options);
+  assert.deepEqual(observation.evidence.unrelatedPublicNames,['qs-probe']);
+  assert.equal(observation.evidence.unrelatedDiscoveryComplete,false,'Unresolved remote theme stays explicitly qualified');
+  assert.deepEqual(observation.state.unrelatedPublicNames,['qs-probe']);
+  assert.throws(()=>predictNativePackageTransition(observation.state,{packageId:'new',phase:'expose',packages:args.options.packages}),/duplicates public identities/);
+  assert.equal((await captureMigrationPath(args.options.homeDirectory)).contentSha256,before.contentSha256);
+  assert.equal((await captureMigrationPath(vendor)).contentSha256,vendorBefore.contentSha256);
+  await writeFile(path.join(vendor,'skills/qs-probe/SKILL.md'),'---\nname: vendor-command\ndescription: Separately owned command.\n---\nUnrelated.\n');
+  await (await import('node:fs/promises')).rename(path.join(vendor,'skills/qs-probe'),path.join(vendor,'skills/vendor-command'));
+  const noncolliding=await observeNativePackages(args.options);
+  assert.deepEqual(noncolliding.evidence.unrelatedPublicNames,['vendor-command']);
+  assert.doesNotThrow(()=>predictNativePackageTransition(noncolliding.state,{packageId:'new',phase:'expose',packages:args.options.packages}));
+});

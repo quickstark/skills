@@ -1,0 +1,85 @@
+{
+  "binding": {
+    "kind": "transport-diagnostic-only",
+    "attempts": 1,
+    "retries": 0,
+    "scenario": "F02",
+    "variant": "v84",
+    "host": {
+      "cliVersion": "codex-cli 0.153.4",
+      "configured": {
+        "model": "gpt-6-astra",
+        "model_reasoning_effort": "high",
+        "sandbox_mode": "workspace-write",
+        "approval_policy": "on-request"
+      },
+      "platform": "linux",
+      "node": "v24.21.0",
+      "overrides": [],
+      "observedModelPolicy": "Use emitted runtime model if present; otherwise unverified. Configured defaults do not prove actual runtime model."
+    },
+    "activePlanSHA256": "c085d200dc169554a6355e3a1e31edb882fa9afc1a8027ce8f6f67b7f6a1d812",
+    "instructions": [
+      {
+        "key": "qs-design-frontend",
+        "sha256": "bda53c25490ca9d151e1b5d0947a4c1f28bbe2e8bc8c9098918d0c569892276a",
+        "bytes": 9524
+      },
+      {
+        "key": "brief",
+        "sha256": "345512810e4a4d721429c7516ead1f6b16cd5b928d9077a1f06a8efaace87e53",
+        "bytes": 1703
+      },
+      {
+        "key": "redesign",
+        "sha256": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76",
+        "bytes": 1347
+      }
+    ],
+    "guidanceSHA256": "abf79f1e5996b5e6c32bfed3427335fa70f5cf149aa1f9e58672fd6b5c25b47d",
+    "originalPromptSHA256": "29e1115cc10b388ecf25e141ef62b481c6e5ff8b76926d7c2956830f2c162593",
+    "probePromptSHA256": "78b1433d4eb0aea555032baa23f2265c50492b8a5cd4bcc0a8904fedc5ae3310",
+    "change": "Same complete instruction bytes moved from user text into workspace guidance file. One added read; no source/task/rubric/model changes. Not adoption or efficiency evidence."
+  },
+  "before": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "fixture-guidance.md": {
+      "sha256": "abf79f1e5996b5e6c32bfed3427335fa70f5cf149aa1f9e58672fd6b5c25b47d",
+      "bytes": 12578
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "after": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "fixture-guidance.md": {
+      "sha256": "abf79f1e5996b5e6c32bfed3427335fa70f5cf149aa1f9e58672fd6b5c25b47d",
+      "bytes": 12578
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "unchanged": true,
+  "completedTurn": true,
+  "exitCode": 0,
+  "residuals": [],
+  "review": "Parent must inspect tool events; one diagnostic cannot establish universal causality."
+}

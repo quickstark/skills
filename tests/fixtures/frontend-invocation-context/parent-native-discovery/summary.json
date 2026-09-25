@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "modelRequests": 0,
+  "zeroDiscoveryErrors": true,
+  "probes": [
+    {
+      "name": "qs-invocation-context-probe",
+      "scope": "repo",
+      "enabled": true
+    },
+    {
+      "name": "qs-invocation-disabled-probe",
+      "scope": "repo",
+      "enabled": true
+    }
+  ],
+  "rawSHA256": "0fe421356d89236f1f0ab0e3751dbc69540e23317cd7fca7e7c35ab971132631",
+  "limit": "skills/list enumerates both repo probes; this does not establish which explicit-only skills a model turn receives. No model turn or actual installation mutation. Parent host execution allowed normal runtime initialization; prior sandbox failures retained."
+}

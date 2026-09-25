@@ -73,6 +73,55 @@
                 "ps-pr-babysit",
                 "ps-worktree-cleanup"
               ]
+            },
+            {
+              "version": "3.8.0",
+              "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+              "digests": {
+                "codex": {
+                  "kind": "portable-directory-sha256",
+                  "value": "7f97ba6168870b52019399bc8fa1adb8616ca9a50ba0c364110a1ad901d0319b",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+                    "sourcePath": "codex/plugins/ps-skills"
+                  }
+                },
+                "claude-code": {
+                  "kind": "portable-directory-sha256",
+                  "value": "16b48b264b16c4b48febb1dd3c2c5d9b268808ed46e4eef9c59513240f4e8c49",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+                    "sourcePath": "packages/ps-skills"
+                  }
+                },
+                "pi": {
+                  "kind": "portable-directory-sha256",
+                  "value": "f9ed5504dc71b8db1131725554c4782baa439cc68f4c988acd760d100ae3c025",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+                    "sourcePath": "pi/packages/ps-skills"
+                  }
+                }
+              },
+              "publicSkills": [
+                "ps-help",
+                "ps-how",
+                "ps-why",
+                "ps-blast-radius",
+                "ps-runtime-forensics",
+                "ps-trace-forensics",
+                "ps-create-verification-skill",
+                "ps-maintain-verification-skill",
+                "ps-skill-eval",
+                "ps-hillclimb",
+                "ps-visual-parity",
+                "ps-pr-babysit",
+                "ps-worktree-cleanup"
+              ],
+              "note": "Verified task-built transition projection for existing direct-checkout consumers; distinct from the original released3.8.0 baseline."
             }
           ],
           "ownedLocations": [
@@ -216,6 +265,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/design-taste-frontend",
               "linkTarget": "~/.agents/skills/design-taste-frontend"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/design-taste-frontend",
+              "linkTarget": "~/.agents/skills/design-taste-frontend"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/design-taste-frontend",
+              "linkTarget": "~/.agents/skills/design-taste-frontend"
             }
           ],
           "replacements": [
@@ -253,6 +312,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/redesign-existing-projects",
+              "linkTarget": "~/.agents/skills/redesign-existing-projects"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/redesign-existing-projects",
+              "linkTarget": "~/.agents/skills/redesign-existing-projects"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/redesign-existing-projects",
               "linkTarget": "~/.agents/skills/redesign-existing-projects"
             }
           ],
@@ -292,6 +361,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/high-end-visual-design",
               "linkTarget": "~/.agents/skills/high-end-visual-design"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/high-end-visual-design",
+              "linkTarget": "~/.agents/skills/high-end-visual-design"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/high-end-visual-design",
+              "linkTarget": "~/.agents/skills/high-end-visual-design"
             }
           ],
           "replacements": [
@@ -329,6 +408,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/minimalist-ui",
+              "linkTarget": "~/.agents/skills/minimalist-ui"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/minimalist-ui",
+              "linkTarget": "~/.agents/skills/minimalist-ui"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/minimalist-ui",
               "linkTarget": "~/.agents/skills/minimalist-ui"
             }
           ],
@@ -368,6 +457,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/imagegen-frontend-web",
               "linkTarget": "~/.agents/skills/imagegen-frontend-web"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/imagegen-frontend-web",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-web"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/imagegen-frontend-web",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-web"
             }
           ],
           "replacements": [
@@ -406,6 +505,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/imagegen-frontend-mobile",
               "linkTarget": "~/.agents/skills/imagegen-frontend-mobile"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/imagegen-frontend-mobile",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-mobile"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/imagegen-frontend-mobile",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-mobile"
             }
           ],
           "replacements": [
@@ -443,6 +552,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/image-to-code",
+              "linkTarget": "~/.agents/skills/image-to-code"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/image-to-code",
+              "linkTarget": "~/.agents/skills/image-to-code"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/image-to-code",
               "linkTarget": "~/.agents/skills/image-to-code"
             }
           ],
@@ -508,6 +627,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes",
               "linkTarget": "~/.agents/skills/hyperframes"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes",
+              "linkTarget": "~/.agents/skills/hyperframes"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes",
+              "linkTarget": "~/.agents/skills/hyperframes"
             }
           ],
           "replacements": [
@@ -545,6 +674,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-animation",
+              "linkTarget": "~/.agents/skills/hyperframes-animation"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-animation",
+              "linkTarget": "~/.agents/skills/hyperframes-animation"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-animation",
               "linkTarget": "~/.agents/skills/hyperframes-animation"
             }
           ],
@@ -584,6 +723,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-audio",
               "linkTarget": "~/.agents/skills/hyperframes-audio"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-audio",
+              "linkTarget": "~/.agents/skills/hyperframes-audio"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-audio",
+              "linkTarget": "~/.agents/skills/hyperframes-audio"
             }
           ],
           "replacements": [
@@ -621,6 +770,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-cli",
+              "linkTarget": "~/.agents/skills/hyperframes-cli"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-cli",
+              "linkTarget": "~/.agents/skills/hyperframes-cli"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-cli",
               "linkTarget": "~/.agents/skills/hyperframes-cli"
             }
           ],
@@ -660,6 +819,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-core",
               "linkTarget": "~/.agents/skills/hyperframes-core"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-core",
+              "linkTarget": "~/.agents/skills/hyperframes-core"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-core",
+              "linkTarget": "~/.agents/skills/hyperframes-core"
             }
           ],
           "replacements": [
@@ -697,6 +866,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-creative",
+              "linkTarget": "~/.agents/skills/hyperframes-creative"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-creative",
+              "linkTarget": "~/.agents/skills/hyperframes-creative"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-creative",
               "linkTarget": "~/.agents/skills/hyperframes-creative"
             }
           ],
@@ -736,6 +915,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-keyframes",
               "linkTarget": "~/.agents/skills/hyperframes-keyframes"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-keyframes",
+              "linkTarget": "~/.agents/skills/hyperframes-keyframes"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-keyframes",
+              "linkTarget": "~/.agents/skills/hyperframes-keyframes"
             }
           ],
           "replacements": [
@@ -774,6 +963,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/hyperframes-registry",
               "linkTarget": "~/.agents/skills/hyperframes-registry"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-registry",
+              "linkTarget": "~/.agents/skills/hyperframes-registry"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-registry",
+              "linkTarget": "~/.agents/skills/hyperframes-registry"
             }
           ],
           "replacements": [
@@ -811,6 +1010,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/media-use",
+              "linkTarget": "~/.agents/skills/media-use"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/media-use",
+              "linkTarget": "~/.agents/skills/media-use"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/media-use",
               "linkTarget": "~/.agents/skills/media-use"
             }
           ],
@@ -876,6 +1085,16 @@
               "surface": "claude-link",
               "path": "~/.claude/skills/unlazy",
               "linkTarget": "~/.agents/skills/unlazy"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/unlazy",
+              "linkTarget": "~/.agents/skills/unlazy"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/unlazy",
+              "linkTarget": "~/.agents/skills/unlazy"
             }
           ],
           "replacements": [
@@ -939,6 +1158,16 @@
             {
               "surface": "claude-link",
               "path": "~/.claude/skills/find-skills",
+              "linkTarget": "~/.agents/skills/find-skills"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/find-skills",
+              "linkTarget": "~/.agents/skills/find-skills"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/find-skills",
               "linkTarget": "~/.agents/skills/find-skills"
             }
           ],

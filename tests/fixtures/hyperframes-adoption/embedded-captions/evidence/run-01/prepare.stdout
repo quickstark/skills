@@ -1,0 +1,21 @@
+[prepare] matte ∥ transcribe ∥ envelope …
+  [matte] [matte] source fps=6 → frames_bg extracted
+  [matte] [matte] verified cached u2net_human_seg + ONNX; remove-background on CPU…
+  [matte] [?25l│
+  [matte] ◒  Loading model on CPU[1G[J◐  Loading model on CPU[1G[J◓  Loading model on CPU[1G[J◑  Loading model on CPU[1G[J◒  Frame 1/24 (4%) — 901ms/frame avg[1G[J◐  Frame 2/24 (8%) — 879ms/frame avg[1G[J◓  Frame 3/24 (12%) — 823ms/frame avg[1G[J◑  Frame 4/24 (16%) — 815ms/frame avg[1G[J◒  Frame 5/24 (20%) — 778ms/frame avg.[1G[J◐  Frame 6/24 (25%) — 748ms/frame avg.[1G[J◓  Frame 7/24 (29%) — 708ms/frame avg.[1G[J◑  Frame 8/24 (33%) — 692ms/frame avg.[1G[J◒  Frame 9/24 (37%) — 672ms/frame avg.[1G[J◐  Frame 10/24 (41%) — 660ms/frame avg.[1G[J◓  Frame 11/24 (45%) — 655ms/frame avg.[1G[J◑  Frame 12/24 (50%) — 656ms/frame avg.[1G[J◒  Frame 13/24 (54%) — 672ms/frame avg..[1G[J◐  Frame 14/24 (58%) — 679ms/frame avg..[1G[J◓  Frame 15/24 (62%) — 679ms/frame avg..[1G[J◑  Frame 16/24 (66%) — 676ms/frame avg..[1G[J◒  Frame 17/24 (70%) — 670ms/frame avg..[1G[J◐  Frame 18/24 (75%) — 665ms/frame avg..[1G[J◓  Frame 19/24 (79%) — 663ms/frame avg..[1G[J◑  Frame 20/24 (83%) — 664ms/frame avg..[1G[J◒  Frame 21/24 (87%) — 662ms/frame avg...[1G[J◐  Frame 22/24 (91%) — 660ms/frame avg...[1G[J◓  Frame 23/24 (95%) — 660ms/frame avg...[1G[J◇  Removed background from 24 frames in 16.2s (1.5 fps, CPU) → /tmp/qs-embedded-caption/run-01/project/_matte_tmp.mov
+  [matte] [?25h[matte] done in 17.8s → fg=24 bg=24 @ 6fps (parity ok)
+  [transcribe] [transcribe] already normalized, skipping
+[prepare] safe-zones …
+[safe-zones] 640×360 grid 48×27 @ 6fps · GLOBAL coverage 38.3% · clearer right · verdict EMBED
+             largest: 31.3%×100% @ (68.8%,0%) [31.3% · luma 56] | left: 16.7%×44.4% @ (0%,0%) [7.4% · luma 44] | right: 31.3%×100% @ (68.8%,0%) [31.3% · luma 56] | top: 47.9%×37% @ (52.1%,0%) [17.7% · luma 57]
+[safe-zones] ✅ EMBED — NARRATION planes go in the clean zones (prefer right/top).
+[safe-zones] 🎯 HERO → centered ON the subject: plane ≈ x2% y15% w92% center · BIG (~0.22–0.34·h) · target ~30–55% occlusion · band luma 55
+[safe-zones] hero bands: best top 44.4% (predicted occlusion 39.8%) · bg-hero FEASIBLE — keep the hero EMBEDDED (fg is last resort)
+[safe-zones] hugging zones (narration belongs HERE, abutting the silhouette): L — · R 29.2%×44.4%@x68.8%
+[safe-zones] 🎨 palette: dominant #0e0e10 #2b312f #172931 · accent suggestion #478fa8 · cool
+[safe-zones] 🔭 depth: bg/subject sharpness 1.062 → embed text blur 0px (scene is uniformly sharp)
+[safe-zones] 💡 light from upper-right → contact shadow offset (-3px, 4px)
+[safe-zones] per-sentence windows (place each group using ITS window's zones):
+   [0.5-2.8s] EMBED cov 37.9% clear:right  best 31.3%×100%@(68.8%,0%)  "Nancy Grace Roman"
+[safe-zones] → /tmp/qs-embedded-caption/run-01/project/safe-zones.json
+[prepare] ✅ ready: frames_fg/ transcript.json safe-zones.json — author next (see instructions.md step 4)

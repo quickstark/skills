@@ -77,6 +77,33 @@ async function fixture(t) {
 }
 const recover = (args) => runMigrationTransaction({ ...args, mode: 'recover', recoveryAuthority: { transactionId: args.plan.id, operation: 'restore-journaled-owned-effects', source: 'isolated-fixture' } });
 
+test('fresh installation needs no withdrawal or retirement and recovery restores actual absence', async (t) => {
+  const args = await fixture(t);
+  const empty = JSON.stringify({ packages: [] });
+  await writeFile(args.files.manager, empty);
+  await rm(args.files.state);
+  args.plan.steps = args.plan.steps.filter((step) => ['stage', 'expose', 'state'].includes(step.phase));
+  args.plan.steps.find((step) => step.phase === 'state').before = args.state(null);
+  assert.equal((await runMigrationTransaction(args)).status, 'complete');
+  assert.deepEqual(args.controls.effects, ['stage', 'expose', 'state']);
+  assert.deepEqual((await jsonFile(args.files.manager)).packages, [newPackage]);
+  assert.equal(await readFile(args.files.retired, 'utf8'), 'legacy-owned');
+  assert.equal((await recover(args)).status, 'rolled-back');
+  assert.deepEqual((await jsonFile(args.files.manager)).packages, []);
+  assert.equal(await missingOrText(args.files.state), null);
+  assert.equal(await missingOrText(args.files.stage), null);
+});
+
+test('phase subsets reject empty plans, no-op effects, and state before exposure', async (t) => {
+  const args = await fixture(t);
+  const validate = (steps) => validateMigrationTransactionPlan({ ...args.plan, steps }, args.journalPath);
+  assert.throws(() => validate([]), /Bounded transaction steps/);
+  const selected = args.plan.steps.filter((step) => ['stage', 'expose', 'state'].includes(step.phase));
+  assert.equal(validate(selected), true);
+  assert.throws(() => validate([selected[0], selected[2], selected[1]]), /Steps must follow/);
+  assert.throws(() => validate([{ ...selected[2], after: selected[2].before }]), /observable state transition/);
+});
+
 test('durable five-phase transaction verifies actual source/version/discovery and saves selection last', async (t) => {
   const args = await fixture(t);
   const result = await runMigrationTransaction(args);

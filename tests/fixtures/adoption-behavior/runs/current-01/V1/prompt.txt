@@ -1,0 +1,236 @@
+Perform one bounded task using the supplied root and private instructions as task guidance. Do not invoke any public skill, create goals, contact external services, install dependencies, inspect secrets, publish, or change model/reasoning/sandbox/approval settings. No delegation. Fixture facts below are synthetic authoritative observations for this task, not claims about real external systems.
+
+Task workspace: /tmp/qs-behavior-task-EQmIO3. Respond directly in chat only. Do not call tools or write files; all needed task facts are supplied.
+
+<user_request>
+
+This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Write only a Spanish video-generation prompt for a12second9:16 museum announcement. Exact text: Northstar Museum; Family membership $100 / year; founded2020. Preserve supplied brand Georgia/#086b64/#f7f5ef. No generation, rendering, project files or provider calls. The prompt is the final deliverable.
+
+</user_request>
+
+<instruction>
+
+---
+name: qs-video
+description: "Create, edit, inspect, or render a selected video with preserved project and provider boundaries."
+disable-model-invocation: true
+---
+
+# QS Video
+
+Deliver the selected video outcome within one root. Read [runtime compatibility](references/runtime-compatibility.md) and [adaptation policy](references/adaptation-policy.md); resolve resources through [the private dependency index](references/dependency-index.json). Private modules contribute mechanics, never another public invocation or result.
+
+## Select the bounded outcome
+
+- **Prompt-only or storyboard-only:** produce the requested creative prompt, brief or storyboard; stop before generation, source edits or rendering. Preserve language, real content, supplied references, target format and selected provider constraints. Use the private creative/intake references only as needed.
+- **Existing project operation:** inspect, diagnose, caption, edit, preview or render only what was requested. Read the project pin and existing BRIEF; do not restart the interview. Run timeline inspection from the project directory. A render request authorizes neither cloud rendering nor publication by itself.
+- **Fresh creation:** use [private intake/routing](modules/hyperframes/instructions.md), select one supported workflow, and preserve confirmed preferences. Resolve the workflow and required domain files before authoring. Use the scaffold helper only for a new, empty target; its generated project instructions preserve this root's boundaries.
+- **Missing capability:** identify the exact unavailable workflow, runtime, provider, named effect or asset and its affected outcome. Continue independent authorized work; do not invent equivalent behavior, install a dependency, upgrade a project pin or claim completion of the missing route.
+
+Set `QS_VIDEO_DIR` to this skill's directory and `QS_VIDEO_CLI` to an existing verified compatible CLI executable. Neither variable installs anything. Existing project pins remain authoritative; unsupported pins need a separate explicit upgrade decision with before/after render evidence and recovery readiness.
+
+## Preserve specialized behavior
+
+Load all domains needed by a combined edit: core for timing/source ranges, keyframes for zoom/reframing, animation for transition mechanics, audio for placed-track mixing, media-use for sourcing, creative for brief/prompt work, registry for selected components, and CLI for operations. Preserve all ten workflow choices, Figma input handling and Studio layout guidance as private resources. Public skill lookup or a helper never expands the selected package.
+
+Keep picture and sound timelines independent where requested. Preserve caption-only source footage; role-correct music/voice/SFX groups; subcomposition IDs, assets/fonts and registration; aspect ratios; transition endpoints and arbitrary seek behavior. The named Pixel Point animate-text catalog is not vendored: disclose its missing reviewed dependency before promising an exact named recipe.
+
+Before an authenticated or metered operation, verify the selected provider and existing authorization without exposing credentials. Use supplied/local assets when they satisfy the request; do not silently replace an expressly selected provider. Account setup, provider/model downloads, paid generation, publication and external reports require their own actual authority. Optional host delegation remains subject to host controls.
+
+Verify actual output for the selected change: runtime checks plus rendered frames/audio and independent expected behavior. Lint or command success alone does not prove a correct video, understandable mix, pixel parity or healthy publication. Report exact runtime, artifact and remaining limitations in this conversation. Do not submit ratings, search-miss reports or upstream feedback during ordinary use.
+
+## Completion report and next steps
+
+Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.
+
+Start with a concise checklist of meaningful stages; one stage is enough for a short task. Label stages pending, active, verified, skipped, blocked, or failed. Only verified stages receive completed checkboxes; explain skipped stages. Verify each stage against relevant artifacts, command results, sources, or observable behavior before checking it off. A failing required check prevents completion; reopen a verified stage when later evidence invalidates it.
+
+During long operations, aim for updates within sixty seconds when the host allows control to return. State the current stage, observed progress or waiting state, and whether user input is needed. Distinguish a process that is running from confirmed progress; elapsed time alone proves neither progress nor completion. Finish with what changed or was configured, checks passed or failed, and remaining work. Read-only runs describe findings without implying mutations. Apply this contract regardless of effort or report mode; brief output may compress evidence but retains blockers and failed checks.
+
+Report at task start, meaningful stage transitions, material progress changes, blockers, resumption, and completion. Use: `Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>`. Overall means the bounded root task for a standalone skill, or the entire authorized goal for a submitted multi-stage workflow. Within a goal, label a root's own completion separately; finishing one root does not make the goal 100% complete.
+
+Assign meaningful stages approximate effort weights at the start and compute overall progress as sum(weight × stage estimate) / sum(in-scope weights). Base stage estimates on verified milestones, observed partial work, and remaining effort; checklist item counts, elapsed time, token consumption, or a running process alone are not progress. Use coarse estimates without decimal precision and explain low confidence. Keep weights stable unless evidence changes the work breakdown; explain recalibration, added work, reopened checks, and any decrease. Explain skipped stages: remove out-of-scope work from the denominator without awarding credit, and credit previously satisfied in-scope work only with current verification evidence; a skipped label alone earns nothing. Helpers contribute evidence to their parent's estimate without separate public reports or double-counting.
+
+Keep the last defensible estimate while waiting or blocked unless evidence changes it; state the required input or external event. Preserve the scope, weights, estimates, and supporting revision/evidence for resumption; reuse only still-valid evidence and reopen invalidated checks. Never reset valid progress or count resumed work twice. Reserve stage 100% for verified stage completion and overall 100% for verified completion of the whole stated scope. Cap unverified estimates at 95% when rounding to coarse values so rounding cannot imply completion. Failed required checks, unresolved acceptance criteria, or actionable P0/P1 findings prohibit completion regardless of the estimate. Percentages never override status or verification gates.
+A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.
+
+This invocation has one root skill: `/qs-video`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
+
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
+
+Resolve governing work context from explicit input, referenced task history available in the host, repository specifications or ticket plans, and a verified tracker when configured. Do not treat completion of the current root as proof that the larger project is complete. Every result must include `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Never omit `Specs:` or `Work summary:`.
+Write `Work summary:` as a compact readout with `Finished —` naming the bounded outcome, meaningful validation, and material outputs, followed by `Next —` outlining up to three highest-priority verified pending or blocked tickets, specifications, issues, or grouped work items as `linked id — state — next action`. Group items only when they share the same state and next action. When no remaining item can be verified, write `Next — None verified after checking the linked specs, available task history, and tracker context.`
+
+Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+
+Eligible next routes: `/qs-flow-handoff`. Failure routes: `/qs-flow-handoff`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
+
+Brief output always contains status, outcome, specs, the compact work summary with Finished and Next entries, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required readout fields.
+
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /qs-video
+Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Work summary:
+- Finished — exact bounded outcome, meaningful validation, and material outputs
+- Next — up to three linked pending or blocked items with state and next action | None verified after checking available sources
+Next work prompt: None | one copy-ready prompt in a fenced `text` block
+
+Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-flow-handoff); Claude uses `/qs-flow-handoff`; Pi uses `/skill:qs-flow-handoff`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+
+</instruction>
+
+<instruction>
+
+# Runtime compatibility
+
+Candidate source 2734ee2c02ef858f3c877c18b56ebcfbb846cb4c is paired with
+hyperframes 0.8.77 for local validation. Exact package integrities and tested host
+versions are in runtime-profile.json. CLI Node requirement is >=22; only Linux
+x64 / Node 24.21.0 / Chrome 151 / FFmpeg 6.1.1 has this fixture evidence. Do not claim
+other hosts tested. A renderer needs full FFmpeg/FFprobe and compatible Chromium.
+The voiceover carve helper additionally requires @hyperframes/core 0.8.77
+resolvable from the project or its explicit --core directory. The CLI's bundled
+core does not satisfy that import.
+
+The candidate remains inactive until package adoption gates are met. Local
+caption/cut/zoom/crossfade/grouped-carve/subcomposition/portrait fixtures passed;
+authenticated generation/provider paths remain unverified or unavailable
+in the review environment. The specification does not require every provider account;
+the parent must identify which unavailable paths are required for the accepted
+workflow scope. Successful local provider fixtures do not establish remote readiness. Missing selected provider capability blocks that
+outcome. The separate animate-text named recipe catalog is not vendored or
+verified. Preserve existing managed capability exposure until replacement gates
+pass; this file never waives an acceptance criterion.
+
+Fresh initialization must use the QS scaffold helper. In 0.8.77 the --skip-skills
+flag is ignored; HYPERFRAMES_SKIP_SKILLS=1 is the actual runtime switch. The
+noninteractive branch returns after scaffold and does not open Studio. Timeline
+inspection works from project cwd; advertised positional DIR was rejected.
+Media-use's FFmpeg lookup requires binaries on PATH even when renderer-specific
+HYPERFRAMES_FFMPEG_PATH/HYPERFRAMES_FFPROBE_PATH are set.
+
+Existing project runtime pins are preserved. Select already-validated instructions
+for that pin, or report the compatibility gap before dependent edits. An explicit
+upgrade is a separate operation with original-pin backup, check/render evidence,
+fixed comparison criteria and rollback readiness; do not rewrite package.json
+merely to apply a newer instruction.
+
+Actual frames/audio are required evidence. Draft encoded RGB differs numerically
+from PNG snapshots; hue/transition smoke tests do not establish pixel parity or
+delivery color fidelity. Synthetic tone carving proves processing and timing,
+not perceptual voice intelligibility. Paid/cloud generation, publication and
+interactive Studio operation retain their separate authority boundaries.
+
+The installed private media resolver has been executed with the bundled SFX provider and a local warm-daylight grade. Bundled SFX bytes and source provenance matched the private asset; local file ingestion preserved bytes. These checks do not establish credentialed generation, Whisper/Kokoro/MusicGen/Parakeet readiness, Figma authorization or Studio interaction. Required unavailable routes continue to block adoption.
+
+A transitive runtime gap remains in CLI0.8.77's `media-use` local voice provider: its `kokoro.local` branch launches unpinned `npx hyperframes tts`. An injected-executor probe of the published module confirmed that argv without running it. Do not invoke that resolver branch merely because Kokoro is installed; first resolve its pinned-runtime compatibility. The separate QS private audio helper uses the selected CLI, but has not been validated with a complete local voice model. The runtime's mflux path invokes `hf download`; local-only classification does not by itself prohibit tool/model acquisition.
+
+Caption transcription resolves the selected existing CLI directly, checks CLI0.8.77/project pin and existing Whisper binary/model, explicitly selects the Whisper engine, and preserves already-normalized transcripts. An injected executable verified argv, output conversion, incompatible-pin preservation and missing-model rejection; actual pinned CLI help verified these flags. No speech model ran.
+
+The embedded-caption pipeline uses `scripts/caption-runtime.cjs` to resolve
+`sharp`, `puppeteer-core`, and local GSAP from the exact existing `QS_VIDEO_CLI`.
+Set `HYPERFRAMES_BROWSER_PATH` to an existing executable. Compilation copies the
+selected local GSAP bytes into a named, hashed project asset; preview and layout
+use the selected browser without relying on a checkout or a CDN GSAP request.
+Ordinary browser launches retain the OS sandbox. Only a trusted isolated fixture
+on a host without working user namespaces may explicitly select the process-local
+`QS_VIDEO_BROWSER_NO_SANDBOX=1`; a failed launch never enables it automatically.
+
+Matting requires the exact existing model at
+`~/.cache/hyperframes/background-removal/models/u2net_human_seg.onnx` and the
+CLI's actual optional-package cache at
+`~/.cache/hyperframes/optional/onnxruntime-node@1.21.1/node_modules/onnxruntime-node`.
+The adapter verifies model SHA256
+`01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c`,
+ONNX version/loadability, and sharp before any matte source adoption or CLI
+background-removal call. A regular CLI `node_modules/onnxruntime-node` is not the
+cache used by this CLI. Missing/corrupt resources stop without automatic setup.
+Model acquisition is a separately authorized operation, never a helper fallback.
+
+The isolated `tests/fixtures/hyperframes-adoption/embedded-captions` fixture uses
+real NASA interview footage and supplied editorial identification text. It exercises
+CPU matting, source/foreground frame parity, safe zones, cream-template compilation,
+preview, measured layout, strict gates, rendering, matte compositing, and decoded
+pixel/audio checks. This supports that local supplied-caption path on the tested
+Linux profile, not speech-recognition accuracy, every caption identity, every host,
+or arbitrary providers. Render timeouts fail even when an output file exists and
+clean up only the owned process group; they never kill Chromium processes by name.
+
+The published CLI still attempts runtime/skill freshness and Google Fonts subset
+requests during these operations. The isolated transport refused those requests;
+no model/package acquisition happened inside the run. A completed local render
+does not imply zero attempted requests or general runtime telemetry silence.
+
+
+</instruction>
+
+<instruction>
+
+# QS video authority and private routing
+
+This policy governs every private module, helper, reference and example. The
+selected QS root owns the outcome; module instruction files are technical
+references. They do not invoke public skills, create goals, publish reports,
+install dependencies or choose a model/delegation setting. User and host
+instructions remain authoritative.
+
+Read the dependency index, then the selected module's instructions and necessary
+resources. Every named workflow/domain must resolve locally before its dependent
+work. `instructions.md` is not an invocable skill. No compatibility alias or lazy
+installation is created. The external animate-text catalog has no reviewed pinned
+payload here; preserve that named-effect capability as an explicit unresolved
+prerequisite, not a claim that a guessed tween is its equivalent.
+
+Use an existing verified runtime through `QS_VIDEO_CLI`; never use an unpinned
+package executor to silently fetch a runtime. A project pin is not automatically
+updated because newer instructions exist. For fresh projects only, run the
+root's scaffold helper: `node "$QS_VIDEO_DIR/scripts/scaffold.mjs" --cli
+"$QS_VIDEO_CLI" -- <new-directory> [supported init options]`. It enforces
+noninteractive initialization in an isolated sibling staging directory, disables skill refresh, and rewrites only staged AGENTS.md/CLAUDE.md. It requires an existing parent directory, revalidates destination identity/state after initialization, and publishes files with exclusive creation. It refuses a nonempty or concurrently changed target, preserves competing guidance, and retains staged diagnostics on failure. Its docs files are generated outputs of that new
+scaffold, not existing user instructions. Never run the upstream skill installer
+or refresh to recover a missing private module. Interactive preview and its
+orphan process cleanup require a selected preview operation and host boundaries.
+
+Provider examples document mechanisms, not blanket setup authority. Inspect
+credentials availability without reading or printing secret values; summarize
+auth status rather than relaying raw output. A provider chosen by the user stays
+selected. If it is unavailable, report its exact prerequisite and use a local
+alternative only when that alternative satisfies the request and existing
+authority. Do not install tools/models, sign in, request paid output, collect
+preferences outside the project, or submit a recipe merely because a helper
+suggests it. Saved preferences are input data; inferred defaults are not new
+permissions. For isolated tests, redirect helper global caches explicitly; real
+runs must respect the user's selected cache/privacy behavior.
+
+No ordinary creation/render/search miss sends feedback, a rating, a report,
+issue, recipe, public URL or upstream PR. Keep diagnostic packets in the current
+conversation with secrets redacted. A separate explicit external-report request
+must name its operation/destination and payload; it is not a hidden final step.
+Publication/cloud rendering must identify the authorized target, costs, artifact
+and verification. Preserve any explicitly granted authority without repeated
+confirmation. Runtime freshness requests and telemetry are separate from skill
+behavior: document the actual runtime configuration instead of promising silence.
+
+Prompt-only and storyboard-only requests stop at those artifacts. Existing briefs
+and operation-only requests do not reopen intake. Review or rendering failures
+remain failures; helper success does not certify an absent provider, missing
+reference, incorrect output or the entire upstream compatibility matrix.
+
+Existing session authorization satisfies a matching review/render checkpoint. Do not ask again solely because an upstream autonomous workflow keeps a final question. Collaborative checkpoints remain when the user selected them or necessary input is unresolved. Files containing dispatch or worker briefs are optional private mechanics, not authority to spawn agents.
+
+Audio helpers require `QS_VIDEO_VERIFIED_LOCAL_PROVIDERS` for local model routes (comma-separated `kokoro`, `whisper`, `whisperx`, `parakeet`, `musicgen`). Set an entry only after checking the complete existing tool/model/cache for the chosen runtime. This records evidence, never grants setup authority. The tested profile currently has none of these local generation prerequisites; report them as blocked. Offline environment switches prevent HuggingFace fetches but do not prove every third-party runtime respects them.
+
+Embedded-caption matting is a separate deterministic local segmentation route.
+Its installed adapter requires the pinned existing model and ONNX cache before
+calling the CLI; see runtime compatibility for exact paths/digests. Neither
+`QS_VIDEO_CLI` nor a supplied transcript authorizes missing model/package/browser
+installation. Preview/layout resolve `puppeteer-core`, sharp and GSAP through that
+selected CLI, and require an explicitly selected existing browser. Preserve the
+browser's normal sandbox unless the owning trusted isolated test explicitly opts
+into the documented process-local container exception; never change host settings.
+
+
+</instruction>

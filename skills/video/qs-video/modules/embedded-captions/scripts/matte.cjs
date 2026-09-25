@@ -4,7 +4,7 @@
  * (rembg-equivalent u2net_human_seg, Apache-2.0, 320×320 input, ~9 fps on
  * CoreML). Replaces the previous bundled PP-MattingV2 ONNX (34 MB asset +
  * an onnxruntime inference loop in this script): one engine, zero bundled
- * weights — the model auto-downloads once (~168 MB) to ~/.cache/hyperframes/.
+ * weights — requires verified existing model and native runtime in the CLI cache.
  *
  * Semantics note (validated 2026-06-12 on 6 scenes + a cold-start E2E): a
  * HUMAN segmenter by intent, not surgically. Thin offset furniture (mic boom
@@ -23,26 +23,14 @@
  * Reads:  <project>/source.mp4 (any video in the project dir is adopted)
  * Writes: <project>/frames_fg/f_%04d.png (RGBA, subject opaque),
  *         <project>/frames_bg/f_%04d.png, <project>/matte.fps
- * Env:    HYPERFRAMES_ROOT — hyperframes checkout (default ~/Downloads/hyperframes)
+ * Env:    QS_VIDEO_CLI — existing exact installed hyperframes executable
  */
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
 const cp = require("child_process");
 
-function hfCli() {
-  const roots = [
-    process.env.HYPERFRAMES_ROOT,
-    path.resolve(__dirname, "..", "..", ".."), // skills/embedded-captions/scripts → repo root if in-repo
-    path.join(os.homedir(), "Downloads", "hyperframes"),
-  ].filter(Boolean);
-  for (const root of roots) {
-    const cli = path.join(root, "packages", "cli", "dist", "cli.js");
-    if (fs.existsSync(cli)) return cli;
-  }
-  console.error("[matte] cannot find hyperframes cli — set HYPERFRAMES_ROOT to a built checkout");
-  process.exit(3);
-}
+const captionRuntime = require("../../../scripts/caption-runtime.cjs");
 
 function ensureSource(project) {
   const src = path.join(project, "source.mp4");
@@ -134,6 +122,8 @@ async function main() {
     console.error("usage: matte.cjs <project-dir>");
     process.exit(1);
   }
+  // Fail before adopting source, extracting frames, or calling download-capable CLI.
+  captionRuntime.preflightMatte(project);
   const src = ensureSource(project);
   if (!fs.existsSync(src)) {
     console.error(`[matte] no source video found in ${project}`);
@@ -200,28 +190,9 @@ async function main() {
   }
   const mov = path.join(project, "_matte_tmp.mov");
   const t0 = Date.now();
-  const cached = fs.existsSync(
-    path.join(
-      os.homedir(),
-      ".cache",
-      "hyperframes",
-      "background-removal",
-      "models",
-      "u2net_human_seg.onnx",
-    ),
-  );
-  console.log(
-    `[matte] hyperframes remove-background (u2net_human_seg${cached ? "" : "; first run downloads ~168 MB"})… model load takes ~1-2 min with no output — not hung`,
-  );
-  const r = cp.spawnSync("node", [hfCli(), "remove-background", matteSrc, "-o", mov], {
-    stdio: ["ignore", "pipe", "pipe"],
-    encoding: "utf8",
-  });
-  if (r.status !== 0 || !fs.existsSync(mov)) {
-    console.error("[matte] remove-background FAILED:");
-    console.error((r.stderr || r.stdout || "").split("\n").slice(-8).join("\n"));
-    process.exit(4);
-  }
+  console.log("[matte] verified cached u2net_human_seg + ONNX; remove-background on CPU…");
+  await captionRuntime.runCli(["remove-background", matteSrc, "--device", "cpu", "-o", mov], { cwd: project });
+  if (!fs.existsSync(mov)) throw new Error("remove-background did not produce its output");
 
   // 2) burst to RGBA pngs at the project rate
   fs.mkdirSync(framesFg, { recursive: true });

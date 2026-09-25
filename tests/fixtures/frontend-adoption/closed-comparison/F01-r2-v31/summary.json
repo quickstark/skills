@@ -1,0 +1,69 @@
+{
+  "run": {
+    "trialId": "F01-r2-v31",
+    "scenarioId": "F01",
+    "repetition": 2,
+    "variant": "v31",
+    "attemptType": "first-attempt"
+  },
+  "cwd": "/tmp/qs-frontend-trial-pYGyh5",
+  "failure": null,
+  "before": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "e74f08f182e8686760ce1b57c08fe44d46d771ccae2cc4ee02ff65ecb28e8fa2",
+      "bytes": 1053
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "01f164b51fd97b152f71ff3bdfe925adafb2b599e477febe2d96d556f0a66543",
+      "bytes": 1768
+    },
+    "evidence/narrow-confirmation.png": {
+      "sha256": "1b3ec238fafd54a746f52bc68d4aac5ad5364851a80ae6fb577e8e757ab87b2e",
+      "bytes": 90508
+    },
+    "evidence/narrow-dark.png": {
+      "sha256": "cd802b08144289db2cac48992d998e1d58021772ffe0053bf4181c046fadc64a",
+      "bytes": 85311
+    },
+    "evidence/narrow.png": {
+      "sha256": "a6a78dec02919db81c8164c198937f335c903f8edf5065cb38556573fc4f8499",
+      "bytes": 83874
+    },
+    "evidence/verify.mjs": {
+      "sha256": "8766a9b7b71efd1abcd4f7df2ff42922af1b36dddf559f5654a12b0026bb9e3e",
+      "bytes": 3881
+    },
+    "evidence/wide-dark.png": {
+      "sha256": "5b64e3ba3ae62279449c9951d59bbf53c33e25d8df4f6a062a8fcc08ec69c1c2",
+      "bytes": 93794
+    },
+    "evidence/wide.png": {
+      "sha256": "3ab34ef9d260bce886ff56bc33694d50d57c45552c2fd2223755793a7797f588",
+      "bytes": 92795
+    },
+    "index.html": {
+      "sha256": "24ab1b63631dee9bbe11d623efaad874b8b92ecb238f163e34ee06eb13263d5b",
+      "bytes": 3399
+    },
+    "styles.css": {
+      "sha256": "cdba2cda3812c2f2a4b45b757f163b72de13d30227379e7a65f2cee2c7fbb119",
+      "bytes": 7412
+    }
+  },
+  "filesChanged": true,
+  "browserStatus": "observed",
+  "browserError": null,
+  "requiredImageEvidence": "No generated images requested.",
+  "independentReview": "pending",
+  "completeness": "Execution evidence only; adoption requires all rubric and scenario checks."
+}

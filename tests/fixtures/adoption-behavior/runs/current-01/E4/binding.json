@@ -1,0 +1,24 @@
+{
+  "id": "E4",
+  "cwd": "/tmp/qs-behavior-task-HNUnku",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-trace-forensics/SKILL.md",
+      "sourceSHA256": "b8c5a6f0e2c2af2e3d79ab95e15c61364901870b852e5a7c0b757b49c0e93d91",
+      "derivedSHA256": "93e4d96860670b3e252a98c1067bfdb7513e6d4ff0eaa95af30e27fa4033f5c0",
+      "bytes": 10078
+    }
+  ]
+}

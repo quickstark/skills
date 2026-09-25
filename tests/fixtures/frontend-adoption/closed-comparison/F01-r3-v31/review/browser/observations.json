@@ -1,0 +1,984 @@
+{
+  "browserVersion": "HeadlessChrome/151.0.7922.34",
+  "blockedRequests": [],
+  "views": {
+    "wide": {
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "scrollWidth": 1280,
+      "text": "Skip to content\nNorthstar\nMuseum\nVisit\nCollections\nMembership\n\nA PLACE FOR CURIOUS MINDS\n\nMake room\nfor wonder.\n\nFamily membership keeps discovery close to home.\n\nExplore membership\n↘\nFamily membership\n\n$100 / year\n\nUnlimited entry for two adults and children under 18.\n\nMembership details\n↗\n\nPricing effective January 1, 2025.\n\nBring your curiosity.\n\nStart with your email.\n\nEmail address\n\nRequired to continue with Family membership.\n\nContinue\n→\n\nRead our privacy policy.\n\nThis local form confirms your selection. No payment is collected.\n\nWonder brings us together.\nMembers\n10,000\nAnnual visits\n50,000\nFounded\n2020\n\nNorthstar Museum\n\nPrivacy\nAccessibility",
+      "links": [
+        {
+          "text": "Skip to content",
+          "href": "#main"
+        },
+        {
+          "text": "NorthstarMuseum",
+          "href": "/"
+        },
+        {
+          "text": "Visit",
+          "href": "/visit"
+        },
+        {
+          "text": "Collections",
+          "href": "/collections"
+        },
+        {
+          "text": "Membership",
+          "href": "/membership"
+        },
+        {
+          "text": "Explore membership ↘",
+          "href": "#membership-panel"
+        },
+        {
+          "text": "Membership details ↗",
+          "href": "/membership/family"
+        },
+        {
+          "text": "privacy policy",
+          "href": "/privacy"
+        },
+        {
+          "text": "Privacy",
+          "href": "/privacy"
+        },
+        {
+          "text": "Accessibility",
+          "href": "/accessibility"
+        }
+      ],
+      "ids": [
+        "site-header",
+        "main",
+        "intro-title",
+        "membership-panel",
+        "membership-title",
+        "price",
+        "details-link",
+        "join-form",
+        "member-email",
+        "email-helper",
+        "email-error",
+        "join-button",
+        "form-message",
+        "facts-title",
+        "member-count",
+        "annual-visits",
+        "founded",
+        "site-footer"
+      ],
+      "landmarks": {
+        "site-header": "<header id=\"site-header\" class=\"site-header wrap\">\n    <a class=\"wordmark\" href=\"/\" aria-label=\"Northstar Museum home\">Northstar<span>Museum</span></a>\n    <nav aria-label=\"Main navigation\">\n      <a href=\"/visit\">Visit</a>\n      <a href=\"/collections\">Collections</a>\n      <a href=\"/membership\" aria-current=\"page\">Membership</a>\n    </nav>\n  </header>",
+        "site-footer": "<footer id=\"site-footer\" class=\"site-footer wrap\">\n    <p>Northstar Museum</p>\n    <nav aria-label=\"Footer navigation\"><a href=\"/privacy\">Privacy</a><a href=\"/accessibility\">Accessibility</a></nav>\n  </footer>"
+      },
+      "typography": {
+        "bodyFont": "Georgia, \"Times New Roman\", serif",
+        "headingFont": "Georgia, \"Times New Roman\", serif"
+      },
+      "controls": [
+        {
+          "tag": "INPUT",
+          "id": "member-email",
+          "type": "email",
+          "text": "",
+          "labels": [
+            "Email address"
+          ],
+          "ariaLabel": null
+        },
+        {
+          "tag": "BUTTON",
+          "id": "join-button",
+          "type": "submit",
+          "text": "Continue →",
+          "labels": [],
+          "ariaLabel": null
+        }
+      ]
+    },
+    "narrow": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "text": "Skip to content\nNorthstar\nMuseum\nVisit\nCollections\nMembership\n\nA PLACE FOR CURIOUS MINDS\n\nMake room\nfor wonder.\n\nFamily membership keeps discovery close to home.\n\nExplore membership\n↘\nFamily membership\n\n$100 / year\n\nUnlimited entry for two adults and children under 18.\n\nMembership details\n↗\n\nPricing effective January 1, 2025.\n\nBring your curiosity.\n\nStart with your email.\n\nEmail address\n\nRequired to continue with Family membership.\n\nContinue\n→\n\nRead our privacy policy.\n\nThis local form confirms your selection. No payment is collected.\n\nWonder brings us together.\nMembers\n10,000\nAnnual visits\n50,000\nFounded\n2020\n\nNorthstar Museum\n\nPrivacy\nAccessibility",
+      "links": [
+        {
+          "text": "Skip to content",
+          "href": "#main"
+        },
+        {
+          "text": "NorthstarMuseum",
+          "href": "/"
+        },
+        {
+          "text": "Visit",
+          "href": "/visit"
+        },
+        {
+          "text": "Collections",
+          "href": "/collections"
+        },
+        {
+          "text": "Membership",
+          "href": "/membership"
+        },
+        {
+          "text": "Explore membership ↘",
+          "href": "#membership-panel"
+        },
+        {
+          "text": "Membership details ↗",
+          "href": "/membership/family"
+        },
+        {
+          "text": "privacy policy",
+          "href": "/privacy"
+        },
+        {
+          "text": "Privacy",
+          "href": "/privacy"
+        },
+        {
+          "text": "Accessibility",
+          "href": "/accessibility"
+        }
+      ],
+      "ids": [
+        "site-header",
+        "main",
+        "intro-title",
+        "membership-panel",
+        "membership-title",
+        "price",
+        "details-link",
+        "join-form",
+        "member-email",
+        "email-helper",
+        "email-error",
+        "join-button",
+        "form-message",
+        "facts-title",
+        "member-count",
+        "annual-visits",
+        "founded",
+        "site-footer"
+      ],
+      "landmarks": {
+        "site-header": "<header id=\"site-header\" class=\"site-header wrap\">\n    <a class=\"wordmark\" href=\"/\" aria-label=\"Northstar Museum home\">Northstar<span>Museum</span></a>\n    <nav aria-label=\"Main navigation\">\n      <a href=\"/visit\">Visit</a>\n      <a href=\"/collections\">Collections</a>\n      <a href=\"/membership\" aria-current=\"page\">Membership</a>\n    </nav>\n  </header>",
+        "site-footer": "<footer id=\"site-footer\" class=\"site-footer wrap\">\n    <p>Northstar Museum</p>\n    <nav aria-label=\"Footer navigation\"><a href=\"/privacy\">Privacy</a><a href=\"/accessibility\">Accessibility</a></nav>\n  </footer>"
+      },
+      "typography": {
+        "bodyFont": "Georgia, \"Times New Roman\", serif",
+        "headingFont": "Georgia, \"Times New Roman\", serif"
+      },
+      "controls": [
+        {
+          "tag": "INPUT",
+          "id": "member-email",
+          "type": "email",
+          "text": "",
+          "labels": [
+            "Email address"
+          ],
+          "ariaLabel": null
+        },
+        {
+          "tag": "BUTTON",
+          "id": "join-button",
+          "type": "submit",
+          "text": "Continue →",
+          "labels": [],
+          "ariaLabel": null
+        }
+      ]
+    }
+  },
+  "qualityJudgment": "Not evaluated; independent review required.",
+  "tabSequence": [
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Skip to content",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "NorthstarMuseum",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Visit",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Collections",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Membership",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Explore membership ↘",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "details-link",
+      "tag": "A",
+      "text": "Membership details ↗",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "member-email",
+      "tag": "INPUT",
+      "text": "",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "join-button",
+      "tag": "BUTTON",
+      "text": "Continue →",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "privacy policy",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Privacy",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Accessibility",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n  Skip to content\n  \n    NorthstarMuseum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n\n  \n    \n      \n  ",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Skip to content",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  ],
+  "invalidEmail": {
+    "valid": false,
+    "message": "Please include an '@' in the email address. 'bad-address' is missing an '@'."
+  },
+  "keyboardSubmission": {
+    "reachedJoin": true,
+    "events": [
+      {
+        "name": "join_started",
+        "plan": "family"
+      }
+    ],
+    "message": "Ready to continue with Family membership."
+  },
+  "reducedMotion": {
+    "matches": true,
+    "elements": [
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 120.890625,
+        "height": 42
+      },
+      {
+        "id": "site-header",
+        "tag": "HEADER",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 80
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 72.125,
+        "height": 37.328125
+      },
+      {
+        "id": "",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 72.125,
+        "height": 11.75
+      },
+      {
+        "id": "",
+        "tag": "NAV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 175.1875,
+        "height": 34
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 22.453125,
+        "height": 34
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 58.703125,
+        "height": 34
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 66.03125,
+        "height": 34
+      },
+      {
+        "id": "main",
+        "tag": "MAIN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 1436.34375
+      },
+      {
+        "id": "",
+        "tag": "SECTION",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 355.15625
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 146.78125
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 15
+      },
+      {
+        "id": "intro-title",
+        "tag": "H1",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 115.78125
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 108.375
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 320,
+        "height": 59.375
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 176.5,
+        "height": 33
+      },
+      {
+        "id": "",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 14,
+        "height": 33
+      },
+      {
+        "id": "membership-panel",
+        "tag": "SECTION",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 709.1875
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 269.1875
+      },
+      {
+        "id": "membership-title",
+        "tag": "H2",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 30
+      },
+      {
+        "id": "price",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 68.1875
+      },
+      {
+        "id": "",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 44.984375,
+        "height": 22
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 54
+      },
+      {
+        "id": "details-link",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 168.703125,
+        "height": 33
+      },
+      {
+        "id": "",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 14,
+        "height": 33
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 18
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 356
+      },
+      {
+        "id": "",
+        "tag": "H3",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 31
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 21
+      },
+      {
+        "id": "join-form",
+        "tag": "FORM",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 193
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 16
+      },
+      {
+        "id": "email-helper",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 18
+      },
+      {
+        "id": "join-button",
+        "tag": "BUTTON",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 48
+      },
+      {
+        "id": "",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 22,
+        "height": 22
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 18
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 71.140625,
+        "height": 14
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 302,
+        "height": 36
+      },
+      {
+        "id": "",
+        "tag": "SECTION",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 372
+      },
+      {
+        "id": "facts-title",
+        "tag": "H2",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 280,
+        "height": 68
+      },
+      {
+        "id": "",
+        "tag": "DL",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 192
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 48
+      },
+      {
+        "id": "",
+        "tag": "DT",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 58.359375,
+        "height": 21
+      },
+      {
+        "id": "member-count",
+        "tag": "DD",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 103.5,
+        "height": 48
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 48
+      },
+      {
+        "id": "",
+        "tag": "DT",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 78.59375,
+        "height": 21
+      },
+      {
+        "id": "annual-visits",
+        "tag": "DD",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 103.5,
+        "height": 48
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 48
+      },
+      {
+        "id": "",
+        "tag": "DT",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 55.28125,
+        "height": 21
+      },
+      {
+        "id": "founded",
+        "tag": "DD",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 76,
+        "height": 48
+      },
+      {
+        "id": "site-footer",
+        "tag": "FOOTER",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 350,
+        "height": 114
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 135.484375,
+        "height": 21
+      },
+      {
+        "id": "",
+        "tag": "NAV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 128.703125,
+        "height": 34
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 39.34375,
+        "height": 34
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 65.359375,
+        "height": 34
+      }
+    ]
+  }
+}

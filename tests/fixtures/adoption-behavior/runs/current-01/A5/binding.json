@@ -1,0 +1,24 @@
+{
+  "id": "A5",
+  "cwd": "/tmp/qs-behavior-task-cAXMzB",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-code-debug/SKILL.md",
+      "sourceSHA256": "0d0de6416b837ba3ba43195aa78269239e074b4dee11cbef1ee2b00a172c9368",
+      "derivedSHA256": "9d76bd94b353526273d311b999badf80e8b0bf86357a642821ac0ef956f9a13f",
+      "bytes": 10927
+    }
+  ]
+}

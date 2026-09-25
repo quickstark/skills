@@ -1,0 +1,1286 @@
+{
+  "command": [
+    "codex",
+    "app-server",
+    "--listen",
+    "stdio://",
+    "-c",
+    "sqlite_home=\"/tmp/qs-native-discovery-n8vv8vua/runtime\"",
+    "-c",
+    "log_dir=\"/tmp/qs-native-discovery-n8vv8vua/logs\""
+  ],
+  "workspace": "/tmp/qs-native-discovery-n8vv8vua",
+  "modelRequests": 0,
+  "requests": [
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "clientInfo": {
+          "name": "qs-native-discovery-probe",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "jsonrpc": "2.0",
+      "method": "initialized",
+      "params": {}
+    },
+    {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "skills/list",
+      "params": {
+        "cwds": [
+          "/tmp/qs-native-discovery-n8vv8vua"
+        ],
+        "forceReload": true
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": 1,
+      "result": {
+        "userAgent": "qs-native-discovery-probe/0.153.4 (Ubuntu 24.4.0; x86_64) dumb (qs-native-discovery-probe; 1)",
+        "codexHome": "/home/djn12313/.codex",
+        "platformFamily": "unix",
+        "platformOs": "linux"
+      }
+    },
+    {
+      "id": 2,
+      "result": {
+        "data": [
+          {
+            "cwd": "/tmp/qs-native-discovery-n8vv8vua",
+            "skills": [
+              {
+                "name": "qs-invocation-context-probe",
+                "description": "Local discovery-only fixture; never invoked.",
+                "path": "/tmp/qs-native-discovery-n8vv8vua/.agents/skills/qs-invocation-context-probe/SKILL.md",
+                "scope": "repo",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "qs-invocation-disabled-probe",
+                "description": "Local discovery-only fixture; never invoked.",
+                "path": "/tmp/qs-native-discovery-n8vv8vua/.agents/skills/qs-invocation-disabled-probe/SKILL.md",
+                "scope": "repo",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "compound-engineering:ce-babysit-pr",
+                "description": "Babysits an open GitHub PR until merge-ready. Use when asked to watch a PR over time \u2014 not for one-shot comment resolution or one CI failure. GitHub (incl. Enterprise) only.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-babysit-pr/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-bakeoff",
+                "description": "Develop independent competing solutions to a defined brief, compare them, and synthesize a winning approach. Use when choosing well requires developing alternatives beyond their current form. Use ce-pov to judge developed material and ce-ideate to discover opportunities.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-bakeoff/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-brainstorm",
+                "description": "Explore vague or ambitious ideas into a right-sized requirements-only unified plan. Use when the user wants to brainstorm or scope what to build. Not for executing already-specified work. Use ce-pov for a verdict on adopting a named external technology.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-brainstorm/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-code-review",
+                "description": "Review a named diff or PR for bugs, regressions, tests, and standards. Use when asked to review code or when a shipping skill needs a review receipt. Use when asked to apply this review's findings locally. Use ce-resolve-pr-feedback for feedback already left on a PR.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-code-review/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-commit",
+                "description": "Create a git commit with a clear, value-communicating message. Use when the user asks to commit/save staged or unstaged changes with a repo-appropriate message.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-commit/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-commit-push-pr",
+                "description": "Commit, push, and open a PR. Use when asked to ship/open a PR, or for PR-description-only flows like writing, rewriting, or describing a PR body.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-commit-push-pr/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-compound",
+                "description": "Document a solved problem as a durable repo learning. Use when verified work produced non-obvious reasoning absent from its final code, tests, or existing docs; avoid routine fixes whose artifacts already explain the lesson.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-compound/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-compound-refresh",
+                "description": "Refresh the repo's captured learnings against the current codebase. Use when auditing stale, overlapping, superseded, or drifted learnings; avoid general refactor, debugging, or code review unless the learnings store is explicit.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-compound-refresh/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-debug",
+                "description": "Diagnosis loop for bugs and failing behavior. Use when asked to debug or fix failing or slow behavior.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-debug/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-doc-review",
+                "description": "Review requirements, plans, or specs with role-specific lenses. Use when the user wants to improve an existing planning document.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-doc-review/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-dogfood",
+                "description": "Hands-off, diff-scoped browser QA of the active branch: maps user flows, drives a real browser, autonomously fixes small breakages with regression tests and commits, judges experience against product personas, and writes a durable dogfood report. Manual invocation only.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-dogfood/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-explain",
+                "description": "Explain how and why something has its current shape, or what happened over a window of work, grounded in evidence. Use when the user asks for an explanation. Use ce-pov for a judgment or recommendation.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-explain/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-handoff",
+                "description": "Create a session handoff for another agent, or resume, find, and read any user-selected continuity source. Use when work or conversation must continue without access to the current session history.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-handoff/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-ideate",
+                "description": "Generate and evaluate grounded ideas. Use when the user wants ideas, improvements, or surprising directions before choosing one to develop. Not for refining an idea they already have (ce-brainstorm) or judging one already on the table (ce-pov).",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-ideate/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-noslop",
+                "description": "Rewrite, check, or draft prose so it carries no AI writing tells, reads plainly on the first read, and keeps every source fact. Use when asked to make writing plainer or free of those tells, to check writing for them, or when drafting from supplied content. Use ce-promote for channel-specific marketing copy.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-noslop/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-optimize",
+                "description": "Optimize a named target with a measured loop: attribute a workload's cost, or score variants and keep winners. Use when a working system's metric should move and the winning change is not already known. Use ce-debug when the job is diagnosis; use ce-work when the change is already known.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-optimize/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-plan",
+                "description": "Create structured plans for multi-step work, including software and non-software tasks. Use when asked to plan, break down implementation, plan from requirements, or deepen an existing plan; prefer ce-brainstorm for exploratory framing.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-plan/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-polish",
+                "description": "Polish a working feature through user-directed live browser feedback. Use when a functional feature needs focused UX refinement before shipping.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-polish/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-pov",
+                "description": "Judge a supplied subject against the project's evidence and constraints. Use when assessing an external-adoption question, a holistic take on a document, or a supplied approach set. Use for an oracle panel to consult other models and reconcile their opinions. Use ce-explain for understanding and ce-doc-review for findings review.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-pov/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-product-pulse",
+                "description": "Generate time-windowed product pulse reports from configured signals.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-product-pulse/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-promote",
+                "description": "Draft launch or promotion copy for a shipped feature.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-promote/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-proof",
+                "description": "Publish, read, comment on, or edit markdown in Proof. Use for Proof links, sharing specs/plans/drafts, or publish handoffs from planning workflows; avoid proofread, math, evidence, or proof-of-concept meanings.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-proof/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-prototype",
+                "description": "Build a throwaway prototype to answer how something should work, feel, or read. Use when committing the wrong answer would be expensive to unravel and a cheap sketch cannot settle it. Not a rough visual probe during brainstorming, not for deciding what to build, not polishing a feature that already works, not implementing the real thing.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-prototype/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-resolve-pr-feedback",
+                "description": "Resolve PR review feedback. Use when addressing feedback already left on a PR. Not for reviewing the code before feedback exists; that is ce-code-review.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-resolve-pr-feedback/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-retune",
+                "description": "Retune a skill corpus for a new model, measurement-first: mine the run archive for a baseline, establish a noise floor, audit the corpus adversarially, then cut in measured passes until a pre-registered bar clears. Requires a benchmark harness that can A/B two builds of the corpus; refuses without one.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-retune/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-riffrec-feedback-analysis",
+                "description": "Analyze recorded product feedback into evidence for bugs and requirements. Use when a Riffrec capture or other screen, voice, or notes artifact needs interpretation. Use for Riffrec setup, capture, or sharing help when no recording exists yet.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-riffrec-feedback-analysis/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-setup",
+                "description": "Check Compound Engineering health and repo-local config, or scaffold a Compound Pack with `pack:<id>`.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-setup/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-simplify-code",
+                "description": "Simplify settled, recently changed code for clarity, reuse, quality, and efficiency while preserving behavior. Use after implementation and before review; use ce-debug for bugs.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-simplify-code/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-strategy",
+                "description": "Create or update STRATEGY.md. Use when starting a product, adding a strategy doc, or changing direction or roadmap.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-strategy/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-sweep",
+                "description": "Sweep configured feedback sources (Slack, GitHub Issues; email experimental) for new items: acknowledge at source, analyze recordings, verify fixes merged to main, and emit an `lfg`-ready plan. First run sets up sources; supports mode:non-interactive for scheduled runs.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-sweep/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-test-browser",
+                "description": "Run browser tests for pages affected by the current branch or PR. Use when asked to run or check browser tests for the current change.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-test-browser/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-test-xcode",
+                "description": "Test iOS apps in a simulator with XcodeBuildMCP. Use when iOS changes need simulator evidence before handoff.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-test-xcode/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-work",
+                "description": "Execute a plan or concrete work prompt end-to-end. Use when implementing from a plan document, a spec path, or a clear build request; use ce-debug for open-ended bugs. Use when an outer orchestrator needs implementation and local verification only, without the shipping tail.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-work/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:ce-worktree",
+                "description": "Set up isolated git worktrees \u2014 create a new branch for fresh work, or attach a worktree to an existing branch, PR, or commit. Use when starting isolated work or isolating an existing ref.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/ce-worktree/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:lfg",
+                "description": "Take a request all the way to done, hands-off, through the right Compound Engineering skills. A code change ends as an open pull request, pushed without stopping. Use only when the user explicitly asks for autonomous end-to-end work or invokes lfg directly. Use ce-plan, ce-work, ce-debug, or ce-commit-push-pr for work the user reviews step by step.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/lfg/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "compound-engineering:wtf",
+                "description": "Explain the last message, or a supplied file, link, or passage, in plain language a person follows on the first read. Use when the user invokes wtf because they did not follow something. Use ce-explain to investigate how or why code works, and ce-noslop to rewrite prose.",
+                "path": "/home/djn12313/.codex/plugins/cache/compound-engineering-plugin/compound-engineering/3.29.0/skills/wtf/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "compound-engineering@compound-engineering-plugin"
+              },
+              {
+                "name": "design-taste-frontend",
+                "description": "Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships interfaces that do not look templated. Real design systems when applicable, audit-first on redesigns, strict pre-flight check.",
+                "path": "/home/djn12313/.agents/skills/design-taste-frontend/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "find-skills",
+                "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+                "path": "/home/djn12313/.agents/skills/find-skills/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "high-end-visual-design",
+                "description": "Teaches the AI to design like a high-end agency. Defines the exact fonts, spacing, shadows, card structures, and animations that make a website feel expensive. Blocks all the common defaults that make AI designs look cheap or generic.",
+                "path": "/home/djn12313/.agents/skills/high-end-visual-design/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes",
+                "description": "Mandatory entry point: read this first for any request to make, create, edit, animate, or render a video, animation, or motion graphic, including a promo, explainer, captioned clip, title card, overlay, slideshow or interactive deck, Remotion port, or any HyperFrames HTML composition. Also use it to inspect, diagnose, validate, preview, publish, or batch-render an existing HyperFrames project. Inputs may be a website URL, GitHub PR, Figma design or URL, text or brief, existing footage, or music. It resumes project state, captures intent when applicable, selects and installs the owning workflow, and routes domain capabilities. HyperFrames is the default output framework unless the user explicitly chooses another framework for the deliverable or asks only to record a browser session.",
+                "path": "/home/djn12313/.agents/skills/hyperframes/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-animation",
+                "description": "All animation knowledge for HyperFrames \u2014 atomic motion rules, multi-phase scene blueprints, scene transitions, broader motion-design techniques, AND the seven runtime adapters (GSAP default, plus Lottie, Three.js, Anime.js, CSS keyframes, Web Animations API, TypeGPU). Use for any motion or animation task: pick 2-4 rules and compose, or load a blueprint, or look up runtime-specific API (e.g. GSAP eases / Lottie player / Three.js mixer). Also covers auditing an existing composition's choreography (animation map) and 24 named text-animation effects. HyperFrames-native: single paused timeline, seek-safe, deterministic.",
+                "path": "/home/djn12313/.agents/skills/hyperframes-animation/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-audio",
+                "description": "Use when audio already placed in a HyperFrames composition needs to be mixed: a music bed that fights a voiceover (voiceover carve), effects on a track (EQ, compressor, limiter, gate, saturation, delay, reverb, chorus, phaser, bitcrush), or automation envelopes drawn on a track's volume or any effect parameter. Don't use for sourcing or generating audio \u2014 finding BGM, SFX, or making a voiceover is `/media-use`. Don't use for clip timing or track layout, which is `/hyperframes-core`.",
+                "path": "/home/djn12313/.agents/skills/hyperframes-audio/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-cli",
+                "description": "Use the HyperFrames CLI development loop: init, add, catalog, capture, lint, check, snapshot, compare, grade-compare, preview, play, present, beats, keyframes, single or batch render, publish, cloud, cloudrun, feedback, lambda, doctor, browser, info, upgrade, skills, compositions, docs, benchmark, telemetry, transcribe, auth, tts, and remove-background. Also use when diagnosing build or render failures. validate, inspect, and layout are deprecated aliases; use check. Covers local, HeyGen-hosted cloud, AWS Lambda, and Google Cloud Run rendering.",
+                "path": "/home/djn12313/.agents/skills/hyperframes-cli/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-core",
+                "description": "The HyperFrames composition contract \u2014 build one renderable project. Use for composition structure, the `data-*` timing attributes, `class=\"clip\"`, tracks, sub-compositions, variables, framework-owned media playback, deterministic-render rules, and validation. Also covers Tailwind projects and the STORYBOARD.md / SCRIPT.md plan formats. Read before writing composition HTML.",
+                "path": "/home/djn12313/.agents/skills/hyperframes-core/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-creative",
+                "description": "Non-animation creative direction for HyperFrames videos. Use for design spec (frame.md / design.md) handling, palettes, typography, narration, beat planning, audio-reactive visuals, composition patterns, and brand / style decisions. For atomic motion patterns and scene blueprints, use `hyperframes-animation`.",
+                "path": "/home/djn12313/.agents/skills/hyperframes-creative/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-keyframes",
+                "description": "Use when a HyperFrames composition needs seek-safe 2D/3D keyframes, GSAP timelines, CSS keyframes, Anime.js, WAAPI, FLIP, paths, masks, SVG morph/draw, text trails, 3D depth, or `hyperframes keyframes` diagnostics. Don't use for broad scene strategy, brand design, media sourcing, captions, or general video planning.",
+                "interface": {
+                  "displayName": "HyperFrames Keyframes",
+                  "shortDescription": "Author seek-safe video keyframes",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $hyperframes-keyframes to author seek-safe 2D/3D keyframes and verify them with the CLI."
+                },
+                "path": "/home/djn12313/.agents/skills/hyperframes-keyframes/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "hyperframes-registry",
+                "description": "Install, discover, and wire registry blocks and components into HyperFrames compositions. Use when running hyperframes add or hyperframes catalog, installing one item or every block matching a tag, wiring an installed item into index.html, or working with hyperframes.json. Covers discovery, install locations, block sub-composition wiring, component snippet merging, and authoring a new block or component to contribute upstream (idea \u2192 scaffold \u2192 validate \u2192 PR).",
+                "path": "/home/djn12313/.agents/skills/hyperframes-registry/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "image-to-code",
+                "description": "Elite website image-to-code skill for Codex. For visually important web tasks, it must first generate the design image(s) itself, deeply analyze them, then implement the website to match them as closely as possible. In Codex, it must prefer large, readable, section-specific images instead of tiny compressed boards, generate fresh standalone images for sections or detail views instead of cropping old ones, avoid lazy under-generation, avoid cards-inside-cards-inside-cards UI, and keep the hero clean, spacious, readable, and visible on a small laptop.",
+                "path": "/home/djn12313/.agents/skills/image-to-code/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "imagegen-frontend-mobile",
+                "description": "Elite mobile app image-generation skill for creating premium, app-native screen concepts and flows. Designed for iOS, Android, and cross-platform mobile products. Prioritizes clean hierarchy, comfortably readable text, strong multi-screen consistency, controlled color palettes, non-generic creative direction, textured surfaces, image-led composition, tasteful custom iconography, and clean phone mockup framing. By default, screens should be shown inside a subtle premium iPhone or similar phone mockup with a visible frame, while the main focus stays on the app content itself. This skill generates images only. It does not write code.",
+                "path": "/home/djn12313/.agents/skills/imagegen-frontend-mobile/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "imagegen-frontend-web",
+                "description": "Elite frontend image-direction skill for generating premium, conversion-aware website design references. CRITICAL OUTPUT RULE \u2014 generate ONE separate horizontal image FOR EVERY section. A landing page with 8 sections produces 8 images. Never compress multiple sections into one image. Enforces composition variety (not always left-text / right-image), background-image freedom, varied CTAs, varied hero scales (giant / mid / mini minimalist), narrative concept spine, second-read moments, and a single consistent palette across all images. Optimized for landing pages, marketing sites, and product comps that developers or coding models can accurately recreate.",
+                "path": "/home/djn12313/.agents/skills/imagegen-frontend-web/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "media-use",
+                "description": "Agent Media OS, the single skill for every media need in a HyperFrames project. Resolve BGM, SFX, image, icon, brand logo, voice, color grade, or LUT into a frozen local file or paste-ready block + ledger record (one verb, `resolve`); generate via TTS / music / image models when the catalog misses; produce voiceover, transcription, captions, and background removal through one shared audio engine; operate on media (cut / reframe / transform); and reuse assets across projects. Also use for vague feedback that real footage looks dark, flat, boring, should feel retro/camcorder/print/ASCII, needs privacy, or needs a media reveal.",
+                "path": "/home/djn12313/.agents/skills/media-use/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "minimalist-ui",
+                "description": "Clean editorial-style interfaces. Warm monochrome palette, typographic contrast, flat bento grids, muted pastels. No gradients, no heavy shadows.",
+                "path": "/home/djn12313/.agents/skills/minimalist-ui/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "ps-skills:ps-blast-radius",
+                "description": "Map the impact of one proposed change across callers, contracts, data, tests, and operations.",
+                "interface": {
+                  "displayName": "PS Blast Radius",
+                  "shortDescription": "Map impact of one proposed change",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-blast-radius to map callers, contracts, data, tests, and operations affected by this proposed change. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-blast-radius/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-create-verification-skill",
+                "description": "Create a project-local rerunnable verification workflow and feature map.",
+                "interface": {
+                  "displayName": "PS Create Verification Skill",
+                  "shortDescription": "Create a rerunnable verification workflow",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-create-verification-skill to create a project-local verification workflow and feature map. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-create-verification-skill/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-help",
+                "description": "Choose the right explicit PS or QS workflow without starting it.",
+                "interface": {
+                  "displayName": "PS Help",
+                  "shortDescription": "Choose a PS or QS workflow",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-help to choose the right explicit PS or QS workflow without starting it. Modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-help/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-hillclimb",
+                "description": "Improve one declared metric through bounded measured experiments.",
+                "interface": {
+                  "displayName": "PS Hillclimb",
+                  "shortDescription": "Improve one metric experimentally",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-hillclimb to improve one declared metric through bounded measured experiments. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-hillclimb/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-how",
+                "description": "Explain how a selected subsystem works from code and observed interfaces.",
+                "interface": {
+                  "displayName": "PS How",
+                  "shortDescription": "Explain how a subsystem works",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-how to explain how this subsystem works from code and observed interfaces. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-how/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-maintain-verification-skill",
+                "description": "Reconcile an existing verification workflow with observed product behavior.",
+                "interface": {
+                  "displayName": "PS Maintain Verification Skill",
+                  "shortDescription": "Reconcile verification coverage",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-maintain-verification-skill to reconcile this verification workflow with observed product behavior. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-maintain-verification-skill/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-pr-babysit",
+                "description": "Drive one selected pull request to a truthful merge-ready assessment.",
+                "interface": {
+                  "displayName": "PS PR Babysit",
+                  "shortDescription": "Drive one PR toward readiness",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-pr-babysit to assess and, only if authorized, repair this selected pull request without merging it. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-pr-babysit/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-runtime-forensics",
+                "description": "Diagnose one live runtime symptom from actual measurements without repairing it.",
+                "interface": {
+                  "displayName": "PS Runtime Forensics",
+                  "shortDescription": "Diagnose a live runtime symptom",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-runtime-forensics to diagnose this live runtime symptom from measurements without repairing it. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-runtime-forensics/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-skill-eval",
+                "description": "Compare a skill or prompt variant with its control through blinded recorded trials.",
+                "interface": {
+                  "displayName": "PS Skill Evaluation",
+                  "shortDescription": "Compare blinded skill variants",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-skill-eval to compare this skill or prompt variant with its control through blinded trials. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-skill-eval/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-trace-forensics",
+                "description": "Diagnose one supplied profiling or trace artifact without changing product behavior.",
+                "interface": {
+                  "displayName": "PS Trace Forensics",
+                  "shortDescription": "Diagnose a supplied trace artifact",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-trace-forensics to diagnose this supplied trace or profile without changing product behavior. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-trace-forensics/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-visual-parity",
+                "description": "Converge a selected implementation toward a verified immutable visual baseline.",
+                "interface": {
+                  "displayName": "PS Visual Parity",
+                  "shortDescription": "Converge to an immutable baseline",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-visual-parity to converge this implementation toward its immutable visual baseline using a declared tolerance. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-visual-parity/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-why",
+                "description": "Explain why a behavior or design exists from attributable evidence.",
+                "interface": {
+                  "displayName": "PS Why",
+                  "shortDescription": "Explain attributable rationale",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-why to explain why this behavior or design exists from attributable evidence. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-why/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "ps-skills:ps-worktree-cleanup",
+                "description": "Audit reclaimable worktrees and remove only explicitly confirmed exact targets.",
+                "interface": {
+                  "displayName": "PS Worktree Cleanup",
+                  "shortDescription": "Audit and remove confirmed worktrees",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $ps-skills:ps-worktree-cleanup to audit reclaimable worktrees and remove only explicitly confirmed exact targets. Modes: effort=quick|standard|deep and report=brief|full."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/ps-skills/3.8.0/skills/ps-worktree-cleanup/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "ps-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-code-build",
+                "description": "Implement one scoped change with an evidence-based test and validation strategy.",
+                "interface": {
+                  "displayName": "QS Code: Build",
+                  "shortDescription": "Implement a specification or tracked ticket",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-code-build to implement this specification or ticket with appropriate tests. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-code-build/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-code-debug",
+                "description": "Diagnose and repair one reproducible defect before changing behavior.",
+                "interface": {
+                  "displayName": "QS Code: Debug",
+                  "shortDescription": "Reproduce and diagnose a bug or regression",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-code-debug to reproduce, diagnose, and fix this bug with a regression test. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-code-debug/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-deploy-release",
+                "description": "Validate and execute an explicitly approved documented release or deployment.",
+                "interface": {
+                  "displayName": "QS Deploy: Release",
+                  "shortDescription": "Safely verify and run a documented deployment",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-deploy-release to verify and run this project's documented release workflow. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-deploy-release/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-flow-handoff",
+                "description": "Preserve verified state and ranked next actions for another operator or invocation.",
+                "interface": {
+                  "displayName": "QS Flow: Handoff",
+                  "shortDescription": "Prepare a concise handoff for another session",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-flow-handoff to prepare a concise handoff so another session can continue this work. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-flow-handoff/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-flow-triage",
+                "description": "Assess incoming work and record one bounded recommended route.",
+                "interface": {
+                  "displayName": "QS Flow: Triage",
+                  "shortDescription": "Triage incoming issues into actionable work",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-flow-triage to triage these incoming issues into clear, actionable work. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-flow-triage/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-git-merge",
+                "description": "Inspect and safely integrate only explicitly selected Git and GitHub changes.",
+                "interface": {
+                  "displayName": "QS Git: Merge",
+                  "shortDescription": "Safely integrate and publish verified GitHub changes",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-git-merge/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-help",
+                "description": "Choose one bounded QuickStark workflow from the v3 core or optional specialists.",
+                "interface": {
+                  "displayName": "QS Help",
+                  "shortDescription": "Find the right QuickStark skill or workflow",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-help to find the right skill or workflow for my current task. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-help/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-plan-clarify",
+                "description": "Turn ambiguity into a confirmed problem, scope, constraints, and decisions.",
+                "interface": {
+                  "displayName": "QS Plan: Clarify",
+                  "shortDescription": "Clarify a plan and capture durable decisions",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-plan-clarify to clarify this project and document the resulting decisions. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-plan-clarify/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-plan-roadmap",
+                "description": "Sequence confirmed outcomes, decisions, and dependencies into a practical roadmap.",
+                "interface": {
+                  "displayName": "QS Plan: Roadmap",
+                  "shortDescription": "Map large projects into manageable decisions",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-plan-roadmap to map this large project into a practical sequence of decisions. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-plan-roadmap/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-plan-spec",
+                "description": "Produce an actionable specification, dependency-aware tickets, or both.",
+                "interface": {
+                  "displayName": "QS Plan: Specs & Tickets",
+                  "shortDescription": "Turn agreed requirements into a spec or tickets",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-plan-spec to turn the agreed requirements into an actionable specification or dependency-aware implementation tickets. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-plan-spec/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-review-code",
+                "description": "Review a change or selected codebase scope and optionally improve or refactor it safely.",
+                "interface": {
+                  "displayName": "QS Review: Code",
+                  "shortDescription": "Review, improve, or refactor selected code safely",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-review-code to review, improve, or refactor the explicitly selected code scope safely. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-review-code/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-skills:qs-setup",
+                "description": "Prepare or verify QuickStark configuration for one project.",
+                "interface": {
+                  "displayName": "QS Setup",
+                  "shortDescription": "Configure project trackers, labels, and docs",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-skills:qs-setup to configure this project for the QuickStark engineering skills. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-setup/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-skills@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-code-document",
+                "description": "Write concise documentation from verified project behavior and interfaces.",
+                "interface": {
+                  "displayName": "QS Code: Document",
+                  "shortDescription": "Write accurate, verified project documentation",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-code-document to write or update accurate documentation for the actual project and its verified behavior. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-code-document/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-deploy-prompt",
+                "description": "Generate one execution-ready goal prompt for autonomous feature delivery without executing it.",
+                "interface": {
+                  "displayName": "QS Deploy: Prompt",
+                  "shortDescription": "Generate a scoped autonomous deployment prompt",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-deploy-prompt to generate one scoped goal-mode execution prompt for planning, building, verifying, and deploying the requested feature. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-deploy-prompt/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-design-prototype",
+                "description": "Build a disposable prototype to answer one design question.",
+                "interface": {
+                  "displayName": "QS Design: Prototype",
+                  "shortDescription": "Prototype an interface or design decision",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-design-prototype to build a focused prototype to answer this design question. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-design-prototype/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-learn-teach",
+                "description": "Teach one bounded subject through explanation, practice, and feedback.",
+                "interface": {
+                  "displayName": "QS Learn: Teach",
+                  "shortDescription": "Learn a subject through a guided study plan",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-learn-teach to teach me this subject through a practical, guided study plan. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-learn-teach/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-plan-research",
+                "description": "Answer one bounded question using reliable, attributable evidence.",
+                "interface": {
+                  "displayName": "QS Plan: Research",
+                  "shortDescription": "Research a question using reliable sources",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-plan-research to research this question and capture evidence-backed findings. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-plan-research/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-skill-write",
+                "description": "Create or improve one focused, testable agent skill.",
+                "interface": {
+                  "displayName": "QS Skill: Write",
+                  "shortDescription": "Create and improve focused, reliable AI skills",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-skill-write to create or improve an effective, reliable agent skill. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-skill-write/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-test-author",
+                "description": "Add or improve focused automated tests for already-established behavior.",
+                "interface": {
+                  "displayName": "QS Test: Author",
+                  "shortDescription": "Add focused tests for existing behavior",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-test-author to add or improve focused automated tests for this existing behavior. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-test-author/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "qs-specialists:qs-test-verify",
+                "description": "Run and report a selected software verification matrix without changing the software.",
+                "interface": {
+                  "displayName": "QS Test: Verify",
+                  "shortDescription": "Run and report selected software verification",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $qs-specialists:qs-test-verify to run and report the selected test suites and environments without changing the software. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/quickstark/qs-specialists/3.8.0/skills/qs-test-verify/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "qs-specialists@quickstark"
+              },
+              {
+                "name": "redesign-existing-projects",
+                "description": "Upgrades existing websites and apps to premium quality. Audits current design, identifies generic AI patterns, and applies high-end design standards without breaking functionality. Works with any CSS framework or vanilla CSS.",
+                "path": "/home/djn12313/.agents/skills/redesign-existing-projects/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "unlazy",
+                "description": "Enforces completion discipline for substantial autonomous work by writing acceptance gates before execution, decomposing work with the Depth Tree, running approved checks, and re-verifying evidence before reporting. Use when Codex faces a long or multi-part task, work that has returned half-done, an exhaustive audit or build, parallel leaves or pipelines, or explicit triggers such as /unlazy, $unlazy, \"tree N\", \"gates\", and \"do not stop until it is done\".",
+                "interface": {
+                  "displayName": "Unlazy",
+                  "shortDescription": "Finish substantial work against runnable gates",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $unlazy to complete this substantial task against explicit, verifiable gates."
+                },
+                "path": "/home/djn12313/.agents/skills/unlazy/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "visualize:live",
+                "description": "Create or update a compact, graphical sidebar view that makes progress, results, and blockers clear at a glance. Use when requested, or proactively for long-running migrations. Also use when a responsibility to check or maintain something continues after a successful pass. Only use in the Codex App or ChatGPT desktop app.",
+                "interface": {
+                  "displayName": "Live visualization",
+                  "shortDescription": "Create a clear, live sidebar visualization",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": null
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/openai-bundled/visualize/1.0.41/skills/live/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "visualize@openai-bundled"
+              },
+              {
+                "name": "visualize:visualize",
+                "description": "Create visualizations and interactive tools directly in conversation. Answer current-state check-ins and personal logistics visually, even when asked briefly. Proactively use to show how something works; explore 'what happens when', 'what changes', or 'help me understand'; compare or inspect; create simulations, maps, charts, graphs, and mockups. Use standard tools for static scientific figures.",
+                "interface": {
+                  "displayName": "Visualize",
+                  "shortDescription": "Turn ideas and data into interactive visuals",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $visualize to create an interactive visual when a chart, map, diagram, simulation, 3D model, data explorer, or UI preview would make the result easier to understand or adjust."
+                },
+                "path": "/home/djn12313/.codex/plugins/cache/openai-bundled/visualize/1.0.41/skills/visualize/SKILL.md",
+                "scope": "user",
+                "enabled": true,
+                "pluginId": "visualize@openai-bundled"
+              },
+              {
+                "name": "imagegen",
+                "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                "interface": {
+                  "displayName": "Image Gen",
+                  "shortDescription": "Generate or edit images for websites, games, and more",
+                  "iconSmall": "/home/djn12313/.codex/skills/.system/imagegen/assets/imagegen-small.svg",
+                  "iconLarge": "/home/djn12313/.codex/skills/.system/imagegen/assets/imagegen.png",
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                },
+                "path": "/home/djn12313/.codex/skills/.system/imagegen/SKILL.md",
+                "scope": "system",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "openai-docs",
+                "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge\u2014including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex\u2014and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                "interface": {
+                  "displayName": "OpenAI Docs",
+                  "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                  "iconSmall": "/home/djn12313/.codex/skills/.system/openai-docs/assets/openai-small.svg",
+                  "iconLarge": "/home/djn12313/.codex/skills/.system/openai-docs/assets/openai.png",
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                },
+                "path": "/home/djn12313/.codex/skills/.system/openai-docs/SKILL.md",
+                "scope": "system",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "plugin-creator",
+                "description": "Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow.",
+                "interface": {
+                  "displayName": "Plugin Creator",
+                  "shortDescription": "Scaffold plugins and marketplace entries",
+                  "iconSmall": "/home/djn12313/.codex/skills/.system/plugin-creator/assets/plugin-creator-small.svg",
+                  "iconLarge": "/home/djn12313/.codex/skills/.system/plugin-creator/assets/plugin-creator.png",
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $plugin-creator to scaffold a valid plugin in the personal marketplace, then validate it before handing it back."
+                },
+                "path": "/home/djn12313/.codex/skills/.system/plugin-creator/SKILL.md",
+                "scope": "system",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "review-agent",
+                "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                "interface": {
+                  "displayName": "Review Agent",
+                  "shortDescription": "Find actionable bugs in code changes",
+                  "iconSmall": null,
+                  "iconLarge": null,
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                },
+                "path": "/home/djn12313/.codex/skills/.system/review-agent/SKILL.md",
+                "scope": "system",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "skill-creator",
+                "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                "shortDescription": "Create or update a skill",
+                "interface": {
+                  "displayName": "Skill Creator",
+                  "shortDescription": "Create or update a skill",
+                  "iconSmall": "/home/djn12313/.codex/skills/.system/skill-creator/assets/skill-creator-small.svg",
+                  "iconLarge": "/home/djn12313/.codex/skills/.system/skill-creator/assets/skill-creator.png",
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": null
+                },
+                "path": "/home/djn12313/.codex/skills/.system/skill-creator/SKILL.md",
+                "scope": "system",
+                "enabled": true,
+                "pluginId": null
+              },
+              {
+                "name": "skill-installer",
+                "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                "shortDescription": "Install curated skills from openai/skills or other repos",
+                "interface": {
+                  "displayName": "Skill Installer",
+                  "shortDescription": "Install curated skills from openai/skills or other repos",
+                  "iconSmall": "/home/djn12313/.codex/skills/.system/skill-installer/assets/skill-installer-small.svg",
+                  "iconLarge": "/home/djn12313/.codex/skills/.system/skill-installer/assets/skill-installer.png",
+                  "iconSmallUrl": null,
+                  "iconLargeUrl": null,
+                  "brandColor": null,
+                  "defaultPrompt": null
+                },
+                "path": "/home/djn12313/.codex/skills/.system/skill-installer/SKILL.md",
+                "scope": "system",
+                "enabled": true,
+                "pluginId": null
+              }
+            ],
+            "errors": []
+          }
+        ]
+      }
+    }
+  ],
+  "stderr": [],
+  "otherMessages": [
+    {
+      "method": "remoteControl/status/changed",
+      "id": null
+    }
+  ],
+  "status": "completed",
+  "exitCode": 0,
+  "workspaceRemoved": true
+}

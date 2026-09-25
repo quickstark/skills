@@ -1,0 +1,147 @@
+{
+  "runId": "2026-09-25T21-12-42-924Z-2",
+  "node": "v24.21.0",
+  "hashes": {
+    "README.md": "bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d",
+    "app.cjs": "5aefc49aa630d232e1712bf174a49b22c3353b3064e82a21f4bf032688550d8b",
+    "verification/features.json": "ba529ba5063bff9d220944b78ef25d5a63ecae1ee3da728b6915474d28e26766",
+    "verification/run.cjs": "b99dccbf066c918e0587d968cbaddf81d40d0f305c6f0f982ba2cd814324bbcd"
+  },
+  "doctors": [
+    {
+      "reason": "before session",
+      "checks": [
+        {
+          "file": "app.cjs",
+          "passed": true
+        },
+        {
+          "file": "verification/run.cjs",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "reason": "new session readiness",
+      "response": {
+        "route": "/health",
+        "status": 200,
+        "body": "{\"ready\":true}",
+        "json": {
+          "ready": true
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "passed": true
+    },
+    {
+      "reason": "after sum failure",
+      "checks": [
+        {
+          "file": "app.cjs",
+          "passed": true
+        },
+        {
+          "file": "verification/run.cjs",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "reason": "after sum failure readiness",
+      "response": {
+        "route": "/health",
+        "status": 200,
+        "body": "{\"ready\":true}",
+        "json": {
+          "ready": true
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "passed": true
+    },
+    {
+      "reason": "after export failure",
+      "checks": [
+        {
+          "file": "app.cjs",
+          "passed": true
+        },
+        {
+          "file": "verification/run.cjs",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "reason": "after export failure readiness",
+      "response": {
+        "route": "/health",
+        "status": 200,
+        "body": "{\"ready\":true}",
+        "json": {
+          "ready": true
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "passed": true
+    }
+  ],
+  "sessions": [
+    {
+      "pid": 23,
+      "stderr": "",
+      "cleanupConfirmed": true,
+      "port": 38275,
+      "exit": {
+        "code": 0,
+        "signal": null
+      }
+    }
+  ],
+  "features": [
+    {
+      "name": "sum",
+      "action": "GET /sum?a=7&b=5",
+      "expected": 12,
+      "response": {
+        "route": "/sum?a=7&b=5",
+        "status": 200,
+        "body": "{\"result\":2}",
+        "json": {
+          "result": 2
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "status": "failed",
+      "classification": "product",
+      "reason": "Expected JSON result 12"
+    },
+    {
+      "name": "export",
+      "action": "GET /export",
+      "expected": "download",
+      "response": {
+        "route": "/export",
+        "status": 404,
+        "body": "{\"error\":\"not found\"}",
+        "json": {
+          "error": "not found"
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "status": "failed",
+      "classification": "product",
+      "reason": "Expected a nonempty attachment download; documented 404 remains a product gap"
+    }
+  ],
+  "passed": false
+}

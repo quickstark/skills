@@ -1,0 +1,20 @@
+{
+  "sourcePage": "https://svs.gsfc.nasa.gov/12634",
+  "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a010000/a012600/a012634/Nancy_Grace_Roman_interview_3-31-2017_part1_1080.webm",
+  "credit": "NASA/Goddard Space Flight Center; Nancy Grace Roman interview, March 31, 2017",
+  "sourceRangeSeconds": [
+    4,
+    8
+  ],
+  "fixtureTransform": "ffmpeg: scale=640:360, fps=6, H264 CRF18/AAC; no title-card frames",
+  "sourceSha256": "a090c7ef01655ceffe8d0c5e8cc044738efb14889a252fff460fbc9444a97fc5",
+  "fixtureSha256": "5ca0c7b4be74173d2496ef86f88d145a252dfbb1a35d42f1415f6bf8596b2ddb",
+  "captionOracle": "Editorial identification from NASA source metadata, supplied timed text. Not a claimed verbatim speech transcript or test of speech-recognition accuracy.",
+  "model": {
+    "url": "https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_human_seg.onnx",
+    "upstreamMd5": "c09ddc2e0104f800e3e1bb4652583d1f",
+    "sha256": "01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c",
+    "licenseSource": "https://github.com/xuebinqin/U-2-Net/blob/master/LICENSE",
+    "license": "Apache-2.0"
+  }
+}

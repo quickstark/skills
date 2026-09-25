@@ -1,0 +1,480 @@
+[
+  {
+    "id": "F01",
+    "title": "greenfield marketing page",
+    "originalSource": "design-taste-frontend",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "empty",
+    "input": "Build a polished static membership page for Northstar Museum from the supplied facts. Include an introduction, Family membership details, and museum facts. Use the existing brand, a clear membership-details link and a local join form. No image generation is needed. Deliver working responsive files, not just recommendations.",
+    "references": [
+      "brief",
+      "design-direction",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "requested-sections",
+      "brand-and-facts",
+      "working-local-form",
+      "narrow-and-keyboard",
+      "zero-image-calls",
+      "no-publication"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F02",
+    "title": "audit only",
+    "originalSource": "redesign-existing-projects",
+    "localRoot": "qs-design-frontend",
+    "mode": "audit",
+    "projectFixture": "project",
+    "input": "Audit this membership flow for the most important usability and accessibility problems. Give prioritized findings with concrete evidence and fixes. Do not edit files or redesign it yet.",
+    "references": [
+      "brief",
+      "redesign"
+    ],
+    "requiredChecks": [
+      "zero-file-mutation",
+      "specific-observed-findings",
+      "prioritized-impact",
+      "no-claimed-implementation",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": false,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "unchanged-input-files"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F03",
+    "title": "preserve existing behavior",
+    "originalSource": "redesign-existing-projects",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Improve spacing and hierarchy in the existing Family membership panel and make the form usable on a narrow screen. Preserve all content, links, stable IDs, analytics, current form behavior and the existing brand.",
+    "references": [
+      "brief",
+      "redesign",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "exact-facts-and-routes",
+      "stable-ids",
+      "analytics-and-form",
+      "brand-preserved",
+      "narrow-no-overflow",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F04",
+    "title": "bounded overhaul",
+    "originalSource": "redesign-existing-projects",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Overhaul only the layout and hierarchy inside the membership panel. It can become a more confident two-part price and signup composition. Keep the header, footer, all facts, routes, form behavior, IDs, analytics, and brand untouched.",
+    "references": [
+      "brief",
+      "redesign",
+      "design-direction",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "panel-improves",
+      "header-footer-unchanged",
+      "exact-facts-and-routes",
+      "analytics-and-form",
+      "panel-responsive-within-scope",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F05",
+    "title": "existing brand versus dimensional defaults",
+    "originalSource": "high-end-visual-design",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Give this membership panel more depth and polish with subtle surfaces and spacing. Our Georgia typeface and museum colors are fixed. Keep every fact, link and interaction; do not introduce decorative motion or new fonts.",
+    "references": [
+      "brief",
+      "design-direction",
+      "dimensional-style",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "brand-font-and-colors",
+      "no-new-motion",
+      "exact-facts-and-routes",
+      "coherent-depth",
+      "panel-legibility-and-existing-interactions"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F06",
+    "title": "legitimate round metrics",
+    "originalSource": "design-taste-frontend",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Make the museum facts easier to scan and the membership price more prominent. These published figures and dates are confirmed: 10,000 members, 50,000 annual visits, founded 2020, $100 per year effective January 1, 2025. Improve presentation without altering them.",
+    "references": [
+      "brief",
+      "design-direction",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "exact-round-metrics",
+      "exact-date-price-name",
+      "readable-hierarchy",
+      "no-invented-proof",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F07",
+    "title": "reduced motion",
+    "originalSource": "high-end-visual-design",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Repair the reduced-motion experience of this page. Keep all content and controls available and keep the existing brand and behavior. Limit edits to the motion/accessibility defect; do not perform a broad redesign.",
+    "references": [
+      "brief",
+      "dimensional-style",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "reduced-motion-animation-off",
+      "content-remains-visible",
+      "no-broad-redesign",
+      "analytics-and-form-preserved",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F08",
+    "title": "keyboard and narrow product flow",
+    "originalSource": "minimalist-ui",
+    "localRoot": "qs-design-frontend",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Make the existing join form work reliably using keyboard alone and at 390px width. Keep this a practical membership flow, with clear labels, visible focus and validation feedback. Keep facts, brand, routes and analytics. No landing-page redesign or new dependencies.",
+    "references": [
+      "brief",
+      "restrained-style",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "keyboard-submit",
+      "input-label",
+      "visible-focus",
+      "narrow-no-overflow",
+      "validation-feedback",
+      "no-marketing-replacement",
+      "exact-facts-and-routes"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F09",
+    "title": "image-only mobile flow",
+    "originalSource": "imagegen-frontend-mobile",
+    "localRoot": "qs-design-image-mobile",
+    "mode": "image-only",
+    "projectFixture": "empty",
+    "input": "Create exactly two separate portrait image mockups for our iOS membership flow: choose Family membership, then confirm the selection. Use the supplied Northstar brand and exact $100/year price. Raw app screens, no device frames or website hero/footer. Target 1179\u00d72556 with safe status/home-indicator regions. Keep selection and labels consistent. Images only; do not implement code. Use at most two image-generation calls.",
+    "references": [
+      "brief",
+      "prompt-construction",
+      "mobile-images"
+    ],
+    "requiredChecks": [
+      "exactly-two-real-images",
+      "ios-app-flow",
+      "raw-screens-safe-areas",
+      "selection-continuity",
+      "exact-brand-price",
+      "zero-product-code",
+      "budget-respected"
+    ],
+    "budget": {
+      "maximumImageCalls": 2,
+      "requiredImages": 2,
+      "maximumModelTurns": 1,
+      "timeoutMs": 600000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": false,
+      "generateImages": true,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "unchanged-input-files",
+      "actual-generated-images",
+      "independent-visual-review"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F10",
+    "title": "prompt only web hero",
+    "originalSource": "imagegen-frontend-web",
+    "localRoot": "qs-design-image-web",
+    "mode": "prompt-only",
+    "projectFixture": "empty",
+    "input": "Write one reusable image-generation prompt for a single desktop membership hero, 1440\u00d7900. Use Northstar Museum, \u201cMake room for wonder.\u201d, Family membership at $100/year, and our supplied Georgia/teal/cream identity. Emphasize readable typography with a quiet editorial composition. Return the prompt only; do not generate an image, implement code, or expand it into a section pack.",
+    "references": [
+      "brief",
+      "prompt-construction",
+      "web-images",
+      "design-direction"
+    ],
+    "requiredChecks": [
+      "one-reusable-prompt",
+      "exact-brand-content-canvas",
+      "no-extra-sections",
+      "zero-image-and-tool-calls",
+      "zero-product-code"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": false,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "unchanged-input-files"
+    ],
+    "qualityFloor": 3
+  },
+  {
+    "id": "F11",
+    "title": "supplied reference implementation",
+    "originalSource": "image-to-code",
+    "localRoot": "qs-design-image-to-code",
+    "mode": "implementation",
+    "projectFixture": "empty",
+    "input": "Implement the supplied authoritative design image as responsive static HTML/CSS/JavaScript. Match its 1280\u00d7900 layout and visible content; adapt cleanly to 390px. Keep the reference file immutable. Do not generate a replacement design or images. Use the supplied brand/facts and working local membership behavior. This is a reference implementation, not an authorization to run another public parity workflow.",
+    "references": [
+      "brief",
+      "implementation"
+    ],
+    "requiredChecks": [
+      "reference-unchanged",
+      "no-image-generation",
+      "reference-content-and-layout",
+      "wide-and-narrow-render",
+      "keyboard-and-form",
+      "no-fake-parity-claim"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": "assets/reference.png",
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  }
+]

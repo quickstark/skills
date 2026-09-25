@@ -18,80 +18,9 @@ const path = require("path");
 const fs = require("fs");
 const os = require("os");
 
-// Locate hyperframes' bundled puppeteer. render-and-composite.sh exports
-// HYPERFRAMES_ROOT; standalone we also try the in-repo path + ~/Downloads, and
-// accept ANY puppeteer@* the bun store holds (not a pinned version).
-const HF_ROOTS = [
-  process.env.HYPERFRAMES_ROOT,
-  path.resolve(__dirname, "../../.."), // skills/embedded-captions/scripts → repo root if in-repo
-  path.join(os.homedir(), "Downloads", "hyperframes"),
-].filter(Boolean);
-let puppeteer = null;
-for (const root of HF_ROOTS) {
-  const cands = [path.join(root, "node_modules", "puppeteer")];
-  const bunDir = path.join(root, "node_modules", ".bun");
-  try {
-    if (fs.existsSync(bunDir)) {
-      for (const d of fs.readdirSync(bunDir)) {
-        if (d.startsWith("puppeteer@"))
-          cands.push(path.join(bunDir, d, "node_modules", "puppeteer"));
-      }
-    }
-  } catch {
-    /* ignore */
-  }
-  for (const p of cands) {
-    try {
-      if (fs.existsSync(p)) {
-        puppeteer = require(p);
-        break;
-      }
-    } catch {
-      /* try next */
-    }
-  }
-  if (puppeteer) break;
-}
-if (!puppeteer) {
-  console.error(
-    "[measure] could not locate puppeteer — set HYPERFRAMES_ROOT to a built hyperframes checkout",
-  );
-  process.exit(3);
-}
-
-// Resolve hyperframes' bundled GSAP. The templates load GSAP from a CDN
-// (cdn.jsdelivr.net), but in headless Chromium that request can be slow or
-// blocked — the page's inline `gsap.timeline()` then throws "gsap is not
-// defined" and the occlusion gate hard-fails. We inject this local copy on
-// every new document (before any page script runs) so window.gsap always
-// exists, and abort the CDN request so the parser never stalls on it. The
-// render path is unaffected — this is measurement-only.
-let gsapSource = null;
-for (const root of HF_ROOTS) {
-  const cands = [path.join(root, "node_modules", "gsap", "dist", "gsap.min.js")];
-  const bunDir = path.join(root, "node_modules", ".bun");
-  try {
-    if (fs.existsSync(bunDir)) {
-      for (const d of fs.readdirSync(bunDir)) {
-        if (d.startsWith("gsap@"))
-          cands.push(path.join(bunDir, d, "node_modules", "gsap", "dist", "gsap.min.js"));
-      }
-    }
-  } catch {
-    /* ignore */
-  }
-  for (const p of cands) {
-    try {
-      if (fs.existsSync(p)) {
-        gsapSource = fs.readFileSync(p, "utf8");
-        break;
-      }
-    } catch {
-      /* try next */
-    }
-  }
-  if (gsapSource) break;
-}
+const captionRuntime = require("../../../scripts/caption-runtime.cjs");
+captionRuntime.runtime(process.argv[2]);
+const puppeteer = captionRuntime.dependency("puppeteer-core");
 
 async function main() {
   const projectDir = process.argv[2];
@@ -134,33 +63,22 @@ async function main() {
   const H = plan?.height || 1290;
   const FPS = plan?.fps || 24;
 
-  const browser = await puppeteer.launch({
+  const browser = await puppeteer.launch(captionRuntime.browserOptions({
     headless: "new",
-    executablePath: fs.existsSync(exe) ? exe : undefined,
+    executablePath: captionRuntime.browserPath(),
     args: [
       "--disable-web-security",
       "--allow-file-access-from-files",
       `--window-size=${W},${H}`,
       "--disable-dev-shm-usage",
     ],
-  });
+  }));
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
     page.on("pageerror", (err) => console.error(`[browser-error] ${err.message}`));
 
-    // Inject local GSAP before any page script + abort the CDN <script> so the
-    // page never depends on network for GSAP (see resolver note above). Falls
-    // back to the page's own CDN load if no local copy was found.
-    if (gsapSource) {
-      await page.evaluateOnNewDocument(gsapSource);
-      await page.setRequestInterception(true);
-      page.on("request", (req) => {
-        const u = req.url();
-        if (req.resourceType() === "script" && /gsap/i.test(u) && /^https?:/i.test(u)) req.abort();
-        else req.continue();
-      });
-    }
+    await captionRuntime.preparePage(page);
 
     await page.goto(`file://${indexPath}`, { waitUntil: "load", timeout: 15000 });
     // GSAP is injected locally above; poll for the page's timeline registration.
@@ -176,7 +94,7 @@ async function main() {
     }
     if (!ready) {
       console.error("[measure] GSAP timeline never registered");
-      process.exit(4);
+      throw new Error("GSAP timeline never registered");
     }
     // Inject the skill's bundled @font-face set so headless Chromium measures the SAME
     // glyph metrics the renderer will use. Without this, Inter/etc fall back to system
@@ -214,7 +132,7 @@ async function main() {
         const out = [];
         for (const cap of caps) {
           const cs = getComputedStyle(cap);
-          if (cs.opacity === "0" || cs.display === "none") continue;
+          if (cs.opacity === "0" || cs.display === "none" || cs.visibility === "hidden" || cs.visibility === "collapse") continue;
           const cb = cap.getBoundingClientRect();
           if (cb.width === 0 || cb.height === 0) continue;
           const id = cap.id || "";
@@ -224,7 +142,7 @@ async function main() {
           const words = [];
           for (const w of ws) {
             const wcs = getComputedStyle(w);
-            if (wcs.opacity === "0") continue; // not yet animated in
+            if (wcs.opacity === "0" || wcs.visibility === "hidden" || wcs.visibility === "collapse") continue; // not yet animated in
             const wb = w.getBoundingClientRect();
             if (wb.width === 0) continue;
             words.push({
@@ -236,6 +154,7 @@ async function main() {
               opacity: +wcs.opacity,
             });
           }
+          if (!words.length) continue;
           // Group by line (same y ± 2px)
           const lines = [];
           for (const w of words) {

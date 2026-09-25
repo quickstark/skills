@@ -1,0 +1,3 @@
+{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"clientInfo": {"name": "qs-native-discovery-probe", "version": "1"}}}
+{"jsonrpc": "2.0", "method": "initialized", "params": {}}
+{"jsonrpc": "2.0", "id": 2, "method": "skills/list", "params": {"cwds": ["/github/skills/tests/fixtures/frontend-invocation-context/discovery-workspace"], "forceReload": true}}

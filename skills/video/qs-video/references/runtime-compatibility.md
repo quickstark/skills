@@ -42,4 +42,38 @@ The installed private media resolver has been executed with the bundled SFX prov
 
 A transitive runtime gap remains in CLI0.8.77's `media-use` local voice provider: its `kokoro.local` branch launches unpinned `npx hyperframes tts`. An injected-executor probe of the published module confirmed that argv without running it. Do not invoke that resolver branch merely because Kokoro is installed; first resolve its pinned-runtime compatibility. The separate QS private audio helper uses the selected CLI, but has not been validated with a complete local voice model. The runtime's mflux path invokes `hf download`; local-only classification does not by itself prohibit tool/model acquisition.
 
-Caption transcription now resolves the selected existing CLI directly, checks CLI0.8.77/project pin and existing Whisper binary/model, explicitly selects the Whisper engine, and preserves already-normalized transcripts. An injected executable verified argv, output conversion, incompatible-pin preservation and missing-model rejection; actual pinned CLI help verified these flags. No speech model ran. The remaining embedded-caption matte/render scripts still contain built-checkout assumptions and unverified model/browser dependencies. Their selected workflow is not proved by the supplied-caption HTML render fixture.
+Caption transcription resolves the selected existing CLI directly, checks CLI0.8.77/project pin and existing Whisper binary/model, explicitly selects the Whisper engine, and preserves already-normalized transcripts. An injected executable verified argv, output conversion, incompatible-pin preservation and missing-model rejection; actual pinned CLI help verified these flags. No speech model ran.
+
+The embedded-caption pipeline uses `scripts/caption-runtime.cjs` to resolve
+`sharp`, `puppeteer-core`, and local GSAP from the exact existing `QS_VIDEO_CLI`.
+Set `HYPERFRAMES_BROWSER_PATH` to an existing executable. Compilation copies the
+selected local GSAP bytes into a named, hashed project asset; preview and layout
+use the selected browser without relying on a checkout or a CDN GSAP request.
+Ordinary browser launches retain the OS sandbox. Only a trusted isolated fixture
+on a host without working user namespaces may explicitly select the process-local
+`QS_VIDEO_BROWSER_NO_SANDBOX=1`; a failed launch never enables it automatically.
+
+Matting requires the exact existing model at
+`~/.cache/hyperframes/background-removal/models/u2net_human_seg.onnx` and the
+CLI's actual optional-package cache at
+`~/.cache/hyperframes/optional/onnxruntime-node@1.21.1/node_modules/onnxruntime-node`.
+The adapter verifies model SHA256
+`01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c`,
+ONNX version/loadability, and sharp before any matte source adoption or CLI
+background-removal call. A regular CLI `node_modules/onnxruntime-node` is not the
+cache used by this CLI. Missing/corrupt resources stop without automatic setup.
+Model acquisition is a separately authorized operation, never a helper fallback.
+
+The isolated `tests/fixtures/hyperframes-adoption/embedded-captions` fixture uses
+real NASA interview footage and supplied editorial identification text. It exercises
+CPU matting, source/foreground frame parity, safe zones, cream-template compilation,
+preview, measured layout, strict gates, rendering, matte compositing, and decoded
+pixel/audio checks. This supports that local supplied-caption path on the tested
+Linux profile, not speech-recognition accuracy, every caption identity, every host,
+or arbitrary providers. Render timeouts fail even when an output file exists and
+clean up only the owned process group; they never kill Chromium processes by name.
+
+The published CLI still attempts runtime/skill freshness and Google Fonts subset
+requests during these operations. The isolated transport refused those requests;
+no model/package acquisition happened inside the run. A completed local render
+does not imply zero attempted requests or general runtime telemetry silence.

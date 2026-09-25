@@ -19,45 +19,7 @@ const path = require("path");
 const fs = require("fs");
 const os = require("os");
 
-const HF_ROOTS = [
-  process.env.HYPERFRAMES_ROOT,
-  path.resolve(__dirname, "../../.."),
-  path.join(os.homedir(), "Downloads", "hyperframes"),
-].filter(Boolean);
-
-function findInBun(root, pkg, sub) {
-  const cands = [path.join(root, "node_modules", pkg)];
-  const bunDir = path.join(root, "node_modules", ".bun");
-  try {
-    if (fs.existsSync(bunDir))
-      for (const d of fs.readdirSync(bunDir))
-        if (d.startsWith(pkg + "@")) cands.push(path.join(bunDir, d, "node_modules", pkg));
-  } catch {
-    /* ignore */
-  }
-  for (const c of cands) {
-    const p = sub ? path.join(c, sub) : c;
-    if (fs.existsSync(p)) return p;
-  }
-  return null;
-}
-
-let puppeteer = null,
-  gsapSource = null;
-for (const root of HF_ROOTS) {
-  if (!puppeteer) {
-    const p = findInBun(root, "puppeteer");
-    if (p) {
-      try {
-        puppeteer = require(p);
-      } catch {}
-    }
-  }
-  if (!gsapSource) {
-    const g = findInBun(root, "gsap", path.join("dist", "gsap.min.js"));
-    if (g) gsapSource = fs.readFileSync(g, "utf8");
-  }
-}
+const captionRuntime = require("../../../scripts/caption-runtime.cjs");
 
 const norm = (s) =>
   String(s)
@@ -81,15 +43,7 @@ function fail(msg) {
 async function newPage(browser, W, H) {
   const page = await browser.newPage();
   await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
-  if (gsapSource) {
-    await page.evaluateOnNewDocument(gsapSource);
-    await page.setRequestInterception(true);
-    page.on("request", (req) => {
-      const u = req.url();
-      if (req.resourceType() === "script" && /gsap/i.test(u) && /^https?:/i.test(u)) req.abort();
-      else req.continue();
-    });
-  }
+  await captionRuntime.preparePage(page);
   return page;
 }
 async function load(page, file) {
@@ -154,7 +108,8 @@ async function main() {
   const railPath = path.join(project, "rail.html");
   if (!fs.existsSync(railPath) || !fs.existsSync(indexPath))
     ok("[rail-climax] no rail.html+index.html — not Standard, skipping");
-  if (!puppeteer) ok("[rail-climax] puppeteer unavailable — skipping (set HYPERFRAMES_ROOT)");
+  captionRuntime.runtime(project);
+  const puppeteer = captionRuntime.dependency("puppeteer-core");
 
   const exe =
     process.platform === "darwin"
@@ -162,11 +117,11 @@ async function main() {
       : "/usr/bin/google-chrome";
   let browser;
   try {
-    browser = await puppeteer.launch({
+    browser = await puppeteer.launch(captionRuntime.browserOptions({
       headless: "new",
-      executablePath: fs.existsSync(exe) ? exe : undefined,
+      executablePath: captionRuntime.browserPath(),
       args: ["--disable-web-security", "--allow-file-access-from-files", "--disable-dev-shm-usage"],
-    });
+    }));
   } catch (e) {
     ok(`[rail-climax] could not launch Chromium — skipping (${e.message})`);
   }

@@ -1,0 +1,1 @@
+Synthetic local calculator. Start: node app.cjs. It prints a JSON port on stdout and binds only127.0.0.1. GET /health -> {ready:true}. GET /sum?a=7&b=5 -> {result:12}. SIGTERM stops server. Export is mapped but currently unavailable and should return404. No dependencies. Product file app.cjs is read-only. Verification belongs in verification/.

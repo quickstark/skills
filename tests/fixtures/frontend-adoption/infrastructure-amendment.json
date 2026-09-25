@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "frontend-pilot-infrastructure-1",
+  "createdAt": "2026-09-25T20:14:00.775Z",
+  "authority": "Parent /root explicitly authorized one corrected F10 pilot initialization through exec_command require_escalated after reviewing the pre-model read-only-filesystem failure. Preparation agent must not execute it.",
+  "reason": "The original attempt exited before app-server initialization. Existing Codex runtime state needs writes outside workspace. No model, reasoning, sandbox, approval, configuration, input, instruction, task, or budget override is authorized.",
+  "originalPlanSHA256": "68dd5e17fff60b61034a4713e79b22702241088ec7c75de5660cf79153c066fb",
+  "originalAttemptMarkerSHA256": "8c8e0c08e0ae2df2955c70ca349a95cd40d514e7e631ede96b39f274008b5a40",
+  "failedPilotDirectory": "/tmp/qs-frontend-pilot-20260925",
+  "failedPilotManifest": {
+    "pilot-F10-v84/after/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "pilot-F10-v84/before/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "pilot-F10-v84/binding.json": {
+      "sha256": "d120756278a419a5e4b2b9b48c1de34d976b26ff839a1cea3876198564626854",
+      "bytes": 1704
+    },
+    "pilot-F10-v84/events.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "pilot-F10-v84/process.json": {
+      "sha256": "c09c2ea2aa8af32d80c0d3e840ea96954f1126afcddfa6159cd952b57f22a936",
+      "bytes": 313
+    },
+    "pilot-F10-v84/prompt.txt": {
+      "sha256": "53117348567e7a6b5fa1e622ef96daa6dffe1acd9064c00f79d3c491c1b19759",
+      "bytes": 21823
+    },
+    "pilot-F10-v84/response.md": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "pilot-F10-v84/review/actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "pilot-F10-v84/review/context.json": {
+      "sha256": "395bc45fe0d385b286d9a0356ad27ce61882e55b97c121607cd9bb3c032a7f00",
+      "bytes": 7298
+    },
+    "pilot-F10-v84/review/events.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "pilot-F10-v84/review/input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "pilot-F10-v84/review/response.md": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "pilot-F10-v84/stderr.txt": {
+      "sha256": "8e3330eeb312ddb37b9da73c3ece4a8aa7e2ade4b7bb255573aa487bc89f0f58",
+      "bytes": 197
+    },
+    "pilot-F10-v84/summary.json": {
+      "sha256": "f434cfe69e98997b8d5530ab736ac4805e8897dad0008e5a2ed063ea5f93dd8d",
+      "bytes": 831
+    },
+    "pilot-F10-v84/telemetry.json": {
+      "sha256": "dc78f0fbc34dd0131b71eb2e624cf0eb9e5f1ac97c229fdb540ab368755a9006",
+      "bytes": 933
+    },
+    "run-summary.json": {
+      "sha256": "c7893c14b68065befc0af21528ccd33d3dc8b5e9d09a1f32259ebbd074a5e1b7",
+      "bytes": 382
+    },
+    "supervisor-lock.json": {
+      "sha256": "477d930c405b0ffc5dc5312f6ed720630356ddc94f9289fed483707a9d3b94c6",
+      "bytes": 225
+    }
+  },
+  "failedSupervisorLog": {
+    "path": "/tmp/qs-frontend-pilot-supervisor.log",
+    "sha256": "fa7bf6558e62bf59506c4f4dd06771e5f4c799011ee378fc832f9907da34ae50"
+  },
+  "interfaceSHA256": "00559f24df37e1d0bddfe719188e4e48cddc41d7c4a10c1aa3c8ed7cdaaad91a",
+  "existingCli": {
+    "path": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+    "sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da"
+  },
+  "scenarioId": "F10",
+  "variant": "v84",
+  "maximumCorrectedAttempts": 1,
+  "modelOverrides": [],
+  "executionInterface": "Parent exec_command sandbox_permissions=require_escalated; same existing CLI and default model/reasoning/sandbox/approval. No child-owned handoff.",
+  "preservation": "Original plan, frozen inputs, runner, failed marker and every failed-pilot file stay byte-for-byte unchanged. Corrected attempt has a separate exclusive marker and output directory. Both pilots stay excluded from comparison.",
+  "successLimit": "Successful initialization and response capture would establish infrastructure only. Independent prompt review remains required and rendered/image quality remains unverified.",
+  "fullComparison": "Unstarted. This amendment authorizes only a corrected pilot initialization, not a comparison or extra sample."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "A4",
+  "cwd": "/tmp/qs-behavior-task-ClMmjS",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/productivity/qs-learn-teach/SKILL.md",
+      "sourceSHA256": "895e87a75411e308fbb30595bcc73b06de94731587862de8c4ff86c8e644e786",
+      "derivedSHA256": "d577a43f87ffff5ab3b75b182a7cee3873079127c70f94fc1ce2da0440488a11",
+      "bytes": 8310
+    }
+  ]
+}

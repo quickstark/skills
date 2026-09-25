@@ -376,6 +376,7 @@ function main() {
   }
 
   for (const [k, v] of Object.entries(subs)) src = src.split(`{{${k}}}`).join(v);
+  src = require("../../../scripts/caption-runtime.cjs").localizeGsap(src, project);
   fs.writeFileSync(path.join(project, "index.html"), src);
   console.log(
     `[compile] ${dna ? `dna=${dna.name} (engine)` : `template=${plan.template}`} → ${path.join(project, "index.html")}`,

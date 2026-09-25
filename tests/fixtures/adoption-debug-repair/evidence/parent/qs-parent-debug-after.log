@@ -1,0 +1,14 @@
+✔ 204 original failure and body never consumed (1.07034ms)
+✔ JSON values and request semantics remain exact (1.78201ms)
+✔ 401 and 403 remain authentication failures without parsing (0.518364ms)
+✔ other HTTP failures retain status without parsing (0.342339ms)
+✔ malformed successful payload retains the parser cause (0.348141ms)
+✔ transport rejection propagates unchanged (0.235297ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68.98251

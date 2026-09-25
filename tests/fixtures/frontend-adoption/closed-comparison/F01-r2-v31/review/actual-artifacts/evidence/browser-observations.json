@@ -1,0 +1,69 @@
+{
+  "layouts": [
+    {
+      "name": "wide",
+      "overflow": false,
+      "headerHeight": 80,
+      "buttonBottom": 615.5,
+      "detailsHref": "/membership/family",
+      "title": "Make room\nfor wonder.",
+      "buttonColor": "rgb(247, 245, 239)",
+      "buttonBackground": "rgb(8, 107, 100)"
+    },
+    {
+      "name": "narrow",
+      "overflow": false,
+      "headerHeight": 76,
+      "buttonBottom": 881.9375,
+      "detailsHref": "/membership/family",
+      "title": "Make room\nfor wonder.",
+      "buttonColor": "rgb(247, 245, 239)",
+      "buttonBackground": "rgb(8, 107, 100)"
+    },
+    {
+      "name": "wide-dark",
+      "overflow": false,
+      "headerHeight": 80,
+      "buttonBottom": 615.5,
+      "detailsHref": "/membership/family",
+      "title": "Make room\nfor wonder.",
+      "buttonColor": "rgb(24, 45, 42)",
+      "buttonBackground": "rgb(135, 206, 193)"
+    },
+    {
+      "name": "narrow-dark",
+      "overflow": false,
+      "headerHeight": 76,
+      "buttonBottom": 881.9375,
+      "detailsHref": "/membership/family",
+      "title": "Make room\nfor wonder.",
+      "buttonColor": "rgb(24, 45, 42)",
+      "buttonBackground": "rgb(135, 206, 193)"
+    }
+  ],
+  "keyboard": {
+    "firstFocus": "Skip to content",
+    "empty": {
+      "error": "Enter your email address to continue.",
+      "focus": "member-email",
+      "events": 0
+    },
+    "invalid": {
+      "error": "Enter a valid email address, such as you@example.com.",
+      "events": 0
+    },
+    "valid": {
+      "message": "Ready to continue with Family membership.",
+      "events": [
+        {
+          "name": "join_started",
+          "plan": "family"
+        }
+      ],
+      "focus": "form-message"
+    }
+  },
+  "errors": [],
+  "externalRequests": [],
+  "imageCalls": 0
+}
