@@ -1,0 +1,38 @@
+# Structural enforcement capability
+
+## Purpose
+
+Encode durable workflow requirements in schemas, tests, or generated structure instead of relying on reminders.
+
+## Entry conditions
+
+Use when a verified lesson is stable, repeatable, and enforceable at a repository boundary.
+
+## Method
+
+1. Name the failure the structure must prevent.
+2. Choose the smallest enforceable seam: schema, validation, fixture, generator, or test.
+3. Derive expected behavior independently of the implementation and demonstrate that the seam rejects the known violation. Use a known-bad control when a tautological check could otherwise pass; retain valid absence, configuration, and contract checks instead of banning test shapes.
+4. Keep policy text aligned with the executable constraint.
+
+## Stop conditions
+
+Stop when the known violation fails deterministically or when the rule remains too contextual for safe automation.
+
+## Evidence
+
+Record the protected invariant and its failing and passing examples as part of the owning root run.
+
+## Owners
+
+`qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`.
+
+<!-- qs-progress:start -->
+## Progress reporting
+
+Contribute stage status and verification evidence to the parent skill's conversation checklist. Report the current stage, observed progress or waiting state, and any required user input to the parent during long operations, aiming for updates within sixty seconds when the host allows control to return. Distinguish running from confirmed progress; elapsed time alone is not evidence.
+
+Supply relevant artifacts, command results, sources, or observable behavior before the parent checks off a stage. Identify failed checks, skipped work and reasons, blockers, and later evidence that requires reopening a verified stage. Supply findings or changes, passed and failed checks, and remaining work for the parent's final explanation. Never imply configuration in a read-only run. Do not create a separate checklist, completion report, skills-used entry, or continuation. Remain inside the public root regardless of effort or report mode.
+
+Contribute observed partial work, remaining effort, uncertainty, and revision-bound evidence for the parent's stage and overall estimates. Waiting, elapsed time, token consumption, or a running process alone earns no progress. Flag invalidated evidence so the parent can lower estimates and reopen checks. Preserve valid evidence for resumption; do not count the same work twice or report an independent public percentage. Only the parent computes weighted progress and verifies 100% completion.
+<!-- qs-progress:end -->

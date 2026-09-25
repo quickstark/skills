@@ -1,6 +1,6 @@
 interface:
   display_name: "QS Unlazy"
   short_description: "Complete substantial work against acceptance gates"
-  default_prompt: "Use $qs-execution:qs-unlazy to complete this substantial scoped work using explicit acceptance gates and verified evidence."
+  default_prompt: "Use $qs-execution:qs-unlazy to complete this substantial scoped work using explicit acceptance gates and verified evidence. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
 policy:
   allow_implicit_invocation: false

@@ -7,6 +7,7 @@ import test from "node:test";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
+import { REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
 import { assertGeneratedPackageRoot } from "../scripts/skill-package-projection.mjs";
 
 const execFileAsync = promisify(execFile);
@@ -60,19 +61,24 @@ test("PS-03 rejects extra manifest entries and missing declared notices", async 
   await assert.rejects(assertGeneratedPackageRoot(root, options), /unexpected top-level entries/i);
 });
 
-test("PS-03 projector entry point rejects a corrupted disposable PS package", async (context) => {
+test("PS-03 projector entry point rejects corrupt active analysis packages and excludes retained PS from target generation", async (context) => {
   const directory = await mkdtemp(join(tmpdir(), "ps-projector-entry-"));
-  const projection = join(directory, "ps-skills");
+  const packageName = REGISTRY_STATE === "target" ? "qs-advanced" : "ps-skills";
+  const projection = join(directory, packageName);
   context.after(() => rm(directory, { recursive: true, force: true }));
-  await cp(join(repositoryRoot, "packages", "ps-skills"), projection, { recursive: true });
+  await cp(join(repositoryRoot, "packages", packageName), projection, { recursive: true });
   await writeFile(join(projection, "unexpected.txt"), "not projected\n");
+  if (REGISTRY_STATE === "target") await assert.rejects(
+    execFileAsync(process.execPath, ["scripts/sync-codex-plugin.mjs", "--check", "--package", "ps-skills", "--root", join(repositoryRoot, "packages", "ps-skills"), "--format", "claude"], { cwd: repositoryRoot }),
+    /Unknown generated package: ps-skills/,
+  );
 
   await assert.rejects(
     execFileAsync(process.execPath, [
       "scripts/sync-codex-plugin.mjs",
       "--check",
       "--package",
-      "ps-skills",
+      packageName,
       "--root",
       projection,
       "--format",

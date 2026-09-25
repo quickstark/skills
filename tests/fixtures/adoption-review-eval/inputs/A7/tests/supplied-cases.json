@@ -1,0 +1,17 @@
+{
+  "kind": "synthetic supplied observations, not tests executed by this review",
+  "cases": [
+    {
+      "unitPrice": 25,
+      "quantity": 2,
+      "expected": 50,
+      "observed": 50
+    },
+    {
+      "unitPrice": 25,
+      "quantity": null,
+      "expected": 25,
+      "observed": 25
+    }
+  ]
+}

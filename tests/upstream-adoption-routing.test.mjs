@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   COLLECTION_REGISTRY,
+  REGISTRY_STATE,
   PUBLIC_COMMANDS,
   resolvePublicCommand,
   resolvePrimaryHelpRoute,
@@ -13,12 +14,17 @@ import {
   renderDocumentationOutputContract,
 } from '../scripts/sync-skill-output-contracts.mjs';
 
-const observed = {
+const target = REGISTRY_STATE === "target";
+const observed = target ? {
+  codex: ["$qs-skills:qs-code-build", "$qs-specialists:qs-deploy-prompt", "$qs-advanced:qs-visual-parity"],
+  claude: ["/qs-code-build", "/qs-deploy-prompt", "/qs-visual-parity"],
+  pi: ["/skill:qs-code-build", "/skill:qs-deploy-prompt", "/skill:qs-visual-parity"],
+} : {
   codex: ['$qs-skills:qs-code-build', '$qs-specialists:qs-deploy-prompt', '$ps-skills:ps-visual-parity'],
   claude: ['/qs-code-build', '/qs-deploy-prompt', '/ps-visual-parity'],
   pi: ['/skill:qs-code-build', '/skill:qs-deploy-prompt', '/skill:ps-visual-parity'],
 };
-const destinations = ['qs-code-build', 'qs-deploy-prompt', 'ps-visual-parity'];
+const destinations = ['qs-code-build', 'qs-deploy-prompt', target ? 'qs-visual-parity' : 'ps-visual-parity'];
 
 test('primary Help reaches build, prompt generation and parity with independently expected host literals', () => {
   const ordinaryRoutes = resolvePublicCommand('qs-help').continuation.normal.map(({ name }) => name);
@@ -69,7 +75,11 @@ test('package presence, a wrong host, an old alias or unverified availability ca
     assert.match(result.prerequisite, /verify discovery/);
     assert.ok(!Object.hasOwn(result, 'literal'));
   }
-  assert.equal(resolvePrimaryHelpRoute('ps-visual-parity').status, 'input-required');
+  assert.equal(resolvePrimaryHelpRoute(target ? 'qs-visual-parity' : 'ps-visual-parity').status, 'input-required');
+  if (target) {
+    assert.throws(() => resolvePrimaryHelpRoute('ps-visual-parity'), /unknown public command/);
+    assert.equal(resolvePrimaryHelpRoute('qs-visual-parity', { availableLiterals: ['$ps-skills:ps-visual-parity'] }).status, 'input-required');
+  }
 });
 
 test('unknown destinations and malformed discovery fail without a fallback or inferred installation', () => {

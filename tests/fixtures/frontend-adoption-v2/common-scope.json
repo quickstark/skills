@@ -1,0 +1,83 @@
+{
+  "organization": "Northstar Museum",
+  "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+  "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+  "brand": {
+    "font": "Georgia, serif",
+    "primary": "#086b64",
+    "paper": "#f7f5ef",
+    "ink": "#182d2a",
+    "radiusPx": 12
+  },
+  "content": {
+    "headline": "Make room for wonder.",
+    "description": "Family membership keeps discovery close to home.",
+    "plan": "Family membership",
+    "price": "$100 / year",
+    "memberCount": "10,000",
+    "annualVisits": "50,000",
+    "founded": "2020",
+    "pricingEffective": "January 1, 2025",
+    "benefit": "Unlimited entry for two adults and children under 18."
+  },
+  "routes": [
+    "/",
+    "/visit",
+    "/collections",
+    "/membership",
+    "/membership/family",
+    "/join/checkout?plan=family",
+    "/privacy",
+    "/accessibility"
+  ],
+  "stableIds": [
+    "site-header",
+    "site-footer",
+    "membership-panel",
+    "membership-title",
+    "price",
+    "member-count",
+    "annual-visits",
+    "founded",
+    "join-form",
+    "member-email",
+    "join-button",
+    "form-message",
+    "details-link"
+  ],
+  "analytics": {
+    "event": "join_started",
+    "payload": {
+      "name": "join_started",
+      "plan": "family"
+    },
+    "observation": "window.__events",
+    "trigger": "A valid family-membership continuation action"
+  },
+  "behavior": {
+    "email": "required valid email",
+    "submitFeedback": "Ready to continue with Family membership.",
+    "privacyLink": "/privacy",
+    "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+  },
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "constraints": {
+    "noPublication": true,
+    "noPackageInstall": true,
+    "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+    "publicSkillInvocation": false,
+    "noInventedClaims": true,
+    "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+    "referenceImmutable": true
+  },
+  "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+}

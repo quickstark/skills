@@ -8,6 +8,7 @@ import {
   PS_INTERNAL_CAPABILITIES,
   PS_PUBLIC_COMMANDS,
 } from "../scripts/ps-skill-catalog.mjs";
+import { LEGACY_PUBLIC_COMMANDS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
 import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -45,7 +46,7 @@ test("PS command and capability sources remain host-neutral and package-safe", a
 
 test("PS direct-chat contracts retain completion modes and one conditional continuation", () => {
   for (const command of PS_PUBLIC_COMMANDS) {
-    const contract = renderSkillOutputContract(command);
+    const contract = renderSkillOutputContract(command, { commandsByName: new Map(LEGACY_PUBLIC_COMMANDS.map(item => [item.name, item])) });
     assert.match(contract, /effort=quick\|standard\|deep/);
     assert.match(contract, /report=brief\|full/);
     assert.match(contract, /Present the result directly in chat/i);
@@ -84,9 +85,9 @@ test("PS Claude, Codex, and Pi projections are isolated and preserve notices", a
   const claude = JSON.parse(await readFile(join(root, "packages", "ps-skills", ".claude-plugin", "plugin.json"), "utf8"));
   const codex = JSON.parse(await readFile(join(root, "codex", "plugins", "ps-skills", ".codex-plugin", "plugin.json"), "utf8"));
   const pi = JSON.parse(await readFile(join(root, "pi", "packages", "ps-skills", "package.json"), "utf8"));
-  assert.equal(claude.version, project.version);
-  assert.equal(codex.version, project.version);
-  assert.equal(pi.version, project.version);
+  assert.equal(claude.version, REGISTRY_STATE === "target" ? "3.8.0" : project.version);
+  assert.equal(codex.version, REGISTRY_STATE === "target" ? "3.8.0" : project.version);
+  assert.equal(pi.version, REGISTRY_STATE === "target" ? "3.8.0" : project.version);
   assert.deepEqual(pi.pi.skills, ["./skills"]);
   assert.deepEqual((await readdir(join(root, "packages", "ps-skills", "skills"))).sort(), [...publicNames].sort());
   assert.deepEqual((await readdir(join(root, "codex", "plugins", "ps-skills", "skills"))).sort(), [...publicNames].sort());

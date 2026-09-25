@@ -1,6 +1,6 @@
 interface:
   display_name: "QS Design Image Mobile"
   short_description: "Create platform-aware mobile images or design prompts"
-  default_prompt: "Use $qs-frontend:qs-design-image-mobile to create the requested mobile screen images or prompt-only output."
+  default_prompt: "Use $qs-frontend:qs-design-image-mobile to create the requested mobile screen images or prompt-only output. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
 policy:
   allow_implicit_invocation: false

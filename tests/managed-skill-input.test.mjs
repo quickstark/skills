@@ -11,7 +11,7 @@ import { derivePackageAcceptanceObligations, buildManagedSkillInput } from '../s
 import { executeManagedSkills, parseManagedSkillsArguments } from '../scripts/managed-skills.mjs';
 import { previewManagedSkillMigration, captureManagedSkillPayload } from '../scripts/managed-skill-migration.mjs';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { TARGET_SKILL_COLLECTIONS } from '../scripts/skill-collection-registry.mjs';
+import { TARGET_SKILL_COLLECTIONS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
 import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
 import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
 
@@ -118,7 +118,7 @@ nativeTest('target CLI flags remain explicit and unsupported target hosts never 
   assert.throws(()=>parseManagedSkillsArguments(['plan','--profile','core','--profile','advanced']),/one explicit profile/);
   const args=await fixture(t); let mutations=0;
   await assert.rejects(executeManagedSkills({...args.options,action:'update',agents:['claude-code'],runManagerCommand:async()=>mutations++}),/Codex and Pi only/); assert.equal(mutations,0);
-  await assert.rejects(executeManagedSkills({...args.options,registryState:'legacy',action:'plan',withPackages:['qs-video']}),/inactive legacy updater/);
+  await assert.rejects(executeManagedSkills({...args.options,registryState:'legacy',action:'plan',withPackages:['qs-video']}),REGISTRY_STATE === 'target' ? /activated target registry cannot use the legacy all-package updater/ : /inactive legacy updater/);
 });
 
 async function refreshFixtureAudit(args) {

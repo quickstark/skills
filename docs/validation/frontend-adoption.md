@@ -35,3 +35,9 @@ rubric and image budgets. Prompt-only tasks may read their guidance but may not
 generate images, execute product work or edit files. Earlier failed evidence will
 remain unchanged. Adoption requires the revised preservation and quality results;
 source length and successful capture exits alone are insufficient.
+
+## Revised comparison readiness and approval
+
+The separate [file-guidance comparison](../../tests/fixtures/frontend-adoption-v2/README.md) is frozen at plan SHA256 `50008084056b8446c04730ecafa627a601fec07666b00af6104f423a813099f7`. Parent review found the native image-generation `savedPath` output field needed explicit collection; the corrected collector and actual-raster negative controls passed in the ten-test preparation suite. Prior frozen preparation was preserved before amendment. Neither prior failures nor model results were overwritten.
+
+Automatic approval review rejected the first launch before process creation, describing repository guidance and copied non-command reference bodies as a sensitive payload sent to an unverified model service. The user was asked specifically to authorize these 66 trials through the existing Codex service with skill text and synthetic museum fixtures. That decision is pending; zero revised frontend model trials have started. The approval block is distinct from the earlier runtime and behavioral failures.

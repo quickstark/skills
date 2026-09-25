@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+  "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+  "scores": {
+    "0": "Missing or unusable requested outcome",
+    "1": "Major task, readability or consistency failures",
+    "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+    "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+    "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+  },
+  "dimensions": [
+    "brief-and-content-fidelity",
+    "visual-hierarchy-and-readability",
+    "interaction-or-screen-flow-clarity",
+    "brand-and-platform-consistency",
+    "scope-and-evidence-honesty"
+  ],
+  "floor": 3,
+  "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+  "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+  "notAutomatic": [
+    "Source-string matching cannot establish behavior.",
+    "Browser metrics are observations for independent review, not aesthetic grades.",
+    "A screenshot cannot prove keyboard behavior.",
+    "An image prompt is not an image.",
+    "A response-only pilot cannot certify rendered or generated-image quality."
+  ],
+  "reviewSchema": {
+    "trialId": "string",
+    "reviewer": "independent identity",
+    "checks": [
+      {
+        "id": "scenario required check",
+        "result": "pass|fail|unverified",
+        "rationale": "cite response/artifact/event/observation"
+      }
+    ],
+    "dimensions": {
+      "dimension": "0..4 or not-applicable with reason"
+    },
+    "overall": "pass|fail|unverified",
+    "rationale": "evidence-backed explanation"
+  }
+}

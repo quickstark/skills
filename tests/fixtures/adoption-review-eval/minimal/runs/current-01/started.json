@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-25T21:42:23.377Z",
+  "planSHA256": "0ae8fc82ed769831ab34cdb1837b135cf39546fe4fd1d6473cdc677da4317d7c",
+  "host": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Unknown unless actual runtime events emit model; configured defaults are not observed identity."
+  }
+}

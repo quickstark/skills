@@ -18,6 +18,7 @@ import {
 } from "../scripts/qs-skill-catalog.mjs";
 import {
   PUBLIC_COMMANDS,
+  REGISTRY_STATE,
   SKILL_COLLECTIONS,
   SPEC_PROGRESS_COMMAND_NAMES,
   codexPublicSkillLiteral,
@@ -99,8 +100,8 @@ test("all public Codex picker prompts expose invocation modes", async () => {
     const metadata = await readFile(join(root, path, "agents", "openai.yaml"), "utf8");
     const defaultPrompt = metadata.match(/^\s*default_prompt:\s*"([^"]+)"\s*$/m)?.[1];
     assert.ok(defaultPrompt, `${skill.name} omits its Codex default prompt`);
-    assert.match(defaultPrompt, /effort=quick\|standard\|deep/);
-    assert.match(defaultPrompt, /report=brief\|full/);
+    assert.match(defaultPrompt, /effort=quick\|standard\|deep/, skill.name);
+    assert.match(defaultPrompt, /report=brief\|full/, skill.name);
   }
 });
 
@@ -108,7 +109,7 @@ test("Codex projections keep explicit commands visible without weakening other h
   const explicitCommands = PUBLIC_COMMANDS.filter(
     (command) => command.userInvoked || command.disableModelInvocation,
   );
-  assert.equal(explicitCommands.length, 27);
+  assert.equal(explicitCommands.length, REGISTRY_STATE === "target" ? 32 : 27);
 
   for (const command of explicitCommands) {
     const sourcePath = command.sourcePath ?? `skills/${command.bucket}/${command.name}`;
@@ -274,12 +275,21 @@ test("applicable engineering results link governing specs and summarize verified
     "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit",
     "ps-worktree-cleanup",
   ];
+  // This exported historical list still initializes the legacy core/PS metadata.
   assert.deepEqual(SPEC_PROGRESS_COMMAND_NAMES, expected);
+  const activeExpected = REGISTRY_STATE === "target" ? [
+    ...expected.filter(name => !name.startsWith("ps-")),
+    "qs-blast-radius", "qs-runtime-forensics", "qs-trace-forensics",
+    "qs-create-verification-skill", "qs-maintain-verification-skill",
+    "qs-skill-eval", "qs-hillclimb", "qs-visual-parity", "qs-pr-babysit", "qs-worktree-cleanup",
+    "qs-design-frontend", "qs-design-image-web", "qs-design-image-mobile", "qs-design-image-to-code", "qs-video", "qs-unlazy",
+  ] : expected;
+  assert.deepEqual(PUBLIC_COMMANDS.filter(command => command.resultContext.specProgress).map(command => command.name).sort(), [...activeExpected].sort());
 
   for (const command of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(command);
     const documentation = renderDocumentationOutputContract(command);
-    if (expected.includes(command.name)) {
+    if (activeExpected.includes(command.name)) {
       assert.equal(command.resultContext.specProgress, true, command.name);
       assert.match(contract, /^Specs: /m, command.name);
       assert.match(contract, /^Work summary:/m, command.name);
@@ -305,7 +315,7 @@ test("applicable engineering results link governing specs and summarize verified
 });
 
 test("completion contracts do not chain same-session public workflow prompts", () => {
-  for (const name of ["qs-plan-spec", "qs-code-build", "qs-code-debug", "qs-review-code", "ps-hillclimb"]) {
+  for (const name of ["qs-plan-spec", "qs-code-build", "qs-code-debug", "qs-review-code", REGISTRY_STATE === "target" ? "qs-hillclimb" : "ps-hillclimb"]) {
     const command = PUBLIC_COMMANDS.find((item) => item.name === name);
     const contract = renderSkillOutputContract(command);
     assert.doesNotMatch(contract, /catalog-approved composite workflow/i, name);
@@ -424,5 +434,5 @@ test("migration documentation accounts for every v2 command exactly once", async
 
 test("package projections are deterministic and synchronized", async () => {
   const { stdout } = await execFileAsync(process.execPath, ["scripts/sync-codex-plugin.mjs", "--check"], { cwd: root });
-  assert.match(stdout, /Verified deterministic active projections for 3 packages across Codex, Claude, and Pi/);
+  assert.equal(stdout.trim(), `Verified deterministic active projections for ${REGISTRY_STATE === "target" ? 6 : 3} packages across Codex, Claude, and Pi.`);
 });

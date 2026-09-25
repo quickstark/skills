@@ -1,6 +1,6 @@
 interface:
   display_name: "QS Design Frontend"
   short_description: "Build or revise a frontend within its existing constraints"
-  default_prompt: "Use $qs-frontend:qs-design-frontend to build or revise this selected frontend while preserving its authorized scope."
+  default_prompt: "Use $qs-frontend:qs-design-frontend to build or revise this selected frontend while preserving its authorized scope. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
 policy:
   allow_implicit_invocation: false

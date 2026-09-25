@@ -1,0 +1,6 @@
+{"status": "failed", "error": "", "counts": null, "modelRequests": 0, "home": "/tmp/qs-target-native-o3jmtz0g/home"}
+Traceback (most recent call last):
+  File "/github/skills/tests/fixtures/target-activation-probe/native-discovery.py", line 80, in <module>
+    assert sorted(s['name'] for s in qs)==sorted(expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

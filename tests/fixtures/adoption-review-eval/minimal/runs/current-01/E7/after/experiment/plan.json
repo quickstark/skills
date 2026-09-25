@@ -1,0 +1,47 @@
+{
+  "id": "batch-17",
+  "kind": "synthetic audit fixture",
+  "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sampleDefinition": "one returned output for each listed task",
+  "sampleCount": 4,
+  "executionOrder": [
+    "sample-01",
+    "sample-02",
+    "sample-03",
+    "sample-04"
+  ],
+  "control": null,
+  "taskSources": [
+    {
+      "id": "sample-01",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "scripted synthetic output",
+      "files": {
+        "input.json": "6ca4ff69fccc2a93b58051a7c5cb962e30d5a2efdab3231d48b29ccbc8112828",
+        "response.md": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58"
+      }
+    },
+    {
+      "id": "sample-02",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "scripted synthetic output",
+      "files": {
+        "input.json": "ccf4c3f2c2876f9ad444c5d41fe8a959363c9d87c52aaa189356d6dda9a1c078",
+        "response.md": "b04df2ed2049691d738b9ea7f40f6c067ca6f74ef9496d952e6d990e57dcde99"
+      }
+    },
+    {
+      "id": "sample-03",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "scripted synthetic output",
+      "files": {
+        "input.json": "543779bd231d7548c363508cdc8fe8a3021beaac611fc08e9a1befe4dad0181e",
+        "response.md": "076320a2a08267b4c026d06573bba408ea68841e73cdc20e62cce59de165ece3"
+      }
+    }
+  ],
+  "missingRecord": {
+    "id": "sample-04",
+    "state": "dispatched; no returned output recorded"
+  }
+}
