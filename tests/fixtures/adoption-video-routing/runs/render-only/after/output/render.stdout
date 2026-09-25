@@ -1,0 +1,32 @@
+
+◆  Rendering composition → /tmp/qs-video-render-only-workspace-20260925/output/render.mp4
+   12fps · draft · 1 workers
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: env
+[?25h  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Checking browser GPU
+[BrowserManager] Browser launched (HeadlessChrome/151.0.7922.34, screenshot, gl=--use-gl=angle --use-angle=swiftshader, headlessShell=true, platform=linux)
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":12,"source":"render-options","rawFpsSource":"render-options","rawFps":12}
+[initSession:screenshot] page.goto complete (178ms)
+[initSession:screenshot] GSAP proxy flush complete (196ms)
+[initSession:screenshot] pollHfReady complete (299ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (301ms)
+[initSession:screenshot] applyVideoMetadataHints complete (301ms)
+[initSession:screenshot] media + fonts + tailwind ready (304ms)
+[initSession:screenshot] static-frame dedup: 6/6 predicted frame(s) reusable (outcome=verified, runs=2/2, screenshots=4, seeks=5, elapsedMs=144) (736ms)
+  ██████░░░░░░░░░░░░░░░░░░░  27%  Streaming frame 1/24
+  ████████████░░░░░░░░░░░░░  48%  Streaming frame 10/24
+  ███████████████░░░░░░░░░░  62%  Streaming frame 16/24
+  ████████████████████░░░░░  80%  Streaming frame 24/24
+[static-dedup] reused 6/24 frame(s) (25%), est. ~234ms saved (avg 39ms/frame)
+  ██████████████████████░░░  90%  Assembling final video
+  █████████████████████████  100%  Render complete
+
+◇  /tmp/qs-video-render-only-workspace-20260925/output/render.mp4
+   54.7 KB · 2.0s video · rendered in 5.3s
+   screenshot capture · software gpu · compile 2.9s · extract 0.0s · audio 0.2s · probe 0.1s · setup 0.0s · capture 1.6s · encode (during capture) 1.6s · assemble 0.4s

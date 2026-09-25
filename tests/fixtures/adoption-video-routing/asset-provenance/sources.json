@@ -1,0 +1,25 @@
+{
+  "addedAfterFreeze": "Archival provenance only; not delivered to either model and no frozen input changed.",
+  "font": {
+    "fixture": "project/composition/font.ttf",
+    "source": "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+    "notice": "dejavu-copyright.txt"
+  },
+  "gsap": {
+    "fixture": "project/composition/gsap.min.js",
+    "source": "/tmp/qs-hf-probe/node_modules/gsap/dist/gsap.min.js",
+    "version": "3.14.2",
+    "sha256": "c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280",
+    "packageLicense": "Standard 'no charge' license: https://gsap.com/standard-license.",
+    "localEvidence": [
+      "gsap-package.json",
+      "gsap-README.md"
+    ],
+    "note": "Preserved local package licensing metadata; no external license retrieval or new redistribution assessment in this trial."
+  },
+  "compositionAndTones": {
+    "source": "Prior locally authored hyperframes-adoption crossfade fixture /tmp/qs-hf-matrix-v3/crossfade",
+    "guide": "Full copied candidate retains its existing dependency index and notices."
+  }
+}

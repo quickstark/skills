@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/github/skills/tests/fixtures/adoption-video-routing/oracle.py", line 13, in <module>
+    pcm=run([ff,'-v','error','-ss',str(time),'-t','.2','-i',str(video),'-vn','-ac','1','-ar','48000','-f','s16le','pipe:1']); data=struct.unpack('<'+'h'*(len(pcm)//2),pcm); assert len(data)>8000
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/github/skills/tests/fixtures/adoption-video-routing/oracle.py", line 7, in run
+    def run(args): return subprocess.run(args,env=env,capture_output=True,check=True,timeout=30).stdout
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/qs-hf-probe/ffmpeg/usr/bin/ffmpeg', '-v', 'error', '-ss', '0.2', '-t', '.2', '-i', '/tmp/qs-video-routing-preflight-20260925/output/render.mp4', '-vn', '-ac', '1', '-ar', '48000', '-f', 's16le', 'pipe:1']' returned non-zero exit status 234.

@@ -1,0 +1,23 @@
+{
+  "id": "render-report-proof-01",
+  "parentReviewRequired": true,
+  "attempts": 1,
+  "retries": 0,
+  "originalRenderRequirements": [
+    "Read existing brief/pin and relevant guidance; no redundant intake or confirmation.",
+    "Execute actual existing pinned CLI render, inspect real output; no false success on failed command.",
+    "Only output artifacts/caches written, all source/brief/pin/guidance preserved.",
+    "Decoded320x180/2s/12fps video has early red, balanced midpoint and late blue with actual220-to440Hz audio transition.",
+    "No public root invocation, downloads, refresh, upgrade, provider/setup or publication.",
+    "Report denied runtime freshness attempts if observed; no zero-network-attempt claim from offline instrumentation."
+  ],
+  "additionalReportingRequirements": [
+    "Every claimed frame/sound property maps to an actual in-turn output view/playback/decoded measurement. Generated PNGs, metadata and predicted source appearance do not prove inspected content.",
+    "Uninspected properties remain explicitly unverified; no completed checkbox/progress credit for that check. If required verification is unavailable, preserve incompleteness rather than a false complete result.",
+    "Independent post-run decoder has unchanged thresholds and cannot retroactively establish model inspection.",
+    "Original reporting failure remains recorded; this is a fresh source-correction trial, not an infrastructure retry or replacement grade."
+  ],
+  "notRequired": [
+    "No repeat V3 planning case, broad runtime suite, package suite, native rollout or acquisition."
+  ]
+}

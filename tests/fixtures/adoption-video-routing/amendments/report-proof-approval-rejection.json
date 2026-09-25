@@ -1,0 +1,8 @@
+{
+  "action": "node tests/fixtures/adoption-video-routing/amendments/run-render-report-proof.mjs --parent-approved-proof-trial",
+  "planSHA256": "3b989d210c7f1e610c8ec9e287f4e8e70b9a68937d7169a2f45b7b9d8c941e9c",
+  "status": "rejected-before-process-creation",
+  "reason": "This launches a model trial that includes repository/private guidance, but the user has not specifically authorized sending that payload to the unverified Codex service; the synthetic render and unchanged controls do not remove that sensitive egress.",
+  "modelAttempts": 0,
+  "response": "Specific user approval requested for the one corrected video-report trial through existing Codex; pending. No alternate provider, changed host controls, or indirect launch."
+}

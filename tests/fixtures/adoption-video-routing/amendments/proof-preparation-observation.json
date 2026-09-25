@@ -1,0 +1,15 @@
+{
+  "observation": "First pre-freeze comparison rejected changed agents/openai.yaml; no model started and no plan frozen. Snapshot excludes picker metadata from both original and proposed model guidance. Changes listed explicitly for parent review.",
+  "changedCanonicalFiles": [
+    {
+      "path": "SKILL.md",
+      "oldSHA256": "c0daedb734d21979f3e89150fbb7bac17b1992e62fe0971c3bc7fd9faa9202df",
+      "currentSHA256": "654a6c49b259b3f47f30b78348f6408f59c743d92bbafbff014a6e4357f9f7ef"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "oldSHA256": "0357461824a9c96c1e5c63cd494a1ddba1d0d794e2ed6b7d7e747b1398b4fd7c",
+      "currentSHA256": "9faa9d70958c2547402b5beaca9e6e3ba631d1facc11b412074bd95f6d486788"
+    }
+  ]
+}

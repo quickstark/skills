@@ -1,0 +1,24 @@
+import { readFile, writeFile, mkdir, cp, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
+import { execute } from '../../../scripts/frontend-adoption-trials.mjs';
+const root=dirname(fileURLToPath(import.meta.url)), id=process.argv[2];
+if (!['V3-file-context','render-only'].includes(id) || process.argv.length!==3) throw new Error('Choose one frozen case');
+const sha=b=>createHash('sha256').update(b).digest('hex');
+async function tree(base,prefix='') { const out={}; for(const e of (await readdir(join(base,prefix),{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))) { const name=join(prefix,e.name); if(e.isDirectory())Object.assign(out,await tree(base,name));else if(e.isFile())out[name]=sha(await readFile(join(base,name)));else throw new Error('Non-regular fixture '+name); } return out; }
+const plan=JSON.parse(await readFile(join(root,'frozen-plan.json')));
+for(const [file,h] of Object.entries(plan.files)) if(sha(await readFile(resolve(root,file)))!==h)throw new Error('Frozen input changed: '+file);
+if(sha(await readFile(plan.executable))!==plan.executableSHA256)throw new Error('Executable changed');
+const selected=plan.cases[id], directory=selected.captureDirectory,cwd=selected.workspace;
+await mkdir(directory);await mkdir(cwd);
+if(id==='render-only')await cp(join(root,'project'),cwd,{recursive:true});
+await cp(join(root,'guidance'),join(cwd,'guidance'),{recursive:true});
+if(id==='V3-file-context')await cp(join(root,'guidance-v3.md'),join(cwd,'guidance/instructions.md'));
+await cp(cwd,join(directory,'before'),{recursive:true});
+await writeFile(join(directory,'before-binding.json'),JSON.stringify(await tree(cwd),null,2));
+await writeFile(join(directory,'run-binding.json'),JSON.stringify({id,planSHA256:sha(await readFile(join(root,'frozen-plan.json'))),node:process.version,platform:process.platform,sourceGuidance:plan.guidanceProvenance},null,2));
+const telemetry=await execute({prompt:await readFile(join(root,selected.prompt),'utf8'),cwd,directory,scenario:{mode:'implementation',budget:{timeoutMs:360000,maximumImageCalls:0}},executable:plan.executable});
+await cp(cwd,join(directory,'after'),{recursive:true});
+await writeFile(join(directory,'after-binding.json'),JSON.stringify(await tree(cwd),null,2));
+console.log(JSON.stringify({id,directory,cwd,exitCode:telemetry.exitCode,completedTurn:telemetry.completedTurn,timedOut:telemetry.timedOut,elapsedMs:telemetry.elapsedMs,processObservationComplete:telemetry.processObservation.complete,ownedResiduals:telemetry.observedOwnedResidualProcesses.length}));
