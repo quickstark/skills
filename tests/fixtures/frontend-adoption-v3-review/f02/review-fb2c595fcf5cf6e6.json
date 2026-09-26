@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-fb2c595fcf5cf6e6",
+  "scenarioId": "F02",
+  "reviewer": "Independent /root/adoption_hf_probe; not author of these six model outputs; capture-infrastructure contributor",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-fb2c595fcf5cf6e6",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "a4e126979ae22da73686976aec0e7fc30cb670e452c443915152783e291b96b0",
+      "bytes": 182
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "context.json": {
+      "sha256": "3881cf4c7656dde60e5928cc63a4aa155c75bfb8e058212f55521bd65067785c",
+      "bytes": 9486
+    },
+    "events.jsonl": {
+      "sha256": "a724edd9ea3fc8f721f444975a6d37251ebf656379b07b72ea47050378dbeb1c",
+      "bytes": 356521
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "18b4eb2ba7ee46c2a7d2509ffd6a374f26aca63bacd623e56f748b9286f56c49",
+      "bytes": 1728
+    },
+    "response.md": {
+      "sha256": "f21663a83055d51b9e109cbb77e4cbff9d2e209fe15555e3ac8742395bd0540c",
+      "bytes": 2829
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "8dd951218f1c9f2e98667f39aa6ffeb142282e4b3d77a97606680a72053f0739",
+  "bundleManifestDefinition": "SHA256 Python json.dumps(fileBindings,sort_keys=True,separators=(comma,colon)), default ensure_ascii=True; every file bound separately.",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "rubricBindingDefinition": "rubricSha256 hashes two-space UTF8 JSON plus newline reconstructed from the opaque context; canonical hash binds parsed value. No source/variant file lookup performed.",
+  "manifestVerification": "All input/artifact declared hashes and byte sizes independently verified. Identical three-file manifests; no extra/missing product artifact. Guidance-preservation guard plus actual read/hash commands retained. Embedded rubric identical across these six opaque contexts.",
+  "screenshotsOpened": [],
+  "checks": [
+    {
+      "id": "zero-file-mutation",
+      "result": "pass",
+      "rationale": "All three actual product artifacts match input bytes/hashes exactly; classified commands only read/inspect. Guidance guard unchanged and before/after hash commands corroborate preservation. Browser runtime profiles are infrastructure, not authored product changes."
+    },
+    {
+      "id": "specific-observed-findings",
+      "result": "pass",
+      "rationale": "index.html:5 has a clickable div, required email placeholder without label, and role=status; app.js:3–5 validates before recording exact event/confirmation and attaches click+submit handlers; style.css:1 fixes min-width960/two columns, removes focus outlines and pulses indefinitely without reduced-motion override. Chromium AX tree exposes textbox name Email address and no button; audit correctly identifies missing persistent label rather than falsely claiming no accessible name. Actual geometry/keyboard/validation/motion output supports stated findings."
+    },
+    {
+      "id": "prioritized-impact",
+      "result": "pass",
+      "rationale": "High priority assigned to mobile reflow, unfocusable visible action and invisible keyboard focus; label and optional content/contrast/motion concerns follow. Fixes are concrete native-button/submit, responsive-grid, focus-visible and label changes. No cosmetic redesign distracts from access barriers."
+    },
+    {
+      "id": "no-claimed-implementation",
+      "result": "pass",
+      "rationale": "Response reports an audit and explicitly leaves fixes unimplemented; unchanged artifacts corroborate that claim. Preserves already-correct validity/event/status behavior."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Every unique completed tool item is classified below, including full inline script bodies. No imageGeneration, imageView, dynamic/MCP/delegation tool or shell image/provider path; browser scripts compute DOM/AX/keyboard values without screenshots or image-generation calls. Not inferred solely from named-count zero."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": "not-applicable",
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": "not-applicable",
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Prioritized, line-specific usability/accessibility audit with actionable fixes, preserved supplied semantics and no implementation. Chromium AX tree exposes textbox name Email address and no button; audit correctly identifies missing persistent label rather than falsely claiming no accessible name. Actual geometry/keyboard/validation/motion output supports stated findings.",
+    "visual-hierarchy-and-readability": "Not applicable: no redesigned screen or visual artifact requested. The numbered audit is readable, but prose organization is not substituted for rendered design quality.",
+    "interaction-or-screen-flow-clarity": "Strong: actual locally observed tab order, validation/Enter action, geometry and reduced-motion results support the proposed repairs and preserve working interactions.",
+    "brand-and-platform-consistency": "Not applicable to an audit-only deliverable with no brand/platform design change. Product facts and proposed semantic controls are assessed in fidelity and interaction clarity; unchanged brand bytes are verified separately.",
+    "scope-and-evidence-honesty": "No mutation/implementation/generation claimed. Source-only versus actual browser evidence is accurately distinguished, with preserved file hashes and explicit verification limits."
+  },
+  "auditFindingEvidence": {
+    "inspectedFiles": [
+      "input-project/index.html",
+      "input-project/style.css",
+      "input-project/app.js"
+    ],
+    "coreEvidence": "index.html:5 has a clickable div, required email placeholder without label, and role=status; app.js:3–5 validates before recording exact event/confirmation and attaches click+submit handlers; style.css:1 fixes min-width960/two columns, removes focus outlines and pulses indefinitely without reduced-motion override.",
+    "caseSpecificReview": "Chromium AX tree exposes textbox name Email address and no button; audit correctly identifies missing persistent label rather than falsely claiming no accessible name. Actual geometry/keyboard/validation/motion output supports stated findings."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native item IDs; normalized/native duplicate fields and deltas are not extra calls. MCP startup notifications are not model service-tool calls.",
+    "classifiedItems": [
+      {
+        "id": "exec-82540221-6822-4581-99cc-33a1339ecfe0",
+        "eventLine": 48,
+        "type": "command_execution",
+        "itemSha256": "63fa3e3ce2b823e00d330bea172c3bd8bac342f7689c20e7386cdc9f7b816a83",
+        "classification": "Read the supplied bound guidance file; body redacted in reviewer stream, command semantics inspected without source lookup.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-58f99ba3-216d-4704-9e16-f2844fba5a03",
+        "eventLine": 53,
+        "type": "command_execution",
+        "itemSha256": "043697ac07132267c33b15d12793755b9ba0bccbbb816670e061f64cf8ce519b",
+        "classification": "List local project filenames while excluding guidance/dependency/git paths; read-only.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-73f6ec2e-0dab-44b0-b521-c874b768bf11",
+        "eventLine": 65,
+        "type": "command_execution",
+        "itemSha256": "4fff7a96e7c57a9ff844b2012617437ffa6bce54b0401546d67a18ac51b2d341",
+        "classification": "Read line-numbered supplied HTML/CSS/JS; no execution or mutation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2b59eccd-1881-440a-aece-8d5a8bbe20d7",
+        "eventLine": 66,
+        "type": "command_execution",
+        "itemSha256": "df4ce995bda68b988822e5c65bb17e58f55deceea73d9358b2decd93ede7bc53",
+        "classification": "Hash supplied product/guidance files: read-only integrity observation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-e703c253-f6b0-4934-adac-85bfa2491ba5",
+        "eventLine": 68,
+        "type": "command_execution",
+        "itemSha256": "820884f331b0aac6dffac2b49046fd85781f4bc3fd08df0c9f00d894f6306dfe",
+        "classification": "Read line-numbered supplied HTML/CSS/JS; no execution or mutation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d38c468b-94f9-47e0-bd5f-84c3c41ec128",
+        "eventLine": 70,
+        "type": "command_execution",
+        "itemSha256": "f09fd3527454484198daef563412a0d4855715fc257528a6cf218e42761eca91",
+        "classification": "Read line-numbered supplied HTML/CSS/JS; no execution or mutation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b9dbc7d2-85f2-4454-bcc8-8ab9e54dc3f5",
+        "eventLine": 85,
+        "type": "command_execution",
+        "itemSha256": "2acff6fe8115197c9157ad93a65db1b93dc421d635a1b0d3559a2e61622ad77c",
+        "classification": "Reviewed inline read-only browser script: Loaded supplied page through file: with non-file page requests aborted; recorded both viewport geometries, Tab sequence, Chromium AX tree, invalid/valid click and Enter submission, reduced-motion state; browser closed in finally.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c3b1e98b-8838-4b4e-8967-d6897cad1eb4",
+        "eventLine": 163,
+        "type": "command_execution",
+        "itemSha256": "984488dbf28a7c5767692b5cce4c24a3e62ed61a2e705db571cc6f91d01bdb9a",
+        "classification": "Hash supplied product/guidance files: read-only integrity observation.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 0,
+    "limits": "Visible shell and inline helper bodies fully inspected; fixture runtime dependencies treated as supplied infrastructure. No external call or publication command observed; not a universal host/process/network proof."
+  },
+  "honestyLimits": [
+    "Audit-only task asks for findings, not an implemented or rendered design; no screenshot/image quality score is assigned.",
+    "Unchanged-product proof covers exported project files plus retained guidance guard/hash observations, not every transient browser/profile file or host write.",
+    "No provider/generation/publication path appears in inspected commands; existing Puppeteer/Chromium dependencies are fixture infrastructure, not a whole-host network audit.",
+    "Actual inline browser results supplement source inspection; reviewer did not rerender. These are not screen-reader or destination-route tests, and no visual screenshot review is claimed."
+  ],
+  "passes": [
+    "Coverage: every required check, all five dimensions with explicit applicability, complete response/context/input/artifact manifests and native tools.",
+    "Domain: read cited HTML/CSS/JS, checked prioritization and preserved correct validation/status/analytics; inspected actual browser/arithmetic output when present.",
+    "Contradiction hunt: keyboard-visible-action versus implicit Enter, placeholder fallback versus unnamed input, source inference versus measured results, transient runtime files versus product mutation.",
+    "Polish: keep opaque identities, bind every file/item, report evidence limitations and no cross-run pooling/adoption claim."
+  ],
+  "blindingLimits": [
+    "Variant map, source bodies and raw-trial directories were not accessed. Reviewer used only opaque bundle contents; absolute paths in output were not followed.",
+    "Exact guidance bodies are redacted, but style/progress wording and visible hashes may partially reveal identity; no preferred variant inference was used.",
+    "Reviewer previously prepared capture infrastructure/fixtures, not these model outputs. Different-scenario schema example was consulted for record structure; none of its scores was reused."
+  ],
+  "overall": "pass",
+  "floorDecision": "All five required checks pass; all three applicable dimensions meet floor3. Two design-output dimensions are justified not-applicable for this audit-only task. Parent verification and eventual matched aggregate decisions remain separate.",
+  "rationale": "The audit identifies real prioritized access problems with actionable fixes and preserves the supplied project. Runtime completion did not determine quality; actual code, outputs and tool authority were reviewed."
+}
