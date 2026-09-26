@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family membership | Northstar Museum</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header id="site-header">
+    <a class="brand" href="/">Northstar Museum</a>
+    <nav aria-label="Main navigation">
+      <a href="/visit">Visit</a>
+      <a href="/collections">Collections</a>
+      <a href="/membership">Membership</a>
+    </nav>
+  </header>
+  <main>
+    <p class="eyebrow">A place for curiosity</p>
+    <h1>Make room for wonder.</h1>
+    <p class="description">Family membership keeps discovery close to home.</p>
+    <section id="membership-panel" aria-labelledby="membership-title">
+      <div class="benefits">
+        <h2 id="membership-title">A year of discovery</h2>
+        <p>Unlimited entry for two adults and children under 18.</p>
+        <ul>
+          <li>Unlimited gallery visits</li>
+          <li>Member preview evenings</li>
+          <li>10% off the museum shop</li>
+        </ul>
+      </div>
+      <div class="membership-action">
+        <p class="plan">Family membership</p>
+        <p id="price">$100 <span>/ year</span></p>
+        <button id="join-button" type="button" aria-haspopup="dialog">Continue with family membership</button>
+        <p class="statistics"><span id="member-count">10,000</span> members · <span id="annual-visits">50,000</span> annual visits</p>
+      </div>
+    </section>
+  </main>
+  <footer id="site-footer">Northstar Museum · Founded <span id="founded">2020</span></footer>
+  <dialog id="join-dialog" aria-labelledby="join-title">
+    <button class="close-dialog" type="button" aria-label="Close membership form">×</button>
+    <h2 id="join-title">Family membership</h2>
+    <p>$100 / year</p>
+    <form id="join-form">
+      <label for="member-email">Email address</label>
+      <input id="member-email" name="email" type="email" autocomplete="email" required>
+      <p class="privacy">Read our <a href="/privacy">privacy policy</a>.</p>
+      <button type="submit">Continue with family membership</button>
+      <p id="form-message" role="status" aria-live="polite"></p>
+    </form>
+    <a id="details-link" href="/membership/family">Family membership details</a>
+  </dialog>
+</body>
+</html>

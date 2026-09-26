@@ -1,0 +1,75 @@
+:root {
+  --primary: #086b64;
+  --paper: #f7f5ef;
+  --ink: #182d2a;
+  --radius: 12px;
+  font-family: Georgia, serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
+}
+#site-header {
+  height: 95px;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #d0ddda;
+}
+.wordmark { color: #007c80; font-size: 26px; font-weight: bold; text-decoration: none; }
+nav { display: flex; gap: 28px; position: relative; top: 2px; }
+nav a { font-size: 16px; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+main, #site-footer { width: min(1080px, calc(100% - 80px)); margin-inline: auto; }
+main { padding-top: 65px; }
+.eyebrow { margin: 0; color: #00828b; font-size: 13px; line-height: 16px; letter-spacing: 3px; text-transform: uppercase; }
+h1 { font-size: 58px; line-height: 1.1; margin: 15px 0 20px; }
+.description { font-size: 19px; line-height: 28px; margin: 0; color: #001b23; }
+#membership-panel { display: grid; grid-template-columns: 54.5% 45.5%; margin-top: 42px; min-height: 316px; border: 1px solid #c8d9d5; border-radius: var(--radius); overflow: hidden; background: #fff; }
+.benefits { padding: 30px 32px; }
+h2 { margin: 0; font-size: 30px; line-height: 38px; }
+.benefits p { font-size: 19px; line-height: 28px; margin: 16px 0 20px; color: #001b23; }
+.benefits ul { padding-left: 40px; margin: 22px 0 0; font-size: 17px; line-height: 34px; }
+.membership-action { padding: 32px; background: #e6f0eb; color: #002432; }
+.plan-name { margin: 0; font-size: 14px; line-height: 20px; }
+#price { display: flex; align-items: baseline; gap: 12px; height: 49px; color: #007c80; margin: 28px 0 31px; font-size: 44px; line-height: 49px; }
+.price-period { font-size: 14px; }
+button:not(.close-dialog) { width: 100%; min-height: 56px; border: 0; border-radius: var(--radius); background: var(--primary); color: white; padding: 14px 18px; font-size: 18px; line-height: 24px; }
+button:not(.close-dialog):hover { background: #075b55; }
+.community { margin: 24px 0 0; font-size: 14px; line-height: 20px; }
+#site-footer { margin-top: 89px; margin-bottom: 60px; color: #00828b; font-size: 16px; line-height: 22px; }
+dialog { width: min(460px, calc(100% - 32px)); padding: 36px 28px 28px; border: 1px solid #c8d9d5; border-radius: var(--radius); color: var(--ink); background: var(--paper); }
+dialog::backdrop { background: rgb(24 45 42 / 45%); }
+.close-dialog { position: absolute; right: 8px; top: 6px; width: 36px; height: 36px; border: 0; border-radius: var(--radius); background: transparent; color: var(--ink); font-size: 28px; }
+label { display: block; margin: 24px 0 8px; }
+input[type="email"] { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid #718a84; border-radius: var(--radius); background: #fff; color: var(--ink); }
+.privacy, #details-link { font-size: 14px; }
+#form-message { line-height: 1.5; }
+#form-message:empty { margin: 0 0 20px; }
+@media (max-width: 680px) {
+  #site-header { height: auto; min-height: 116px; padding: 22px 24px; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .wordmark { font-size: 25px; }
+  nav { gap: 26px; }
+  main, #site-footer { width: calc(100% - 48px); }
+  main { padding-top: 38px; }
+  h1 { font-size: 42px; line-height: 1.12; margin: 18px 0; }
+  .description { font-size: 18px; line-height: 27px; }
+  #membership-panel { grid-template-columns: 1fr; margin-top: 30px; }
+  .benefits, .membership-action { padding: 25px 24px; }
+  h2 { font-size: 27px; line-height: 34px; }
+  .benefits p { font-size: 18px; line-height: 27px; }
+  .benefits ul { padding-left: 22px; font-size: 16px; line-height: 32px; margin-top: 16px; }
+  #price { margin: 19px 0 23px; }
+  button:not(.close-dialog) { font-size: 17px; padding-inline: 12px; }
+  .community { font-size: 13px; margin-top: 20px; }
+  #site-footer { margin-top: 40px; margin-bottom: 36px; font-size: 14px; }
+}

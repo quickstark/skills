@@ -1,0 +1,11 @@
+{
+  "command": "node --test tests/fixtures/frontend-adoption-v3-f11-http/observer.test.mjs",
+  "observed": {
+    "tests": 7,
+    "pass": 4,
+    "fail": 3
+  },
+  "failure": "Inline, dialog and network controls reached typing but failed with Error: Unknown key: Control+A. Existing Puppeteer press() accepts individual keys; this was an observer defect. Broken/inaccessible opener and transport/launch controls passed.",
+  "correction": "Use Control keydown, A press, Control keyup; preserve failure history.",
+  "actualF11ObservationPerformed": false
+}

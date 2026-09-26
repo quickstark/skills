@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "name": "wide",
+      "viewportWidth": 1280,
+      "pageWidth": 1280,
+      "panel": {
+        "x": 100,
+        "y": 345,
+        "width": 1080,
+        "height": 316
+      },
+      "keyboardAndForm": "passed: Enter opens, email focus, empty/invalid rejected, valid confirms and records exact event, Escape closes and restores focus"
+    },
+    {
+      "name": "narrow",
+      "viewportWidth": 390,
+      "pageWidth": 390,
+      "panel": {
+        "x": 24,
+        "y": 379.375,
+        "width": 342,
+        "height": 531.1875
+      },
+      "keyboardAndForm": "passed: Enter opens, email focus, empty/invalid rejected, valid confirms and records exact event, Escape closes and restores focus"
+    }
+  ],
+  "errors": [],
+  "externalRequests": []
+}
