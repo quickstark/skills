@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-448e0b8a432279d8",
+  "scenarioId": "F08",
+  "reviewer": "adoption_a_ps independent F07-F08 review",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-448e0b8a432279d8",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "7071883a579c3a0d9c3ddb511c33820c9ff287ce5d5cb0ffe041ae00fc88811b",
+      "bytes": 1520
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "4ee5cb8488e2df8c90d479a9a9c833ce84bdf4abc902858b1528c5cf28469041",
+      "bytes": 1080
+    },
+    "actual-artifacts/evidence/1280-default.png": {
+      "sha256": "05a466294c182611b924fd6c6cb5a17af76be332b4c5d91cf69490de2dee2dcf",
+      "bytes": 87998
+    },
+    "actual-artifacts/evidence/1280-success.png": {
+      "sha256": "c90bce01b2309e56be99af7285cab071cb10db2584b62ee6624540a2b1e68746",
+      "bytes": 95795
+    },
+    "actual-artifacts/evidence/1280-validation.png": {
+      "sha256": "f90a797d3eeb9d3628602e9adb11988022dafbe1379f1ab821dcf3f86b675c58",
+      "bytes": 93791
+    },
+    "actual-artifacts/evidence/390-default.png": {
+      "sha256": "275b8c56caac80e6ca5597edd1c59eb53fe62ff494e381771f07d7895c81bf5d",
+      "bytes": 81578
+    },
+    "actual-artifacts/evidence/390-success.png": {
+      "sha256": "e9b80fc0865bae19f01612b4094ceb05c68119b5001328c0dce6328e53fa9ecd",
+      "bytes": 89212
+    },
+    "actual-artifacts/evidence/390-validation.png": {
+      "sha256": "f1a1995acc1b548a49159af00a463faf9a2ed609f4333ccf57eee06af2b54850",
+      "bytes": 87025
+    },
+    "actual-artifacts/evidence/browser-observations.json": {
+      "sha256": "58d3691d5c110260277307cd7462646005175301d6caa9f0959d2a94da34ce75",
+      "bytes": 5141
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "91d3dbed69e2c74e7dd5351395b60c2f3e9e375c45fa467c71256dd855b94e1f",
+      "bytes": 2190
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "1c7d48e191ce25488b7d149e4d6e397da9f47c69d202edc4bb44100bb19f0976",
+      "bytes": 1756
+    },
+    "browser/narrow.png": {
+      "sha256": "275b8c56caac80e6ca5597edd1c59eb53fe62ff494e381771f07d7895c81bf5d",
+      "bytes": 81578
+    },
+    "browser/observations.json": {
+      "sha256": "3a6e926044a052a18bd77cb96aeb5998f0b4742df4c6bc6d37040e18c8107678",
+      "bytes": 21779
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "8126d7b2c7f134ccb9b31ca4dcd7802794e86203cee4ce8a8da2b28e3596cfeb",
+      "bytes": 7788
+    },
+    "browser/wide.png": {
+      "sha256": "05a466294c182611b924fd6c6cb5a17af76be332b4c5d91cf69490de2dee2dcf",
+      "bytes": 87998
+    },
+    "context.json": {
+      "sha256": "8cd36bd8fe8da8540edadecf9f00a47fef4be450882560a0127fdfcefd3315f8",
+      "bytes": 10637
+    },
+    "events.jsonl": {
+      "sha256": "d6907844a00764b1dd899b61fd0ef6c08fcf6ef58e5f3553dc5d0f253cfa5a45",
+      "bytes": 395952
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "765b6af5840f0f3e259ad12a90a23e6289b2d3289e779be925f03b2c824da5e7",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "6d293a17154c2c44cb24ce74c61ab975a7cbabeb6b79e5de596cb08576fd1ee1",
+      "bytes": 2330
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "3c9c17d49ffa0ca21d77f2dff86c4080e243fae28b2c42dade709d02d91a95c5",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "Full bundle file SHA/size, normalized tool items and frozen rubric bound; independent uniform HTTP source/copy hashes unchanged and capture complete.",
+  "checks": [
+    {
+      "id": "keyboard-submit",
+      "result": "pass",
+      "rationale": "Uniform keyboard observer reaches native button and exact family event/feedback. Successful helper289 checks email Enter and button Space/Enter each increment once, then tab onward to privacy."
+    },
+    {
+      "id": "input-label",
+      "result": "pass",
+      "rationale": "Actual visible Email address (required) label associated and feedback describedby; independent labels confirms."
+    },
+    {
+      "id": "visible-focus",
+      "result": "pass",
+      "rationale": "Uniform tabSequence3px solid on links/input/button and actual invalid narrow image shows clear teal ring; helper tests computed focus."
+    },
+    {
+      "id": "narrow-no-overflow",
+      "result": "pass",
+      "rationale": "Uniform and helper widths390 matchscrollWidth, including after actions; actual narrow image retains all content and clear stacking."
+    },
+    {
+      "id": "validation-feedback",
+      "result": "pass",
+      "rationale": "Form.checkValidity and custom inline status feedback block invalid events, return focus and clear state after correction; actual invalid screenshot and successful keyboard checks support it."
+    },
+    {
+      "id": "no-marketing-replacement",
+      "result": "pass",
+      "rationale": "Original membership content and practical form retained, no new marketing sections/dependencies. CSS additionally removes decorative pulse/keyframes, beyond keyboard repair but not a landing-page replacement."
+    },
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "Actual source and successful helper verify all facts/date/benefit/headline/routes, exact family event and computed controlbrand."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 4,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "All requested keyboard/narrow/fact outcomes are met with the existing membership flow.",
+    "visual-hierarchy-and-readability": "Actual screens show clear hierarchy, legible control/feedback and no overflow. Reserved feedback spacing remains visible but does not obscure actions.",
+    "interaction-or-screen-flow-clarity": "Keyboard Enter/Space, validation focus return, visible outline and local confirmation provide a clear tested flow.",
+    "brand-and-platform-consistency": "Exact brand tokens, Georgia and12px control radius retained and verified; native button replaces div appropriately.",
+    "scope-and-evidence-honesty": "All6 commands,1 patch and2 views classified; local file-only browser closes cleanly and has no generation/install/publication. Evidence supports reported core behavior. Removal of the decorative pulse for all users is an additional unreported cosmetic change; reduced-motion success alone does not prove original normal-motion behavior preserved."
+  },
+  "blindingLimits": [
+    "Opaque bundle and fixed rubric only; no operator mapping, source instruction bodies or other reviewer grades. Guidance tool bodies suppressed; incidental response conventions/workspace links remain visible.",
+    "Incidental workflow conventions visible; guidance link not followed. No screen-reader session or JS-disabled fallback execution."
+  ],
+  "overall": "pass",
+  "floorDecision": "Original criterion and dimension judgments retained without averaging or comparative adoption.",
+  "rationale": "Assessment binds actual product files, full tool semantics/results, opened images and uniform browser evidence; no rerender or model call.",
+  "screenshotsOpened": [
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-448e0b8a432279d8/browser/wide.png",
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-448e0b8a432279d8/browser/narrow.png",
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-448e0b8a432279d8/actual-artifacts/evidence/390-validation.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed tool IDs; native duplicates/deltas are not extra calls.",
+    "classifiedItems": [
+      {
+        "id": "exec-56e85563-6a06-4a58-9abf-cfd39476be17",
+        "eventLine": 54,
+        "type": "command_execution",
+        "itemSha256": "9857c30144d6ab38e7e91e7fe0fa09319d8df354e1cab128a6d78c5b4fa4780c",
+        "classification": "Exact guidance read; body suppressed",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-ccba5d20-c433-445c-bd5f-d379b9fdd7e8",
+        "eventLine": 59,
+        "type": "command_execution",
+        "itemSha256": "ddb36829e1d36a180634e47b032fe945eab878005ea84d9addb3db33f16080c5",
+        "classification": "Local inventory",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9a1caaa0-3780-4269-b3cc-bcacfafe1042",
+        "eventLine": 149,
+        "type": "command_execution",
+        "itemSha256": "561c713e0da006d19767ad71423cf71e43e3d312b24a6978437c36907c2fa277",
+        "classification": "Read JS",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-64ff587d-4fcc-4224-bf45-669f0f08c0e8",
+        "eventLine": 150,
+        "type": "command_execution",
+        "itemSha256": "eeceb3791c8299fc8ded60312296741924af0d174d24c5ab772680c20fcaee94",
+        "classification": "Read CSS",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-e8218e71-8481-4375-b610-865c2c99fc7d",
+        "eventLine": 151,
+        "type": "command_execution",
+        "itemSha256": "94b7b4a8e70fddf191d0308d79a8ea66bff322b4039706cd7fdfcc87ea3390a2",
+        "classification": "Read HTML",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-cceb1ee5-017c-4ef2-8900-bd77c6ea2446",
+        "eventLine": 280,
+        "type": "file_change",
+        "itemSha256": "ccdd40ff41267f698f70e62d88077c52f77d080dfef471e63c96a153ca5c3663",
+        "classification": "Form and responsive CSS patch; also removes pulse",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9215c16a-e07a-4653-9c93-4c1c1322a111",
+        "eventLine": 289,
+        "type": "command_execution",
+        "itemSha256": "e6eacb78ee1ca486525e16f0575397b98176ac634e07b9d8ddccdd36fe76e540",
+        "classification": "Execute complete local browser assertions/screenshots successfully",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-616f7328-541f-4344-be40-ef9f65b5723b",
+        "eventLine": 426,
+        "type": "image_view",
+        "itemSha256": "17b394b56818b89208b59edcdfc60f08ed7e62b1ac8c21bd6e6728b419652efc",
+        "classification": "View narrow validation screenshot",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9c7dfa07-7f93-45db-8c09-9e6fdfcabd11",
+        "eventLine": 428,
+        "type": "image_view",
+        "itemSha256": "bc8386ef87697534f3d7d46510d63cba7a9419fc520457f0d17bab324b17ce7b",
+        "classification": "View wide success screenshot",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Every listed action/helper and non-guidance result was inspected without execution/rerender. No semantic absence is inferred from native named count alone. Process evidence covers observed owned PIDs only."
+  },
+  "passes": [
+    "Read exact task/common facts and fixed rubric without source/operator mapping or other reviewer scores.",
+    "Inspect input/output files, complete tool actions/helper bodies and non-guidance runtime results, retaining failures.",
+    "Open actual wide/narrow images and reconcile visual findings with independent uniform HTTP observations and task-specific evidence.",
+    "Bind exact files/items/rubric; record original judgments and inherited/evidence limitations without comparison or adoption."
+  ]
+}
