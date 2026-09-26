@@ -1,0 +1,23 @@
+{
+  "kind": "Preparation and historical evidence checkpoint",
+  "scope": "Legacy registry unchanged; no adoption, publication or actual machine migration",
+  "rootSuites": {
+    "sync": "pass",
+    "check": "pass",
+    "tests": 462,
+    "failed": 0,
+    "skipped": 0
+  },
+  "orchestratorControls": 10,
+  "bindings": {
+    "scripts/frontend-adoption-v3.mjs": "afb098fee1b0af9f1bd4350edb52524f67f8ff1fa1a90f51bf0a7b0b2bb215fe",
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+    "tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs": "816334f3cdc37c93d71928281d1d000ba0437db88c625ec84091dfc68ead6f42",
+    "tests/fixtures/frontend-adoption-v3-controls/evidence.json": "d3f8a2e4151bc5a1710a3ac1424562bfae1f3ffff131c2c3b6c1478446a57770",
+    "tests/fixtures/native-comparison-parent/sync.log": "f689aaa649068c7ec544ed40e7acef8dd2d19ef7abc7ce43f2e4d2c321ad1f50",
+    "tests/fixtures/native-comparison-parent/check.log": "d2c30dd51dca120b19c36f052a6984396e94f7a05b445ee912f1e2b8a830f8a1",
+    "tests/fixtures/native-comparison-parent/tests.log": "da2402e607974cf4b51909f1ef63749121cec190823d32d1971874b95bbd924d",
+    "tests/fixtures/native-comparison-parent/orchestrator-gates.log": "99d0fcbb96898dbaa93517ee642e097fd624e631fc5fedfeac460033744ed711"
+  },
+  "nativeAdapter": "Final schema disposition review pending; prior25parentcontrols passed. No model currently running."
+}

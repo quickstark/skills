@@ -1,0 +1,13 @@
+✔ static server serves immutable bytes, allows GET/HEAD, and rejects traversal, unsafe methods, wrong host and symlink payloads (37.5358ms)
+✔ actual browser loads root-relative and relative CSS/JS with identical frozen measurements and screenshots (1028.195377ms)
+✔ actual browser blocks other origins including fetch, worker requests and WebSockets without contacting the sentinel (448.588591ms)
+✔ failed browser launch preserves separate failure evidence and leaves original bytes untouched (11.612988ms)
+✔ HTTP derivative preserves the exact frozen measurement block (0.706172ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1613.973912

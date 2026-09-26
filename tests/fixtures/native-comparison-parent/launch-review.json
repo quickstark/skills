@@ -1,0 +1,35 @@
+{
+  "authorization": "User explicitly approved both test batches; same existing Codex service, guidance and synthetic fixtures.",
+  "review": "Parent read native adapter/schema dispositions, frontend orchestration, uniform HTTP observer and video launcher/verifier/support. No remaining identified preparation defect.",
+  "verification": {
+    "nativeAndFrontendControls": 43,
+    "nativeGateReverification": 33,
+    "videoPreparationControls": 8,
+    "httpControls": 5,
+    "rootSuite": 462,
+    "failed": 0
+  },
+  "nativeReadiness": "Inherited five controls, initialization/thread only, no model call. Exact response and source/hash limits archived separately.",
+  "changedProtocol": "Complete native tool/image items; uniform HTTP frontend observation; inherit configured on-request/auto_review, not old exec implicit Never. No pooled results or causal comparison across protocols.",
+  "bindings": {
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+    "scripts/frontend-adoption-v3.mjs": "afb098fee1b0af9f1bd4350edb52524f67f8ff1fa1a90f51bf0a7b0b2bb215fe",
+    "tests/fixtures/frontend-adoption-v3/plan.json": "62bb5776078183239fd906cbd063194e1fe1ea8e6e61ca839208dddd69e00455",
+    "tests/fixtures/adoption-video-native/plan.json": "01502482f96ab9a0c7a3114edefe8bb8891b1ed067f0c2b85eed7ce1278ffb83",
+    "tests/fixtures/native-comparison-parent/final-controls.log": "6fdb121f440491afc490e4529c61df0b8ee51a3a28e8ce80ae91736a6d5bf356",
+    "tests/fixtures/native-comparison-parent/native-gates.log": "76305b87a43ab2372c4336c6c9dbcf9fca6728b1783640f89069522782c20373",
+    "tests/fixtures/native-comparison-parent/video-tests.log": "8927a4cfd8fb9021589e085f9a878c3a1a3b9663c7b566e4182216ab87a6a560"
+  },
+  "frontend": {
+    "session": 91880,
+    "supervisor": "/tmp/qs-frontend-native-supervisor-identity-20260926.json",
+    "output": "/tmp/qs-frontend-comparison-v3-native-20260926",
+    "state": "Launched; not graded"
+  },
+  "video": {
+    "session": 10679,
+    "output": "/tmp/qs-video-native-capture-20260926",
+    "state": "Launched; not graded"
+  },
+  "acceptance": "Preparation verification only; behavior, activation, release and actual machine migration remain pending."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "render-report-proof-01-host-init-recovery",
+  "planSHA256": "219eb304ff8b4d6b8ace57033fc898a65ce741bdc085f1c1aa6202543ea7938e",
+  "node": "v24.21.0",
+  "platform": "linux",
+  "amendedRootSHA256": "654a6c49b259b3f47f30b78348f6408f59c743d92bbafbff014a6e4357f9f7ef",
+  "observedControlsBeforePreparation": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request"
+  }
+}

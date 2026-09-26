@@ -1,0 +1,46 @@
+{
+  "exitCode": 1,
+  "signal": null,
+  "elapsedMs": 255.55463099999906,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [],
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 3,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+  },
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+  "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+  "promptSHA256": "c41d09a46f46a96a5f0ca3a79dd2e9cf579056f9f7436b45682b87deb654e844",
+  "promptUtf8Bytes": 6559,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-frontend-v2-task-Lr1FYe",
+    "--json",
+    "--image",
+    "/tmp/qs-frontend-v2-task-Lr1FYe/reference.png",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "7eb170cab8980e381a89d7eda3f0f793feb8c22288483c42571abcff196f8c3c"
+  }
+}

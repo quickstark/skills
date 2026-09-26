@@ -1,0 +1,116 @@
+{
+  "checks": [
+    {
+      "width": 1280,
+      "documentWidth": 1280,
+      "input": {
+        "font": "Georgia, serif",
+        "radius": "12px",
+        "background": "rgb(247, 245, 239)"
+      },
+      "button": {
+        "font": "Georgia, serif",
+        "radius": "12px",
+        "background": "rgb(8, 107, 100)"
+      },
+      "panel": {
+        "font": "Georgia, serif",
+        "radius": "12px",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "idsPresent": true,
+      "detailsHref": "/membership/family",
+      "facts": [
+        "$100 / year",
+        "10,000",
+        "50,000",
+        "2020"
+      ],
+      "keyboardFocus": [
+        {
+          "id": "",
+          "text": "Find your membership ↓",
+          "outline": "solid"
+        },
+        {
+          "id": "details-link",
+          "text": "View membership details ↗",
+          "outline": "solid"
+        },
+        {
+          "id": "member-email",
+          "text": "",
+          "outline": "solid"
+        },
+        {
+          "id": "join-button",
+          "text": "Continue with Family membership →",
+          "outline": "solid"
+        }
+      ],
+      "emptyEmailBlocked": true,
+      "invalidEmailBlocked": true,
+      "validKeyboardSubmission": true,
+      "correctLocalEvent": true,
+      "confirmation": true,
+      "reducedMotion": true
+    },
+    {
+      "width": 390,
+      "documentWidth": 390,
+      "input": {
+        "font": "Georgia, serif",
+        "radius": "12px",
+        "background": "rgb(247, 245, 239)"
+      },
+      "button": {
+        "font": "Georgia, serif",
+        "radius": "12px",
+        "background": "rgb(8, 107, 100)"
+      },
+      "panel": {
+        "font": "Georgia, serif",
+        "radius": "12px",
+        "background": "rgba(0, 0, 0, 0)"
+      },
+      "idsPresent": true,
+      "detailsHref": "/membership/family",
+      "facts": [
+        "$100 / year",
+        "10,000",
+        "50,000",
+        "2020"
+      ],
+      "keyboardFocus": [
+        {
+          "id": "",
+          "text": "Find your membership ↓",
+          "outline": "solid"
+        },
+        {
+          "id": "details-link",
+          "text": "View membership details ↗",
+          "outline": "solid"
+        },
+        {
+          "id": "member-email",
+          "text": "",
+          "outline": "solid"
+        },
+        {
+          "id": "join-button",
+          "text": "Continue with Family membership →",
+          "outline": "solid"
+        }
+      ],
+      "emptyEmailBlocked": true,
+      "invalidEmailBlocked": true,
+      "validKeyboardSubmission": true,
+      "correctLocalEvent": true,
+      "confirmation": true,
+      "reducedMotion": true
+    }
+  ],
+  "externalRequests": [],
+  "errors": []
+}

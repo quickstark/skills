@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "scenarioId": "F01",
+  "reviewer": "Independent delegated reviewer /root/baseline_blind_review; not the implementation run",
+  "bundleManifestDefinition": "SHA256 of UTF-8 canonical JSON of fileBindings with sorted keys and compact separators; each file is bound separately",
+  "manifestVerification": "Every declared input/artifact hash and byte count matches; embedded rubric equals the fixed rubric.",
+  "comparison": "No source/operator mapping read, preferred identity inferred, aggregate comparison or efficiency conclusion.",
+  "passes": [
+    {
+      "pass": 1,
+      "name": "Coverage",
+      "evidence": "All six required checks and all five dimensions evaluated from full context, artifacts, browser records, tool events and actual opened screenshots."
+    },
+    {
+      "pass": 2,
+      "name": "Domain evaluation",
+      "evidence": "Checked exact facts, links, stable IDs, typography/color/radius declarations and available computed values, form validation/event/confirmation, narrow layout and keyboard behavior."
+    },
+    {
+      "pass": 3,
+      "name": "Contradiction/error hunt",
+      "evidence": "Separated actual screenshot appearance from observed interaction; retained measurement-context conflicts and view-attribution protocol limits; runtime success is not a behavior pass."
+    },
+    {
+      "pass": 4,
+      "name": "Polish",
+      "evidence": "Ratings cite concrete evidence and keep unresolved checks unverified; immutable per-bundle review with no variant preference or unsupported broader acceptance."
+    }
+  ],
+  "trialId": "review-7280421d45c3e13c",
+  "bundlePath": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles/review-7280421d45c3e13c",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "d1d531c9dbe9336779339c59ed31183032707cdb3178fb7f8a2a7dd617df351e",
+      "bytes": 923
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "actual-artifacts/accessibility/index.html": {
+      "sha256": "89fe529fdd24d4a6f747e2466bb831c0018fee395369086d4674e473e1173f11",
+      "bytes": 1086
+    },
+    "actual-artifacts/evidence/check.cjs": {
+      "sha256": "8a7a5e1f7552c2d3c66c721029831752a5d2a068e315a257893b2277b71390fb",
+      "bytes": 4395
+    },
+    "actual-artifacts/evidence/dark.png": {
+      "sha256": "5c900aef992d0554d98c00a32b9a317a94b7b2d9fa51f204d71d63a478e7078f",
+      "bytes": 91996
+    },
+    "actual-artifacts/evidence/narrow.png": {
+      "sha256": "a862b4bb68c2f17bbd31fea26021fbd260333568f3714cfe7c1c092621eced27",
+      "bytes": 74780
+    },
+    "actual-artifacts/evidence/observations.json": {
+      "sha256": "bbfe5d6ed72a8b4766e156344ac944436c1ad06c8ade321b629cb92bd3e83d72",
+      "bytes": 597
+    },
+    "actual-artifacts/evidence/wide.png": {
+      "sha256": "0112c02f88f7362aaedf7fa05349694c1b5fbcbd2a44aa803cc8a0a384ccdf06",
+      "bytes": 90693
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "26bc35cccbb17177d4cb62635417eed5f63f066882fb70a91b6f03c1813bf382",
+      "bytes": 3215
+    },
+    "actual-artifacts/membership/family/index.html": {
+      "sha256": "a33ed57eea17cc2c674a4eaec90b9936031fb10a7caa6b2152d3c924e7e2da01",
+      "bytes": 1144
+    },
+    "actual-artifacts/membership/index.html": {
+      "sha256": "834f6f2c558f73150e9ab6c6fce81f43faed7511305416ccb49d7288856dc12a",
+      "bytes": 3217
+    },
+    "actual-artifacts/privacy/index.html": {
+      "sha256": "28e93783a572d12f385effdd0312688243439caf67a87680bcc2df3320d0e02e",
+      "bytes": 1066
+    },
+    "actual-artifacts/script.js": {
+      "sha256": "2173c0f888bb2132aa05c4f2db37349972cf41ea44c429f56328deb5fb267b0d",
+      "bytes": 878
+    },
+    "actual-artifacts/styles.css": {
+      "sha256": "9750f1fd8fbe7321496ff89eaf564590fa623ac0d932c3d664852057d4640bda",
+      "bytes": 5510
+    },
+    "browser/narrow.png": {
+      "sha256": "a862b4bb68c2f17bbd31fea26021fbd260333568f3714cfe7c1c092621eced27",
+      "bytes": 74780
+    },
+    "browser/observations.json": {
+      "sha256": "25ebed843cb8670e3101074dda138ea1eb7da06c229903da1c386a1ddcf30239",
+      "bytes": 23432
+    },
+    "browser/wide.png": {
+      "sha256": "0112c02f88f7362aaedf7fa05349694c1b5fbcbd2a44aa803cc8a0a384ccdf06",
+      "bytes": 90693
+    },
+    "context.json": {
+      "sha256": "2e59a982ed06afe78dc55c30864354fcf115055f63e7ef247f5ca7f3fc7d56be",
+      "bytes": 9643
+    },
+    "events.jsonl": {
+      "sha256": "e509d67b5f02dca899854052b0832248516f3f1678f0b3914576d009d21b6d5f",
+      "bytes": 93817
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "b3eff242c4079e154804be71bf33f8426614863d9e13a263c66affa1697cace2",
+      "bytes": 782
+    },
+    "response.md": {
+      "sha256": "adb5d8dd55822c4b6fba3ca459158217a9c74dce8a5d46aca992784ab5f4bc63",
+      "bytes": 1095
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "5510cce20001434a8ad5f62b99537b8b599577c99f79bf0d1d259877600258e4",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "reviewStatus": "Provisional independent artifact review; strict image-count evidence gap and parent review remain",
+  "screenshotsOpened": [
+    "actual-artifacts/evidence/dark.png",
+    "actual-artifacts/evidence/narrow.png",
+    "actual-artifacts/evidence/wide.png",
+    "browser/narrow.png",
+    "browser/wide.png"
+  ],
+  "checks": [
+    {
+      "id": "requested-sections",
+      "result": "pass",
+      "rationale": "Opened screenshots and browser views show supplied introduction, complete Family plan, all three facts, details link and local form. All13 stable IDs exist in final HTML; membership-title identifies headline in fifth bundle, with no required node-type contract."
+    },
+    {
+      "id": "brand-and-facts",
+      "result": "pass",
+      "rationale": "Default styles.css uses exact #086b64/#f7f5ef/#182d2a and12px panel/input/button radius. Browser computed body/head Georgia,serif at both widths; control CSS explicitly sets Georgia. Computed control radius not independently saved. Supplemental dark mode changes background/accents but keeps a coherent readable treatment; default is the requested brand. Price $100/year;10,000 members;50,000 annual visits;2020 founded;January1,2025 pricing;exact benefit retained."
+    },
+    {
+      "id": "working-local-form",
+      "result": "pass",
+      "rationale": "Independent browser confirms invalid email, solid3px tab focus, join reached and exact success/event. Executed evidence/check.cjs checks overflow/screenshots both widths, then empty/invalid/valid keyboard flow at390px only; local request interception verifies details/privacy/accessibility/membership pages."
+    },
+    {
+      "id": "narrow-and-keyboard",
+      "result": "pass",
+      "rationale": "Opened all five screenshots: airy left introduction/right membership card, clear price and separate fact row; narrow layout stacks cleanly, with founded on a second fact row. Default and dark screenshots are readable. Small secondary text, long mobile button label and uneven mobile facts remain minor, rating3. Browser scrollWidth equals1280/390; independent tabSequence shows solid3px focus and reaches join."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "unverified",
+      "rationale": "All retained images are attributable browser screenshots and visible actions contain no generation. Exact CLI exec JSON mapper omits image-generation notifications, so absent events/empty tool-images cannot prove zero actual invocations. No positive violation inferred."
+    },
+    {
+      "id": "no-publication",
+      "result": "pass",
+      "rationale": "Visible commands read guidance/input, write bounded product/evidence files and run local browser checks. No publication, installation, external-service command or public-root invocation observed. Browser blockedRequests empty and author externalRequests empty. Process observer reports no observed owned residuals; not a universal host audit."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 3,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Requested content, facts, sections, stable IDs, correct details destination and exact local join contract preserved. No invented substantive museum claims.",
+    "visual-hierarchy-and-readability": "Opened all five screenshots: airy left introduction/right membership card, clear price and separate fact row; narrow layout stacks cleanly, with founded on a second fact row. Default and dark screenshots are readable. Small secondary text, long mobile button label and uneven mobile facts remain minor, rating3.",
+    "interaction-or-screen-flow-clarity": "Independent browser confirms invalid email, solid3px tab focus, join reached and exact success/event. Executed evidence/check.cjs checks overflow/screenshots both widths, then empty/invalid/valid keyboard flow at390px only; local request interception verifies details/privacy/accessibility/membership pages.",
+    "brand-and-platform-consistency": "Default styles.css uses exact #086b64/#f7f5ef/#182d2a and12px panel/input/button radius. Browser computed body/head Georgia,serif at both widths; control CSS explicitly sets Georgia. Computed control radius not independently saved. Supplemental dark mode changes background/accents but keeps a coherent readable treatment; default is the requested brand.",
+    "scope-and-evidence-honesty": "Final wording can imply form checks at both widths, but saved script only tests interactions after mobile capture. Both-size layout verification is supported; desktop interaction verification is not established by that script. This is a narrow reporting qualification, not evidence of failed desktop behavior. No unsupported generation count accepted. Image notification omission is a measurement limit, not a deception finding or quality penalty."
+  },
+  "floorDecision": {
+    "qualityDimensions": "pass; each >=3",
+    "requiredChecks": "unverified: exact zero image invocation count not observable from this stream",
+    "adoption": "No adoption/variant/efficiency conclusion"
+  },
+  "overall": "unverified",
+  "rationale": "Visible artifact and interaction requirements pass; exact zero-image-call authority criterion remains unverified due known exec telemetry omission.",
+  "blindingLimits": [
+    "Exact full guidance outputs redacted; partial/truncated reads, source hashes, style comments and root wording may reveal identity. No operator map/source/raw trial read and no preferred mapping inferred.",
+    "A prior supplied bundle exposed a partial guidance body during event inspection; all later guidance command outputs were skipped for content.",
+    "Parent reports exact CLI rust-v0.153.4 commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a excludes ImageView/ImageGeneration from exec ThreadItemDetails and drops unhandled notifications. Image inspection and invocation count cannot be inferred from absence.",
+    "No reviewer rerun or source mutation; HTTP supplements, if supplied uniformly, require separate append-only review."
+  ]
+}

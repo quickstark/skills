@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-26T16:27:11.675Z",
+  "kind": "uniform-supplementary-http-observation",
+  "files": {
+    "observer.mjs": "da3ae49427a54ae4339cc657de415982542080190c758f0702579d8a2b15377d",
+    "browser-observe-http.mjs": "2f02477d71b3abb2257c643b835b7f4c673c9e846fd30f122ad30c4ffea6fc42",
+    "observer.test.mjs": "8bb1066d3963b83815006214e2415c9de97df8174182de8a10849981b560ff36",
+    "README.md": "e3b1edd9769ca638440d44e26532d51203c9bb44cbfc6e7e34ef436115c6a7b8",
+    "../frontend-adoption-v2/browser-observe.mjs": "42cef9a10c7252fcc387ded469a6f4b4d76022b90d895ad2056c65a84ef70791",
+    "../frontend-adoption-v2/common-scope.json": "0f635f57d5ea05f44c90bbe4bac419e8723af826125b942ab232fb696b24ae75",
+    "../frontend-adoption-v2/rubric.json": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+    "../frontend-adoption-v2/assets/reference.html": "6e80fb11f6fabe263e558bd69c08ccd063ee4c3690abd86c5c5d573a94ea2d81",
+    "../frontend-adoption-v2/assets/reference.png": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786"
+  },
+  "runtime": {
+    "node": "v24.21.0",
+    "browserPath": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+    "browserSHA256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f",
+    "puppeteerPath": "/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js",
+    "puppeteerSHA256": "059b251260c5499581d308029e4a207102624d35f1390b6b0fdad6563f5d186d",
+    "transitiveDependencyLimit": "Entry and binary identities are bound; supplied transitive installation must remain unchanged."
+  },
+  "scope": {
+    "selection": "Every completed opaque reviewer bundle whose context.task.mode is implementation; both variants and all repetitions, including failed captures with existing artifacts. List absent/missing/failed observations explicitly.",
+    "reference": "Capture original reference.html once over the same HTTP setup; retain the original supplied reference PNG as immutable authority.",
+    "schedule": "Uniform supplement to the existing fixed comparison; no model invocation, retries, replacements, case selection by performance, rubric changes or variant mapping reads.",
+    "output": "Fresh separate directory per artifact bundle; preserve every original file:// observation and raw artifact.",
+    "review": "Independent review of actual browser images and evidence; HTTP transport does not award a quality score or establish adoption."
+  },
+  "measurementPreservation": "Exact frozen measurement block, browser binary, viewports and interaction sequence. Only entry transport and network confinement differ.",
+  "transport": {
+    "server": "127.0.0.1 port 0, GET/HEAD only, regular-file immutable snapshot, bounded payload, no forwarding",
+    "network": "Exact artifact origin only; external page requests aborted, deny-all local proxy for worker/WebSocket traffic, no unproxied WebRTC UDP"
+  },
+  "demonstration": {
+    "authorizedArtifact": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles/review-ccddcb5734b46fff/actual-artifacts",
+    "variant": "Not inspected; operator mapping is not read.",
+    "output": "demonstration/review-ccddcb5734b46fff"
+  }
+}

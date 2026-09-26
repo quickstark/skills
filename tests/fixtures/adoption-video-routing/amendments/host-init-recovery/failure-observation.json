@@ -1,0 +1,21 @@
+{
+  "classification": "Infrastructure initialization failure before model turn; no behavioral grade",
+  "parentSession": 73433,
+  "originalCapture": "/tmp/qs-video-render-report-proof-01-capture-20260925",
+  "exitCode": 1,
+  "elapsedMs": 211.81732999999986,
+  "eventsBytes": 0,
+  "responseBytes": 0,
+  "toolCount": 0,
+  "usage": [],
+  "completedTurn": false,
+  "beforeAfterIdentical": true,
+  "stderrSHA256": "8e3330eeb312ddb37b9da73c3ece4a8aa7e2ade4b7bb255573aa487bc89f0f58",
+  "rawArchive": "failed-start",
+  "duplicateGuidanceOmitted": [
+    "failed-start/before/guidance",
+    "failed-start/after/guidance"
+  ],
+  "reconstruction": "Use original shared guidance snapshot plus amendments/render-report-proof-root.md as guidance/instructions.md; before/after full hashes are preserved.",
+  "supervisorLog": "/tmp/qs-video-render-report-proof-01-supervisor-20260925.log"
+}

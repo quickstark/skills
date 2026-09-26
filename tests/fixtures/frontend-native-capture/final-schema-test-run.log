@@ -1,0 +1,41 @@
+✔ native images, views, deltas, usage and reference input are captured without setting overrides (133.567871ms)
+✔ retains and fails unknown (128.618089ms)
+✔ retains and fails unknown-item-notification (128.236835ms)
+✔ retains and fails malformed (125.564484ms)
+✔ retains and fails missing-terminal (141.970646ms)
+✔ retains and fails approval (122.534473ms)
+✔ retains and fails wrong-thread (121.08649ms)
+✔ retains and fails open-item (124.888829ms)
+✔ retains and fails failed-turn (123.785ms)
+✔ unknown dynamic semantics survive without certifying absence of image operations (119.460559ms)
+✔ authority observation stops image-budget (136.614834ms)
+✔ authority observation stops prompt-tool (129.893926ms)
+✔ bounded timeout kills an uncooperative exact child (1298.917935ms)
+✔ observed detached descendant is cleaned after parent exits (930.361893ms)
+✔ terminal full items reconcile an earlier unfinished view (127.849809ms)
+✔ effective model mismatch blocks turn (83.577215ms)
+✔ effective reasoningEffort mismatch blocks turn (89.368495ms)
+✔ effective approvalPolicy mismatch blocks turn (84.682496ms)
+✔ effective sandbox mismatch blocks turn (77.40555ms)
+✔ effective approvalsReviewer mismatch blocks turn (86.868922ms)
+✔ readiness mode never sends a model turn (123.714006ms)
+✔ existing capture evidence is never overwritten (45.826308ms)
+✔ frozen native reviewer drift fails before process creation (42.229781ms)
+✔ native userMessage is retained but does not count as a tool (119.970037ms)
+✔ read-only guidance remains byte-exact in normalized and raw streams (128.569417ms)
+✔ function-call output retains native name/namespace/output and positive image evidence (2.433828ms)
+✔ ordinary functions.exec output is retained as tool evidence, not unknown or non-tool (0.171466ms)
+✔ function-call output cannot silently pass prompt-only authority (0.208757ms)
+✔ contextCompaction metadata is preserved without inventing a tool call (0.142741ms)
+✔ enteredReviewMode metadata is preserved without inventing a tool call (0.111401ms)
+✔ exitedReviewMode metadata is preserved without inventing a tool call (0.090101ms)
+✔ hookPrompt unsupported authority fails with raw item retained (0.159734ms)
+✔ subAgentActivity unsupported authority fails with raw item retained (0.153692ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4879.168624

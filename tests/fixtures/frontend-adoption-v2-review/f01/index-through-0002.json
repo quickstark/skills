@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "received": 2,
+  "expected": 6,
+  "reviewed": 2,
+  "status": "partial; four further opaque bundles not yet supplied",
+  "records": [
+    {
+      "trialId": "review-61af6737213b5ca7",
+      "path": "review-61af6737213b5ca7.json",
+      "sha256": "1a03482d9343b36b2eb55555e06df3ec2c6e12edf9cf0ae9c3b042b365add3b5",
+      "overall": "pass"
+    },
+    {
+      "trialId": "review-ccddcb5734b46fff",
+      "path": "review-ccddcb5734b46fff.json",
+      "sha256": "3c25c51b23388fc7147221f35f96fd74cb11f9a9c5127f0140824555309c8772",
+      "overall": "unverified"
+    }
+  ],
+  "policy": "Append new reviews and supplemental amendments; do not replace earlier grades or infer mapping. Parent independently reviews before adoption."
+}

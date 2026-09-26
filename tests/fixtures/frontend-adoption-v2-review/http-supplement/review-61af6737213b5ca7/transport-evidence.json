@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "project": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles/review-61af6737213b5ca7/actual-artifacts",
+  "reference": false,
+  "transport": "Supplementary loopback HTTP over an immutable in-memory snapshot of artifact-copy; original file:// evidence unchanged.",
+  "sourceBefore": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "artifacts/membership-1280.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "artifacts/membership-390.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "index.html": {
+      "sha256": "62c19fe37cddd7d081cc60ff4fed1143c4c7fe3c252c8407e29ad0f319976cbf",
+      "bytes": 3837
+    },
+    "script.js": {
+      "sha256": "0950b0dae49311df5a5c85a055ba622feb0f9ebb7210ffde65facee7953b34cb",
+      "bytes": 546
+    },
+    "styles.css": {
+      "sha256": "206cffa2193596ebb4a2b6d59eae9f4f1526c3ff205e3549de51d5bdce9c091e",
+      "bytes": 6318
+    }
+  },
+  "sourceAfter": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "artifacts/membership-1280.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "artifacts/membership-390.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "index.html": {
+      "sha256": "62c19fe37cddd7d081cc60ff4fed1143c4c7fe3c252c8407e29ad0f319976cbf",
+      "bytes": 3837
+    },
+    "script.js": {
+      "sha256": "0950b0dae49311df5a5c85a055ba622feb0f9ebb7210ffde65facee7953b34cb",
+      "bytes": 546
+    },
+    "styles.css": {
+      "sha256": "206cffa2193596ebb4a2b6d59eae9f4f1526c3ff205e3549de51d5bdce9c091e",
+      "bytes": 6318
+    }
+  },
+  "copyBefore": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "artifacts/membership-1280.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "artifacts/membership-390.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "index.html": {
+      "sha256": "62c19fe37cddd7d081cc60ff4fed1143c4c7fe3c252c8407e29ad0f319976cbf",
+      "bytes": 3837
+    },
+    "script.js": {
+      "sha256": "0950b0dae49311df5a5c85a055ba622feb0f9ebb7210ffde65facee7953b34cb",
+      "bytes": 546
+    },
+    "styles.css": {
+      "sha256": "206cffa2193596ebb4a2b6d59eae9f4f1526c3ff205e3549de51d5bdce9c091e",
+      "bytes": 6318
+    }
+  },
+  "copyAfter": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "artifacts/membership-1280.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "artifacts/membership-390.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "index.html": {
+      "sha256": "62c19fe37cddd7d081cc60ff4fed1143c4c7fe3c252c8407e29ad0f319976cbf",
+      "bytes": 3837
+    },
+    "script.js": {
+      "sha256": "0950b0dae49311df5a5c85a055ba622feb0f9ebb7210ffde65facee7953b34cb",
+      "bytes": 546
+    },
+    "styles.css": {
+      "sha256": "206cffa2193596ebb4a2b6d59eae9f4f1526c3ff205e3549de51d5bdce9c091e",
+      "bytes": 6318
+    }
+  },
+  "unchanged": true,
+  "requests": [
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    }
+  ],
+  "deniedProxyRequests": [],
+  "reportComplete": true,
+  "failure": null,
+  "qualityJudgment": "Not evaluated; original rubric and independent review still required."
+}

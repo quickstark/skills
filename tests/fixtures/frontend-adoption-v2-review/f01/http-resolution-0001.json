@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "type": "append-only historical HTTP evidence resolution",
+  "scope": "Six F01 implementations in the closed experiment only. No model call, rerender, product/source mutation, adoption, comparative grade, efficiency claim or pooling into next comparison.",
+  "supersedes": "Only prior statements that ccdd rendering-context conflict awaits uniform HTTP evidence; no original record/score overwritten.",
+  "supplementRoot": "/github/skills/tests/fixtures/frontend-adoption-v2-review/http-supplement",
+  "supplementBindings": {
+    "inventory.json": {
+      "sha256": "e96fd13cd75d9779f04afdb69bbaab7be07d670e9697d264e5d6243dc81473fe",
+      "bytes": 10560
+    },
+    "review-1ca0d52a49091ad7/browser/observations.json": {
+      "sha256": "8f046301b63c8b15e3f9f7758bbc7ab028a1e78c58a65b43693529532a2a5b4a",
+      "bytes": 29281
+    },
+    "review-1ca0d52a49091ad7/browser/wide.png": {
+      "sha256": "25510af6f0ddae2d5b08a263fa87cc405a69a148a518686f419f752732fb2aea",
+      "bytes": 113656
+    },
+    "review-1ca0d52a49091ad7/browser/narrow.png": {
+      "sha256": "c0a8644f9134d85bce284e95b74ad1d2b92a1f3dfcf02d47f75d87c83d1811bb",
+      "bytes": 95151
+    },
+    "review-1ca0d52a49091ad7/transport-evidence.json": {
+      "sha256": "04a1b21c60c97878f7f8cd11439089f5dc2286946117f05565f18de08b1bc35b",
+      "bytes": 5991
+    },
+    "review-61af6737213b5ca7/browser/observations.json": {
+      "sha256": "e6bc5ae36d63c22516a08974a30113c9811bccf6f53706ea33945a764b6b0c2b",
+      "bytes": 28828
+    },
+    "review-61af6737213b5ca7/browser/wide.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "review-61af6737213b5ca7/browser/narrow.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "review-61af6737213b5ca7/transport-evidence.json": {
+      "sha256": "d96038b59c4d86d17c63b60e688594f2ecf3418a4c16ff9808629455c17b3a04",
+      "bytes": 4895
+    },
+    "review-7280421d45c3e13c/browser/observations.json": {
+      "sha256": "25ebed843cb8670e3101074dda138ea1eb7da06c229903da1c386a1ddcf30239",
+      "bytes": 23432
+    },
+    "review-7280421d45c3e13c/browser/wide.png": {
+      "sha256": "0112c02f88f7362aaedf7fa05349694c1b5fbcbd2a44aa803cc8a0a384ccdf06",
+      "bytes": 90693
+    },
+    "review-7280421d45c3e13c/browser/narrow.png": {
+      "sha256": "a862b4bb68c2f17bbd31fea26021fbd260333568f3714cfe7c1c092621eced27",
+      "bytes": 74780
+    },
+    "review-7280421d45c3e13c/transport-evidence.json": {
+      "sha256": "63301a6e01dd9aaf554c7698ff10fc132055c671ebd84c8f04135f0cb46b55e8",
+      "bytes": 8803
+    },
+    "review-a1652b054b884178/browser/observations.json": {
+      "sha256": "1169814ec24a08f0548bbb3d9e7f95982ced7960fd5d821c2fa473b7e548a496",
+      "bytes": 22461
+    },
+    "review-a1652b054b884178/browser/wide.png": {
+      "sha256": "58d20ddd73740035770beece07fb23baf9b3f7625e545857596b5025cd1f66db",
+      "bytes": 84933
+    },
+    "review-a1652b054b884178/browser/narrow.png": {
+      "sha256": "617433bb9fb1992a62f026fb1becb62c4d9f317557e849b6af1834c379433645",
+      "bytes": 70565
+    },
+    "review-a1652b054b884178/transport-evidence.json": {
+      "sha256": "96e8e066d8adafff9824c7aa5d40186bed826d43edbfbaaa5b35b0dc550be2f4",
+      "bytes": 8251
+    },
+    "review-ccddcb5734b46fff/browser/observations.json": {
+      "sha256": "bf03a4c35934d487b2f983afea8d9d3d981e933b2372e050b4915e5eb806ff71",
+      "bytes": 22988
+    },
+    "review-ccddcb5734b46fff/browser/wide.png": {
+      "sha256": "d2eb4c77410a0d099f1910536520429ce944fd6c757656ad4e941308e7479df5",
+      "bytes": 84297
+    },
+    "review-ccddcb5734b46fff/browser/narrow.png": {
+      "sha256": "9711a1451583369e7bba7a05aef8ae09b9218562bd795a6aaabba2b7da90c1fb",
+      "bytes": 73411
+    },
+    "review-ccddcb5734b46fff/transport-evidence.json": {
+      "sha256": "d6a5cb1687064670f1c598227af41c613bc5fde22f9ecfd2e95aeae22dddc3ae",
+      "bytes": 8275
+    },
+    "review-ebf921892d7dfc7d/browser/observations.json": {
+      "sha256": "2bcde741e421c83fd5632a228f7d9a1b074d9e6459c6f5d2cc5f59361dd44f50",
+      "bytes": 29240
+    },
+    "review-ebf921892d7dfc7d/browser/wide.png": {
+      "sha256": "d77ca1c2fa590892aa9a3eaae646dfa49fb74c46d551a1ec4dd1d70b387a78b1",
+      "bytes": 99619
+    },
+    "review-ebf921892d7dfc7d/browser/narrow.png": {
+      "sha256": "d5c935be257aa8ad1429aeeecf766877ff21c67dc4c367aa21bd5e9a7b4428f0",
+      "bytes": 86716
+    },
+    "review-ebf921892d7dfc7d/transport-evidence.json": {
+      "sha256": "9bf37d775d1e7644ce89c90b3aa1dc8fa15b459971224e655f6fb32e8af37d76",
+      "bytes": 4807
+    }
+  },
+  "priorIndexBinding": {
+    "sha256": "16937c2cadcf00ed193ac42ca1dd392d3e4318616684afd2eb1a7d97a332112d",
+    "bytes": 2652
+  },
+  "protocolAmendmentBinding": {
+    "sha256": "c51a70c51a85dfa411a72eb490c2f01b19691efee3815912269ce822961efd92",
+    "bytes": 1088
+  },
+  "uniformity": "Inventory covers eight closed bundles: six implementation observed, two audit excluded. Reference observation is listed but not needed to adjudicate these greenfield F01 artifacts and not graded here.",
+  "verification": "All six transport source/copy before/after manifests equal inventory sourceManifest and archived review artifact bindings.12 supplemental screenshots match retained author screenshots exactly;10 also match original independent file-context screenshots.25 supplement files are bound below.",
+  "screenshotsOpenedThisSupplement": [
+    "review-ccddcb5734b46fff/browser/wide.png",
+    "review-ccddcb5734b46fff/browser/narrow.png"
+  ],
+  "otherImageInspection": "Remaining10 supplemental screenshots byte-identical to previously opened independent screenshots; reused prior visual review without rerender.",
+  "fourPasses": [
+    "Coverage: all six eligible inventory entries, transport evidence, metrics and image bindings.",
+    "Domain: CSS/JS transport, brand/font evidence, responsive screenshot appearance and local keyboard outcome.",
+    "Contradiction hunt: file versus HTTP serving resolved; no fabricated new control-radius measurements or recovered model image-call telemetry.",
+    "Polish: concise per-bundle interpretation, immutable old grades and explicit historical limits."
+  ],
+  "results": [
+    {
+      "trialId": "review-1ca0d52a49091ad7",
+      "originalReviewBinding": {
+        "sha256": "c147525c6f2ce58deea48648c50aefd7fcbfccbff08619278bbe2f340954cb5e",
+        "bytes": 10587
+      },
+      "sourceManifestsMatchArchivedReview": true,
+      "screenshotByteMatches": {
+        "wide": [
+          "actual-artifacts/evidence/wide.png",
+          "browser/wide.png"
+        ],
+        "narrow": [
+          "actual-artifacts/evidence/narrow.png",
+          "browser/narrow.png"
+        ]
+      },
+      "computedBodyAndHeadingFonts": {
+        "wide": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        },
+        "narrow": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        }
+      },
+      "observations": "Both widths1280/390 without horizontal overflow; invalid email rejected; join reachable with solid3px focus; exact local confirmation and one join_started/family event. Only index.html/styles.css/script.js GET200 requests recorded; no blocked or denied requests.",
+      "interpretation": "No changed artifact interpretation; HTTP images byte-identical to original independent file-context images and author screenshots. Existing qualifications and scores retained.",
+      "overall": "unverified; image-call telemetry gap unchanged"
+    },
+    {
+      "trialId": "review-61af6737213b5ca7",
+      "originalReviewBinding": {
+        "sha256": "1a03482d9343b36b2eb55555e06df3ec2c6e12edf9cf0ae9c3b042b365add3b5",
+        "bytes": 9678
+      },
+      "sourceManifestsMatchArchivedReview": true,
+      "screenshotByteMatches": {
+        "wide": [
+          "actual-artifacts/artifacts/membership-1280.png",
+          "browser/wide.png"
+        ],
+        "narrow": [
+          "actual-artifacts/artifacts/membership-390.png",
+          "browser/narrow.png"
+        ]
+      },
+      "computedBodyAndHeadingFonts": {
+        "wide": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        },
+        "narrow": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        }
+      },
+      "observations": "Both widths1280/390 without horizontal overflow; invalid email rejected; join reachable with solid3px focus; exact local confirmation and one join_started/family event. Only index.html/styles.css/script.js GET200 requests recorded; no blocked or denied requests.",
+      "interpretation": "No changed artifact interpretation; HTTP images byte-identical to original independent file-context images and author screenshots. Existing qualifications and scores retained.",
+      "overall": "unverified; image-call telemetry gap unchanged"
+    },
+    {
+      "trialId": "review-7280421d45c3e13c",
+      "originalReviewBinding": {
+        "sha256": "cd60c5f25f59ee8b3afd5324e23002e99d12e5c2f14216d9ec249fccc30e6545",
+        "bytes": 11501
+      },
+      "sourceManifestsMatchArchivedReview": true,
+      "screenshotByteMatches": {
+        "wide": [
+          "actual-artifacts/evidence/wide.png",
+          "browser/wide.png"
+        ],
+        "narrow": [
+          "actual-artifacts/evidence/narrow.png",
+          "browser/narrow.png"
+        ]
+      },
+      "computedBodyAndHeadingFonts": {
+        "wide": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        },
+        "narrow": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        }
+      },
+      "observations": "Both widths1280/390 without horizontal overflow; invalid email rejected; join reachable with solid3px focus; exact local confirmation and one join_started/family event. Only index.html/styles.css/script.js GET200 requests recorded; no blocked or denied requests.",
+      "interpretation": "No changed artifact interpretation; HTTP images byte-identical to original independent file-context images and author screenshots. Existing qualifications and scores retained. Earlier author-report qualification remains: later supplemental evidence does not retroactively establish what the author tested at desktop.",
+      "overall": "unverified; image-call telemetry gap unchanged"
+    },
+    {
+      "trialId": "review-a1652b054b884178",
+      "originalReviewBinding": {
+        "sha256": "7f8394b6926d963b99076be6311e736a6b05bf74346ce30d5694ef1e17078122",
+        "bytes": 11327
+      },
+      "sourceManifestsMatchArchivedReview": true,
+      "screenshotByteMatches": {
+        "wide": [
+          "actual-artifacts/evidence/wide.png",
+          "browser/wide.png"
+        ],
+        "narrow": [
+          "actual-artifacts/evidence/narrow.png",
+          "browser/narrow.png"
+        ]
+      },
+      "computedBodyAndHeadingFonts": {
+        "wide": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        },
+        "narrow": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        }
+      },
+      "observations": "Both widths1280/390 without horizontal overflow; invalid email rejected; join reachable with solid3px focus; exact local confirmation and one join_started/family event. Only index.html/styles.css/script.js GET200 requests recorded; no blocked or denied requests.",
+      "interpretation": "No changed artifact interpretation; HTTP images byte-identical to original independent file-context images and author screenshots. Existing qualifications and scores retained.",
+      "overall": "unverified; image-call telemetry gap unchanged"
+    },
+    {
+      "trialId": "review-ccddcb5734b46fff",
+      "originalReviewBinding": {
+        "sha256": "3c25c51b23388fc7147221f35f96fd74cb11f9a9c5127f0140824555309c8772",
+        "bytes": 12158
+      },
+      "sourceManifestsMatchArchivedReview": true,
+      "screenshotByteMatches": {
+        "wide": [
+          "actual-artifacts/evidence/wide.png"
+        ],
+        "narrow": [
+          "actual-artifacts/evidence/narrow.png"
+        ]
+      },
+      "computedBodyAndHeadingFonts": {
+        "wide": {
+          "bodyFont": "Georgia, \"Times New Roman\", serif",
+          "headingFont": "Georgia, \"Times New Roman\", serif"
+        },
+        "narrow": {
+          "bodyFont": "Georgia, \"Times New Roman\", serif",
+          "headingFont": "Georgia, \"Times New Roman\", serif"
+        }
+      },
+      "observations": "Both widths1280/390 without horizontal overflow; invalid email rejected; join reachable with solid3px focus; exact local confirmation and one join_started/family event. Only index.html/styles.css/script.js GET200 requests recorded; no blocked or denied requests.",
+      "interpretation": "Rendering-context conflict resolved for documented HTTP serving. Original file:// observations remain valid evidence for that context, not a failure of the documented HTTP workflow. Root-relative CSS/JS resolve successfully over HTTP; two newly opened HTTP screenshots exactly match retained author HTTP screenshots. Coherent Georgia-led intro, complete plan, readable fact row/mobile stack and usable form agree with prior provisional visual interpretation.",
+      "overall": "unverified; image-call telemetry gap unchanged",
+      "newEvidenceResolution": {
+        "brand-and-facts": "Supported in HTTP context: supplied facts, Georgia-first computed family, styled brand treatment; prior source/author control-radius evidence retained. Observer does not newly measure control radii.",
+        "working-local-form": "Supported in HTTP context: enabled join reached and exact confirmation/event observed; no service call.",
+        "narrow-and-keyboard": "Supported in HTTP context:390px screenshot readable and unclipped, scrollWidth390, solid3px focus and successful keyboard continuation.",
+        "gradingPolicy": "No previous check or dimension record overwritten and no new numeric grade. This resolves the serving-context evidence limitation only; historical overall remains unverified."
+      }
+    },
+    {
+      "trialId": "review-ebf921892d7dfc7d",
+      "originalReviewBinding": {
+        "sha256": "241c6a57d0ebebd900d1edbc47c60adc17f747beafef68139178fbd08e367dea",
+        "bytes": 10354
+      },
+      "sourceManifestsMatchArchivedReview": true,
+      "screenshotByteMatches": {
+        "wide": [
+          "actual-artifacts/evidence/wide.png",
+          "browser/wide.png"
+        ],
+        "narrow": [
+          "actual-artifacts/evidence/narrow.png",
+          "browser/narrow.png"
+        ]
+      },
+      "computedBodyAndHeadingFonts": {
+        "wide": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        },
+        "narrow": {
+          "bodyFont": "Georgia, serif",
+          "headingFont": "Georgia, serif"
+        }
+      },
+      "observations": "Both widths1280/390 without horizontal overflow; invalid email rejected; join reachable with solid3px focus; exact local confirmation and one join_started/family event. Only index.html/styles.css/script.js GET200 requests recorded; no blocked or denied requests.",
+      "interpretation": "No changed artifact interpretation; HTTP images byte-identical to original independent file-context images and author screenshots. Existing qualifications and scores retained.",
+      "overall": "unverified; image-call telemetry gap unchanged"
+    }
+  ],
+  "finalDisposition": "All six historical overall results remain unverified because original exec telemetry omits image-generation notifications. Uniform HTTP observations cannot recover invocation counts or establish author image inspection. Missing events imply neither prohibited generation nor deception. Original blinding limitations persist. Parent independent review pending."
+}

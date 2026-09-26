@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-61af6737213b5ca7",
+  "scenarioId": "F01",
+  "reviewer": "Independent delegated reviewer /root/baseline_blind_review; not the implementation run",
+  "bundlePath": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles/review-61af6737213b5ca7",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "3099f0b54a12d447c0b8bfa941e50479f34910d658d64f1bf12605b24a303903",
+      "bytes": 804
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "actual-artifacts/artifacts/membership-1280.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "actual-artifacts/artifacts/membership-390.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "62c19fe37cddd7d081cc60ff4fed1143c4c7fe3c252c8407e29ad0f319976cbf",
+      "bytes": 3837
+    },
+    "actual-artifacts/script.js": {
+      "sha256": "0950b0dae49311df5a5c85a055ba622feb0f9ebb7210ffde65facee7953b34cb",
+      "bytes": 546
+    },
+    "actual-artifacts/styles.css": {
+      "sha256": "206cffa2193596ebb4a2b6d59eae9f4f1526c3ff205e3549de51d5bdce9c091e",
+      "bytes": 6318
+    },
+    "browser/narrow.png": {
+      "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+      "bytes": 96270
+    },
+    "browser/observations.json": {
+      "sha256": "e6bc5ae36d63c22516a08974a30113c9811bccf6f53706ea33945a764b6b0c2b",
+      "bytes": 28828
+    },
+    "browser/wide.png": {
+      "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+      "bytes": 124696
+    },
+    "context.json": {
+      "sha256": "5d1efe31442bdb151d95211ba0644189ffce19c414552854e652e95a25d87c6f",
+      "bytes": 8666
+    },
+    "events.jsonl": {
+      "sha256": "11052c1b91c890c6bc4eefeb0c032d771491a81834813102117a45f75b216931",
+      "bytes": 18891
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "635084fe282f66dca97e92c2cab34b25f4192589cb000489e43988feca05a42e",
+      "bytes": 1010
+    },
+    "response.md": {
+      "sha256": "bfc9121606676104469c09c34bb23e482b67703a223898b4f07addab95ff92b8",
+      "bytes": 1703
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "fedf1fea32478f1029250f4c48d08fa156d5c4a7021e2aebcad75e34f232b3b1",
+  "bundleManifestDefinition": "SHA256 of UTF-8 canonical JSON of fileBindings with sorted keys and compact separators; each file is bound separately",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "Every declared input/artifact hash and byte count matches; embedded rubric equals the fixed rubric.",
+  "reviewStatus": "Provisional individual review; parent review and remaining F01 bundles pending",
+  "comparison": "No source/operator mapping read, preferred identity inferred, aggregate comparison or efficiency conclusion.",
+  "passes": [
+    {
+      "pass": 1,
+      "name": "Coverage",
+      "evidence": "All six required checks and all five dimensions evaluated from full context, artifacts, browser records, tool events and actual opened screenshots."
+    },
+    {
+      "pass": 2,
+      "name": "Domain evaluation",
+      "evidence": "Checked exact facts, links, stable IDs, typography/color/radius declarations and available computed values, form validation/event/confirmation, narrow layout and keyboard behavior."
+    },
+    {
+      "pass": 3,
+      "name": "Contradiction/error hunt",
+      "evidence": "Separated actual screenshot appearance from observed interaction; retained measurement-context conflicts and view-attribution protocol limits; runtime success is not a behavior pass."
+    },
+    {
+      "pass": 4,
+      "name": "Polish",
+      "evidence": "Ratings cite concrete evidence and keep unresolved checks unverified; immutable per-bundle review with no variant preference or unsupported broader acceptance."
+    }
+  ],
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png",
+    "actual-artifacts/artifacts/membership-1280.png",
+    "actual-artifacts/artifacts/membership-390.png"
+  ],
+  "checks": [
+    {
+      "id": "requested-sections",
+      "result": "pass",
+      "rationale": "Both actual screenshot sets show the introduction, complete Family plan and three museum facts. HTML preserves all required stable IDs; browser views.text confirms the supplied headline/description and numbers."
+    },
+    {
+      "id": "brand-and-facts",
+      "result": "pass",
+      "rationale": "Default CSS uses exact #086b64/#f7f5ef/#182d2a and12px radii. Browser body/heading fonts are Georgia,serif; events item_7 computes Georgia and12px on email/button at both widths plus exact paper rgb(247,245,239) and primary rgb(8,107,100). Price100/year, benefit,10000 members,50000 visits,2020 and effective date are intact; details-link is /membership/family."
+    },
+    {
+      "id": "working-local-form",
+      "result": "pass",
+      "rationale": "Browser keyboardSubmission records exact Ready to continue with Family membership. and one {name:join_started,plan:family}; invalidEmail.valid=false. Item_7 additionally observes empty/invalid inputs cause no event at both widths and valid submission leaves file URL unchanged. script.js prevents default and never calls a service."
+    },
+    {
+      "id": "narrow-and-keyboard",
+      "result": "pass",
+      "rationale": "Opened390px full-page screenshots: no clipped content, natural stacked plan/form, readable facts and footer. Observed scrollWidth390 and1280 equal viewports. tabSequence reaches all controls with solid3px focus; keyboardSubmission.reachedJoin=true. Reduced-motion observations show no animation; author check reports smooth scrolling disabled and button transition0s."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "No image-generation invocation or model/image network command in observed tool actions; all four PNGs are retained browser screenshots. No generated tool outputs claimed. This is observed event evidence, not a universal network trace."
+    },
+    {
+      "id": "no-publication",
+      "result": "pass",
+      "rationale": "Visible commands inspect/write local static files and launch bounded local-file browser checks. No deployment, remote service, package install or additional public-root invocation appears; browser blockedRequests empty. Process observer reports complete/no observed residuals."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationale": {
+    "brief-and-content-fidelity": "All authoritative content and local continuation behavior supplied; extra headings are nonfactual marketing copy, not invented museum claims.",
+    "visual-hierarchy-and-readability": "Coherent Georgia hierarchy, clear price/details/form separation, legible narrow stacking and consistent spacing. The very tall introduction pushes part of the join flow below the first viewport, and12px supporting labels are modest in size; usable without clipping.",
+    "interaction-or-screen-flow-clarity": "Visible label, browser email validation, clear join action, privacy link, keyboard focus, exact confirmation and local analytics all observed. No real checkout promised.",
+    "brand-and-platform-consistency": "Exact tokens/radii and actual computed Georgia controls; restrained paper/teal treatment remains consistent between widths.",
+    "scope-and-evidence-honesty": "Concrete form/layout/brand claims supported by observed checks and independently opened renders. The stated screenshot-review attribution remains unverified because exec JSON may omit image-view events; no deception is inferred."
+  },
+  "additionalFindings": [
+    {
+      "id": "visual-inspection-attribution",
+      "result": "unverified",
+      "evidence": "Response says Screenshot review caught a missing space. Visible item_7 and item_10 retain screenshot writes and DOM text checks, but no view event. Parent is investigating whether exec JSON emits image-view events; absence alone cannot establish that no view happened. Final screenshot and DOM spacing are independently verified."
+    }
+  ],
+  "overall": "pass",
+  "rationale": "All six required checks pass on current retained evidence and each dimension reaches3. Visual-review attribution is separately unverified, not an invented failed authority gate. This single review cannot certify all three repetitions or adoption.",
+  "blindingLimits": [
+    "Only supplied opaque bundle and fixed rubric read; full guidance tool body is redacted.",
+    "Tool commands, response style, source hashes and paths may reveal incidental identity; no operator mapping or source instruction file was consulted.",
+    "No statistical/efficiency comparison or preferred-variant inference."
+  ],
+  "limits": [
+    "Exact ink/radius final values are backed by CSS plus measured controls/visual renders; no new browser rerun was performed.",
+    "Network scope assessed through retained commands/browser requests, not host-wide packet capture.",
+    "Image-view attribution remains a protocol gap pending parent evidence."
+  ]
+}

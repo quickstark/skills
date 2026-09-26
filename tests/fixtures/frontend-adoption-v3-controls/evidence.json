@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-26T16:44:33.782998+00:00",
+  "scope": "Non-model infrastructure controls; no canonical experiment freeze or visual adoption verdict.",
+  "files": {
+    "scripts/frontend-adoption-v3.mjs": "afb098fee1b0af9f1bd4350edb52524f67f8ff1fa1a90f51bf0a7b0b2bb215fe",
+    "scripts/frontend-native-capture.mjs": "5cf50b1d81518fb9a54aac5461591bde0fd0ac96bb073c884f81ba44f63c8f28",
+    "scripts/frontend-adoption-trials.mjs": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "tests/fixtures/frontend-native-capture/fake-server.mjs": "07fa5ee167d71b5e3f5c585e297438169e4671da5b39405e5f3a58f09b7f7965",
+    "tests/fixtures/frontend-native-capture/bindings.json": "64e70c4c25919a02b71c1634b5aee46ccf23cc5a77716fbd87fbdf069507c989",
+    "tests/fixtures/frontend-native-capture/readiness/inherited-reviewer-success/thread-start-response.json": "029bad59dcfe8a5ec064b036a2390e662d2425417ad1f06102578dc34649f020",
+    "tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs": "816334f3cdc37c93d71928281d1d000ba0437db88c625ec84091dfc68ead6f42",
+    "tests/fixtures/frontend-adoption-v3-controls/README.md": "58c306af0bd345cb3bfc8adab09f6c3c91a2879a44b06383a78f337bfacce3ae",
+    "tests/fixtures/frontend-adoption-v3-controls/initial-failure.log": "80d28bb8af1ebb4b2648525db6239c881d3d361b1a46d0046c337ce195df85fa",
+    "tests/fixtures/frontend-adoption-v3-controls/corrected-mock.log": "65b90849de1724841f281f0434098afa4f44699f3ca8fa53f4c1c306bfe2080b",
+    "tests/fixtures/frontend-adoption-v3-controls/final-gates.log": "67e679858f535cd709b4a431e57cd4d1146aa024c4e70309d357a976e4875028",
+    "tests/fixtures/frontend-adoption-v3-controls/prior-binding-gates.log": "ee9d8a8b5909026834c06fcda7a67bd3651e9ae0f15205a5f7bc002d721b4632"
+  },
+  "results": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "gateGroups": {
+      "G1": 4,
+      "G2": 6
+    },
+    "gateLog": "final-gates.log",
+    "firstRun": "5/10 failed because shared native mock used cat without required --; mock owner fixed exact command, runner contract unchanged.",
+    "finalMetadataControl": "Native userMessage/contextCompaction/enteredReviewMode/exitedReviewMode allowed; opaque functionCallOutput remains prohibited in F10."
+  },
+  "retainedActualNativeFixture": {
+    "root": "/tmp/qs-v3-control-full-8Hrewf",
+    "files": {
+      "capture/events.jsonl": "71c288d8dcdcbda882429cfd67846e4f49a437896a28349971953cb91274cde4",
+      "capture/raw-protocol.jsonl": "8f46ef1e79ba0649c0febcf8ef4b766861b600ac621696c44bdc9bae1bc1fe3d",
+      "capture/telemetry.json": "f54f0bf13bdca519c13fb9ca34918b56bddf67f3fa3b86b5744f6af98e1ad130",
+      "reviewer/events.jsonl": "a3ccb13eb42a24359bd2a381cab89f50b08e294a88b58b7bdf154008fc9edd43",
+      "reviewer/tool-images.json": "ae2d9362d7750eb7aa74f682746fe079696620f6434d03c23dac98cbe5a78400",
+      "reviewer/IMAGES.md": "7664d671656fe1d3d70d278c88205aad6bc30abce8eacbed929ca9016275faa0",
+      "reviewer/redactions.json": "698eb93855f22a59f0381f75d60ac02652f5786e473bc1daf45069b0c8956808"
+    },
+    "imageMeaning": "Actual tiny raster file emitted by executable mock; transport evidence only, not a model-generated adoption example."
+  },
+  "limitations": [
+    "No real model/tool capability validation is inferred from mock results.",
+    "Partial guidance deltas and incidental names can reveal identity; responses/product outputs intentionally unchanged.",
+    "Process proof covers observed owned leaders; detached-child controls belong to native adapter suite; unseen escapes are not disproved.",
+    "Parent independent review and canonical freeze remain separate."
+  ]
+}

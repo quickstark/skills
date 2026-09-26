@@ -1,0 +1,33 @@
+{
+  "row": {
+    "trialId": "F10-r2-v31",
+    "scenarioId": "F10",
+    "repetition": 2,
+    "variant": "v31"
+  },
+  "cwd": "/tmp/qs-frontend-v2-task-81DoD4",
+  "planSHA256": "50008084056b8446c04730ecafa627a601fec07666b00af6104f423a813099f7",
+  "guidance": {
+    "path": "/tmp/qs-frontend-v2-task-81DoD4/trial-guidance.md",
+    "sha256": "8e6b07d5ab124649237aef006f4f91c3194ea12f5b0f3869363b34920053a4eb",
+    "instructions": [
+      {
+        "key": "imagegen-frontend-web",
+        "sha256": "6b5c2256522fdba1e3313eafa3d743b960a7b13ec029d3e6586e04b23327c1f8"
+      }
+    ]
+  },
+  "configuredHost": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Runtime model only when emitted; configured defaults do not prove runtime identity."
+  }
+}

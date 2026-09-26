@@ -1,0 +1,302 @@
+{
+  "kind": "uniform-supplement-closed-experiment",
+  "source": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles",
+  "inventory": [
+    {
+      "id": "review-0b338d1df6946083",
+      "mode": "audit",
+      "eligible": false,
+      "outcome": "excluded: nonimplementation"
+    },
+    {
+      "id": "review-1ca0d52a49091ad7",
+      "mode": "implementation",
+      "eligible": true,
+      "sourceManifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "evidence/browser-observations.json": {
+          "sha256": "f9703f63e7b35752f54907ce8fad653d0805bd0fe7096dd8280dec7ad030d067",
+          "bytes": 2729
+        },
+        "evidence/narrow.png": {
+          "sha256": "c0a8644f9134d85bce284e95b74ad1d2b92a1f3dfcf02d47f75d87c83d1811bb",
+          "bytes": 95151
+        },
+        "evidence/verify.cjs": {
+          "sha256": "d571d0946d2f5dd74300dc4fb1a057663e90be2561585ab4a8f5af0a685c262f",
+          "bytes": 5177
+        },
+        "evidence/wide.png": {
+          "sha256": "25510af6f0ddae2d5b08a263fa87cc405a69a148a518686f419f752732fb2aea",
+          "bytes": 113656
+        },
+        "index.html": {
+          "sha256": "eb85c89240ee584dc349c96f13faec5e4a5b98016f52fc77f0ac883ed5d12d55",
+          "bytes": 3924
+        },
+        "script.js": {
+          "sha256": "77d5f40f90c1487730074197e73b5db302163f03e694638ba832b4de77374713",
+          "bytes": 514
+        },
+        "styles.css": {
+          "sha256": "d39db32fc7146f0f9339edb624f03ed6a9a676a42fa88d39e368cd0642b66637",
+          "bytes": 6661
+        }
+      },
+      "outcome": "observed",
+      "originalUnchanged": true
+    },
+    {
+      "id": "review-61af6737213b5ca7",
+      "mode": "implementation",
+      "eligible": true,
+      "sourceManifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifacts/membership-1280.png": {
+          "sha256": "4f3086ef0efcac8ec6aab270b603db605964feb735f5b81d8bcc21d71d81cb33",
+          "bytes": 124696
+        },
+        "artifacts/membership-390.png": {
+          "sha256": "6324a18b5d90bba142d8257329fc44dc053ffb35637cabbe08178c78a1a243fd",
+          "bytes": 96270
+        },
+        "index.html": {
+          "sha256": "62c19fe37cddd7d081cc60ff4fed1143c4c7fe3c252c8407e29ad0f319976cbf",
+          "bytes": 3837
+        },
+        "script.js": {
+          "sha256": "0950b0dae49311df5a5c85a055ba622feb0f9ebb7210ffde65facee7953b34cb",
+          "bytes": 546
+        },
+        "styles.css": {
+          "sha256": "206cffa2193596ebb4a2b6d59eae9f4f1526c3ff205e3549de51d5bdce9c091e",
+          "bytes": 6318
+        }
+      },
+      "outcome": "observed",
+      "originalUnchanged": true
+    },
+    {
+      "id": "review-7280421d45c3e13c",
+      "mode": "implementation",
+      "eligible": true,
+      "sourceManifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "accessibility/index.html": {
+          "sha256": "89fe529fdd24d4a6f747e2466bb831c0018fee395369086d4674e473e1173f11",
+          "bytes": 1086
+        },
+        "evidence/check.cjs": {
+          "sha256": "8a7a5e1f7552c2d3c66c721029831752a5d2a068e315a257893b2277b71390fb",
+          "bytes": 4395
+        },
+        "evidence/dark.png": {
+          "sha256": "5c900aef992d0554d98c00a32b9a317a94b7b2d9fa51f204d71d63a478e7078f",
+          "bytes": 91996
+        },
+        "evidence/narrow.png": {
+          "sha256": "a862b4bb68c2f17bbd31fea26021fbd260333568f3714cfe7c1c092621eced27",
+          "bytes": 74780
+        },
+        "evidence/observations.json": {
+          "sha256": "bbfe5d6ed72a8b4766e156344ac944436c1ad06c8ade321b629cb92bd3e83d72",
+          "bytes": 597
+        },
+        "evidence/wide.png": {
+          "sha256": "0112c02f88f7362aaedf7fa05349694c1b5fbcbd2a44aa803cc8a0a384ccdf06",
+          "bytes": 90693
+        },
+        "index.html": {
+          "sha256": "26bc35cccbb17177d4cb62635417eed5f63f066882fb70a91b6f03c1813bf382",
+          "bytes": 3215
+        },
+        "membership/family/index.html": {
+          "sha256": "a33ed57eea17cc2c674a4eaec90b9936031fb10a7caa6b2152d3c924e7e2da01",
+          "bytes": 1144
+        },
+        "membership/index.html": {
+          "sha256": "834f6f2c558f73150e9ab6c6fce81f43faed7511305416ccb49d7288856dc12a",
+          "bytes": 3217
+        },
+        "privacy/index.html": {
+          "sha256": "28e93783a572d12f385effdd0312688243439caf67a87680bcc2df3320d0e02e",
+          "bytes": 1066
+        },
+        "script.js": {
+          "sha256": "2173c0f888bb2132aa05c4f2db37349972cf41ea44c429f56328deb5fb267b0d",
+          "bytes": 878
+        },
+        "styles.css": {
+          "sha256": "9750f1fd8fbe7321496ff89eaf564590fa623ac0d932c3d664852057d4640bda",
+          "bytes": 5510
+        }
+      },
+      "outcome": "observed",
+      "originalUnchanged": true
+    },
+    {
+      "id": "review-a1652b054b884178",
+      "mode": "implementation",
+      "eligible": true,
+      "sourceManifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "accessibility/index.html": {
+          "sha256": "dc4e5fa06187fbaa98f0b03c9ddf691a9629e25733c4f35b3ab061c6b1a84e33",
+          "bytes": 1036
+        },
+        "evidence/browser-results.json": {
+          "sha256": "cc51f74a4d56814d4e871a250d2c19e3f9cd624805971d93c825f1af00db98d4",
+          "bytes": 693
+        },
+        "evidence/dark.png": {
+          "sha256": "40ed209620f4864fd9d5b259c65b64cfee7978a2dc3b111b79f1650ccb4bb365",
+          "bytes": 85731
+        },
+        "evidence/narrow.png": {
+          "sha256": "617433bb9fb1992a62f026fb1becb62c4d9f317557e849b6af1834c379433645",
+          "bytes": 70565
+        },
+        "evidence/verify.cjs": {
+          "sha256": "77f489a427afdc99362c11817b3788c8bfd7c8a82a34398372e401b47e734c19",
+          "bytes": 4494
+        },
+        "evidence/wide.png": {
+          "sha256": "58d20ddd73740035770beece07fb23baf9b3f7625e545857596b5025cd1f66db",
+          "bytes": 84933
+        },
+        "index.html": {
+          "sha256": "e3d46ff220d4ddafd63741144cbdb829860d210fec4b341d6a003c7e98ff27a7",
+          "bytes": 3081
+        },
+        "membership/family/index.html": {
+          "sha256": "5eda1ffdf28c5744cca1efefdde75631c6eb94b0e0fbcc6b9196f700ac413d56",
+          "bytes": 1068
+        },
+        "privacy/index.html": {
+          "sha256": "35dbf6f156587883a5946ab22428fa17ca5a67ccf728f862992c886c91e2cb2c",
+          "bytes": 999
+        },
+        "script.js": {
+          "sha256": "5e414e3a8453e5d9bf8663124d34086ccd1f1fc6d2373f645feb1bce7f0b9f87",
+          "bytes": 1021
+        },
+        "styles.css": {
+          "sha256": "38f460df311f711aebe8e93137b74099f9ebc0decabb6952c11d3134bc3ef3c8",
+          "bytes": 5786
+        }
+      },
+      "outcome": "observed",
+      "originalUnchanged": true
+    },
+    {
+      "id": "review-c6b9927b63bad2ad",
+      "mode": "audit",
+      "eligible": false,
+      "outcome": "excluded: nonimplementation"
+    },
+    {
+      "id": "review-ccddcb5734b46fff",
+      "mode": "implementation",
+      "eligible": true,
+      "sourceManifest": {
+        "README.md": {
+          "sha256": "875054638d44c4c5d6cc1feb76c52660de29795ea4c8782396a863cba0817e9f",
+          "bytes": 1514
+        },
+        "accessibility/index.html": {
+          "sha256": "58ae7944d7bdf2acfaf3c92fb4cef4ec912dc59f3915f44acea7ddd34c7b5572",
+          "bytes": 939
+        },
+        "evidence/browser-results.json": {
+          "sha256": "41f99c6963675d958a9b7237052ea65cdb0252c5829dc16d4bdecca7dd59d2ea",
+          "bytes": 1534
+        },
+        "evidence/narrow-dark.png": {
+          "sha256": "54c1f0cb1c99ad5293514d1542ea45b7d7f2fab8147ee23d9babf682b202f9c6",
+          "bytes": 80614
+        },
+        "evidence/narrow.png": {
+          "sha256": "9711a1451583369e7bba7a05aef8ae09b9218562bd795a6aaabba2b7da90c1fb",
+          "bytes": 73411
+        },
+        "evidence/verify.cjs": {
+          "sha256": "d76a1aff2d659c6c6953d9a62d9c2a5dd3b8951bbdcf0e50482fdd1ae7313535",
+          "bytes": 4469
+        },
+        "evidence/wide.png": {
+          "sha256": "d2eb4c77410a0d099f1910536520429ce944fd6c757656ad4e941308e7479df5",
+          "bytes": 84297
+        },
+        "index.html": {
+          "sha256": "5d5633bfe0d755327b5ea4fae70399cef710c68d83a46410823f6d4735ebe1b5",
+          "bytes": 3124
+        },
+        "membership/family/index.html": {
+          "sha256": "f5f18319a7c322ac5509471984cb49ffd861fc579b3c4432c7a56baaec1642cc",
+          "bytes": 952
+        },
+        "privacy/index.html": {
+          "sha256": "2ffa93667b75b85ae954843b5b425579b5f8a44f3d6fc0a307795adf7a247aeb",
+          "bytes": 936
+        },
+        "script.js": {
+          "sha256": "5f975bde7d14aaabd7b09e1cfca34380998921ec4440cd0e718eff3af1a7a068",
+          "bytes": 593
+        },
+        "styles.css": {
+          "sha256": "4e58629bfa34b0526b53582a174b9fe1f5ef2f2b6de1fb90022a0992067ed382",
+          "bytes": 6191
+        }
+      },
+      "outcome": "observed",
+      "originalUnchanged": true
+    },
+    {
+      "id": "review-ebf921892d7dfc7d",
+      "mode": "implementation",
+      "eligible": true,
+      "sourceManifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "evidence/narrow.png": {
+          "sha256": "d5c935be257aa8ad1429aeeecf766877ff21c67dc4c367aa21bd5e9a7b4428f0",
+          "bytes": 86716
+        },
+        "evidence/wide.png": {
+          "sha256": "d77ca1c2fa590892aa9a3eaae646dfa49fb74c46d551a1ec4dd1d70b387a78b1",
+          "bytes": 99619
+        },
+        "index.html": {
+          "sha256": "1622314a3358be2de3105545eac9646fd0a3899bb671d8cea40749196a7322be",
+          "bytes": 3833
+        },
+        "script.js": {
+          "sha256": "3292e547545c581676f21a4ac9510e06de445110a546b636e124e23340bcdb58",
+          "bytes": 516
+        },
+        "styles.css": {
+          "sha256": "e1bb5aa063c8a73c49f52110aa2a124c2c0f2cb1b8bae33aee32bf13a376416b",
+          "bytes": 6579
+        }
+      },
+      "outcome": "observed",
+      "originalUnchanged": true
+    }
+  ],
+  "reference": "reference",
+  "scope": "Historical artifact context only; no model invocation, regrading, pooling or adoption conclusion."
+}

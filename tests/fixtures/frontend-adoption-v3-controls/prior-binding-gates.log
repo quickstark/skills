@@ -1,0 +1,22 @@
+APPROVAL REQUIRED leaf-55:G1
+    CHECK: node --test --test-name-pattern='fresh preparation|freeze requires|paired failure|parent interruption' tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs
+    EXPECT: pass 4
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-leaf55-gate-approvals/2612e284ac1731562aacffd1a8f1ba27d3ec16824bf020e41dec41f1ad2283ab.json
+APPROVAL REQUIRED leaf-55:G2
+    CHECK: node --test --test-name-pattern='F10|reviewer exports|redaction does' tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs
+    EXPECT: pass 6
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-leaf55-gate-approvals/68b90a26ae42ddb51bf3175e10ec2b3309e52d816421313cdcb44dd246cf1c92.json
+  RUN  leaf-55:G1 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  RUN  leaf-55:G2 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  PASS leaf-55:G1: Test unchanged 66-case inputs, original contributor/candidate byte identity, dependency freeze tamper rejection, explicit launch authority and paired interruption using the v3 native interface; no model calls.
+       exit=0; EXPECT=matched; output=sha256=b90cf172d667d289498eb6a02aa63da6abd73fd376899d2fa168040d6152e9d9; bytes=578
+  PASS leaf-55:G2: Verify prompt-only exact read detection rejects native image/dynamic/unknown tools while allowing user messages; reviewer export preserves evidence and image bytes with declared guidance redaction limits. Report defects to parent without editing parent-owned runner or adapter.
+       exit=0; EXPECT=matched; output=sha256=94d47371371e1b195967b42b822e28a5b0e2b7c179e93e13765f348d8790be0f; bytes=766
+leaf-55.md: 2 gates
+ALL MET (2 met, reran: 2, previously met reverified: 0)

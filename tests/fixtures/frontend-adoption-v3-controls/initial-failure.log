@@ -1,0 +1,105 @@
+✔ fresh preparation keeps all 11 tasks, 66 paired rows, rubric, source bytes and private bodies unchanged (310.479831ms)
+✔ freeze requires explicit authority and detects real dependency, predecessor, input and canonical tampering (3489.379733ms)
+✖ F10 native exact guidance read and ordinary userMessage succeed; alternate reads cannot masquerade as exact (173.401379ms)
+✖ F10 rejects observed native prompt-tool even with a successful exact read (150.62018ms)
+✖ F10 rejects observed native dynamic even with a successful exact read (141.307872ms)
+✖ F10 rejects observed native unknown even with a successful exact read (150.503037ms)
+✖ reviewer exports retain native/delta evidence, actual raster bytes and raw integrity with attributable redaction (155.516391ms)
+✔ redaction does not alter agent responses or unrelated product output; partial chunk limits remain honest (0.80456ms)
+✔ paired failure waits for its active partner and never launches the next pair (33.342562ms)
+✔ parent interruption settles both actual native capture processes and does not launch another pair (259.161014ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 5
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5000.358868
+
+✖ failing tests:
+
+test at tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:101:1
+✖ F10 native exact guidance read and ordinary userMessage succeed; alternate reads cannot masquerade as exact (173.401379ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:104:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:110:133
+✖ F10 rejects observed native prompt-tool even with a successful exact read (150.62018ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:112:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:110:133
+✖ F10 rejects observed native dynamic even with a successful exact read (141.307872ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:112:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:110:133
+✖ F10 rejects observed native unknown even with a successful exact read (150.503037ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:112:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:118:1
+✖ reviewer exports retain native/delta evidence, actual raster bytes and raw integrity with attributable redaction (155.516391ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(result.redactions > 0)
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs:126:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

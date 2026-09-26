@@ -1,0 +1,77 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 908.0234,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": "Native automatic approval reviewer is outside this capture authority.",
+  "malformedLines": 0,
+  "observedModel": "gpt-6-astra",
+  "effectiveControls": null,
+  "configuredControls": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request"
+  },
+  "initialized": true,
+  "readinessOnly": true,
+  "usage": [],
+  "nativeUsage": null,
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [
+    "Native automatic approval reviewer is outside this capture authority."
+  ],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": false,
+  "processCleanup": [
+    {
+      "pid": 568462,
+      "identity": "7f4cb682-25f6-481e-919d-dde07c4edce7:268216300",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 568475,
+      "identity": "7f4cb682-25f6-481e-919d-dde07c4edce7:268216301",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 568486,
+      "identity": "7f4cb682-25f6-481e-919d-dde07c4edce7:268216301",
+      "action": "SIGTERM to observed owned descendant"
+    }
+  ],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 6,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "b56c311aee0ea6e44af7bdbd54bf620cdefa8dbbf40ea3c64150b33a144db68e",
+  "promptSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "promptUtf8Bytes": 0,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "cdc553c6e12d7b5957c8dad835a028f18f566f566cc62dbc3148cee6c82c8ed7",
+    "raw-protocol.jsonl": "d417cac82fe1da3153b2e4cf1e63b76436e93e7b0f8920e044dd407b6e8a35c4",
+    "raw-stdout.jsonl": "53408827b3cc49d27585ce0903577c930f366f6f5a86f69f5c0eab8b1923d329",
+    "stderr.txt": "caccd755dd3617777113724948e7022be2dc98ba4646855583443b55da606c6a"
+  }
+}

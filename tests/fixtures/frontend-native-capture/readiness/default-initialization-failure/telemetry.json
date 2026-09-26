@@ -1,0 +1,61 @@
+{
+  "exitCode": 1,
+  "signal": null,
+  "elapsedMs": 60.61112899999999,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": "Native transport closed before initialize response",
+  "malformedLines": 0,
+  "observedModel": null,
+  "effectiveControls": null,
+  "configuredControls": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request"
+  },
+  "initialized": false,
+  "readinessOnly": true,
+  "usage": [],
+  "nativeUsage": null,
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [
+    "Native transport closed before initialize response"
+  ],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": false,
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 1,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "b56c311aee0ea6e44af7bdbd54bf620cdefa8dbbf40ea3c64150b33a144db68e",
+  "promptSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "promptUtf8Bytes": 0,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw-protocol.jsonl": "2ff67140bcb5cf366b3e1d678efee3a8a9af002ba5563f3170bc8d4fc4372142",
+    "raw-stdout.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.txt": "20acebdd1311b45ebbcd5b45a3d9349ef2489ab809de7422af078c8c990bad68"
+  }
+}

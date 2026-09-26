@@ -1,0 +1,6 @@
+2026-09-26T16:35:35.380156Z ERROR codex_core::agents_md: error trying to find AGENTS.md docs: background task failed environment_id="local"
+2026-09-26T16:35:35.381936Z ERROR codex_skills_extension::loader::host: failed to walk skills root file:///home/djn12313/.codex/skills: filesystem task failed: task 1418 was cancelled
+2026-09-26T16:35:35.381974Z ERROR codex_skills_extension::loader::host: failed to walk skills root file:///home/djn12313/.agents/skills: filesystem task failed: task 1420 was cancelled
+2026-09-26T16:35:35.382000Z ERROR codex_skills_extension::loader::host: failed to walk skills root file:///home/djn12313/.codex/skills/.system: filesystem task failed: task 1422 was cancelled
+2026-09-26T16:35:35.382028Z ERROR codex_skills_extension::loader::host: failed to walk skills root file:///etc/codex/skills: filesystem task failed: task 1424 was cancelled
+2026-09-26T16:35:35.382086Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when Client(HttpRequest(HttpRequest("http/request failed: error sending request for url (https://developers.openai.com/mcp?source=codex)")))

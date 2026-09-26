@@ -1,0 +1,16 @@
+{
+  "rawEventsSHA256": "c0c58fe9f76bd98cc21eeca96b26b9583f8a29c9eadb8c301933b81aab3c127a",
+  "redactions": [
+    {
+      "eventLine": 5,
+      "field": "item.aggregated_output",
+      "originalSHA256": "e24195ea9dd1231d1b838a5e0011e3ff1e2e7ce4114139716e2085087d36430a",
+      "redactedSHA256": "889f045ce21a7bcee62f9755d0d354e8d0e66c5f7ec34cff30575fd007aa362c",
+      "guidanceSHA256": "e24195ea9dd1231d1b838a5e0011e3ff1e2e7ce4114139716e2085087d36430a",
+      "sourceSHA256s": [
+        "98ad3e5b051bfb71b2795f7e8a6aa0d32b51ee095606c098a4b2822ac07926c9"
+      ]
+    }
+  ],
+  "policy": "Only attributable guidance tool-output bodies are redacted; commands, responses, product outputs and actual image bytes stay unchanged. Partial or incidental identity leakage remains possible."
+}

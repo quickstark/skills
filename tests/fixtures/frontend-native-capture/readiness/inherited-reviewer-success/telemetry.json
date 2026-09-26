@@ -1,0 +1,82 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 969.5351479999999,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": "gpt-6-astra",
+  "effectiveControls": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "configuredControls": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "initialized": true,
+  "readinessOnly": true,
+  "usage": [],
+  "nativeUsage": null,
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": false,
+  "processCleanup": [
+    {
+      "pid": 589220,
+      "identity": "7f4cb682-25f6-481e-919d-dde07c4edce7:268231843",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 589235,
+      "identity": "7f4cb682-25f6-481e-919d-dde07c4edce7:268231843",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 589249,
+      "identity": "7f4cb682-25f6-481e-919d-dde07c4edce7:268231843",
+      "action": "SIGTERM to observed owned descendant"
+    }
+  ],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 7,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "21ded7ff83875a9718f7b32573f8a271694fc9dab53e470eb477277b1afd8403",
+  "promptSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "promptUtf8Bytes": 0,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "0673bf82c1a1fc1fc23f506a0c7fbac0f4d316f2b5427b971d82b73c4b5cdd96",
+    "raw-protocol.jsonl": "725c0560c807f96a1029150140ae73eb8f44dbd28f407b2079aed0398ec9d92f",
+    "raw-stdout.jsonl": "8f482945684cf2b6c087e2ed08a97c5056dc87bad56c6ae9e206a1a72a9d8814",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

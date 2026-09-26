@@ -1,0 +1,30 @@
+✔ native images, views, deltas, usage and reference input are captured without setting overrides (134.748783ms)
+✔ retains and fails unknown (124.769172ms)
+✔ retains and fails unknown-item-notification (123.886063ms)
+✔ retains and fails malformed (120.164614ms)
+✔ retains and fails missing-terminal (143.075922ms)
+✔ retains and fails approval (120.085424ms)
+✔ retains and fails wrong-thread (114.863601ms)
+✔ retains and fails open-item (114.254593ms)
+✔ retains and fails failed-turn (117.93808ms)
+✔ unknown dynamic semantics survive without certifying absence of image operations (119.651989ms)
+✔ authority observation stops image-budget (118.011509ms)
+✔ authority observation stops prompt-tool (116.631103ms)
+✔ bounded timeout kills an uncooperative exact child (1296.223413ms)
+✔ observed detached descendant is cleaned after parent exits (940.237956ms)
+✔ terminal full items reconcile an earlier unfinished view (118.067494ms)
+✔ effective model mismatch blocks turn (79.423364ms)
+✔ effective reasoningEffort mismatch blocks turn (77.66022ms)
+✔ effective approvalPolicy mismatch blocks turn (79.087595ms)
+✔ effective sandbox mismatch blocks turn (87.784757ms)
+✔ effective approvalsReviewer mismatch blocks turn (79.506652ms)
+✔ readiness mode never sends a model turn (119.246948ms)
+✔ existing capture evidence is never overwritten (41.292439ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4488.882308

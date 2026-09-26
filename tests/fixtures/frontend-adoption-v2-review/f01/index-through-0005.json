@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "received": 5,
+  "expected": 6,
+  "reviewed": 5,
+  "status": "Provisional; final bundle and uniform HTTP supplement pending",
+  "records": [
+    {
+      "trialId": "review-61af6737213b5ca7",
+      "path": "review-61af6737213b5ca7.json",
+      "sha256": "1a03482d9343b36b2eb55555e06df3ec2c6e12edf9cf0ae9c3b042b365add3b5",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-7280421d45c3e13c",
+      "path": "review-7280421d45c3e13c.json",
+      "sha256": "cd60c5f25f59ee8b3afd5324e23002e99d12e5c2f14216d9ec249fccc30e6545",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-a1652b054b884178",
+      "path": "review-a1652b054b884178.json",
+      "sha256": "7f8394b6926d963b99076be6311e736a6b05bf74346ce30d5694ef1e17078122",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-ccddcb5734b46fff",
+      "path": "review-ccddcb5734b46fff.json",
+      "sha256": "3c25c51b23388fc7147221f35f96fd74cb11f9a9c5127f0140824555309c8772",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-ebf921892d7dfc7d",
+      "path": "review-ebf921892d7dfc7d.json",
+      "sha256": "241c6a57d0ebebd900d1edbc47c60adc17f747beafef68139178fbd08e367dea",
+      "effectiveOverall": "unverified"
+    }
+  ],
+  "mandatoryAmendments": [
+    {
+      "path": "protocol-amendment-0001.json",
+      "sha256": "c51a70c51a85dfa411a72eb490c2f01b19691efee3815912269ce822961efd92"
+    }
+  ],
+  "policy": "Earlier index/records retained. Apply amendment before aggregation; no variant mapping or adoption conclusion."
+}

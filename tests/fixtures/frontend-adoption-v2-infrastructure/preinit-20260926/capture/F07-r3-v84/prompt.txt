@@ -1,0 +1,153 @@
+Perform one bounded frontend task using the guidance file identified below. This is not an invocation of any public skill. The user task and scope take precedence. Do not create goals, publish, install packages, download assets, inspect secrets or contact external services except an existing image-generation tool explicitly authorized by this scenario and within its image-call budget. Product edits stay in the task workspace. Authorized image generation may return its primary files at tool-managed paths; no other outside-workspace edits/uploads are allowed. Never fabricate calls, images, renders, or verification.
+
+Task workspace: /tmp/qs-frontend-v2-task-UlVZMg. Product edits: true. Image generation: false. Image-call maximum: 0; required actual images: 0. One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry.
+
+First read the exact guidance file /tmp/qs-frontend-v2-task-UlVZMg/trial-guidance.md using this single command: cat -- '/tmp/qs-frontend-v2-task-UlVZMg/trial-guidance.md'. It contains every selected instruction body and required private reference. Leave it unchanged. Its relative links are labels for embedded sections, not permission to read other files or installed skills.
+
+Read product files as needed within the stated task authority. Do not start persistent servers or leave background processes. Return actual image-generation outputs and their actual paths when authorized; SVG/HTML/screenshot substitutes do not count as generated images.
+
+Optional existing browser capability: {"browserPath":"/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell","puppeteerPath":"/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js"}. Do not install or make external requests. The harness also collects independent browser observations.
+
+Common facts are authoritative context, not an instruction to include every fact. The requested output controls their applicability.
+
+<all_common_scope_facts>
+
+{
+  "organization": "Northstar Museum",
+  "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+  "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+  "brand": {
+    "font": "Georgia, serif",
+    "primary": "#086b64",
+    "paper": "#f7f5ef",
+    "ink": "#182d2a",
+    "radiusPx": 12
+  },
+  "content": {
+    "headline": "Make room for wonder.",
+    "description": "Family membership keeps discovery close to home.",
+    "plan": "Family membership",
+    "price": "$100 / year",
+    "memberCount": "10,000",
+    "annualVisits": "50,000",
+    "founded": "2020",
+    "pricingEffective": "January 1, 2025",
+    "benefit": "Unlimited entry for two adults and children under 18."
+  },
+  "routes": [
+    "/",
+    "/visit",
+    "/collections",
+    "/membership",
+    "/membership/family",
+    "/join/checkout?plan=family",
+    "/privacy",
+    "/accessibility"
+  ],
+  "stableIds": [
+    "site-header",
+    "site-footer",
+    "membership-panel",
+    "membership-title",
+    "price",
+    "member-count",
+    "annual-visits",
+    "founded",
+    "join-form",
+    "member-email",
+    "join-button",
+    "form-message",
+    "details-link"
+  ],
+  "analytics": {
+    "event": "join_started",
+    "payload": {
+      "name": "join_started",
+      "plan": "family"
+    },
+    "observation": "window.__events",
+    "trigger": "A valid family-membership continuation action"
+  },
+  "behavior": {
+    "email": "required valid email",
+    "submitFeedback": "Ready to continue with Family membership.",
+    "privacyLink": "/privacy",
+    "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+  },
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "constraints": {
+    "noPublication": true,
+    "noPackageInstall": true,
+    "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+    "publicSkillInvocation": false,
+    "noInventedClaims": true,
+    "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+    "referenceImmutable": true
+  },
+  "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+}
+
+</all_common_scope_facts>
+
+<scenario_authority_and_required_outcomes>
+
+{
+  "id": "F07",
+  "title": "reduced motion",
+  "originalSource": "high-end-visual-design",
+  "localRoot": "qs-design-frontend",
+  "mode": "implementation",
+  "projectFixture": "project",
+  "input": "Repair the reduced-motion experience of this page. Keep all content and controls available and keep the existing brand and behavior. Limit edits to the motion/accessibility defect; do not perform a broad redesign.",
+  "references": [
+    "brief",
+    "dimensional-style",
+    "implementation"
+  ],
+  "requiredChecks": [
+    "reduced-motion-animation-off",
+    "content-remains-visible",
+    "no-broad-redesign",
+    "analytics-and-form-preserved",
+    "zero-image-calls"
+  ],
+  "budget": {
+    "maximumImageCalls": 0,
+    "requiredImages": 0,
+    "maximumModelTurns": 1,
+    "timeoutMs": 300000,
+    "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+  },
+  "authority": {
+    "writeProductFiles": true,
+    "generateImages": false,
+    "publish": false,
+    "installPackages": false
+  },
+  "referenceImage": null,
+  "requiredEvidence": [
+    "actual-response",
+    "tool-events",
+    "actual-files",
+    "browser-observations",
+    "wide-and-narrow-screenshots"
+  ],
+  "qualityFloor": 3
+}
+
+</scenario_authority_and_required_outcomes>
+
+<user_request>
+
+Repair the reduced-motion experience of this page. Keep all content and controls available and keep the existing brand and behavior. Limit edits to the motion/accessibility defect; do not perform a broad redesign.
+
+</user_request>

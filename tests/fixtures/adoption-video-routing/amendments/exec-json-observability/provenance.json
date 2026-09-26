@@ -1,0 +1,28 @@
+{
+  "officialTag": "rust-v0.153.4",
+  "resolvedCommit": "3d2ee51ca2d5db578f328aa75e20aa22c0197c9a",
+  "tagResolutionURL": "https://api.github.com/repos/openai/codex/commits/rust-v0.153.4",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/exec/src/exec_events.rs",
+      "file": "exec_events.rs",
+      "sha256": "c404928e0f2a463e19d1b263081c9d5e0380aec9f651a05ee0766f7bb7527f32"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/exec/src/event_processor_with_jsonl_output.rs",
+      "file": "event_processor_with_jsonl_output.rs",
+      "sha256": "2f71fbf8a1b0a79bd342ed3c9caa414f1c5e06d9e52d6a94461799f304a9f255"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/LICENSE",
+      "file": "LICENSE",
+      "sha256": "d17f227e4df5da1600391338865ce0f3055211760a36688f816941d58232d8dc"
+    }
+  ],
+  "cliPath": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+  "cliSHA256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "generatedAppServerSchemaSource": "/tmp/qs-frontend-invocation-schema/v2/ItemCompletedNotification.json",
+  "generatedAppServerSchemaSHA256": "69aba3fe5f72f38bf5c541e7e2c09de40778abe65ff969d9fc73372037812091",
+  "binaryExecDiscriminantExcerpt": "gentsend_inputclose_agentthread.startedturn.startedturn.completedturn.faileditem.starteditem.updateditem.completederroritemsqueryactionchangesserverargumentsresultadddeleteupdatepending_initrunninginterruptederrorednot_foundagent_messagereasoningcommand_executionfile_changemcp_tool_callweb_searchtodo_listcodex.execcodex_execotel.kindthread.idturn.idexec/src/lib.rsinternal error: entered unreachable code: required stdin prompt should produce conte",
+  "initialLookupFailure": "Incorrect event_processor_with_json_output.rs URL returned404; exact source filename is event_processor_with_jsonl_output.rs. No model invocation."
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "received": 6,
+  "expected": 6,
+  "reviewed": 6,
+  "status": "Historical review complete; parent closed experiment for mandatory image-event telemetry omission; no pooling into next experiment",
+  "records": [
+    {
+      "trialId": "review-1ca0d52a49091ad7",
+      "path": "review-1ca0d52a49091ad7.json",
+      "sha256": "c147525c6f2ce58deea48648c50aefd7fcbfccbff08619278bbe2f340954cb5e",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-61af6737213b5ca7",
+      "path": "review-61af6737213b5ca7.json",
+      "sha256": "1a03482d9343b36b2eb55555e06df3ec2c6e12edf9cf0ae9c3b042b365add3b5",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-7280421d45c3e13c",
+      "path": "review-7280421d45c3e13c.json",
+      "sha256": "cd60c5f25f59ee8b3afd5324e23002e99d12e5c2f14216d9ec249fccc30e6545",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-a1652b054b884178",
+      "path": "review-a1652b054b884178.json",
+      "sha256": "7f8394b6926d963b99076be6311e736a6b05bf74346ce30d5694ef1e17078122",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-ccddcb5734b46fff",
+      "path": "review-ccddcb5734b46fff.json",
+      "sha256": "3c25c51b23388fc7147221f35f96fd74cb11f9a9c5127f0140824555309c8772",
+      "effectiveOverall": "unverified"
+    },
+    {
+      "trialId": "review-ebf921892d7dfc7d",
+      "path": "review-ebf921892d7dfc7d.json",
+      "sha256": "241c6a57d0ebebd900d1edbc47c60adc17f747beafef68139178fbd08e367dea",
+      "effectiveOverall": "unverified"
+    }
+  ],
+  "mandatoryAmendments": [
+    {
+      "path": "protocol-amendment-0001.json",
+      "sha256": "c51a70c51a85dfa411a72eb490c2f01b19691efee3815912269ce822961efd92"
+    }
+  ],
+  "acceptanceBlockers": [
+    "All6: exact zero image invocation count unverified; no positive violation inferred.",
+    "review-ccddcb5734b46fff: file:// independent observations conflict with styled author HTTP results; uniform HTTP supplement may resolve rendering only."
+  ],
+  "qualityLimits": [
+    "All numeric dimension ratings >=3, but ccdd ratings apply provisionally to retained author HTTP evidence only; cannot certify aggregate quality.",
+    "7280421d45c3e13c: author script tests layout both widths and interactions mobile only; final report wording is broader.",
+    "Partial guidance exposure and incidental identity leakage explicitly retained. No preferred variant inferred."
+  ],
+  "policy": "Preserve all earlier records/indexes. Apply protocol amendment to first two before any historical summary. No adoption, comparative quality or efficiency conclusion."
+}
