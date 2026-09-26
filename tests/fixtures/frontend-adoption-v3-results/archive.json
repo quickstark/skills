@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "format": "POSIX pax tar compressed as one Zstandard stream, split in listed byte order",
+  "archiveTopLevel": "qs-frontend-comparison-v3-native-20260926",
+  "compression": "zstd -T2 -10",
+  "uncompressedFileBytes": 351142577,
+  "compressedBytes": 109177858,
+  "compressedSHA256": "56b6267c42b257fdef5377deedc8159adc0b059af3fa8496e893a1985cd6d97a",
+  "parts": [
+    {
+      "file": "frontend-v3-native.tar.zst.part-001",
+      "bytes": 67108864,
+      "sha256": "a06d6b4255ae745717a82a580b87a8b1d964b49ec30f92d82034e4f8feda88a2"
+    },
+    {
+      "file": "frontend-v3-native.tar.zst.part-002",
+      "bytes": 42068994,
+      "sha256": "fcd580bbab2c126731376ce94e6752b5c506273d434a3107089a0d161e74fe71"
+    }
+  ],
+  "fileManifestSHA256": "5e101af13a4a513e9873f2609ee80cdb08a46a2cdddf3177f82d893130ce5313",
+  "captureFacts": {
+    "requested": 66,
+    "recorded": 66,
+    "captureFailures": 0,
+    "interrupted": false,
+    "reviewerBundles": 66
+  },
+  "limit": "Capture completion is not behavioral success, quality acceptance or adoption; every failure file is retained.",
+  "frozenBindingsSHA256": "4494dabb77fd9eb2582b451ae808f05a639a0c7487f8cea862b2a92c019b0d60"
+}

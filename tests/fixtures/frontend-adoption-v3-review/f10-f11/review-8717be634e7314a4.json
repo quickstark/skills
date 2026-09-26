@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-8717be634e7314a4",
+  "scenarioId": "F10",
+  "reviewer": "Independent /root/adoption_hf_probe; capture-infrastructure contributor, not author of model output",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-8717be634e7314a4",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "a4e126979ae22da73686976aec0e7fc30cb670e452c443915152783e291b96b0",
+      "bytes": 182
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "context.json": {
+      "sha256": "f2dffbcfe2aeba118223834d4240213e3081e5eeae7e7151e5594d12f52f735e",
+      "bytes": 8830
+    },
+    "events.jsonl": {
+      "sha256": "76e3576e37faf6f18afee9da2e4272220566674813d2d880142744d4fe286143",
+      "bytes": 238421
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "ae331cf8c14f1f0ca882abea1b16ebebaad248fcb7098810ebc81076f73d7593",
+      "bytes": 1728
+    },
+    "response.md": {
+      "sha256": "71f01d712842b6d19cb0ed263e34fe2cdde65752c862eb28324672155c4b139a",
+      "bytes": 1858
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "8b6255ba4fd6b9fd72d3168763c416cac2c84f7c3e83d802f763725c7111e46a",
+  "bundleManifestDefinition": "SHA256 Python json.dumps(fileBindings,sort_keys=True,separators=(comma,colon)), default ensure_ascii=True; every file separately bound.",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "rubricBindingDefinition": "Reconstructed two-space UTF8 JSON plus newline from opaque context; canonical digest also binds parsed rubric. No source/variant lookup.",
+  "screenshotsOpened": [],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-ca65c877-7c60-4f9b-95b5-38ad91118836",
+        "eventLine": 42,
+        "type": "command_execution",
+        "itemSha256": "ddc3244bee93ffc450702830b54018c8a299c57ab8da9c960b150dd9bb4064c8",
+        "classification": "Required exact bound-guidance cat; read-only, no transitive script or generation/publication.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0deea-e9d4-7663-b1be-631ca93472a5",
+        "eventLine": 19,
+        "type": "userMessage",
+        "itemSha256": "db75c36b7e15efaa96b1bc125fcf33f36bae1834a7633be0f8ccc590d71f9125"
+      },
+      {
+        "id": "msg_0da3e3bd324811ad016ab80afe128c87d1b11a52312260dc18",
+        "eventLine": 35,
+        "type": "agent_message",
+        "itemSha256": "6e6a04f7003d736ff1a85fc301e8e56b461ec3f8265db1f39ee2cd63d5fe8161"
+      },
+      {
+        "id": "rs_0da3e3bd324811ad016ab80b02bc0487d1b7319bfbe141e49e",
+        "eventLine": 46,
+        "type": "reasoning",
+        "itemSha256": "ab99f1c6f57acc9b1d02f95b64d7cb2e91c7d189f1cc92e3085bf04ae420f759"
+      },
+      {
+        "id": "msg_0da3e3bd324811ad016ab80b048aec87d19ec0312975fcee0a",
+        "eventLine": 398,
+        "type": "agent_message",
+        "itemSha256": "54f8cd393557fd8f0c97cf509997b1f07ef45aa10ad1ecf7a103bbb30b22fbab"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 0,
+    "limits": "Complete local command/helper semantics reviewed; native metadata counts alone never establish zero generation. No whole-host network audit claimed."
+  },
+  "passes": [
+    "Coverage: all requested checks and five dimensions with applicability rationale; complete supplied task/common facts and exported input/output.",
+    "Domain: actual prompt or actual reference/output images, product source, browser observations and transitive tool bodies examined as applicable.",
+    "Contradiction: output scope, immutable inputs, exact values/routes/behavior, claims versus observed tool/artifact evidence; failure and missing evidence retained.",
+    "Polish: opaque identities, exact file/item/line/rubric bindings, original grades and partial-blinding limits; no comparison/adoption claim."
+  ],
+  "blindingLimits": [
+    "Only opaque bundle input/context/artifact/events/response used; no mapping, original guidance source or raw trial lookup.",
+    "Exact full guidance read outputs withheld; partial reads or response wording may reveal identity. Guidance output is suppressed from reviewer display when recognized, with any accidental exposure disclosed.",
+    "Reviewer previously prepared capture infrastructure but did not author these model outputs; prior review schema used for structure only."
+  ],
+  "checks": [
+    {
+      "id": "one-reusable-prompt",
+      "result": "pass",
+      "rationale": "Native final_answer at line398 contains one self-contained copy-ready image prompt, with canvas, exact copy, composition, typography, colors and exclusions. It needs no original guidance/path. One earlier commentary sentence announces the required read; it is not a second prompt or part of the final artifact."
+    },
+    {
+      "id": "exact-brand-content-canvas",
+      "result": "pass",
+      "rationale": "Exact1440\u00d7900 single desktop hero; Northstar Museum, Make room for wonder. (intentional line break), Family membership and $100/year. Georgia, exact teal/cream/ink values and12px radii specified; supporting description matches supplied facts."
+    },
+    {
+      "id": "no-extra-sections",
+      "result": "pass",
+      "rationale": "Explicitly one hero only, no additional sections/alternate concepts. Wordmark, headline, quiet gallery photograph and membership invitation are elements within the requested hero, not a section pack."
+    },
+    {
+      "id": "zero-image-and-tool-calls",
+      "result": "pass",
+      "rationale": "One exact bound-guidance cat at line42 is the required protocol read. No other tool call: no generation, image view, project discovery or execution. Guidance guard confirms one matched read and zero violations. This is zero additional tools beyond mandated guidance read, not a literal claim of zero total tool items."
+    },
+    {
+      "id": "zero-product-code",
+      "result": "pass",
+      "rationale": "Input and final artifact sets contain only identical180-byte README; no code/assets added. Actual command is read-only and guidance remains unchanged; final deliverable is prompt text."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": "not-applicable",
+    "interaction-or-screen-flow-clarity": "not-applicable",
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "One detailed reusable prompt faithfully encodes requested hero, canvas, brand/copy and quiet readable editorial direction without a section pack or execution.",
+    "visual-hierarchy-and-readability": "Not applicable to rendered visual quality: only a prompt was requested, and no raster exists. Its explicit hierarchy/size/contrast directions are assessed as prompt fidelity, not proof of a rendered design.",
+    "interaction-or-screen-flow-clarity": "Not applicable: a single static image prompt requests no implemented interactive flow. A clear button label is prompt content, not tested interaction.",
+    "brand-and-platform-consistency": "Prompt explicitly preserves exact font/colors, museum naming and desktop1440\u00d7900 format, with exclusions against browser/device framing. This grades the specification, not an unseen image.",
+    "scope-and-evidence-honesty": "Final answer contains only the prompt and makes no generation/render/test claim. One commentary sentence precedes the authorized guidance read; actual product unchanged and no subsequent tools."
+  },
+  "manifestVerification": "Independently checked exact input/artifact hashes/bytes and equal manifests: README only,180bytes; guidance guard unchanged. Complete native stream has only one authorized cat tool.",
+  "honestyLimits": [
+    "No generated/rendered image; visual and interaction quality are not certified.",
+    "Mandated bound-guidance read is explicitly exempted from the no-additional-tools constraint; never reported as literally zero total tools.",
+    "Prompt quality judged from actual final text; initial commentary distinguished using native phase. No model execution by reviewer."
+  ],
+  "caseSpecificEvidence": "Final agent message line398 phase final_answer; introductory line35 phase commentary. Exact read line42; no additional artifacts beyond original README.",
+  "overall": "pass",
+  "floorDecision": "All five required checks pass; three applicable dimensions meet floor3. Two rendered/interactive dimensions explicitly N/A. Parent aggregate decisions separate.",
+  "rationale": "Self-contained single hero prompt preserves supplied brand/canvas/content and execution boundary."
+}

@@ -85,3 +85,41 @@ Parent verification passed 43 recorder/orchestrator controls and the separate
 five HTTP controls; required repository sync/check and all 462 tests passed.
 Actual quality and authority review proceeds as completed bundles become available.
 A complete recording is not a passing behavioral grade.
+
+## Completed native comparison
+
+The native batch closed with all66 captures, no interrupted row and no recording
+failure. The complete [archive](../../tests/fixtures/frontend-adoption-v3-results/README.md)
+retains3,773 files, including failures and original images. Independent reviewers
+assessed all66 outputs. The [unchanged review summary](../../tests/fixtures/frontend-adoption-v3-final/all-review-summary.json)
+records27/33 baseline passes and30/33 candidate passes. These are individual
+review results, not adoption approval.
+
+All six mobile-image outputs missed the requested1179×2556 dimensions and scored
+below the fidelity floor. One baseline also produced a transparent screen;
+one candidate used a conflicting font in small app labels. Three baseline
+real-metrics cases retained an inaccessible button and failed the interaction
+floor. Every failed grade remains unchanged.
+
+All six supplied-reference captures hit a defect in the shared observer: it tried
+to click a form inside a closed dialog. A separately frozen
+[dialog-aware observer](../../tests/fixtures/frontend-adoption-v3-f11-http/README.md)
+passed seven controls, then observed all six unchanged products at both widths.
+Keyboard opening, invalid-input rejection, exact successful analytics/status and
+Escape/focus return were observed. The independent
+[append-only review](../../tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json)
+preserves the original failures and bounded focus-trap evidence.
+
+The original aggregation exits1 with `incomplete/unverified`: it retains the mobile
+and baseline interaction failures and does not substitute supplemental browser
+records for the failed original observer. Descriptive means across all immutable
+reviews are3.5686/4 baseline and3.7451/4 candidate. Higher aggregate quality does
+not override a failed required case. No adoption or efficiency claim follows.
+
+The [exact native image-interface audit](../../tests/fixtures/frontend-adoption-v3-image-resolution/README.md)
+shows that Codex0.153.4 exposes no numeric size argument and sends `size: auto`.
+All twelve original, archived and reviewed PNGs match byte for byte; capture did
+not resize them. This does not establish a universal provider resolution limit.
+A separate proposed mobile repair and native-portrait qualification must preserve
+these failed exact-size cases, avoid pooling results, and cannot claim exact-size
+support. It has not run at this checkpoint. Frontend migration remains gated.
