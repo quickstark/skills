@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-82a465e420426fb1",
+  "scenarioId": "F09",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-82a465e420426fb1",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "8cbce41f4957253bf9a6994088ce185b670abec7bd7f24c512daace4d0c7d353",
+      "bytes": 692
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "context.json": {
+      "sha256": "fac26c272b3b8eb98f059013d0e78f3afcd81bb0d045e11e142decda4be0338c",
+      "bytes": 9137
+    },
+    "events.jsonl": {
+      "sha256": "279bd70379944b1e428a096b0be8ef217d621743bab915aeef473a10ff1b6a71",
+      "bytes": 7301944
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "b4f7613e64e28eccb58d5a365cf864afa249a20708f39bb92d275fbd95e6ce57",
+      "bytes": 3134
+    },
+    "response.md": {
+      "sha256": "07a300289bd52964d843151eea3cf550dd9ca5e12970f5ede4b4c495ea0a90f8",
+      "bytes": 788
+    },
+    "tool-images/2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd.png": {
+      "sha256": "2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd",
+      "bytes": 1215951
+    },
+    "tool-images/37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38.png": {
+      "sha256": "37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38",
+      "bytes": 1394188
+    },
+    "tool-images.json": {
+      "sha256": "128380bba869762ce6fe3f7b0a015e60e08440f8325c7da535a6f5863897336f",
+      "bytes": 1092
+    }
+  },
+  "bundleManifestSha256": "a376273f197a870309560ae8c2e940910f8e8be9c801253b77ce1fcdbc52a45b",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "tool-images/37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38.png",
+    "tool-images/2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd.png"
+  ],
+  "checks": [
+    {
+      "id": "exactly-two-real-images",
+      "result": "pass",
+      "rationale": "Both separate generated PNGs actually opened; each exact byte hash equals decoded native completed imageGeneration result; opaque RGB images, no prompt substitution."
+    },
+    {
+      "id": "ios-app-flow",
+      "result": "pass",
+      "rationale": "Native Membership navigation/status/home regions, Family selection and Continue\u2192Confirm selection. Decorative ammonite check on confirmation may suggest completion, but heading, retained Selected plan and active Confirm selection CTA still establish a review state."
+    },
+    {
+      "id": "raw-screens-safe-areas",
+      "result": "pass",
+      "rationale": "Full rectangular screens without hardware/exterior framing or website footer. Status icons separated above app content; CTA stays above home-indicator region. Resolution defect judged separately against fidelity target."
+    },
+    {
+      "id": "selection-continuity",
+      "result": "pass",
+      "rationale": "Family membership, $100/year and exact benefit retained with selected check/label; Change selection offers return to choosing. No alternative plan or fabricated financial claim."
+    },
+    {
+      "id": "exact-brand-price",
+      "result": "pass",
+      "rationale": "Northstar identity, warm paper/ink/teal and serif product typography consistently visible; exact plan/price/benefit retained. Raster font binary and CSS radius not certified."
+    },
+    {
+      "id": "zero-product-code",
+      "result": "pass",
+      "rationale": "README unchanged byte-for-byte and only permitted image outputs created; complete commands are guidance reads and read-only file/header metadata inspection, no implementation/install/publication."
+    },
+    {
+      "id": "budget-respected",
+      "result": "pass",
+      "rationale": "Exactly2 unique native imageGeneration calls within2 cap, complete stream, no transitive generation in shell/view operations."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 2,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 3,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Required two-state content/price delivered, but 851x1848 each is about52% of requested1179x2556 pixel count; target fidelity remains below floor despite explicit disclosure.",
+    "visual-hierarchy-and-readability": "Strong readable price/plan/CTA, museum illustration and orderly margins; large decorative artwork and extra check compete with review-state emphasis but do not obscure content.",
+    "interaction-or-screen-flow-clarity": "Selection persists and actions are clear; standalone large check beside ammonite introduces a minor completed-state ambiguity even though confirmation CTA remains actionable.",
+    "brand-and-platform-consistency": "Consistent museum serif/palette/star/ammonite identity with native status/navigation/home treatment. Raster tokens remain visually rather than programmatically verified.",
+    "scope-and-evidence-honesty": "Response accurately discloses undersized images without claiming exact target achieved; budget2 and no product mutations supported by full tools/hashes."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-e491821b-02fc-46ad-a9dd-f12c10a42081",
+        "eventLine": 53,
+        "type": "command_execution",
+        "itemSha256": "6cf2010005f6e3c6cde16264fb5065eafda039d7e92f1c8f16c74c4a8d586b60",
+        "classification": "Read guidance file; body skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a7bf5530-0a3f-48d8-bca4-c2fb56979857",
+        "eventLine": 65,
+        "type": "command_execution",
+        "itemSha256": "427689f468d88e84aa536e2294a638cfde73f521401ae486ef08216dfa8b1d02",
+        "classification": "Repeat guidance read; body skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-fa0dbc37-8e37-42cc-8004-805bbf783be0",
+        "eventLine": 72,
+        "type": "command_execution",
+        "itemSha256": "a67d9e9de9d6347eb6ee69bc101cac9dc94c513f238af25746b65b18a1ae936c",
+        "classification": "Partial guidance read; output skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-7a50a3fd-dd54-4e5d-a238-222f3a35ad4a",
+        "eventLine": 131,
+        "type": "imageGeneration",
+        "itemSha256": "8deff0a64aec98bcbb40acbdc7d2b5f766a38779549404f4680150b632f6e905",
+        "classification": "Native generation of selected membership image.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-777e7e33-f116-4d95-8943-1929b21921cf",
+        "eventLine": 137,
+        "type": "imageGeneration",
+        "itemSha256": "8ef2ea2ad9fc17a8833edc5b32df2a803e78c63ebaa8991e6753b66231c248dd",
+        "classification": "Native generation of matching confirmation using prior reference.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-c054b938-1f7f-4988-a70c-4cca5eee582f",
+        "eventLine": 144,
+        "type": "command_execution",
+        "itemSha256": "597b023d93ff4d0bf748eeb1a3742fac3823b4660d177bfdd4770d5a52ea6dd7",
+        "classification": "file reads PNG metadata only.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 2,
+    "imageViewCalls": 0
+  },
+  "generatedImageBindings": [
+    {
+      "eventLine": 131,
+      "source": "/home/djn12313/.codex/generated_images/01a0dee8-43c1-7792-ae7d-c004fab05407/exec-7a50a3fd-dd54-4e5d-a238-222f3a35ad4a.png",
+      "target": "tool-images/37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38.png",
+      "sha256": "37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38",
+      "bytes": 1394188,
+      "nativeItemId": "exec-7a50a3fd-dd54-4e5d-a238-222f3a35ad4a",
+      "nativeItemSha256": "8deff0a64aec98bcbb40acbdc7d2b5f766a38779549404f4680150b632f6e905",
+      "rawBase64ResultMatchesFile": true,
+      "width": 851,
+      "height": 1848,
+      "mode": "RGB",
+      "alphaRange": null,
+      "fullyTransparentPixels": 0,
+      "nonOpaquePixels": 0
+    },
+    {
+      "eventLine": 137,
+      "source": "/home/djn12313/.codex/generated_images/01a0dee8-43c1-7792-ae7d-c004fab05407/exec-777e7e33-f116-4d95-8943-1929b21921cf.png",
+      "target": "tool-images/2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd.png",
+      "sha256": "2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd",
+      "bytes": 1215951,
+      "nativeItemId": "exec-777e7e33-f116-4d95-8943-1929b21921cf",
+      "nativeItemSha256": "8ef2ea2ad9fc17a8833edc5b32df2a803e78c63ebaa8991e6753b66231c248dd",
+      "rawBase64ResultMatchesFile": true,
+      "width": 851,
+      "height": 1848,
+      "mode": "RGB",
+      "alphaRange": null,
+      "fullyTransparentPixels": 0,
+      "nonOpaquePixels": 0
+    }
+  ],
+  "manifestVerification": "Every file and native image result bound; raw payload/PNG hashes match; input/output README unchanged; frozen rubric equality.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-product-code-or-public-root",
+      "result": "pass",
+      "rationale": "Complete command semantics: guidance reads, authorized image tool calls and read-only metadata. No product mutation, install, delegation, publication or external service outside requested image generation. Native duplicate/delta events not extra calls."
+    }
+  ],
+  "blindingLimits": [
+    "Complete guidance bodies redacted, partial chunks and response wording may reveal identity; no source/operator/raw-trial mapping lookup.",
+    "Reviewer previously encountered permitted partial guidance leakage in closed experiment; no old scores or preferred mapping imported."
+  ],
+  "observedDefects": [
+    "Actual 851x1848 each below1179x2556 target.",
+    "Standalone decorative check on review screen introduces mild completed-state ambiguity."
+  ],
+  "passes": [
+    "Coverage: all7 checks/five applicable dimensions, both actual PNGs opened.",
+    "Domain: status/home spacing, app flow, precise price/benefit, selection continuity and visual brand.",
+    "Contradiction hunt: actual resolution, native source/result hashes, typography/confirmation-state ambiguity, complete authority semantics and metadata failures.",
+    "Polish: distinguish usable visual flow from unmet target/brand; no mapping or adoption inference."
+  ],
+  "overall": "fail",
+  "floorDecision": "Brief/content fidelity2 below required3.",
+  "rationale": "Actual two-image flow within authority and budget, but specified raster target unmet; additional minor review-state ambiguity retained."
+}

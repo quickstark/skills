@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "expected": 6,
+  "reviewed": 2,
+  "scenarioCounts": {
+    "F09": 2
+  },
+  "scope": [
+    "F09"
+  ],
+  "status": "continuation-required",
+  "records": [
+    {
+      "trialId": "review-37b98778ebd44dcb",
+      "path": "review-37b98778ebd44dcb.json",
+      "sha256": "db333a06189aed3076d95234805efbda1e3060f14d7a79d1b0367eee7692bb56",
+      "overall": "fail"
+    },
+    {
+      "trialId": "review-ea14e1deb6414e7a",
+      "path": "review-ea14e1deb6414e7a.json",
+      "sha256": "7741bc0dfb8077313843a2cbf3e664d748fb6027ecab11e632006d91b773af5f",
+      "overall": "fail"
+    }
+  ],
+  "parentIndependentReview": "pending",
+  "policy": "Append-only independent opaque reviews; no source/mapping lookup, old-run pooling, efficiency or adoption conclusion."
+}
