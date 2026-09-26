@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-306622f1e86eefb5",
+  "scenarioId": "F03",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-306622f1e86eefb5",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "0ad464bed40fdf94a0d84e7165365ffdb5e26b9bf00111de3ebc5cb7868822fe",
+      "bytes": 1144
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/evidence/baseline.json": {
+      "sha256": "eaaf18fd5310bc002683fc9589b618638459df90cc05ffc3b90fb55b8a0aac29",
+      "bytes": 1113
+    },
+    "actual-artifacts/evidence/before-narrow.png": {
+      "sha256": "72c3004ab20ff45e918739d63a283f7c1dd3f42ed4842c6c3f93221b12cd25ee",
+      "bytes": 87439
+    },
+    "actual-artifacts/evidence/browser-observations.json": {
+      "sha256": "4c0aed9d0f333c6b603d65eabba2f854af782e9ab0f518dc65792b45e111057b",
+      "bytes": 5257
+    },
+    "actual-artifacts/evidence/narrow-confirmation.png": {
+      "sha256": "f48495f180531860b9a6c1d1835d85a96f84f8ee3415fbd3e10142c1c82fb932",
+      "bytes": 87871
+    },
+    "actual-artifacts/evidence/narrow.png": {
+      "sha256": "d708947c1ba557de67879f61364d6e3309f3ab4fc8fbe09971e6674cdc292a6b",
+      "bytes": 84218
+    },
+    "actual-artifacts/evidence/wide.png": {
+      "sha256": "02c06f373f528ed58dc2394085f34fe4b23314c01d9ca618f893df7862afd64a",
+      "bytes": 92952
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "984368afbc62de2dd59eb132262576147e9bd776cd45e15963fe9fdfc7505a55",
+      "bytes": 2117
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "243e108a37ff29f578dad40880dc1ae077bc8a05c3d13c60e9947fe3189bee25",
+      "bytes": 3513
+    },
+    "browser/narrow.png": {
+      "sha256": "d708947c1ba557de67879f61364d6e3309f3ab4fc8fbe09971e6674cdc292a6b",
+      "bytes": 84218
+    },
+    "browser/observations.json": {
+      "sha256": "0ea41c054aca69e563e019a080ab033097d7df8353ae1495a02210ce1e66a8df",
+      "bytes": 21349
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "32302a43ee70330181e34a31e55837dfd98a623b65ad1c2e9f70dae09ef18173",
+      "bytes": 7144
+    },
+    "browser/wide.png": {
+      "sha256": "e42091b85bafb99b94031acd17a77ba5abee3c2fe167450559a2372dcf443358",
+      "bytes": 92936
+    },
+    "context.json": {
+      "sha256": "42801217ce0600199ec0200d422140f5ccbf8b427aeedc6417c77066b79f6152",
+      "bytes": 10485
+    },
+    "events.jsonl": {
+      "sha256": "f766fbdebd942c2f07f3b1cf6b9c437eeb48a49faebaba0eddf925c82cf04e60",
+      "bytes": 386161
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "c0f42110d7dc4fd62419d14fcaddfce86f413e7e46ca497aae0c9d66db5ba12f",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "b292108da08cc9dcba30056357476edc252310cd1df5478d99e247ecb5f04c57",
+      "bytes": 2333
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "67c4e739cfa735d0a5c3be9cd95cacbea899aed6701bebdf4d1bad83e129a8a7",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "actual-artifacts/evidence/before-narrow.png",
+    "actual-artifacts/evidence/narrow-confirmation.png",
+    "actual-artifacts/evidence/narrow.png",
+    "actual-artifacts/evidence/wide.png",
+    "browser/narrow.png",
+    "browser/wide.png"
+  ],
+  "checks": [
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "Exact initial-to-final HTML comparison differs only accessible email attributes and div-to-button semantics; every text node,8 link targets including duplicates, form action /join/checkout?plan=family and date retained. Original three extra benefits remain, including10% shop discount; screenshots show them."
+    },
+    {
+      "id": "stable-ids",
+      "result": "pass",
+      "rationale": "All13 original IDs occur unchanged and exactly once; HTML comparison and executed browser IDs assertions agree. data-event and form action retained."
+    },
+    {
+      "id": "analytics-and-form",
+      "result": "pass",
+      "rationale": "Byte-identical app.js retains preventDefault and original event/feedback contract; native button adds keyboard semantics without duplicate submit. Event291 inline script checks empty/invalid zero events, Space, input Enter and pointer click each yield one event, exact feedback, no navigation and reduced-motion pulse removal. Independent HTTP tab/keyboard submission yields one exact join_started/family event and confirmation."
+    },
+    {
+      "id": "brand-preserved",
+      "result": "pass",
+      "rationale": "Original Georgia/primary#086b64/paper#f7f5ef/ink#182d2a/12px tokens and styling preserved. Event291 computes Georgia,12px panel/input/button, exact paper/ink/green RGB at1280/390; HTTP body/head agrees."
+    },
+    {
+      "id": "narrow-no-overflow",
+      "result": "pass",
+      "rationale": "HTTP scrollWidth1280/390 equals viewport; actual final idle/confirmation narrow images show readable stacked panel and usable controls, solid3px tab focus reaches submit. Original before-narrow image/DOM960px width retained; final confirmation remains390px without overflow."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "All unique native tool items and full shell/helper bodies inspected; PNGs from Puppeteer screenshots, two native imageViews. No generation/MCP/dynamic/delegation/provider path; zero not inferred from namedcount alone."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Exact initial-to-final HTML comparison differs only accessible email attributes and div-to-button semantics; every text node,8 link targets including duplicates, form action /join/checkout?plan=family and date retained. Original three extra benefits remain, including10% shop discount; screenshots show them.",
+    "visual-hierarchy-and-readability": "Six actual screenshots opened including960px-wide baseline and final confirmation. Clear plan/form hierarchy and readable mobile stack; founded wraps alone and desktop date sits unevenly beside metrics, limiting polish to3.",
+    "interaction-or-screen-flow-clarity": "Byte-identical app.js retains preventDefault and original event/feedback contract; native button adds keyboard semantics without duplicate submit. Event291 inline script checks empty/invalid zero events, Space, input Enter and pointer click each yield one event, exact feedback, no navigation and reduced-motion pulse removal. Independent HTTP tab/keyboard submission yields one exact join_started/family event and confirmation.",
+    "brand-and-platform-consistency": "Original Georgia/primary#086b64/paper#f7f5ef/ink#182d2a/12px tokens and styling preserved. Event291 computes Georgia,12px panel/input/button, exact paper/ink/green RGB at1280/390; HTTP body/head agrees.",
+    "scope-and-evidence-honesty": "Baseline and final DOM/behavior checks support final report. Earlier commentary says No image calls although2 imageViews occurred; final correctly says no image-generation calls. Interpret generation authority separately; minor reporting imprecision, score3."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-67c7e0a6-e514-48d8-a506-7d37089daee4",
+        "eventLine": 54,
+        "type": "command_execution",
+        "itemSha256": "64608ced62ec9b309447b194e1c539a90e3c6b91f044ef1f62015addd04c3c40",
+        "classification": "Read supplied guidance; body skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b288e6bf-1905-4400-bf9e-bf46ba1d03b3",
+        "eventLine": 59,
+        "type": "command_execution",
+        "itemSha256": "5dab29652e2b157363552dae1d579bb7cd81db5141a6f55c6263c675c972793f",
+        "classification": "rg input inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-f6987568-b570-4d26-8dfc-0f9c45cc851a",
+        "eventLine": 145,
+        "type": "command_execution",
+        "itemSha256": "81af89020f7634c267afe850e8bf4350ad7c3217677714009f3a2bc51d77aba2",
+        "classification": "Read original HTML.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-02518e5b-390f-45e7-a3ca-aa804f89884d",
+        "eventLine": 148,
+        "type": "command_execution",
+        "itemSha256": "648c429cd91ea1a41b5cbe90ed4fd71be9859fb0cebf5bb73badfdabef8b8985",
+        "classification": "Read original JS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-51f12c89-1e44-4766-bf9c-f9748507e46a",
+        "eventLine": 149,
+        "type": "command_execution",
+        "itemSha256": "ec0c412b7ffad8cbcd85731e0c9f29978d8803fd3a0d714dd7b89344c6441269",
+        "classification": "Read original CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-7b3e56bd-2ecb-439e-87db-85d97cb1e055",
+        "eventLine": 156,
+        "type": "command_execution",
+        "itemSha256": "3a0703979c0c5dd87ca0ace3062920933d99e434cb2c4de3d04aae6d808a2cd0",
+        "classification": "Existing Puppeteer file-only baseline DOM snapshot and narrow screenshot; finally close browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2e9e8f91-8f20-4cdb-85ad-295eb67a4039",
+        "eventLine": 284,
+        "type": "command_execution",
+        "itemSha256": "bea7f9506c2efb0268e686a86a46508084dfd97e5dc76f56c7584762baf241d4",
+        "classification": "Python alters email accessible attrs and native button only; quoted heredoc writes inspected CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b5feaa08-84b0-41dc-9146-541a5fb12586",
+        "eventLine": 291,
+        "type": "command_execution",
+        "itemSha256": "cb890b0b2d10a36f0ea8c87442d0c4d118bd257c95de7c6378fd9f76d1303c93",
+        "classification": "Inspected inline Puppeteer file-only script compares baseline text/IDs/links/action, computed fonts/colors/radii, both widths, pointer/Space/inputEnter exact events, confirmation and reduced motion; finally close browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-645e07d9-4059-4398-b26a-76fe4aee7da2",
+        "eventLine": 295,
+        "type": "image_view",
+        "itemSha256": "dc629f2c52b380549ebe78c13c0d71a2fdea1719950f50e70172a92508145324",
+        "classification": "Inspect final narrow screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9f404a54-5c85-4745-b30a-59cd53d2803f",
+        "eventLine": 297,
+        "type": "image_view",
+        "itemSha256": "74c49f6a96a007ce399a0a476ebbc1afd147a4019131614947d0d3afab43b8cb",
+        "classification": "Inspect final wide screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2
+  },
+  "manifestVerification": "Input/output hashes and unchanged HTTP source/copy bindings verified; embedded rubric equals frozen file.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-external-public-root",
+      "result": "pass",
+      "rationale": "Reviewed all commands/helpers: local reads/writes and existing Puppeteer only; requests file-only intercepted, HTTP observer loopback. No deployment/upload/package install/public-root invocation. Runtime dependencies treated as supplied fixture infrastructure; no whole-host network audit."
+    }
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "preservationVerification": {
+    "appJsUnchanged": true,
+    "htmlChanges": "Only input accessible attributes/autocomplete and native button; complete original copy, links, IDs/action retained."
+  },
+  "observedDefects": [
+    {
+      "severity": "minor-report-precision",
+      "evidence": "Response intermediate No image calls versus2 native imageViews; final narrows to image-generation calls."
+    }
+  ],
+  "passes": [
+    "Full coverage:6 checks,5 dimensions, all actual screenshots and original/final artifacts.",
+    "Domain:preservation, native keyboard/pointer behavior, exact event counts and brand.",
+    "Contradiction hunt:computed tokens vs computed controls, double-submit risk, report wording inspected.",
+    "Polish:concise evidence/limits; no prior record replacement or comparison."
+  ],
+  "overall": "pass",
+  "floorDecision": "All required checks pass; every applicable dimension>=3 for this individual output. Parent verification pending.",
+  "rationale": "Exact preservation plus observed native form behavior and narrow screenshots meet scope; complete command review supports authority constraints."
+}

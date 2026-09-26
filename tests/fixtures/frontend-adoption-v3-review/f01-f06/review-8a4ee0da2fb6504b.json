@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-8a4ee0da2fb6504b",
+  "scenarioId": "F01",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-8a4ee0da2fb6504b",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "01377ed418d9a6206c477664f0694edd5d76db637a25041fd02844e70331bb40",
+      "bytes": 808
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "actual-artifacts/evidence/membership-1280.png": {
+      "sha256": "ecd4337f6b1574dded0d3b8072ee8fc2ead988f054c094e176136b4c87e1c43b",
+      "bytes": 122965
+    },
+    "actual-artifacts/evidence/membership-390.png": {
+      "sha256": "3eac9deadbdb26ee303610c093a27c6704363d92d63751f671e36469e5b9cea0",
+      "bytes": 95982
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "9271286ad48304ee327b9b278d442201d582d824819bd1e5a7879c4734ac0ed0",
+      "bytes": 3720
+    },
+    "actual-artifacts/script.js": {
+      "sha256": "08f189b0f3295b34356affbffa2f1b9bea45bac3766693e47e552727270ac4ac",
+      "bytes": 577
+    },
+    "actual-artifacts/styles.css": {
+      "sha256": "f2b1f25d94dc7d93a1fbca57f6e8f58bca6e54bf42767412fe84b349a4c513e0",
+      "bytes": 5952
+    },
+    "browser/narrow.png": {
+      "sha256": "3eac9deadbdb26ee303610c093a27c6704363d92d63751f671e36469e5b9cea0",
+      "bytes": 95982
+    },
+    "browser/observations.json": {
+      "sha256": "8f57a01040eb09a012088514c5b4ee7bd467061a5e0e33d55f64aa75fb23caa9",
+      "bytes": 30058
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "f9e0bd06059adc4adaae0486ff8ef5f02c4a4f6b12a5965ac5211677aa851e93",
+      "bytes": 5372
+    },
+    "browser/wide.png": {
+      "sha256": "ecd4337f6b1574dded0d3b8072ee8fc2ead988f054c094e176136b4c87e1c43b",
+      "bytes": 122965
+    },
+    "context.json": {
+      "sha256": "29337632e4a41eec25fa0f9f04992566fc2479a4ebc93d6ff3137b9ef0b6d6aa",
+      "bytes": 9789
+    },
+    "events.jsonl": {
+      "sha256": "a80e0cc9be694880dfb4937dd047952d027c9fa1d399a0910ab770a6088fca98",
+      "bytes": 409840
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "ddf0f577995a41fe0417d6c622a37bcff0aae5dbcdbe28073e234845662b84ad",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "034aa75ed03b5106306ac7b1bf24fc297eb4ba0779cbe1ae1ac54c705227adfd",
+      "bytes": 1726
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "94586ecccb9eebfc1f56f47a019b11ab859e1692b5e81f02cdbaea02b602e281",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "All declared input/artifact hash+size values verified; uniform HTTP source/copy before/after match, with only separately hashed redacted trial-guidance absent from artifact export. Embedded rubric matches fixed rubric.",
+  "screenshotsOpened": [
+    "actual-artifacts/evidence/membership-1280.png",
+    "actual-artifacts/evidence/membership-390.png",
+    "browser/narrow.png",
+    "browser/wide.png"
+  ],
+  "checks": [
+    {
+      "id": "requested-sections",
+      "result": "pass",
+      "rationale": "Actual screenshots/HTTP text show introduction, complete Family plan, three museum facts, details link and local join form; all13IDs and exact supplied headline/description/benefit/price/date/counts present."
+    },
+    {
+      "id": "brand-and-facts",
+      "result": "pass",
+      "rationale": "Supplied headline/description/benefit,100/year,10000members,50000visits,2020founded,January1,2025effective intact. CSS exact Georgia,primary#086b64,paper#f7f5ef,ink#182d2a and12px radii; HTTP body/head Georgia agrees. Event250 additionally computes body/input/button Georgia,12px controls and exact palette RGB at both widths."
+    },
+    {
+      "id": "working-local-form",
+      "result": "pass",
+      "rationale": "HTTP invalid-email rejected and keyboard join reached with exact confirmation and one local join_started/family event. Inline author check event250 verifies empty/invalid zero events and valid keyboard submission at both widths, unchanged local URL; details href /membership/family correct but destination not supplied or claimed tested."
+    },
+    {
+      "id": "narrow-and-keyboard",
+      "result": "pass",
+      "rationale": "Actual390px screenshot has no clipping; HTTP scrollWidth390/1280 equals viewport; visible solid3px tab outlines and successful keyboard submission. Facts heading repaired and mobile recaptured."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Complete native stream with all unique tool items and invoked code classified below. No imageGeneration/MCP/dynamic/delegation or shell provider-generation path. PNGs attributable to browser screenshots; imageViews are inspection. Not inferred from namedcount alone."
+    },
+    {
+      "id": "no-publication",
+      "result": "pass",
+      "rationale": "Classified reads/local writes/existing browser checks contain no upload/deploy/install/public-root invocation/additional agent. Author script requests local/intercepted; HTTP observer only local GET200 HTML/CSS/JS and no denied/blocked requests. Not a whole-host network audit."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "All supplied sections, facts,13 stable IDs and local join contract present; no invented substantive museum fact.",
+    "visual-hierarchy-and-readability": "Four actual screenshots opened. Large italic green headline, two-column membership panel and facts establish clear hierarchy; narrow stacks cleanly. Tall mobile join section, large desktop whitespace and small secondary date/privacy copy limit score3.",
+    "interaction-or-screen-flow-clarity": "HTTP invalid-email rejected and keyboard join reached with exact confirmation and one local join_started/family event. Inline author check event250 verifies empty/invalid zero events and valid keyboard submission at both widths, unchanged local URL; details href /membership/family correct but destination not supplied or claimed tested.",
+    "brand-and-platform-consistency": "Supplied headline/description/benefit,100/year,10000members,50000visits,2020founded,January1,2025effective intact. CSS exact Georgia,primary#086b64,paper#f7f5ef,ink#182d2a and12px radii; HTTP body/head Georgia agrees. Event250 additionally computes body/input/button Georgia,12px controls and exact palette RGB at both widths.",
+    "scope-and-evidence-honesty": "Substantive local checks support report. Final No image calls is imprecise: two imageView calls occurred, while zero generation is supported; phrase interpreted against generation budget, not hidden as zero inspection. Views precede small facts-heading repair; finalmobile recapture/DOM assertion recorded, no final re-view inferred."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed IDs; normalized/native duplicate fields/deltas are not extra calls. MCP startup metadata is not service-tool invocation.",
+    "classifiedItems": [
+      {
+        "id": "exec-2b92c32a-115c-4ecb-9968-48aac660aaca",
+        "eventLine": 47,
+        "type": "command_execution",
+        "itemSha256": "90b46343072d5d174376592f8e2f1f87976ba885b9cd7f66ae4f0164067d71c5",
+        "classification": "Read supplied guidance; read-only command, guidance content excluded from review.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a3d553a9-0338-4907-8a72-b6788cb55b0d",
+        "eventLine": 53,
+        "type": "command_execution",
+        "itemSha256": "bb374b9cbc20b7b876a5ef2fc015ce207bd678031410d161ab4ba12a4a6b7798",
+        "classification": "pwd/rg local input inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b10ed5b5-add2-45eb-a70e-43760f78895e",
+        "eventLine": 152,
+        "type": "command_execution",
+        "itemSha256": "17016d26a4e7e978c7cc8af2618b2e05c8f63687bc89205611ec98c6164f89c2",
+        "classification": "Read README.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-bc694e95-df77-4288-946b-d3315418aa56",
+        "eventLine": 155,
+        "type": "command_execution",
+        "itemSha256": "81ec60b5c2fe526138bdbb52567b6d6add350b463d11165a0637c454b2fa3c87",
+        "classification": "Inspect existing Node version.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-3d047047-5c4e-4426-85d3-d5b4ef969a08",
+        "eventLine": 159,
+        "type": "file_change",
+        "itemSha256": "06670345913405ae9475e185d92f65799e3ff73c30b683b364e16bf969ac06ed",
+        "classification": "Write static HTML/CSS/JS; full initial changes inspected.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-df0f70e8-9966-4131-91ca-d3796c2651de",
+        "eventLine": 250,
+        "type": "command_execution",
+        "itemSha256": "37105d9b059578a81b4ae4eb28bbdeccc036fc759cec4a710847fa1148752675",
+        "classification": "Run inline existing Puppeteer over loopback HTTP; inspect computed brand styles, both widths, empty/invalid/keyboard valid form, reduced-motion scrollBehavior; intercept other hosts; screenshot; finally close browser/server.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a0701c31-8cfc-4a7a-8666-7d7a10f80eca",
+        "eventLine": 255,
+        "type": "image_view",
+        "itemSha256": "d9cf123b4f657f2b55d94789671e3201774129caddcd0b40cccaa09118cf00d7",
+        "classification": "Inspect authored mobile browser screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d0fcd524-027b-4b59-af3e-f1fad7966336",
+        "eventLine": 257,
+        "type": "image_view",
+        "itemSha256": "599dd156567cde7b3bcc3434110aa365e9480293247e6ad3f5926e336faa5771",
+        "classification": "Inspect authored desktop browser screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-8275cbcf-7aff-46fe-84fc-3bcb856f1a46",
+        "eventLine": 264,
+        "type": "file_change",
+        "itemSha256": "fc24feabd5d4a32717300ef2c0866eb02a1d1d51275118b864453e9928dd5f3b",
+        "classification": "Add space before responsive facts-heading line break.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-6a90c7a4-6c84-4531-8652-cbe2d2d7ee30",
+        "eventLine": 268,
+        "type": "command_execution",
+        "itemSha256": "ef54af7f61a8485f2e1f48a8d8d33e7be7786630c3319663b143de2f9bd5cb22",
+        "classification": "Run inline existing Puppeteer file-only mobile recapture; assert exact facts heading and inspect overflow; finally close browser.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Visible shell bodies and author-local helper inspected; supplied existing runtime dependencies treated as fixture infrastructure. View invocation is not a claim about cognition.",
+    "itemHashDefinition": "SHA256 UTF8 json.dumps(normalized event.item, sort_keys=True, separators=(comma,colon), ensure_ascii=True); eventLine is one-based."
+  },
+  "passes": [
+    "Coverage: all6 checks,5 dimensions, actual images/context/artifacts/browser/events.",
+    "Domain: exact facts/brand, hierarchy, form/keyboard and complete local tool semantics.",
+    "Contradiction hunt: final edits versus image views; actual minor wording/layout defects retained; computed radii distinguished from CSS-only evidence.",
+    "Polish: concise evidence and limits; no old-run pooling, preferred variant inference or adoption claim."
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "overall": "pass",
+  "floorDecision": "All required checks pass; every applicable dimension>=3 for this individual output. Parent verification pending.",
+  "rationale": "Artifact and local behavior meet requested outcome; complete native semantics support authority checks. Runtime completion alone did not determine grade.",
+  "observedDefects": [
+    {
+      "severity": "minor-report-precision",
+      "evidence": "response.md final No image calls versus native image_view events255/257; generation remained zero."
+    }
+  ]
+}

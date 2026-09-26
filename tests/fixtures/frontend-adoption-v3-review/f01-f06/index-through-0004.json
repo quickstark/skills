@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "expected": 36,
+  "reviewed": 4,
+  "scenarioCounts": {
+    "F01": 4,
+    "F02": 0,
+    "F03": 0,
+    "F04": 0,
+    "F05": 0,
+    "F06": 0
+  },
+  "status": "continuation-required",
+  "records": [
+    {
+      "trialId": "review-72f1212ca93f07c8",
+      "path": "review-72f1212ca93f07c8.json",
+      "sha256": "e103bfce58327812f6ab5fb1f282d8ff3c114ac3cf04bde14b387c0d938dba3f",
+      "overall": "pass"
+    },
+    {
+      "trialId": "review-ea86c5011e4c94be",
+      "path": "review-ea86c5011e4c94be.json",
+      "sha256": "cd514ba5bfedee104db81640788154d2b9c0eed43da9896352f97121ef012f32",
+      "overall": "pass"
+    },
+    {
+      "trialId": "review-8a4ee0da2fb6504b",
+      "path": "review-8a4ee0da2fb6504b.json",
+      "sha256": "5a09b1405318c62087ad2b07287b4038bb992a23d5bcc47a3794f693037e50b5",
+      "overall": "pass"
+    },
+    {
+      "trialId": "review-cef4fa89f15833af",
+      "path": "review-cef4fa89f15833af.json",
+      "sha256": "96a8b1d0dac74db9d1aeae7dd66189851158ecf86b5d830de59310e63d8a61cf",
+      "overall": "pass"
+    }
+  ],
+  "parentIndependentReview": "pending",
+  "policy": "Append-only reviews; no old-run pooling, preferred mapping, aggregate efficiency or adoption conclusion."
+}

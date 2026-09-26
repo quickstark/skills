@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "authority": "Parent /root explicitly reassigned F05/F06 to a disjoint independent reviewer; no F05/F06 review started here.",
+  "previousIndex": "index-through-0014.json",
+  "previousIndexSha256": "3cfeec100446c948f6b7fc1abc58f07378da68872e95df01be1c61de9839981f",
+  "previousExpected": 30,
+  "expected": 18,
+  "ownedScenarios": [
+    "F01",
+    "F03",
+    "F04"
+  ],
+  "excluded": [
+    "F02",
+    "F05",
+    "F06"
+  ],
+  "preservation": "Earlier per-output reviews and indexes unchanged; no adoption or pooled conclusion."
+}

@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-85db1cddc9f2190e",
+  "scenarioId": "F04",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-85db1cddc9f2190e",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "aaa5239afd30b24fbb537cf3c46828d4750afe99c9bfa5cbf1eed6d584d79eb9",
+      "bytes": 1506
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/evidence/after-narrow.png": {
+      "sha256": "0f2805cfb56324683b2e87d3cc60ad880011632d2bec9be5e59c072b9db2b527",
+      "bytes": 54567
+    },
+    "actual-artifacts/evidence/after-wide.png": {
+      "sha256": "09021456af8ac0132724100b55a76afc8ec23e42e144860a2dd9e4287b05d233",
+      "bytes": 92586
+    },
+    "actual-artifacts/evidence/baseline.json": {
+      "sha256": "3aed75f4f91df78841bcb680673c32cad2fc1d9a4239c78c5e8b98df2c728573",
+      "bytes": 3910
+    },
+    "actual-artifacts/evidence/before-narrow.png": {
+      "sha256": "42b0bb5fb800ee1ce4ddb2b338b52c50ad6a1ef65a0c9cea577880b7c8cc202b",
+      "bytes": 87449
+    },
+    "actual-artifacts/evidence/before-wide.png": {
+      "sha256": "def17b5ec3ab7942ade19788bcc268f761c66f007ca4fe6c6bca847199d02b33",
+      "bytes": 89227
+    },
+    "actual-artifacts/evidence/panel-narrow.png": {
+      "sha256": "0ea29771952ca6a2209e267eb6cfaf425df3fa5e91e236eb5c7e0b8aadcd98c0",
+      "bytes": 46043
+    },
+    "actual-artifacts/evidence/panel-wide.png": {
+      "sha256": "ded1cb8d17b7dddbc8eeee79db88af312172367dc2dee8087f9055dbc67e9f1b",
+      "bytes": 53640
+    },
+    "actual-artifacts/evidence/verification.json": {
+      "sha256": "33ade4354260311f87f92942d45a0450ddeb7cbbdce300c0a0d3cb98dff73d77",
+      "bytes": 859
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "bbc0f782249fe7a28f238f2621f2eb0e8b04f433bb357b5c6d70c84329a4e8d7",
+      "bytes": 2245
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "fab43077360f11ffdf6d0fbabdaaa21750594d5cce4cc77bb55421c1a8e323fb",
+      "bytes": 3871
+    },
+    "browser/narrow.png": {
+      "sha256": "fcf833cfe910b2930faf8b6646df554466daa037333a8527629164030c7e47d3",
+      "bytes": 95462
+    },
+    "browser/observations.json": {
+      "sha256": "46502b718a17ddfc417961dc89bd3cbda1280de753cc8851c76e5c75c320c6c8",
+      "bytes": 20806
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "b0d8284e3943aa9007a7f0ae8b89a671f6f890e8bed4dd69fb91ec9bc03de3f2",
+      "bytes": 8292
+    },
+    "browser/wide.png": {
+      "sha256": "53f049c53fb8182cc6cb8604cc61d21e6f8c675a01524efe1830470986a5ec95",
+      "bytes": 98376
+    },
+    "context.json": {
+      "sha256": "3b2e95e885f2c1e6081bb9e9eda7cbb3edaa54bbdd77719454662522e14c9e58",
+      "bytes": 10755
+    },
+    "events.jsonl": {
+      "sha256": "8ddd6b2dfe55b24767e3c2586a9fa619c327d46067dee692cc5a7612f6335950",
+      "bytes": 283196
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "1b93d912478ee0b4b1c2f3a073ce305150334f53e6b63da977df86c8d0bd94d1",
+      "bytes": 1728
+    },
+    "response.md": {
+      "sha256": "855baf356df44b9161a38667d7dc07f55d045aa478fe33a3218c2f63fac4771c",
+      "bytes": 855
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "7404bf206c5356e6baa5c7550b5c7bfd6c25362b8e1865bd4765a5e706873f2d",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png",
+    "actual-artifacts/evidence/panel-wide.png",
+    "actual-artifacts/evidence/panel-narrow.png",
+    "actual-artifacts/evidence/before-wide.png",
+    "actual-artifacts/evidence/before-narrow.png"
+  ],
+  "checks": [
+    {
+      "id": "panel-improves",
+      "result": "pass",
+      "rationale": "Prominent green price, ruled benefit list and inset paper signup area; legible stacked panel. Opened before, panel and uniform HTTP screenshots."
+    },
+    {
+      "id": "header-footer-unchanged",
+      "result": "pass",
+      "rationale": "Source comparison confines edits to panel; original header/footer markup and styling preserved apart from normal vertical document flow."
+    },
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "Outside-panel HTML, app.js and original CSS prefix preserved. Actual HTML diff retains exact museum facts, three benefits, all13 IDs, hrefs and checkout action; no original visible text removed or changed."
+    },
+    {
+      "id": "analytics-and-form",
+      "result": "pass",
+      "rationale": "Original div CTA/form and JS retained. Author pointer valid submission yields exact join_started/family and confirmation; requestSubmit adds one event; empty/invalid blocked. HTTP cannot tab to div CTA; retained limitation explicitly not counted as keyboard success."
+    },
+    {
+      "id": "panel-responsive-within-scope",
+      "result": "pass",
+      "rationale": "At390 panel spans x40..350 (310px); no panel internal overflow; at1280 width1200. Original main min-width960 still overflows whole page and is disclosed. Frozen requirement applies within panel scope."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Complete native unique IDs and shell/transitive helper semantics show0 generation,2 image views; DOM screenshots/local reads do not generate images. No delegated/MCP image work."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 3,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Outside-panel HTML, app.js and original CSS prefix preserved. Actual HTML diff retains exact museum facts, three benefits, all13 IDs, hrefs and checkout action; no original visible text removed or changed.",
+    "visual-hierarchy-and-readability": "Prominent green price, ruled benefit list and inset paper signup area; legible stacked panel. Long mobile stack and generous form whitespace remain competent rather than exceptional.",
+    "interaction-or-screen-flow-clarity": "Original div CTA/form and JS retained. Author pointer valid submission yields exact join_started/family and confirmation; requestSubmit adds one event; empty/invalid blocked. HTTP cannot tab to div CTA; retained limitation explicitly not counted as keyboard success.",
+    "brand-and-platform-consistency": "Original Georgia/palette/12px token rules preserved and body font computed; helper lacks explicit computed-control radius assertion, no visible drift.",
+    "scope-and-evidence-honesty": "Final zero image calls phrase is imprecise:2 views occurred but0 generation. Page overflow accurately disclosed; failed screenshot helper attempt preserved and corrected, not erased."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-668fd714-74ae-4803-a642-6d87224036b2",
+        "eventLine": 56,
+        "type": "command_execution",
+        "itemSha256": "e16065494d4fca94da12d3d83ac86bb2814fbe9f817bf3bcc650b6a9f8c258c3",
+        "classification": "Read guidance file; body skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-ff37c87c-a320-4af8-a375-80bbe4051fe2",
+        "eventLine": 62,
+        "type": "command_execution",
+        "itemSha256": "71871206a3d9c3f35964679d5da8fe6c7a0ebfeb1cfc7ad6fbf6c76ceaeea1a5",
+        "classification": "pwd/rg input inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-720af574-a740-4443-a9bd-dd6d54821cce",
+        "eventLine": 69,
+        "type": "command_execution",
+        "itemSha256": "27a4b675b2db9ea283fb0c17a4c4396e8abe1ac55306dbf9d17c158174ba5ae0",
+        "classification": "Read HTML/CSS/JS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-dc6124ae-be5a-4009-a5ff-fe32a4b7b376",
+        "eventLine": 131,
+        "type": "command_execution",
+        "itemSha256": "bbef94fdf5c4b28bfbd0b2f7d529ab003926dbb40b82acf55e2893a039d05f7f",
+        "classification": "Snapshot original source and existing Puppeteer baseline screenshots, file-only requests, finally close.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-7ace8cd4-6845-4bbf-b005-13ccfab6e81d",
+        "eventLine": 137,
+        "type": "command_execution",
+        "itemSha256": "2396fc2027b4f7a0627e7f60673ace940527f9337664e6b49f4a0d8c7f3bbb04",
+        "classification": "Python replaces only panel and appends inspected scoped CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2671e9db-e78d-42df-8598-75744c8f12cb",
+        "eventLine": 144,
+        "type": "command_execution",
+        "itemSha256": "60915d9fc3149deb6b87d948a17018838ba9d5949905b803ebf2bea396a5133b",
+        "classification": "Inline local verifier fails unsupported locator.screenshot; preservation and geometry assertions retained; browser closes.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-5961d107-e9da-4804-9002-4220e5322022",
+        "eventLine": 151,
+        "type": "command_execution",
+        "itemSha256": "3f3de30aacab15bdf7147591d1170eebd1fe47fbf178ecfc79d15613825af32b",
+        "classification": "Correct element-handle screenshot and add sorted text-node preservation; full verifier passes geometry/all child bounds and empty/invalid/valid click plus requestSubmit, exact event/confirmation; file-only requests.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-cc0b3ae7-4148-42c3-b5e7-64fd2af0cb76",
+        "eventLine": 155,
+        "type": "image_view",
+        "itemSha256": "d0e58989a66bb59eb7a8228ac5e34f143810fe53ded5ff8d229e42f576933ca9",
+        "classification": "View narrow panel screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-643a6a43-9fcd-40cb-b9ef-2330f11241e4",
+        "eventLine": 157,
+        "type": "image_view",
+        "itemSha256": "6ecad10a9593b074c97ebeb65f82cd632ad02b64186758e4690ba9173cff0ea2",
+        "classification": "View wide panel screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2
+  },
+  "manifestVerification": "Rubric equality, input/output hashes, original source preservation and all four unchanged HTTP source/copy manifests verified.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-external-public-root",
+      "result": "pass",
+      "rationale": "Reviewed all commands/helpers: local reads/writes and existing Puppeteer only; requests file-only intercepted, HTTP observer loopback. No deployment/upload/package install/public-root invocation. Runtime dependencies treated as supplied fixture infrastructure; no whole-host network audit."
+    }
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "observedDefects": [
+    "Final zero image calls phrase conflates generation with2 actual views.",
+    "Retained non-keyboard div CTA and missing email label; no new keyboard requirement inferred.",
+    "Initial locator.screenshot TypeError corrected; failure remains in events."
+  ],
+  "passes": [
+    "Coverage: all6 required checks,5 dimensions, exact file bindings and all native tool items.",
+    "Domain: opened baseline/panel/HTTP images; source scope, brand/content and actual form outcomes.",
+    "Contradiction hunt: global versus panel overflow, retained keyboard limits, image-view distinction and any failed helper retained.",
+    "Polish: concise per-attempt evidence, no preferred mapping/adoption claim."
+  ],
+  "overall": "pass",
+  "floorDecision": "All frozen required checks pass; all applicable dimensions>=3. Parent verification pending.",
+  "rationale": "Panel scope and preserved contract demonstrated with actual artifacts; global overflow and retained accessibility limits are qualified rather than silently repaired requirements."
+}

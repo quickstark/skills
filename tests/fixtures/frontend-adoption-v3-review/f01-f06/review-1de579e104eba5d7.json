@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-1de579e104eba5d7",
+  "scenarioId": "F04",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-1de579e104eba5d7",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "f2b2c0ad29d2bc42cc995564be5d189d22bd5b5eab219a42901bde3f8749cb1f",
+      "bytes": 1518
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/artifacts/after-narrow.png": {
+      "sha256": "87151daf8200f8be9cf70b99807a29bb863071a7ae90e3678fb5f6a2bd6c41a0",
+      "bytes": 54330
+    },
+    "actual-artifacts/artifacts/after-wide.png": {
+      "sha256": "09fc5e5be61cca30af3da759a38017407f7087d7caf1dfd3b733f70cce88e18f",
+      "bytes": 91721
+    },
+    "actual-artifacts/artifacts/baseline.json": {
+      "sha256": "38e4490625bb828b2dc732a2f11c110318870c50f4ac5e727e62e8bf6dfd3034",
+      "bytes": 7698
+    },
+    "actual-artifacts/artifacts/before-narrow.png": {
+      "sha256": "72c3004ab20ff45e918739d63a283f7c1dd3f42ed4842c6c3f93221b12cd25ee",
+      "bytes": 87439
+    },
+    "actual-artifacts/artifacts/before-wide.png": {
+      "sha256": "def17b5ec3ab7942ade19788bcc268f761c66f007ca4fe6c6bca847199d02b33",
+      "bytes": 89227
+    },
+    "actual-artifacts/artifacts/observations.json": {
+      "sha256": "babae98ef7ea88f20a5a868bb361cfc37999b344befe2155f071e92ddcbfcf0f",
+      "bytes": 4636
+    },
+    "actual-artifacts/artifacts/panel-narrow.png": {
+      "sha256": "5528b7af16e682da794eca1abe10bde47fb06d20020093ba698f4139ef69d703",
+      "bytes": 46034
+    },
+    "actual-artifacts/artifacts/panel-wide.png": {
+      "sha256": "e0226c64c8d2ccf6f81bd65c166aebad026e42c398a895f4864850fb232c5db7",
+      "bytes": 52479
+    },
+    "actual-artifacts/artifacts/verify.mjs": {
+      "sha256": "c4700223e779517744c4342650969692b41e41a68462de34794734d93f14764d",
+      "bytes": 5359
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "96aeee349df78370f73c155427782a43d7385c0b72b92f5606a781f3cbb8fe6e",
+      "bytes": 2247
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "9eb7389ed11dfa356b17d8ac46ff71fe2d308d77ad1615ca8d551ed7cc3ebc89",
+      "bytes": 3782
+    },
+    "browser/narrow.png": {
+      "sha256": "92ebef4a92e365c01e41befc85f10e66ce69190e0de07310a2b9d638d8403acc",
+      "bytes": 95595
+    },
+    "browser/observations.json": {
+      "sha256": "4ca9aa997d2d133ce56f48118a8189d97baf7a02a7c1924a3c9b3ec492f6e44e",
+      "bytes": 21398
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "b7f09d7a043c66b98db5ce33a289637f99a1e0ad8cf4fedb041fb47978b7b50f",
+      "bytes": 8892
+    },
+    "browser/wide.png": {
+      "sha256": "59f651140de6917f6cfe1c6bd8acc77cb7f09e6c20fa8df260aa98e080c947fa",
+      "bytes": 97396
+    },
+    "context.json": {
+      "sha256": "e3c62e81522485d101e0cb6b741f4f2a5a2ed7433dc0da231c3ea9de17864657",
+      "bytes": 10957
+    },
+    "events.jsonl": {
+      "sha256": "375a09408bc585d8fbe251e8b5b07f699fab5d8c94118244504e0261125c0f2f",
+      "bytes": 366515
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "82c82e754f14a1d5dd28516f7a44e6578f07cedad2cdc402b014265a3e14453e",
+      "bytes": 2640
+    },
+    "response.md": {
+      "sha256": "c74d24d02f8185498a04b7a6d4e175ef77ae48bbd2540d8983d04f0a757f6ffa",
+      "bytes": 1795
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "b05928e159ed871d0e90c0e4ab4ff825c76acbfd77aa8f0a05ee7447470f8b90",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png",
+    "actual-artifacts/artifacts/panel-wide.png",
+    "actual-artifacts/artifacts/panel-narrow.png",
+    "actual-artifacts/artifacts/before-wide.png",
+    "actual-artifacts/artifacts/before-narrow.png"
+  ],
+  "checks": [
+    {
+      "id": "panel-improves",
+      "result": "pass",
+      "rationale": "Prominent green price with a paper signup inset and clean stacked mobile layout. Opened before, panel and uniform HTTP screenshots."
+    },
+    {
+      "id": "header-footer-unchanged",
+      "result": "pass",
+      "rationale": "Source comparison confines edits to panel; original header/footer markup and styling preserved apart from normal vertical document flow. Header bounds compared at both viewports."
+    },
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "Outside-panel HTML, app.js and original CSS prefix preserved. Actual HTML diff retains exact museum facts, three benefits, all13 IDs, hrefs and checkout action; no original visible text removed or changed."
+    },
+    {
+      "id": "analytics-and-form",
+      "result": "pass",
+      "rationale": "Native button with accessible email aria-label; author checks actual keyboard submission and exact join_started/family event/confirmation, empty/invalid blocked; uniform HTTP keyboard corroborates."
+    },
+    {
+      "id": "panel-responsive-within-scope",
+      "result": "pass",
+      "rationale": "At390 panel spans x40..350 (310px); no panel internal overflow; at1280 width1200. Original main min-width960 still overflows whole page and is disclosed. Frozen requirement applies within panel scope."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Complete native unique IDs and shell/transitive helper semantics show0 generation,2 image views; DOM screenshots/local reads do not generate images. No delegated/MCP image work."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Outside-panel HTML, app.js and original CSS prefix preserved. Actual HTML diff retains exact museum facts, three benefits, all13 IDs, hrefs and checkout action; no original visible text removed or changed.",
+    "visual-hierarchy-and-readability": "Prominent green price with a paper signup inset and clean stacked mobile layout. Long mobile stack and generous form whitespace remain competent rather than exceptional.",
+    "interaction-or-screen-flow-clarity": "Native button with accessible email aria-label; author checks actual keyboard submission and exact join_started/family event/confirmation, empty/invalid blocked; uniform HTTP keyboard corroborates.",
+    "brand-and-platform-consistency": "Computed panel/input/button Georgia, serif and12px radii plus unchanged brand tokens; screenshots remain on brand.",
+    "scope-and-evidence-honesty": "Final zero image calls phrase is imprecise:2 views occurred but0 generation. Page overflow accurately disclosed; external requests claim is supported for instrumented page requests, not a whole-host audit."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-c2bfbbaf-6e0d-4552-8552-86b9f2b29da2",
+        "eventLine": 52,
+        "type": "command_execution",
+        "itemSha256": "53f776a37e57f7ddc69a1417d0d5a3d36fb76ff454e9f2cd761de01374ae78ec",
+        "classification": "Read guidance file; body skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-85473409-0829-46c0-8566-c7388d7b9683",
+        "eventLine": 57,
+        "type": "command_execution",
+        "itemSha256": "28ce8181fe74df107af5990b183744ee21a856c6070d10e0455c41e872ffaa15",
+        "classification": "rg input inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-828d08fe-fcfd-407d-90f9-1d4b2c4bb8f9",
+        "eventLine": 64,
+        "type": "command_execution",
+        "itemSha256": "3a10ccf9f98c6a31df4b5ab0168843fadf8f7c8194993862b8826e4be9557be9",
+        "classification": "Read HTML.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-521ca962-2f05-4c72-a328-004e4997863a",
+        "eventLine": 67,
+        "type": "command_execution",
+        "itemSha256": "70f79fda109e93901fd558ca3676cc1896774f939b2fdbe18bb2369f53c9304e",
+        "classification": "Read JS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-66ed25e6-675d-4efc-a003-f0bf4bbf3509",
+        "eventLine": 68,
+        "type": "command_execution",
+        "itemSha256": "52a85c432eea6a7f3a947a3fd11411c894ffc099e636c5317a9c72c246bb6117",
+        "classification": "Read CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-5266beca-2c62-45f3-81da-8d64cbcb34ff",
+        "eventLine": 186,
+        "type": "command_execution",
+        "itemSha256": "500d739cb437f13fef7f5ef77aac0682c77a3b86200795d5d9340c9b20f960f8",
+        "classification": "Existing Puppeteer baseline screenshots and source/DOM snapshot, file-only interception, finally closes browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-4eb246f3-2df8-42b2-963f-33455d46bb71",
+        "eventLine": 192,
+        "type": "command_execution",
+        "itemSha256": "e613b3ed5052b9432af90650451572e528125907e23086742baede1c3c0855ee",
+        "classification": "Python replaces only membership panel and appends inspected scoped CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-1ae62aba-5a66-42c1-b6c7-b8a8dc494c79",
+        "eventLine": 305,
+        "type": "command_execution",
+        "itemSha256": "5390aa648c4d4553a32449499fb51d68876714b1790ba767b9b758347c84fae1",
+        "classification": "Write exact bound verify.mjs and execute: outside markup, JS, original CSS, text/routes/IDs/header bounds, computed Georgia/12px, panel fit, invalid/valid click/Enter, tab order/focus, panel motion and external-request assertions; finally close.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-4a32faa8-22dc-41e0-bd9f-e4ca08546de7",
+        "eventLine": 309,
+        "type": "image_view",
+        "itemSha256": "c0a3150097c7f1a69906fdd4de8f4c6bcf7910951858a74a80ca4b310f251925",
+        "classification": "View narrow panel screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b657f3d7-d319-40f3-8f38-4433b38fff46",
+        "eventLine": 311,
+        "type": "image_view",
+        "itemSha256": "b8b17c375e9bb5bcecddf16bed25339ddb7d918365c90ea469aac8544a9123a2",
+        "classification": "View wide panel screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2
+  },
+  "manifestVerification": "Rubric equality, input/output hashes, original source preservation and all four unchanged HTTP source/copy manifests verified.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-external-public-root",
+      "result": "pass",
+      "rationale": "Reviewed all commands/helpers: local reads/writes and existing Puppeteer only; requests file-only intercepted, HTTP observer loopback. No deployment/upload/package install/public-root invocation. Runtime dependencies treated as supplied fixture infrastructure; no whole-host network audit."
+    }
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "observedDefects": [
+    "Final zero image calls phrase conflates generation with2 actual views."
+  ],
+  "passes": [
+    "Coverage: all6 required checks,5 dimensions, exact file bindings and all native tool items.",
+    "Domain: opened baseline/panel/HTTP images; source scope, brand/content and actual form outcomes.",
+    "Contradiction hunt: global versus panel overflow, retained keyboard limits, image-view distinction and any failed helper retained.",
+    "Polish: concise per-attempt evidence, no preferred mapping/adoption claim."
+  ],
+  "overall": "pass",
+  "floorDecision": "All frozen required checks pass; all applicable dimensions>=3. Parent verification pending.",
+  "rationale": "Panel scope and preserved contract demonstrated with actual artifacts; global overflow and retained accessibility limits are qualified rather than silently repaired requirements."
+}
