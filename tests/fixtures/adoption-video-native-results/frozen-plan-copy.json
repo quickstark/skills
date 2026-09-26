@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "render-report-native-01",
+  "frozenAt": "2026-09-26T16:47:30.621Z",
+  "state": "Prepared only; separate parent launch review required. No model or runtime render during preparation.",
+  "workspace": "/tmp/qs-video-native-workspace-20260926",
+  "captureDirectory": "/tmp/qs-video-native-capture-20260926",
+  "executable": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+  "nodeExecutable": "/usr/bin/node",
+  "nodeVersion": "v24.21.0",
+  "expectedControls": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "timeoutMs": 360000,
+  "maximumImageCalls": 0,
+  "attempts": 1,
+  "retries": 0,
+  "change": "New separate app-server native-protocol capture. Inherits and verifies all five configured controls against thread/start before turn/start. Approval behavior follows native on-request/auto_review rather than assuming exec CLI semantics match. Unsupported interactive approval requests stop unverified; no auto-grant or override.",
+  "unchanged": "Exact prior render task, source/assets/project, runtime wrapper/profile/pin, current amended root/private closure, reporting rubric and independent oracle. Guidance remains immutable at existing paths until launch copies it to the exclusive workspace.",
+  "historyPolicy": "Preserve original render/reporting failures and all later qualified observability findings. Missing exec image events cannot establish absent inspection. New evidence cannot repair prior grades; no pooling or adoption conclusion.",
+  "bindings": {
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+    "scripts/frontend-adoption-trials.mjs": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "tests/fixtures/adoption-video-native/run.mjs": "fcefb6ceb49c104fd64563d110d75025fe799d01688b9f12f7acc6bd8e240a21",
+    "tests/fixtures/adoption-video-native/support.mjs": "4c0636995dba791dc7249ffabdebe6c99c0eace462ad2feff59853b1cc2fa926",
+    "tests/fixtures/adoption-video-native/verify.mjs": "64e861160f3f91488154b4aadbc3b5964d403412874039207516e392d927ef99",
+    "tests/fixtures/adoption-video-native/freeze.mjs": "599cfa823485e39ddb8028b19e375aa37c0cbb4d75fdb48433e5f378073ce034",
+    "tests/fixtures/adoption-video-native/support.test.mjs": "fce44b32f798ed10ea4b797635878fe746857a36a287e4906487cb701e7d8a0f",
+    "tests/fixtures/adoption-video-native/README.md": "5059d6c3856d8d1c1ab844dcb4bb18442442b6e7887c3791d3d2de65904183a0",
+    "tests/fixtures/adoption-video-routing/amendments/render-report-host-recovery-plan.json": "219eb304ff8b4d6b8ace57033fc898a65ce741bdc085f1c1aa6202543ea7938e",
+    "tests/fixtures/adoption-video-routing/amendments/run-render-report-host-recovery.mjs": "e9665b9db9cc8abf3ac6ac9fdc756cb3c13cc7cb1cff271c6c0d24e63b330747",
+    "tests/fixtures/adoption-video-routing/amendments/proof-launch-support.mjs": "9c99b503d94fce756f8d6820cb06f459ed19905d591e6042534c3805839c80d5",
+    "tests/fixtures/adoption-video-routing/amendments/render-report-proof-root.md": "654a6c49b259b3f47f30b78348f6408f59c743d92bbafbff014a6e4357f9f7ef",
+    "tests/fixtures/adoption-video-routing/amendments/render-report-proof-rubric.json": "03522ef11e862a80b813876e389ed9c1ccb449fba5e88206da80c55a0e4e1391",
+    "tests/fixtures/adoption-video-routing/render-prompt.txt": "50d4721e7089ff8b1bf0b0e5e9bb91882fe5661155208d25e1037c666049e0ff",
+    "tests/fixtures/adoption-video-routing/oracle.py": "73fb2178ef57759a84e52e7323db150af7f18788893950488ac2bdb6d14caca2",
+    "tests/fixtures/adoption-video-routing/runs/render-report-proof-01-host-init-recovery/archive-sha256.json": "b568785e18ab3b3f2a8516ac22358b45c520521b4685376dc1581af33348ff60",
+    "tests/fixtures/adoption-video-routing/runs/render-report-proof-01-host-init-recovery/archive-layout.json": "8cabbefff66f168db88984eb2949d054e092cf348dec43f3a460ed5b845f4b1a",
+    "tests/fixtures/adoption-video-routing/amendments/exec-json-observability/audit-sha256.json": "3f15bf684d526e2507d742873ba5f70d190af3c41fc6888ea93154c662ac3f19",
+    "tests/fixtures/adoption-video-routing/parent/host-recovery-review.json": "f369e9bbe4d5de99ad5bbf779c205da84376498336278145f1f49a3f8805cbf8",
+    "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+    "/usr/bin/node": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c"
+  },
+  "transitiveBindings": "Bound prior plan supplies all1003 inputs,923 canonical source records and1114 preserved archive records; verify every referenced byte before launch. No large guidance duplication during preparation.",
+  "archives": [
+    {
+      "manifest": "tests/fixtures/adoption-video-routing/runs/render-report-proof-01-host-init-recovery/archive-sha256.json",
+      "base": "tests/fixtures/adoption-video-routing/runs/render-report-proof-01-host-init-recovery"
+    },
+    {
+      "manifest": "tests/fixtures/adoption-video-routing/amendments/exec-json-observability/audit-sha256.json",
+      "base": "tests/fixtures/adoption-video-routing/amendments/exec-json-observability"
+    }
+  ],
+  "oracle": "After capture only: python3 tests/fixtures/adoption-video-routing/oracle.py /tmp/qs-video-native-capture-20260926/after. Independent output measurements never establish what the model inspected in-turn.",
+  "acceptance": "Parent independent review of native complete stream, all shell/MCP/delegation semantics, output preservation and claim-to-view/measurement attribution; native transport success and observedNamedImageCalls alone are not acceptance."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "render-report-native-01",
+  "planSHA256": "01502482f96ab9a0c7a3114edefe8bb8891b1ed067f0c2b85eed7ce1278ffb83",
+  "node": "v24.21.0",
+  "nodeExecutable": "/usr/bin/node",
+  "verified": {
+    "controls": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request",
+      "approvals_reviewer": "auto_review"
+    },
+    "verifiedOldInputs": 1003,
+    "verifiedCanonicalSources": 923,
+    "verifiedPreservedHistory": 1114
+  }
+}

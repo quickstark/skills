@@ -71,10 +71,17 @@ file URLs; originals and original grades remain unchanged. The
 [append-only resolution](../../tests/fixtures/frontend-adoption-v2-review/f01/http-resolution-0001.json)
 records exact artifacts and evidence limits.
 
-A separate native app-server protocol is being prepared for the unchanged 66-row
-source/task/rubric/schedule. It will retain native image and tool events and use
+A separate native app-server protocol is frozen and running for the unchanged 66-row
+source/task/rubric/schedule. It retains native image and tool events and uses
 the same HTTP observer for both variants. Existing configured controls are
 inherited; the native reviewer is recorded, not overridden. Prior exec implicitly
 used a different approval behavior, so no results will be pooled or attributed
 causally across protocols. No efficiency or adoption conclusion follows from
 preparation, artifact quality alone, or a successful capture exit.
+
+The [native plan](../../tests/fixtures/frontend-adoption-v3/plan.json) is bound at
+SHA256 `62bb5776078183239fd906cbd063194e1fe1ea8e6e61ca839208dddd69e00455`.
+Parent verification passed 43 recorder/orchestrator controls and the separate
+five HTTP controls; required repository sync/check and all 462 tests passed.
+Actual quality and authority review proceeds as completed bundles become available.
+A complete recording is not a passing behavioral grade.
