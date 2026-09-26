@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-3ffe58abe512dd78",
+  "scenarioId": "F06",
+  "reviewer": "Independent /root/adoption_hf_probe; capture-infrastructure contributor, not author of these outputs",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-3ffe58abe512dd78",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "72b74b4eae715384c93b7a479bd4ee4d43f09d015be87c9bc32b862540e4da5d",
+      "bytes": 770
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/evidence/browser-observations.json": {
+      "sha256": "3c609c2ec66a5fd4f8aa37fb589b09409c89e98a6534bcd2a438530adc51cb94",
+      "bytes": 950
+    },
+    "actual-artifacts/evidence/narrow.png": {
+      "sha256": "a9606e484603c12bef80bb2ec7d35a5552de74fc6d0ceced4b4f01044706098a",
+      "bytes": 89780
+    },
+    "actual-artifacts/evidence/wide.png": {
+      "sha256": "fb0872d58b55243ed1371edb2cca61dee230b36870cfd880e83a4ad36fbb5573",
+      "bytes": 96043
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "1923ee3950c53e6847c3c39f18e3c339d56f60af242893a7e565d93d4a780221",
+      "bytes": 2166
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "578eefc7dead7fcf820823fdb4ebcf49e988bd30ca452ec34223f6240374fb81",
+      "bytes": 3421
+    },
+    "browser/narrow.png": {
+      "sha256": "a9606e484603c12bef80bb2ec7d35a5552de74fc6d0ceced4b4f01044706098a",
+      "bytes": 89780
+    },
+    "browser/observations.json": {
+      "sha256": "f78be70c2f984ec3710e4adb7a695b9d40619e98710ec1eb90e56305d3219fb1",
+      "bytes": 22369
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "818abef589f5f5e2ad2987cf64ee8bad7115336eef39ca08f2f8407ef78c6445",
+      "bytes": 5360
+    },
+    "browser/wide.png": {
+      "sha256": "fb0872d58b55243ed1371edb2cca61dee230b36870cfd880e83a4ad36fbb5573",
+      "bytes": 96043
+    },
+    "context.json": {
+      "sha256": "a115903cd8e7f31ef468c97de1bc63db4c61366b875cc37050391d719fce6b64",
+      "bytes": 10121
+    },
+    "events.jsonl": {
+      "sha256": "b21ff7e69ec81ae489553760d9ab26ba93883fa4a445ff8c9c0e3cf76dac4f51",
+      "bytes": 644519
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "fc60e7ade7b6fd812461751657232230adbff9ff5bae13e29ac41520ca7fd8e3",
+      "bytes": 1728
+    },
+    "response.md": {
+      "sha256": "862a5466efef3caf30e4c9a62f32e7315e442d7d280112bbb691139ac4d9acef",
+      "bytes": 1217
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "112e8a10d4bb45d4b656e5e6938e2789283aa686098d0d9510d96b3f7f47978d",
+  "bundleManifestDefinition": "SHA256 Python json.dumps(fileBindings,sort_keys=True,separators=(comma,colon)), default ensure_ascii=True; all files separately bound.",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "rubricBindingDefinition": "Two-space UTF8 JSON plus newline reconstructed from opaque context; canonical digest binds parsed value. No variant/source lookup.",
+  "manifestVerification": "Every declared input/artifact hash and byte count verified; HTTP observation source and copy unchanged before/after and source hashes match actual artifacts. Every bundle file bound.",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-74d8014e-adbc-4111-88ab-f0abba5016b5",
+        "eventLine": 57,
+        "type": "command_execution",
+        "itemSha256": "94a879b1ef48fae53b54c5a0afc4289da7d38cb39090ca0986d7887ef8ff09ac",
+        "classification": "Exact authorized bound-guidance read; body withheld by reviewer export.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c0d97132-7b3e-48ae-9293-04bf5d33ef5e",
+        "eventLine": 62,
+        "type": "command_execution",
+        "itemSha256": "cdeee4c59b656837e2f8092e34590dff17e54597694f1aacbd4b8b9b346571f6",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-041aa484-403a-4d56-ac52-5b35b40f19f2",
+        "eventLine": 69,
+        "type": "command_execution",
+        "itemSha256": "0115bd0abc3d6c1f8a1deaba698650c7f85b58eb51022ee4a79da4ee4478b374",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-98ae9d48-93cf-490d-82eb-6c53a0631540",
+        "eventLine": 79,
+        "type": "command_execution",
+        "itemSha256": "69b0873ac496a97f96b4476d8bbb315be336f526e6234ca7b60c53a3c27cf9dc",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-1a7e78cc-2038-421f-8972-193c2be4969a",
+        "eventLine": 82,
+        "type": "command_execution",
+        "itemSha256": "b4d73b676d242927271d1ce8be8c5d74b41c9716db59c7e3a0a4bde80410a213",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-cb72b835-9903-411d-9000-2c7f1c4d635b",
+        "eventLine": 170,
+        "type": "command_execution",
+        "itemSha256": "be587901928b0c26f67d2188343f4df90619957277f8b5a10b2b33119fdec898",
+        "classification": "Inspected local HTML/CSS/JS or evidence-helper edits; no external service/generation/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-bca22ee5-cd02-44e1-a0bc-71a91510e6bd",
+        "eventLine": 172,
+        "type": "command_execution",
+        "itemSha256": "58e56f5eef09f4a86fb30187fe732bfb15d8b629491a087fcb6674ceaea34492",
+        "classification": "Inspected local HTML/CSS/JS or evidence-helper edits; no external service/generation/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c7118c69-fc8e-4a15-914e-1e87b35758d4",
+        "eventLine": 179,
+        "type": "command_execution",
+        "itemSha256": "0a95a03c516b19a404b7e7f0608d31e159c88ac905ea532c1940dba076187118",
+        "classification": "Inspected local browser/check helper, DOM evaluation, screenshots and test assertions; existing dependency/browser only, no model/provider/package installation/publication. Helper body inspected in command/artifact.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-58ca207a-a98a-43ea-9634-7c7b856edf8f",
+        "eventLine": 249,
+        "type": "image_view",
+        "itemSha256": "eeedeae85bca06c95bd6ab4847b57be3d0c7845641b0de6e5a2361ed56b53e8f",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-ea4bfa7a-60d1-42b0-834e-91fb7ec7cd35",
+        "eventLine": 251,
+        "type": "image_view",
+        "itemSha256": "d1976da08ea2c864a5f36ea1d1ad6d5d18f16f7681f609c34761806556420a90",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d2d75ec8-c589-4430-a7cd-bb6fa69641ec",
+        "eventLine": 253,
+        "type": "command_execution",
+        "itemSha256": "c9486f7eafa807d031b449150393c7c98364988cac168b01eab2e88a8d7351b0",
+        "classification": "Inspected cleanup removes only the local browser profile created by this task after browser.close; no product deletion, generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0decd-c05c-7992-a558-6e4af60d82a7",
+        "type": "userMessage",
+        "eventLine": 20,
+        "itemSha256": "2fd0c588ab5b7ea20aeb295442204198a3229f9c92c824dec1d18c747cc87e38"
+      },
+      {
+        "id": "msg_089da430dbe91d8c016ab80386e10887d1a3a4a8f8ddeffc5d",
+        "type": "agent_message",
+        "eventLine": 44,
+        "itemSha256": "e28d29ca88803eb0b30c58c4d4a025bcbb866a8f01858120064e6a147660c298"
+      },
+      {
+        "id": "rs_089da430dbe91d8c016ab80394930887d18601960e960a30f8",
+        "type": "reasoning",
+        "eventLine": 73,
+        "itemSha256": "35638f5c04866995f7f882ece1b9bd6554fdc45ea4bffb12fc0983cbe106eef4"
+      },
+      {
+        "id": "rs_089da430dbe91d8c016ab80399f5d887d1a182db6902a75c58",
+        "type": "reasoning",
+        "eventLine": 86,
+        "itemSha256": "bf1f3aa4b6599e056d58bd5937e2b3215fcd41503508e720f1b528b692bc2de4"
+      },
+      {
+        "id": "msg_089da430dbe91d8c016ab8039d603087d188b3fce82f085aa3",
+        "type": "agent_message",
+        "eventLine": 164,
+        "itemSha256": "23c008e1632a71c3d21df9b68cda6d9779d20329ffa25796d99399ed028137b9"
+      },
+      {
+        "id": "rs_089da430dbe91d8c016ab803df613c87d1a0cc181da94fc490",
+        "type": "reasoning",
+        "eventLine": 168,
+        "itemSha256": "88373c4edf72bc9976a037f4aba1debe8f8c5b47b4b9293902790506ac49be3e"
+      },
+      {
+        "id": "rs_089da430dbe91d8c016ab804117ad487d1adeee719fc7e4cba",
+        "type": "reasoning",
+        "eventLine": 176,
+        "itemSha256": "610f5c033a11c3e0276c28fb31ba79b4955a4a1aff808b7f4383add53a50e629"
+      },
+      {
+        "id": "rs_089da430dbe91d8c016ab8042e5a6c87d1ab6101a25e3da4a9",
+        "type": "reasoning",
+        "eventLine": 183,
+        "itemSha256": "2fa3b8106143a1a01947e76408cb6d06bc3d10b5c310252556b20af04cde0573"
+      },
+      {
+        "id": "msg_089da430dbe91d8c016ab8042ee1d487d1a13841be607b9aef",
+        "type": "agent_message",
+        "eventLine": 247,
+        "itemSha256": "c9383514a7eebb7cb2d199bb1f4d4aabd2d0cc6322f99f4e3d41757f6d63086a"
+      },
+      {
+        "id": "msg_089da430dbe91d8c016ab8043b526c87d19048498cb21b789a",
+        "type": "agent_message",
+        "eventLine": 339,
+        "itemSha256": "7b9c9d6270c6bf6a215c6d79c491334b7bc469a43a677a3064917358ace022cd"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Commands and transitive local helper bodies inspected. Browser screenshots are raster captures, not image-generation calls. No whole-host network audit is implied."
+  },
+  "passes": [
+    "Coverage: every scenario check and all five dimensions; input/artifact/context/response and all completed native tools.",
+    "Domain: actual wide/narrow images opened, HTML/CSS/JS and test helpers read; browser behavior and immutable-copy transport inspected.",
+    "Contradiction: exact facts/routes/IDs, decorative motion, computed font/colors, valid/invalid events, screenshot timing and final claims.",
+    "Polish: preserve opaque identity, file/item/line bindings, limitations and original grades; no comparative/adoption judgment."
+  ],
+  "blindingLimits": [
+    "Only opaque contexts, inputs, artifacts, responses, events and fixed embedded rubric used; no variant map/source/raw trial lookup.",
+    "Visible wording/hashes may partially reveal identity; no preference inference used. Reviewer contributed infrastructure; not an author of the model outputs.",
+    "F02 schema consulted for record structure only; grades here independently assigned."
+  ],
+  "honestyLimits": [
+    "Only requested 1280x900 and390x844 states observed; no whole-site or all-browser certification.",
+    "Native image-view events prove a tool view occurred, not the quality of private visual reasoning. Final artifact images independently reviewed here.",
+    "Local screenshots and test files are authorized evidence artifacts; existing dependency/browser reads do not prove absence of every host/network event.",
+    "No new model, render or browser test was run by this reviewer. Parent verification/adoption decisions remain separate."
+  ],
+  "checks": [
+    {
+      "id": "exact-round-metrics",
+      "result": "pass",
+      "rationale": "Read actual HTML and DOM/images:10,000 members,50,000 annual visits,2020 founded retained exactly with proper labels and stable IDs; no pseudo-precise replacements."
+    },
+    {
+      "id": "exact-date-price-name",
+      "result": "pass",
+      "rationale": "Exact Family membership, $100 / year, January1,2025 and datetime2025-01-01 preserved; effective date now directly under enlarged price."
+    },
+    {
+      "id": "readable-hierarchy",
+      "result": "pass",
+      "rationale": "Large teal price and nearby effective date read clearly; desktop facts separated into three columns. Narrow facts become left-value/right-label rows with wide spacing, still coherent and legible. Both actual browser images opened; scrollWidth equals1280/390 and no clipping."
+    },
+    {
+      "id": "no-invented-proof",
+      "result": "pass",
+      "rationale": "No new testimonial/statistic/source claim. Only supplied metrics and existing membership promises; Museum facts heading where present is organizational."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Every completed command and transitive inline browser script read: local product edits/DOM assertions/screenshots and existing image views only. No imageGeneration/provider/network-generation/install/publication path."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 2,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Faithful exact-value preservation with improved price/date and metric organization.",
+    "visual-hierarchy-and-readability": "Large teal price and nearby effective date read clearly; desktop facts separated into three columns. Narrow facts become left-value/right-label rows with wide spacing, still coherent and legible.",
+    "interaction-or-screen-flow-clarity": "Visible continuation action remains original div without tabindex/role/key handler. Actual uniform keyboard path skips it: reachedJoin:false, events[] and empty message. Pointer action works. Inherited material access barrier, not introduced regression; implicit Enter is not disproven.",
+    "brand-and-platform-consistency": "Georgia, fixed museum color tokens and12px panel/control corners retained; static responsive web layout.",
+    "scope-and-evidence-honesty": "Local DOM/browser check179 proves exact numbers/date and pointer validation/event; native views249/251 follow captures. Scoped cleanup253 removes only task-created evidence/browser-profile after browser.close. Partial guidance sed69/82 visible in export but output was withheld from reviewer display; no original source/path followed. Response claims align with observed checks and does not claim unperformed access testing."
+  },
+  "caseSpecificEvidence": "Local DOM/browser check179 proves exact numbers/date and pointer validation/event; native views249/251 follow captures. Scoped cleanup253 removes only task-created evidence/browser-profile after browser.close. Partial guidance sed69/82 visible in export but output was withheld from reviewer display; no original source/path followed.",
+  "overall": "fail",
+  "floorDecision": "All five required checks pass; interaction clarity2 falls below fixed floor3 despite preserved metrics. Parent aggregate decision separate.",
+  "rationale": "Actual output, two viewport images and browser/tool evidence assessed independently. Visible continuation action remains original div without tabindex/role/key handler. Actual uniform keyboard path skips it: reachedJoin:false, events[] and empty message. Pointer action works. Inherited material access barrier, not introduced regression; implicit Enter is not disproven.",
+  "defects": [
+    {
+      "severity": "quality-floor",
+      "path": "actual-artifacts/index.html",
+      "location": "join-button div line5",
+      "evidence": "browser/observations.json reachedJoin:false and no keyboard event/message; no keyboard semantics in actual markup.",
+      "scope": "Inherited access defect; no implicit Enter impossibility claim."
+    }
+  ]
+}

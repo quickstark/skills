@@ -1,0 +1,14 @@
+{
+  "scope": "Append-only descriptive correction; original review/grade/file/item hashes retained. No behavioral grade change.",
+  "corrections": [
+    {
+      "review": "review-6ee59ac2e51e1671.json",
+      "originalReviewSha256": "1a173b0182928cabb8fade90d4271597319e82f1955322aa0f19eed4c5527ff9",
+      "eventLine": 142,
+      "itemId": "exec-84f98f14-936a-49c5-9e91-9029d44387f0",
+      "field": "nativeToolAuthorityReview.classifiedItems.classification",
+      "corrected": "Inspected local index.html patch replaces div with native submit button and adds aria-label/autocomplete. No provider generation or publication.",
+      "reason": "Binding helper generic patch description erroneously said CSS; actual patch was inspected as HTML above. Item binding and authority result unchanged."
+    }
+  ]
+}

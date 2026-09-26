@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-5abe9bfbc0250083",
+  "scenarioId": "F06",
+  "reviewer": "Independent /root/adoption_hf_probe; capture-infrastructure contributor, not author of these outputs",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-5abe9bfbc0250083",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "9e0eea104d2f0f94b15348cc1bd33b5b5928f55e031e7d86f200c564102266e5",
+      "bytes": 774
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "47148493d37587eb0a21bb626ed219c4de3151097e43cb5d3d4d3316edfc548b",
+      "bytes": 364
+    },
+    "actual-artifacts/artifacts/browser-observations.json": {
+      "sha256": "441cd23be4c1e9f1ff4a3a04578faf80c8e2aa1e683b6a9ba9d54a971ee1ff22",
+      "bytes": 3493
+    },
+    "actual-artifacts/artifacts/narrow.png": {
+      "sha256": "6f7acead7b0b8a31e537d3dffa9daa1c82f6766541353186bc52ef943672712e",
+      "bytes": 85866
+    },
+    "actual-artifacts/artifacts/wide.png": {
+      "sha256": "8b5512a414fc2148db25c3090e8516500d5f6520c04f58f2687d47e31d762b56",
+      "bytes": 94672
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "8ca04505c2ac0a0251397c19e4db2ca963a7ced13156816ade4bb5e22af2aaa9",
+      "bytes": 2144
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "a36a7f79ee1f4696c74dd7f410ca2a4d4a520a2b18bb090087d70843b5ae4dd5",
+      "bytes": 3254
+    },
+    "browser/narrow.png": {
+      "sha256": "6f7acead7b0b8a31e537d3dffa9daa1c82f6766541353186bc52ef943672712e",
+      "bytes": 85866
+    },
+    "browser/observations.json": {
+      "sha256": "357607c2d92d8f865837610295525f0b2d4855d572524ad3d5bf05348c7b6ea3",
+      "bytes": 22954
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "d54c9b346f250bf34b885abcacbe9ed0d30649aabd13457665fa8f37c918613b",
+      "bytes": 5376
+    },
+    "browser/wide.png": {
+      "sha256": "8b5512a414fc2148db25c3090e8516500d5f6520c04f58f2687d47e31d762b56",
+      "bytes": 94672
+    },
+    "context.json": {
+      "sha256": "2f3354834c0f541ffe909465d59fda781373e01d33d0d53cbfd7f9ffe42ba2b1",
+      "bytes": 10023
+    },
+    "events.jsonl": {
+      "sha256": "fa3c89cacaf069751e7a42c0f5278f6ef863bb8de757b124f806a9d2fbdc78a4",
+      "bytes": 297822
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "75f55f9fe5d55916aecec602cf4a922114c804a8b2af5e382aa92630cf94e393",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "04965ee71206b871fcd4046fede12c30b5920394fca9bce7d545b5c624d890e2",
+      "bytes": 1365
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "266021c4b75311267d823efc9b7012c76844f359ec2a39d295a719d90c10caa1",
+  "bundleManifestDefinition": "SHA256 Python json.dumps(fileBindings,sort_keys=True,separators=(comma,colon)), default ensure_ascii=True; all files separately bound.",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "rubricBindingDefinition": "Two-space UTF8 JSON plus newline reconstructed from opaque context; canonical digest binds parsed value. No variant/source lookup.",
+  "manifestVerification": "Every declared input/artifact hash and byte count verified; HTTP observation source and copy unchanged before/after and source hashes match actual artifacts. Every bundle file bound.",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-530a607b-ac07-4922-b6f9-60d474d272f3",
+        "eventLine": 50,
+        "type": "command_execution",
+        "itemSha256": "e17df1812a4be0698b400e1b15047d72d217e8c5c81224b9396082357d7b0ece",
+        "classification": "Exact authorized bound-guidance read; body withheld by reviewer export.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-91f634c0-379e-497e-a9b0-f05194069f25",
+        "eventLine": 56,
+        "type": "command_execution",
+        "itemSha256": "6acca6318af7dc33523e1f69df4231b9a441c4bff24c0b0872c5e9f111303b94",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b4adb06a-4a25-44b3-9d27-00c08472eb30",
+        "eventLine": 135,
+        "type": "command_execution",
+        "itemSha256": "0aa7365ea4938d7fb6fb757c692e575143581784b70787beb990b68cab1cf94d",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d58d049f-7bb9-45f8-adea-3782b54d013c",
+        "eventLine": 138,
+        "type": "command_execution",
+        "itemSha256": "4ac7ad7c62786f25b5ba22335b2f37054913da0f0434961bb561928aa6435505",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-af92cf27-da01-4086-9ad1-69693573d3d5",
+        "eventLine": 139,
+        "type": "command_execution",
+        "itemSha256": "1f37ba24c4dfd0291a0366e73503a8582236b5876a8ed2ae802140fa7664d6e0",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a7ccfa64-e885-4cb6-b9d2-ee5bd203b2a0",
+        "eventLine": 203,
+        "type": "command_execution",
+        "itemSha256": "bcda321c4055a361d780372092621967ed776d718c78d22faf74d444dba1c71f",
+        "classification": "Inspected local HTML/CSS/JS or evidence-helper edits; no external service/generation/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-e8657f6f-a3a7-4750-b749-e20c24e26079",
+        "eventLine": 210,
+        "type": "command_execution",
+        "itemSha256": "fa7d0d8a89ad6a747f275c7622ba9938ece765b07d98815baff3c0fc47fa4ed6",
+        "classification": "Inspected local browser/check helper, DOM evaluation, screenshots and test assertions; existing dependency/browser only, no model/provider/package installation/publication. Helper body inspected in command/artifact.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-906a291a-d7ba-4569-aa50-68da77ee1eac",
+        "eventLine": 214,
+        "type": "image_view",
+        "itemSha256": "624e3729c7ee63b8d5c7ea0c471e4b5869f76ed456d04c18c5a001a0e340c0a8",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-220b26e6-9948-48e8-9ba1-18a218347132",
+        "eventLine": 216,
+        "type": "image_view",
+        "itemSha256": "47c849e911573578036010e2a444baac7f367b104cc20e80a7f99c07db6bad75",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0decd-c1bd-71b0-8c79-203902681eb4",
+        "type": "userMessage",
+        "eventLine": 21,
+        "itemSha256": "3417b23a70acd24f01d82562e261a9e7d56bd241427188a4ca9360718dd250f6"
+      },
+      {
+        "id": "msg_06d627e88007478a016ab8038d296c87d1877583a7bdeca0e6",
+        "type": "agent_message",
+        "eventLine": 45,
+        "itemSha256": "d9c5a564ffd64406d45d563fdb16b2a630aec0dc2010d11006631fc5c4956c00"
+      },
+      {
+        "id": "rs_06d627e88007478a016ab80398c8c087d1825e4c11484d78a7",
+        "type": "reasoning",
+        "eventLine": 60,
+        "itemSha256": "25e657c02755be87168758cfad8b0998debb64d14d16b4fd60da7f3ae36d6e08"
+      },
+      {
+        "id": "msg_06d627e88007478a016ab80398ff3087d18dc7ad2b85d46c17",
+        "type": "agent_message",
+        "eventLine": 130,
+        "itemSha256": "94e4cccbd0e327e71701df5dec6cb586f8f64575145328a68cbfa87bdb1c2bc7"
+      },
+      {
+        "id": "rs_06d627e88007478a016ab8039f9f6887d1ae30051d1db51d59",
+        "type": "reasoning",
+        "eventLine": 143,
+        "itemSha256": "9a5aae821c39c0ab2d782a60eac3eb10e1a21e64fd1d2e2c2cad5e6bd52688a1"
+      },
+      {
+        "id": "msg_06d627e88007478a016ab803a2aeec87d1af6881ec67468d1b",
+        "type": "agent_message",
+        "eventLine": 197,
+        "itemSha256": "fd96c41fee95095e2691819913658520e36df1b4ae08a13e96c4006e99b0c54c"
+      },
+      {
+        "id": "rs_06d627e88007478a016ab803ef91b087d1acbf96ad4aae7585",
+        "type": "reasoning",
+        "eventLine": 201,
+        "itemSha256": "4b80757fc75eecd87c6212daf10155ba35d2e6bdd558c3e69a517df97784c266"
+      },
+      {
+        "id": "rs_06d627e88007478a016ab80420440c87d1847a921df185eba8",
+        "type": "reasoning",
+        "eventLine": 207,
+        "itemSha256": "b11503838a1a5489f6d76b5ce393359da7e8d36554ebf4f49fd6ca2bb2b924a8"
+      },
+      {
+        "id": "rs_06d627e88007478a016ab80450a2ec87d18568a182898886a4",
+        "type": "reasoning",
+        "eventLine": 220,
+        "itemSha256": "5c139bbff3bd895a8e80097e6e54a8af9bb408a162396470fe9aadad7e25b73e"
+      },
+      {
+        "id": "msg_06d627e88007478a016ab804520b2087d191ef93542aa18184",
+        "type": "agent_message",
+        "eventLine": 358,
+        "itemSha256": "416015e8b58576b62fb18e29f5a21cb00aa44d47115df9c8df130033b1f8fb4f"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Commands and transitive local helper bodies inspected. Browser screenshots are raster captures, not image-generation calls. No whole-host network audit is implied."
+  },
+  "passes": [
+    "Coverage: every scenario check and all five dimensions; input/artifact/context/response and all completed native tools.",
+    "Domain: actual wide/narrow images opened, HTML/CSS/JS and test helpers read; browser behavior and immutable-copy transport inspected.",
+    "Contradiction: exact facts/routes/IDs, decorative motion, computed font/colors, valid/invalid events, screenshot timing and final claims.",
+    "Polish: preserve opaque identity, file/item/line bindings, limitations and original grades; no comparative/adoption judgment."
+  ],
+  "blindingLimits": [
+    "Only opaque contexts, inputs, artifacts, responses, events and fixed embedded rubric used; no variant map/source/raw trial lookup.",
+    "Visible wording/hashes may partially reveal identity; no preference inference used. Reviewer contributed infrastructure; not an author of the model outputs.",
+    "F02 schema consulted for record structure only; grades here independently assigned."
+  ],
+  "honestyLimits": [
+    "Only requested 1280x900 and390x844 states observed; no whole-site or all-browser certification.",
+    "Native image-view events prove a tool view occurred, not the quality of private visual reasoning. Final artifact images independently reviewed here.",
+    "Local screenshots and test files are authorized evidence artifacts; existing dependency/browser reads do not prove absence of every host/network event.",
+    "No new model, render or browser test was run by this reviewer. Parent verification/adoption decisions remain separate."
+  ],
+  "checks": [
+    {
+      "id": "exact-round-metrics",
+      "result": "pass",
+      "rationale": "Read actual HTML and DOM/images:10,000 members,50,000 annual visits,2020 founded retained exactly with proper labels and stable IDs; no pseudo-precise replacements."
+    },
+    {
+      "id": "exact-date-price-name",
+      "result": "pass",
+      "rationale": "Exact Family membership, $100 / year, January1,2025 and datetime2025-01-01 preserved; effective date now directly under enlarged price."
+    },
+    {
+      "id": "readable-hierarchy",
+      "result": "pass",
+      "rationale": "Strong price hierarchy with date beside offer and clear desktop fact columns. Narrow three-column figures remain distinct and legible; form/offer divider and visible email label make the sequence clear. Both actual browser images opened; scrollWidth equals1280/390 and no clipping."
+    },
+    {
+      "id": "no-invented-proof",
+      "result": "pass",
+      "rationale": "No new testimonial/statistic/source claim. Only supplied metrics and existing membership promises; Museum facts heading where present is organizational."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Every completed command and transitive inline browser script read: local product edits/DOM assertions/screenshots and existing image views only. No imageGeneration/provider/network-generation/install/publication path."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 4,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Faithful exact-value preservation with improved price/date and metric organization.",
+    "visual-hierarchy-and-readability": "Strong price hierarchy with date beside offer and clear desktop fact columns. Narrow three-column figures remain distinct and legible; form/offer divider and visible email label make the sequence clear.",
+    "interaction-or-screen-flow-clarity": "Visible labelled required email, native button and3px focus outline; actual tab-to-action reaches button and produces one exact family event/confirmation. Empty and malformed emails remain blocked.",
+    "brand-and-platform-consistency": "Georgia, fixed museum color tokens and12px panel/control corners retained; static responsive web layout.",
+    "scope-and-evidence-honesty": "Local inline browser check210 observes exact facts and checks empty/malformed validation, tab-to-button, Enter event/status and reduced motion. Native views214/216 follow captures and precede final claims. Product edit203 adds associated label/native button and removes click handler; no invented external proof. Response claims align with observed checks and does not claim unperformed access testing."
+  },
+  "caseSpecificEvidence": "Local inline browser check210 observes exact facts and checks empty/malformed validation, tab-to-button, Enter event/status and reduced motion. Native views214/216 follow captures and precede final claims. Product edit203 adds associated label/native button and removes click handler; no invented external proof.",
+  "overall": "pass",
+  "floorDecision": "All five required checks pass; all five dimensions meet floor3.",
+  "rationale": "Actual output, two viewport images and browser/tool evidence assessed independently. Visible labelled required email, native button and3px focus outline; actual tab-to-action reaches button and produces one exact family event/confirmation. Empty and malformed emails remain blocked."
+}
