@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "experiment": "mobile-native-portrait-qualification-01",
+  "fileManifest": {
+    "README.md": {
+      "sha256": "41ccc1e72181e33c32e30baa7f59eefa76baf4b9744551f02b5452e818369889",
+      "bytes": 3391
+    },
+    "assets/empty/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "common-scope.json": {
+      "sha256": "0f635f57d5ea05f44c90bbe4bac419e8723af826125b942ab232fb696b24ae75",
+      "bytes": 2451
+    },
+    "mobile-guidance.patch": {
+      "sha256": "24cd5ab43f07662eea003abe9b4adb86c75464188ca69eea3d7db5089e374657",
+      "bytes": 1857
+    },
+    "preparation.test.mjs": {
+      "sha256": "87947a8a7fd385535089d70329435f54f4dc6555d79442f630de2ba4efbacfbb",
+      "bytes": 4763
+    },
+    "prepare.py": {
+      "sha256": "541ca9fcb89eae3ded330f97613de8bd9c1d2fe67ef78e894d3c290680c3b6fa",
+      "bytes": 5879
+    },
+    "qualification.json": {
+      "sha256": "73c2655af1a03496c52c6364e9923bb62e06a90a3a5bfdf7f7cdb84e25aa223c",
+      "bytes": 2642
+    },
+    "rubric.json": {
+      "sha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+      "bytes": 2561
+    },
+    "run.mjs": {
+      "sha256": "0a5cf16dd58048bb44d0de56cb51ae0780495892be9b79657afb6286b75d6e92",
+      "bytes": 7567
+    },
+    "scenarios.json": {
+      "sha256": "70035894e58e959286e52bffdb1ce6dc5a371d49b20396db59eb1e2ad514d76f",
+      "bytes": 1818
+    },
+    "schedule.json": {
+      "sha256": "a24e6903ff3e425291b60ad443b5db11e77f8a6bccb5ea570d8ef62c5b242cd7",
+      "bytes": 633
+    },
+    "sources/index.json": {
+      "sha256": "da96b3ead3ae949ed1e6c04a97d3077124c0ad911bbec5d24bcc30b73651bf19",
+      "bytes": 1816
+    },
+    "sources/local-qs-design-image-mobile.md": {
+      "sha256": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+      "bytes": 9443
+    },
+    "sources/original-imagegen-frontend-mobile.md": {
+      "sha256": "8a33389979f3074fa0926678e266ad2eb9234624472254469fc1ad916b9caa24",
+      "bytes": 40326
+    },
+    "sources/private-brief.md": {
+      "sha256": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a",
+      "bytes": 2105
+    },
+    "sources/private-mobile-images.md": {
+      "sha256": "c25f1805343b461d13e394d77fe73f2debf8c36a1dda1ac50d2c180557eb45b4",
+      "bytes": 2868
+    },
+    "sources/private-prompt-construction.md": {
+      "sha256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+      "bytes": 1792
+    }
+  },
+  "dependencies": {
+    "scripts/frontend-adoption-v3.mjs": "afb098fee1b0af9f1bd4350edb52524f67f8ff1fa1a90f51bf0a7b0b2bb215fe",
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+    "scripts/frontend-adoption-trials.mjs": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "tests/fixtures/frontend-native-capture/bindings.json": "772f149e16169f14b5c39e484b14aaf8294102f85955ab6492c86d15ecabbea6",
+    "tests/fixtures/frontend-native-capture/readiness/inherited-reviewer-success/thread-start-response.json": "029bad59dcfe8a5ec064b036a2390e662d2425417ad1f06102578dc34649f020",
+    "tests/fixtures/frontend-adoption-v2-http/observer.mjs": "da3ae49427a54ae4339cc657de415982542080190c758f0702579d8a2b15377d",
+    "tests/fixtures/frontend-adoption-v2-http/browser-observe-http.mjs": "2f02477d71b3abb2257c643b835b7f4c673c9e846fd30f122ad30c4ffea6fc42",
+    "tests/fixtures/frontend-adoption-v2-http/plan.json": "e715f85666c1de3f73da3715bb9a0a588e95a11897ed2ac2409d84bcbb8f276d",
+    "tests/fixtures/frontend-adoption-v3/plan.json": "62bb5776078183239fd906cbd063194e1fe1ea8e6e61ca839208dddd69e00455",
+    "tests/fixtures/frontend-adoption-v3/scenarios.json": "116ed1e6bc3c744b5422051503e76bc1eecb8886fb44f49e1a214f93b9cf56b5",
+    "tests/fixtures/frontend-adoption-v3/schedule.json": "5f93b668fa74a664306e9e6dc7478bb3d0bada7d81e175672f851727957802b5",
+    "tests/fixtures/frontend-adoption-v3/sources/index.json": "039eb152c1e02ca4227535019aab4e938555ae05dbf2f0134b96d4f3e979c9a1",
+    "tests/fixtures/frontend-adoption-v3/common-scope.json": "0f635f57d5ea05f44c90bbe4bac419e8723af826125b942ab232fb696b24ae75",
+    "tests/fixtures/frontend-adoption-v3/rubric.json": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+    "tests/fixtures/frontend-adoption-v3/sources/original-imagegen-frontend-mobile.md": "8a33389979f3074fa0926678e266ad2eb9234624472254469fc1ad916b9caa24",
+    "tests/fixtures/frontend-adoption-v3/sources/local-qs-design-image-mobile.md": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+    "tests/fixtures/frontend-adoption-v3/sources/private-brief.md": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a",
+    "tests/fixtures/frontend-adoption-v3/sources/private-prompt-construction.md": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+    "tests/fixtures/frontend-adoption-v3/sources/private-mobile-images.md": "172b8fe046e4ac4dce7a2b7fbafaed350d5437863d54aeae409062fddcc35c36",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/README.md": "7e882be771e3702ba96a7aa28c9888ad3d67a8df6bf8ae64efff2d53a1b54ca1",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/observed-images.json": "43831d02b1676c60b54df2b0ae6bebb5cc1f1da1ea0a59604984a31813a6d78b",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/parent-review.json": "6f2b18784ae04781da36fcd4183bf9245426f481ddc349fffc120d8fe42fb14c",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/LICENSE": "d17f227e4df5da1600391338865ce0f3055211760a36688f816941d58232d8dc",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__app-server__tests__suite__v2__imagegen_extension.rs": "b1d8050cb19fd5f65c341f4cd5c8333b83d53cea49ec72ef27453d5f904f58c1",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__codex-api__src__endpoint__images.rs": "ce436bdce56e6c0a9000acb4bd979f0c5a3ed7cee53c57dbccf0a9c35764262c",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__codex-api__src__images.rs": "6d5457430c184c354281889d736404c144ced04a6f5bff5fc36861a9b14b22a9",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__imagegen_description.md": "77a992a7c90e45fcd11623a1efa34bfd4c7870697e0aa54ce9b28f690877170e",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__artifact.rs": "a5e6477035945eeeb4128f122ca382b8c3a11e55e9f599bb55136fbc685ad0de",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__backend.rs": "e63c1a96ae3e2379b6f5ce2605c5f0a560cd947c6c787007ae852c661618e80c",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__extension.rs": "d831e12e1a3d531a2ae1bb405045afe9834b59e6ca9ed8956041a5d913f80ab7",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__tests.rs": "73a14392280974b9c6f8d8712cda3234c9ba2cd5c8e036e1d0043d31e4313e39",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__tool.rs": "92b24f057434902d7ec33ccb8de1e93a02590f1835baea8a3c2bbafc0dd11523",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/source-provenance.json": "54b7b1da6ac7aff57b7e2aaec09fc3ca217e01a602e8950eb508c1d0a72879ca",
+    "tests/fixtures/frontend-adoption-v3-image-resolution/verify.py": "911fc4e060c7fd943576c464f8c6c902354834f1cd49bf3d186a61be10a5feff"
+  },
+  "host": {
+    "executablePath": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+    "executableSHA256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request",
+      "approvals_reviewer": "auto_review"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Native effective controls validated before turn; runtime reroute notifications invalidate the capture."
+  },
+  "outputPath": "/tmp/qs-frontend-mobile-native-qualification-20260926",
+  "controls": "All five controls inherited unchanged and checked again before launch and by native recorder before turn.",
+  "execution": "Existing captureTrial/runPairs; three original matched pairs; six total attempts, no retry/expansion; one fresh fixed output and persistent exclusive run claim. Identity-scoped SIGINT/SIGTERM interruption uses existing recorder.",
+  "outcome": "Independent review pending. Original F09 remains failed; no pooling/regrade/exact-resolution qualification.",
+  "launchAuthority": "Parent source/criteria/authority review required before --parent-approved; freeze alone authorizes no model call."
+}

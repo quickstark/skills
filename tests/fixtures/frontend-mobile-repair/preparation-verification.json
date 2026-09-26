@@ -1,0 +1,32 @@
+{
+  "kind": "preparation-only",
+  "planSha256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c",
+  "tests": {
+    "command": "node --test tests/fixtures/frontend-mobile-repair/preparation.test.mjs",
+    "passed": 7,
+    "failed": 0,
+    "exitCode": 0,
+    "testSha256": "87947a8a7fd385535089d70329435f54f4dc6555d79442f630de2ba4efbacfbb"
+  },
+  "freezeAndVerify": {
+    "exitCode": 0,
+    "result": "verified",
+    "controls": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request",
+      "approvals_reviewer": "auto_review"
+    }
+  },
+  "fourPassAudit": [
+    "Full coverage: all original checks, common facts, five dimensions/floor and two-image budget preserved with explicit separate-size contract.",
+    "Domain evaluation: app-owned versus platform-owned typography, opaque raw backgrounds and primary pixel-size evidence distinguished.",
+    "Contradiction/error hunt: exact task delta, only one source delta, clean nonmutating patch check, paired failure waits, no retries/expansion and missing parent approval refusal verified.",
+    "Concise polish: qualification limits, original failures, parent-only source application/launch and independent image review are explicit."
+  ],
+  "noModelCalls": true,
+  "canonicalEdits": false,
+  "actualTrials": 0,
+  "processes": "All preparation processes exited; no live capture."
+}
