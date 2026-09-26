@@ -1,0 +1,15 @@
+{
+  "commands": [
+    "npm run sync:codex",
+    "npm run check:codex",
+    "npm test"
+  ],
+  "exitCode": 0,
+  "tests": 462,
+  "pass": 462,
+  "fail": 0,
+  "skipped": 0,
+  "testLogSHA256": "f554a983f5a780833b4825d3878d3ad7ada11398cd687f85c31684b689f54c8c",
+  "changes": "Exact tested mobile reference patch; matching derived digests in provenance and frontend dependency index. Initial missingindex refresh460/462failure retained. Testsunchanged.",
+  "scope": "Legacy registry; inactive candidate only. Not targetactivation/release/hostrollout verification."
+}

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "scope": "Six opaque native-portrait mobile outputs, strict unchanged rubric. No originalF09 pooling/regrading or adoption comparison.",
+  "counts": {
+    "images": 12,
+    "nonOpaqueImages": 1,
+    "reviews": 6,
+    "files": 60,
+    "tools": 52,
+    "checks": 48,
+    "pass": 4,
+    "fail": 2
+  },
+  "reviews": [
+    {
+      "trialId": "review-323c7c37e4103ec0",
+      "reviewSha256": "13193915d41d31b52296832d99f004254250cfc5d18663be42d1d87b60e6e927",
+      "overall": "pass",
+      "failedChecks": [],
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      }
+    },
+    {
+      "trialId": "review-62746d28184428ef",
+      "reviewSha256": "6987e2d543169cd4c47228b7576422a3dd90ca1207b63416767f552a4f580317",
+      "overall": "pass",
+      "failedChecks": [],
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      }
+    },
+    {
+      "trialId": "review-82f1387ba536341b",
+      "reviewSha256": "f8c50a664e7b0ec2c6d5a84fcfec9db8cf41962c72958dc5578d09e8ba5f0660",
+      "overall": "fail",
+      "failedChecks": [
+        "exact-brand-price"
+      ],
+      "dimensions": {
+        "brief-and-content-fidelity": 3,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      }
+    },
+    {
+      "trialId": "review-951aedc03bf706f9",
+      "reviewSha256": "dab4bb55ce889b95b056ec963bc8232d31b038a7b412d9529390683f368affa4",
+      "overall": "pass",
+      "failedChecks": [],
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      }
+    },
+    {
+      "trialId": "review-e242a7f3905c690f",
+      "reviewSha256": "c7ff8314e11f870f670c8f9d8f4626790348e13a6be80a30951c0a9d7f23096b",
+      "overall": "pass",
+      "failedChecks": [],
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      }
+    },
+    {
+      "trialId": "review-f294dbae2bc643d6",
+      "reviewSha256": "b11fd225e0a1b46a1ecb043de7f17cd1cc282c0efe8f43e697d51542d9149aca",
+      "overall": "fail",
+      "failedChecks": [
+        "raw-screens-safe-areas",
+        "exact-brand-price"
+      ],
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 2,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 2,
+        "scope-and-evidence-honesty": 4
+      }
+    }
+  ],
+  "failureSummary": {
+    "review-82f1387ba536341b": "App-owned SELECTED sans in both images; mandatory exact-brand-price fails, visually usable pair and candid typography failure disclosed.",
+    "review-f294dbae2bc643d6": "First image non-opaque, plus app-owned progress/Selected sans; raw-screens-safe-areas and exact-brand-price fail. Response candidly discloses transparency."
+  },
+  "renderingLimits": "Native portrait sizes actually delivered/verified984\u00d71599,887\u00d71774,941\u00d71672,852\u00d71846; no requested or proven1179\u00d72556 capability.",
+  "acceptance": "Parent independently verifies and makes adoption decision. Any later scope amendment must be separate; these original strict grades stay immutable."
+}

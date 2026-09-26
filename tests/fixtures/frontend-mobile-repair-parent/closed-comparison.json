@@ -1,0 +1,146 @@
+{
+  "planSHA256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c",
+  "mapping": {
+    "v31": "original contributor",
+    "v84": "QS candidate with mobile guidance repair"
+  },
+  "strictDecision": "Does not qualify under original mandatory brand gate. No prospective amendment applied.",
+  "rows": [
+    {
+      "row": {
+        "trialId": "F09-r1-v31",
+        "scenarioId": "F09",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-f294dbae2bc643d6",
+      "reviewSHA256": "b11fd225e0a1b46a1ecb043de7f17cd1cc282c0efe8f43e697d51542d9149aca",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 2,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 2,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": [
+        "raw-screens-safe-areas",
+        "exact-brand-price"
+      ]
+    },
+    {
+      "row": {
+        "trialId": "F09-r1-v84",
+        "scenarioId": "F09",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-82f1387ba536341b",
+      "reviewSHA256": "f8c50a664e7b0ec2c6d5a84fcfec9db8cf41962c72958dc5578d09e8ba5f0660",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 3,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": [
+        "exact-brand-price"
+      ]
+    },
+    {
+      "row": {
+        "trialId": "F09-r2-v84",
+        "scenarioId": "F09",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-e242a7f3905c690f",
+      "reviewSHA256": "c7ff8314e11f870f670c8f9d8f4626790348e13a6be80a30951c0a9d7f23096b",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r2-v31",
+        "scenarioId": "F09",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-323c7c37e4103ec0",
+      "reviewSHA256": "13193915d41d31b52296832d99f004254250cfc5d18663be42d1d87b60e6e927",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r3-v31",
+        "scenarioId": "F09",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-62746d28184428ef",
+      "reviewSHA256": "6987e2d543169cd4c47228b7576422a3dd90ca1207b63416767f552a4f580317",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r3-v84",
+        "scenarioId": "F09",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-951aedc03bf706f9",
+      "reviewSHA256": "dab4bb55ce889b95b056ec963bc8232d31b038a7b412d9529390683f368affa4",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    }
+  ],
+  "summary": {
+    "v31": {
+      "strictCounts": {
+        "fail": 1,
+        "pass": 2
+      },
+      "meanApplicableGrade": 3.533333333333333
+    },
+    "v84": {
+      "strictCounts": {
+        "fail": 1,
+        "pass": 2
+      },
+      "meanApplicableGrade": 3.8666666666666667
+    }
+  },
+  "limit": "Separate nativeportrait qualification; no pooled original F09 grades, no exactsize or skill-only efficiency claim."
+}

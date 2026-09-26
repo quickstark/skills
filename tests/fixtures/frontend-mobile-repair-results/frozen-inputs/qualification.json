@@ -1,0 +1,27 @@
+{
+  "id": "mobile-native-portrait-qualification-01",
+  "predecessor": "frontend-native-events-v3/F09",
+  "requestChange": {
+    "removed": "Target 1179×2556 with safe status/home-indicator regions.",
+    "replacement": "Use the available native image tool’s portrait output with safe status/home-indicator regions. Inspect and report each delivered image’s actual pixel dimensions; no exact numeric resolution is requested."
+  },
+  "independence": "Another reviewer must inspect all twelve actual primary images, native tool evidence and exact hashes. This preparation author does not grade resulting images.",
+  "originalOutcome": "Original F09 remains FAILED, including exact1179x2556 fidelity and observed typography defects. Original per-output grades stay immutable; defects are not attributed to outputs where they were not observed.",
+  "noncomparability": "Changed resolution requirement and proposed candidate guidance define a separate supported-interface capability qualification. Never pool with or regrade original F09; no exact-resolution capability claim, no inference that all requested numeric dimensions are impossible.",
+  "fixedDesign": {
+    "cases": 1,
+    "pairedRepetitions": 3,
+    "trials": 6,
+    "maximumImageCallsPerTrial": 2,
+    "requiredImagesPerTrial": 2,
+    "retries": 0,
+    "expansion": false
+  },
+  "reviewAddendum": {
+    "native-portrait-actual-size-reporting": "Open and decode both actual primary images; height exceeds width and response reports each exact stored pixel size. Missing size inspection/report remains failed or unverified. Do not infer size from prompt, preview or claimed dimensions.",
+    "exact-brand-price": "Brand font applies to all app-owned lettering including selected/navigation/small labels; platform status/system glyph typography stays platform appropriate. Preserve supplied price, content and identity.",
+    "raw-screens-safe-areas": "Both images must be separate complete opaque raw screens with coherent backgrounds and safe system regions, no device frame, collage or transparent cutout.",
+    "unchanged": "Retain every original required check, all five rubric dimensions and floor3 in all three repetitions. Candidate quality cannot be below matched baseline. Inspect every native/transitive tool action and actual artifacts; runtime completion alone is not quality."
+  },
+  "authority": "Preparation only. Parent must review source, fixed criteria and actual-run authority before launch. Canonical patch application belongs to parent after original aggregation closes. No canonical edit, generation, installed-skill change or service call in preparation."
+}

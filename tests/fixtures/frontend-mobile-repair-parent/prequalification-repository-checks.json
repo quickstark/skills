@@ -1,0 +1,16 @@
+{
+  "revision": "09d7623e9ea1e7354627d9d5c880bde6eb94bbe9",
+  "state": "legacy",
+  "commands": [
+    "npm run sync:codex",
+    "npm run check:codex",
+    "npm test"
+  ],
+  "exitCode": 0,
+  "tests": 462,
+  "passed": 462,
+  "failed": 0,
+  "skipped": 0,
+  "testLogSHA256": "4b1691185dc883b9d7af68679b0882a07eafe4d137ba143147a6499eeee99047",
+  "limit": "Current legacy repository coherence only; does not establish frontend acceptance or final target/release state."
+}

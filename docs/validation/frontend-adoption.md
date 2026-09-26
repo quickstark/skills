@@ -123,3 +123,37 @@ not resize them. This does not establish a universal provider resolution limit.
 A separate proposed mobile repair and native-portrait qualification must preserve
 these failed exact-size cases, avoid pooling results, and cannot claim exact-size
 support. It has not run at this checkpoint. Frontend migration remains gated.
+
+## Mobile repair qualification and pending decision
+
+The separate [native-portrait qualification](../../tests/fixtures/frontend-mobile-repair/README.md)
+closed all six fixed attempts. It changed the benchmark’s numeric resolution
+request to native portrait output with actual size reporting; the original F09
+failures remain unchanged. The tested guidance repair now exists in the inactive
+canonical mobile reference: check all app-owned brand lettering, complete opaque
+backgrounds, and actual dimensions. Its separate derived digests were updated;
+upstream source identities and adoption decisions were preserved.
+
+[Independent strict reviews](../../tests/fixtures/frontend-mobile-repair-review/README.md)
+opened all twelve primary images and bound all 52 tool actions. Two of three QS
+outputs passed every check. The third delivered usable opaque screens and accurate
+size reporting, but used sans-serif SELECTED labels and explicitly reported that
+font requirement as failed. The baseline also passed two of three; its failing
+pair included transparency and small-label font mismatches. The
+[comparison record](../../tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json)
+keeps all strict grades, with descriptive means of 3.8667/4 for QS and 3.5333/4
+for the baseline. These results do not satisfy the original mandatory brand gate.
+
+The [complete archive](../../tests/fixtures/frontend-mobile-repair-results/README.md)
+preserves every original byte. Parent verification confirmed all 182 files and
+repeated independent review binding checks. A review-verifier filename-filter
+failure and its append-only correction are retained; no grades were changed.
+Repository sync/check and all 462 tests passed after correcting the candidate’s
+private dependency digest; the initial 460/462 failure is also retained.
+
+The user has been asked whether AC-10 may permit mobile adoption with explicitly
+reported generator font limitations, while retaining every other quality and
+authority check, or whether to retain the current mobile contributor and delay
+its migration. That decision is pending at this checkpoint. Neither silence nor
+approval of the earlier test batches grants this acceptance change. The registry
+remains legacy, and no publication or actual-machine update has occurred.

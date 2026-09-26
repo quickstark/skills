@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-323c7c37e4103ec0",
+  "scenarioId": "F09",
+  "reviewer": "/root/adoption_hf_probe independent artifact reviewer; prior capture-infrastructure contributor, not output author",
+  "bundlePath": "/tmp/qs-frontend-mobile-native-qualification-20260926/reviewer-bundles/review-323c7c37e4103ec0",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "71bc216702b192deb25582baba780846c72553c876c4c47941e66a6d95a3303f",
+      "bytes": 706
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "context.json": {
+      "sha256": "607363fb814ac38b53cc04e43a1d2805a4dacba957815432fee424cb84c07d09",
+      "bytes": 9384
+    },
+    "events.jsonl": {
+      "sha256": "4848477d8bab06929b2fdf4b0b3c8169cc1c1e16945582f8ae22911f379659dd",
+      "bytes": 8614707
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "aa36186f30f61842e7c9d6de3d28d9f596a7e9d182253353978d1542352d6d60",
+      "bytes": 3134
+    },
+    "response.md": {
+      "sha256": "6701d51faaf21ed96ce0b15faccc7f6166433fb0f16192fc21ff26360d110efe",
+      "bytes": 952
+    },
+    "tool-images/06211bb27371e2f94114506d61d9a66380d4cb08192ed8da7683b69f8939898c.png": {
+      "sha256": "06211bb27371e2f94114506d61d9a66380d4cb08192ed8da7683b69f8939898c",
+      "bytes": 1429418
+    },
+    "tool-images/3b0996550f560c23c0df9209333f9905956167743eec8c24c80999c2c919cdba.png": {
+      "sha256": "3b0996550f560c23c0df9209333f9905956167743eec8c24c80999c2c919cdba",
+      "bytes": 1662590
+    },
+    "tool-images.json": {
+      "sha256": "2693f1dc58d5fffc230132f3268fef0a257a9c80f44488e92c6d5ac66099398c",
+      "bytes": 1092
+    }
+  },
+  "bundleManifestSha256": "a84c27ac2f20b1f853f8a66265c271ce862c30db191c772bb78cc65fe8b7e740",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "images": [
+    {
+      "eventLine": 125,
+      "source": "/home/djn12313/.codex/generated_images/01a0df07-16db-7c92-9a93-6a29e5e64ccc/exec-b9b84834-6462-4b24-a0b4-2d78586a71fe.png",
+      "target": "tool-images/3b0996550f560c23c0df9209333f9905956167743eec8c24c80999c2c919cdba.png",
+      "sha256": "3b0996550f560c23c0df9209333f9905956167743eec8c24c80999c2c919cdba",
+      "bytes": 1662590,
+      "width": 887,
+      "height": 1774,
+      "mode": "RGB",
+      "alphaExtrema": [
+        255,
+        255
+      ],
+      "nonOpaquePixels": 0,
+      "opaque": true,
+      "nativeResultBytesMatch": true,
+      "openedByReviewer": true
+    },
+    {
+      "eventLine": 138,
+      "source": "/home/djn12313/.codex/generated_images/01a0df07-16db-7c92-9a93-6a29e5e64ccc/exec-7211b214-b186-4a94-bfa8-61c468486578.png",
+      "target": "tool-images/06211bb27371e2f94114506d61d9a66380d4cb08192ed8da7683b69f8939898c.png",
+      "sha256": "06211bb27371e2f94114506d61d9a66380d4cb08192ed8da7683b69f8939898c",
+      "bytes": 1429418,
+      "width": 887,
+      "height": 1774,
+      "mode": "RGB",
+      "alphaExtrema": [
+        255,
+        255
+      ],
+      "nonOpaquePixels": 0,
+      "opaque": true,
+      "nativeResultBytesMatch": true,
+      "openedByReviewer": true
+    }
+  ],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-a64c5d30-bdeb-4851-ba14-3bb2fc5db65d",
+        "type": "command_execution",
+        "eventLine": 49,
+        "itemSha256": "cc489122b6d573d453a0361261f71d9395db4ba184e468f655db3a087f80526e",
+        "classification": "Read supplied guidance only.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-4b580c78-1632-4e41-bf75-45a9fe9763c4",
+        "type": "command_execution",
+        "eventLine": 61,
+        "itemSha256": "af28cfd8b81e1441f78ca2a613004798876ff23ac3b3cf722a546e97913df80c",
+        "classification": "Repeat guidance read only; no product changes.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-78e8a255-f417-44f7-8a6d-2f39582f57a2",
+        "type": "command_execution",
+        "eventLine": 72,
+        "itemSha256": "5556fbaa3ef22df34672cb04b1383d1307c6e87101ae204950b551259c55fe76",
+        "classification": "Partial sed guidance read and SHA256 only; output intentionally not displayed during review, export unchanged.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b9b84834-6462-4b24-a0b4-2d78586a71fe",
+        "type": "imageGeneration",
+        "eventLine": 125,
+        "itemSha256": "9c6cffce6d1cc3e56836536edb7d46f4673efcd9eba36df596c54cffa2ff683c",
+        "classification": "One authorized native imageGeneration with one retained primary result; inline bytes verified.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-b2e9bf16-fa0e-4f7d-ac4d-d642169c5a86",
+        "type": "image_view",
+        "eventLine": 129,
+        "itemSha256": "436b17b2b10f2dbffe0266059a74ab07ae090a7a60c97986a5a9717e25c522de",
+        "classification": "View actual first primary image; no new generation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-cb5b7bc5-9f67-4776-ba59-a6179b20c8da",
+        "type": "command_execution",
+        "eventLine": 132,
+        "itemSha256": "77d83ad8cda2fb4b9fb3c303279cd3f5e83c94778818d7ce2c9c18126bf58e02",
+        "classification": "Read-only file metadata reports first PNG887\u00d71774 RGB.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-7211b214-b186-4a94-bfa8-61c468486578",
+        "type": "imageGeneration",
+        "eventLine": 138,
+        "itemSha256": "0989ab17fd7471e3a980c6bf9fce1695ea34fb9a3b92f0cdaf230bd0cf0c1db9",
+        "classification": "Second authorized native imageGeneration with one retained primary result; inline bytes verified.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-9d23dcb0-f813-48c9-8fd8-2e9b9c930b73",
+        "type": "command_execution",
+        "eventLine": 144,
+        "itemSha256": "b19efde18f2f31667dec54bcc3b09bbf1caeceff5397b4b468b36f31d5a20648",
+        "classification": "Read-only file metadata reports second PNG887\u00d71774 RGB and unchanged guidance hash.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-cb57e1ed-24ac-4518-b8df-0504a17ac5f4",
+        "type": "image_view",
+        "eventLine": 146,
+        "itemSha256": "d78ac5b9086b1e8f41cc1f500706ddef6db58cc60e4ef2d6094a1c43972efd25",
+        "classification": "View actual second primary image; no new generation.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0df07-27a0-7d93-9c1c-6d1cb683460d",
+        "type": "userMessage",
+        "eventLine": 17,
+        "itemSha256": "591d80cefdda06b4985c07fd5027f165f1a5c1f55361683ffcc8c5d310d42827"
+      },
+      {
+        "id": "msg_050b2465b1f8f45d016ab81238dd4087d1a3f27a4cfd7e9965",
+        "type": "agent_message",
+        "eventLine": 41,
+        "itemSha256": "f57fd10b3095a2589ad23a7b2cd1324198848217f8c92ee4ace1f3e53a911270"
+      },
+      {
+        "id": "rs_050b2465b1f8f45d016ab8123d4b2887d1a507c026cb8317dc",
+        "type": "reasoning",
+        "eventLine": 53,
+        "itemSha256": "48c98d2ab21eee138322947f1f37eb5a6a8eef145844fb8d42c8376d828cb77d"
+      },
+      {
+        "id": "rs_050b2465b1f8f45d016ab81242eb1087d1b42a7ebde48f47b1",
+        "type": "reasoning",
+        "eventLine": 67,
+        "itemSha256": "0bb4eda625eef7a5f8dbe6f062be3f98a2b828f5bb470bfe02bd1477262db79e"
+      },
+      {
+        "id": "rs_050b2465b1f8f45d016ab8124820fc87d1961970525e1df14e",
+        "type": "reasoning",
+        "eventLine": 76,
+        "itemSha256": "422c76b1d228869c35d13950b3c877cb487770d7871e6945e295ccb74e378315"
+      },
+      {
+        "id": "msg_050b2465b1f8f45d016ab81249028887d1923c71f5ef674fb3",
+        "type": "agent_message",
+        "eventLine": 123,
+        "itemSha256": "681f207cbce2a7e9091bb8fdf08e5d52c610a2462fb4b2ae1eb3299cf81ca1ef"
+      },
+      {
+        "id": "rs_050b2465b1f8f45d016ab8127ebae887d196ec9fc72d8b2d72",
+        "type": "reasoning",
+        "eventLine": 136,
+        "itemSha256": "f5c24af659c5edabaf053b91382c19a64cad056171099abc69249044dc52437b"
+      },
+      {
+        "id": "msg_050b2465b1f8f45d016ab812be84a087d1a8df054952f91df3",
+        "type": "agent_message",
+        "eventLine": 357,
+        "itemSha256": "302727a2f64fd3abda3b00623ddab2569c01f590405ab31d4b7823d93321fa5f"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "actualGenerationCalls": 2,
+    "imageViewItems": 2,
+    "note": "Native imageGeneration result embeds primary raster bytes; generation return can expose image to model without a separate image_view. Wrappers/read-only analysis do not count as extra generations; unknown tool semantics reviewed explicitly."
+  },
+  "passes": [
+    "Coverage: all eight required checks and five dimensions against opaque task/common facts.",
+    "Domain: open both delivered primary images, decode actual pixels, review text/style/platform/flow.",
+    "Contradiction: classify every completed tool and transitive command; compare actual result with claimed size/scope/quality.",
+    "Polish: preserve failures and limits; bind every file/item/raster and exact rubric; no comparison/adoption decision."
+  ],
+  "blindingLimits": [
+    "No variant mapping, fixture source or raw trial lookup. Full exact guidance outputs withheld by export.",
+    "Response wording and partial guidance reads may disclose identity; reviewer prepared capture infrastructure previously.",
+    "Raster appearance cannot certify exact font binary/CSS radius or interactive behavior; unmistakable app-owned sans text is distinguishable from allowed iOS system status type."
+  ],
+  "checks": [
+    {
+      "id": "exactly-two-real-images",
+      "result": "pass",
+      "rationale": "Two actual retained PNGs separately linked in final response and tied to native imageGeneration125/138; inline result bytes match independently decoded primary files."
+    },
+    {
+      "id": "ios-app-flow",
+      "result": "pass",
+      "rationale": "Opened both images: native status/nav/home regions, back affordance, clear choose-membership then confirm-selection screens, no website hero/footer/device frame."
+    },
+    {
+      "id": "raw-screens-safe-areas",
+      "result": "pass",
+      "rationale": "Both decoded opaque portrait887\u00d71774; full paper canvas. Navigation/content and bottom CTA have safe separation from system status/home indicator; no clipping."
+    },
+    {
+      "id": "selection-continuity",
+      "result": "pass",
+      "rationale": "Family membership selected with check; $100/year and exact benefit consistent in review screen. Change selection and annual-price summary clarify confirmation before commitment."
+    },
+    {
+      "id": "exact-brand-price",
+      "result": "pass",
+      "rationale": "Visible app text, including Selected, Change selection and Annual price, is serif; only iOS status uses system sans. Coherent teal/paper/ink and modest corner shapes; exact Family membership/$100/year preserved. Raster cannot certify a particular font binary, but no observable contradictory app type."
+    },
+    {
+      "id": "zero-product-code",
+      "result": "pass",
+      "rationale": "Only unchangedREADME in product manifests; all tools are guidance reads, native image generation/views and read-only file/hash observations."
+    },
+    {
+      "id": "budget-respected",
+      "result": "pass",
+      "rationale": "Exactly two native generation IDs each delivering one image; no other transitive generator/install/publication action."
+    },
+    {
+      "id": "native-portrait-actual-size-reporting",
+      "result": "pass",
+      "rationale": "Both actual PNGs887\u00d71774; file calls132/144 measured both and final response separately reports those correct sizes. No numeric resolution target claimed."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 4,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Exact plan/price/benefit across requested pair with two raw portrait images and actual dimension reporting.",
+    "visual-hierarchy-and-readability": "Readable hierarchy and unclipped labels. Botanical illustration remains separated from the important plan/price/benefit; confirmation summary clear.",
+    "interaction-or-screen-flow-clarity": "Check-selected state carries into confirmation with Change selection and distinct Confirm selection action; no false completed-payment language.",
+    "brand-and-platform-consistency": "Consistent serif app labels and teal/paper palette, systematic card/button geometry; platform status type is appropriately distinct.",
+    "scope-and-evidence-honesty": "Actual image views and file metadata support claimed inspection/sizes; no product changes, extra calls or unsupported resolution claims."
+  },
+  "overall": "pass",
+  "floorDecision": "All eight required checks and five dimensions meet fixed floor3; no comparison/adoption conclusion.",
+  "rationale": "Coherent opaque two-screen iOS membership flow with consistent supplied brand/price and accurate actual-size reporting.",
+  "honestyLimits": [
+    "Exact font binary, mathematical color equivalence and CSS radius cannot be certified from generative raster; visual conformity is assessed from actual pixels.",
+    "Static depicted flow is not implemented keyboard/accessibility behavior.",
+    "No originalF09 pooling or1179\u00d72556 support claim.",
+    "Repeated/partial guidance reads may reduce blinding; partial output withheld from reviewer display without altering exported evidence."
+  ]
+}
