@@ -1,0 +1,94 @@
+{
+  "commit": "3d2ee51ca2d5db578f328aa75e20aa22c0197c9a",
+  "tag": "rust-v0.153.4",
+  "sources": [
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__tool.rs",
+      "upstreamPath": "codex-rs/ext/image-generation/src/tool.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/ext/image-generation/src/tool.rs",
+      "sha256": "92b24f057434902d7ec33ccb8de1e93a02590f1835baea8a3c2bbafc0dd11523"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__backend.rs",
+      "upstreamPath": "codex-rs/ext/image-generation/src/backend.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/ext/image-generation/src/backend.rs",
+      "sha256": "e63c1a96ae3e2379b6f5ce2605c5f0a560cd947c6c787007ae852c661618e80c"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__artifact.rs",
+      "upstreamPath": "codex-rs/ext/image-generation/src/artifact.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/ext/image-generation/src/artifact.rs",
+      "sha256": "a5e6477035945eeeb4128f122ca382b8c3a11e55e9f599bb55136fbc685ad0de"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__extension.rs",
+      "upstreamPath": "codex-rs/ext/image-generation/src/extension.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/ext/image-generation/src/extension.rs",
+      "sha256": "d831e12e1a3d531a2ae1bb405045afe9834b59e6ca9ed8956041a5d913f80ab7"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__src__tests.rs",
+      "upstreamPath": "codex-rs/ext/image-generation/src/tests.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/ext/image-generation/src/tests.rs",
+      "sha256": "73a14392280974b9c6f8d8712cda3234c9ba2cd5c8e036e1d0043d31e4313e39"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__codex-api__src__images.rs",
+      "upstreamPath": "codex-rs/codex-api/src/images.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/codex-api/src/images.rs",
+      "sha256": "6d5457430c184c354281889d736404c144ced04a6f5bff5fc36861a9b14b22a9"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__codex-api__src__endpoint__images.rs",
+      "upstreamPath": "codex-rs/codex-api/src/endpoint/images.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/codex-api/src/endpoint/images.rs",
+      "sha256": "ce436bdce56e6c0a9000acb4bd979f0c5a3ed7cee53c57dbccf0a9c35764262c"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__app-server__tests__suite__v2__imagegen_extension.rs",
+      "upstreamPath": "codex-rs/app-server/tests/suite/v2/imagegen_extension.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/app-server/tests/suite/v2/imagegen_extension.rs",
+      "sha256": "b1d8050cb19fd5f65c341f4cd5c8333b83d53cea49ec72ef27453d5f904f58c1"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/codex-rs__ext__image-generation__imagegen_description.md",
+      "upstreamPath": "codex-rs/ext/image-generation/imagegen_description.md",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/ext/image-generation/imagegen_description.md",
+      "sha256": "77a992a7c90e45fcd11623a1efa34bfd4c7870697e0aa54ce9b28f690877170e"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/source/LICENSE",
+      "upstreamPath": "LICENSE",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/LICENSE",
+      "sha256": "d17f227e4df5da1600391338865ce0f3055211760a36688f816941d58232d8dc"
+    }
+  ],
+  "installed": {
+    "path": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+    "version": "codex-cli 0.153.4",
+    "sha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+    "limit": "Matches official tagged source, not reproducible-build attestation. --version emitted read-only PATH-alias warning; no model request."
+  },
+  "localCaptureFiles": [
+    {
+      "path": "scripts/frontend-native-capture.mjs",
+      "sha256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c"
+    },
+    {
+      "path": "scripts/frontend-adoption-v3.mjs",
+      "sha256": "afb098fee1b0af9f1bd4350edb52524f67f8ff1fa1a90f51bf0a7b0b2bb215fe"
+    },
+    {
+      "path": "tests/fixtures/frontend-native-capture/protocol/ItemCompletedNotification.json",
+      "sha256": "69aba3fe5f72f38bf5c541e7e2c09de40778abe65ff969d9fc73372037812091"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3/scenarios.json",
+      "sha256": "116ed1e6bc3c744b5422051503e76bc1eecb8886fb44f49e1a214f93b9cf56b5"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3/rubric.json",
+      "sha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f"
+    }
+  ]
+}

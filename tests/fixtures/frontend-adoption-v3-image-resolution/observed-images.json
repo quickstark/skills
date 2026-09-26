@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "method": "Read-only base64 decode, PNG IHDR dimensions and byte-for-byte comparison; no image resize/edit/model calls. Labels kept opaque; no variant mapping read.",
+  "trials": [
+    {
+      "trialId": "F09-r1-v31",
+      "rawProtocolPath": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r1-v31/raw-protocol.jsonl",
+      "rawProtocolSHA256": "9c4ee3ac05623ab2b6bbe7bb3211af96d25e700cef4085137b7dcd6d26eedd9d",
+      "images": [
+        {
+          "itemId": "exec-0fa24ad0-8b37-482d-929b-40862286e2e7",
+          "rawProtocolLine": 126,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE image: the first of two matching raw iOS app screens for Northstar Museum. Target raster dimensions 1179 \u00d7 2556 pixels, tall portrait ratio 393:852. No phone frame, no bezel, no device, no perspective, no surrounding mockup background, no multi-screen board. The entire rectangular image IS the app screen.\n\nLOCKED DESIGN SYSTEM for this and the next screen: warm paper #f7f5ef background, deep ink #182d2a, teal #086b64 for buttons and selection. Georgia serif for all app typography, only OS status symbols use iOS system style. Restrained 12pt corner radii (36px at 3x). Refined museum editorial identity meets native iOS stack navigation. Legible 17\u201318pt body, 32pt title, 17pt navigation, 20pt plan label; do not use tiny text. Content padding 24pt (72px). Elegant whitespace, subtle fine paper grain only in illustration. Thin rules, no heavy shadows or gradients. Single tiny four-point north-star brand glyph. No invented perks, discounts, stats, extra plans or financial claims.\n\nSAFE AREAS: top 59pt reserved for authentic small status bar: 9:41 left, cellular/wifi/battery right; no dynamic island drawn. Bottom 34pt gesture area with centered dark home indicator, all actions above it. Raw screen has square outer corners. App nav at y~76pt: back chevron left; centered \u201cNorthstar Museum\u201d. Below nav a slender two-stage progress row: \u201c1 Choose\u201d active teal and \u201c2 Confirm\u201d muted.\n\nSCREEN 1 PURPOSE: Choose Family membership, Family is visibly selected ready to continue.\nLarge left-aligned title \u201cChoose your membership\u201d on two lines around y~145pt.\nShort support text \u201cFamily membership keeps discovery close to home.\u201d in readable Georgia around y~235pt.\nA purposeful illustration panel around y~315\u2013465pt, width 345pt: delicate museum natural-history print of a sculptural ammonite fossil with fine engraved contours, on warm paper, limited muted teal and ink. This is decorative, contains no labels, not a full-screen website hero.\nBelow at y~490pt ONE clearly selectable membership card, 345pt wide, approximately 160pt tall, thin teal border, faint tinted-paper fill, radius 12pt. Card top row exact \u201cFamily membership\u201d and a filled teal selection circle with white check. Price exact \u201c$100/year\u201d prominent below. Benefit exact \u201cUnlimited entry for two adults and children under 18.\u201d wraps clearly into 2 or 3 readable lines. Ensure all text is crisp and correctly spelled.\nBottom fixed action area, on same paper surface: full-width teal button approximately 56pt high at y~734pt with exact white label \u201cContinue\u201d. Beneath remains safe gesture space and home indicator at y~838pt. No website header/footer, no tab bar, no logos of payment providers, no email field needed in this selection-only flow. Compose calm, polished, touch-friendly, clearly a real native iOS app.",
+          "targetMentioned": true,
+          "nativeBytes": 1526644,
+          "nativeSHA256": "218a69b91d2a1c8c7689fbe10a005c85f8bb6f9e6b0e4b7ce1d446850e2006f2",
+          "pngDimensions": [
+            851,
+            1848
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee3-bd9e-77b3-83fd-f2c12e47efa4/exec-0fa24ad0-8b37-482d-929b-40862286e2e7.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r1-v31/generated-images/0.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": true,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-37b98778ebd44dcb/tool-images/218a69b91d2a1c8c7689fbe10a005c85f8bb6f9e6b0e4b7ce1d446850e2006f2.png",
+          "reviewerImageMatchesNative": true
+        },
+        {
+          "itemId": "exec-d480d4d9-cdad-4edb-934c-d99980febc7d",
+          "rawProtocolLine": 141,
+          "status": "completed",
+          "revisedPrompt": "Create exactly ONE new image: screen 2 of this Northstar Museum iOS membership flow, CONFIRM SELECTION. Use the attached first screen as a design consistency reference; this is a new distinct screen, not a collage. Target 1179 \u00d7 2556 pixels portrait. CRITICAL: fully opaque solid warm paper #f7f5ef background across EVERY pixel of the entire screen; do not make a transparent background or cutout. Raw rectangular app screen only, no device frame, no bezel, no presentation margins, no perspective.\n\nMatch first screen's Georgia serif app type, ink #182d2a, teal #086b64, 12pt card and button corners, 24pt side gutters, native iOS stack navigation, warm museum editorial style. Keep text crisp, readable at 17pt body size, generous spacing. Preserve exact selected plan label \u201cFamily membership\u201d, price \u201c$100/year\u201d, and benefit \u201cUnlimited entry for two adults and children under 18.\u201d No extra benefits, fees, discounts, plans or invented claims.\n\nSafe area: 59pt top region with 9:41 left, authentic cellular/wifi/battery icons right, all in ink on opaque paper. No dynamic island. App navigation below status region: back chevron at left, centered \u201cNorthstar Museum\u201d, tiny four-point teal star at right matching reference. Two-step progress indicator: \u201c1 Choose\u201d now completed, \u201c2 Confirm\u201d active teal, same overall scale as reference.\n\nScreen content: around y=155pt, large Georgia heading \u201cConfirm your selection\u201d on two tidy left-aligned lines. Supporting copy \u201cReview your membership.\u201d in readable body text below.\nAt y=310pt place a selected membership summary card, thin teal outline, faint warm teal-paper fill, radius 12pt, padding 20pt. Card top has a small carefully engraved ammonite fossil illustration (same visual motif as first screen) in a short wide warm-paper panel, about 100pt high. Beneath it, exact prominent \u201cFamily membership\u201d with the identical teal circle and white check selection glyph aligned right. Beneath it exact prominent \u201c$100/year\u201d. Beneath that the exact benefit \u201cUnlimited entry for two adults and children under 18.\u201d on three comfortably readable lines. The card ends around y=610pt. Under card left-align a plain teal text action \u201cChange selection\u201d, no pill or additional box. No large success check, no payment-complete messaging: this screen is a review step awaiting confirmation.\nBottom fixed action area: full-width teal filled button, height 56pt, side margins 24pt, positioned around y=734pt, exact white label \u201cConfirm selection\u201d. Paper background continues under it to safe 34pt gesture region with centered dark home indicator around y=838pt. Opaque light canvas, square outer corners. No website hero/footer, tab bar, financial branding, email form, additional explanatory captions outside app. Unified selection-to-review flow, calm polished iOS interface.",
+          "targetMentioned": true,
+          "nativeBytes": 1370982,
+          "nativeSHA256": "69c7f7fbb8347e3c0a1f6edf509e87cd70069c2f718089b573d24d6f8d1f069d",
+          "pngDimensions": [
+            853,
+            1844
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee3-bd9e-77b3-83fd-f2c12e47efa4/exec-d480d4d9-cdad-4edb-934c-d99980febc7d.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r1-v31/generated-images/1.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-37b98778ebd44dcb/tool-images/69c7f7fbb8347e3c0a1f6edf509e87cd70069c2f718089b573d24d6f8d1f069d.png",
+          "reviewerImageMatchesNative": true
+        }
+      ]
+    },
+    {
+      "trialId": "F09-r1-v84",
+      "rawProtocolPath": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r1-v84/raw-protocol.jsonl",
+      "rawProtocolSHA256": "181b37d0a96e69743fd7c470f436d9b4a01b45bd5f9eea65fc51eed00b937e0d",
+      "images": [
+        {
+          "itemId": "exec-5b019d04-10b0-42b5-b419-8bcfefea4a95",
+          "rawProtocolLine": 125,
+          "status": "completed",
+          "revisedPrompt": "Create exactly ONE image: a raw iOS app UI screen for Northstar Museum, screen 1 of a two-screen membership flow: choose Family membership. Portrait target canvas 1179\u00d72556 pixels (aspect 393:852). Fill the entire canvas with the app screen, no device frame, no outer mockup background, no website header/footer, no collage, no extra screen, no perspective. This is a polished, restrained museum app with generous intentional spacing and crisp readable typography. Fixed design bible: warm paper background #f7f5ef; ink #182d2a; primary teal #086b64; Georgia serif for ALL app text; all cards and buttons have consistent 12pt corner radius (36px at this 3x target). Thin dividers, flat surfaces, no gradients, no shadows. Native status bar icons can use system style. Geometry at 393pt logical scale, rendered at 3x: status region y0\u201362 reserved, show 9:41 on left and cellular/wifi/battery on right, no notch or hardware; home indicator region final 34pt reserved, centered dark horizontal home indicator. Horizontal app margins 24pt. Top native navigation row y72, left simple back chevron, centered title 'Membership' at 18pt Georgia. Below navigation, y145 small teal 'NORTHSTAR MUSEUM' 12pt letter-spaced. At y188 large ink Georgia heading 'Make room\\nfor wonder.' at 38pt, clear two-line hierarchy. Below at y300 in 17pt ink the exact supporting text 'Family membership keeps discovery close to home.' Set in two balanced lines. Main selected plan card y400 height about 208pt, 345pt wide: a thin 2pt teal border, subtle warm white fill, 12pt radius. Inside with 22pt padding: 'Family membership' in bold Georgia 22pt on two lines if needed, and a teal filled circular selected radio with a white dot in top right. Under name, exact price '$100/year' at 28pt in ink. Hairline divider then benefit exact wording 'Unlimited entry for two adults and children under 18.' in 16pt Georgia over readable lines. Small quiet teal 'Selected' label just below card. At y718 a full width 56pt high teal button labeled 'Continue' in white Georgia bold 18pt. Beneath button and above home safe area a small muted label 'Step 1 of 2' centered. The task is choosing the already-selected family membership; no other plans, invented factual claims, numeric statistics, email forms, tabs, website elements, photos, illustrations, or payment success language. Render precise readable app text and carefully aligned controls; keep all app content clear of status and home safe regions. Output this single screen as an actual generated image.",
+          "targetMentioned": true,
+          "nativeBytes": 1127937,
+          "nativeSHA256": "0c6769c49fffc18a8347b4f2089eabc06b7c8a1b39c67dda4a90e0fcfb5f628e",
+          "pngDimensions": [
+            853,
+            1844
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee3-bd9f-7b53-825d-39b7754e0bba/exec-5b019d04-10b0-42b5-b419-8bcfefea4a95.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r1-v84/generated-images/0.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-ea14e1deb6414e7a/tool-images/0c6769c49fffc18a8347b4f2089eabc06b7c8a1b39c67dda4a90e0fcfb5f628e.png",
+          "reviewerImageMatchesNative": true
+        },
+        {
+          "itemId": "exec-b5fe2861-8741-4a26-9225-0d05945dca5b",
+          "rawProtocolLine": 181,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE new separate portrait image for SCREEN 2 of this iOS Northstar Museum membership flow, using the supplied first screen as the strict visual continuity reference. Target output resolution 1179\u00d72556 pixels, portrait 393:852 aspect. Raw app screen edge-to-edge, no device frame, no hardware notch, no background around the screen, no website header/footer, no collage. This screen is the next screen after tapping Continue: REVIEW AND CONFIRM THE SELECTION. It is not a completed payment or active membership success screen. Match the reference's Georgia serif typography, warm paper #f7f5ef, ink #182d2a, teal #086b64, 12pt/36px corner radii, left and right margins, status bar and home indicator, native navigation and button placement. Use flat colors and crisp edges. Preserve status safe area top 62pt and home indicator safe area bottom 34pt, 393pt logical canvas at 3x. Display 9:41 and cellular/wifi/battery as in reference. Navigation title remains exactly 'Membership' with left back chevron. Keep the small spaced 'NORTHSTAR MUSEUM' eyebrow in the same position. Replace main large heading with 'Confirm your\\nselection.' using the same two-line Georgia heading scale. Supporting paragraph: 'Review your Family membership.' in same Georgia body style. Keep the membership card at the same location and width, same thin teal border, warm white fill, same corner radius, same selected teal circular radio with white dot at upper right. Card text must be EXACTLY 'Family membership', '$100/year', and 'Unlimited entry for two adults and children under 18.' Match reference line breaks, label positioning, type weights and sizing as closely as possible. Keep the exact 'Selected' label beneath the card. Below it, add a quiet teal text action 'Change selection', comfortably spaced, indicating return to first screen. At the same bottom position as the reference's Continue button, render full-width teal 56pt button with exact text 'Confirm selection' in bold white Georgia. Beneath it above the home safe area show 'Step 2 of 2' in muted Georgia. No extra prices, fees, benefits, billing details, email, payment information, invented factual claims, celebratory icons, or success language. Preserve exact '$100/year' spelling. This image is only the confirmation review screen, not two screens together. Make all labels crisp and legible. Output the actual generated image.",
+          "targetMentioned": true,
+          "nativeBytes": 1104792,
+          "nativeSHA256": "d70a113cff2bafed47b0f5dbcf2122611a8138480ea08754a806b4212d80bd45",
+          "pngDimensions": [
+            853,
+            1844
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee3-bd9f-7b53-825d-39b7754e0bba/exec-b5fe2861-8741-4a26-9225-0d05945dca5b.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r1-v84/generated-images/1.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-ea14e1deb6414e7a/tool-images/d70a113cff2bafed47b0f5dbcf2122611a8138480ea08754a806b4212d80bd45.png",
+          "reviewerImageMatchesNative": true
+        }
+      ]
+    },
+    {
+      "trialId": "F09-r2-v31",
+      "rawProtocolPath": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r2-v31/raw-protocol.jsonl",
+      "rawProtocolSHA256": "cbc60fe3abccae3442202d4b73836e122e6cd2d8d433141114d2e8df953b1a38",
+      "images": [
+        {
+          "itemId": "exec-601c004f-c566-4f09-93ad-c6392a9a2e31",
+          "rawProtocolLine": 76,
+          "status": "completed",
+          "revisedPrompt": "Create ONE image only: first of two raw iOS app screen mockups for Northstar Museum membership flow. Target exact portrait canvas 1179\u00d72556 pixels. The full rectangular canvas IS the app screen, edge to edge: NO device frame, bezel, exterior background, perspective, website hero, website footer, collage, or multiple screens. Premium native iOS stack-navigation membership chooser. Lock this design system for the next screen: warm paper #f7f5ef background, deep ink #182d2a, teal #086b64 primary; Georgia serif for ALL product typography, system sans only for iOS status symbols. 24pt side margins (72px at 3x), 12pt component corner radius (36px at 3x); 17pt readable body, 32pt title, 20pt card title; calm generous rhythm, crisp high contrast, almost invisible paper grain. Reserve 177px top safe region for 9:41 and standard cellular/wifi/battery indicators; no product content there. Reserve bottom 102px home indicator region, with a single dark horizontal home indicator near bottom. No hardware cutout needed. Layout in logical iOS points of 393\u00d7852: status top 59pt; nav row y65-109 with left back chevron and centered 'Northstar Museum'. Tiny progress label '1 of 2' at y131. Title 'Choose membership' in two lines if needed at y160. Supporting copy at y247: 'Family membership keeps discovery close to home.' Below, ONE selectable Family membership card from y320 to 603 with teal border, light warm paper fill, selected teal circular check at upper right. Inside card a refined horizontal botanical museum illustration strip (delicate fern specimen in teal engraving style on pale paper) roughly 72pt high, integrated as small editorial artwork; below art, exact label 'Family membership', exact price '$100/year' prominent, then exact benefit 'Unlimited entry for two adults and children under 18.' All text sharp, correctly spelled, readable, no tiny captions. At bottom of card show selected check and word 'Selected' if room without clutter. Generous free breathing space to bottom action area. Bottom primary full-width teal button at y728-786, 12pt radius, paper Georgia label 'Continue'. Button is visibly ABOVE the home safe region. No other plans, no invented offers, no extra benefits, no payment fields, no stats. It must look like a carefully art-directed real museum iOS membership selection screen, not a landing page or decorative poster. Render exactly one standalone portrait image.",
+          "targetMentioned": true,
+          "nativeBytes": 1384091,
+          "nativeSHA256": "d0637f334e53ba09fce1321db95d9d027685994f95891cf062ec0dea085c7274",
+          "pngDimensions": [
+            851,
+            1848
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee6-2706-7e61-b104-0c787f135f30/exec-601c004f-c566-4f09-93ad-c6392a9a2e31.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r2-v31/generated-images/0.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-854317b4c3da4528/tool-images/d0637f334e53ba09fce1321db95d9d027685994f95891cf062ec0dea085c7274.png",
+          "reviewerImageMatchesNative": true
+        },
+        {
+          "itemId": "exec-16c66a4e-2658-4c4e-8169-eaea9a10c15f",
+          "rawProtocolLine": 111,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE new standalone portrait raw iOS app screen: screen 2 of the Northstar Museum membership flow. Use the supplied first screen as the exact visual design reference, but make a distinct confirmation/review screen reached by tapping Continue. Target 1179\u00d72556 pixels. Entire canvas IS the rectangular app screen, no physical device, frame, exterior margin/background, collage, website hero/footer, or perspective. Match reference Georgia serif product typography, paper #f7f5ef, ink #182d2a and teal #086b64; component corner radius 12pt, consistent side padding and large readable labels. Preserve the exact top status bar 9:41 with cellular/wifi/battery, top safe area, centered 'Northstar Museum' stack-nav bar and left back chevron. Preserve bottom home indicator safe region and same bottom primary button location, safely above gesture area. Change step text to '2 of 2'. Main title exactly 'Confirm selection' in two lines. Supporting text 'Review your membership.' This is a review before confirmation, NOT a payment receipt or active membership success. In the central area, show a compact selected-plan summary card with same thin teal outline and same teal botanical fern engraving illustration in a SHORTER horizontal strip than screen 1, same visual language. Exact plan label 'Family membership'; selected check with text 'Selected'; prominent exact price '$100/year'. Give the summary beautiful generous interior padding and consistent typography, no nested cards. Below the summary show a flat, clearly separated benefit block on the paper background, heading 'Included', body exactly 'Unlimited entry for two adults and children under 18.' Align all text to the same side margins; readable at phone size. Below that, teal text action 'Change membership' with small leftward chevron, implying return to screen 1. At the bottom full-width teal primary button with paper Georgia text exactly 'Confirm selection'. Keep lower button the same size and radius as screen 1. Preserve calm native-app flow and generous spacing, delicate paper texture and fine engraving character. No extra plans, no invented benefit/discount/fees/taxes/renewal policy, no account fields, no payment details, no claim that payment or joining has completed. Render a complete polished raw portrait screen, exactly one image, the faithful second screen of the reference product.",
+          "targetMentioned": true,
+          "nativeBytes": 1392107,
+          "nativeSHA256": "d5065820284784324ffe6814d6eecc96b2fe758575494167275b577e0b6e2ba1",
+          "pngDimensions": [
+            852,
+            1846
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee6-2706-7e61-b104-0c787f135f30/exec-16c66a4e-2658-4c4e-8169-eaea9a10c15f.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r2-v31/generated-images/1.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-854317b4c3da4528/tool-images/d5065820284784324ffe6814d6eecc96b2fe758575494167275b577e0b6e2ba1.png",
+          "reviewerImageMatchesNative": true
+        }
+      ]
+    },
+    {
+      "trialId": "F09-r2-v84",
+      "rawProtocolPath": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r2-v84/raw-protocol.jsonl",
+      "rawProtocolSHA256": "17c87aea8b2923b351d2e4c3bfa4d369449cb702cd9a694f4ede5f8877579e45",
+      "images": [
+        {
+          "itemId": "exec-824a2f24-605b-46f1-8e0c-893505d3ff0a",
+          "rawProtocolLine": 128,
+          "status": "completed",
+          "revisedPrompt": "Create exactly ONE finished raster image: screen 1 of a two-screen iOS museum membership flow, CHOOSE FAMILY MEMBERSHIP. Output a single separate raw app screen, requested canvas exactly 1179 pixels wide by 2556 pixels tall, portrait (393\u00d7852 logical points at 3x). No device frame, no phone hardware, no perspective, no collage, no surrounding presentation background, no website hero or footer. Full-bleed flat app screen.\n\nAUTHORITATIVE BRAND / DESIGN BIBLE to use consistently for the subsequent confirmation screen: Northstar Museum. All product typography Georgia serif, including buttons and labels. Only iOS system status indicators may use native system typography. Exact background paper #f7f5ef, primary teal #086b64, dark ink #182d2a. Card and button corners 12 logical pixels = 36 canvas pixels, not pills. Fine teal borders, restrained pale teal selected surface, no gradients or shadows. Spacious carefully aligned mobile UI with an 8pt spacing rhythm, 24pt horizontal margins, comfortably legible body 17\u201318pt (51\u201354 raster px), screen title 32pt (96 raster px). Minimal outlined icons. Native app controls, no photography or extraneous decoration.\n\nSAFE AREAS: top 62 logical points (186 raster px) reserved for iOS status area: unobtrusive 9:41 left, cellular/wifi/battery right; no camera cutout or decorative copy. Bottom 34 logical points (102 raster px) reserved for centered dark home indicator. Every app control clear of both system regions. Fixed bottom action area with a 52pt-high teal button, side margins 24pt, bottom 50pt above canvas edge; do not collide with home indicator. No keyboard, tab bar, browser UI, or web navigation.\n\nSCREEN CONTENT AND LAYOUT, exactly spelled:\nBelow status safe area, nav row with back chevron on left and centered 'Membership' in Georgia.\nBelow nav, quiet teal small label 'NORTHSTAR MUSEUM'.\nSmall step label '1 of 2'.\nLarge left aligned title over two lines: 'Make room\\nfor wonder.'\nSupporting copy: 'Family membership keeps discovery close to home.'\nBelow generous gap, one selected membership card only. 345pt wide, around 220pt high, teal 1.5pt border, pale teal fill. Top row shows 'Family membership' on left and filled teal selection circle with a white check on right. Prominent price exactly '$100/year'. Fine divider then readable benefit: 'Unlimited entry for two adults and children under 18.' Use comfortable 18pt leading and break into three lines as needed. The selection must unambiguously look selected. No other plans, made-up claims, discounts, trial, or invented metrics.\nUnder the card show a subtle selected-state line with small check and exact text 'Family membership selected'. Leave meaningful quiet space below; no filler.\nBottom primary action button labeled exactly 'Continue' in white Georgia, no extra button. Pressing Continue conceptually leads to the second screen titled 'Confirm your selection', with this same Family membership and $100/year.\n\nProduce a polished, highly readable, faithfully typeset iOS screen. All listed text must be accurately rendered. Maintain paper background throughout. Exactly one image; do not show the next screen in this image.",
+          "targetMentioned": true,
+          "nativeBytes": 1100994,
+          "nativeSHA256": "0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37",
+          "pngDimensions": [
+            853,
+            1844
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee6-267b-79f0-bc98-763d5e3c219c/exec-824a2f24-605b-46f1-8e0c-893505d3ff0a.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r2-v84/generated-images/0.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-923e72692daa0142/tool-images/0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37.png",
+          "reviewerImageMatchesNative": true
+        },
+        {
+          "itemId": "exec-5a2cb5db-9125-4626-8eaf-8087d53d4fa9",
+          "rawProtocolLine": 172,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE NEW image: the SECOND raw iOS app screen in the Northstar Museum membership flow. The supplied image is screen 1, a VISUAL CONTINUITY REFERENCE only. Render only screen 2, never a pair or collage. Desired output resolution 1179\u00d72556 pixels, tall portrait 393\u00d7852 logical points at 3x. Full-bleed screen, no device frame, no surrounding mockup, no hardware, no browser, no website hero/footer.\n\nPreserve the reference's paper background, Georgian serif product typography, teal selected membership card, nav row, margins, corner radius, status region, bottom primary action position and home indicator. Authoritative tokens: Georgia serif for ALL product copy, primary #086b64, paper #f7f5ef, ink #182d2a, 12pt corner radius (36px at target 3x). Do not invent a secondary product font. Prefer flat solid colors without texture or gradients. Fine teal card border with very pale teal fill. Readable 17\u201318pt body, 32pt heading. Only iOS system status indicators use standard native system typography.\n\nFLOW STATE: User selected Family membership at exactly $100/year on screen 1 and tapped Continue. This screen reviews that SAME selection and invites confirmation. It is BEFORE purchase, so do not show payment success, a ticket, membership number, or activation claims. No additional plans, invented facts, fake data, inputs or keyboard.\n\nReserve the top 62pt for the same iOS status bar: 9:41 left, cellular/wifi/battery right. Then exactly the same navigation row: back chevron left and centered 'Membership'. Below it brand label 'NORTHSTAR MUSEUM' at the same left margin. Step label changes to '2 of 2'. Heading changes to exact text 'Confirm your selection', wrapped elegantly on two lines. Below heading, supporting line 'Review your Family membership.'\n\nPlace the identical selected plan card below the intro with the same 24pt outer margin and 12pt radius as screen 1: 'Family membership' at top left and teal circular check at right; large price text exactly '$100/year'; thin divider; exact benefit 'Unlimited entry for two adults and children under 18.' Card content, typography, selected border/fill and check must closely match screen 1. Below the card a small checked label reads exactly 'Family membership selected', retaining the same chosen plan state. Then a simple left-aligned teal text action 'Change selection' with generous touch spacing, allowing return to screen 1. Leave quiet paper whitespace below these elements rather than adding filler.\n\nAt the same bottom position and same dimensions as the reference's Continue button, put a solid teal 52pt-high button with white Georgia label exactly 'Confirm selection'. At least 16pt space below the button to the bottom system region. Reserve bottom 34pt safe area for the same centered dark home indicator, no product text in that region. Keep comfortable spacing around all elements, no overlaps or cut-off text. Deliver ONE separate portrait raster image of this confirmation screen, faithfully continuing the reference.",
+          "targetMentioned": true,
+          "nativeBytes": 1107306,
+          "nativeSHA256": "b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30",
+          "pngDimensions": [
+            853,
+            1844
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee6-267b-79f0-bc98-763d5e3c219c/exec-5a2cb5db-9125-4626-8eaf-8087d53d4fa9.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r2-v84/generated-images/1.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-923e72692daa0142/tool-images/b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30.png",
+          "reviewerImageMatchesNative": true
+        }
+      ]
+    },
+    {
+      "trialId": "F09-r3-v31",
+      "rawProtocolPath": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r3-v31/raw-protocol.jsonl",
+      "rawProtocolSHA256": "d61b79ca37e21fee0e1996d841ce84588cd8fdf1aa950c30b8d8eef1bcd71798",
+      "images": [
+        {
+          "itemId": "exec-7a50a3fd-dd54-4e5d-a238-222f3a35ad4a",
+          "rawProtocolLine": 138,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE image: screen 1 of a cohesive two-screen iOS membership flow for Northstar Museum. Deliver a raw flat app screen only, portrait target exactly 1179\u00d72556 pixels (393\u00d7852 logical points at 3x). No device frame, no bezel, no exterior canvas, no perspective, no phone hardware, no website header/hero/footer, no collage, no extra screen. Full rectangular cream screen edge to edge.\nLOCKED DESIGN SYSTEM for both screens: background paper #f7f5ef, primary teal #086b64, ink #182d2a. Georgia serif typography for all product text, only native iOS status text uses system sans. Refined museum editorial identity adapted to actual native iOS UI, airy and exceptionally readable. Product body text about 17 logical points / 51px; titles 32pt / 96px; button text 18pt; small labels minimum 14pt. Side inset 24 logical points /72px. Components use 12pt/36px corner radius, flat surfaces, very restrained fine paper texture in decorative illustration only, no shadows, no gradients. Custom small four-point north-star emblem accompanies Northstar Museum. Native stack navigation with back chevron, no tab bar for this short task flow.\nSCREEN 1 \u2014 CHOOSE FAMILY MEMBERSHIP, selected state before advancing. Reserve top 59pt/177px for safe status area with 9:41 at top left and authentic cellular wifi battery symbols at top right, ample blank center; no Dynamic Island/hardware. Below it a 44pt navigation row: back chevron at left, 'Membership' centered. Main content starts about y=132pt: small star and exact brand name 'Northstar Museum'; then large left-aligned title 'Choose membership' wrapping naturally to two lines if needed. Under title concise exact copy 'Family membership keeps discovery close to home.'\nAt y\u2248282pt one purposeful botanical/museum specimen illustration strip roughly 345\u00d7130pt: an elegant teal hand-engraved ammonite fossil with faint concentric growth lines on warm paper, a small north-star motif; no labels or invented facts. This is a bounded supporting illustration, not a huge marketing hero.\nAt y\u2248440pt a single selected membership option card, 345pt wide about 210pt high, cream interior thin teal outline and 12pt radius. Content inset24pt: exact title 'Family membership' left, a filled teal circular check at upper right; exact large price '$100/year' on its own line; exact readable benefit 'Unlimited entry for two adults and children under 18.' with comfortable line wrapping. Small teal text 'Selected' near the check if space permits. No other plans, no invented benefit or claims, no stats, no input form.\nAt bottom a fixed native action area on same cream background: hairline divider around y=727pt, one full-width teal button at x=24pt y=749pt height56pt, label exactly 'Continue' in cream Georgia. Keep at least 34pt of protected home-indicator space below action, black centered home indicator near y=837pt. All copy legible, precise price punctuation. Compose an elegant usable membership-selection screen rather than an advertisement. Output one actual generated raster image.",
+          "targetMentioned": true,
+          "nativeBytes": 1394188,
+          "nativeSHA256": "37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38",
+          "pngDimensions": [
+            851,
+            1848
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee8-43c1-7792-ae7d-c004fab05407/exec-7a50a3fd-dd54-4e5d-a238-222f3a35ad4a.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r3-v31/generated-images/0.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-82a465e420426fb1/tool-images/37ff6ab998ab973cdfb3b3ff845c99ac091559eff279f2da042222a0f8500e38.png",
+          "reviewerImageMatchesNative": true
+        },
+        {
+          "itemId": "exec-777e7e33-f116-4d95-8943-1929b21921cf",
+          "rawProtocolLine": 144,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE NEW separate portrait raster image for screen 2 of the Northstar Museum iOS membership flow. Use the reference screen to precisely maintain the same identity, Georgia serif typeface, creamy paper #f7f5ef, teal #086b64, ink #182d2a, north-star brand emblem, native status bar, navigation row, generous side insets, 12-point corners, and fixed teal bottom action button. This is a new confirmation screen following the reference's Continue action; do not reproduce the choose screen. Target output 1179\u00d72556 pixels, aspect ratio 393:852. Raw app screen edge-to-edge, no phone frame, no bezel, no hardware, no exterior margins, no collage, no website footer/hero. ONE screen only.\nSCREEN CONTENT AND HIERARCHY: top safe status region of 59 logical points with 9:41 and native iOS signal/wifi/battery icons like the reference. Native nav bar below with teal back chevron and centered title 'Membership', identical positioning to reference. Same small Northstar Museum wordmark with four-point star at content top. Main Georgia title below it reads exactly 'Confirm selection', using the same strong two-line type hierarchy as screen 1. Subtitle in readable Georgia exactly 'Review your Family membership.'\nReduce the reference's ammonite illustration to a restrained small engraved teal ammonite about 76 points wide, centered in an airy confirmation emblem area, with a small teal circular checkmark beside it. Preserve same fine engraved character as reference, no extra animals, no new claims. Make this screen calmer and more review-oriented than screen 1.\nBelow, a single clean outlined membership summary card with the same cream fill, thin teal border, 12pt corners and generous padding as reference. Exact same selected product name 'Family membership', same filled teal checkmark with label 'Selected', exact same price '$100/year' prominent on its own line, exact same benefit 'Unlimited entry for two adults and children under 18.' in fully legible comfortable body type. Do not invent taxes, discounts, automatic renewal claims, payment confirmation, membership IDs, expiration dates, other plans or benefits. Under summary card, a quiet teal text action 'Change selection'. This is a REVIEW AND CONFIRM step, not a claim of successful purchase.\nFixed bottom action region in exactly same position and dimensions as reference, hairline divider, large full-width teal button with cream Georgia label exactly 'Confirm selection'. Keep at least34 logical points free under button for native black home indicator. All meaningful content above this protected home gesture area. No checkout forms or email fields. All product text Georgia, native iOS status text system sans. Every word should be clearly readable at phone size, strong ink contrast, no decorative microcopy, no gradients, no floating shadow effects. Render one polished actual app screenshot mockup with complete status and home regions.",
+          "targetMentioned": true,
+          "nativeBytes": 1215951,
+          "nativeSHA256": "2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd",
+          "pngDimensions": [
+            851,
+            1848
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee8-43c1-7792-ae7d-c004fab05407/exec-777e7e33-f116-4d95-8943-1929b21921cf.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r3-v31/generated-images/1.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-82a465e420426fb1/tool-images/2c025354627299feffb7693664a61e02fa651b3c4b492deb77d6c9179e98e3bd.png",
+          "reviewerImageMatchesNative": true
+        }
+      ]
+    },
+    {
+      "trialId": "F09-r3-v84",
+      "rawProtocolPath": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r3-v84/raw-protocol.jsonl",
+      "rawProtocolSHA256": "29467192ab621db65a6c6ceb8454aa36401a1699f72e3c20c3211d708fb305e0",
+      "images": [
+        {
+          "itemId": "exec-68da3465-625c-4b65-8ed0-a7bf8413ed72",
+          "rawProtocolLine": 138,
+          "status": "completed",
+          "revisedPrompt": "Generate exactly ONE image: screen 1 of a coordinated two-screen iOS membership app flow for Northstar Museum. This is the CHOOSE screen; the next image will confirm this same selection. Deliver a raw flat app screen, target exactly 1179 pixels wide by 2556 pixels high, portrait. Full-bleed rectangular canvas, NO device frame, NO phone hardware, NO perspective, NO surrounding presentation background, NO collage, NO website header/hero/footer. If saving an image file, return its actual path.\n\nFIXED DESIGN BIBLE for both screens: background warm paper #f7f5ef; primary teal #086b64; dark ink #182d2a. App typography strictly Georgia serif, clear readable large lettering. Modest 12pt corner radii for every card and button; no pill buttons. Logical iOS canvas 393x852 points at 3x, generous 24pt horizontal margins, 8pt spacing rhythm, thin warm-gray separator lines, flat surfaces, no gradients or dramatic shadows. Small simple outline icons. Native status symbols only in top safe system region (9:41 at upper left, cellular/wifi/battery at upper right), reserve top 62pt. Native black home indicator centered in bottom 34pt safe region; no app content inside safe regions. No dynamic island or bezel. All app elements fit comfortably without clipping. Large tactile CTA 56pt tall.\n\nCOMPOSITION screen 1: after safe area, compact iOS navigation row with a left-pointing chevron and label 'Back' at left. Below at x24pt, small 'Northstar Museum' brand line in teal. Then small progress label '1 of 2', generous 36pt Georgia headline over two lines 'Choose your\\nmembership'. Supporting copy at 18pt: 'Family membership keeps discovery close to home.' Use appropriate wrapping and excellent line spacing. Around y300pt a prominent selected membership card occupying content width, paper interior and 2pt teal border, 12pt radius. Inside card, top-right a teal circular selection control with white check; top-left label 'SELECTED' in small spaced serif caps. Below exact title 'Family membership' in bold Georgia 25pt. Exact price '$100/year' in Georgia 34pt, prominent. Thin separator, then exact benefit 'Unlimited entry for two adults and children under 18.' in Georgia 18pt with ample line spacing. Do not add any other plan, price, discount, metric, factual claim, photograph or illustration. Preserve breathing room below card. Anchored above bottom safe area at y742pt, full content width teal 56pt button with white Georgia label 'Continue' centered, with simple right arrow if space permits. This action leads to the next screen's review and confirmation. No keyboard, email input or tab bar needed. No real purchase or payment state. High fidelity crisp app UI, strong contrast, disciplined typography, intentional whitespace. Render all quoted copy accurately. One single screen only.",
+          "targetMentioned": true,
+          "nativeBytes": 1068002,
+          "nativeSHA256": "b89885eeae092fb975f4c14e179ad2c0218bd5bca62c99d1bf497932f977c08a",
+          "pngDimensions": [
+            852,
+            1846
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee8-4451-78b1-bd95-27bf5d1ed205/exec-68da3465-625c-4b65-8ed0-a7bf8413ed72.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r3-v84/generated-images/0.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-d9cd0234c658e60b/tool-images/b89885eeae092fb975f4c14e179ad2c0218bd5bca62c99d1bf497932f977c08a.png",
+          "reviewerImageMatchesNative": true
+        },
+        {
+          "itemId": "exec-813c131f-be87-4ebb-a3e7-3a266c6e3196",
+          "rawProtocolLine": 198,
+          "status": "completed",
+          "revisedPrompt": "Create exactly ONE new image, screen 2 of the Northstar Museum iOS membership flow, using the supplied screen 1 image as the visual reference. This new screen is REVIEW AND CONFIRM THE SELECTION, reached by pressing Continue on screen 1. Deliver only the new second raw app screen, NOT a comparison or collage. Target output dimensions 1179\u00d72556 pixels, portrait. No device frame, bezel, phone hardware, perspective, presentation background, website hero or footer. Do not repeat the first image unchanged.\n\nPreserve its recognizable typography, spacing, palette, nav, card styling, selected Family membership and exact price. Shared design bible: Georgia serif app typography; primary teal #086b64; warm paper #f7f5ef; dark ink #182d2a; 12pt corner radii for cards and buttons; flat colors, no gradients, no shadows. Use 393\u00d7852 logical iOS points at 3x, 24pt horizontal margins, 8pt spacing rhythm. Reserve the same top status safe area, time 9:41 at top left and native cellular/wifi/battery icons at top right. Keep a clear 34pt bottom safe area with black centered home indicator. Native status symbols can retain native appearance. All typography must be comfortably legible with generous line height. App content never overlaps system regions.\n\nNEW SCREEN COMPOSITION: keep the Back chevron and 'Back' row and 'Northstar Museum' brand line at the exact same upper locations and sizes as screen 1. Change the progress label to '2 of 2'. Headline in same bold Georgia and same scale, two lines: 'Confirm your\\nselection'. Supporting copy: 'Review your membership.' Below this, a slightly more compact selected summary card at the same horizontal margins and with same teal border, paper interior, 12pt radius and teal circular check at top right as the reference. Retain label 'SELECTED', exact plan name 'Family membership', and exact prominently displayed price '$100/year'. Then a fine separator and the same exact benefit 'Unlimited entry for two adults and children under 18.' All wording must be readable, accurately spelled, and fit naturally with no cramped wraps. Below the card place a small teal text action 'Change selection', left aligned with card, allowing the user to go back to screen 1. Preserve intentional open space. At precisely the same bottom position and width as the reference Continue button, show a primary teal 56pt tall button with white Georgia label 'Confirm selection'. Make this CTA fit on one line. The screen is before tapping Confirm selection: no purchase-success message, no claim that membership is active, no invented billing, discounts, payment details, or additional plans. No keyboard, email form, tab bar, photographs or illustrations. This should unmistakably be the second screen of the exact same app flow, with state continuity and consistent selected plan, price and labels. Output one single portrait image only.",
+          "targetMentioned": true,
+          "nativeBytes": 1025808,
+          "nativeSHA256": "272f5a981ae119a88de95e11431fd018ee1781fc4d52a097096c0c44254d7b9c",
+          "pngDimensions": [
+            853,
+            1844
+          ],
+          "targetDimensions": [
+            1179,
+            2556
+          ],
+          "targetMet": false,
+          "savedPath": "/home/djn12313/.codex/generated_images/01a0dee8-4451-78b1-bd95-27bf5d1ed205/exec-813c131f-be87-4ebb-a3e7-3a266c6e3196.png",
+          "savedMatchesNative": true,
+          "captureArchive": "/tmp/qs-frontend-comparison-v3-native-20260926/F09-r3-v84/generated-images/1.png",
+          "archiveMatchesNative": true,
+          "transparentBackground": false,
+          "reviewerImagePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-d9cd0234c658e60b/tool-images/272f5a981ae119a88de95e11431fd018ee1781fc4d52a097096c0c44254d7b9c.png",
+          "reviewerImageMatchesNative": true
+        }
+      ]
+    }
+  ]
+}
