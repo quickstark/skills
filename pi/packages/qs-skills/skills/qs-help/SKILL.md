@@ -32,11 +32,13 @@ Inspect the request and available project evidence, then recommend the single be
 ## Routing rules
 
 - Prefer the command whose primary outcome matches the request, not an intermediate technique.
-- Refactoring belongs to `/qs-review-code` with `action=improve` and a narrow selected target. Whole-codebase refactoring starts with a bounded read-only review.
+- Refactoring belongs to `/qs-review-code` with `action=refactor` and a narrow selected target. Whole-codebase refactoring starts with a bounded read-only review.
 - Adding or improving tests for already-established behavior belongs to `/qs-test-author`; executing and reporting a read-only verification matrix belongs to `/qs-test-verify`.
 - Test-driven development is internal to `/qs-code-build`, not a command.
 - Domain modeling, module decomposition, and ticket decomposition are internal planning or implementation capabilities.
-- Recommend three commands in ranked order: one opinionated preferred route and two useful alternatives. Keep each copy-ready prompt concise.
+- Choose one primary route from the registered public catalog; primary Help routing is not limited to another workflow's continuation list. Use the registry's exact literal for the active host.
+- Verify that the selected command is actually available before emitting its one copy-ready prompt. Catalog membership alone does not prove installation. For an unavailable optional capability, report the specific installation prerequisite; do not invent an executable prompt or install it automatically.
+- Keep discovery read-only. Describe optional capabilities from metadata without loading or invoking their public bodies. Preserve distinct prompt-authoring and visual-parity outcomes when they are available.
 
 ## Completion report and next steps
 
@@ -59,7 +61,7 @@ Normalize explicit flags first, then clear natural-language intent, then default
 
 Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
 
-Eligible next routes: `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Failure routes: `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+Primary Help routing may select any actually available registered public root. Read [ROUTING.md](ROUTING.md) for registry-generated descriptions and exact Codex/Claude/Pi literals; verify the selected literal in the active host before emitting it. This primary recommendation is separate from ordinary continuation eligibility. Ordinary continuation routes: `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Failure routes: `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Emit at most one prompt overall and never execute the selected root or install a missing package. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
 
 Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
 
@@ -70,4 +72,4 @@ Skills used: /qs-help
 Outcome: Concise verified result.
 Next work prompt: None | one copy-ready prompt in a fenced `text` block
 
-Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-plan-clarify, $qs-skills:qs-flow-triage, $qs-skills:qs-setup); Claude uses `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`; Pi uses `/skill:qs-plan-clarify`, `/skill:qs-flow-triage`, `/skill:qs-setup`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+Always write `Next work prompt:`. For one verified actionable request and an available primary destination, put exactly one fenced `text` block beneath it beginning with the destination's exact installed literal from [ROUTING.md](ROUTING.md). Name the requested work and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. A missing or unverified destination produces Input required with its precise package/discovery prerequisite and no executable prompt for that destination; do not claim no follow-on is needed. When there is no verified remaining actionable work, write `Next work prompt: None — no follow-on needed.` Ordinary continuation literals also require verified availability: Codex $qs-skills:qs-plan-clarify, $qs-skills:qs-flow-triage, $qs-skills:qs-setup; Claude uses `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`; Pi uses `/skill:qs-plan-clarify`, `/skill:qs-flow-triage`, `/skill:qs-setup`. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.

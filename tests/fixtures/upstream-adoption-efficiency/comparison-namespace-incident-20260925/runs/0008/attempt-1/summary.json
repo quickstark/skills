@@ -1,0 +1,50 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 8,
+    "scenarioId": "G4",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "G4",
+  "inputSHA256": "693a5874e899ece828ddd70a2d4d525f97f13e8da45d0c341da334e962633d6a",
+  "sourceSHA256": "f47e615e43d47daa26ea1f313d83a901c2b476356e360e4cae33604e2804763c",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-SZgYOj",
+  "startedAt": "2026-09-25T19:15:46.892Z",
+  "completedAt": "2026-09-25T19:16:10.996Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25836,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 617,
+      "reasoning_output_tokens": 225
+    }
+  ],
+  "elapsedMs": 24053.879674999975,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "- [x] Verified — assessed the supplied scope, authorization, and capabilities (weight 40%).\n- [ ] Blocked — generate the execution prompt (weight 60%); required implementation skill is absent.\n\nStage: Prompt generation | Stage estimate: ~0% | Overall estimate: ~40% | blocked — readiness requires an unavailable implementation workflow. Input needed: verified availability of `$qs-skills:qs-code-build`.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: An execution-ready prompt cannot be generated because `$qs-skills:qs-code-build` is not installed. The existing specification resolves requirements; clarification or another specification is unnecessary.\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. Goal tools and credentials are available. No implementation, goal creation, installation, or deployment was performed.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — provide the required implementation workflow, then regenerate the deployment prompt.\n\nThe retained scope is export of currently filtered invoices with a header row and CSV escaping while preserving the existing screen. Authorization covers repository edits/builds/tests, commit and push of `feature/export` to `origin`, and staging deployment through [the documented workflow](/fixture/ledger-app/docs/deploy.md). Merge, production, unrelated files, and rollback execution are not authorized. Deployment verification must establish `/health` HTTP 200 and a version matching the built artifact.\n\nNext work prompt: None — the required implementation skill is unavailable; no executable deployment prompt was generated. Execution has not started.",
+    "requestedActions": [],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

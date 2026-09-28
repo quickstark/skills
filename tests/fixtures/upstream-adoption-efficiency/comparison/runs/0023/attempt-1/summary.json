@@ -1,0 +1,54 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 23,
+    "scenarioId": "E6",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "E6",
+  "inputSHA256": "1d6d6c0bcea003f5dc16efcb369611f6ec646da4e26b0da2bedf529d09366877",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-NJQsfy",
+  "startedAt": "2026-09-25T19:24:32.460Z",
+  "completedAt": "2026-09-25T19:25:09.697Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25764,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1011,
+      "reasoning_output_tokens": 503
+    }
+  ],
+  "elapsedMs": 37187.58382399997,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-release (reporting contract only)\nOutcome: Supplied evidence verifies staging delivery; authoritative host goal-state confirmation remains pending.\n\n- [x] Build — verified complete at `abc123`: required build, tests, existing-screen validation, and diff review are current.\n- [x] Git — verified complete: supplied Git evidence confirms the tested revision `abc123` on `origin/feature/export`.\n- [x] Release — verified complete: authoritative deployment `J42` completed on staging; `/health` returned HTTP 200 and version `export:abc123`. CSV smoke checks verified filters, header, and escaping. Rollback readiness is verified.\n\nStage: Release | Stage estimate: ~100% | Overall estimate: ~100% | verified — delivery checks pass; host goal completion has not been confirmed. Input needed: supported goal-tool availability and authoritative matching goal state.\n\nWeights remain Build/Git/Release = 60/10/30. Earlier progress was `(60×50 + 10×0 + 30×0)/100 = 30%`. Current revision-bound completion evidence supersedes that snapshot: `(60×100 + 10×100 + 30×100)/100 = 100%`. This measures verified delivery, not a claimed host goal update.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Supplied observations establish CSV export delivery to staging as `export:abc123`, with required validation and healthy deployment `J42`. No operations were executed in this response.\n- Next — Confirm the matching host goal through supported goal tools, then record completion under the host’s actual contract. No build, push, deployment, or rollback retry is indicated.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify that the host supports get_goal and update_goal and obtain their actual contracts.",
+      "Use get_goal to inspect the resumed matching goal for CSV invoice export to staging; preserve any unrelated active goal.",
+      "If the authoritative matching goal and completion contract permit, use update_goal to record the supplied abc123 and J42 completion evidence, then verify the resulting goal state. If goal support is unavailable or state conflicts, report input-required without mutations."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

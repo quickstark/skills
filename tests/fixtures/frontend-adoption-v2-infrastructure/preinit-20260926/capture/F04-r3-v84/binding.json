@@ -1,0 +1,49 @@
+{
+  "row": {
+    "trialId": "F04-r3-v84",
+    "scenarioId": "F04",
+    "repetition": 3,
+    "variant": "v84"
+  },
+  "cwd": "/tmp/qs-frontend-v2-task-mEpBVs",
+  "planSHA256": "50008084056b8446c04730ecafa627a601fec07666b00af6104f423a813099f7",
+  "guidance": {
+    "path": "/tmp/qs-frontend-v2-task-mEpBVs/trial-guidance.md",
+    "sha256": "d77b3ed10f312c6d3a00c937e1bc40bcac66931db4f622e9a2ca0e130bc7746a",
+    "instructions": [
+      {
+        "key": "qs-design-frontend",
+        "sha256": "0e509af5790b68e1bec779390d6966de760badd28f0ccc90c73aeb570179f41c"
+      },
+      {
+        "key": "brief",
+        "sha256": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a"
+      },
+      {
+        "key": "redesign",
+        "sha256": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76"
+      },
+      {
+        "key": "design-direction",
+        "sha256": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386"
+      },
+      {
+        "key": "implementation",
+        "sha256": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5"
+      }
+    ]
+  },
+  "configuredHost": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Runtime model only when emitted; configured defaults do not prove runtime identity."
+  }
+}

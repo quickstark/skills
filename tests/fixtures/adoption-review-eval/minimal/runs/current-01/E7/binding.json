@@ -1,0 +1,199 @@
+{
+  "case": {
+    "id": "E7",
+    "source": "skills/engineering/qs-skill-eval/SKILL.md",
+    "references": [
+      "skills/advanced/internal/multi-candidate-exploration.md",
+      "skills/advanced/internal/decision-trail.md",
+      "skills/advanced/internal/parallel-coverage.md",
+      "skills/advanced/internal/typescript-discipline.md",
+      "skills/advanced/internal/plain-writing.md",
+      "skills/advanced/internal/rerunnable-tooling.md",
+      "skills/advanced/internal/structural-enforcement.md",
+      "skills/advanced/internal/context-discipline.md",
+      "skills/advanced/internal/minimal-change.md",
+      "skills/advanced/internal/concurrency-ownership.md",
+      "skills/advanced/internal/type-system-discipline.md"
+    ],
+    "timeoutMs": 360000,
+    "request": "Assess the declared evaluation batch using the local experiment/ and history/ records. I need a warranted review and any audit-trail correction under review-output/, plus a concise report in chat. All existing artifacts are read-only. Work only from the supplied evidence; do not run new experiments, model requests, candidate tasks, or checks against external services. No source repair, installation, publication, or configuration change is authorized."
+  },
+  "cwd": "/tmp/qs-review-eval-E7-7LdwTO",
+  "before": {
+    "experiment/README.md": {
+      "sha256": "a5594be50e12e2230d585c03a4180ae05563de212d325da52d8d07b3d574d607",
+      "bytes": 431
+    },
+    "experiment/outputs/sample-01/input.json": {
+      "sha256": "6ca4ff69fccc2a93b58051a7c5cb962e30d5a2efdab3231d48b29ccbc8112828",
+      "bytes": 93
+    },
+    "experiment/outputs/sample-01/response.md": {
+      "sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+      "bytes": 2
+    },
+    "experiment/outputs/sample-02/input.json": {
+      "sha256": "ccf4c3f2c2876f9ad444c5d41fe8a959363c9d87c52aaa189356d6dda9a1c078",
+      "bytes": 165
+    },
+    "experiment/outputs/sample-02/response.md": {
+      "sha256": "b04df2ed2049691d738b9ea7f40f6c067ca6f74ef9496d952e6d990e57dcde99",
+      "bytes": 20
+    },
+    "experiment/outputs/sample-03/input.json": {
+      "sha256": "543779bd231d7548c363508cdc8fe8a3021beaac611fc08e9a1befe4dad0181e",
+      "bytes": 93
+    },
+    "experiment/outputs/sample-03/response.md": {
+      "sha256": "076320a2a08267b4c026d06573bba408ea68841e73cdc20e62cce59de165ece3",
+      "bytes": 3
+    },
+    "experiment/plan.json": {
+      "sha256": "593cda3e1bc5bb77acd794bd5f3d6650f64fce70a02e866f2c99953243b14c65",
+      "bytes": 1488
+    },
+    "experiment/summary.json": {
+      "sha256": "2b144ec336aae7a9c296fe55fc8900fcc3e1706ff2e6ca7cf75afe7efe75f1d0",
+      "bytes": 339
+    },
+    "guidance/entry.md": {
+      "sha256": "26fcd5005372bc529f220af2c1aa37e6b241428247faa6f0fe5301fc52a2b4d6",
+      "bytes": 1432
+    },
+    "guidance/skills/advanced/internal/concurrency-ownership.md": {
+      "sha256": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a",
+      "bytes": 2570
+    },
+    "guidance/skills/advanced/internal/context-discipline.md": {
+      "sha256": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507",
+      "bytes": 2648
+    },
+    "guidance/skills/advanced/internal/decision-trail.md": {
+      "sha256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    "guidance/skills/advanced/internal/minimal-change.md": {
+      "sha256": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2",
+      "bytes": 2557
+    },
+    "guidance/skills/advanced/internal/multi-candidate-exploration.md": {
+      "sha256": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042",
+      "bytes": 2691
+    },
+    "guidance/skills/advanced/internal/parallel-coverage.md": {
+      "sha256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    "guidance/skills/advanced/internal/plain-writing.md": {
+      "sha256": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06",
+      "bytes": 2702
+    },
+    "guidance/skills/advanced/internal/rerunnable-tooling.md": {
+      "sha256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    "guidance/skills/advanced/internal/structural-enforcement.md": {
+      "sha256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    },
+    "guidance/skills/advanced/internal/type-system-discipline.md": {
+      "sha256": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd",
+      "bytes": 2814
+    },
+    "guidance/skills/advanced/internal/typescript-discipline.md": {
+      "sha256": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03",
+      "bytes": 2931
+    },
+    "guidance/skills/engineering/qs-skill-eval/SKILL.md": {
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    "history/archive-before-replacement.json": {
+      "sha256": "83aa60df5eaae540b462a5df7f68c8c53103721b5d1f9eb39b462c3a09fc0304",
+      "bytes": 255
+    },
+    "history/decisions.jsonl": {
+      "sha256": "5ff767a133ade6256223c2fff47d5ddd8744d780c53f94f1472f87fd70c9bf9f",
+      "bytes": 139
+    },
+    "history/edit-log.json": {
+      "sha256": "15299861eeb233fcd8cb48b027d0c97c69ebac39df1b0d086263c39163b3fc63",
+      "bytes": 264
+    }
+  },
+  "planSHA256": "0ae8fc82ed769831ab34cdb1837b135cf39546fe4fd1d6473cdc677da4317d7c",
+  "sources": [
+    {
+      "caseId": "E7",
+      "path": "skills/engineering/qs-skill-eval/SKILL.md",
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/multi-candidate-exploration.md",
+      "sha256": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042",
+      "bytes": 2691
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/decision-trail.md",
+      "sha256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/parallel-coverage.md",
+      "sha256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/typescript-discipline.md",
+      "sha256": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03",
+      "bytes": 2931
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/plain-writing.md",
+      "sha256": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06",
+      "bytes": 2702
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/rerunnable-tooling.md",
+      "sha256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/structural-enforcement.md",
+      "sha256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/context-discipline.md",
+      "sha256": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507",
+      "bytes": 2648
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/minimal-change.md",
+      "sha256": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2",
+      "bytes": 2557
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/concurrency-ownership.md",
+      "sha256": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a",
+      "bytes": 2570
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/type-system-discipline.md",
+      "sha256": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd",
+      "bytes": 2814
+    }
+  ]
+}

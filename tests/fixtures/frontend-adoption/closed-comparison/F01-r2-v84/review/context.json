@@ -1,0 +1,271 @@
+{
+  "trialId": "F01-r2-v84",
+  "task": {
+    "id": "F01",
+    "title": "greenfield marketing page",
+    "mode": "implementation",
+    "projectFixture": "empty",
+    "input": "Build a polished static membership page for Northstar Museum from the supplied facts. Include an introduction, Family membership details, and museum facts. Use the existing brand, a clear membership-details link and a local join form. No image generation is needed. Deliver working responsive files, not just recommendations.",
+    "requiredChecks": [
+      "requested-sections",
+      "brand-and-facts",
+      "working-local-form",
+      "narrow-and-keyboard",
+      "zero-image-calls",
+      "no-publication"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "inputManifest": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "actualArtifactManifest": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "2c1a0d1b33ad58f64deb2409fd88522dbe7f120d3c58a158c6005b2de49f4d62",
+      "bytes": 544
+    },
+    "evidence/narrow.png": {
+      "sha256": "659534ec848d3992bed9b11935ec7244dec32a4dacb5162ca9bd3c87256ea93b",
+      "bytes": 84435
+    },
+    "evidence/wide.png": {
+      "sha256": "d406fab8523c4bea70e123e7e1c11ebca031e8bd32a346e2224c5b727dc9065f",
+      "bytes": 103795
+    },
+    "index.html": {
+      "sha256": "101af8b9560b0f54901bac0119ba897432f163bee596e2d67180fdb44c64bce6",
+      "bytes": 3714
+    },
+    "styles.css": {
+      "sha256": "aaedc6044d25410d2ccb23c86aca3caa9f4686f0deeda2af0f50ea518cfd0dc6",
+      "bytes": 6690
+    }
+  },
+  "rawToolItems": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!'\"\\\\.git' -g '\"'!*lock*'\"' -g 'AGENTS.md' -g '*.md' -g '*.html' -g '*.css' -g '*.js' -g 'package.json' .\"",
+      "aggregated_output": "/tmp/qs-frontend-trial-7Os9cs\n./README.md\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'cat /home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-flow-handoff/SKILL.md'",
+      "aggregated_output": "---\nname: qs-flow-handoff\ndescription: \"Preserve verified state and ranked next actions for another operator or invocation.\"\n---\n\n# Create a handoff\n\nCapture only verified current state: objective, completed work, governing decisions, changed and unrelated dirty files, checks, branch/commit/PR state, blockers, risks, and the exact remaining boundary.\n\nDo not claim a receiving workflow has run. Provide at most one copy-ready continuation for the next verified actionable boundary, with the evidence needed to resume safely. Preserve current authority, cancellations, pending work, and revision-bound checks; a receiving session must revalidate changed evidence before continuing.\n\nKeep the handoff concise enough to resume without rereading the full session. Never include credentials or private values.\n\nInclude rerunnable commands, exact artifact identities, and the last proven boundary. Distinguish completed evidence from planned actions so resumption never depends on hidden transcript context.\n\n## Completion report and next steps\n\nKeep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.\n\nStart with a concise checklist of meaningful stages; one stage is enough for a short task. Label stages pending, active, verified, skipped, blocked, or failed. Only verified stages receive completed checkboxes; explain skipped stages. Verify each stage against relevant artifacts, command results, sources, or observable behavior before checking it off. A failing required check prevents completion; reopen a verified stage when later evidence invalidates it.\n\nDuring long operations, aim for updates within sixty seconds when the host allows control to return. State the current stage, observed progress or waiting state, and whether user input is needed. Distinguish a process that is running from confirmed progress; elapsed time alone proves neither progress nor completion. Finish with what changed or was configured, checks passed or failed, and remaining work. Read-only runs describe findings without implying mutations. Apply this contract regardless of effort or report mode; brief output may compress evidence but retains blockers and failed checks.\n\nReport at task start, meaningful stage transitions, material progress changes, blockers, resumption, and completion. Use: `Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>`. Overall means the bounded root task for a standalone skill, or the entire authorized goal for a submitted multi-stage workflow. Within a goal, label a root's own completion separately; finishing one root does not make the goal 100% complete.\n\nAssign meaningful stages approximate effort weights at the start and compute overall progress as sum(weight × stage estimate) / sum(in-scope weights). Base stage estimates on verified milestones, observed partial work, and remaining effort; checklist item counts, elapsed time, token consumption, or a running process alone are not progress. Use coarse estimates without decimal precision and explain low confidence. Keep weights stable unless evidence changes the work breakdown; explain recalibration, added work, reopened checks, and any decrease. Explain skipped stages: remove out-of-scope work from the denominator without awarding credit, and credit previously satisfied in-scope work only with current verification evidence; a skipped label alone earns nothing. Helpers contribute evidence to their parent's estimate without separate public reports or double-counting.\n\nKeep the last defensible estimate while waiting or blocked unless evidence changes it; state the required input or external event. Preserve the scope, weights, estimates, and supporting revision/evidence for resumption; reuse only still-valid evidence and reopen invalidated checks. Never reset valid progress or count resumed work twice. Reserve stage 100% for verified stage completion and overall 100% for verified completion of the whole stated scope. Cap unverified estimates at 95% when rounding to coarse values so rounding cannot imply completion. Failed required checks, unresolved acceptance criteria, or actionable P0/P1 findings prohibit completion regardless of the estimate. Percentages never override status or verification gates.\nA user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.\n\nThis invocation has one root skill: `/qs-flow-handoff`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.\n\nNormalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.\n\nResolve governing work context from explicit input, referenced task history available in the host, repository specifications or ticket plans, and a verified tracker when configured. Do not treat completion of the current root as proof that the larger project is complete. Every result must include `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Never omit `Specs:` or `Work summary:`.\nWrite `Work summary:` as a compact readout with `Finished —` naming the bounded outcome, meaningful validation, and material outputs, followed by `Next —` outlining up to three highest-priority verified pending or blocked tickets, specifications, issues, or grouped work items as `linked id — state — next action`. Group items only when they share the same state and next action. When no remaining item can be verified, write `Next — None verified after checking the linked specs, available task history, and tracker context.`\n\nUse `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.\n\nEligible next routes: `/qs-help`, `/qs-code-build`, `/qs-plan-clarify`. Failure routes: `/qs-help`, `/qs-code-build`, `/qs-plan-clarify`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.\n\nBefore responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.\n\nBrief output always contains status, outcome, specs, the compact work summary with Finished and Next entries, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required readout fields.\n\nStatus: Complete | Continuation required | Input required | Failed\nSkills used: /qs-flow-handoff\nOutcome: Concise verified result.\nSpecs: verified specification link(s) | Not located\nWork summary:\n- Finished — exact bounded outcome, meaningful validation, and material outputs\n- Next — up to three linked pending or blocked items with state and next action | None verified after checking available sources\nNext work prompt: None | one copy-ready prompt in a fenced `text` block\n\nAlways write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-help, $qs-skills:qs-code-build, $qs-skills:qs-plan-clarify); Claude uses `/qs-help`, `/qs-code-build`, `/qs-plan-clarify`; Pi uses `/skill:qs-help`, `/skill:qs-code-build`, `/skill:qs-plan-clarify`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'cat README.md && ls -la && git status --short --branch'",
+      "aggregated_output": "This fixture has no build system or external dependencies. Use static HTML/CSS/JavaScript. Serve only on loopback if a local preview is needed; do not install packages or publish.\ntotal 168\ndrwx------    5 djn12313 djn12313   4096 Sep 25 15:51 .\ndrwxrwxrwt 1924 nobody   nogroup  159744 Sep 25 15:51 ..\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:51 .agents\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:51 .codex\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 15:51 .git\n-rw-rw-r--    1 djn12313 djn12313    180 Sep 25 15:51 README.md\nfatal: not a git repository (or any of the parent directories): .git\n",
+      "exit_code": 128,
+      "status": "failed"
+    },
+    {
+      "id": "item_5",
+      "type": "file_change",
+      "changes": [
+        {
+          "path": "/tmp/qs-frontend-trial-7Os9cs/app.js",
+          "kind": "add"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-7Os9cs/index.html",
+          "kind": "add"
+        },
+        {
+          "path": "/tmp/qs-frontend-trial-7Os9cs/styles.css",
+          "kind": "add"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "item_7",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"mkdir -p evidence && node --check app.js && node --input-type=module <<'JS'\nimport puppeteer from '/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';\nimport assert from 'node:assert/strict';\nconst browser = await puppeteer.launch({executablePath:'/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});\ntry {\n const page=await browser.newPage();\n const errors=[]; const external=[];\n page.on('pageerror',e=>errors.push(e.message));\n await page.setRequestInterception(true);\n page.on('request',r=>{if(r.url().startsWith('file:'))r.continue();else{external.push(r.url());r.abort();}});\n for(const [name,width,height] of [['wide',1280,900],['narrow',390,844]]){\n  await page.setViewport({width,height});\n  await page.goto('file:///tmp/qs-frontend-trial-7Os9cs/index.html');\n  assert.equal(await page.title(),'Membership — Northstar Museum');\n  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,name+' overflow');\n  for(const id of ['site-header','site-footer','membership-panel','membership-title','price','member-count','annual-visits','founded','join-form','member-email','join-button','form-message','details-link']) assert.equal(await page.\"'$$eval('\"'#'+id,e=>e.length),1,id);\n  assert.deepEqual(await page.evaluate(()=>['member-count','annual-visits','founded'].map(id=>document.getElementById(id).textContent)),['10,000','50,000','2020']);\n  assert.equal(await page.\"'$eval('\"'#price',e=>e.textContent),'\"'$100 / year'\"');\n  assert.equal(await page.\"'$eval('\"'#details-link',e=>e.getAttribute('href')),'/membership/family');\n  assert.equal(await page.\"'$eval('\"'#join-form',e=>e.getAttribute('action')),'/join/checkout?plan=family');\n  assert.equal(await page.\"'$eval('\"'body',e=>getComputedStyle(e).fontFamily),'Georgia, \\\"Times New Roman\\\", serif');\n  await page.screenshot({path:'evidence/'+name+'.png',fullPage:true});\n  await page.keyboard.press('Tab');\n  assert.equal(await page.evaluate(()=>document.activeElement.className),'skip-link');\n  assert.equal(await page.evaluate(()=>getComputedStyle(document.activeElement).outlineStyle),'solid');\n  await page.focus('#join-button'); await page.keyboard.press('Enter');\n  assert.equal(await page.evaluate(()=>window.__events.length),0);\n  assert.equal(await page.evaluate(()=>document.activeElement.id),'member-email');\n  await page.type('#member-email','invalid');\n  await page.focus('#join-button'); await page.keyboard.press('Enter');\n  assert.equal(await page.evaluate(()=>window.__events.length),0);\n  await page.\"'$eval('\"'#member-email',e=>e.value='');\n  await page.focus('#member-email'); await page.type('#member-email','visitor@example.com');\n  await page.keyboard.press('Tab');\n  assert.equal(await page.evaluate(()=>document.activeElement.id),'join-button');\n  await page.keyboard.press('Enter');\n  assert.equal(await page.\"'$eval('\"'#form-message',e=>e.textContent),'Ready to continue with Family membership.');\n  assert.deepEqual(await page.evaluate(()=>window.__events),[{name:'join_started',plan:'family'}]);\n  assert.equal(page.url(),'file:///tmp/qs-frontend-trial-7Os9cs/index.html');\n  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,name+' success overflow');\n  await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);\n  assert.equal(await page.evaluate(()=>matchMedia('(prefers-reduced-motion: reduce)').matches),true);\n  console.log(name+': PASS — content, IDs, routes, typography, overflow, keyboard focus, invalid and valid form, analytics, reduced motion');\n }\n assert.deepEqual(errors,[]);assert.deepEqual(external,[]);\n console.log('PASS — no browser errors; no external requests; screenshots: evidence/wide.png, evidence/narrow.png');\n} finally {await browser.close();}\nJS\"",
+      "aggregated_output": "wide: PASS — content, IDs, routes, typography, overflow, keyboard focus, invalid and valid form, analytics, reduced motion\nnarrow: PASS — content, IDs, routes, typography, overflow, keyboard focus, invalid and valid form, analytics, reduced motion\nPASS — no browser errors; no external requests; screenshots: evidence/wide.png, evidence/narrow.png\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "execution": {
+    "exitCode": 0,
+    "timedOut": false,
+    "stopReason": null,
+    "completedTurn": true,
+    "processObservation": {
+      "passes": 2142,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "observedOwnedResidualProcesses": []
+  },
+  "browserStatus": "observed",
+  "rubric": {
+    "schemaVersion": 1,
+    "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+    "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+    "scores": {
+      "0": "Missing or unusable requested outcome",
+      "1": "Major task, readability or consistency failures",
+      "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+      "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+      "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+    },
+    "dimensions": [
+      "brief-and-content-fidelity",
+      "visual-hierarchy-and-readability",
+      "interaction-or-screen-flow-clarity",
+      "brand-and-platform-consistency",
+      "scope-and-evidence-honesty"
+    ],
+    "floor": 3,
+    "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+    "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+    "notAutomatic": [
+      "Source-string matching cannot establish behavior.",
+      "Browser metrics are observations for independent review, not aesthetic grades.",
+      "A screenshot cannot prove keyboard behavior.",
+      "An image prompt is not an image.",
+      "A response-only pilot cannot certify rendered or generated-image quality."
+    ],
+    "reviewSchema": {
+      "trialId": "string",
+      "reviewer": "independent identity",
+      "checks": [
+        {
+          "id": "scenario required check",
+          "result": "pass|fail|unverified",
+          "rationale": "cite response/artifact/event/observation"
+        }
+      ],
+      "dimensions": {
+        "dimension": "0..4 or not-applicable with reason"
+      },
+      "overall": "pass|fail|unverified",
+      "rationale": "evidence-backed explanation"
+    }
+  },
+  "reviewStatus": "Pending independent reviewer. Do not infer image/render quality from prose or source matching. Source names may remain visible in raw responses; blinding is partial."
+}

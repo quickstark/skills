@@ -1,0 +1,32 @@
+[
+  {
+    "label": "compile",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/modules/embedded-captions/scripts/make-composition.cjs",
+      "/tmp/qs-embedded-caption/run-01/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "fonts",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/modules/embedded-captions/scripts/inject-fonts.cjs",
+      "/tmp/qs-embedded-caption/run-01/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "preview",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/modules/embedded-captions/scripts/preview-frames.cjs",
+      "/tmp/qs-embedded-caption/run-01/project",
+      "0.25",
+      "1.8",
+      "3.5"
+    ],
+    "exit": 1
+  }
+]

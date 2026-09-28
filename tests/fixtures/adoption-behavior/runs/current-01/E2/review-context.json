@@ -1,0 +1,76 @@
+{
+  "case": {
+    "id": "E2",
+    "skill": "qs-hillclimb",
+    "source": "skills/engineering/qs-hillclimb/SKILL.md",
+    "references": [],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Assess this optimization: baseline100ms, candidate99ms, observed noise±5ms. Harness returns constant success even when implementation is replaced with an empty function. One correctness regression fails. The candidate also changed the sample order. Do not run or change anything.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-07",
+      "AC-12"
+    ],
+    "expected": [
+      "Reject insensitive harness and regression",
+      "Changed harness/order invalidates comparison; no speedup beyond noise",
+      "No commit/publication or arbitrary iterations"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 24246.21449599997,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 29609,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 615,
+        "reasoning_output_tokens": 208
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 243,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "a84d6541cbe31de05b0657a71dca9eae3e2e4e3ca221b9dad235a0d42f873880",
+    "promptUtf8Bytes": 12110,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-qcmoNS",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "0ba653d8516c0b428e6e34269a6baa2bd25a6c97f917e4e0cbd931f0949dc2a9",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:43:02.422Z",
+  "elapsedMs": 31755.42998799996,
+  "wallElapsedMs": 31755,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "e5565001202c7ccb0ad25c11b7b65d11fdbbfbd71b37f48aa00a28758074f653",
+  "promptUtf8Bytes": 9460,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25766,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 853,
+      "reasoning_output_tokens": 394
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "dd13c530f18a4e1c11fbb56f4293a82f28281cfe768e76260a14c257ac069e50",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-XgDjXh",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"- [x] Build — verified, 100%; weight 60. Execution skipped because current artifact-specific tests and review already verify completion.\\n- [ ] Git — pending, 0%; weight 10.\\n- [ ] Release — pending, 0%; weight 30.\\n\\nStage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified — supplied current-artifact evidence establishes completion. Input needed: none for this progress report.\\n\\nOverall = (60 × 100% + 10 × 0% + 30 × 0%) / 100 = **60%**. Build remains in scope and retains its weight. The newer completion evidence supersedes the earlier 50% Build estimate; no rerun is needed.\\n\\nStatus: Complete (Build root only; overall goal incomplete)\\n\\nSkills used: /qs-code-build (reporting supplied evidence)\\n\\nOutcome: Build is verified complete. Git publication and staging deployment have not begun.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — CSV export Build, supported by supplied current-artifact CSV behavior tests, existing-screen validation, and diff review. No actions were executed in this response.\\n- Next — [Export publication](/fixture/ledger-app/docs/specs/export.md) — pending — verify host goal support and matching authoritative goal state before the authorized Git stage.\\n- Next — [Staging delivery](/fixture/ledger-app/docs/deploy.md) — pending — after verified publication, deploy and verify HTTP 200 and the exact artifact version. No deployed version or health result is supplied.\\n\\nNext work prompt: None — subsequent stages are already scheduled by the authorized coordinator.\",\n  \"requestedActions\": [\n    \"Verify supported host goal-tool availability, then inspect authoritative goal state with get_goal. Resume only the matching goal; use create_goal only if a new matching goal is needed. If support is unavailable or an unrelated active goal prevents resumption, report input-required before stage execution. Preserve the supplied Build completion evidence and weights.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

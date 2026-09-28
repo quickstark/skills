@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 36,
+    "scenarioId": "P3",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "P3",
+  "inputSHA256": "6758c7bcb32c2aac1e81675f4ba6101114520208c7893cf701d79f02a4b3bc77",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-UadjBO",
+  "startedAt": "2026-09-25T19:40:20.951Z",
+  "completedAt": "2026-09-25T19:40:48.101Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25849,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 704,
+      "reasoning_output_tokens": 248
+    }
+  ],
+  "elapsedMs": 27098.84675700002,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-code-build (supplied instructions)\nOutcome: Build is reopened: the current CSV escaping change fails a required test. Git and Release remain blocked.\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — current-revision evidence invalidates earlier Build completion. Input needed: none for this report; host goal support and matching goal state must be verified before execution.\n\n- [ ] Build — failed, reopened; ~50%; weight 60.\n- [ ] Git — blocked, not started; 0%; weight 10.\n- [ ] Release — blocked, not started; 0%; weight 30.\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **30%**. The decrease from 60% reflects invalidated verification, with weights unchanged. Still-valid implementation and review milestones support Build’s remaining 50% credit.\n\nWork summary:\n\n- Finished — Reassessed progress from supplied observations. No operations were executed or artifacts produced; no deployed version or health evidence is supplied.\n- Next — [CSV export](/fixture/ledger-app/docs/specs/export.md) — failed — first verify goal-tool availability and inspect the matching goal. Then, within the authorized Build scope, repair escaping and rerun relevant CSV cases, existing-screen checks, and diff review at the resulting revision. Publication and deployment remain gated on verified completion. If goal support is unavailable, stop with Input required.\n\nNext work prompt: None — repair belongs to the current Build root; later stages are already scheduled.",
+    "requestedActions": [
+      "Verify the host’s supported goal tools, then use get_goal to inspect authoritative state for the matching CSV export staging goal. Do not replace an unrelated active goal; stop with input-required if goal support is unavailable. Reconcile the reopened Build failure under the host’s actual goal-state contract before any repair."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

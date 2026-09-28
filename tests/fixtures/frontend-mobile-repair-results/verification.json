@@ -1,0 +1,25 @@
+{
+  "type": "manual",
+  "result": "pass",
+  "archiveJsonSHA256": "04a50581e447c4c326bea2c35e150bf0f1bfac1dbb9ae0e3f0ffa8ae402c7321",
+  "fileManifestSHA256": "df3ff43cb4189230a4d00c5078ebb436c719b7267b0ee8c5725573c5fdafce57",
+  "verifierSHA256": "6fcaeb0150f2fbe9185c0a583c700dd450055ce0a3ad3e9612275ab44dcfe4eb",
+  "roundtrip": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-mobile-repair-results/verify.py --extract /tmp/qs-leaf71-roundtrip-20260926 --source /tmp/qs-frontend-mobile-native-qualification-20260926",
+    "exitCode": 0,
+    "result": "182 files and49 directories matched byte hashes/modes; six captures and six bundles; original source unchanged"
+  },
+  "existingDestinationControl": {
+    "exitCode": 1,
+    "error": "FileExistsError",
+    "result": "Refused existing extraction target before decompression; original and extracted evidence not replaced."
+  },
+  "fourPasses": [
+    "Full source inventory and every trial plan binding",
+    "Whole-stream compression/split and per-file hash preservation",
+    "Fresh extraction, full original/extracted bytes and modes verified",
+    "Error hunt/path safeguard and concise scope/quality wording review"
+  ],
+  "quality": "No quality verdict; independent review pending at archive time. Parent-reported candidate brand failure not repaired. Original F09 failed; no pooling or exact-size claim.",
+  "processes": "Build/compression/full verification/negative control processes exited; no model/browser processes started."
+}

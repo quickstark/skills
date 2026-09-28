@@ -1,0 +1,24 @@
+{
+  "kind": "ungraded-matched-run",
+  "run": {
+    "run": 38,
+    "scenarioId": "P4",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "inputSHA256": "5f97aeb6d603a19bbf993d820177604b90a27356cc9e00dbb5478dd1478cb371",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "selectedAttempt": 1,
+  "attempts": [
+    {
+      "path": "comparison/runs/0038/attempt-1",
+      "failure": null,
+      "infrastructureFailure": false,
+      "modelOutputObserved": true
+    }
+  ],
+  "failure": null,
+  "summaryPath": "comparison/runs/0038/attempt-1/summary.json",
+  "completedAt": "2026-09-25T19:41:40.315Z"
+}

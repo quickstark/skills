@@ -1,0 +1,30 @@
+{
+  "kind": "ungraded-matched-run",
+  "run": {
+    "run": 51,
+    "scenarioId": "H1",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "inputSHA256": "c44f167dbde88c96774a9db36705a0ec02fbacb3fbeb11dbb4f797a895b7ba34",
+  "sourceSHA256": "51fb964fe9068e8e1023a3bfc660f350d24d77d59713062c17a5d6e0834a4dd7",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "selectedAttempt": 2,
+  "attempts": [
+    {
+      "path": "comparison/runs/0051/attempt-1",
+      "failure": "CLI infrastructure failure/timeout/interruption; raw evidence retained.",
+      "infrastructureFailure": true,
+      "modelOutputObserved": false
+    },
+    {
+      "path": "comparison/runs/0051/attempt-2",
+      "failure": "CLI infrastructure failure/timeout/interruption; raw evidence retained.",
+      "infrastructureFailure": true,
+      "modelOutputObserved": false
+    }
+  ],
+  "failure": "CLI infrastructure failure/timeout/interruption; raw evidence retained.",
+  "summaryPath": "comparison/runs/0051/attempt-2/summary.json",
+  "completedAt": "2026-09-25T19:25:54.227Z"
+}

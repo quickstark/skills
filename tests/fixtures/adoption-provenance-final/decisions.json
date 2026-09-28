@@ -1,0 +1,1259 @@
+{
+  "kind": "source-adaptation-decisions-not-release-acceptance",
+  "date": "2026-09-28",
+  "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+  "reportingCompression": "retained-baseline",
+  "records": [
+    {
+      "id": "target:public:qs-help",
+      "path": "skills/engineering/qs-help/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-setup",
+      "path": "skills/engineering/qs-setup/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-plan-clarify",
+      "path": "skills/engineering/qs-plan-clarify/SKILL.md",
+      "package": "qs-skills",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-plan-roadmap",
+      "path": "skills/engineering/qs-plan-roadmap/SKILL.md",
+      "package": "qs-skills",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-plan-spec",
+      "path": "skills/engineering/qs-plan-spec/SKILL.md",
+      "package": "qs-skills",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-code-build",
+      "path": "skills/engineering/qs-code-build/SKILL.md",
+      "package": "qs-skills",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-code-debug",
+      "path": "skills/engineering/qs-code-debug/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-review-code",
+      "path": "skills/engineering/qs-review-code/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-git-merge",
+      "path": "skills/engineering/qs-git-merge/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-deploy-release",
+      "path": "skills/engineering/qs-deploy-release/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-flow-triage",
+      "path": "skills/engineering/qs-flow-triage/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-flow-handoff",
+      "path": "skills/productivity/qs-flow-handoff/SKILL.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:public:qs-plan-research",
+      "path": "skills/engineering/qs-plan-research/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-design-prototype",
+      "path": "skills/engineering/qs-design-prototype/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-code-document",
+      "path": "skills/engineering/qs-code-document/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-test-author",
+      "path": "skills/engineering/qs-test-author/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-test-verify",
+      "path": "skills/engineering/qs-test-verify/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-learn-teach",
+      "path": "skills/productivity/qs-learn-teach/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-skill-write",
+      "path": "skills/productivity/qs-skill-write/SKILL.md",
+      "package": "qs-specialists",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-deploy-prompt",
+      "path": "skills/engineering/qs-deploy-prompt/SKILL.md",
+      "package": "qs-specialists",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-how",
+      "path": "skills/engineering/qs-how/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-why",
+      "path": "skills/engineering/qs-why/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-blast-radius",
+      "path": "skills/engineering/qs-blast-radius/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-runtime-forensics",
+      "path": "skills/engineering/qs-runtime-forensics/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-trace-forensics",
+      "path": "skills/engineering/qs-trace-forensics/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-create-verification-skill",
+      "path": "skills/engineering/qs-create-verification-skill/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-maintain-verification-skill",
+      "path": "skills/engineering/qs-maintain-verification-skill/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-skill-eval",
+      "path": "skills/engineering/qs-skill-eval/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-hillclimb",
+      "path": "skills/engineering/qs-hillclimb/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-visual-parity",
+      "path": "skills/engineering/qs-visual-parity/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-pr-babysit",
+      "path": "skills/engineering/qs-pr-babysit/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-worktree-cleanup",
+      "path": "skills/engineering/qs-worktree-cleanup/SKILL.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:public:qs-design-frontend",
+      "path": "skills/engineering/qs-design-frontend/SKILL.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:public:qs-design-image-web",
+      "path": "skills/engineering/qs-design-image-web/SKILL.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:public:qs-design-image-mobile",
+      "path": "skills/engineering/qs-design-image-mobile/SKILL.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:public:qs-design-image-to-code",
+      "path": "skills/engineering/qs-design-image-to-code/SKILL.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:public:qs-video",
+      "path": "skills/video/qs-video/SKILL.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:public:qs-unlazy",
+      "path": "skills/engineering/qs-unlazy/SKILL.md",
+      "package": "qs-execution",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/execution-candidate.test.mjs"
+      ]
+    },
+    {
+      "id": "target:private:qs-skills:domain-modeling",
+      "path": "skills/internal/domain-modeling.md",
+      "package": "qs-skills",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:private:qs-skills:module-decomposition",
+      "path": "skills/internal/module-decomposition.md",
+      "package": "qs-skills",
+      "status": "retained-baseline",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:private:qs-skills:ticket-decomposition",
+      "path": "skills/internal/ticket-decomposition.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:private:qs-skills:tdd-loop",
+      "path": "skills/internal/tdd-loop.md",
+      "package": "qs-skills",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:multi-candidate-exploration",
+      "path": "skills/advanced/internal/multi-candidate-exploration.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:decision-trail",
+      "path": "skills/advanced/internal/decision-trail.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:parallel-coverage",
+      "path": "skills/advanced/internal/parallel-coverage.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:typescript-discipline",
+      "path": "skills/advanced/internal/typescript-discipline.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:plain-writing",
+      "path": "skills/advanced/internal/plain-writing.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:boundary-discipline",
+      "path": "skills/advanced/internal/boundary-discipline.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:rerunnable-tooling",
+      "path": "skills/advanced/internal/rerunnable-tooling.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:structural-enforcement",
+      "path": "skills/advanced/internal/structural-enforcement.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:experience-first",
+      "path": "skills/advanced/internal/experience-first.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:context-discipline",
+      "path": "skills/advanced/internal/context-discipline.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:minimal-change",
+      "path": "skills/advanced/internal/minimal-change.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:idempotent-operations",
+      "path": "skills/advanced/internal/idempotent-operations.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:outcome-oriented-execution",
+      "path": "skills/advanced/internal/outcome-oriented-execution.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:concurrency-ownership",
+      "path": "skills/advanced/internal/concurrency-ownership.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:type-system-discipline",
+      "path": "skills/advanced/internal/type-system-discipline.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-advanced:bounded-autonomous-loop",
+      "path": "skills/advanced/internal/bounded-autonomous-loop.md",
+      "package": "qs-advanced",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:brief",
+      "path": "skills/frontend/internal/brief.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:design-direction",
+      "path": "skills/frontend/internal/design-direction.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:redesign",
+      "path": "skills/frontend/internal/redesign.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:dimensional-style",
+      "path": "skills/frontend/internal/dimensional-style.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:restrained-style",
+      "path": "skills/frontend/internal/restrained-style.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:implementation",
+      "path": "skills/frontend/internal/implementation.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:prompt-construction",
+      "path": "skills/frontend/internal/prompt-construction.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:web-images",
+      "path": "skills/frontend/internal/web-images.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-frontend:mobile-images",
+      "path": "skills/frontend/internal/mobile-images.md",
+      "package": "qs-frontend",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes",
+      "path": "skills/video/qs-video/modules/hyperframes/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-core",
+      "path": "skills/video/qs-video/modules/hyperframes-core/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-animation",
+      "path": "skills/video/qs-video/modules/hyperframes-animation/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-keyframes",
+      "path": "skills/video/qs-video/modules/hyperframes-keyframes/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-creative",
+      "path": "skills/video/qs-video/modules/hyperframes-creative/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-audio",
+      "path": "skills/video/qs-video/modules/hyperframes-audio/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-cli",
+      "path": "skills/video/qs-video/modules/hyperframes-cli/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-registry",
+      "path": "skills/video/qs-video/modules/hyperframes-registry/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:media-use",
+      "path": "skills/video/qs-video/modules/media-use/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:remotion-to-hyperframes",
+      "path": "skills/video/qs-video/modules/remotion-to-hyperframes/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:slideshow",
+      "path": "skills/video/qs-video/modules/slideshow/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:embedded-captions",
+      "path": "skills/video/qs-video/modules/embedded-captions/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:talking-head-recut",
+      "path": "skills/video/qs-video/modules/talking-head-recut/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:music-to-video",
+      "path": "skills/video/qs-video/modules/music-to-video/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:motion-graphics",
+      "path": "skills/video/qs-video/modules/motion-graphics/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:pr-to-video",
+      "path": "skills/video/qs-video/modules/pr-to-video/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:product-launch-video",
+      "path": "skills/video/qs-video/modules/product-launch-video/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:faceless-explainer",
+      "path": "skills/video/qs-video/modules/faceless-explainer/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:general-video",
+      "path": "skills/video/qs-video/modules/general-video/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:figma",
+      "path": "skills/video/qs-video/modules/figma/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-video:hyperframes-studio",
+      "path": "skills/video/qs-video/modules/hyperframes-studio/instructions.md",
+      "package": "qs-video",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "skills/video/qs-video/references/runtime-compatibility.md"
+      ]
+    },
+    {
+      "id": "target:private:qs-execution:unlazy",
+      "path": "skills/engineering/qs-unlazy/modules/unlazy/instructions.md",
+      "package": "qs-execution",
+      "status": "adopted",
+      "implementationRevision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+      "evidence": [
+        "tests/fixtures/adoption-provenance-final/README.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/execution-candidate.test.mjs"
+      ]
+    }
+  ]
+}

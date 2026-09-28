@@ -1,0 +1,185 @@
+✔ current catalogs, private owners and all managed contributors have complete provenance (465.590999ms)
+✔ missing private capability and lost secondary owner fail coverage (442.131222ms)
+✔ missing canonical owner, unknown current identity and duplicate IDs fail (650.826811ms)
+✔ planned owners neither need an existing path nor activate a command (211.994141ms)
+✔ mutable, absent and ambiguous revisions are rejected (672.827817ms)
+✔ unknown or not-adopted status is explicit and never invents a revision (859.109829ms)
+✔ byte identity needs actual manifest authority, not just a plausible digest (814.614501ms)
+✔ a source digest cannot prove an adapted repository file is byte-identical (191.255506ms)
+✔ derived content digest is independently verified against current file bytes (390.681013ms)
+✔ repository-authored records are allowed without invented upstream origin (204.37163ms)
+✔ writer original and successor identities remain separate (0.285563ms)
+✔ original PS72 inventory and every historical disposition survive independently (787.385217ms)
+✔ unsafe paths, dormant promotion and missing evidence are rejected (860.203018ms)
+✔ directories cannot stand in for canonical files, evidence or historical snapshots (671.745952ms)
+✔ malformed records return diagnostic failures rather than throwing TypeError (1286.710512ms)
+✔ rendering is deterministic, read-only and exposes revision distinctions (15.943239ms)
+✖ baseline identities and all original113 sources survive target mapping unchanged (1.423366ms)
+✔ target catalog omissions, duplicates and owner loss are rejected (1345.472092ms)
+✖ pending, unknown, reviewed, retained and adopted decisions remain distinct (3.819241ms)
+✖ target and closure digests reject stale bytes independently of upstream pins (839.399132ms)
+✔ malformed target records return diagnostics (861.860502ms)
+✔ complete private closure rejects missing, duplicate, changed and unindexed resources (2354.655498ms)
+✖ generated document includes target ownership and matches the checked-in file (10.175524ms)
+✖ target notices and explicit closure adoption cannot disappear or be inferred (1561.194327ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 19
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15645.449183
+
+✖ failing tests:
+
+test at tests/skill-provenance.test.mjs:144:1
+✖ baseline identities and all original113 sources survive target mapping unchanged (1.423366ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:155:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-provenance.test.mjs:168:1
+✖ pending, unknown, reviewed, retained and adopted decisions remain distinct (3.819241ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:171:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-provenance.test.mjs:184:1
+✖ target and closure digests reject stale bytes independently of upstream pins (839.399132ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at rejects (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:14:78)
+      at TestContext.<anonymous> (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:188:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-provenance.test.mjs:241:1
+✖ generated document includes target ownership and matches the checked-in file (10.175524ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /pending \(no revision claimed\)/. Input:
+  
+  '# Skill provenance\n' +
+    '\n' +
+    'Generated from [the provenance records](../../config/skill-provenance.json). Baseline installation history and target ownership are separate. Catalog mappings do not activate packages or adopt reviewed sources.\n' +
+    '\n' +
+    '71 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.\n' +
+    '\n' +
+    '## Target ownership\n' +
+    '\n' +
+    'Target decisions remain explicit: pending/unknown make no revision claim; reviewed records assessment; retained-baseline records rejection of a proposed change; adopted requires separate evidence. Decision revisions identify the QuickStark implementation revision, not every upstream origin. Baseline source adoption is never inherited as target adoption. Owner-context links retain the public owner’s origin scope; they do not assert that every private helper copied every listed origin.\n' +
+    '\n' +
+    '| Target / role | Package / owners | Baseline stable IDs | Decision |\n' +
+    '| --- | --- | --- | --- |\n' +
+    '| `boundary-discipline` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:boundary-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `bounded-autonomous-loop` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:bounded-autonomous-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `concurrency-ownership` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval`, `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:concurrency-ownership` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `context-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit` | `ps-internal:context-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `decision-trail` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:decision-trail` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `experience-first` / private | `qs-advanced` / `qs-visual-parity`, `qs-hillclimb` | `ps-internal:experience-first` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `idempotent-operations` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-worktree-cleanup` | `ps-internal:idempotent-operations` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `minimal-change` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:minimal-change` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `multi-candidate-exploration` / private | `qs-advanced` / `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity` | `ps-internal:multi-candidate-exploration` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `outcome-oriented-execution` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:outcome-oriented-execution` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `parallel-coverage` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval` | `ps-internal:parallel-coverage` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `plain-writing` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:plain-writing` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `rerunnable-tooling` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb` | `ps-internal:rerunnable-tooling` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `structural-enforcement` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval` | `ps-internal:structural-enforcement` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `type-system-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:type-system-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `typescript-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:typescript-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `unlazy` / private | `qs-execution` / `qs-unlazy` | `contributor:unlazy` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `brief` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-web`, `qs-design-image-mobile`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:imagegen-frontend-mobile`, `contributor:imagegen-frontend-web`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `design-direction` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-web`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:imagegen-frontend-web`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `dimensional-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `implementation` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `mobile-images` / private | `qs-frontend` / `qs-design-image-mobile` | `contributor:imagegen-frontend-mobile` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `prompt-construction` / private | `qs-frontend` / `qs-design-image-web`, `qs-design-image-mobile`, `qs-design-image-to-code` | `contributor:image-to-code`, `contributor:imagegen-frontend-mobile`, `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `redesign` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `restrained-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `web-images` / private | `qs-frontend` / `qs-design-image-web` | `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `domain-modeling` / private | `qs-skills` / `qs-plan-clarify`, `qs-plan-spec`, `qs-review-code` | `qs-internal:domain-modeling` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `module-decomposition` / private | `qs-skills` / `qs-plan-spec`, `qs-code-build`, `qs-review-code` | `qs-internal:module-decomposition` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `tdd-loop` / private | `qs-skills` / `qs-code-build` | `qs-internal:tdd-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `ticket-decomposition` / private | `qs-skills` / `qs-plan-spec` | `qs-internal:ticket-decomposition` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `embedded-captions` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `faceless-explainer` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n' +
+    '| `figma` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` |'... 61511 more characters
+  
+      at TestContext.<anonymous> (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:247:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '# Skill provenance\n\nGenerated from [the provenance records](../../config/skill-provenance.json). Baseline installation history and target ownership are separate. Catalog mappings do not activate packages or adopt reviewed sources.\n\n71 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.\n\n## Target ownership\n\nTarget decisions remain explicit: pending/unknown make no revision claim; reviewed records assessment; retained-baseline records rejection of a proposed change; adopted requires separate evidence. Decision revisions identify the QuickStark implementation revision, not every upstream origin. Baseline source adoption is never inherited as target adoption. Owner-context links retain the public owner’s origin scope; they do not assert that every private helper copied every listed origin.\n\n| Target / role | Package / owners | Baseline stable IDs | Decision |\n| --- | --- | --- | --- |\n| `boundary-discipline` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:boundary-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `bounded-autonomous-loop` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:bounded-autonomous-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `concurrency-ownership` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval`, `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:concurrency-ownership` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `context-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit` | `ps-internal:context-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `decision-trail` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:decision-trail` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `experience-first` / private | `qs-advanced` / `qs-visual-parity`, `qs-hillclimb` | `ps-internal:experience-first` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `idempotent-operations` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-worktree-cleanup` | `ps-internal:idempotent-operations` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `minimal-change` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:minimal-change` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `multi-candidate-exploration` / private | `qs-advanced` / `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity` | `ps-internal:multi-candidate-exploration` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `outcome-oriented-execution` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:outcome-oriented-execution` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `parallel-coverage` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval` | `ps-internal:parallel-coverage` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `plain-writing` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:plain-writing` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `rerunnable-tooling` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb` | `ps-internal:rerunnable-tooling` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `structural-enforcement` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval` | `ps-internal:structural-enforcement` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `type-system-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:type-system-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `typescript-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:typescript-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `unlazy` / private | `qs-execution` / `qs-unlazy` | `contributor:unlazy` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `brief` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-web`, `qs-design-image-mobile`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:imagegen-frontend-mobile`, `contributor:imagegen-frontend-web`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `design-direction` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-web`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:imagegen-frontend-web`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `dimensional-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `implementation` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `mobile-images` / private | `qs-frontend` / `qs-design-image-mobile` | `contributor:imagegen-frontend-mobile` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `prompt-construction` / private | `qs-frontend` / `qs-design-image-web`, `qs-design-image-mobile`, `qs-design-image-to-code` | `contributor:image-to-code`, `contributor:imagegen-frontend-mobile`, `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `redesign` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `restrained-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `web-images` / private | `qs-frontend` / `qs-design-image-web` | `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `domain-modeling` / private | `qs-skills` / `qs-plan-clarify`, `qs-plan-spec`, `qs-review-code` | `qs-internal:domain-modeling` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `module-decomposition` / private | `qs-skills` / `qs-plan-spec`, `qs-code-build`, `qs-review-code` | `qs-internal:module-decomposition` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `tdd-loop` / private | `qs-skills` / `qs-code-build` | `qs-internal:tdd-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `ticket-decomposition` / private | `qs-skills` / `qs-plan-spec` | `qs-internal:ticket-decomposition` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `embedded-captions` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `faceless-explainer` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |\n| `figma` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` |'... 61511 more characters,
+    expected: /pending \(no revision claimed\)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/skill-provenance.test.mjs:250:1
+✖ target notices and explicit closure adoption cannot disappear or be inferred (1561.194327ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at rejects (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:14:78)
+      at TestContext.<anonymous> (file:///github/skills-adoption-release/tests/skill-provenance.test.mjs:254:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,32 @@
+{
+  "reviewId": "review-cb3fab72962e7198",
+  "supplementPath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-supplements/review-cb3fab72962e7198/original-observer-failure",
+  "fileBindings": {
+    "browser/narrow.png": {
+      "sha256": "1b8f5765986aac6acd857339c638b2d3cf0cff045c8e425048e58acae417f6aa",
+      "bytes": 57711
+    },
+    "browser/wide.png": {
+      "sha256": "2eb0bea90d001a534e5460f87796e1fd9db97c6ed44b2f53cb660901ef2554b3",
+      "bytes": 66598
+    },
+    "receipt.json": {
+      "sha256": "968ae096260233f5f3bf63901ee5293a5bfb500c1ed0dc33dfff7e5b159a3c5b",
+      "bytes": 1903
+    },
+    "transport-evidence.json": {
+      "sha256": "53eb4313daa3ab42bca6ad966f8278a8164659d37a82a6710df03c1b49ef4128",
+      "bytes": 7819
+    }
+  },
+  "sourceSummarySha256": "c54eda3d19cbdb700166cf20a239fb185ae7eadb9924608ef9ba9b7887e8df3e",
+  "finding": "Original shared observer failed on non-clickable element at frozen observer line46. Parent source inspection identifies hidden email click before opening native dialog; independently inspected actual markup agrees. Partial original evidence only, not a rerun or passing uniform observation.",
+  "sourceCopyUnchangedVerified": true,
+  "artifactBindingsVerified": true,
+  "partialImagesIdenticalToOpenedAuthorImages": {
+    "wide": true,
+    "narrow": true
+  },
+  "gradeChange": false,
+  "limits": "Original review preserved. Raw summary hash is parent receipt binding, not raw/operator lookup. Author runtime evidence remains separately assessed; full uniform interaction observation unavailable."
+}

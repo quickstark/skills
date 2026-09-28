@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-e339a52a79026b91",
+  "scenarioId": "F04",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-e339a52a79026b91",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "1382ec0a942b4cc3c72987812e638ba16f93c657912496d9acfed494a7fda413",
+      "bytes": 1343
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/evidence/after-narrow-panel.png": {
+      "sha256": "5e45fac9cdfc308acc7c160977e257cac0bae1e9b400565d0815c2b6f137782b",
+      "bytes": 46224
+    },
+    "actual-artifacts/evidence/after-narrow.png": {
+      "sha256": "1766d81a172e7252246054882cf313f400c5c6102dc48bbeb04b4c8014044511",
+      "bytes": 54709
+    },
+    "actual-artifacts/evidence/after-wide.png": {
+      "sha256": "aefe54d242539a306a9a14e29d2992fb4afcb78df0aa2bccdd1a921c58be72aa",
+      "bytes": 92037
+    },
+    "actual-artifacts/evidence/before-narrow.png": {
+      "sha256": "81eb8a18c2edfefeb0fdb6460bad1f2fda85ad7654c04521d4969bb3f3507c52",
+      "bytes": 52658
+    },
+    "actual-artifacts/evidence/before-wide.png": {
+      "sha256": "def17b5ec3ab7942ade19788bcc268f761c66f007ca4fe6c6bca847199d02b33",
+      "bytes": 89227
+    },
+    "actual-artifacts/evidence/before.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "actual-artifacts/evidence/before.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "actual-artifacts/evidence/before.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/evidence/checks.json": {
+      "sha256": "18faf1b8076cfbbd49b6a54c0cb876c3e0e1edb4a9f982a053e122124b0bf41b",
+      "bytes": 1092
+    },
+    "actual-artifacts/evidence/verify.mjs": {
+      "sha256": "e806430082e420f66470c287ead0d9a991698da8cfd0b9539153a6785bf0efe2",
+      "bytes": 4867
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "44620e95e41b23e2cbcd5311d3135c06949ea81cd055a80acfb5dd0b2f05c04f",
+      "bytes": 2101
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "70c3c69270efbdc23365d87fc59029e69cf7f2da0ef02d6de55cea705de3c098",
+      "bytes": 3842
+    },
+    "browser/narrow.png": {
+      "sha256": "9158c7cce83e91c2a7855f0462fd9422f1d2c4e065dc7c81dd7207846fb0d477",
+      "bytes": 95934
+    },
+    "browser/observations.json": {
+      "sha256": "89b4c3dcf995e44608571bdc908bb21d95b5c5fa949aeb9ac8e4e469d265223d",
+      "bytes": 20784
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "e6a2eed40d922082fd1b630148429826dbaa33b792507cc06459f594a9c38016",
+      "bytes": 9380
+    },
+    "browser/wide.png": {
+      "sha256": "c1d860f7114374f12680fe4a8baf378f8c63647bdf79d9a16f5ddd7f4bd6eb0c",
+      "bytes": 97799
+    },
+    "context.json": {
+      "sha256": "fe548c038bf6a322f5fc18fa91b2e1b6820f7027b0015f9e21eb32a86fd8b599",
+      "bytes": 11130
+    },
+    "events.jsonl": {
+      "sha256": "0b4e815ba637cfe8995f51757a894f46982a5ed7d07d919b896b61e1d19a80f8",
+      "bytes": 268046
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "8ed989e7f3bde7b8e2492edefba936ebcda12f15ac0490dd0701e36837ce610d",
+      "bytes": 1728
+    },
+    "response.md": {
+      "sha256": "97b26652b00cb6db424da144117e47462c2d8bd23cbe5872a000a004b346d790",
+      "bytes": 936
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "dd8ca0497e1668e28d224da01a3ada8efb99289cb736795d2ff9501b0b5a3f10",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png",
+    "actual-artifacts/evidence/after-narrow-panel.png",
+    "actual-artifacts/evidence/after-narrow.png",
+    "actual-artifacts/evidence/after-wide.png",
+    "actual-artifacts/evidence/before-narrow.png",
+    "actual-artifacts/evidence/before-wide.png"
+  ],
+  "checks": [
+    {
+      "id": "panel-improves",
+      "result": "pass",
+      "rationale": "Joined two-part panel; bold price then benefit list; stacked mobile panel visibly improves price/signup hierarchy in opened before/after and independent HTTP screenshots."
+    },
+    {
+      "id": "header-footer-unchanged",
+      "result": "pass",
+      "rationale": "Outside-panel HTML and original CSS prefix byte-preserved; added selectors affect only panel descendants. Header/footer appearance preserved apart from normal document-flow displacement."
+    },
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "All original text/facts (including three benefits), 13 IDs, hrefs and form action retained; HTML diff only inside panel. Sorted text-node check."
+    },
+    {
+      "id": "analytics-and-form",
+      "result": "pass",
+      "rationale": "app.js byte-identical; empty/invalid block and valid pointer click/requestSubmit each records exactly one join_started/family plus exact confirmation. HTTP keyboard cannot reach retained div CTA; not claiming keyboard success or imposing a repair outside frozen scope."
+    },
+    {
+      "id": "panel-responsive-within-scope",
+      "result": "pass",
+      "rationale": "Panel x40..350 at390, width310 and scrollWidth=clientWidth; desktop x40..1240. Global main min-width960 intentionally preserved and disclosed; requirement is panel within scope."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "All unique native items and complete commands/transitive browser helpers inspected: zero generation; two image views and DOM screenshots are not generation. No delegated/MCP generation."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 3,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Exact preserved brief/content/routes with bounded panel-only layout changes.",
+    "visual-hierarchy-and-readability": "Price and signup hierarchy substantially clearer; readable 310px stack. Long mobile panel and generous blank form space keep quality at competent rather than exceptional.",
+    "interaction-or-screen-flow-clarity": "Pointer/programmatic submission preserved and unambiguous visual CTA; original keyboard-inaccessible div and missing email label remain. Retained limitation, not new regression.",
+    "brand-and-platform-consistency": "Original Georgia/palette/12px CSS preserved, computed controls not independently asserted in this helper; no brand drift visible.",
+    "scope-and-evidence-honesty": "Scope and page overflow reported honestly; final zero image calls is imprecise with2 actual views (zero generation is verified). Initial verification TypeError from unsupported locator.screenshot is retained; changed only to element screenshot then full checks pass."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-d2337f11-0df3-4bb0-a3d1-7f7460a265f8",
+        "eventLine": 53,
+        "type": "command_execution",
+        "itemSha256": "e0a8e5a38b9278e5ec984a7d20b1d17c37bbe1afd79dc619b158ed8407015fab",
+        "classification": "Read supplied guidance file; content skipped for blinding.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-f0a572f9-6df7-4b01-acdd-11afb72e0f35",
+        "eventLine": 59,
+        "type": "command_execution",
+        "itemSha256": "2417d1f71c0ea9b5807123a9f0b43d20ec0852347c23466b23c5d45d93181e91",
+        "classification": "pwd/rg input inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-8b2906bb-d1fa-4c5a-b549-27c56eaeff2d",
+        "eventLine": 68,
+        "type": "command_execution",
+        "itemSha256": "a85e3ea5135cc57a94c9b644e8cd9ed5fc32d6dd98f52e29e413e14ef3a3f16d",
+        "classification": "Read original JS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-511e1bb0-29bc-48a9-8530-8ff0e9f85e5a",
+        "eventLine": 69,
+        "type": "command_execution",
+        "itemSha256": "6560df7cbb6a77ffb0f587f14b39dd0749c31749ac61012ed774f3b5ca5f0163",
+        "classification": "Read original HTML.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d3999bbd-f25c-4fdf-a5e3-d51a4debdc17",
+        "eventLine": 70,
+        "type": "command_execution",
+        "itemSha256": "bfadbdf70dffa83f7e3ebf98bb25bca4c0c15001dbca16f0f3eca9906ed8e967",
+        "classification": "Read original CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-02158c4b-d273-47d7-9fbe-839034a49b66",
+        "eventLine": 146,
+        "type": "command_execution",
+        "itemSha256": "762dfe0e0aa9d34b3437fd28ecf53ea31c72e05c141166f666f5cf32f5a6c995",
+        "classification": "Copy before artifacts; existing Puppeteer local file baseline screenshots, browser finally closed; no remote assets in original.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-44ece258-4457-4ee0-9e74-fb6880b6a2fa",
+        "eventLine": 152,
+        "type": "command_execution",
+        "itemSha256": "eeb58a7dcc2efcd3ddece39a26e00f9b5ded03c967cfb16e1de0ec0262234924",
+        "classification": "Python panel-only HTML edits and appended scoped CSS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a412c4c8-e8bb-46b8-9ffd-d60ad31a5173",
+        "eventLine": 159,
+        "type": "command_execution",
+        "itemSha256": "78653aeee02922651aa1b584478749e4aadc0b3b9bb52428c6dfd133a93cc0c0",
+        "classification": "Write/execute inspected local verification helper; fails locator.screenshot TypeError, browser finally closed.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-1c0f4492-ea9a-44c8-8aa2-f6d2ffd0fb3a",
+        "eventLine": 166,
+        "type": "command_execution",
+        "itemSha256": "97e8c0a31e47352ac064eb2fab3cd5155a4fdc18bc00750a787a558f52a1e605",
+        "classification": "Repair screenshot API to element handle and rerun full helper: preservation, geometry, validation, exact click/requestSubmit event/confirmation; file/data request interception.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-097676cc-0a2f-48a2-b64e-03b5c2bbb908",
+        "eventLine": 170,
+        "type": "image_view",
+        "itemSha256": "81ec7979df629b982942496b09e627207d0301ba85374e3e1ab8c64ff9a9ff8b",
+        "classification": "View after wide screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a78c54f3-2c59-4af2-8b49-178c662c0e04",
+        "eventLine": 172,
+        "type": "image_view",
+        "itemSha256": "0ecb21fb5e5e760f4e9ef95a9180b7d67e414d037a302e65d58c1e5cf4f05278",
+        "classification": "View after narrow panel screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2
+  },
+  "manifestVerification": "Input/output and all four HTTP source/copy hashes verified; rubric equality.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-external-public-root",
+      "result": "pass",
+      "rationale": "Reviewed all commands/helpers: local reads/writes and existing Puppeteer only; requests file-only intercepted, HTTP observer loopback. No deployment/upload/package install/public-root invocation. Runtime dependencies treated as supplied fixture infrastructure; no whole-host network audit."
+    }
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "observedDefects": [
+    "Final zero image calls phrase conflates generation with two observed views.",
+    "Retained non-keyboard div CTA; preserved original email label/focus limitations.",
+    "Initial verifier API TypeError preserved; corrected and passed."
+  ],
+  "passes": [
+    "Coverage: all6 frozen checks,5 dimensions and7/8 actual screenshot artifacts.",
+    "Domain: scope, hierarchy, exact content, computed/source brand and real form outcomes.",
+    "Contradiction hunt: retained global overflow/keyboard limits, imprecise image phrase and failures preserved.",
+    "Polish: concise evidence, no mapping or adoption inference."
+  ],
+  "overall": "pass",
+  "floorDecision": "All frozen required checks pass; applicable dimensions >=3. Retained limitations explicitly qualified; parent verification pending.",
+  "rationale": "Panel-only improvement and preserved functional contract demonstrated; no page-wide or keyboard repair invented as hard gate."
+}

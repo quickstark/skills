@@ -1,0 +1,24 @@
+{
+  "id": "E3",
+  "cwd": "/tmp/qs-behavior-task-GIRTMN",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-pr-babysit/SKILL.md",
+      "sourceSHA256": "0c4197b8b29c83bce0536e895028bde24604746a304cd3bafb305634eb8634b7",
+      "derivedSHA256": "73b9160795ab1b188d2dd93eca7c9373f7483877221f286e838bd577f944a7c9",
+      "bytes": 10887
+    }
+  ]
+}

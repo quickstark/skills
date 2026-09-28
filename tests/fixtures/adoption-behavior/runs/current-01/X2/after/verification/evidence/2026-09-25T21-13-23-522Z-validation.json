@@ -1,0 +1,75 @@
+{
+  "runId": "2026-09-25T21-13-23-522Z",
+  "baseline": "2026-09-25T21-09-18-846Z-baseline.json",
+  "preserved": [
+    {
+      "file": "README.md",
+      "hash": "bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d",
+      "unchanged": true
+    },
+    {
+      "file": "app.cjs",
+      "hash": "5aefc49aa630d232e1712bf174a49b22c3353b3064e82a21f4bf032688550d8b",
+      "unchanged": true
+    },
+    {
+      "file": "verification/features.json",
+      "hash": "ba529ba5063bff9d220944b78ef25d5a63ecae1ee3da728b6915474d28e26766",
+      "unchanged": true
+    }
+  ],
+  "checks": [
+    {
+      "evidence": "verification/evidence/2026-09-25T21-12-26-204Z-2.json",
+      "port": 45575,
+      "closed": true,
+      "readinessPassed": true,
+      "allMappedFeaturesDriven": true
+    },
+    {
+      "evidence": "verification/evidence/2026-09-25T21-12-42-924Z-2.json",
+      "port": 38275,
+      "closed": true,
+      "readinessPassed": true,
+      "allMappedFeaturesDriven": true
+    }
+  ],
+  "verifierHash": "b99dccbf066c918e0587d968cbaddf81d40d0f305c6f0f982ba2cd814324bbcd",
+  "controls": {
+    "sum12Passes": true,
+    "sum2Fails": true,
+    "export404Fails": true,
+    "attachmentPasses": true
+  },
+  "decisions": [
+    {
+      "decision": "Replace status-only verification with documented result and readiness checks",
+      "source": "2026-09-25T21-09-18-846Z-baseline.json",
+      "alternative": "Retain HTTP-200-only check",
+      "rejectedBecause": "Original verifier exited 0 and printed sum request returned 200; both corrected real runs show result 2, expected 12",
+      "acceptedBy": [
+        "verification/evidence/2026-09-25T21-12-26-204Z-2.json",
+        "verification/evidence/2026-09-25T21-12-42-924Z-2.json"
+      ]
+    },
+    {
+      "decision": "Preserve export mapping and record a product gap",
+      "alternative": "Treat documented 404 as a successful download check or remove export",
+      "rejectedBecause": "Mapped expectation remains download; both real requests return 404",
+      "acceptedBy": [
+        "verification/evidence/2026-09-25T21-12-26-204Z-2.json",
+        "verification/evidence/2026-09-25T21-12-42-924Z-2.json"
+      ]
+    },
+    {
+      "decision": "Resolve app relative to verifier; bound startup, HTTP and cleanup; append unique evidence",
+      "acceptedBy": "Second real run from /tmp; all owned child exits confirmed; both loopback ports refuse connections; earlier evidence remains readable"
+    }
+  ],
+  "evidenceSurvivedCleanup": [
+    "2026-09-25T21-09-18-846Z-baseline.json",
+    "2026-09-25T21-12-26-114Z-5.json",
+    "2026-09-25T21-12-26-204Z-2.json",
+    "2026-09-25T21-12-42-924Z-2.json"
+  ]
+}

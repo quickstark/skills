@@ -1,0 +1,13 @@
+{
+  "originalArchivedDecisionPreservedExactly": true,
+  "correctionLinksBothDecisions": true,
+  "allFourDispositionsAndCountsCorrect": true,
+  "comparativeAndAdoptionClaimsRejected": true,
+  "reportHashBindingsVerified": 25,
+  "reviewLinksResolved": 19,
+  "correctionRecordCount": 3,
+  "limitations": [
+    "Independent checks inspect outputs; they do not execute model-authored commands.",
+    "New sidecar records extend the audit trail while original history stays immutable; no file append to an original ledger is authorized."
+  ]
+}

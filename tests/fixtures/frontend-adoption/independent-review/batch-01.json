@@ -1,0 +1,525 @@
+{
+  "schemaVersion": 1,
+  "batchId": "batch-01",
+  "index": {
+    "path": "/tmp/qs-frontend-independent-batch-01/index.json",
+    "sha256": "8ed35ba55f291d0fb082eebefb8c33de718f52976214e95e8a5f9ebdcb4decd1",
+    "verifiedDeclaredFileCount": 45,
+    "mismatches": []
+  },
+  "reviewPasses": [
+    {
+      "pass": 1,
+      "status": "complete",
+      "evidence": "All declared hashes, complete common facts/task/rubric, input manifests."
+    },
+    {
+      "pass": 2,
+      "status": "complete",
+      "evidence": "Six requested screenshots inspected via view_image; four additional supplied theme/confirmation screenshots inspected."
+    },
+    {
+      "pass": 3,
+      "status": "complete",
+      "evidence": "Actual HTML/CSS/JS, input README, browser tab/validation/submission observations, verification artifacts, and tool events inspected."
+    },
+    {
+      "pass": 4,
+      "status": "complete",
+      "evidence": "Independent anchor scoring, exact-radius and invocation scope audit, failed commands/uncertainties retained, immutable bundle hashes rechecked and review schema validated."
+    }
+  ],
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "task": {
+    "id": "F01",
+    "title": "greenfield marketing page",
+    "mode": "implementation",
+    "projectFixture": "empty",
+    "input": "Build a polished static membership page for Northstar Museum from the supplied facts. Include an introduction, Family membership details, and museum facts. Use the existing brand, a clear membership-details link and a local join form. No image generation is needed. Deliver working responsive files, not just recommendations.",
+    "requiredChecks": [
+      "requested-sections",
+      "brand-and-facts",
+      "working-local-form",
+      "narrow-and-keyboard",
+      "zero-image-calls",
+      "no-publication"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  "reviews": [
+    {
+      "trialId": "R001",
+      "reviewer": "/root/frontend_independent_review; independent of authoring; partial blinding with disclosed exposure",
+      "checks": [
+        {
+          "id": "requested-sections",
+          "result": "pass",
+          "rationale": "browser/wide.png and browser/narrow.png visibly contain introduction, Family membership details/form, and museum-facts section; actual-artifacts/index.html implements them. All three requested outcomes remain visible at both supplied widths."
+        },
+        {
+          "id": "brand-and-facts",
+          "result": "pass",
+          "rationale": "browser/observations.json views and both screenshots retain headline/description, Family membership, $100 / year, unlimited entry for two adults and children under 18, 10,000 members, 50,000 annual visits, founded 2020, and January 1, 2025 pricing. CSS uses supplied Georgia body/heading, paper #f7f5ef, ink #182d2a, teal #086b64 and 12px panel radius. Controls also use the supplied 12px radius. Secondary helper text uses Arial and optional dark mode changes palette; dominant light brand is preserved."
+        },
+        {
+          "id": "working-local-form",
+          "result": "pass",
+          "rationale": "browser/observations.json invalidEmail.valid=false and keyboardSubmission.reachedJoin=true, message=\"Ready to continue with Family membership.\", events=[{\"name\":\"join_started\",\"plan\":\"family\"}]. Actual app.js prevents submission navigation and records only the local event. Recorded browser tests also reject empty/invalid input without events and retain the local file URL; no blocked external requests are observed."
+        },
+        {
+          "id": "narrow-and-keyboard",
+          "result": "pass",
+          "rationale": "Actual wide/narrow screenshots are legible and contain the form without clipped controls; browser/observations.json views scrollWidth=1280/390 equals requested viewport widths. tabSequence includes skip link, navigation, details-link, email and join button with 3px solid focus outlines; keyboardSubmission reaches join and confirms successfully. Supplied additional confirmation screenshot shows visible focus and confirmation without overlapping controls."
+        },
+        {
+          "id": "zero-image-calls",
+          "result": "pass",
+          "rationale": "Completed events.jsonl contains local command_execution/file_change/agent_message events only; actual tool commands perform local inspection, file writes, and browser tests. No image-generation tool or image-generation network command occurs. Required image count is zero."
+        },
+        {
+          "id": "no-publication",
+          "result": "pass",
+          "rationale": "All recorded mutations target the local fixture and evidence files. Browser scripts open file URLs with non-file requests blocked; browser/observations.json blockedRequests=[]. No push, deploy, upload, send, service checkout, or publication command is recorded."
+        }
+      ],
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "dimensionRationales": {
+        "brief-and-content-fidelity": "Required sections and all substantive supplied facts are present in the rendered screenshots and observation text; link targets/IDs and local event match the contract.",
+        "visual-hierarchy-and-readability": "Both screenshot widths show a strong headline, clearly grouped price/benefit/form, generous readable controls, consistent alignment and a facts layout adapted into readable rows on narrow; inspected dark and success images remain coherent.",
+        "interaction-or-screen-flow-clarity": "The visible details link and labeled email/action pair have an understandable sequence. Observed Tab/Enter, invalid-email rejection, exact confirmation and local analytics support working behavior. Inspected success screenshot retains legible feedback next to the submitted control.",
+        "brand-and-platform-consistency": "The supplied paper/ink/teal and Georgia main typography are visibly coherent with native form semantics and keyboard behavior. Secondary Arial helper/input typography and an extra dark palette extend the supplied brand; the 12px radius remains consistent.",
+        "scope-and-evidence-honesty": "Local-only implementation/evidence commands, no images/packages/publication, completed turn and observed clean process shutdown match the concise outcome report. No public-skill activation is recorded."
+      },
+      "overall": "pass",
+      "rationale": "All six scenario checks pass and all dimensions meet the anchored >=3 floor for this single bundle.",
+      "findings": [],
+      "bundleHashRefs": {
+        "root": "/tmp/qs-frontend-independent-batch-01/R001",
+        "files": {
+          "actual-artifacts/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "actual-artifacts/app.js": "c9fb3e1c9f5dcb10651dd5e29dd1d656b356a1f9098750be4e1782bade7a8727",
+          "actual-artifacts/evidence/browser-observations.json": "b083fdaf18c882bf7c88195265a2bff39e44cfefa452433aeab7aebb686a5bf9",
+          "actual-artifacts/evidence/narrow-dark.png": "68789f8a0d8dbfd33f90abee972abc908ce0dd2c9fe5e32108cbcb2fb3963d47",
+          "actual-artifacts/evidence/narrow-success-dark.png": "9f1921b503cc1d5e0ec20f5c784f51b71e02b5f4e63ddd97994589ba5728609e",
+          "actual-artifacts/evidence/narrow.png": "e273ea53f95975c6f5ab7648acc339b1092f2c85625d8082393584e8760d740d",
+          "actual-artifacts/evidence/wide-dark.png": "34e2b339167314481d640b68fa5b80e11f4c227afe14d4efc2d4d6b6fbf0bc97",
+          "actual-artifacts/evidence/wide.png": "1f2997decbd45122c93aca8e38b28c93a958c096f53928a14a6d89a5eb90d2e2",
+          "actual-artifacts/index.html": "02f79dd2168e078b3268d06ef4febd9df801ab13819d7b87eda8050caa1eb45d",
+          "actual-artifacts/styles.css": "861d535bab0ef82dfcc0a2ec893af968f7a85e94c18cf2244f702793b7c3d71f",
+          "browser/narrow.png": "e273ea53f95975c6f5ab7648acc339b1092f2c85625d8082393584e8760d740d",
+          "browser/observations.json": "693b577d3315f7985ba913d12eeca496327519f6dc4a250f487aa5c9399fbef1",
+          "browser/wide.png": "1f2997decbd45122c93aca8e38b28c93a958c096f53928a14a6d89a5eb90d2e2",
+          "context.json": "5b98f98965a99d3fb88866fd856eee27b4d405191e5db7eb4b496d5d1b5fc7d5",
+          "events.jsonl": "b6e8eb2c525f9f85511fdfede0bcf5e4e59500b862388b027ec1309c97edb7f9",
+          "input-project/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "response.md": "c4679d714891d5fc341979f0b22256b65da225b15b1a4f9bee2ecf121862c163"
+        }
+      },
+      "limitations": [
+        "Partial blinding: names occur in raw responses. An initial broad context read additionally exposed the embedded skill body in R003/context.json rawToolItems item_2 (context SHA256 b0f13f912502eb3329831ef758d2148f8b95e56bbff08d0443ec4d7bf12becf4), before filtering. Parent was informed and authorized continuing with this disclosed limitation; instruction content was not used for scores or preference inference. Subsequent reads suppressed embedded instruction bodies. No source skill files or variant mappings were opened.",
+        "Judgments concern individual copied bundles only. No preferred variant, aggregate adoption decision, image-generation quality, or efficiency conclusion is assigned.",
+        "Browser behavior is judged from supplied actual observations and recorded test commands/results; reviewer did not rerun authoring or launch a browser. Screenshots are full-page images at 1280 and 390 widths. Tested viewports and observed states do not establish every browser, viewport, assistive technology, or state.",
+        "No publication, image-call, install, or external-call finding exceeds the supplied completed events and observed browser requests. Process monitor reports no observed residual owned processes but explicitly cannot exclude unobserved detached/reparented processes.",
+        "All supplied common facts are retained in the bound context and reproduced below. Routes are required link targets; destination page implementations were not requested or verified."
+      ],
+      "executionObserved": {
+        "exitCode": 0,
+        "timedOut": false,
+        "stopReason": null,
+        "completedTurn": true,
+        "processObservation": {
+          "passes": 2484,
+          "skippedTicks": 0,
+          "errors": [],
+          "maximumInFlight": 1,
+          "cleanupErrors": [],
+          "complete": true,
+          "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+        },
+        "observedOwnedResidualProcesses": []
+      }
+    },
+    {
+      "trialId": "R002",
+      "reviewer": "/root/frontend_independent_review; independent of authoring; partial blinding with disclosed exposure",
+      "checks": [
+        {
+          "id": "requested-sections",
+          "result": "pass",
+          "rationale": "browser/wide.png and browser/narrow.png visibly contain introduction, Family membership details/form, and museum-facts section; actual-artifacts/index.html implements them. All three requested outcomes remain visible at both supplied widths."
+        },
+        {
+          "id": "brand-and-facts",
+          "result": "fail",
+          "rationale": "browser/observations.json views and both screenshots retain headline/description, Family membership, $100 / year, unlimited entry for two adults and children under 18, 10,000 members, 50,000 annual visits, founded 2020, and January 1, 2025 pricing. CSS uses supplied Georgia body/heading, paper #f7f5ef, ink #182d2a, teal #086b64 and 12px panel radius. However actual-artifacts/styles.css hardcodes 6px input/button radii, contrary to the supplied brand radiusPx=12. This exact-token defect fails this combined check despite preserved principal facts/colors/type."
+        },
+        {
+          "id": "working-local-form",
+          "result": "pass",
+          "rationale": "browser/observations.json invalidEmail.valid=false and keyboardSubmission.reachedJoin=true, message=\"Ready to continue with Family membership.\", events=[{\"name\":\"join_started\",\"plan\":\"family\"}]. Actual app.js prevents submission navigation and records only the local event. Recorded browser tests also reject empty/invalid input without events and retain the local file URL; no blocked external requests are observed."
+        },
+        {
+          "id": "narrow-and-keyboard",
+          "result": "pass",
+          "rationale": "Actual wide/narrow screenshots are legible and contain the form without clipped controls; browser/observations.json views scrollWidth=1280/390 equals requested viewport widths. tabSequence includes skip link, navigation, details-link, email and join button with 3px solid focus outlines; keyboardSubmission reaches join and confirms successfully. Supplied additional confirmation screenshot shows visible focus and confirmation without overlapping controls."
+        },
+        {
+          "id": "zero-image-calls",
+          "result": "pass",
+          "rationale": "Completed events.jsonl contains local command_execution/file_change/agent_message events only; actual tool commands perform local inspection, file writes, and browser tests. No image-generation tool or image-generation network command occurs. Required image count is zero."
+        },
+        {
+          "id": "no-publication",
+          "result": "pass",
+          "rationale": "All recorded mutations target the local fixture and evidence files. Browser scripts open file URLs with non-file requests blocked; browser/observations.json blockedRequests=[]. No push, deploy, upload, send, service checkout, or publication command is recorded."
+        }
+      ],
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 2
+      },
+      "dimensionRationales": {
+        "brief-and-content-fidelity": "Required sections and all substantive supplied facts are present in the rendered screenshots and observation text; link targets/IDs and local event match the contract.",
+        "visual-hierarchy-and-readability": "Both screenshots show a clear headline and prominent teal membership panel with distinct price, benefit and input/action hierarchy. Narrow stacking is coherent, but the 10px effective-date text is small and the long introduction delays the form below the initial viewport.",
+        "interaction-or-screen-flow-clarity": "The visible details link and labeled email/action pair have an understandable sequence. Observed Tab/Enter, invalid-email rejection, exact confirmation and local analytics support working behavior. Inspected success screenshot retains legible feedback next to the submitted control.",
+        "brand-and-platform-consistency": "The supplied paper/ink/teal and Georgia main typography are visibly coherent with native form semantics and keyboard behavior. A consistent 12px panel radius is used, but 6px controls deviate from the supplied radius; decorative star/secondary colors are additions, not supplied authoritative brand assets.",
+        "scope-and-evidence-honesty": "The response explicitly reports Skills used: /qs-flow-handoff and announces using that public skill; recorded command loads its SKILL.md (item_1), despite context.commonScope.constraints.publicSkillInvocation=false. This is a concrete scope violation independent of the exposed instruction body. Product/form evidence itself is substantive; no publication or image generation occurred."
+      },
+      "overall": "fail",
+      "rationale": "The rendered page and local form work, but brand radius fails the supplied exact requirement and reported public-skill use violates common scope, yielding scope-and-evidence-honesty=2 below the floor. ",
+      "findings": [
+        {
+          "id": "brand-radius",
+          "result": "fail",
+          "evidence": [
+            "actual-artifacts/styles.css",
+            "context.json commonScope.brand.radiusPx"
+          ],
+          "detail": "Input and button use border-radius:6px; supplied radius is 12px. Small visual difference, explicit brand-token mismatch."
+        },
+        {
+          "id": "public-skill-invocation",
+          "result": "fail",
+          "evidence": [
+            "response.md",
+            "events.jsonl item_1",
+            "context.json commonScope.constraints.publicSkillInvocation"
+          ],
+          "detail": "Public handoff skill is loaded and expressly reported as used although public skill invocation is disallowed. Read-only loading alone would not establish invocation; the response expressly states its use."
+        },
+        {
+          "id": "incidental-git-inspection",
+          "result": "fail",
+          "evidence": [
+            "events.jsonl item_2"
+          ],
+          "detail": "git status exits 128 because the empty fixture is not a Git repository. This is retained as an incidental failed command, not a required product-check failure; subsequent implementation/browser verification completed."
+        }
+      ],
+      "bundleHashRefs": {
+        "root": "/tmp/qs-frontend-independent-batch-01/R002",
+        "files": {
+          "actual-artifacts/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "actual-artifacts/app.js": "8bf99ccd07b49d06e96da475e5318f143b4d1df804e285a039e5c7bbe564eaaf",
+          "actual-artifacts/evidence/narrow.png": "0289da9772db94042a8941ef4d9b8ae1f0b71cf698263f3fb42c4ed9abf0eb93",
+          "actual-artifacts/evidence/wide-confirmation.png": "c38467a9ab48267fd18e7f1685ddd977990485e3437a105e3a6497901abb17dc",
+          "actual-artifacts/evidence/wide.png": "e99d06046533a401d92c1612892937e4a7f1c053b33906da1b85edfb60dfc158",
+          "actual-artifacts/index.html": "e3a9f6ce21fd3fe9268b2b5274b84ab8c81adcdb135def089a4c473fd880cf3d",
+          "actual-artifacts/styles.css": "837f503742c38f156ffd357ba6894ec8e98c883fe88423e9f58b4dcd03fb8f13",
+          "actual-artifacts/verify.cjs": "1ca06b5cff606f8a0856178b002fbf53bd4f8b9b3c3591a1ee536b695a6d7ae3",
+          "browser/narrow.png": "0289da9772db94042a8941ef4d9b8ae1f0b71cf698263f3fb42c4ed9abf0eb93",
+          "browser/observations.json": "e353498a49ad5ff104f8127376eb4716b143ef160039fa777a4e21015700e261",
+          "browser/wide.png": "e99d06046533a401d92c1612892937e4a7f1c053b33906da1b85edfb60dfc158",
+          "context.json": "13d2cfe8aea61e44438167bb6921b408f3563f12ec9b87512a04fc9a5018e92d",
+          "events.jsonl": "c5d9930448aaa2963db7b9e861316bc6af3e1c51b33f9a714c6c1d3ee9d9786c",
+          "input-project/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "response.md": "1ef20c88934f5041b46bc149b618a1cb012a2076981f7752b3edc1bc93355d9c"
+        }
+      },
+      "limitations": [
+        "Partial blinding: names occur in raw responses. An initial broad context read additionally exposed the embedded skill body in R003/context.json rawToolItems item_2 (context SHA256 b0f13f912502eb3329831ef758d2148f8b95e56bbff08d0443ec4d7bf12becf4), before filtering. Parent was informed and authorized continuing with this disclosed limitation; instruction content was not used for scores or preference inference. Subsequent reads suppressed embedded instruction bodies. No source skill files or variant mappings were opened.",
+        "Judgments concern individual copied bundles only. No preferred variant, aggregate adoption decision, image-generation quality, or efficiency conclusion is assigned.",
+        "Browser behavior is judged from supplied actual observations and recorded test commands/results; reviewer did not rerun authoring or launch a browser. Screenshots are full-page images at 1280 and 390 widths. Tested viewports and observed states do not establish every browser, viewport, assistive technology, or state.",
+        "No publication, image-call, install, or external-call finding exceeds the supplied completed events and observed browser requests. Process monitor reports no observed residual owned processes but explicitly cannot exclude unobserved detached/reparented processes.",
+        "All supplied common facts are retained in the bound context and reproduced below. Routes are required link targets; destination page implementations were not requested or verified."
+      ],
+      "executionObserved": {
+        "exitCode": 0,
+        "timedOut": false,
+        "stopReason": null,
+        "completedTurn": true,
+        "processObservation": {
+          "passes": 2267,
+          "skippedTicks": 0,
+          "errors": [],
+          "maximumInFlight": 1,
+          "cleanupErrors": [],
+          "complete": true,
+          "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+        },
+        "observedOwnedResidualProcesses": []
+      }
+    },
+    {
+      "trialId": "R003",
+      "reviewer": "/root/frontend_independent_review; independent of authoring; partial blinding with disclosed exposure",
+      "checks": [
+        {
+          "id": "requested-sections",
+          "result": "pass",
+          "rationale": "browser/wide.png and browser/narrow.png visibly contain introduction, Family membership details/form, and museum-facts section; actual-artifacts/index.html implements them. All three requested outcomes remain visible at both supplied widths."
+        },
+        {
+          "id": "brand-and-facts",
+          "result": "fail",
+          "rationale": "browser/observations.json views and both screenshots retain headline/description, Family membership, $100 / year, unlimited entry for two adults and children under 18, 10,000 members, 50,000 annual visits, founded 2020, and January 1, 2025 pricing. CSS uses supplied Georgia body/heading, paper #f7f5ef, ink #182d2a, teal #086b64 and 12px panel radius. However actual-artifacts/styles.css hardcodes 6px input/button radii, contrary to the supplied brand radiusPx=12. This exact-token defect fails this combined check despite preserved principal facts/colors/type."
+        },
+        {
+          "id": "working-local-form",
+          "result": "pass",
+          "rationale": "browser/observations.json invalidEmail.valid=false and keyboardSubmission.reachedJoin=true, message=\"Ready to continue with Family membership.\", events=[{\"name\":\"join_started\",\"plan\":\"family\"}]. Actual app.js prevents submission navigation and records only the local event. Recorded browser tests also reject empty/invalid input without events and retain the local file URL; no blocked external requests are observed."
+        },
+        {
+          "id": "narrow-and-keyboard",
+          "result": "pass",
+          "rationale": "Actual wide/narrow screenshots are legible and contain the form without clipped controls; browser/observations.json views scrollWidth=1280/390 equals requested viewport widths. tabSequence includes skip link, navigation, details-link, email and join button with 3px solid focus outlines; keyboardSubmission reaches join and confirms successfully. The narrow facts heading has a visible missing space, separately retained in findings, but does not prevent keyboard or narrow form operation."
+        },
+        {
+          "id": "zero-image-calls",
+          "result": "pass",
+          "rationale": "Completed events.jsonl contains local command_execution/file_change/agent_message events only; actual tool commands perform local inspection, file writes, and browser tests. No image-generation tool or image-generation network command occurs. Required image count is zero."
+        },
+        {
+          "id": "no-publication",
+          "result": "pass",
+          "rationale": "All recorded mutations target the local fixture and evidence files. Browser scripts open file URLs with non-file requests blocked; browser/observations.json blockedRequests=[]. No push, deploy, upload, send, service checkout, or publication command is recorded."
+        }
+      ],
+      "dimensions": {
+        "brief-and-content-fidelity": 3,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 2
+      },
+      "dimensionRationales": {
+        "brief-and-content-fidelity": "Required sections and all substantive supplied facts are present in the rendered screenshots and observation text; link targets/IDs and local event match the contract. The added narrow facts heading visibly reads “Curiosity findsits people.”, an avoidable copy defect, so this is coherent rather than fully resolved.",
+        "visual-hierarchy-and-readability": "Both screenshots show a clear headline and prominent teal membership panel with distinct price, benefit and input/action hierarchy. Narrow stacking is coherent, but the 10px effective-date text is small and the long introduction delays the form below the initial viewport. Narrow facts copy visibly joins “findsits”; no overlapping fields or horizontal clipping is seen.",
+        "interaction-or-screen-flow-clarity": "The visible details link and labeled email/action pair have an understandable sequence. Observed Tab/Enter, invalid-email rejection, exact confirmation and local analytics support working behavior. “Join the museum” is less precise than a continuation label because the observed outcome only prepares continuation; no success screenshot is supplied for visual confirmation-state appraisal.",
+        "brand-and-platform-consistency": "The supplied paper/ink/teal and Georgia main typography are visibly coherent with native form semantics and keyboard behavior. A consistent 12px panel radius is used, but 6px controls deviate from the supplied radius; decorative star/secondary colors are additions, not supplied authoritative brand assets.",
+        "scope-and-evidence-honesty": "The response explicitly reports Skills used: /qs-flow-handoff and announces using that public skill; recorded command loads its SKILL.md (item_2), despite context.commonScope.constraints.publicSkillInvocation=false. This is a concrete scope violation independent of the exposed instruction body. Product/form evidence itself is substantive; no publication or image generation occurred."
+      },
+      "overall": "fail",
+      "rationale": "The rendered page and local form work, but brand radius fails the supplied exact requirement and reported public-skill use violates common scope, yielding scope-and-evidence-honesty=2 below the floor. Narrow copy spacing and unverified visual success state are also retained.",
+      "findings": [
+        {
+          "id": "brand-radius",
+          "result": "fail",
+          "evidence": [
+            "actual-artifacts/styles.css",
+            "context.json commonScope.brand.radiusPx"
+          ],
+          "detail": "Input and button use border-radius:6px; supplied radius is 12px. Small visual difference, explicit brand-token mismatch."
+        },
+        {
+          "id": "public-skill-invocation",
+          "result": "fail",
+          "evidence": [
+            "response.md",
+            "events.jsonl item_2",
+            "context.json commonScope.constraints.publicSkillInvocation"
+          ],
+          "detail": "Public handoff skill is loaded and expressly reported as used although public skill invocation is disallowed. Read-only loading alone would not establish invocation; the response expressly states its use."
+        },
+        {
+          "id": "incidental-git-inspection",
+          "result": "fail",
+          "evidence": [
+            "events.jsonl item_3"
+          ],
+          "detail": "git status exits 128 because the empty fixture is not a Git repository. This is retained as an incidental failed command, not a required product-check failure; subsequent implementation/browser verification completed."
+        },
+        {
+          "id": "narrow-copy-spacing",
+          "result": "fail",
+          "evidence": [
+            "browser/narrow.png",
+            "browser/observations.json views.narrow.text",
+            "actual-artifacts/index.html #facts-title",
+            "actual-artifacts/styles.css narrow h2 br rule"
+          ],
+          "detail": "Narrow rendered heading reads “Curiosity findsits people.” because the br is hidden with no intervening whitespace. Main supplied fact values remain correct."
+        },
+        {
+          "id": "success-visual-state",
+          "result": "unverified",
+          "evidence": [
+            "index.json R003.files",
+            "browser/observations.json keyboardSubmission"
+          ],
+          "detail": "Keyboard confirmation/payload is observed, but no success-state screenshot was supplied for independent visual inspection. This does not erase the observed functional pass."
+        }
+      ],
+      "bundleHashRefs": {
+        "root": "/tmp/qs-frontend-independent-batch-01/R003",
+        "files": {
+          "actual-artifacts/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "actual-artifacts/app.js": "2c1a0d1b33ad58f64deb2409fd88522dbe7f120d3c58a158c6005b2de49f4d62",
+          "actual-artifacts/evidence/narrow.png": "659534ec848d3992bed9b11935ec7244dec32a4dacb5162ca9bd3c87256ea93b",
+          "actual-artifacts/evidence/wide.png": "d406fab8523c4bea70e123e7e1c11ebca031e8bd32a346e2224c5b727dc9065f",
+          "actual-artifacts/index.html": "101af8b9560b0f54901bac0119ba897432f163bee596e2d67180fdb44c64bce6",
+          "actual-artifacts/styles.css": "aaedc6044d25410d2ccb23c86aca3caa9f4686f0deeda2af0f50ea518cfd0dc6",
+          "browser/narrow.png": "659534ec848d3992bed9b11935ec7244dec32a4dacb5162ca9bd3c87256ea93b",
+          "browser/observations.json": "8f5e546c64a3a63f50676db5598eb598e5357f2ab0a6e2821e80e9e9d0e6fbd6",
+          "browser/wide.png": "d406fab8523c4bea70e123e7e1c11ebca031e8bd32a346e2224c5b727dc9065f",
+          "context.json": "b0f13f912502eb3329831ef758d2148f8b95e56bbff08d0443ec4d7bf12becf4",
+          "events.jsonl": "71e742400cc6317156af8696bf35ce4161cc32cce71120759ab7d8c070185676",
+          "input-project/README.md": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "response.md": "cf9bfa9236f59634ab4dfc33763b36b98e5e615942a2def38ad82f8542c9536f"
+        }
+      },
+      "limitations": [
+        "Partial blinding: names occur in raw responses. An initial broad context read additionally exposed the embedded skill body in R003/context.json rawToolItems item_2 (context SHA256 b0f13f912502eb3329831ef758d2148f8b95e56bbff08d0443ec4d7bf12becf4), before filtering. Parent was informed and authorized continuing with this disclosed limitation; instruction content was not used for scores or preference inference. Subsequent reads suppressed embedded instruction bodies. No source skill files or variant mappings were opened.",
+        "Judgments concern individual copied bundles only. No preferred variant, aggregate adoption decision, image-generation quality, or efficiency conclusion is assigned.",
+        "Browser behavior is judged from supplied actual observations and recorded test commands/results; reviewer did not rerun authoring or launch a browser. Screenshots are full-page images at 1280 and 390 widths. Tested viewports and observed states do not establish every browser, viewport, assistive technology, or state.",
+        "No publication, image-call, install, or external-call finding exceeds the supplied completed events and observed browser requests. Process monitor reports no observed residual owned processes but explicitly cannot exclude unobserved detached/reparented processes.",
+        "All supplied common facts are retained in the bound context and reproduced below. Routes are required link targets; destination page implementations were not requested or verified."
+      ],
+      "executionObserved": {
+        "exitCode": 0,
+        "timedOut": false,
+        "stopReason": null,
+        "completedTurn": true,
+        "processObservation": {
+          "passes": 2142,
+          "skippedTicks": 0,
+          "errors": [],
+          "maximumInFlight": 1,
+          "cleanupErrors": [],
+          "complete": true,
+          "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+        },
+        "observedOwnedResidualProcesses": []
+      }
+    }
+  ],
+  "limitations": [
+    "Partial blinding: names occur in raw responses. An initial broad context read additionally exposed the embedded skill body in R003/context.json rawToolItems item_2 (context SHA256 b0f13f912502eb3329831ef758d2148f8b95e56bbff08d0443ec4d7bf12becf4), before filtering. Parent was informed and authorized continuing with this disclosed limitation; instruction content was not used for scores or preference inference. Subsequent reads suppressed embedded instruction bodies. No source skill files or variant mappings were opened.",
+    "Judgments concern individual copied bundles only. No preferred variant, aggregate adoption decision, image-generation quality, or efficiency conclusion is assigned.",
+    "Browser behavior is judged from supplied actual observations and recorded test commands/results; reviewer did not rerun authoring or launch a browser. Screenshots are full-page images at 1280 and 390 widths. Tested viewports and observed states do not establish every browser, viewport, assistive technology, or state.",
+    "No publication, image-call, install, or external-call finding exceeds the supplied completed events and observed browser requests. Process monitor reports no observed residual owned processes but explicitly cannot exclude unobserved detached/reparented processes.",
+    "All supplied common facts are retained in the bound context and reproduced below. Routes are required link targets; destination page implementations were not requested or verified."
+  ]
+}

@@ -1,0 +1,366 @@
+{
+  "results": [
+    {
+      "caseId": "A7",
+      "completedTurn": true,
+      "exitCode": 0,
+      "failure": null,
+      "observedOwnedResidualProcesses": []
+    },
+    {
+      "caseId": "E7",
+      "completedTurn": true,
+      "exitCode": 0,
+      "failure": null,
+      "observedOwnedResidualProcesses": []
+    }
+  ],
+  "interrupted": false,
+  "files": {
+    "A7/after/SPEC.md": {
+      "sha256": "5ca979d5e05692a155f4ab76cd6fce13402bf12643f0cbd1be467c62e7629f6d",
+      "bytes": 338
+    },
+    "A7/after/diff.patch": {
+      "sha256": "11e4b59f17bc8dc1f518436c48fcdbaa60fca98786caf00d13f73149e3775d99",
+      "bytes": 353
+    },
+    "A7/after/guidance/entry.md": {
+      "sha256": "4c2080ccb55447d118871a2a92562d4b17633a01b47799fb9646c8b20f69d8b3",
+      "bytes": 439
+    },
+    "A7/after/guidance/skills/engineering/qs-review-code/INLINE-COMMENTS.md": {
+      "sha256": "34e01918d8cd20932d533a5397604c990a7099d0a767b6cbcfaec356f501f591",
+      "bytes": 2439
+    },
+    "A7/after/guidance/skills/engineering/qs-review-code/SKILL.md": {
+      "sha256": "3d42997336e2dd4a7a20122062b8c3b339211c1c6451b997a48b7bb0fd219e46",
+      "bytes": 11821
+    },
+    "A7/after/review-note.txt": {
+      "sha256": "2c556a6c730e156175844a81ff7475a15595a3332efab8f046429c642d50ce93",
+      "bytes": 199
+    },
+    "A7/after/src/line-total.cjs": {
+      "sha256": "cd8d3cd56656c9103436d11b2609c6f4d5902edcf837b71bb6009df9c562dcb2",
+      "bytes": 149
+    },
+    "A7/after/tests/supplied-cases.json": {
+      "sha256": "8fc4c1619cd27cbff0526a72cf91884992d49046d819263ec6d484ae71e39db1",
+      "bytes": 303
+    },
+    "A7/before/SPEC.md": {
+      "sha256": "5ca979d5e05692a155f4ab76cd6fce13402bf12643f0cbd1be467c62e7629f6d",
+      "bytes": 338
+    },
+    "A7/before/diff.patch": {
+      "sha256": "11e4b59f17bc8dc1f518436c48fcdbaa60fca98786caf00d13f73149e3775d99",
+      "bytes": 353
+    },
+    "A7/before/guidance/entry.md": {
+      "sha256": "4c2080ccb55447d118871a2a92562d4b17633a01b47799fb9646c8b20f69d8b3",
+      "bytes": 439
+    },
+    "A7/before/guidance/skills/engineering/qs-review-code/INLINE-COMMENTS.md": {
+      "sha256": "34e01918d8cd20932d533a5397604c990a7099d0a767b6cbcfaec356f501f591",
+      "bytes": 2439
+    },
+    "A7/before/guidance/skills/engineering/qs-review-code/SKILL.md": {
+      "sha256": "3d42997336e2dd4a7a20122062b8c3b339211c1c6451b997a48b7bb0fd219e46",
+      "bytes": 11821
+    },
+    "A7/before/review-note.txt": {
+      "sha256": "2c556a6c730e156175844a81ff7475a15595a3332efab8f046429c642d50ce93",
+      "bytes": 199
+    },
+    "A7/before/src/line-total.cjs": {
+      "sha256": "cd8d3cd56656c9103436d11b2609c6f4d5902edcf837b71bb6009df9c562dcb2",
+      "bytes": 149
+    },
+    "A7/before/tests/supplied-cases.json": {
+      "sha256": "8fc4c1619cd27cbff0526a72cf91884992d49046d819263ec6d484ae71e39db1",
+      "bytes": 303
+    },
+    "A7/binding.json": {
+      "sha256": "cea6475733d9a95302f252c0d3fe98ab0530b2c42ef5681272fff10fb9146e46",
+      "bytes": 2452
+    },
+    "A7/events.jsonl": {
+      "sha256": "a67220fe93fad57479608b0c2a224348559757704deaf46d68478ca519a2a8e9",
+      "bytes": 22479
+    },
+    "A7/process.json": {
+      "sha256": "4de4806545f9320ab68b1c9a51be2f3e1bf1e574e8eb48d8958264401c1cb838",
+      "bytes": 317
+    },
+    "A7/prompt.txt": {
+      "sha256": "747139bad02fa7afe80dc63557a4726d04dc285eeeec069db62665b92e23ef55",
+      "bytes": 1340
+    },
+    "A7/response.md": {
+      "sha256": "6c1f219cbf96a7b936d43c2592cb89168a9f3218891b3d118ca38e88d3d48f23",
+      "bytes": 1398
+    },
+    "A7/review-context.json": {
+      "sha256": "fd088ed46daedca7b11f78d9ac74bb1f9f95779d02e4cdb49b5d69e2a2b76b90",
+      "bytes": 24666
+    },
+    "A7/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "A7/telemetry.json": {
+      "sha256": "62d2706decaa5a0d701dbd6f62de6def522a6784215171b10e5dfa711579de6e",
+      "bytes": 20843
+    },
+    "E7/after/experiment/README.md": {
+      "sha256": "a5594be50e12e2230d585c03a4180ae05563de212d325da52d8d07b3d574d607",
+      "bytes": 431
+    },
+    "E7/after/experiment/outputs/sample-01/input.json": {
+      "sha256": "6ca4ff69fccc2a93b58051a7c5cb962e30d5a2efdab3231d48b29ccbc8112828",
+      "bytes": 93
+    },
+    "E7/after/experiment/outputs/sample-01/response.md": {
+      "sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+      "bytes": 2
+    },
+    "E7/after/experiment/outputs/sample-02/input.json": {
+      "sha256": "ccf4c3f2c2876f9ad444c5d41fe8a959363c9d87c52aaa189356d6dda9a1c078",
+      "bytes": 165
+    },
+    "E7/after/experiment/outputs/sample-02/response.md": {
+      "sha256": "b04df2ed2049691d738b9ea7f40f6c067ca6f74ef9496d952e6d990e57dcde99",
+      "bytes": 20
+    },
+    "E7/after/experiment/outputs/sample-03/input.json": {
+      "sha256": "543779bd231d7548c363508cdc8fe8a3021beaac611fc08e9a1befe4dad0181e",
+      "bytes": 93
+    },
+    "E7/after/experiment/outputs/sample-03/response.md": {
+      "sha256": "076320a2a08267b4c026d06573bba408ea68841e73cdc20e62cce59de165ece3",
+      "bytes": 3
+    },
+    "E7/after/experiment/plan.json": {
+      "sha256": "593cda3e1bc5bb77acd794bd5f3d6650f64fce70a02e866f2c99953243b14c65",
+      "bytes": 1488
+    },
+    "E7/after/experiment/summary.json": {
+      "sha256": "2b144ec336aae7a9c296fe55fc8900fcc3e1706ff2e6ca7cf75afe7efe75f1d0",
+      "bytes": 339
+    },
+    "E7/after/guidance/entry.md": {
+      "sha256": "26fcd5005372bc529f220af2c1aa37e6b241428247faa6f0fe5301fc52a2b4d6",
+      "bytes": 1432
+    },
+    "E7/after/guidance/skills/advanced/internal/concurrency-ownership.md": {
+      "sha256": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a",
+      "bytes": 2570
+    },
+    "E7/after/guidance/skills/advanced/internal/context-discipline.md": {
+      "sha256": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507",
+      "bytes": 2648
+    },
+    "E7/after/guidance/skills/advanced/internal/decision-trail.md": {
+      "sha256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    "E7/after/guidance/skills/advanced/internal/minimal-change.md": {
+      "sha256": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2",
+      "bytes": 2557
+    },
+    "E7/after/guidance/skills/advanced/internal/multi-candidate-exploration.md": {
+      "sha256": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042",
+      "bytes": 2691
+    },
+    "E7/after/guidance/skills/advanced/internal/parallel-coverage.md": {
+      "sha256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    "E7/after/guidance/skills/advanced/internal/plain-writing.md": {
+      "sha256": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06",
+      "bytes": 2702
+    },
+    "E7/after/guidance/skills/advanced/internal/rerunnable-tooling.md": {
+      "sha256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    "E7/after/guidance/skills/advanced/internal/structural-enforcement.md": {
+      "sha256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    },
+    "E7/after/guidance/skills/advanced/internal/type-system-discipline.md": {
+      "sha256": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd",
+      "bytes": 2814
+    },
+    "E7/after/guidance/skills/advanced/internal/typescript-discipline.md": {
+      "sha256": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03",
+      "bytes": 2931
+    },
+    "E7/after/guidance/skills/engineering/qs-skill-eval/SKILL.md": {
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    "E7/after/history/archive-before-replacement.json": {
+      "sha256": "83aa60df5eaae540b462a5df7f68c8c53103721b5d1f9eb39b462c3a09fc0304",
+      "bytes": 255
+    },
+    "E7/after/history/decisions.jsonl": {
+      "sha256": "5ff767a133ade6256223c2fff47d5ddd8744d780c53f94f1472f87fd70c9bf9f",
+      "bytes": 139
+    },
+    "E7/after/history/edit-log.json": {
+      "sha256": "15299861eeb233fcd8cb48b027d0c97c69ebac39df1b0d086263c39163b3fc63",
+      "bytes": 264
+    },
+    "E7/after/review-output/audit-corrections.jsonl": {
+      "sha256": "3f2b667958624e2baa96a92689c79f0da61090a560c58c39fe8b1b6544844b03",
+      "bytes": 4145
+    },
+    "E7/after/review-output/evidence-sha256.json": {
+      "sha256": "041b7d4a54aa31606c8b3e7e3163ec9f46f71443085d00df44a8942365f5c689",
+      "bytes": 3083
+    },
+    "E7/after/review-output/review.md": {
+      "sha256": "1a152cba7fa47cc8e548399d618abeed5935fd97766e3b2017ad664b7a990912",
+      "bytes": 6588
+    },
+    "E7/before/experiment/README.md": {
+      "sha256": "a5594be50e12e2230d585c03a4180ae05563de212d325da52d8d07b3d574d607",
+      "bytes": 431
+    },
+    "E7/before/experiment/outputs/sample-01/input.json": {
+      "sha256": "6ca4ff69fccc2a93b58051a7c5cb962e30d5a2efdab3231d48b29ccbc8112828",
+      "bytes": 93
+    },
+    "E7/before/experiment/outputs/sample-01/response.md": {
+      "sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+      "bytes": 2
+    },
+    "E7/before/experiment/outputs/sample-02/input.json": {
+      "sha256": "ccf4c3f2c2876f9ad444c5d41fe8a959363c9d87c52aaa189356d6dda9a1c078",
+      "bytes": 165
+    },
+    "E7/before/experiment/outputs/sample-02/response.md": {
+      "sha256": "b04df2ed2049691d738b9ea7f40f6c067ca6f74ef9496d952e6d990e57dcde99",
+      "bytes": 20
+    },
+    "E7/before/experiment/outputs/sample-03/input.json": {
+      "sha256": "543779bd231d7548c363508cdc8fe8a3021beaac611fc08e9a1befe4dad0181e",
+      "bytes": 93
+    },
+    "E7/before/experiment/outputs/sample-03/response.md": {
+      "sha256": "076320a2a08267b4c026d06573bba408ea68841e73cdc20e62cce59de165ece3",
+      "bytes": 3
+    },
+    "E7/before/experiment/plan.json": {
+      "sha256": "593cda3e1bc5bb77acd794bd5f3d6650f64fce70a02e866f2c99953243b14c65",
+      "bytes": 1488
+    },
+    "E7/before/experiment/summary.json": {
+      "sha256": "2b144ec336aae7a9c296fe55fc8900fcc3e1706ff2e6ca7cf75afe7efe75f1d0",
+      "bytes": 339
+    },
+    "E7/before/guidance/entry.md": {
+      "sha256": "26fcd5005372bc529f220af2c1aa37e6b241428247faa6f0fe5301fc52a2b4d6",
+      "bytes": 1432
+    },
+    "E7/before/guidance/skills/advanced/internal/concurrency-ownership.md": {
+      "sha256": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a",
+      "bytes": 2570
+    },
+    "E7/before/guidance/skills/advanced/internal/context-discipline.md": {
+      "sha256": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507",
+      "bytes": 2648
+    },
+    "E7/before/guidance/skills/advanced/internal/decision-trail.md": {
+      "sha256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    "E7/before/guidance/skills/advanced/internal/minimal-change.md": {
+      "sha256": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2",
+      "bytes": 2557
+    },
+    "E7/before/guidance/skills/advanced/internal/multi-candidate-exploration.md": {
+      "sha256": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042",
+      "bytes": 2691
+    },
+    "E7/before/guidance/skills/advanced/internal/parallel-coverage.md": {
+      "sha256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    "E7/before/guidance/skills/advanced/internal/plain-writing.md": {
+      "sha256": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06",
+      "bytes": 2702
+    },
+    "E7/before/guidance/skills/advanced/internal/rerunnable-tooling.md": {
+      "sha256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    "E7/before/guidance/skills/advanced/internal/structural-enforcement.md": {
+      "sha256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    },
+    "E7/before/guidance/skills/advanced/internal/type-system-discipline.md": {
+      "sha256": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd",
+      "bytes": 2814
+    },
+    "E7/before/guidance/skills/advanced/internal/typescript-discipline.md": {
+      "sha256": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03",
+      "bytes": 2931
+    },
+    "E7/before/guidance/skills/engineering/qs-skill-eval/SKILL.md": {
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    "E7/before/history/archive-before-replacement.json": {
+      "sha256": "83aa60df5eaae540b462a5df7f68c8c53103721b5d1f9eb39b462c3a09fc0304",
+      "bytes": 255
+    },
+    "E7/before/history/decisions.jsonl": {
+      "sha256": "5ff767a133ade6256223c2fff47d5ddd8744d780c53f94f1472f87fd70c9bf9f",
+      "bytes": 139
+    },
+    "E7/before/history/edit-log.json": {
+      "sha256": "15299861eeb233fcd8cb48b027d0c97c69ebac39df1b0d086263c39163b3fc63",
+      "bytes": 264
+    },
+    "E7/binding.json": {
+      "sha256": "8e91fd47f0b4a73d582e3edd3d78a8e9a68e8adca7ab816d33e08decff9bbc2d",
+      "bytes": 7919
+    },
+    "E7/events.jsonl": {
+      "sha256": "a72316cbcd3a0ed06b3c4417ec24f2ee0f79575e8d226ba6e3b2a7854d3b0ea5",
+      "bytes": 79411
+    },
+    "E7/process.json": {
+      "sha256": "62e495147b7082d0128fb33ad769c4cb51f7c6620b8ce3011e46393a20ce0abc",
+      "bytes": 317
+    },
+    "E7/prompt.txt": {
+      "sha256": "af79c4478081f36b82caaa73fa0d9e746103e4124a8b327716d6389831090a36",
+      "bytes": 1308
+    },
+    "E7/response.md": {
+      "sha256": "a1c05389222eaade13e97e3c03aba9c346ae89569ea978de920cf087e51fe66b",
+      "bytes": 1962
+    },
+    "E7/review-context.json": {
+      "sha256": "8cc3f40b3d4fd240902a97db9f3c41654380b2699352b99711a48a407647cd41",
+      "bytes": 81804
+    },
+    "E7/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "E7/telemetry.json": {
+      "sha256": "ddc7ae3fca7b8d9a1c49ecbd59390da3bab9105545a7b5202578521ab3292664",
+      "bytes": 70803
+    },
+    "started.json": {
+      "sha256": "1ffed371e89c7b5b208fe21428780b976ff347110e0509347c76fe54e355d064",
+      "bytes": 532
+    }
+  },
+  "acceptance": "Pending independent review."
+}

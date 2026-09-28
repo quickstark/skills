@@ -1,0 +1,75 @@
+{
+  "case": {
+    "id": "A3",
+    "skill": "qs-flow-triage",
+    "source": "skills/engineering/qs-flow-triage/SKILL.md",
+    "references": [],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Triage supplied BUG-8 without changing the tracker: the export button reports success but writes no file on Windows; one Linux success is recorded. Severity is not yet assessed. Return concrete next investigation and unknowns, no issue/comment publication.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-04"
+    ],
+    "expected": [
+      "Discriminating Windows evidence needed",
+      "No tracker or comment mutation",
+      "No false claim defect repaired"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 24630.199991,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 26691,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 631,
+        "reasoning_output_tokens": 138
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 244,
+      "skippedTicks": 2,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "7154358fbf7ac76292a7751349ca3e33449ce39868f6e99e791969bfb120c50e",
+    "promptUtf8Bytes": 10493,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-tnBy3f",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "ce6eac7ea484b2f51e37c61c8be51fdf3c34274708c60c8ed0470529050da777",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

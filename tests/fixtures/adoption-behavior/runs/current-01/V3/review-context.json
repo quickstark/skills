@@ -1,0 +1,79 @@
+{
+  "case": {
+    "id": "V3",
+    "skill": "qs-video",
+    "source": "skills/video/qs-video/SKILL.md",
+    "references": [
+      "skills/video/qs-video/references/runtime-compatibility.md",
+      "skills/video/qs-video/references/adaptation-policy.md"
+    ],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Plan a fresh30second16:9 product walkthrough using only supplied local screenshots and narration.wav. Confirmed audience is existing customers, language French, brand teal/Georgia, no provider purchases. A cached catalog has a Japanese query result unsearchable_query:true and its component payload is uncached. No asset search, installation, generation or output files requested yet.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-19",
+      "AC-20"
+    ],
+    "expected": [
+      "Preserve confirmed preferences; select local supported workflow",
+      "Honest query/uncached payload limitation, no installation/report",
+      "Picture/sound role and validation planned not completed"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 35462.77132200007,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 25176,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1007,
+        "reasoning_output_tokens": 362
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 355,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "da7d20fc5af22113ffe692c02c0a0a5cc71e7fa305dd255d119e31f605684a4e",
+    "promptUtf8Bytes": 24600,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-JjLy7G",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "4cee4ba960b13b42a16aad9cb6eaae7f88531d83e24d4272724ab23c045f54b4",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

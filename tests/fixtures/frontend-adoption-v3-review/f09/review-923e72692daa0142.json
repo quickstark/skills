@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-923e72692daa0142",
+  "scenarioId": "F09",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-923e72692daa0142",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "92052a61532f128c64e6808091e50c0e23208c6c1ac84cf593443fe6a9e699ee",
+      "bytes": 692
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "context.json": {
+      "sha256": "9d8d6869dc74131262950120482969bd7ac5eb2f6a610ef56a3a88c2841e9f1a",
+      "bytes": 9086
+    },
+    "events.jsonl": {
+      "sha256": "e9db80f13825a3ebcb53eb3f9c16671fe44e2f3a22de55e83d53000b84906f08",
+      "bytes": 6093951
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "aaeca5fa24339e9160b0368b18a4a0d822995cbf3c5b5d39f699e5c1df548b51",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "af97d061db540d37795b86ee691306ded07a7aeb928fffbd857196b78be154a2",
+      "bytes": 1043
+    },
+    "tool-images/0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37.png": {
+      "sha256": "0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37",
+      "bytes": 1100994
+    },
+    "tool-images/b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30.png": {
+      "sha256": "b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30",
+      "bytes": 1107306
+    },
+    "tool-images.json": {
+      "sha256": "f6855146de6b5460a7982ef27d1af19cc2b0010903d3bb5b4b962edff3c85241",
+      "bytes": 1092
+    }
+  },
+  "bundleManifestSha256": "fab5b6eddbd5c34aab5005a97d7e44a44812ec007c690066b514672e8820a994",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "tool-images/0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37.png",
+    "tool-images/b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30.png"
+  ],
+  "checks": [
+    {
+      "id": "exactly-two-real-images",
+      "result": "pass",
+      "rationale": "Opened two separate opaque RGB PNGs; each hashes identically to its completed native imageGeneration raw base64 result. No missing or substituted image."
+    },
+    {
+      "id": "ios-app-flow",
+      "result": "pass",
+      "rationale": "Status bar, back navigation, step1/2 and bottom home region identify a raw iOS flow; Continue leads to review then Confirm selection. No payment-success state or website footer."
+    },
+    {
+      "id": "raw-screens-safe-areas",
+      "result": "pass",
+      "rationale": "Full rectangular app canvases, no device frame/exterior presentation. Status icons occupy top region; product labels/actions stay clear of home indicator. Lower-than-target dimensions separately fail fidelity floor."
+    },
+    {
+      "id": "selection-continuity",
+      "result": "pass",
+      "rationale": "Same Family membership/$100/year/benefit card, checkmarks and Family membership selected label across screens; step1\u21922 and Continue\u2192Confirm selection with Change selection make state continuity explicit."
+    },
+    {
+      "id": "exact-brand-price",
+      "result": "pass",
+      "rationale": "Exact price/plan/benefit visually read in both; Northstar identity and paper/ink/teal serif appearance consistent. Raster cannot prove exact font binary or CSS radii; no invented product claims visible."
+    },
+    {
+      "id": "zero-product-code",
+      "result": "pass",
+      "rationale": "README input/output byte-identical; complete commands only read guidance or image metadata. Images generated outside product tree, no code implementation/install/publication."
+    },
+    {
+      "id": "budget-respected",
+      "result": "pass",
+      "rationale": "Exactly2 unique completed native imageGeneration IDs with actual files; no other transitive generation or delegated/MCP calls in complete stream. Both within2-call cap."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 2,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 3,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Two requested states and exact facts delivered, but 853x1844 each misses1179x2556 target at about52% of requested pixel count. Notable delivery fidelity shortfall despite candid report.",
+    "visual-hierarchy-and-readability": "Readable price/benefit card and predictable bottom CTA; repeated selection check/label and large quiet gap make hierarchy competent rather than exceptional.",
+    "interaction-or-screen-flow-clarity": "Consistent selected plan and explicit step progression; back/change and confirm actions communicate a review flow. Static screen-flow quality only, no working touch behavior claimed.",
+    "brand-and-platform-consistency": "Shared museum serif/paper/teal look and native navigation/status/home treatment retained. Slight raster textures/tonal variation prevent claiming exact token/font provenance.",
+    "scope-and-evidence-honesty": "Final explicitly reports actual below-target dimensions; records contain no hidden resize/repair or code change. Two calls used as authorized. Failed python header read preserved; file fallback obtains correct dimensions."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-47d896ad-2be5-4bfb-8674-d6b657e85836",
+        "eventLine": 51,
+        "type": "command_execution",
+        "itemSha256": "29d892079a5e7b90470484614ab12e2f6fe10ca8ff6cad246aa2eeddf29ba4d3",
+        "classification": "Read supplied guidance file; body skipped.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-824a2f24-605b-46f1-8e0c-893505d3ff0a",
+        "eventLine": 121,
+        "type": "imageGeneration",
+        "itemSha256": "4b78019ef5ba8591fb1468c14a997bd4543f97b96896c5d3ab4a7ecbbc380f4e",
+        "classification": "Native generation of selected Family membership screen.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-5a2cb5db-9125-4626-8eaf-8087d53d4fa9",
+        "eventLine": 165,
+        "type": "imageGeneration",
+        "itemSha256": "595b8102fee28a3f036915fba5cea22c678af6e27db7649693e1c12def808b6c",
+        "classification": "Native generation of matching confirmation screen using prior visual reference.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-69ba191c-24ac-42d8-aeaa-a3391786690e",
+        "eventLine": 172,
+        "type": "command_execution",
+        "itemSha256": "754950fba54bf11a96bdbaa1dd8826dee20259894d62bf1c8e1d3631e5573d50",
+        "classification": "Read-only Python PNG header attempt fails because python is unavailable.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c88e851d-d8b9-44ef-8821-52dd4e4f48d1",
+        "eventLine": 179,
+        "type": "command_execution",
+        "itemSha256": "ebfa291c2948bc49883b56689f32c0608a0191bea795aee85083c038c2cc0ace",
+        "classification": "Read-only file metadata fallback for both PNGs.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 2,
+    "imageViewCalls": 0
+  },
+  "generatedImageBindings": [
+    {
+      "eventLine": 121,
+      "source": "/home/djn12313/.codex/generated_images/01a0dee6-267b-79f0-bc98-763d5e3c219c/exec-824a2f24-605b-46f1-8e0c-893505d3ff0a.png",
+      "target": "tool-images/0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37.png",
+      "sha256": "0068d243522144e859ed44e5b95a27a52b79fb757ddda672dc25297ac75a0e37",
+      "bytes": 1100994,
+      "nativeItemId": "exec-824a2f24-605b-46f1-8e0c-893505d3ff0a",
+      "nativeItemSha256": "4b78019ef5ba8591fb1468c14a997bd4543f97b96896c5d3ab4a7ecbbc380f4e",
+      "rawBase64ResultMatchesFile": true,
+      "width": 853,
+      "height": 1844,
+      "mode": "RGB",
+      "alphaRange": null,
+      "fullyTransparentPixels": 0,
+      "nonOpaquePixels": 0
+    },
+    {
+      "eventLine": 165,
+      "source": "/home/djn12313/.codex/generated_images/01a0dee6-267b-79f0-bc98-763d5e3c219c/exec-5a2cb5db-9125-4626-8eaf-8087d53d4fa9.png",
+      "target": "tool-images/b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30.png",
+      "sha256": "b36c12e4d34d0d4eb808cf24b16894b52e8946ae913903764947bb9535c4fe30",
+      "bytes": 1107306,
+      "nativeItemId": "exec-5a2cb5db-9125-4626-8eaf-8087d53d4fa9",
+      "nativeItemSha256": "595b8102fee28a3f036915fba5cea22c678af6e27db7649693e1c12def808b6c",
+      "rawBase64ResultMatchesFile": true,
+      "width": 853,
+      "height": 1844,
+      "mode": "RGB",
+      "alphaRange": null,
+      "fullyTransparentPixels": 0,
+      "nonOpaquePixels": 0
+    }
+  ],
+  "manifestVerification": "Rubric equality, complete bundle/input/output/native-image hashes verified; README unchanged and both returned PNGs actually opened.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-product-code-or-public-root",
+      "result": "pass",
+      "rationale": "Complete command semantics: guidance reads, authorized image tool calls and read-only metadata. No product mutation, install, delegation, publication or external service outside requested image generation. Native duplicate/delta events not extra calls."
+    }
+  ],
+  "blindingLimits": [
+    "Complete guidance bodies redacted, partial chunks and response wording may reveal identity; no source/operator/raw-trial mapping lookup.",
+    "Reviewer previously encountered permitted partial guidance leakage in closed experiment; no old scores or preferred mapping imported."
+  ],
+  "observedDefects": [
+    "Generated 853x1844 each instead of1179x2556.",
+    "Initial python metadata command unavailable; failure retained, read-only file fallback succeeds."
+  ],
+  "passes": [
+    "Coverage: all7 required checks,5 applicable dimensions and both actual images.",
+    "Domain: visually checked native regions, exact price/benefit, selected state continuity and brand appearance.",
+    "Contradiction hunt: actual dimensions versus requested target, native calls/results, unchanged product hash and any failed metadata probe.",
+    "Polish: resolution defect separated from otherwise usable visual flow; no variant/adoption inference."
+  ],
+  "overall": "fail",
+  "floorDecision": "All named checks pass, but brief/content fidelity2 falls below required3 because requested raster target is not delivered.",
+  "rationale": "Real coherent image flow within authority/budget; honest below-target delivery remains a fidelity defect, not unavailable evidence."
+}

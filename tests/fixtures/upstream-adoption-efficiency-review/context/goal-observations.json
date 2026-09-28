@@ -1,0 +1,66 @@
+{
+  "kind": "review-context-completeness-supplement",
+  "appliesToScenarioIds": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E7",
+    "E8",
+    "E9",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8",
+    "P9",
+    "P10"
+  ],
+  "scopeData": {
+    "objective": "Deliver CSV invoice export to staging",
+    "repository": "/fixture/ledger-app",
+    "deployment": {
+      "target": "staging",
+      "workflow": "/fixture/ledger-app/docs/deploy.md: npm run deploy:staging; check /health version and HTTP 200; rollback npm run rollback:staging",
+      "evidence": "Controlled fixture: deployment documentation inspected, credentials available"
+    },
+    "references": [
+      {
+        "path": "/fixture/ledger-app/docs/specs/export.md",
+        "evidence": "Controlled fixture: confirmed CSV header, escaping, current filter and existing screen requirements"
+      }
+    ],
+    "acceptanceCriteria": [
+      "CSV exports current filtered invoices with header and escaping",
+      "Existing invoice screen still works",
+      "Staging /health returns HTTP 200 and exact deployed version"
+    ],
+    "exclusions": [
+      "production",
+      "unrelated files"
+    ],
+    "authorization": [
+      {
+        "operation": "edit/build/test",
+        "target": "/fixture/ledger-app"
+      },
+      {
+        "operation": "commit/push",
+        "target": "origin/feature/export"
+      },
+      {
+        "operation": "deploy",
+        "target": "staging"
+      }
+    ]
+  },
+  "selectedRootsAsSupplied": "1. $qs-skills:qs-code-build\n   Selection evidence: \"Approved spec; CSV not implemented\"\n   Verify: [\"CSV behavior cases and existing screen pass at current revision\",\"Diff review passes\"]\n   Authorized operations: [{\"operation\":\"edit/build/test\",\"target\":\"/fixture/ledger-app\"}]\n\n2. $qs-skills:qs-git-merge\n   Selection evidence: \"User requests push of tested branch\"\n   Verify: [\"origin/feature/export equals tested revision\"]\n   Authorized operations: [{\"operation\":\"commit/push\",\"target\":\"origin/feature/export\"}]\n\n3. $qs-skills:qs-deploy-release\n   Selection evidence: \"Staging delivery requested\"\n   Verify: [\"Health/version matches artifact\"]\n   Authorized operations: [{\"operation\":\"deploy\",\"target\":\"staging\"}]",
+  "scopeDataSHA256": "146c725aa4f868336c3a1ad224df5e9f41bc8b4bbb4b653ce46393228e022991",
+  "selectedRootsSHA256": "fdf4136e64ef79313c22a984da9f3e260bc5a87b887471864f2cd04e12ca4810",
+  "note": "These exact fixture facts and selected-root block were embedded in the instructions actually supplied to goal-scenario responders. The review exporter omitted them. Both compared instruction bodies contain byte-identical copies. No new response, request, rubric or authority has been added; later explicit scenario updates/revocations still govern."
+}

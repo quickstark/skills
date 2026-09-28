@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "https://github.com/Leonxlnx/unlazy",
+  "sourceRevision": "16671491f6679ad9378f52604d3bc2415b4120c7",
+  "sourceLabel": "Unreleased target 2.1.0",
+  "moduleRoot": "modules/unlazy",
+  "files": [
+    {
+      "sourcePath": "references/dispatch.md",
+      "destination": "references/dispatch.md",
+      "sourceSha256": "39633b600475711a53ea1ba5393b4dc05ec0cb3439fff8b787d40c5b9038cf7e",
+      "derivedSha256": "75b9e51511aac7382887e2b5fa2121cca4c386a9e0792d872023017d8c78d1a3"
+    },
+    {
+      "sourcePath": "references/gates.md",
+      "destination": "references/gates.md",
+      "sourceSha256": "83a70b12f1b5058d1f1554fe42f350307bcb83fd33e8c102c60d20955def423c",
+      "derivedSha256": "83a70b12f1b5058d1f1554fe42f350307bcb83fd33e8c102c60d20955def423c"
+    },
+    {
+      "sourcePath": "references/method.md",
+      "destination": "references/method.md",
+      "sourceSha256": "4644bbaabea7f99fb7a21e84cd771715e619742ce7c8fe2e7a29c094d2e9709e",
+      "derivedSha256": "4644bbaabea7f99fb7a21e84cd771715e619742ce7c8fe2e7a29c094d2e9709e"
+    },
+    {
+      "sourcePath": "references/orchestration.md",
+      "destination": "references/orchestration.md",
+      "sourceSha256": "812d909c60b7cf717839a6ae685d138f501e5577edf8df378d7e10b9c2e4fc79",
+      "derivedSha256": "f07877cd54b594c9e7120e135670bfa6f295ebbe96f39a4b805a3ff96ad3bd73"
+    },
+    {
+      "sourcePath": "references/parallel.md",
+      "destination": "references/parallel.md",
+      "sourceSha256": "2d1294eb01e20f752c6ad5306a7c12817ae0882b2df795da0347c49ee75bca4b",
+      "derivedSha256": "91e85a62f4c4d42a5003f334cc63d20eeb0f7d13466a42df4f7dd49471a1744e"
+    },
+    {
+      "sourcePath": "references/token-economy.md",
+      "destination": "references/token-economy.md",
+      "sourceSha256": "cf6875e69bb73e082a24360232a6051124ebc3f447f3f167259db417ecacb7ae",
+      "derivedSha256": "b4d3cee8c559e227cb0425a867c246694afcbe2d40d0d0267a2549e477c1872a"
+    },
+    {
+      "sourcePath": "scripts/dispatch-check.mjs",
+      "destination": "scripts/dispatch-check.mjs",
+      "sourceSha256": "8c6826144ba6f1865e4e2fde858c73781f93c58cb249bc6ef03ac78defe6712a",
+      "derivedSha256": "8c6826144ba6f1865e4e2fde858c73781f93c58cb249bc6ef03ac78defe6712a"
+    },
+    {
+      "sourcePath": "scripts/gate-check.mjs",
+      "destination": "scripts/gate-check.mjs",
+      "sourceSha256": "29dee3acfdf566c24eedace85163a4e7a66eda01b712c5b4b76a99eae1eda8a1",
+      "derivedSha256": "29dee3acfdf566c24eedace85163a4e7a66eda01b712c5b4b76a99eae1eda8a1"
+    },
+    {
+      "sourcePath": "scripts/gate-lint.mjs",
+      "destination": "scripts/gate-lint.mjs",
+      "sourceSha256": "12fedaa4ad7bcfacf6da8d66f4ead0d186115e03fe941d3d20efd361dec7ee7e",
+      "derivedSha256": "12fedaa4ad7bcfacf6da8d66f4ead0d186115e03fe941d3d20efd361dec7ee7e"
+    },
+    {
+      "sourcePath": "scripts/install-hooks.mjs",
+      "destination": "scripts/install-hooks.mjs",
+      "sourceSha256": "cf61da1f265f0a4c2fb23512eda3beb03cf7bad61461c1e948d47b6b1995b7d6",
+      "derivedSha256": "cf61da1f265f0a4c2fb23512eda3beb03cf7bad61461c1e948d47b6b1995b7d6"
+    },
+    {
+      "sourcePath": "scripts/lib/check-supervisor.mjs",
+      "destination": "scripts/lib/check-supervisor.mjs",
+      "sourceSha256": "2bf15a383c0e64f77024820fedf9da8045c02cca9051ec0e6444e85814eb8c3b",
+      "derivedSha256": "2bf15a383c0e64f77024820fedf9da8045c02cca9051ec0e6444e85814eb8c3b"
+    },
+    {
+      "sourcePath": "scripts/lib/dispatch.mjs",
+      "destination": "scripts/lib/dispatch.mjs",
+      "sourceSha256": "101cc06361f2eae77946d5fa1d9dd5dd9effcfc039f376967565951909ad1baf",
+      "derivedSha256": "101cc06361f2eae77946d5fa1d9dd5dd9effcfc039f376967565951909ad1baf"
+    },
+    {
+      "sourcePath": "scripts/lib/gates.mjs",
+      "destination": "scripts/lib/gates.mjs",
+      "sourceSha256": "12758e27c415e619a93148fb71cd217d0c1b81de39fe932b2dda344fac778809",
+      "derivedSha256": "12758e27c415e619a93148fb71cd217d0c1b81de39fe932b2dda344fac778809"
+    },
+    {
+      "sourcePath": "scripts/lib/process-tree.mjs",
+      "destination": "scripts/lib/process-tree.mjs",
+      "sourceSha256": "2b6c28613b2686e3afaa32a0196eaa3c67fafa283fbbba11df872f4deb993682",
+      "derivedSha256": "2b6c28613b2686e3afaa32a0196eaa3c67fafa283fbbba11df872f4deb993682"
+    },
+    {
+      "sourcePath": "scripts/lib/regex-worker.mjs",
+      "destination": "scripts/lib/regex-worker.mjs",
+      "sourceSha256": "76a9448f3c1b15b4904239608bd50381ee609e1edf0c6ac281d3f30473b36e0b",
+      "derivedSha256": "76a9448f3c1b15b4904239608bd50381ee609e1edf0c6ac281d3f30473b36e0b"
+    },
+    {
+      "sourcePath": "scripts/stop-hook.mjs",
+      "destination": "scripts/stop-hook.mjs",
+      "sourceSha256": "f18f2f189a3be2ff1bcdd01b09eea0ac53edcf9a3f9d9b1ba64817661ce4b683",
+      "derivedSha256": "f18f2f189a3be2ff1bcdd01b09eea0ac53edcf9a3f9d9b1ba64817661ce4b683"
+    },
+    {
+      "sourcePath": "templates/PLAN.md",
+      "destination": "templates/PLAN.md",
+      "sourceSha256": "dffcf92500d4a4cb9eb15b4665388ff3e488398a8038198566db531a653537d0",
+      "derivedSha256": "dffcf92500d4a4cb9eb15b4665388ff3e488398a8038198566db531a653537d0"
+    },
+    {
+      "sourcePath": "templates/gates-leaf.md",
+      "destination": "templates/gates-leaf.md",
+      "sourceSha256": "2bf0dad7c8325d28033ab4b95b6af7af2921763c5939a508bf5bfcd29c696f4e",
+      "derivedSha256": "2bf0dad7c8325d28033ab4b95b6af7af2921763c5939a508bf5bfcd29c696f4e"
+    },
+    {
+      "sourcePath": "templates/gates-node.md",
+      "destination": "templates/gates-node.md",
+      "sourceSha256": "3bfa7e7811b817904be1d2681c964bf99147a50ad4c08fb9a2a86f0b495f95a6",
+      "derivedSha256": "3bfa7e7811b817904be1d2681c964bf99147a50ad4c08fb9a2a86f0b495f95a6"
+    },
+    {
+      "sourcePath": "LICENSE",
+      "destination": "LICENSE",
+      "sourceSha256": "4575a543ab88dad12ccea7d97e563d0bce5b448b06072e65d3264497dad326df",
+      "derivedSha256": "4575a543ab88dad12ccea7d97e563d0bce5b448b06072e65d3264497dad326df"
+    },
+    {
+      "sourcePath": "SECURITY.md",
+      "destination": "SECURITY.md",
+      "sourceSha256": "1d3995733df3e0512d974f476bad3537b56aa3fc9b89fb1367b9b61f7f18cc80",
+      "derivedSha256": "1d3995733df3e0512d974f476bad3537b56aa3fc9b89fb1367b9b61f7f18cc80"
+    },
+    {
+      "sourcePath": "SKILL.md",
+      "destination": "instructions.md",
+      "sourceSha256": "0ea144724398f9df5ce4cb880ff472c8afee0193179eb2f2a5d82f1a0f633450",
+      "derivedSha256": "cb7c311fba787902cf0c87bfdc34c82dbb6223cac14b330d0e840533e5a8523c"
+    },
+    {
+      "sourcePath": "research/validation-protocol.md",
+      "destination": "research/validation-protocol.md",
+      "sourceSha256": "b1ce84abbe23a0185bb9f15e1b52318c3b95fe1758e4b8100c3c38d81116b0f1",
+      "derivedSha256": "b1ce84abbe23a0185bb9f15e1b52318c3b95fe1758e4b8100c3c38d81116b0f1"
+    }
+  ]
+}

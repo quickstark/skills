@@ -1,0 +1,76 @@
+{
+  "case": {
+    "id": "A4",
+    "skill": "qs-learn-teach",
+    "source": "skills/productivity/qs-learn-teach/SKILL.md",
+    "references": [],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Explain expand/migrate/contract using a concrete API rename example. This is a teaching-only request; do not edit files, create records or begin the migration. Explain when an integration task must wait for consumers.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-04",
+      "AC-06"
+    ],
+    "expected": [
+      "Teach expand then migrate consumers then contract",
+      "Explicit dependency/integration condition",
+      "No learning record or code mutation"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 32029.044297999993,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 26126,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 829,
+        "reasoning_output_tokens": 222
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 320,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "61fc299c72d175ad9c299190e120f1475183f340b86933cb4af6b5edac3f14d9",
+    "promptUtf8Bytes": 9333,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-ClMmjS",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "0248ce6b09ed9763a2aba5ab90e5a4a25e4ed02be70dbf3b450d0b1417b4f963",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

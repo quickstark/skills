@@ -1,0 +1,29 @@
+✔ JSON success returns server preferences (21.284449ms)
+✔ 401 asks the caller to sign in (0.447068ms)
+✔ turning off the digest preserves the request and accepts 204 without parsing (0.288567ms)
+✔ successful JSON preserves false (0.328343ms)
+✔ successful JSON preserves 0 (0.247549ms)
+✔ successful JSON preserves "" (0.230106ms)
+✔ successful JSON preserves null (0.244112ms)
+✔ successful JSON preserves {"digest":false} (0.214687ms)
+✔ successful JSON preserves [false,0] (0.382696ms)
+✔ other successful statuses return the parsed value unchanged (0.256717ms)
+✔ HTTP 401 is classified without parsing its body (0.218063ms)
+✔ HTTP 403 is classified without parsing its body (0.117502ms)
+✔ HTTP 400 is classified without parsing its body (0.120769ms)
+✔ HTTP 404 is classified without parsing its body (0.07908ms)
+✔ HTTP 429 is classified without parsing its body (0.071586ms)
+✔ HTTP 500 is classified without parsing its body (0.555002ms)
+✔ HTTP 302 is classified without parsing its body (0.09469ms)
+✔ invalid successful JSON (malformed) is a payload failure (0.38005ms)
+✔ invalid successful JSON (empty) is a payload failure (0.195882ms)
+✔ payload failure retains the exact parser cause (0.185321ms)
+✔ transport rejection propagates unchanged (0.138693ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 85.339767

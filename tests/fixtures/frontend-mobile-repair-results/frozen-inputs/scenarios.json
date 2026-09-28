@@ -1,0 +1,48 @@
+[
+  {
+    "id": "F09",
+    "title": "image-only mobile flow",
+    "originalSource": "imagegen-frontend-mobile",
+    "localRoot": "qs-design-image-mobile",
+    "mode": "image-only",
+    "projectFixture": "empty",
+    "input": "Create exactly two separate portrait image mockups for our iOS membership flow: choose Family membership, then confirm the selection. Use the supplied Northstar brand and exact $100/year price. Raw app screens, no device frames or website hero/footer. Use the available native image tool’s portrait output with safe status/home-indicator regions. Inspect and report each delivered image’s actual pixel dimensions; no exact numeric resolution is requested. Keep selection and labels consistent. Images only; do not implement code. Use at most two image-generation calls.",
+    "references": [
+      "brief",
+      "prompt-construction",
+      "mobile-images"
+    ],
+    "requiredChecks": [
+      "exactly-two-real-images",
+      "ios-app-flow",
+      "raw-screens-safe-areas",
+      "selection-continuity",
+      "exact-brand-price",
+      "zero-product-code",
+      "budget-respected",
+      "native-portrait-actual-size-reporting"
+    ],
+    "budget": {
+      "maximumImageCalls": 2,
+      "requiredImages": 2,
+      "maximumModelTurns": 1,
+      "timeoutMs": 600000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": false,
+      "generateImages": true,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "unchanged-input-files",
+      "actual-generated-images",
+      "independent-visual-review"
+    ],
+    "qualityFloor": 3
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "name": "qs-execution",
+  "version": "3.8.0",
+  "description": "Optional substantial-work acceptance gates and completion discipline.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "optional"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "QuickStark Execution",
+    "shortDescription": "Optional substantial-work acceptance gates and completion discipline.",
+    "longDescription": "Optional substantial-work acceptance gates and completion discipline.",
+    "developerName": "QuickStark",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/quickstark/skills",
+    "defaultPrompt": [
+      "Optional substantial-work acceptance gates and completion discipline."
+    ]
+  }
+}

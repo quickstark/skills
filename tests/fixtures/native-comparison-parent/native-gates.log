@@ -1,0 +1,12 @@
+APPROVAL REQUIRED leaf-53:G4
+    CHECK: node --test tests/fixtures/frontend-native-capture/native-capture.test.mjs tests/fixtures/frontend-native-capture/native-transcript.test.mjs
+    EXPECT: pass 33
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-adoption-deploy-approvals/2e811af99f95b9709a696dc5c2e156d724d2e33c195d8ec2aa95319c04f399ba.json
+  RUN  leaf-53:G4 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  PASS leaf-53:G4: Execute meaningful scripted protocol/process tests (including full image events, unknown tool, invalid/missing completion, timeout, malformed JSON, denied approval request and child cleanup); native initialization/readiness may run without model calls. Parent reviews before any real model launch.
+       exit=0; EXPECT=matched; output=ℹ todo 0 | ℹ duration_ms 4754.224747
+leaf-53.md: 4 gates
+ALL MET (4 met, reran: 1, previously met reverified: 1)

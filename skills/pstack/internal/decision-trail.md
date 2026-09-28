@@ -10,9 +10,9 @@ Use when the owning root may change files, external state, or a measured impleme
 
 ## Method
 
-1. Record the decision point and the evidence available at that moment.
+1. Record run identity and source revision or content hash with the decision point and the evidence available at that moment. Read existing entries before resuming; append a new run boundary when another run has written since.
 2. Name the chosen action and the alternatives actually considered.
-3. Attach the check that accepted or rejected the action.
+3. Attach a resolvable evidence pointer and the check that accepted or rejected the action. Append corrections linked to earlier entries; never truncate or rewrite prior evidence. Reverify this run's claims and any earlier claims invalidated by its changes.
 4. Keep sensitive or temporary evidence private and summarize only what the result needs.
 
 ## Stop conditions

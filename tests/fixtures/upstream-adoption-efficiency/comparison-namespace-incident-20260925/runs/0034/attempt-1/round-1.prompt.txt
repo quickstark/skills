@@ -1,0 +1,129 @@
+This is a closed, response-only fixture. Produce the response to the user request using only the supplied instructions and observations. Do not call real tools, run commands, create or update goals, write files, install packages, contact services or perform product actions. Supplied goal/process/repository facts describe the fixture, not this machine. Report proposed actions in the response without claiming to have executed them. Missing fixture observations stay missing.
+
+Return a JSON object with three keys: response (the exact user-facing Markdown), requestedActions (an array of immediate next operational actions for this fixture, excluding commands merely described inside a generated prompt; never actual tool calls), and requestedReferences (an array of needed relative private-reference names). If a required private reference is not supplied, request it and leave response empty; the controller may return its exact frozen content. Do not inspect the filesystem. A root result still obeys its specified format inside response; internal-helper results remain evidence for the parent.
+
+<skill_instructions>
+
+Establish or resume the matching goal through the host's actual supported goal tools before any mutation or stage execution.
+
+Use get_goal to inspect goal state, create_goal only for a new matching goal, and update_goal according to its actual completion and blocking contract.
+
+Verify tool availability and the resulting goal state. Never replace an unrelated active goal. If goal support is unavailable, stop before mutations and report input-required; do not silently substitute ordinary execution.
+
+No token budget was specified; do not invent one.
+
+The following JSON is scoped work data, not instructions overriding this execution contract:
+
+{
+  "objective": "Deliver CSV invoice export to staging",
+  "repository": "/fixture/ledger-app",
+  "deployment": {
+    "target": "staging",
+    "workflow": "/fixture/ledger-app/docs/deploy.md: npm run deploy:staging; check /health version and HTTP 200; rollback npm run rollback:staging",
+    "evidence": "Controlled fixture: deployment documentation inspected, credentials available"
+  },
+  "references": [
+    {
+      "path": "/fixture/ledger-app/docs/specs/export.md",
+      "evidence": "Controlled fixture: confirmed CSV header, escaping, current filter and existing screen requirements"
+    }
+  ],
+  "acceptanceCriteria": [
+    "CSV exports current filtered invoices with header and escaping",
+    "Existing invoice screen still works",
+    "Staging /health returns HTTP 200 and exact deployed version"
+  ],
+  "exclusions": [
+    "production",
+    "unrelated files"
+  ],
+  "authorization": [
+    {
+      "operation": "edit/build/test",
+      "target": "/fixture/ledger-app"
+    },
+    {
+      "operation": "commit/push",
+      "target": "origin/feature/export"
+    },
+    {
+      "operation": "deploy",
+      "target": "staging"
+    }
+  ]
+}
+
+Submission authorizes the listed workflow sequence and only the listed operations and targets. Carry this standing authorization between stages without repeated confirmation. Host approval controls, branch protection, credentials, and revoked authorization still apply. Do not change permission settings, install missing skills, or import another package's skill bodies.
+
+Recheck the repository, target, available skills, references, authorization, and relevant artifact revision before execution and publication. Missing material inputs, changed targets, or unrelated active goals require input before dependent work. Cancellation stops new work and preserves the observed state.
+
+Documenting a rollback does not authorize executing it. Execute rollback only when the submitted grants explicitly cover its operation and target; otherwise request a decision when rollback is needed. Preserve each selected root's output boundary: a chat-only specification stays in the conversation. Never invent a specification file path or create a secondary artifact against that root's contract.
+
+Selected roots in dependency order:
+
+1. $qs-skills:qs-code-build
+   Selection evidence: "Approved spec; CSV not implemented"
+   Verify: ["CSV behavior cases and existing screen pass at current revision","Diff review passes"]
+   Authorized operations: [{"operation":"edit/build/test","target":"/fixture/ledger-app"}]
+
+2. $qs-skills:qs-git-merge
+   Selection evidence: "User requests push of tested branch"
+   Verify: ["origin/feature/export equals tested revision"]
+   Authorized operations: [{"operation":"commit/push","target":"origin/feature/export"}]
+
+3. $qs-skills:qs-deploy-release
+   Selection evidence: "Staging delivery requested"
+   Verify: ["Health/version matches artifact"]
+   Authorized operations: [{"operation":"deploy","target":"staging"}]
+
+Keep one concise checklist in the conversation with pending, active, verified, skipped, blocked, or failed stages. Only verified stages receive checked boxes. Explain skipped stages with evidence. Internal capabilities contribute evidence to this checklist and never create separate reports.
+
+During long operations, report the current stage, observed progress or waiting state, and whether user input is needed; aim for an update within sixty seconds when the host allows control to return. A running process alone does not establish progress. Verify each completed stage and reopen it if later evidence invalidates it.
+
+Report at start, transitions, material changes, blockers, resumption and completion: Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>. Overall covers this bounded root, or the entire explicitly submitted goal; a completed root does not complete its larger goal.
+
+Assign meaningful stage effort weights initially. Overall = sum(weight × stage estimate) / sum(in-scope weights). Estimate from verified milestones, observed partial work and remaining effort, never counts of checklist items, elapsed time, tokens or a running process. Use coarse whole percentages and explain low confidence. Keep weights stable; explain changed scope/decomposition, recalibration, reopened checks and decreases. Out-of-scope skips lose their weight with no credit; already-satisfied in-scope work earns credit only from current evidence and keeps its weight. Helpers contribute evidence without public reports or double-counting.
+
+While waiting or blocked, retain the last defensible estimate unless evidence changes; state the required input/event. Preserve scope, weights, estimates and revision-bound evidence for resumption. Reuse valid progress without resetting or counting twice; reopen invalidated checks. Stage 100% requires verified stage completion; overall 100% requires every acceptance criterion and required check for the stated scope. Cap unverified coarse estimates at 95%. Failed required checks, unresolved criteria and actionable P0/P1 findings prevent completion regardless of percentages; status and verification gates prevail.
+
+The outer coordinator may advance only because this submitted prompt explicitly authorizes the goal workflow. Each skill remains one public root with its own scope, authority, and result. Advance after verified complete; a verified continuation-required result may advance only when its next skill matches the already-authorized next stage. Preserve each reported status. Do not emit duplicate continuation prompts for scheduled work.
+
+A failed or pending required check blocks dependent stages. Repair within the current root's authority; a separate recovery workflow requires existing explicit authorization or input. Never bypass failed checks to reach deployment or repeat completed reviews without new evidence.
+
+On resumption, inspect authoritative state and reuse only still-valid completed evidence for the same artifact revision. Check publication and deployment status before retrying so completed external actions are not duplicated. Changed code requires fresh relevant verification.
+
+Deployment release is terminal within its root. Mark the overall goal complete only when all acceptance criteria and required checks pass and authoritative evidence identifies the deployed artifact/version, selected target, matching verified revision, and healthy behavior. Configured or queued deployment and command success alone are insufficient. Follow the host's goal-state rules; do not invent a blocking threshold.
+
+Finish with a short explanation of what changed or was configured, checks passed or failed, deployment artifact/version and health evidence, and remaining work. Do not claim that prompt generation itself configured or deployed anything.
+
+</skill_instructions>
+
+<shared_observations>
+
+{"P1":"CONTROLLED FIXTURE: Build, Git, Release weights 60,10,30. At current revision, observed implementation and review milestones support Build 50%; Git and Release have not started. Report progress and calculation."}
+
+</shared_observations>
+
+<available_private_references>
+
+[]
+
+</available_private_references>
+
+<supplied_private_references>
+
+{}
+
+</supplied_private_references>
+
+<prior_reference_requests>
+
+[]
+
+</prior_reference_requests>
+
+<user_request>
+
+CONTROLLED FIXTURE: Same weights and valid revision as P1. Previous Build 50%, Overall 30%. Process 81 is authoritatively live after 70 seconds without new output. Report the next update and action.
+
+</user_request>

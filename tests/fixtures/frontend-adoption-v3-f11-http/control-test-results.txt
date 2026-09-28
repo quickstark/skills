@@ -1,0 +1,15 @@
+✔ real browser inline: actual keyboard/form behavior, both widths, immutable artifacts (800.397293ms)
+✔ real browser dialog: actual keyboard/form behavior, both widths, immutable artifacts (994.319625ms)
+✔ real browser inaccessible: actual keyboard/form behavior, both widths, immutable artifacts (479.256073ms)
+✔ real browser broken: actual keyboard/form behavior, both widths, immutable artifacts (437.216812ms)
+✔ unchanged confinement blocks page/worker/WebSocket attempts; local sentinel gets zero hits (991.752642ms)
+✔ launch failure retains evidence and original bytes; nested output and symlink source rejected (9.074921ms)
+✔ transport module is byte-identical; launch/confinement and base measurement slices preserved (1.089994ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3794.520382

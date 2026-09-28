@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:38:38.896Z",
+  "elapsedMs": 23123.21036299999,
+  "wallElapsedMs": 23123,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "e96d77b696e8edf16b18bde0ca52c4032e56a4c133c23d2ab773934325a62373",
+  "promptUtf8Bytes": 9908,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25845,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 579,
+      "reasoning_output_tokens": 304
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "f287e2749eed7ceb27188e4243ec9ca638a083cf0e7ed42caf2970533205d2c2",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-FX9k17",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Supplied observations support partial implementation and review milestones at the current revision. Input needed: none for this progress report.\\n\\n- [ ] Build — active, ~50%; weight 60.\\n- [ ] Git — pending, 0%; weight 10.\\n- [ ] Release — pending, 0%; weight 30.\\n\\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **~30%**.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — Progress calculation from supplied evidence. No stage is verified complete; no actions were executed.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — active — finish implementation and required behavior, screen, and diff checks before Git and Release advance.\\n\\nGoal-tool availability and authoritative goal state remain unobserved; both must be verified before execution resumes.\\n\\nNext work prompt: None — subsequent stages are already scheduled by the authorized workflow.\",\n  \"requestedActions\": [],\n  \"requestedReferences\": []\n}"
+  ]
+}

@@ -1,0 +1,66 @@
+:root{color-scheme:light;--paper:#f7f5ef;--ink:#182d2a;--green:#086b64;--line:#d5d9cf;--mint:#e4eee4;--radius:12px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:5px}
+button,input{font:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #c7752d;outline-offset:5px}
+.skip-link{position:absolute;top:-100px;left:20px;padding:12px;background:var(--paper);z-index:10}
+.skip-link:focus{top:12px}
+.site-header,main,#site-footer{width:min(1152px,calc(100% - 96px));margin-inline:auto}
+.site-header{min-height:112px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:24px}
+.wordmark{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:26px;line-height:1.05;letter-spacing:-.8px}
+.brand-star{font-size:52px;color:var(--green);line-height:1}
+.wordmark-sub{display:block;font-size:15px;letter-spacing:2.7px;margin-top:5px}
+nav{display:flex;align-items:center;gap:34px}
+nav a{text-decoration:none;font-size:15px;padding:10px 0}
+nav a:hover,.text-link:hover{text-decoration:underline}
+nav a[aria-current]{color:var(--green);border-bottom:1px solid var(--green)}
+nav a span{margin-left:12px}
+.membership-layout{display:grid;grid-template-columns:1.12fr 1fr;gap:72px;padding:54px 0 48px;align-items:center}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.8px;line-height:1.6;margin:0}
+.introduction>.eyebrow{display:flex;align-items:center;gap:10px;color:var(--green)}
+.small-star{font-size:21px}
+h1{font-size:clamp(60px,6.5vw,88px);font-weight:400;line-height:1.04;letter-spacing:-4px;margin:25px 0 24px}
+h1 em{font-weight:400;color:var(--green)}
+.intro-copy{font-size:21px;line-height:1.55;max-width:330px;margin:0 0 28px}
+.text-link{display:inline-flex;gap:28px;align-items:center;color:var(--green);font-size:16px;text-decoration:none;border-bottom:1px solid var(--green);padding-bottom:8px}
+.intro-note{display:flex;gap:18px;align-items:center;margin-top:49px}
+.note-line{height:1px;width:46px;background:var(--green)}
+.intro-note p{font-size:14px;line-height:1.6;font-style:italic;margin:0;color:#57665d}
+.membership-panel{background:var(--green);border-radius:var(--radius);color:var(--paper);padding:29px 32px 23px}
+.panel-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.panel-top .eyebrow{color:#dfebe0}
+.panel-star{font-size:39px;line-height:1;color:#d6e4b4}
+.membership-panel h2{font-size:28px;font-weight:400;letter-spacing:-.6px;margin:0 0 14px}
+.price{font-size:57px;letter-spacing:-2px;line-height:1.1;margin:0 0 16px}
+.price span{font-size:19px;letter-spacing:0}
+.benefit{font-size:16px;line-height:1.6;max-width:320px;margin:0 0 24px}
+.join-area{border-top:1px solid #51968e;padding-top:22px}
+label{display:block;font-size:14px;margin-bottom:9px}
+input{width:100%;background:var(--paper);border:1px solid transparent;border-radius:6px;min-height:47px;padding:12px 14px;color:var(--ink);font-size:16px}
+input::placeholder{color:#65746d}
+.email-note{font-size:12px;margin:9px 0 17px;color:#e0e9df}
+button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#e3eccb;color:var(--ink);border:0;border-radius:6px;min-height:49px;padding:13px 15px;font-size:15px;cursor:pointer}
+button:hover{background:#f0f4dc}
+button span{font-size:23px;line-height:1}
+#form-message{font-size:14px;line-height:1.5;margin:0}
+#form-message:not(:empty){margin-top:15px;padding-left:12px;border-left:2px solid #e3eccb}
+.privacy-note{font-size:11px;line-height:1.6;margin:13px 0 0;color:#e0e9df}
+.privacy-note a{white-space:nowrap}
+.effective-date{font-size:10px;letter-spacing:.3px;margin:22px 0 0;color:#e0e9df}
+.museum-facts{display:grid;grid-template-columns:1fr 2fr;gap:48px;padding:31px 0 36px;border-top:1px solid var(--line)}
+.facts-heading .eyebrow{font-size:10px;color:var(--green)}
+.facts-heading h2{font-size:23px;line-height:1.2;font-weight:400;margin:10px 0 0;letter-spacing:-.4px}
+.facts-list{display:grid;grid-template-columns:repeat(3,1fr);margin:0;align-items:center}
+.facts-list>div{display:flex;flex-direction:column-reverse;padding-left:30px;border-left:1px solid var(--line);gap:10px}
+dt{font-size:13px;color:#56675f}
+dd{font-size:40px;letter-spacing:-1.5px;margin:0;color:var(--green)}
+#site-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);gap:20px;padding:23px 0 26px}
+#site-footer p{margin:0;font-size:13px}
+#site-footer .footer-tagline{font-style:italic;color:#56675f}
+#site-footer nav{gap:24px}
+#site-footer a{font-size:12px;padding:5px 0}
+@media(min-width:1400px){.membership-layout{gap:100px}}
+@media(max-width:900px){.site-header,main,#site-footer{width:calc(100% - 48px)}.membership-layout{gap:32px;grid-template-columns:1fr 1fr}h1{font-size:65px;letter-spacing:-3px}.membership-panel{padding:25px}.museum-facts{gap:25px}.facts-list>div{padding-left:20px}dd{font-size:33px}}
+@media(max-width:650px){.site-header,main,#site-footer{width:calc(100% - 40px)}.site-header{padding:21px 0 0;display:block}.wordmark{font-size:24px}.brand-star{font-size:46px}.wordmark-sub{font-size:12px}.site-header nav{justify-content:space-between;gap:16px;margin-top:20px}.site-header nav a{font-size:14px;padding:12px 0 16px}.membership-layout{grid-template-columns:1fr;gap:33px;padding:34px 0}.introduction>.eyebrow{font-size:10px}h1{font-size:66px;letter-spacing:-3px;margin:23px 0}.intro-copy{font-size:19px;max-width:290px;margin-bottom:24px}.text-link{font-size:15px;gap:24px}.intro-note{margin-top:29px}.membership-panel{padding:25px 23px}.membership-panel h2{font-size:27px}.museum-facts{grid-template-columns:1fr;gap:27px;padding:28px 0 32px}.facts-heading h2 br{display:none}.facts-heading h2{font-size:24px}.facts-list>div{padding-left:13px;gap:9px}.facts-list>div:first-child{padding-left:0;border-left:0}dd{font-size:31px}dt{font-size:12px}#site-footer{flex-wrap:wrap;gap:16px;padding:23px 0}#site-footer .footer-tagline{display:none}#site-footer nav{gap:17px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

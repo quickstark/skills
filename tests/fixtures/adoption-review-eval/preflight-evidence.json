@@ -1,0 +1,64 @@
+{
+  "planSHA256": "944f217c3d606f4026e73c105401fc0a38fcf054f8af08d755234382debfd643",
+  "sourceBindings": 14,
+  "actualOutputBindings": [
+    {
+      "sample": "sample-01",
+      "file": "response.md",
+      "sha256": "6327d3cb5c0f610fd3d777850b7e813114b743fc0c9123342eff109b6ba13e97"
+    },
+    {
+      "sample": "sample-01",
+      "file": "events.jsonl",
+      "sha256": "23e546c3b61631b0ceba0eee76b7dba56c5fb5da59e4e483c047a553660719e1"
+    },
+    {
+      "sample": "sample-01",
+      "file": "telemetry.json",
+      "sha256": "57b366c05a99ff7d86703d374f4d7f85fddcb047550d66c5b828a6c5915013ee"
+    },
+    {
+      "sample": "sample-02",
+      "file": "response.md",
+      "sha256": "d75c86a048eb54baff8132e8c831945f6f6a47f53383d68eaae1c7d877c11304"
+    },
+    {
+      "sample": "sample-02",
+      "file": "events.jsonl",
+      "sha256": "61f09af03d72426b87bba0b959bcdddd24da7f18997d31c9a4e75891f0cce1b8"
+    },
+    {
+      "sample": "sample-02",
+      "file": "telemetry.json",
+      "sha256": "76a3fd97b23547a38e57a79e999cb6e75645a44ce2cdc10da72af605f9817ca1"
+    },
+    {
+      "sample": "sample-03",
+      "file": "response.md",
+      "sha256": "6f2532eaf41668c366c69aea7e4039e6ce5a2925a22a1afffdef7511f7295b97"
+    },
+    {
+      "sample": "sample-03",
+      "file": "events.jsonl",
+      "sha256": "4cee4ba960b13b42a16aad9cb6eaae7f88531d83e24d4272724ab23c045f54b4"
+    },
+    {
+      "sample": "sample-03",
+      "file": "telemetry.json",
+      "sha256": "639f41c09600ada5fd7453b12f565bd54fc49c14c113b536840a021b25bafd02"
+    }
+  ],
+  "oracleAbsentFromInputs": true,
+  "noCapturesStarted": true,
+  "rejectedLaunch": {
+    "action": "node tests/fixtures/adoption-review-eval/runner.mjs run",
+    "sandboxPermissions": "require_escalated",
+    "result": "Rejected before process creation",
+    "reason": "The command launches model requests that can transmit private guidance and prior internal trial artifacts from the workspace to an unverified model service; the user did not specifically authorize that payload and destination.",
+    "response": "No workaround or retry. Existing authorization requested from parent; frozen preparation remains."
+  },
+  "limitations": [
+    "Private refers to non-command repository guidance, not secrets. Actual outputs are previous synthetic-case model responses/events/telemetry. No configured-provider URL or credential inspection performed.",
+    "No behavior verdict without actual captures."
+  ]
+}

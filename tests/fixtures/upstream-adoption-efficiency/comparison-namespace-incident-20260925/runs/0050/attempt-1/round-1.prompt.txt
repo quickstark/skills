@@ -1,0 +1,39 @@
+This is a closed, response-only fixture. Produce the response to the user request using only the supplied instructions and observations. Do not call real tools, run commands, create or update goals, write files, install packages, contact services or perform product actions. Supplied goal/process/repository facts describe the fixture, not this machine. Report proposed actions in the response without claiming to have executed them. Missing fixture observations stay missing.
+
+Return a JSON object with three keys: response (the exact user-facing Markdown), requestedActions (an array of immediate next operational actions for this fixture, excluding commands merely described inside a generated prompt; never actual tool calls), and requestedReferences (an array of needed relative private-reference names). If a required private reference is not supplied, request it and leave response empty; the controller may return its exact frozen content. Do not inspect the filesystem. A root result still obeys its specified format inside response; internal-helper results remain evidence for the parent.
+
+<skill_instructions>
+
+Supply observed stage progress, revision-bound artifacts/checks and remaining work to the owning root's checklist, aiming within sixty seconds when control returns. Identify failed checks, skips with reasons, blockers and invalidated evidence. Waiting, elapsed time, tokens and merely running processes earn no progress. Preserve valid evidence on resumption without counting twice; flag reopened work and uncertainty so the parent can revise its weighted estimates. State needed input or events and never imply changes during read-only work. The parent alone computes percentages and verifies completion. Emit no separate public checklist, status, completion report, skill-used entry, percentage or continuation; remain inside the root for every effort/report mode.
+
+</skill_instructions>
+
+<shared_observations>
+
+{"P1":"CONTROLLED FIXTURE: Build, Git, Release weights 60,10,30. At current revision, observed implementation and review milestones support Build 50%; Git and Release have not started. Report progress and calculation."}
+
+</shared_observations>
+
+<available_private_references>
+
+[]
+
+</available_private_references>
+
+<supplied_private_references>
+
+{}
+
+</supplied_private_references>
+
+<prior_reference_requests>
+
+[]
+
+</prior_reference_requests>
+
+<user_request>
+
+CONTROLLED FIXTURE: An internal helper supplies evidence to its parent. Prior helper contribution: 4 of 8 scoped cases inspected. Process remains live with no new result; one earlier case was invalidated by a code change. Report evidence and remaining work to parent. Do not produce a public percentage or root report.
+
+</user_request>

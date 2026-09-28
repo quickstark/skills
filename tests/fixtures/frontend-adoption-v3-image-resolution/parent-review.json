@@ -1,0 +1,12 @@
+{
+  "scope": "Parent verification of native image size diagnosis, not adoption or retrospective repair",
+  "bindings": {
+    "README.md": "7e882be771e3702ba96a7aa28c9888ad3d67a8df6bf8ae64efff2d53a1b54ca1",
+    "observed-images.json": "43831d02b1676c60b54df2b0ae6bebb5cc1f1da1ea0a59604984a31813a6d78b",
+    "verify.py": "911fc4e060c7fd943576c464f8c6c902354834f1cd49bf3d186a61be10a5feff",
+    "source-provenance.json": "54b7b1da6ac7aff57b7e2aaec09fc3ca217e01a602e8950eb508c1d0a72879ca"
+  },
+  "reverification": "Read verifier and source argument/request/save paths, reran leaf65:G1: all12 original nativePNG bytes equal saved/archive/export, all12 requested1179x2556 andmissedtarget.",
+  "finding": "Exactmatchingrelease exposes prompt/referencefields only and hardcodes size:auto for generate/edit. No numeric-size selection exists in this tool. Provider-wide limits and prompt influence remain unknown.",
+  "decision": "Preserve all original failures. Any supported-native-resolution workflow must be a separately declared compatibility case, never a regrade or pooled repair of frozen F09. Exact-size generation remains unqualified in this interface."
+}

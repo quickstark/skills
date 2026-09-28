@@ -1,0 +1,92 @@
+{
+  "kind": "source-decision-evidence-bindings",
+  "entries": [
+    {
+      "path": "docs/specs/quickstark-upstream-adoption-font-amendment.md",
+      "sha256": "456821cee367a135236a47379a8df002e9d8a6b51e7e3974bbf8ba38b8fc720b",
+      "bytes": 2414,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+      "sha256": "943f4d82e53472ccb74ce3e9191145a9d25d26ce8362a2fb8bfc3ba367df91b1",
+      "bytes": 1114,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "skills/video/qs-video/references/runtime-compatibility.md",
+      "sha256": "82436dce157e2d8db0c393da0afb5995ba7597399c9e33d00fdc5ade924d0742",
+      "bytes": 6378,
+      "role": "existing-record-or-input",
+      "initialObservedSha256": "8c12e3b39d2eb8cd1e8cb243c568cbc157c1d1af34c500f2b001c5528f828699",
+      "initialObservedBytes": 6289,
+      "amendment": "Parent replaced inactive-candidate wording with selected bounded adaptation; installed exposure still requires acceptance and migration. No measured runtime guarantee changed."
+    },
+    {
+      "path": "tests/execution-candidate.test.mjs",
+      "sha256": "d05a28f4ac2054cf5784d48f675a090a1f93ee5067c6f3632ea215ff807d5421",
+      "bytes": 7556,
+      "role": "test-source-not-new-execution"
+    },
+    {
+      "path": "tests/fixtures/adoption-behavior-review/current-01-review.json",
+      "sha256": "f5940386608b15e3b17684834b5870a93c37865ef6a85f6c1a981fbbd589c716",
+      "bytes": 86578,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+      "sha256": "a113901001164d3c4c849130b5d9660cd26194a5f0f0b461e43553f67b5d1347",
+      "bytes": 903,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log",
+      "sha256": "2dde78908d611a30344bdfbfc2f9928cc6506b13e09d55a8808f554963b0f929",
+      "bytes": 509,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/adoption-review-eval/parent/review.json",
+      "sha256": "cc615f36d397cf73d0a97ac8084f5546aa8d5f8d91eb2ec71627ca6e8a2ff56e",
+      "bytes": 1310,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/adoption-video-native-results/parent-review.json",
+      "sha256": "ea88a1d23439eb2ad3c84ef2daf29a633ae684f9d458123e6cf889b72d914bbe",
+      "bytes": 1654,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+      "sha256": "003c7c52ee3b889a03f52a5e84a7f3979a27a0ce6fae0b042f59a43ff2e4e8d2",
+      "bytes": 47335,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+      "sha256": "5072d44771dc051dc4edcd6751b814e0aa2d9881eec0b8234ab2a9ea3d50e7f2",
+      "bytes": 39106,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+      "sha256": "4b87f9d5643a4a74701f4bfa33949155167252a0148c03bfaa7ce03b37171453",
+      "bytes": 4372,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+      "sha256": "4a0a069c564ff24fdf4c1766b31dd8e14a1afd2972f5e0a19f39265af7255967",
+      "bytes": 559,
+      "role": "existing-record-or-input"
+    },
+    {
+      "path": "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+      "sha256": "e227d3ea7626cbe59eddb0d6de1cb8580d7e6b28534e1eb6588948671b964990",
+      "bytes": 2147,
+      "role": "existing-record-or-input"
+    }
+  ]
+}

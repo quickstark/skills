@@ -12,7 +12,7 @@ Use when a verified lesson is stable, repeatable, and enforceable at a repositor
 
 1. Name the failure the structure must prevent.
 2. Choose the smallest enforceable seam: schema, validation, fixture, generator, or test.
-3. Demonstrate that the seam rejects the known violation.
+3. Derive expected behavior independently of the implementation and demonstrate that the seam rejects the known violation. Use a known-bad control when a tautological check could otherwise pass; retain valid absence, configuration, and contract checks instead of banning test shapes.
 4. Keep policy text aligned with the executable constraint.
 
 ## Stop conditions

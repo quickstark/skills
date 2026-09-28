@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#086b64">
+  <meta name="description" content="Make room for wonder with Northstar Museum Family membership. Unlimited entry for two adults and children under 18 for $100 a year.">
+  <title>Membership · Northstar Museum</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header wrap">
+    <a class="brand" href="/" aria-label="Northstar Museum home"><span class="brand-mark" aria-hidden="true">✳</span><span>Northstar<br>Museum</span></a>
+    <nav aria-label="Main navigation">
+      <a href="/visit">Visit</a>
+      <a href="/collections">Collections</a>
+      <a href="/membership" aria-current="page">Membership</a>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="introduction" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow"><span class="small-star" aria-hidden="true">✳</span> A place for your curiosity</p>
+        <h1 id="page-title">Make room<br>for <em>wonder.</em></h1>
+      </div>
+      <div class="intro-note">
+        <p>Family membership keeps<br class="desktop-break"> discovery close to home.</p>
+        <a id="details-link" class="text-link" href="/membership/family">Explore Family membership <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section id="membership-panel" class="membership-panel" aria-labelledby="membership-title">
+      <div class="plan">
+        <div class="plan-top"><p class="eyebrow">Your year of discovery</p><span aria-hidden="true">01 /</span></div>
+        <h2 id="membership-title">Family membership</h2>
+        <p id="price" class="price">$100 <span>/ year</span></p>
+        <p class="benefit">Unlimited entry for two adults and children under 18.</p>
+        <p class="effective">Pricing effective January 1, 2025</p>
+      </div>
+      <div class="join">
+        <p class="eyebrow">Come curious. Come together.</p>
+        <h2>Let the discovery begin.</h2>
+        <form id="join-form" action="/join/checkout?plan=family" method="get">
+          <input type="hidden" name="plan" value="family">
+          <label for="member-email">Email address</label>
+          <div class="form-row">
+            <input id="member-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="privacy-note">
+            <button id="join-button" type="submit">Join the family <span aria-hidden="true">→</span></button>
+          </div>
+          <p id="privacy-note" class="privacy-note">Your next chapter starts here. <a href="/privacy">Privacy policy</a></p>
+          <p id="form-message" class="form-message" role="status" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="museum-facts" aria-labelledby="facts-title">
+      <div class="facts-intro"><p class="eyebrow">A shared curiosity</p><h2 id="facts-title">Your museum.<br> Our community.</h2></div>
+      <dl class="facts-grid">
+        <div><dt>Members</dt><dd id="member-count">10,000</dd></div>
+        <div><dt>Annual visits</dt><dd id="annual-visits">50,000</dd></div>
+        <div><dt>Founded</dt><dd id="founded">2020</dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer wrap">
+    <p>Northstar Museum <span aria-hidden="true">·</span> Stay curious.</p>
+    <nav aria-label="Footer navigation"><a href="/privacy">Privacy</a><a href="/accessibility">Accessibility</a><a href="#site-header">Back to top <span aria-hidden="true">↑</span></a></nav>
+  </footer>
+</body>
+</html>

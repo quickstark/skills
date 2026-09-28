@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:38:16.476Z",
+  "elapsedMs": 22317.642492999992,
+  "wallElapsedMs": 22317,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "fc9bac15162c5a34dd6fa9a768b7c3b90ef9ae9c1a0c9a176418f70adef16fc9",
+  "promptUtf8Bytes": 9398,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25746,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 560,
+      "reasoning_output_tokens": 156
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "3f7b4a2badd00246149d03b66fdeeb5c6b2e73d36a7ea4f2cdcaa6b7c8ea68c9",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-RSLrUS",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-code-build\\nOutcome: Build is ~50% complete; the overall staging-delivery goal is ~30% complete, based on supplied observations.\\n\\n- [ ] Build — blocked before further execution; ~50%, weight 60. Observed implementation and review milestones support this estimate.\\n- [ ] Git — pending; 0%, weight 10.\\n- [ ] Release — pending; 0%, weight 30.\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — progress retained; host goal-tool availability and matching goal state are not supplied. Input needed: verified goal-tool availability and authoritative matching goal state before execution resumes.\\n\\nCalculation: **(60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%**. Weights remain unchanged. These are coarse milestone estimates, not completion evidence.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — Progress calculation from supplied current-revision observations. No actions were executed or artifacts produced in this response. Final CSV, existing-screen, and diff-review check results are not supplied.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — verify matching goal state, then finish implementation and required validation. Git publication and staging deployment remain scheduled after their prerequisite gates pass. No deployed version or health evidence is supplied.\\n\\nNext work prompt: None — subsequent stages are already scheduled by the authorized workflow.\",\n  \"requestedActions\": [\n    \"Verify host goal-tool availability and inspect authoritative state with get_goal before further execution; create_goal only if no matching goal exists and doing so would not replace an unrelated active goal.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

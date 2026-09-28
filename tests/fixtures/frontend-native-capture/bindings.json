@@ -1,0 +1,63 @@
+{
+  "cliVersion": "0.153.4",
+  "executable": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+  "executableSHA256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "officialTag": "rust-v0.153.4",
+  "resolvedCommit": "3d2ee51ca2d5db578f328aa75e20aa22c0197c9a",
+  "sourceBindingLimit": "Matching official release source and installed executable hash; not a reproducible-build attestation.",
+  "sources": [
+    {
+      "path": "source/exec-cli.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/exec/src/cli.rs",
+      "sha256": "ba4767bdf5d83376830864b60a8a5e350e5e189fbc6e97a834d4a7f36240e822"
+    },
+    {
+      "path": "source/exec-lib.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/exec/src/lib.rs",
+      "sha256": "7497f8b5971cf4a10d237c34a10f39ffd1b51c99cf3e2f161f2bfa25f8e353df"
+    },
+    {
+      "path": "source/exec-json-mapper.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/exec/src/event_processor_with_jsonl_output.rs",
+      "sha256": "2f71fbf8a1b0a79bd342ed3c9caa414f1c5e06d9e52d6a94461799f304a9f255"
+    },
+    {
+      "path": "source/session.rs",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/codex-rs/core/src/session/session.rs",
+      "sha256": "b84a57c59c7db19c5e91a0b08281bb564c2edad77a2403ae167639587d9f521c"
+    },
+    {
+      "path": "source/LICENSE",
+      "url": "https://raw.githubusercontent.com/openai/codex/3d2ee51ca2d5db578f328aa75e20aa22c0197c9a/LICENSE",
+      "sha256": "d17f227e4df5da1600391338865ce0f3055211760a36688f816941d58232d8dc"
+    }
+  ],
+  "generatedSchemaSource": "/tmp/qs-frontend-invocation-schema generated previously by this exact installed CLI",
+  "schemaHashes": {
+    "protocol/InitializeParams.json": "6f0094be9a65242ec779a40794cbd4fdfa32fca1e45084a16adfb50501d33ea2",
+    "protocol/ItemCompletedNotification.json": "69aba3fe5f72f38bf5c541e7e2c09de40778abe65ff969d9fc73372037812091",
+    "protocol/ServerNotification.json": "b3e76cf11842f3e8b3270c05e000212b56eabafb0152fc38e8f920e2ef902991",
+    "protocol/ServerRequest.json": "31f580ad468fbd18766eb7adb12744be4e3790e3357b58bd4413c0108c4f65d0",
+    "protocol/ThreadStartParams.json": "792e2f32e37cece971bd616664ea2053741acbed4e9c92e9d1766427718f2ecd",
+    "protocol/ThreadStartResponse.json": "656f8fd0fe91f533126cbfdb9369cfab550927a229e48dd46460f6f015d2b186",
+    "protocol/ThreadTokenUsageUpdatedNotification.json": "aba4f6c7e4a19b2b842c08ee793b57000c07dafd57b922ad0d8e7c76609108c2",
+    "protocol/TurnStartParams.json": "a3835e8c1e942e4b358e1a670939b89918b16c4d13105a579899892b7ade6dea",
+    "protocol/TurnStartResponse.json": "6fc49c3e5d0ce11a3a109ae194619b04d6e3ff98fa29bac683fdb754608958be"
+  },
+  "successfulReadiness": "readiness/inherited-reviewer-success",
+  "readinessControls": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "modelCalls": 0,
+  "finalAdapterSHA256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+  "processHelperSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+  "testsSHA256": "507e93f1d516766a1e26ac0d83d92a126f5accc1a3353e4640b5368a44b62375",
+  "mockSHA256": "07fa5ee167d71b5e3f5c585e297438169e4671da5b39405e5f3a58f09b7f7965",
+  "readinessObservedAdapterSHA256": "21ded7ff83875a9718f7b32573f8a271694fc9dab53e470eb477277b1afd8403",
+  "postReadinessAdapterChange": "Added cache_write_input_tokens mapping and explicit current-schema item dispositions; initialization/control behavior unchanged.",
+  "transcriptTestsSHA256": "adca32f7605bedbef616fe59a9ce615a516e0c544e05491eeba2c55063807d5d"
+}

@@ -16,18 +16,23 @@ export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-export function renderSkillOutputContract(skill) {
-  const registered = PUBLIC_COMMANDS_BY_NAME.get(skill.name) ?? skill;
+export function renderSkillOutputContract(skill, { commandsByName = PUBLIC_COMMANDS_BY_NAME } = {}) {
+  const registered = commandsByName.get(skill.name) ?? skill;
   const routes = registered.continuation.normal;
   const failureRoutes = registered.continuation.failure;
   const continuations = routes.map((item) => item.name);
   const failureContinuations = failureRoutes.map((item) => item.name);
   const terminal = routes.length === 0 && failureRoutes.length === 0;
   const allRoutes = [...new Map([...routes, ...failureRoutes].map((item) => [item.name, item])).values()];
-  const codexLiterals = allRoutes.map((item) => codexPublicSkillLiteral(item.name));
-  const piLiterals = allRoutes.map((item) => piPublicSkillLiteral(item.name));
+  const codexLiterals = allRoutes.map((item) => {
+    const command = commandsByName.get(item.name);
+    if (!command) throw new Error(`Unknown continuation: ${item.name}.`);
+    return command.codexLiteral;
+  });
+  const piLiterals = allRoutes.map((item) => `/skill:${item.name}`);
   const reportsSpecProgress = registered.resultContext?.specProgress === true;
   const goalPrompt = registered.outputKind === "goal-workflow-prompt";
+  const primaryHelp = registered.primaryRouting?.kind === "available-public-command";
   return [
     SKILL_OUTPUT_HEADING,
     "",
@@ -49,6 +54,8 @@ export function renderSkillOutputContract(skill) {
     "",
     terminal
       ? "Do not invent a follow-on workflow after release. State any release failure in this result."
+      : primaryHelp
+        ? `Primary Help routing may select any actually available registered public root. Read [${registered.primaryRouting.referenceFile}](${registered.primaryRouting.referenceFile}) for registry-generated descriptions and exact Codex/Claude/Pi literals; verify the selected literal in the active host before emitting it. This primary recommendation is separate from ordinary continuation eligibility. Ordinary continuation routes: ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Emit at most one prompt overall and never execute the selected root or install a missing package. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`
       : `Eligible next routes: ${continuations.map((name) => `\`/${name}\``).join(", ") || "None — primary deliverable is the goal prompt"}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`,
     "",
     "Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.",
@@ -76,6 +83,8 @@ export function renderSkillOutputContract(skill) {
       ? `Always write \`Next work prompt:\`. On success, write exactly one fenced \`text\` block containing the execution prompt under Next work prompt: beginning with the instruction to establish or resume the scoped goal before mutations. Include exact selected skill literals, scope, evidence, authorization, stage checks and deployment evidence. This is the primary deliverable, not an ordinary continuation; emit no second prompt. State: Prompt generated; execution has not started. On missing material inputs, use Input required and do not emit an executable deployment prompt; at most one eligible recovery prompt is allowed (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Do not replace the fenced block with inline prose. Name the exact verified ticket, specification, issue, or grouped work item.`
       : terminal
       ? "Never add a speculative prompt merely to keep the workflow moving."
+      : primaryHelp
+        ? `Always write \`Next work prompt:\`. For one verified actionable request and an available primary destination, put exactly one fenced \`text\` block beneath it beginning with the destination's exact installed literal from [${registered.primaryRouting.referenceFile}](${registered.primaryRouting.referenceFile}). Name the requested work and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. A missing or unverified destination produces Input required with its precise package/discovery prerequisite and no executable prompt for that destination; do not claim no follow-on is needed. When there is no verified remaining actionable work, write \`Next work prompt: None — no follow-on needed.\` Ordinary continuation literals also require verified availability: Codex ${codexLiterals.join(", ")}; Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`
       : `Always write \`Next work prompt:\`. When a distinct verified actionable item exists, put one fenced \`text\` block beneath it beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. ${reportsSpecProgress ? "When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. " : ""}Only when no eligible actionable item remains, write \`Next work prompt: None — no follow-on needed.\` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
   ].join("\n");
 }
@@ -89,6 +98,7 @@ export function renderDocumentationOutputContract(skill) {
   const terminal = routes.length === 0 && failureRoutes.length === 0;
   const reportsSpecProgress = registered.resultContext?.specProgress === true;
   const goalPrompt = registered.outputKind === "goal-workflow-prompt";
+  const primaryHelp = registered.primaryRouting?.kind === "available-public-command";
   return [
     DOCUMENTATION_OUTPUT_HEADING,
     "",
@@ -102,6 +112,8 @@ export function renderDocumentationOutputContract(skill) {
       ? "The release command has no catalog-approved continuation."
       : goalPrompt
         ? `The primary output is one goal execution prompt. Failure routes are ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}; missing prerequisites prevent execution-ready output.`
+      : primaryHelp
+        ? `Primary Help routing may select any registered public root whose exact literal is verified in the active host. Generated private routing metadata supplies descriptions and Codex/Claude/Pi literals without importing public skill bodies. Missing availability produces a package/discovery prerequisite, not an executable prompt or automatic installation. Ordinary continuations remain ${continuations.map((name) => `\`/${name}\``).join(", ")}; failure routes remain ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Choose at most one prompt overall and never execute the selected root.`
       : `Eligible normal routes are ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes are ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select at most one route that owns verified unfinished work.`,
     "",
     ...(reportsSpecProgress ? [
@@ -112,6 +124,24 @@ export function renderDocumentationOutputContract(skill) {
     "",
     ...(goalPrompt ? ["Successful generation produces exactly one self-contained goal execution prompt, beginning with goal establishment before mutations. It does not start a goal or deploy. Missing material inputs prevent execution-ready output; submission authorizes only the named sequence and operations within host controls.", ""] : []),
     "Every result receives the same internal clear-writing pass before presentation and stays in the current conversation. See [the shared skill-run contract](../skill-run-contract.md).",
+  ].join("\n");
+}
+
+export function renderHelpRoutingReference(commands = PUBLIC_COMMANDS) {
+  const cell = (value) => String(value).replace(/\|/g, "\\|").replace(/[\r\n]+/g, " ");
+  return [
+    "# QuickStark primary routing metadata",
+    "",
+    "Generated from the collection registry. This is a private reference, not a command or proof of installation.",
+    "",
+    "Use inside qs-help only when choosing its primary recommendation. Match the requested outcome, then verify the exact destination literal in the active host's available-command catalog. Package configuration alone is insufficient: disabled, stale or undiscoverable commands are unavailable. For an unavailable destination, report its owning package and the missing discovery/installation prerequisite without emitting its executable prompt. Do not install, enable or execute it automatically. Never import another public skill body to route.",
+    "",
+    "Select one route and one copy-ready prompt at most. A primary Help recommendation may use any verified available row below; ordinary continuation restrictions for other roots remain unchanged. Codex uses the Codex column, Claude the Claude column, and Pi the Pi column. Unrelated vendor commands and unknown names are outside this registry.",
+    "",
+    "| Command | Package | Outcome | Codex | Claude | Pi |",
+    "| --- | --- | --- | --- | --- | --- |",
+    ...commands.map((command) => `| ${cell(command.name)} | ${cell(command.collectionId)} | ${cell(command.shortDescription)} | \`${command.codexLiteral}\` | \`${command.claudeLiteral}\` | \`/skill:${command.name}\` |`),
+    "",
   ].join("\n");
 }
 
@@ -149,6 +179,20 @@ export async function syncSkillOutputContracts({ check = false } = {}) {
     if (documentation !== expectedDocumentation) {
       if (check) throw new Error(`Output documentation is out of date: ${skill.name}.md.`);
       await writeFile(documentationPath, expectedDocumentation);
+      updated += 1;
+    }
+  }
+  const help = PUBLIC_COMMANDS_BY_NAME.get("qs-help");
+  if (help?.primaryRouting) {
+    const referencePath = join(repositoryRoot, help.sourcePath ?? `skills/${help.bucket}/${help.name}`, help.primaryRouting.referenceFile);
+    const expectedReference = renderHelpRoutingReference();
+    const currentReference = await readFile(referencePath, "utf8").catch((error) => {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    });
+    if (currentReference !== expectedReference) {
+      if (check) throw new Error("Primary Help routing metadata is out of date: qs-help/ROUTING.md.");
+      await writeFile(referencePath, expectedReference);
       updated += 1;
     }
   }

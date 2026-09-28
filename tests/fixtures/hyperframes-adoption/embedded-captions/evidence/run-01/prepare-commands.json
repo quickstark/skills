@@ -1,0 +1,48 @@
+[
+  {
+    "label": "relocated-closure",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/scripts/verify-closure.mjs",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "missing-model",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/modules/embedded-captions/scripts/matte.cjs",
+      "/tmp/qs-embedded-caption/run-01/missing-model-project"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "missing-optional",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/modules/embedded-captions/scripts/matte.cjs",
+      "/tmp/qs-embedded-caption/run-01/missing-optional-project"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "real-preflight",
+    "argv": [
+      "node",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/scripts/caption-runtime.cjs",
+      "preflight-matte",
+      "/tmp/qs-embedded-caption/run-01/project"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "prepare",
+    "argv": [
+      "bash",
+      "/tmp/qs-embedded-caption/run-01/relocated-skill/modules/embedded-captions/scripts/prepare.sh",
+      "/tmp/qs-embedded-caption/run-01/project"
+    ],
+    "exit": 0
+  }
+]

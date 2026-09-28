@@ -16,6 +16,8 @@ Observable trial inputs, outputs, and checks are sufficient evidence. Transcript
 
 Do not switch models secretly, claim performance without measurements, retry failures away, or change unrelated skill sources. Store only bounded evaluation fixtures and results.
 
+Use natural task prompts and neutral labels and working paths; withhold the scoring rubric and preferred-variant identity from candidates. Score all variants on the same scale, with labels blinded to the evaluator. Keep model/variant identities and revealing source paths out of those labels; retain the true identities in the trial record. Record source revision or content hash, model/host configuration, sample count, sample definition, execution order, and actual inputs/outputs for every trial. Reject or explicitly disclose leaked identities, mismatched configurations, and unavailable controls; they cannot support a controlled superiority claim. The root inspects every completed output and records missing or failed candidates as gaps. Require repeated matched trials before claiming efficacy; separate instruction/token cost from task quality.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

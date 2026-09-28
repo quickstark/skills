@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-868dd3795cd8d8e2",
+  "scenarioId": "F07",
+  "reviewer": "adoption_a_ps independent F07-F08 review",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-868dd3795cd8d8e2",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "65c2f0a7163bd19816a1f7b2d78960f82533671f47ffb516b32305b0c9eec7b2",
+      "bytes": 1212
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/artifacts/after-1280-reduced.png": {
+      "sha256": "976dfc69bcf8c119692a844de021f0f3364903bc8b338bc72de28a80ca71ee85",
+      "bytes": 87143
+    },
+    "actual-artifacts/artifacts/after-390-reduced.png": {
+      "sha256": "9833a220131cf0f74722e4878532004219303d37adb8af253eae0e0abc67783d",
+      "bytes": 85356
+    },
+    "actual-artifacts/artifacts/app.before.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/artifacts/before-1280-reduced.png": {
+      "sha256": "def17b5ec3ab7942ade19788bcc268f761c66f007ca4fe6c6bca847199d02b33",
+      "bytes": 89227
+    },
+    "actual-artifacts/artifacts/before-390-reduced.png": {
+      "sha256": "42b0bb5fb800ee1ce4ddb2b338b52c50ad6a1ef65a0c9cea577880b7c8cc202b",
+      "bytes": 87449
+    },
+    "actual-artifacts/artifacts/browser-observations.json": {
+      "sha256": "6b83bf74e94e56acc7fa3da50aaa3a9cde78cc0af364138d876da5180dd832f4",
+      "bytes": 32822
+    },
+    "actual-artifacts/artifacts/index.before.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "actual-artifacts/artifacts/style.before.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "actual-artifacts/artifacts/verify.cjs": {
+      "sha256": "500aec8d0700e1a6bfebcc1262cc3c71afa4540236c91137f34f1e29ac9bdb5e",
+      "bytes": 5272
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "dbe0329608c55af003ae371a2854a4409bfaa7a094019cc4ca538fcf45e8c0b0",
+      "bytes": 1330
+    },
+    "browser/narrow.png": {
+      "sha256": "42b0bb5fb800ee1ce4ddb2b338b52c50ad6a1ef65a0c9cea577880b7c8cc202b",
+      "bytes": 87449
+    },
+    "browser/observations.json": {
+      "sha256": "a5c11475638c6003cc25f57d2f8503460e22da2a2abc2bf1c4d5329ea5416a3d",
+      "bytes": 20739
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "9a3075214303fd46271f1881bb7ce995282af39eedfa1c53eba6bd9b60939c01",
+      "bytes": 9032
+    },
+    "browser/wide.png": {
+      "sha256": "0782c5254bbc94d037864bee5f91df9bdeca01a926dd15149844442767dbc4e0",
+      "bytes": 89212
+    },
+    "context.json": {
+      "sha256": "698c169b9b13821888e3e9e793ae6f4e89306c19bab256623c509e6336db0629",
+      "bytes": 10949
+    },
+    "events.jsonl": {
+      "sha256": "d77e0b4961d7c5062641a6274eb6cac085f4aa57ec7c66f37824569b5a921c3b",
+      "bytes": 262649
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "f6c2ea4070c0957c3b6792e7c37d1fff47874399a518f3a96dee6b269f073a43",
+      "bytes": 1728
+    },
+    "response.md": {
+      "sha256": "66d74c951cf3722fb32a5fc23d24147474f4216d51de02d19e617c5fa4291ef5",
+      "bytes": 1108
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "a5b52c054fb1725aefdc3160d1737c26cec86d079670b5fdc8decc9fa78c6ad4",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "All bundle file SHA/size bound. HTML/JS exactly unchanged; complete HTTP observer source/copy before/after digests equal, no failure. Native stream complete, no protocol/guard violations or observed owned residual processes.",
+  "checks": [
+    {
+      "id": "reduced-motion-animation-off",
+      "result": "pass",
+      "rationale": "The complete artifacts/verify.cjs helper compares before/after at both widths, asserts reduce none/0, normal gentle-pulse and live return to0. Line144 succeeds; independent reducedMotion has no animated/hidden elements."
+    },
+    {
+      "id": "content-remains-visible",
+      "result": "pass",
+      "rationale": "Actual uniform wide/narrow images opened. Static content remains visible; 390px viewport retains inherited960px overflow, explicitly outside this motion-only task."
+    },
+    {
+      "id": "no-broad-redesign",
+      "result": "pass",
+      "rationale": "Only product change is the pulse reduced-motion CSS override. HTML/JS equal input exactly; facts, routes, controls and layout preserved."
+    },
+    {
+      "id": "analytics-and-form-preserved",
+      "result": "pass",
+      "rationale": "Executed helper asserts empty/invalid blocked, valid click exact join_started/family and required feedback. HTML and app.js unchanged; no new keyboard functionality is claimed. Uniform keyboard observer cannot Tab to original div-button; preserved limitation is distinct from email-focused Enter or click."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "8 commands,2 file changes and2 image views reviewed. Local snapshots and verifier use installed browser, block non-file requests and close pages/browser. No provider/generation/install/publication operation."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Precisely repairs the requested pulse while preserving product facts/content.",
+    "visual-hierarchy-and-readability": "Actual images preserve existing hierarchy and static readability. Inherited narrow overflow remains; score concerns bounded motion repair, not responsive redesign.",
+    "interaction-or-screen-flow-clarity": "Form behavior retained with observed validation and exact local analytics. Inherited nonfocusable div-button remains outside this task.",
+    "brand-and-platform-consistency": "Original Georgia and exact brand tokens remain; platform reduced-motion preference now works.",
+    "scope-and-evidence-honesty": "Helper/source invariants, successful actual runtime result and independent observations support the bounded claims. Response explicitly preserves existing mobile overflow. All observed tool results succeed."
+  },
+  "blindingLimits": [
+    "Only opaque bundle, fixed task/rubric and original input project inspected; no operator mapping, source instruction bodies or other reviewer grades.",
+    "Guidance result bodies suppressed; incidental workspace links and response workflow conventions remain visible. No variant inference made."
+  ],
+  "overall": "pass",
+  "floorDecision": "All F07 checks pass and applicable dimensions meet floor3 within explicit motion-only scope.",
+  "rationale": "Targeted CSS repair supported by actual motion/form observations; inherited narrow and keyboard defects remain explicitly limited.",
+  "screenshotsOpened": [
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-868dd3795cd8d8e2/browser/wide.png",
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-868dd3795cd8d8e2/browser/narrow.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed tool IDs; native duplicates/deltas are not extra calls.",
+    "classifiedItems": [
+      {
+        "id": "exec-994a64da-c57e-487d-a736-e474012ba589",
+        "eventLine": 53,
+        "type": "command_execution",
+        "itemSha256": "b03d0451857a9dac7e9c883a9e8fa196e6d9d2367b8ed985c3e2daa0f79f68ab",
+        "classification": "Exact guidance read; body suppressed",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2f85b477-ef04-4000-9cb1-94b88643cef3",
+        "eventLine": 58,
+        "type": "command_execution",
+        "itemSha256": "22cb4ccbf5772f49d04689b97c388c70ab2a1a74d9f43ff26bf55a8ca88cca43",
+        "classification": "Local inventory",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-100c2050-456b-47e8-85fc-3692435af324",
+        "eventLine": 65,
+        "type": "command_execution",
+        "itemSha256": "0a67142a8787ff788b46f111ea2f838a57fc79716fec0e94820cc7b90151f916",
+        "classification": "Read HTML",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-5e3c05f1-2f7f-4fec-a0de-e871033a30a5",
+        "eventLine": 68,
+        "type": "command_execution",
+        "itemSha256": "a1e41da673bf4826ef890b7a5d80eff713dea08992fcf3898e823a615e6332c6",
+        "classification": "Read CSS",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-821509c9-2cae-4145-a4ab-7533f305f31f",
+        "eventLine": 69,
+        "type": "command_execution",
+        "itemSha256": "52198872a465120c41dd12a2d2eb22e028ef184649bca080220a7d9a2377e346",
+        "classification": "Read app JS",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-58a28ed9-80ea-4a50-b239-bf1a87a889ef",
+        "eventLine": 122,
+        "type": "command_execution",
+        "itemSha256": "c16d853891e0115ca4ae4ef0506379dedfd20e3ccdc1472f83495ce96422ff8f",
+        "classification": "Copy baseline product files into local evidence",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-8f07858f-cf69-4a1c-bb47-987687a5c0da",
+        "eventLine": 124,
+        "type": "file_change",
+        "itemSha256": "5395a9c2a3b561b13264185a7b45ece624b5c712a22546afd1e10d1991c6e252",
+        "classification": "Targeted reduced-motion CSS patch",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-95957dd6-d148-4c2a-aee1-049e09c22f83",
+        "eventLine": 133,
+        "type": "command_execution",
+        "itemSha256": "bfeee432b0a4619479bdd13e879a4258692aed5c639be3a7a18868fa05b9d9c9",
+        "classification": "Read CSS",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2cd3e5aa-82b1-4c7f-8ce5-28b8c8e51099",
+        "eventLine": 140,
+        "type": "file_change",
+        "itemSha256": "1638863852d2ce3de53ae9740bd76183a57d59ce05dbecf26d72ff3320ae9c6d",
+        "classification": "Write local verification helper; full body reviewed",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-dc7dc5fb-2edf-48f6-8245-f2feaa3780f5",
+        "eventLine": 144,
+        "type": "command_execution",
+        "itemSha256": "bb3e306507b9488ddbba07e5e6b3d48cef973dc09aa22d0610249fe823477469",
+        "classification": "Execute local browser verifier; successful",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-76f5a350-595f-454f-b098-d031948b09d2",
+        "eventLine": 201,
+        "type": "image_view",
+        "itemSha256": "f6936c9b829d2fb37645a1ab27d23a5758e4b2fffa5e09974c1b307d838636c6",
+        "classification": "View actual wide screenshot",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-fa51fcd4-ef09-4a2b-bdd0-1d7e23997f74",
+        "eventLine": 203,
+        "type": "image_view",
+        "itemSha256": "d610f0a0fbeb773c9f50ac053b10764ae2acd9dbe5284ac39adb0f71e8121387",
+        "classification": "View actual narrow screenshot",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Every listed action/helper and non-guidance result was inspected without execution/rerender. No semantic absence is inferred from native named count alone. Process evidence covers observed owned PIDs only."
+  },
+  "passes": [
+    "Read exact task/common facts and fixed rubric without source/operator mapping or other reviewer scores.",
+    "Inspect input/output files, complete tool actions/helper bodies and non-guidance runtime results, retaining failures.",
+    "Open actual wide/narrow images and reconcile visual findings with independent uniform HTTP observations and task-specific evidence.",
+    "Bind exact files/items/rubric; record original judgments and inherited/evidence limitations without comparison or adoption."
+  ]
+}

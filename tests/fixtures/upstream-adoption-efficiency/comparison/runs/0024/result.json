@@ -1,0 +1,49 @@
+{
+  "kind": "reconstructed-ungraded-matched-run",
+  "run": {
+    "run": 24,
+    "scenarioId": "E6",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "inputSHA256": "1d6d6c0bcea003f5dc16efcb369611f6ec646da4e26b0da2bedf529d09366877",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "selectedAttempt": 1,
+  "attempts": [
+    {
+      "path": "comparison/runs/0024/attempt-1",
+      "failure": "Interrupted attempt; process no longer live and completion/exit not authoritatively observed. Partial raw streams retained.",
+      "infrastructureFailure": true,
+      "modelOutputObserved": false
+    },
+    {
+      "path": "comparison/runs/0024/attempt-2",
+      "failure": "CLI infrastructure failure/timeout/interruption; raw evidence retained.",
+      "infrastructureFailure": true,
+      "modelOutputObserved": false
+    }
+  ],
+  "failure": null,
+  "summaryPath": "comparison/runs/0024/attempt-1/reconstructed-summary.json",
+  "completedAt": null,
+  "reconstruction": {
+    "recordedAt": "2026-09-25T19:35:05.211Z",
+    "archivedOriginalResult": "comparison-namespace-incident-20260925/runs/0024/result.json",
+    "originalAttempts": [
+      {
+        "path": "comparison/runs/0024/attempt-1",
+        "failure": "Interrupted attempt; process no longer live and completion/exit not authoritatively observed. Partial raw streams retained.",
+        "infrastructureFailure": true,
+        "modelOutputObserved": false
+      },
+      {
+        "path": "comparison/runs/0024/attempt-2",
+        "failure": "CLI infrastructure failure/timeout/interruption; raw evidence retained.",
+        "infrastructureFailure": true,
+        "modelOutputObserved": false
+      }
+    ],
+    "qualification": "Original complete response recovered from immutable telemetry; semantic review pending. No new model response."
+  }
+}

@@ -1,0 +1,26 @@
+✔ authorization refuses before opening nonexistent mapping or any run evidence (1.405165ms)
+✔ synthetic exact 66 binds all rows, native tokens, real raster bytes and original independent grades (18024.028919ms)
+✔ partial run never receives completion even when every available review passes (341.208651ms)
+✔ rejects missing check while preserving original review bytes (307.214817ms)
+✔ rejects duplicate check while preserving original review bytes (308.838819ms)
+✔ rejects failed check while preserving original review bytes (342.907164ms)
+✔ rejects below-floor grade while preserving original review bytes (343.697818ms)
+✔ rejects unresolved tool while preserving original review bytes (309.147415ms)
+✔ rejects stale item digest while preserving original review bytes (336.563654ms)
+✔ rejects changed rubric digest while preserving original review bytes (119.638246ms)
+✔ rejects unapproved reviewer while preserving original review bytes (117.042253ms)
+✔ rejects inconsistent reviewed image calls while preserving original review bytes (319.881161ms)
+✔ changed artifact bytes or even declared size without byte change invalidates review binding (249.838703ms)
+✔ missing F09 raster and unopened actual image cannot be passed by positive grades (764.589754ms)
+✔ duplicate reviews, stale opaque IDs and failed native completion remain unresolved (141.188246ms)
+✔ raw native replay detects extra opaque tools even after telemetry hashes are recomputed (33.679254ms)
+✔ applicability disagreements are unresolved and original not-applicable grade is retained (669.49768ms)
+✔ HTTP copy mismatch and raster corruption fail despite rebound positive reviewer claims (669.843728ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23474.369915

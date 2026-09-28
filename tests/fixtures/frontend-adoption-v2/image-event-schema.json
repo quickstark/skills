@@ -1,0 +1,88 @@
+{
+  "cliVersion": "0.153.4",
+  "binary": "/home/djn12313/.codex/packages/standalone/releases/0.153.4-x86_64-unknown-linux-musl/bin/codex",
+  "binarySha256": "56ef98ab4032d317ab26e9b5e5a175650717351edb16ed9cde0cb6d1734d62da",
+  "schemaSource": "/tmp/qs-frontend-invocation-schema/v2/TurnCompletedNotification.json",
+  "schemaSha256": "78af2a37391e8e669a4020cb58593e4d3e378756ced79d5fec72374fa69fb94b",
+  "imageGenerationThreadItem": {
+    "properties": {
+      "failure": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/ImageGenerationFailure"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "id": {
+        "type": "string"
+      },
+      "result": {
+        "type": "string"
+      },
+      "revisedPrompt": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "savedPath": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/AbsolutePathBuf"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "status": {
+        "type": "string"
+      },
+      "transparentBackground": {
+        "default": null,
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "type": {
+        "enum": [
+          "imageGeneration"
+        ],
+        "title": "ImageGenerationThreadItemType",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "result",
+      "status",
+      "type"
+    ],
+    "title": "ImageGenerationThreadItem",
+    "type": "object"
+  },
+  "featureCommand": [
+    "codex",
+    "features",
+    "list"
+  ],
+  "featureLines": [
+    "apps                                     stable             true",
+    "image_generation                         stable             true",
+    "view_image                               stable             true"
+  ],
+  "commandStderr": "WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)",
+  "binaryCapabilityStrings": [
+    "image_gen.generation",
+    "image_generation_call",
+    "image_generation_begin",
+    "image_generation_end",
+    "ext/image-generation/src/tool.rs"
+  ],
+  "interpretation": "Local CLI advertises image_generation stable true and has image-generation protocol/tool implementation. No model-visible tool catalog, service readiness, account quota, generation invocation or successful image output was tested."
+}

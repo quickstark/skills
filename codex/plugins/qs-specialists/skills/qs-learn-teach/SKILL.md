@@ -13,6 +13,8 @@ Minimize reader load: introduce vocabulary only when it unlocks the next concept
 
 Do not turn a learning request into implementation or research automatically. Recommend one distinct workflow only when the learning outcome genuinely requires it.
 
+Only for a requested durable learning workspace, load the needed formats: [MISSION-FORMAT.md](MISSION-FORMAT.md) for goals, [GLOSSARY-FORMAT.md](GLOSSARY-FORMAT.md) for established vocabulary, [LEARNING-RECORD-FORMAT.md](LEARNING-RECORD-FORMAT.md) for demonstrated understanding, and [RESOURCES-FORMAT.md](RESOURCES-FORMAT.md) for sources. Reuse existing paths and requested scope. An explanation or deeper effort alone does not authorize course scaffolding, file writes, resource subscriptions, or joining communities.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

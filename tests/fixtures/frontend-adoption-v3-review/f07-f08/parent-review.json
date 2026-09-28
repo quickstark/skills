@@ -1,0 +1,21 @@
+{
+  "scope": "Parent verification of12 independentF07/F08 reviews, not comparative adoption",
+  "reviewBindings": {
+    "review-244ec24b2b2d1287.json": "0caeee75e3195022934535483cb153fd293bab3e7eef1bc5670375163a3635c7",
+    "review-33f6a47dfb658e46.json": "831dd9a6b13561e69be2f6900f27f17ad862f73e5f0fdac80839c1d0d49c401f",
+    "review-448e0b8a432279d8.json": "8afd3924b5cd594f5dd77d165b7d54dddc1be1471887470639c29b7fa9f1e165",
+    "review-73f653f889b5bb1f.json": "f400ccbbf1a02394d8a79e7a02a99d52825aa4810c926e7085ec446773a91f7e",
+    "review-7fb53d5e7f575679.json": "c6a5dbdebb7afd7f82c1c7260f333a3bcddbf22ae65a558d26758b29d7eabfc4",
+    "review-842e7bb78b07cf57.json": "710f20aa9168dc680ae912c59824aee5bcc11bf7aa7559cbe3e10a68a5b45e6e",
+    "review-868dd3795cd8d8e2.json": "43b95c37585a4548d81e6c7aeeb3976c8b6d406a8e2e6baccf793b885991a4b6",
+    "review-985133d86a796af4.json": "710b8aa684201baa4787f737fbd92ee03d0e5efeef591980b320f8c8023c7a47",
+    "review-9e70e3245eeeb5f7.json": "dcf202d57c9bbb144f183efbaa4c31ea4a51148bee313b45043c7290e38627d1",
+    "review-c0bd00d4477ab1e1.json": "f9921c267f78d4aefae482f6e7d956c46c232d4c27c5d63a5c5582fd10c2c0f4",
+    "review-d063e094b271fe6f.json": "943e0e78180f7e815d83d57b5d8a19bf2211b558ed4754d17c51e4dac309552e",
+    "review-f45ad5871eb88c09.json": "23039164ceceaa692d94bc8e27c03287e19454427f496d26e31c22774227d0a0"
+  },
+  "verifierSHA256": "ff3684a78ec8429d0a9e4cd5c25720bfd0455710c4caad01e15abddfc4f765b5",
+  "reverification": "Reviewed full read-only verify.py and reran leaf62:G1 successfully; exact6+6 coverage, file/item/rubric/check/image bindings pass.",
+  "assessment": "All12 individual outputs pass fixed required checks/floors. Read grades/check rationale and failure qualifications, opened representative actual F08 narrow images. F07 motion-only repairs retain inherited overflow/nonfocusable controls; no repair outside scope is credited. F08 keyboard/validation/narrow cases meet explicit requirements, with duplicate feedback, unreported pulse removal and corrected helper failures reflected in quality/evidence scores.",
+  "limits": "The optional quantitative pixel comparison remains unverified where python was unavailable; successful Node assertions do not imply compound exit0. Original tests and partial-blinding limitations remain. Parent sampling does not claim a second36-image review. Final aggregate/adoption undecided."
+}

@@ -1,5 +1,7 @@
 # Learning Record Format
 
+Use this format only for a requested durable learning workspace and only within its selected write scope. Reuse the user's existing location and format. Loading this reference does not create a course, directories or files, and does not authorize external posting or joining a community. Ordinary explanation and practice remain in chat.
+
 Learning records live in `./learning-records/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc. Create the directory lazily — only when the first record is written.
 
 They are the teaching equivalent of ADRs: they capture non-obvious lessons, key insights, and stated prior knowledge that will steer future sessions. They are used to calculate the zone of proximal development.

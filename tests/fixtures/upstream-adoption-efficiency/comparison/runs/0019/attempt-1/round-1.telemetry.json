@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:22:22.353Z",
+  "elapsedMs": 32143.946744999965,
+  "wallElapsedMs": 32144,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "34f974f9c88416e304f54b475cce1bc6051280a9ef2a8fb368785b1c96d6f33e",
+  "promptUtf8Bytes": 9359,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25729,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 795,
+      "reasoning_output_tokens": 269
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "3fa47b270eb4359cc192cccc62719871c8c3d353dcfab5f365846f585c0063bc",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-DUcLEM",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-code-build (supplied verified result)\\nOutcome: Build at `abc123` retains its `continuation-required` status with `nextSkill=qs-git-merge`. Revoked push authorization blocks advancement; no Git or deployment action is proposed for execution.\\n\\n- [x] Build — verified at `abc123`; root status: continuation-required.\\n- [ ] Git — blocked; push authorization revoked.\\n- [ ] Release — blocked by pending Git verification.\\n\\nStage: Git | Stage estimate: ~0% | Overall estimate: ~60% | blocked — awaiting authorization for publication. Input needed: renewed push authorization for `origin/feature/export`, or a revised delivery scope.\\n\\nWeights remain Build 60, Git 10, Release 30. The supplied verified build completion supersedes the earlier Build 50% observation: overall = (60 × 100 + 10 × 0 + 30 × 0) / 100 = 60%. Authorization revocation does not invalidate completed build evidence or remove pending work from scope.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — Supplied evidence identifies the verified CSV build at `abc123`, including behavior, existing-screen validation, and diff review. No new work was executed in this response.\\n- Next — [CSV publication](/fixture/ledger-app/docs/specs/export.md) — blocked — resolve revoked push authorization before advancing.\\n- Next — [Staging delivery](/fixture/ledger-app/docs/deploy.md) — blocked — after authorized publication is verified, deploy and confirm HTTP 200 with the exact deployed version. Deployment and health evidence remain unavailable.\\n\\nNext work prompt: None — scheduled continuation is blocked by revoked authorization.\\n\\nDo you renew push authorization for `origin/feature/export`, or want to revise the delivery scope? This decision is required because the submitted execution contract explicitly makes revoked authorization override earlier grants.\",\n  \"requestedActions\": [\n    \"Request renewed push authorization for origin/feature/export or a revised delivery scope; keep Git and Release blocked pending that decision.\",\n    \"Before any future stage execution, verify supported goal tools and inspect the confirmed matching goal with get_goal; preserve abc123 evidence and record the authorization blocker through update_goal only according to its actual contract. If goal support is unavailable, stop with input-required.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

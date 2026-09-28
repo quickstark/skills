@@ -1,0 +1,52 @@
+{
+  "review": "bc9b27918611ae93eedf04a1c1c30c818cbf9f8e99a576a3698210ae922295b9",
+  "archiveManifest": "b568785e18ab3b3f2a8516ac22358b45c520521b4685376dc1581af33348ff60",
+  "archiveFilesVerified": 99,
+  "independentOracleReexecuted": true,
+  "oracleCommand": "python3 tests/fixtures/adoption-video-routing/oracle.py tests/fixtures/adoption-video-routing/runs/render-report-proof-01-host-init-recovery/after",
+  "oracle": {
+    "videoSHA256": "c4049885c315eb80bfe20e85ff5325a3bccdebb63a69bcebfa85f762ebc9dcf1",
+    "size": [
+      320,
+      180
+    ],
+    "fps": "12/1",
+    "duration": "2.000000",
+    "decodedRGB": [
+      [
+        255,
+        23,
+        0
+      ],
+      [
+        137,
+        18,
+        133
+      ],
+      [
+        0,
+        14,
+        255
+      ]
+    ],
+    "toneMagnitudes220_440": [
+      [
+        2980.3523315261964,
+        0.31125451133213444
+      ],
+      [
+        1492.4182885316861,
+        1502.8533656998998
+      ],
+      [
+        0.3492447950862601,
+        2985.507121513768
+      ]
+    ],
+    "negativeControls": [
+      "constant-red rejected",
+      "constant-first-tone rejected"
+    ]
+  },
+  "assessment": "Runtime and output verified. In-turn visual inspection unverified because exact exec serializer omits image views; absence is not proof of deception. No final behavior/adoption acceptance."
+}

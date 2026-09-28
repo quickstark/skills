@@ -1,0 +1,12 @@
+{
+  "kind": "scripted synthetic edit record",
+  "operation": "replace-file",
+  "path": "history/decisions.jsonl",
+  "removed": [
+    "decision-01"
+  ],
+  "replacement": [
+    "decision-02"
+  ],
+  "priorBytesArchivedAt": "history/archive-before-replacement.json"
+}

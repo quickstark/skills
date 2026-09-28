@@ -1,0 +1,112 @@
+This is a closed, response-only fixture. Produce the response to the user request using only the supplied instructions and observations. Do not call real tools, run commands, create or update goals, write files, install packages, contact services or perform product actions. Supplied goal/process/repository facts describe the fixture, not this machine. Report proposed actions in the response without claiming to have executed them. Missing fixture observations stay missing.
+
+Return a JSON object with three keys: response (the exact user-facing Markdown), requestedActions (an array of immediate next operational actions for this fixture, excluding commands merely described inside a generated prompt; never actual tool calls), and requestedReferences (an array of needed relative private-reference names). If a required private reference is not supplied, request it and leave response empty; the controller may return its exact frozen content. Do not inspect the filesystem. A root result still obeys its specified format inside response; internal-helper results remain evidence for the parent.
+
+<skill_instructions>
+
+---
+name: qs-help
+description: "Choose one bounded QuickStark workflow from the v3 core or optional specialists."
+disable-model-invocation: true
+---
+
+# QuickStark help
+
+Inspect the request and available project evidence, then recommend the single best root command. Do not execute it automatically.
+
+## Core commands
+
+| Order | Command | Use when |
+| ---: | --- | --- |
+| 10 | `/qs-help` | The correct workflow is unclear. |
+| 20 | `/qs-setup` | A project needs QuickStark configuration or verification. |
+| 30 | `/qs-plan-clarify` | Ambiguity, scope, constraints, or decisions remain. |
+| 40 | `/qs-plan-roadmap` | Confirmed outcomes need sequencing across phases. |
+| 50 | `/qs-plan-spec` | Confirmed work needs an actionable spec or dependency-aware tickets. |
+| 60 | `/qs-code-build` | A scoped change is ready to implement. |
+| 70 | `/qs-code-debug` | A reproducible defect needs diagnosis and repair. |
+| 80 | `/qs-review-code` | Code or a change needs review, scoped improvement, or refactoring. |
+| 90 | `/qs-git-merge` | Selected changes need safe Git integration or publication. |
+| 100 | `/qs-deploy-release` | A documented release or deployment is explicitly requested. |
+| 110 | `/qs-flow-triage` | Incoming work needs one bounded route. |
+| 120 | `/qs-flow-handoff` | Verified state must be transferred. |
+
+## Optional specialists
+
+`/qs-plan-research`, `/qs-design-prototype`, `/qs-code-document`, `/qs-test-author`, `/qs-test-verify`, `/qs-learn-teach`, `/qs-skill-write`, and `/qs-deploy-prompt` are independently installable in `qs-specialists`. Core workflows do not require them.
+
+## Routing rules
+
+- Prefer the command whose primary outcome matches the request, not an intermediate technique.
+- Refactoring belongs to `/qs-review-code` with `action=refactor` and a narrow selected target. Whole-codebase refactoring starts with a bounded read-only review.
+- Adding or improving tests for already-established behavior belongs to `/qs-test-author`; executing and reporting a read-only verification matrix belongs to `/qs-test-verify`.
+- Test-driven development is internal to `/qs-code-build`, not a command.
+- Domain modeling, module decomposition, and ticket decomposition are internal planning or implementation capabilities.
+- Choose one primary route from the registered public catalog; primary Help routing is not limited to another workflow's continuation list. Use the registry's exact literal for the active host.
+- Verify that the selected command is actually available before emitting its one copy-ready prompt. Catalog membership alone does not prove installation. For an unavailable optional capability, report the specific installation prerequisite; do not invent an executable prompt or install it automatically.
+- Keep discovery read-only. Describe optional capabilities from metadata without loading or invoking their public bodies. Preserve distinct prompt-authoring and visual-parity outcomes when they are available.
+
+## Completion report and next steps
+
+Keep one conversation checklist of meaningful stages: pending, active, verified, skipped, blocked or failed. One stage suffices for a short task. Check off only verified stages, supported by artifacts, commands, sources or observed behavior; explain skips and reopen invalidated evidence.
+
+During long operations, aim for updates within sixty seconds when control returns. State the stage, observed progress or waiting, and needed input; running and elapsed time alone prove no progress or completion. Finish with what changed/configured or was found read-only, actual passed/failed checks, limitations and remaining work. All effort/report modes retain blockers and failed checks; never imply mutations in a read-only run.
+
+Report at start, transitions, material changes, blockers, resumption and completion: Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>. Overall covers this bounded root, or the entire explicitly submitted goal; a completed root does not complete its larger goal.
+
+Assign meaningful stage effort weights initially. Overall = sum(weight × stage estimate) / sum(in-scope weights). Estimate from verified milestones, observed partial work and remaining effort, never counts of checklist items, elapsed time, tokens or a running process. Use coarse whole percentages and explain low confidence. Keep weights stable; explain changed scope/decomposition, recalibration, reopened checks and decreases. Out-of-scope skips lose their weight with no credit; already-satisfied in-scope work earns credit only from current evidence and keeps its weight. Helpers contribute evidence without public reports or double-counting.
+
+While waiting or blocked, retain the last defensible estimate unless evidence changes; state the required input/event. Preserve scope, weights, estimates and revision-bound evidence for resumption. Reuse valid progress without resetting or counting twice; reopen invalidated checks. Stage 100% requires verified stage completion; overall 100% requires every acceptance criterion and required check for the stated scope. Cap unverified coarse estimates at 95%. Failed required checks, unresolved criteria and actionable P0/P1 findings prevent completion regardless of percentages; status and verification gates prevail.
+A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.
+
+This invocation has one root skill: `/qs-help`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
+
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
+
+Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+
+Primary Help routing may select any actually available registered public root. Read [ROUTING.md](ROUTING.md) for registry-generated descriptions and exact Codex/Claude/Pi literals; verify the selected literal in the active host before emitting it. This primary recommendation is separate from ordinary continuation eligibility. Ordinary continuation routes: `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Failure routes: `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`. Emit at most one prompt overall and never execute the selected root or install a missing package. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
+
+Brief output always contains status, outcome, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required result fields.
+
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /qs-help
+Outcome: Concise verified result.
+Next work prompt: None | one copy-ready prompt in a fenced `text` block
+
+Always write `Next work prompt:`. For one verified actionable request and an available primary destination, put exactly one fenced `text` block beneath it beginning with the destination's exact installed literal from [ROUTING.md](ROUTING.md). Name the requested work and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. A missing or unverified destination produces Input required with its precise package/discovery prerequisite and no executable prompt for that destination; do not claim no follow-on is needed. When there is no verified remaining actionable work, write `Next work prompt: None — no follow-on needed.` Ordinary continuation literals also require verified availability: Codex $qs-skills:qs-plan-clarify, $qs-skills:qs-flow-triage, $qs-skills:qs-setup; Claude uses `/qs-plan-clarify`, `/qs-flow-triage`, `/qs-setup`; Pi uses `/skill:qs-plan-clarify`, `/skill:qs-flow-triage`, `/skill:qs-setup`. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+
+
+</skill_instructions>
+
+<shared_observations>
+
+{}
+
+</shared_observations>
+
+<available_private_references>
+
+["ROUTING.md"]
+
+</available_private_references>
+
+<supplied_private_references>
+
+{}
+
+</supplied_private_references>
+
+<prior_reference_requests>
+
+[]
+
+</prior_reference_requests>
+
+<user_request>
+
+I have an approved specification for CSV export and want it implemented. Which skill should I use? Observed available literal: $qs-skills:qs-code-build. No workflow has run.
+
+</user_request>

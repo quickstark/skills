@@ -15,6 +15,8 @@ Use whenever the owning root is authorized to mutate files or external state.
 3. Keep unrelated cleanup out of the selected change.
 4. Verify the intended effect and the nearest preserved invariant.
 
+After repeated failed fixes, question their shared premise and collect discriminating evidence before introducing compensating machinery. This does not authorize a wider rewrite.
+
 ## Stop conditions
 
 Stop when the bounded outcome is met; do not continue polishing unrelated surfaces.

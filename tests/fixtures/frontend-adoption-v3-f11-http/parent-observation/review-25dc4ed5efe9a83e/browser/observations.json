@@ -1,0 +1,3124 @@
+{
+  "browserVersion": "HeadlessChrome/151.0.7922.34",
+  "blockedRequests": [],
+  "views": {
+    "wide": {
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "scrollWidth": 1280,
+      "text": "Northstar Museum\nVisit\nCollections\nMembership\n\nA PLACE FOR CURIOSITY\n\nMake room for wonder.\n\nFamily membership keeps discovery close to home.\n\nA year of discovery\n\nUnlimited entry for two adults and children under 18.\n\nUnlimited gallery visits\nMember preview evenings\n10% off the museum shop\n\nFamily membership\n\n$100 / year\n\nContinue with family membership\n\n10,000 members · 50,000 annual visits\n\nNorthstar Museum · Founded 2020",
+      "links": [
+        {
+          "text": "Northstar Museum",
+          "href": "/"
+        },
+        {
+          "text": "Visit",
+          "href": "/visit"
+        },
+        {
+          "text": "Collections",
+          "href": "/collections"
+        },
+        {
+          "text": "Membership",
+          "href": "/membership"
+        },
+        {
+          "text": "privacy policy",
+          "href": "/privacy"
+        },
+        {
+          "text": "Family membership details",
+          "href": "/membership/family"
+        }
+      ],
+      "ids": [
+        "site-header",
+        "membership-panel",
+        "membership-title",
+        "price",
+        "join-button",
+        "member-count",
+        "annual-visits",
+        "site-footer",
+        "founded",
+        "membership-dialog",
+        "join-title",
+        "join-form",
+        "member-email",
+        "form-message",
+        "details-link"
+      ],
+      "landmarks": {
+        "site-header": "<header id=\"site-header\">\n    <a class=\"wordmark\" href=\"/\">Northstar Museum</a>\n    <nav aria-label=\"Main navigation\">\n      <a href=\"/visit\">Visit</a>\n      <a href=\"/collections\">Collections</a>\n      <a href=\"/membership\" aria-current=\"page\">Membership</a>\n    </nav>\n  </header>",
+        "site-footer": "<footer id=\"site-footer\">Northstar Museum · Founded <span id=\"founded\">2020</span></footer>"
+      },
+      "typography": {
+        "bodyFont": "Georgia, serif",
+        "headingFont": "Georgia, serif"
+      },
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "id": "join-button",
+          "type": "button",
+          "text": "Continue with family membership",
+          "labels": [],
+          "ariaLabel": null
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "button",
+          "text": "×",
+          "labels": [],
+          "ariaLabel": "Close membership form"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "type": "hidden",
+          "text": "",
+          "labels": [],
+          "ariaLabel": null
+        },
+        {
+          "tag": "INPUT",
+          "id": "member-email",
+          "type": "email",
+          "text": "",
+          "labels": [
+            "Email address"
+          ],
+          "ariaLabel": null
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Continue with family membership",
+          "labels": [],
+          "ariaLabel": null
+        }
+      ]
+    },
+    "narrow": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "text": "Northstar Museum\nVisit\nCollections\nMembership\n\nA PLACE FOR CURIOSITY\n\nMake room for wonder.\n\nFamily membership keeps discovery close to home.\n\nA year of discovery\n\nUnlimited entry for two adults and children under 18.\n\nUnlimited gallery visits\nMember preview evenings\n10% off the museum shop\n\nFamily membership\n\n$100 / year\n\nContinue with family membership\n\n10,000 members · 50,000 annual visits\n\nNorthstar Museum · Founded 2020",
+      "links": [
+        {
+          "text": "Northstar Museum",
+          "href": "/"
+        },
+        {
+          "text": "Visit",
+          "href": "/visit"
+        },
+        {
+          "text": "Collections",
+          "href": "/collections"
+        },
+        {
+          "text": "Membership",
+          "href": "/membership"
+        },
+        {
+          "text": "privacy policy",
+          "href": "/privacy"
+        },
+        {
+          "text": "Family membership details",
+          "href": "/membership/family"
+        }
+      ],
+      "ids": [
+        "site-header",
+        "membership-panel",
+        "membership-title",
+        "price",
+        "join-button",
+        "member-count",
+        "annual-visits",
+        "site-footer",
+        "founded",
+        "membership-dialog",
+        "join-title",
+        "join-form",
+        "member-email",
+        "form-message",
+        "details-link"
+      ],
+      "landmarks": {
+        "site-header": "<header id=\"site-header\">\n    <a class=\"wordmark\" href=\"/\">Northstar Museum</a>\n    <nav aria-label=\"Main navigation\">\n      <a href=\"/visit\">Visit</a>\n      <a href=\"/collections\">Collections</a>\n      <a href=\"/membership\" aria-current=\"page\">Membership</a>\n    </nav>\n  </header>",
+        "site-footer": "<footer id=\"site-footer\">Northstar Museum · Founded <span id=\"founded\">2020</span></footer>"
+      },
+      "typography": {
+        "bodyFont": "Georgia, serif",
+        "headingFont": "Georgia, serif"
+      },
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "id": "join-button",
+          "type": "button",
+          "text": "Continue with family membership",
+          "labels": [],
+          "ariaLabel": null
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "button",
+          "text": "×",
+          "labels": [],
+          "ariaLabel": "Close membership form"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "type": "hidden",
+          "text": "",
+          "labels": [],
+          "ariaLabel": null
+        },
+        {
+          "tag": "INPUT",
+          "id": "member-email",
+          "type": "email",
+          "text": "",
+          "labels": [
+            "Email address"
+          ],
+          "ariaLabel": null
+        },
+        {
+          "tag": "BUTTON",
+          "id": "",
+          "type": "submit",
+          "text": "Continue with family membership",
+          "labels": [],
+          "ariaLabel": null
+        }
+      ]
+    }
+  },
+  "interactions": {
+    "wide": {
+      "status": "observed",
+      "steps": {
+        "opener": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "",
+              "tag": "BODY",
+              "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "none",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Northstar Museum",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Visit",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Collections",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": false,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please fill out this field.",
+              "value": ""
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": false,
+              "modal": false
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": false,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "reopen": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": false,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please fill out this field.",
+              "value": ""
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": false,
+              "modal": false
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": false,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "email": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please fill out this field.",
+              "value": ""
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "invalidSubmit": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "privacy policy",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+              "value": "bad-address"
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "validEmail": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+              "value": "bad-address"
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "validSubmit": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "privacy policy",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": true,
+              "validationMessage": "",
+              "value": "trial@example.invalid"
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        }
+      },
+      "qualityJudgment": "No quality grade assigned; observed behavior only.",
+      "initial": {
+        "email": {
+          "visible": false,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please fill out this field.",
+          "value": ""
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": false,
+          "modal": false
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": false,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "kind": "dialog",
+      "openerFocus": {
+        "id": "join-button",
+        "tag": "BUTTON",
+        "text": "Continue with family membership",
+        "onEmail": false,
+        "onOpener": true,
+        "onSubmit": false,
+        "insideDialog": false,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "boxShadow": "none",
+        "documentHasFocus": true
+      },
+      "opened": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please fill out this field.",
+          "value": ""
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "dialogFocusSequence": [
+        {
+          "id": "",
+          "tag": "A",
+          "text": "privacy policy",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "details-link",
+          "tag": "A",
+          "text": "Family membership details",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": false
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "×",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "A",
+          "text": "privacy policy",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "details-link",
+          "tag": "A",
+          "text": "Family membership details",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": false
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "×",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "A",
+          "text": "privacy policy",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "details-link",
+          "tag": "A",
+          "text": "Family membership details",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": false
+        }
+      ],
+      "focusStayedInDialog": false,
+      "focusReachedOutsideControl": false,
+      "focusObservationLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap.",
+      "afterEscape": {
+        "email": {
+          "visible": false,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please fill out this field.",
+          "value": ""
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": false,
+          "modal": false
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": false,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "join-button",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": true,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "escapeClosed": true,
+      "escapeReturnedFocus": true,
+      "invalidBefore": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+          "value": "bad-address"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "invalidAfter": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+          "value": "bad-address"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "validBefore": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": true,
+          "validationMessage": "",
+          "value": "trial@example.invalid"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "validAfter": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": true,
+          "validationMessage": "",
+          "value": "trial@example.invalid"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [
+          {
+            "name": "join_started",
+            "plan": "family"
+          }
+        ],
+        "message": "Ready to continue with Family membership.",
+        "url": "http://127.0.0.1:46617/index.html"
+      }
+    },
+    "narrow": {
+      "status": "observed",
+      "steps": {
+        "opener": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "",
+              "tag": "BODY",
+              "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "none",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Northstar Museum",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Visit",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Collections",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "Membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": false,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please fill out this field.",
+              "value": ""
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": false,
+              "modal": false
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": false,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "reopen": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": false,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please fill out this field.",
+              "value": ""
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": false,
+              "modal": false
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": false,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "join-button",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": true,
+              "onSubmit": false,
+              "insideDialog": false,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "email": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please fill out this field.",
+              "value": ""
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "invalidSubmit": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "privacy policy",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+              "value": "bad-address"
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "validEmail": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": false,
+              "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+              "value": "bad-address"
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        },
+        "validSubmit": {
+          "reached": true,
+          "sequence": [
+            {
+              "id": "member-email",
+              "tag": "INPUT",
+              "text": "",
+              "onEmail": true,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "A",
+              "text": "privacy policy",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": false,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            }
+          ],
+          "state": {
+            "email": {
+              "visible": true,
+              "disabled": false,
+              "readOnly": false,
+              "valid": true,
+              "validationMessage": "",
+              "value": "trial@example.invalid"
+            },
+            "form": {
+              "id": "join-form",
+              "action": "/join/checkout",
+              "method": "get"
+            },
+            "dialog": {
+              "id": "membership-dialog",
+              "open": true,
+              "modal": true
+            },
+            "openerCandidates": [
+              {
+                "id": "join-button",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "disabled": false,
+                "tabIndex": 0
+              }
+            ],
+            "submitControls": [
+              {
+                "id": "",
+                "tag": "BUTTON",
+                "text": "Continue with family membership",
+                "visible": true,
+                "disabled": false
+              }
+            ],
+            "focus": {
+              "id": "",
+              "tag": "BUTTON",
+              "text": "Continue with family membership",
+              "onEmail": false,
+              "onOpener": false,
+              "onSubmit": true,
+              "insideDialog": true,
+              "outlineStyle": "solid",
+              "outlineWidth": "3px",
+              "boxShadow": "none",
+              "documentHasFocus": true
+            },
+            "events": [],
+            "message": "",
+            "url": "http://127.0.0.1:46617/index.html"
+          }
+        }
+      },
+      "qualityJudgment": "No quality grade assigned; observed behavior only.",
+      "initial": {
+        "email": {
+          "visible": false,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please fill out this field.",
+          "value": ""
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": false,
+          "modal": false
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": false,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "kind": "dialog",
+      "openerFocus": {
+        "id": "join-button",
+        "tag": "BUTTON",
+        "text": "Continue with family membership",
+        "onEmail": false,
+        "onOpener": true,
+        "onSubmit": false,
+        "insideDialog": false,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "boxShadow": "none",
+        "documentHasFocus": true
+      },
+      "opened": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please fill out this field.",
+          "value": ""
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "dialogFocusSequence": [
+        {
+          "id": "",
+          "tag": "A",
+          "text": "privacy policy",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "details-link",
+          "tag": "A",
+          "text": "Family membership details",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": false
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "×",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "A",
+          "text": "privacy policy",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "details-link",
+          "tag": "A",
+          "text": "Family membership details",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": false
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "×",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "A",
+          "text": "privacy policy",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "details-link",
+          "tag": "A",
+          "text": "Family membership details",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "none",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": false
+        }
+      ],
+      "focusStayedInDialog": false,
+      "focusReachedOutsideControl": false,
+      "focusObservationLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap.",
+      "afterEscape": {
+        "email": {
+          "visible": false,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please fill out this field.",
+          "value": ""
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": false,
+          "modal": false
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": false,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "join-button",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": true,
+          "onSubmit": false,
+          "insideDialog": false,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "escapeClosed": true,
+      "escapeReturnedFocus": true,
+      "invalidBefore": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+          "value": "bad-address"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "invalidAfter": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": false,
+          "validationMessage": "Please include an '@' in the email address. 'bad-address' is missing an '@'.",
+          "value": "bad-address"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "validBefore": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": true,
+          "validationMessage": "",
+          "value": "trial@example.invalid"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "member-email",
+          "tag": "INPUT",
+          "text": "",
+          "onEmail": true,
+          "onOpener": false,
+          "onSubmit": false,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [],
+        "message": "",
+        "url": "http://127.0.0.1:46617/index.html"
+      },
+      "validAfter": {
+        "email": {
+          "visible": true,
+          "disabled": false,
+          "readOnly": false,
+          "valid": true,
+          "validationMessage": "",
+          "value": "trial@example.invalid"
+        },
+        "form": {
+          "id": "join-form",
+          "action": "/join/checkout",
+          "method": "get"
+        },
+        "dialog": {
+          "id": "membership-dialog",
+          "open": true,
+          "modal": true
+        },
+        "openerCandidates": [
+          {
+            "id": "join-button",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "submitControls": [
+          {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "Continue with family membership",
+            "visible": true,
+            "disabled": false
+          }
+        ],
+        "focus": {
+          "id": "",
+          "tag": "BUTTON",
+          "text": "Continue with family membership",
+          "onEmail": false,
+          "onOpener": false,
+          "onSubmit": true,
+          "insideDialog": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "3px",
+          "boxShadow": "none",
+          "documentHasFocus": true
+        },
+        "events": [
+          {
+            "name": "join_started",
+            "plan": "family"
+          }
+        ],
+        "message": "Ready to continue with Family membership.",
+        "url": "http://127.0.0.1:46617/index.html"
+      }
+    }
+  },
+  "qualityJudgment": "Not evaluated; independent review required.",
+  "tabSequence": [
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Northstar Museum",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Visit",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Collections",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Membership",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "join-button",
+      "tag": "BUTTON",
+      "text": "Continue with family membership",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Northstar Museum",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Visit",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Collections",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Membership",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "join-button",
+      "tag": "BUTTON",
+      "text": "Continue with family membership",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n  \n    Northstar Museum\n    \n      Visit\n      Collections\n      Membership\n    \n  \n  \n    A place for curiosity\n    Ma",
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Northstar Museum",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    },
+    {
+      "id": "",
+      "tag": "A",
+      "text": "Visit",
+      "outlineStyle": "solid",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  ],
+  "reducedMotion": {
+    "matches": true,
+    "elements": [
+      {
+        "id": "site-header",
+        "tag": "HEADER",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 390,
+        "height": 116
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 196.21875,
+        "height": 27
+      },
+      {
+        "id": "",
+        "tag": "NAV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 235.921875,
+        "height": 18
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 30.15625,
+        "height": 18
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 72.890625,
+        "height": 18
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 80.875,
+        "height": 18
+      },
+      {
+        "id": "",
+        "tag": "MAIN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 342,
+        "height": 774.0625
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 342,
+        "height": 16
+      },
+      {
+        "id": "",
+        "tag": "H1",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 342,
+        "height": 94.0625
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 342,
+        "height": 52
+      },
+      {
+        "id": "membership-panel",
+        "tag": "SECTION",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 342,
+        "height": 510
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 340,
+        "height": 257
+      },
+      {
+        "id": "membership-title",
+        "tag": "H2",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 33
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 52
+      },
+      {
+        "id": "",
+        "tag": "UL",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 90
+      },
+      {
+        "id": "",
+        "tag": "LI",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "list-item",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 270,
+        "height": 30
+      },
+      {
+        "id": "",
+        "tag": "LI",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "list-item",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 270,
+        "height": 30
+      },
+      {
+        "id": "",
+        "tag": "LI",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "list-item",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 270,
+        "height": 30
+      },
+      {
+        "id": "",
+        "tag": "DIV",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 340,
+        "height": 251
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 18
+      },
+      {
+        "id": "price",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 53
+      },
+      {
+        "id": "",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 31.484375,
+        "height": 15
+      },
+      {
+        "id": "join-button",
+        "tag": "BUTTON",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 56
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 292,
+        "height": 18
+      },
+      {
+        "id": "member-count",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 35.75,
+        "height": 15
+      },
+      {
+        "id": "annual-visits",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 35.75,
+        "height": 15
+      },
+      {
+        "id": "site-footer",
+        "tag": "FOOTER",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 342,
+        "height": 60
+      },
+      {
+        "id": "founded",
+        "tag": "SPAN",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 32,
+        "height": 17
+      },
+      {
+        "id": "membership-dialog",
+        "tag": "DIALOG",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "",
+        "tag": "BUTTON",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "join-title",
+        "tag": "H2",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "join-form",
+        "tag": "FORM",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "",
+        "tag": "LABEL",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "",
+        "tag": "P",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "",
+        "tag": "BUTTON",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      },
+      {
+        "id": "details-link",
+        "tag": "A",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "animationPlayState": "running",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1",
+        "width": 0,
+        "height": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{"state":"started","id":"H1"}
+TypeError [ERR_INVALID_ARG_TYPE]: The "file" argument must be of type string. Received undefined
+    at normalizeSpawnArguments (node:child_process:585:3)
+    at spawn (node:child_process:806:13)
+    at execute (file:///github/skills/scripts/frontend-adoption-trials.mjs:222:17)
+    at async run (file:///github/skills/scripts/adoption-behavior-trials.mjs:62:19)
+    at async file:///github/skills/scripts/adoption-behavior-trials.mjs:71:286

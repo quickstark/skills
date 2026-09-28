@@ -1,0 +1,24 @@
+{
+  "id": "E2",
+  "cwd": "/tmp/qs-behavior-task-qcmoNS",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-hillclimb/SKILL.md",
+      "sourceSHA256": "07533f0af9a1685b1f56e895e2d4d0b0786f81b0582ce73fd8c847a5508678a4",
+      "derivedSHA256": "ab4255773f43a48eb42dc1ba5f306c9208259b6a6b1840da51a0474894f97082",
+      "bytes": 11024
+    }
+  ]
+}

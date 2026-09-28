@@ -1,0 +1,125 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, mkdir, readFile, writeFile, cp, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { prepare, freeze, verify, previousRoot, materializeGuidance, buildPrompt, capture, captureTrial, isGuidanceRead, reviewerBundle, run, runPairs, interruptCaptures } from '../../../scripts/frontend-adoption-v2.mjs';
+import { manifest, sha } from '../../../scripts/frontend-adoption-trials.mjs';
+
+// Executable fixtures emit native-shaped events after actual local reads/writes and spawn
+// actual owned descendants. They never invoke a model or change real host configuration.
+async function fixture(t, behavior = 'allow') {
+  const base = await mkdtemp(join(tmpdir(), 'qs-frontend-v2-control-')); t.after(() => rm(base, { recursive: true, force: true }));
+  const executable = join(base, 'fake-codex.mjs');
+  await writeFile(executable, `#!/usr/bin/env node
+import fs from 'node:fs'; import {spawn} from 'node:child_process'; import path from 'node:path';
+if(process.argv.includes('--version')) { console.log('fake-capture-fixture 1'); process.exit(0); }
+const behavior=${JSON.stringify(behavior)}, guidancePath=path.join(process.cwd(),'trial-guidance.md');
+const body=fs.readFileSync(guidancePath,'utf8'), emit=x=>process.stdout.write(JSON.stringify(x)+'\\n');
+let child;
+if(['forbidden','hold'].includes(behavior)) { child=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{detached:true,stdio:'ignore'}); fs.writeFileSync('owned-child.pid',String(child.pid)); }
+process.stdin.resume(); process.stdin.on('end',()=>{
+emit({type:'item.completed',item:{id:'read',type:'command_execution',command:'cat -- '+JSON.stringify(guidancePath),aggregated_output:body,exit_code:0}});
+if(behavior==='mutate') fs.writeFileSync('unauthorized-product.txt','changed product without tool disclosure');
+if(behavior==='hold') { setInterval(()=>{},1000); return; }
+if(behavior==='forbidden') { setTimeout(()=>{fs.writeFileSync('unauthorized-product.txt','actual retained bad effect'); emit({type:'item.started',item:{id:'bad',type:'command_execution',command:'cat -- '+JSON.stringify(guidancePath)+'; touch unauthorized-product.txt'}});},650); setInterval(()=>{},1000); return; }
+emit({type:'item.completed',item:{id:'answer',type:'agent_message',text:'Fixture response; no actual model.'}});
+emit({type:'turn.completed',usage:{input_tokens:1,output_tokens:1}});
+});
+`, { mode: 0o755 });
+  const root = join(base, 'fixture'); const sources = await prepare({ root });
+  const cases = JSON.parse(await readFile(join(root, 'scenarios.json'))); const common = JSON.parse(await readFile(join(root, 'common-scope.json')));
+  return { base, executable, root, sources, cases, common };
+}
+async function setupCapture(f) {
+  const cwd = join(f.base, 'task'), directory = join(f.base, 'capture'); await mkdir(cwd); await mkdir(directory);
+  const scenario = { ...f.cases.find(item => item.id === 'F10'), budget: { ...f.cases.find(item => item.id === 'F10').budget, timeoutMs: 10000 } };
+  const guidance = await materializeGuidance({ root: f.root, sources: f.sources, scenario, variant: 'v84', cwd });
+  return { cwd, directory, scenario, guidance, executable: f.executable, prompt: buildPrompt({ scenario, common: f.common, cwd, guidance }) };
+}
+test('prepared cases/schedule/rubric/assets and contributor bytes remain matched; candidate bodies are real embedded bytes', async t => {
+  const f = await fixture(t);
+  for (const name of ['common-scope.json','scenarios.json','schedule.json','rubric.json','operator-mapping.json']) assert.deepEqual(await readFile(join(f.root,name)), await readFile(join(previousRoot,name)));
+  assert.deepEqual(await manifest(join(f.root,'assets')), await manifest(join(previousRoot,'assets')));
+  assert.equal(JSON.parse(await readFile(join(f.root,'schedule.json'))).length,66);
+  for(const source of Object.values(f.sources)) if(!source.canonicalPath) assert.equal(sha(await readFile(join(f.root,source.path))),source.sha256);
+  const setup = await setupCapture(f);
+  for(const binding of setup.guidance.instructions) assert.ok(setup.guidance.body.includes(await readFile(join(f.root,f.sources[binding.key].path),'utf8')));
+  assert.ok(setup.prompt.includes(setup.guidance.guidancePath)); assert.ok(!setup.prompt.includes('# Bound task guidance'));
+  assert.ok(!setup.prompt.includes(await readFile(join(f.root,f.sources[setup.scenario.localRoot].path),'utf8')));
+  assert.ok(setup.prompt.includes('sole tool exception')); assert.ok(setup.guidance.body.includes('NOT paths to open'));
+  const originalCwd = join(f.base,'original'); await mkdir(originalCwd);
+  const original = await materializeGuidance({root:f.root,sources:f.sources,scenario:setup.scenario,variant:'v31',cwd:originalCwd});
+  assert.equal(original.instructions.length,1); assert.equal(original.instructions[0].key,setup.scenario.originalSource);
+});
+test('freeze requires explicit readiness, binds host/runner/66 schedule, and rejects mutated or added input', async t => {
+  const f = await fixture(t);
+  await assert.rejects(freeze({root:f.root,executable:f.executable}),/readiness/);
+  await freeze({root:f.root,executable:f.executable,parentReady:true});
+  const checked = await verify(f.root); assert.equal(checked.schedule.length,66); assert.equal(checked.plan.comparison.concurrency,2);
+  await writeFile(join(f.root,'unexpected.txt'),'extra'); await assert.rejects(verify(f.root),/added or removed/); await rm(join(f.root,'unexpected.txt'));
+  await writeFile(join(f.root,'rubric.json'),'{}'); await assert.rejects(verify(f.root),/Frozen input changed/);
+});
+test('pre-freeze altered asset and unmapped relative reference are rejected, not newly blessed', async t => {
+  const f = await fixture(t);
+  const target = join(f.root,'assets/project/style.css'), original = await readFile(target);
+  await writeFile(target,'bad'); await assert.rejects(freeze({root:f.root,executable:f.executable,parentReady:true}),/input assets changed/); await writeFile(target,original);
+  const body = join(f.root,f.sources['qs-design-frontend'].path); await writeFile(body,(await readFile(body,'utf8'))+'\n[escape](../../secret.md)\n');
+  await assert.rejects(freeze({root:f.root,executable:f.executable,parentReady:true}),/Unmapped relative guidance reference/);
+});
+test('F10 exact guidance read succeeds; shell chains, alternate files and other tool types are rejected', async t => {
+  const f=await fixture(t), setup=await setupCapture(f), {telemetry,guard}=await capture(setup);
+  assert.equal(telemetry.exitCode,0); assert.equal(guard.guidanceReadObserved,true); assert.equal(guard.guidanceUnchanged,true); assert.deepEqual(guard.violations,[]); assert.deepEqual(telemetry.observedOwnedResidualProcesses,[]);
+  assert.equal(isGuidanceRead({type:'command_execution',command:`/usr/bin/zsh -lc '${setup.guidance.readCommand.replaceAll("'",'"')}'`},setup.guidance.guidancePath),true);
+  for(const item of [{type:'command_execution',command:setup.guidance.readCommand+'; echo bad'},{type:'command_execution',command:'cat -- /tmp/other.md'},{type:'mcp_tool_call',command:setup.guidance.readCommand},{type:'command_execution',command:setup.guidance.readCommand+' > /tmp/out'}]) assert.equal(isGuidanceRead(item,setup.guidance.guidancePath),false);
+});
+test('forbidden F10 dispatch stops actual executable and owned detached child while preserving observed bad effects', async t => {
+  const f=await fixture(t,'forbidden'), setup=await setupCapture(f); const {telemetry,guard}=await capture(setup);
+  assert.ok(guard.violation); assert.ok(guard.violations.length); assert.ok(!telemetry.timedOut); assert.deepEqual(telemetry.observedOwnedResidualProcesses,[]); assert.equal(telemetry.processObservation.complete,true);
+  const pid=Number(await readFile(join(setup.cwd,'owned-child.pid'),'utf8'));
+  const stat=await readFile(`/proc/${pid}/stat`,'utf8').catch(error=>error.code==='ENOENT'?null:Promise.reject(error)); assert.ok(stat===null || stat.slice(stat.lastIndexOf(')')+2).startsWith('Z '));
+  assert.equal(await readFile(join(setup.cwd,'unauthorized-product.txt'),'utf8'),'actual retained bad effect');
+  assert.ok((await readFile(join(setup.directory,'events.jsonl'),'utf8')).includes('touch unauthorized-product.txt'));
+});
+test('full trial catches undisclosed product writes even when exact guidance read and turn completion pass', async t => {
+  const f=await fixture(t,'mutate'); const directory=join(f.base,'trial'); await mkdir(directory);
+  const row={trialId:'fixture-F10',scenarioId:'F10',variant:'v84',repetition:1};
+  const result=await captureTrial({root:f.root,snapshot:{cases:f.cases,common:f.common,sources:f.sources,planSHA256:'a'.repeat(64),plan:{host:{fixture:true}}},row,directory,exportRoot:join(f.base,'reviews'),executable:f.executable});
+  t.after(()=>rm(result.cwd,{recursive:true,force:true}));
+  assert.equal(result.failed,true); assert.equal(result.productOrGuidanceChanged,true);
+  assert.equal(await readFile(join(directory,'after/unauthorized-product.txt'),'utf8'),'changed product without tool disclosure');
+  const guard=JSON.parse(await readFile(join(directory,'guidance-guard.json'))); assert.equal(guard.guidanceReadObserved,true); assert.equal(guard.violations.length,0);
+});
+test('review export redacts only bound guidance output; retains malformed line, other output, raw hash and actual raster', async t => {
+  const f=await fixture(t), setup=await setupCapture(f); await capture(setup);
+  for(const name of ['before','after']) await cp(setup.cwd,join(setup.directory,name),{recursive:true});
+  const imagePath=join(f.base,'actual-tool-image.png'); await cp(join(f.root,'assets/reference.png'),imagePath);
+  const events=[{type:'item.completed',item:{id:'read',type:'command_execution',command:setup.guidance.readCommand,aggregated_output:'startup diagnostic\n'+setup.guidance.body+'\nproduct suffix',exit_code:0}}, {type:'item.completed',item:{id:'product',type:'command_execution',command:'cat style.css',aggregated_output:'important product output'}}, {type:'item.completed',item:{id:'actual-image',type:'mcp_tool_call',tool:'imagegen',result:{image_path:imagePath}}}];
+  const raw='malformed line retained\n'+events.map(item=>JSON.stringify(item)).join('\n')+'\n'; await writeFile(join(setup.directory,'events.jsonl'),raw);
+  const exportRoot=join(f.base,'review'); const product=await manifest(setup.cwd);
+  await reviewerBundle({root:f.root,directory:setup.directory,exportRoot,scenario:setup.scenario,common:f.common,before:product,after:product,reviewId:'opaque',telemetry:{},guard:{},browserStatus:'not-applicable',guidance:setup.guidance});
+  const exported=await readFile(join(exportRoot,'events.jsonl'),'utf8'); assert.ok(exported.startsWith('malformed line retained\n')); assert.ok(exported.includes('important product output')); assert.ok(exported.includes('startup diagnostic')); assert.ok(exported.includes('product suffix')); assert.ok(!exported.includes(JSON.stringify(setup.guidance.body).slice(1,-1)));
+  assert.equal(await readFile(join(setup.directory,'events.jsonl'),'utf8'),raw);
+  const redactions=JSON.parse(await readFile(join(exportRoot,'redactions.json'))); assert.equal(redactions.redactions.length,1); assert.equal(redactions.redactions[0].eventLine,2); assert.equal(redactions.rawEventsSHA256,sha(raw)); assert.equal(redactions.redactions[0].sourceSHA256s.length,setup.guidance.instructions.length);
+  const imageEvidence=JSON.parse(await readFile(join(exportRoot,'tool-images.json'))); assert.equal(imageEvidence.retained.length,1); assert.deepEqual(await readFile(join(exportRoot,imageEvidence.retained[0].target)),await readFile(imagePath));
+  assert.ok((await readFile(join(exportRoot,'IMAGES.md'),'utf8')).includes(join(exportRoot,imageEvidence.retained[0].target)));
+  await assert.rejects(readFile(join(exportRoot,'actual-artifacts/trial-guidance.md')),/ENOENT/);
+});
+test('full comparison requires separate parent authorization before any capture or filesystem output',async t=>{
+  const f=await fixture(t),output=join(f.base,'should-not-exist'); await assert.rejects(run({root:f.root,output,executable:f.executable}),/separately authorize/); await assert.rejects(readFile(join(output,'supervisor-lock.json')),/ENOENT/);
+});
+
+test('paired supervisor awaits both actual captures after interruption and never begins the next pair',async t=>{
+  const left=await fixture(t,'hold'),right=await fixture(t,'hold'); const setups=[await setupCapture(left),await setupCapture(right)];
+  const schedule=[{scenarioId:'F10',repetition:1,variant:'v31'},{scenarioId:'F10',repetition:1,variant:'v84'},{scenarioId:'F10',repetition:2,variant:'v31'},{scenarioId:'F10',repetition:2,variant:'v84'}];
+  const started=[]; let stopped=false;
+  const pending=runPairs({schedule,shouldStop:()=>stopped,start:async row=>{const index=started.length;started.push(row);return capture(setups[index]);}});
+  // Wait for actual owned children and enough sampler ticks to bind their identities.
+  const deadline=Date.now()+5000;
+  while(Date.now()<deadline) { if((await Promise.all(setups.map(s=>readFile(join(s.cwd,'owned-child.pid')).then(()=>true,()=>false)))).every(Boolean)) break; await new Promise(done=>setTimeout(done,20)); }
+  assert.equal((await Promise.all(setups.map(s=>readFile(join(s.cwd,'owned-child.pid')).then(()=>true,()=>false)))).every(Boolean),true);
+  await new Promise(done=>setTimeout(done,250)); stopped=true; const stoppedGroups=await interruptCaptures(); assert.equal(stoppedGroups.length,2);
+  const results=await pending; assert.equal(started.length,2); assert.equal(results.length,2);
+  for(const result of results) {assert.equal(result.status,'fulfilled'); assert.deepEqual(result.value.telemetry.observedOwnedResidualProcesses,[]); assert.equal(result.value.telemetry.processObservation.complete,true); assert.equal(result.value.telemetry.timedOut,false);}
+  for(const setup of setups) { const pid=Number(await readFile(join(setup.cwd,'owned-child.pid'),'utf8')); const stat=await readFile(`/proc/${pid}/stat`,'utf8').catch(error=>error.code==='ENOENT'?null:Promise.reject(error)); assert.ok(stat===null || stat.slice(stat.lastIndexOf(')')+2).startsWith('Z ')); }
+});

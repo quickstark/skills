@@ -4,7 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { PUBLIC_COMMANDS, SKILL_COLLECTIONS } from "../scripts/skill-collection-registry.mjs";
+import { PUBLIC_COMMANDS, SKILL_COLLECTIONS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
 import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -31,7 +31,7 @@ async function filesRecursively(path) {
 }
 
 test("every public command has matching source, metadata, documentation, and package projection", async () => {
-  assert.equal(PUBLIC_COMMANDS.length, 33);
+  assert.equal(PUBLIC_COMMANDS.length, REGISTRY_STATE === "target" ? 38 : 33);
   for (const command of PUBLIC_COMMANDS) {
     const sourceRoot = join(root, command.sourcePath ?? `skills/${command.bucket}/${command.name}`);
     const documentation = join(root, command.documentationPath ?? `docs/${command.bucket}/${command.name}.md`);
@@ -116,27 +116,29 @@ test("reporting runtime, deployment, operational API, and browser dependency are
   assert.ok(Object.keys(project.scripts).every((name) => !name.startsWith("readouts:")));
 });
 
-test("package manifests and marketplaces expose exactly three same-version packages per harness", async () => {
+test("active packages share the release version while target marketplaces retain only the pinned PS transition exception", async () => {
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
-  const claudeMarketplace = JSON.parse(await readFile(join(root, ".claude-plugin", "marketplace.json"), "utf8"));
-  const codexMarketplace = JSON.parse(await readFile(join(root, "codex", ".agents", "plugins", "marketplace.json"), "utf8"));
-  const names = ["qs-skills", "qs-specialists", "ps-skills"];
-  assert.deepEqual(claudeMarketplace.plugins.map((plugin) => plugin.name), names);
-  assert.deepEqual(codexMarketplace.plugins.map((plugin) => plugin.name), names);
-
-  for (const path of [
-    ".claude-plugin/plugin.json",
-    "packages/qs-specialists/.claude-plugin/plugin.json",
-    "packages/ps-skills/.claude-plugin/plugin.json",
-    "codex/plugins/qs-skills/.codex-plugin/plugin.json",
-    "codex/plugins/qs-specialists/.codex-plugin/plugin.json",
-    "codex/plugins/ps-skills/.codex-plugin/plugin.json",
-    "pi/packages/qs-skills/package.json",
-    "pi/packages/qs-specialists/package.json",
-    "pi/packages/ps-skills/package.json",
-  ]) {
-    const manifest = JSON.parse(await readFile(join(root, path), "utf8"));
-    assert.equal(manifest.version, project.version, path);
+  const claudeMarketplace = JSON.parse(await readFile(join(root, ".claude-plugin/marketplace.json"), "utf8"));
+  const codexMarketplace = JSON.parse(await readFile(join(root, "codex/.agents/plugins/marketplace.json"), "utf8"));
+  const target = REGISTRY_STATE === "target";
+  const activeNames = target ? ["qs-skills", "qs-specialists", "qs-advanced", "qs-frontend", "qs-video", "qs-execution"] : ["qs-skills", "qs-specialists", "ps-skills"];
+  const marketplaceNames = target ? [...activeNames, "ps-skills"] : activeNames;
+  assert.deepEqual(SKILL_COLLECTIONS.map(collection => collection.id), activeNames);
+  assert.deepEqual(claudeMarketplace.plugins.map(plugin => plugin.name), marketplaceNames);
+  assert.deepEqual(codexMarketplace.plugins.map(plugin => plugin.name), marketplaceNames);
+  for (const name of marketplaceNames) {
+    const expectedVersion = target && name === "ps-skills" ? "3.8.0" : project.version;
+    for (const manifestPath of [name === "qs-skills" ? ".claude-plugin/plugin.json" : `packages/${name}/.claude-plugin/plugin.json`, `codex/plugins/${name}/.codex-plugin/plugin.json`, `pi/packages/${name}/package.json`]) {
+      const manifest = JSON.parse(await readFile(join(root, manifestPath), "utf8")); assert.equal(manifest.name, name, manifestPath); assert.equal(manifest.version, expectedVersion, manifestPath);
+    }
+  }
+  if (target) {
+    const transition = JSON.parse(await readFile(join(root, "config/skill-transition-packages.json"), "utf8"));
+    assert.deepEqual(transition.packages.map(pkg => [pkg.id, pkg.state, pkg.version, pkg.sourceRevision]), [["ps-skills", "retained-for-migration", "3.8.0", "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac"]]);
+    assert.equal(claudeMarketplace.plugins.at(-1).source, "./packages/ps-skills");
+    assert.deepEqual(codexMarketplace.plugins.at(-1).source, { source: "local", path: "./plugins/ps-skills" });
+    assert.match(claudeMarketplace.plugins.at(-1).description, /Legacy migration compatibility only/);
+    assert.ok(!PUBLIC_COMMANDS.some(command => command.collectionId === "ps-skills"));
   }
 });
 

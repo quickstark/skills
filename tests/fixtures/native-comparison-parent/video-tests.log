@@ -1,0 +1,16 @@
+✔ all five controls required and each drift rejected without a capture (2.37765ms)
+✔ identity-scoped interruption refuses stale/missing identities and protected PIDs (0.242341ms)
+✔ digest drift and absent bound input fail closed (6.339573ms)
+✔ unbound additional input cannot silently enter a copied guidance tree (1.911044ms)
+✔ synthetic completion preserves before and after evidence (7.246036ms)
+✔ synthetic failure preserves before and after evidence (5.994968ms)
+✔ snapshot error retains original failure and independently records manifest (2.249006ms)
+✔ completed model turn cannot mask incomplete native stream, residuals or interruption (0.251939ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87.566975

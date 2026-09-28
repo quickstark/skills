@@ -1,0 +1,12 @@
+{
+  "scope": "Parent review of read-only fixed native66 aggregation utility, not actual trial acceptance",
+  "sourceBindings": {
+    "aggregate.mjs": "8daf45cbc8fc2cdbdfeb298ac99191a7f78cd29072770233b48ea54d71a5d45b",
+    "aggregate.test.mjs": "7726caef94f265ea6ba297d1ecc162646fb85ebd0a25c27c96c3b82828cd1d7c",
+    "README.md": "81d1f41a74040f6272f9d46af953226fd613bde9fa7698b377276fe6ec50c614",
+    "evidence.json": "e9b93690c5e0fdd0538d20f66ee5de48babe1d7f78440a36518035f0ecc004f7"
+  },
+  "runnableControl": "UNLAZY_APPROVAL_DIR=/tmp/qs-adoption-deploy-approvals node /home/djn12313/.agents/skills/unlazy/scripts/gate-check.mjs --root . --reverify --approve .unlazy/adoption-deploy/gates/leaf-59.md",
+  "result": "All21 synthetic controls pass, zero skip; parent read full utility/tests and exact serialization/native replay/image archive checks. No actual mapping read or real aggregation. Initial unsupported --approvals-dir exited2 before execution; corrected environment option used.",
+  "adoption": "Undecided; final real66 independent reviews and fixed comparison remain required."
+}

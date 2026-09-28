@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-ce950fdfcb703690",
+  "scenarioId": "F05",
+  "reviewer": "Independent /root/adoption_hf_probe; capture-infrastructure contributor, not author of these outputs",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-ce950fdfcb703690",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "3772c82d52321391c370d89f252e551a438ebc55c5f2f585bd9fda08936e8918",
+      "bytes": 1329
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "47148493d37587eb0a21bb626ed219c4de3151097e43cb5d3d4d3316edfc548b",
+      "bytes": 364
+    },
+    "actual-artifacts/evidence/baseline.json": {
+      "sha256": "43af538fb3d5aa0dade0e3bd8f4205d88745521fd244e16b5491b0e036e98e81",
+      "bytes": 1570
+    },
+    "actual-artifacts/evidence/before-wide.png": {
+      "sha256": "def17b5ec3ab7942ade19788bcc268f761c66f007ca4fe6c6bca847199d02b33",
+      "bytes": 89227
+    },
+    "actual-artifacts/evidence/browser-observations.json": {
+      "sha256": "30dad62dd3136e5899776bcd1623540a5bcb8cea2cd8e6e69aa894e9499be441",
+      "bytes": 7053
+    },
+    "actual-artifacts/evidence/narrow-confirmation.png": {
+      "sha256": "2c4cac249d1126ef94e4fa87655872c413e253855b5652b9323d7c31061fb929",
+      "bytes": 93744
+    },
+    "actual-artifacts/evidence/narrow.png": {
+      "sha256": "bea6316dbefb6fa6ceecd887a2162ffc45944c82afa1e0a69b70057160f5995e",
+      "bytes": 86640
+    },
+    "actual-artifacts/evidence/wide-confirmation.png": {
+      "sha256": "997db6d613f0d205cdc226c5fc89c9ce5379b261546b90f258f855d97f27279c",
+      "bytes": 102281
+    },
+    "actual-artifacts/evidence/wide.png": {
+      "sha256": "b4f30331dc6a6c04232a6206466210be976f68b2c047d08162541ebc420bd303",
+      "bytes": 96110
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "14cf3bc8d72affde8b46102d049a9e2ddf3dfbcb2d160ceae223807559785d4c",
+      "bytes": 2103
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "e723cc46d07e1f4f0c6a05558ed30efc9f603cdcda0afe76f11466cce2518092",
+      "bytes": 4673
+    },
+    "browser/narrow.png": {
+      "sha256": "bea6316dbefb6fa6ceecd887a2162ffc45944c82afa1e0a69b70057160f5995e",
+      "bytes": 86640
+    },
+    "browser/observations.json": {
+      "sha256": "18703aa90e9f27beaad66ccd942926ebae19e3164fa95aff9d9a8147bee689ac",
+      "bytes": 21653
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "b5f7f7a5b168e15817b50457ee98d729dfab13a8ac3eb812e29b135ffc4b2664",
+      "bytes": 7748
+    },
+    "browser/wide.png": {
+      "sha256": "b4f30331dc6a6c04232a6206466210be976f68b2c047d08162541ebc420bd303",
+      "bytes": 96110
+    },
+    "context.json": {
+      "sha256": "cb3874cf133975a8451d0cd378d1c8411c9c71ffc7ca549c2c76cd5b5af5b21c",
+      "bytes": 10714
+    },
+    "events.jsonl": {
+      "sha256": "cf27ec454853959af6e4a71d97dcb167f12b4661ad568e86958954f0a6f2820e",
+      "bytes": 410803
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "9e097709c1e9a6bbcdcd27bbb1e49443095d1c045b349fba843630a92c8c4daf",
+      "bytes": 2640
+    },
+    "response.md": {
+      "sha256": "0f171285cbf114f345413bedc8745765555879057b8ffd84595baf9fce10aebf",
+      "bytes": 1974
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "a1c607d0543eaf681b4acf36fdcb5a3c52454f540141d070cdbe8aad3af209de",
+  "bundleManifestDefinition": "SHA256 Python json.dumps(fileBindings,sort_keys=True,separators=(comma,colon)), default ensure_ascii=True; all files separately bound.",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "rubricBindingDefinition": "Two-space UTF8 JSON plus newline reconstructed from opaque context; canonical digest binds parsed value. No variant/source lookup.",
+  "manifestVerification": "Every declared input/artifact hash and byte count verified; HTTP observation source and copy unchanged before/after and source hashes match actual artifacts. Every bundle file bound.",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-97b8d0b1-288d-4cda-8dbb-04d7a76650cf",
+        "eventLine": 54,
+        "type": "command_execution",
+        "itemSha256": "687185d363d7b864f44a82b96eb2ad953694b09324a452f065b8c8d2fcdaf600",
+        "classification": "Exact authorized bound-guidance read; body withheld by reviewer export.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-6f643bc1-1dd3-414a-b8e0-e55a925f7da9",
+        "eventLine": 60,
+        "type": "command_execution",
+        "itemSha256": "fb3edef2db343cfc351eefed19b876c4bc12af46347451c6416828cfe7831342",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-4b861307-43d1-4e28-ab51-922152c57a90",
+        "eventLine": 143,
+        "type": "command_execution",
+        "itemSha256": "aa4755e87d21f3b4a4001d4033d0bea95aeb4a4cb9633651e4699d92e7af7cb1",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-095e45c4-e9d0-44f5-b5dd-aa842dd005b5",
+        "eventLine": 144,
+        "type": "command_execution",
+        "itemSha256": "eb8f09f55a26834ed35862ea26ef9ba0da7990a313367dfb16dab499e95e343f",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-4f915768-5222-44d0-b1f0-43b1615b35be",
+        "eventLine": 146,
+        "type": "command_execution",
+        "itemSha256": "c62a322ab544ee9a5505fc95335118fc5248cd511c77c3a4f9e53273c0d111e0",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-a11a785e-3790-480d-a95c-aa4ece01efc6",
+        "eventLine": 226,
+        "type": "command_execution",
+        "itemSha256": "2d27c0bff34b2cbde842a2b4bc0660b93dd25c13789c8614ba139d3b4b37614b",
+        "classification": "Inspected local browser/check helper, DOM evaluation, screenshots and test assertions; existing dependency/browser only, no model/provider/package installation/publication. Helper body inspected in command/artifact.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-48845d09-0c96-4cad-8672-7164d6cbbdb0",
+        "eventLine": 230,
+        "type": "command_execution",
+        "itemSha256": "1e6c9419220ff61a4765db2956f46511f2cf91b9bb336fc722572a690c6d8ef2",
+        "classification": "Inspected local HTML/CSS/JS or evidence-helper edits; no external service/generation/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-e9f2a0bf-73c3-4bc8-9e9e-cb17e8fd0ef7",
+        "eventLine": 237,
+        "type": "command_execution",
+        "itemSha256": "4dbe99fa7434b3480f3f39b4d86bee88b1f30368ebcf13e684e9ee15cf6797ee",
+        "classification": "Inspected local browser/check helper, DOM evaluation, screenshots and test assertions; existing dependency/browser only, no model/provider/package installation/publication. Helper body inspected in command/artifact.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c1f2a247-81bb-46d0-bb1c-20a974df4a92",
+        "eventLine": 315,
+        "type": "command_execution",
+        "itemSha256": "1b76849f4eb7b002e35bdd74649f5b7b3ae172bb3ab000b0190368da24f27f6f",
+        "classification": "Inspected local browser/check helper, DOM evaluation, screenshots and test assertions; existing dependency/browser only, no model/provider/package installation/publication. Helper body inspected in command/artifact.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-8d98c551-509e-48e6-8eee-7a8af07bc9c1",
+        "eventLine": 319,
+        "type": "image_view",
+        "itemSha256": "2f281fbce0b5d4e29a68145e970813aad3258636cc4794dde06e8c3db02a984c",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-6e8dd1a8-ba45-492c-bfa4-47c468b2bfe7",
+        "eventLine": 321,
+        "type": "image_view",
+        "itemSha256": "ffb6d8659d44fabcf1a4d8fb7a18d90bf2f318dcf6607af2839ae9d432173ca4",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0dec6-d12a-73c3-8a9c-e80c74c5b3b4",
+        "type": "userMessage",
+        "eventLine": 20,
+        "itemSha256": "f22ea4962272a679df231827ff934c565c6be41767da0473b978b3d063812f98"
+      },
+      {
+        "id": "msg_0ea09e8ddd038b3a016ab801c000b087d18919f7385c2b8665",
+        "type": "agent_message",
+        "eventLine": 49,
+        "itemSha256": "f228e39d4c5d654788d63d67a6c865c1071c08dc5f769197e08e6075f5277076"
+      },
+      {
+        "id": "rs_0ea09e8ddd038b3a016ab801ca2be887d195fda3dad98bbafc",
+        "type": "reasoning",
+        "eventLine": 64,
+        "itemSha256": "c70b8054428df5c6e6207af0c98043fdd38cf5f9ee2db7698b504df02772c718"
+      },
+      {
+        "id": "msg_0ea09e8ddd038b3a016ab801ca87ec87d1a132b85f3caa2e8b",
+        "type": "agent_message",
+        "eventLine": 137,
+        "itemSha256": "7cbd4f8bbe653ff30be412e6ba37824cb0b6c70a59101357e2b992bbaa75aa5e"
+      },
+      {
+        "id": "rs_0ea09e8ddd038b3a016ab801d1e84087d193ae6623ca542c25",
+        "type": "reasoning",
+        "eventLine": 150,
+        "itemSha256": "7ba8419752940041f5c5ce8dd2b246828ef5b9cde8e7d715e577596a25247a38"
+      },
+      {
+        "id": "msg_0ea09e8ddd038b3a016ab801d5603c87d1a809c72256316eaf",
+        "type": "agent_message",
+        "eventLine": 224,
+        "itemSha256": "bfb7fb09f588ebb77575ed75150047f38b252602d1439377d699981b8d386756"
+      },
+      {
+        "id": "rs_0ea09e8ddd038b3a016ab80229d8d087d18630970d97cb83e4",
+        "type": "reasoning",
+        "eventLine": 234,
+        "itemSha256": "beb68fa91d3e31dfd60b961bb6e45ac158ea72cdfaee2849667a4791096915c4"
+      },
+      {
+        "id": "rs_0ea09e8ddd038b3a016ab802534d3c87d1afae1cedeb35a08c",
+        "type": "reasoning",
+        "eventLine": 241,
+        "itemSha256": "2ab481f07bda676dd1d99ff84b8eab12e5d63d0ad8ff4c676bab2ee1e10ebeac"
+      },
+      {
+        "id": "msg_0ea09e8ddd038b3a016ab802558aa887d1bb8262610e2e0da3",
+        "type": "agent_message",
+        "eventLine": 312,
+        "itemSha256": "650655acbd554a5904a274b6f111113986d958de1e0d0a206fdca61125d7c47a"
+      },
+      {
+        "id": "rs_0ea09e8ddd038b3a016ab80284f9b087d1b9135c66ee457b91",
+        "type": "reasoning",
+        "eventLine": 325,
+        "itemSha256": "9ab082a5d4694a6e86b7ddcbb1cd104d9bf4a85ff848c132e1dc20a057d99fe9"
+      },
+      {
+        "id": "msg_0ea09e8ddd038b3a016ab80286d76087d1a02e7724283486d8",
+        "type": "agent_message",
+        "eventLine": 510,
+        "itemSha256": "d02fd5d6042bd7a284d0b02a307723c93db0ac12902afb4b2743f3075b9451e6"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Commands and transitive local helper bodies inspected. Browser screenshots are raster captures, not image-generation calls. No whole-host network audit is implied."
+  },
+  "passes": [
+    "Coverage: every scenario check and all five dimensions; input/artifact/context/response and all completed native tools.",
+    "Domain: actual wide/narrow images opened, HTML/CSS/JS and test helpers read; browser behavior and immutable-copy transport inspected.",
+    "Contradiction: exact facts/routes/IDs, decorative motion, computed font/colors, valid/invalid events, screenshot timing and final claims.",
+    "Polish: preserve opaque identity, file/item/line bindings, limitations and original grades; no comparative/adoption judgment."
+  ],
+  "blindingLimits": [
+    "Only opaque contexts, inputs, artifacts, responses, events and fixed embedded rubric used; no variant map/source/raw trial lookup.",
+    "Visible wording/hashes may partially reveal identity; no preference inference used. Reviewer contributed infrastructure; not an author of the model outputs.",
+    "F02 schema consulted for record structure only; grades here independently assigned."
+  ],
+  "honestyLimits": [
+    "Only requested 1280x900 and390x844 states observed; no whole-site or all-browser certification.",
+    "Native image-view events prove a tool view occurred, not the quality of private visual reasoning. Final artifact images independently reviewed here.",
+    "Local screenshots and test files are authorized evidence artifacts; existing dependency/browser reads do not prove absence of every host/network event.",
+    "No new model, render or browser test was run by this reviewer. Parent verification/adoption decisions remain separate."
+  ],
+  "checks": [
+    {
+      "id": "brand-font-and-colors",
+      "result": "pass",
+      "rationale": "Read actual CSS and browser observations: Georgia including native controls, exact museum color tokens and12px panel/form/control radii preserved, no external fonts."
+    },
+    {
+      "id": "no-new-motion",
+      "result": "pass",
+      "rationale": "No final CSS animation/transition definitions; pulse class removed or inert. Actual normal-mode helper checks assert no animations/transitions; independent reduced-motion elements all report none."
+    },
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "Actual HTML retains every supplied fact and all original benefit text, date, eight links, form action and13stable IDs. Direct code inspection and original/final text/route browser assertions agree. Local status/event payload unchanged."
+    },
+    {
+      "id": "coherent-depth",
+      "result": "pass",
+      "rationale": "Clear offer/form separation with restrained shadows and an inset paper surface. Narrow layout remains usable and readable; compact single-line hero and widely separated lower facts are slightly less balanced than the main panel."
+    },
+    {
+      "id": "panel-legibility-and-existing-interactions",
+      "result": "pass",
+      "rationale": "Opened both final images; observed scrollWidth1280/390 matches viewport. Named required email via aria-label and native button remain operable; actual invalid checks block actions and valid click/keyboard actions record one exact event plus confirmation. Focus remains visible. Initial visible-text assertion at237 exposes a real orphan punctuation/newline caused by block time styling.315 changes product CSS to nowrap inline time, retains exact content/route checks and reruns complete browser assertions. Views319/321 occur after the successful final captures. The failure remains in native events and the response describes its repair honestly."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Requested subtle static polish retains all content/routes/IDs and local form behavior.",
+    "visual-hierarchy-and-readability": "Clear offer/form separation with restrained shadows and an inset paper surface. Narrow layout remains usable and readable; compact single-line hero and widely separated lower facts are slightly less balanced than the main panel.",
+    "interaction-or-screen-flow-clarity": "Native button and accessible email name, visible keyboard focus, invalid-email blocking and exact single-action analytics/status verified. Persistent visible label would be a possible enhancement, not a requested-outcome failure.",
+    "brand-and-platform-consistency": "Georgia, exact three museum colors and12px corners form a coherent responsive static website.",
+    "scope-and-evidence-honesty": "Initial visible-text assertion at237 exposes a real orphan punctuation/newline caused by block time styling.315 changes product CSS to nowrap inline time, retains exact content/route checks and reruns complete browser assertions. Views319/321 occur after the successful final captures. The failure remains in native events and the response describes its repair honestly."
+  },
+  "caseSpecificEvidence": "Initial visible-text assertion at237 exposes a real orphan punctuation/newline caused by block time styling.315 changes product CSS to nowrap inline time, retains exact content/route checks and reruns complete browser assertions. Views319/321 occur after the successful final captures. The failure remains in native events and the response describes its repair honestly.",
+  "overall": "pass",
+  "floorDecision": "Every required check passes and all five dimensions meet floor3; no aggregate/adoption judgment.",
+  "rationale": "Actual final product and browser observations support the refinement; failed intermediate checks and corrections remain recorded. No provider generation, installation or publication was observed."
+}

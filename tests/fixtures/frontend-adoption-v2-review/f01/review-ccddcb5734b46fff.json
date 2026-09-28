@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-ccddcb5734b46fff",
+  "scenarioId": "F01",
+  "reviewer": "Independent delegated reviewer /root/baseline_blind_review; not the implementation run",
+  "bundlePath": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles/review-ccddcb5734b46fff",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "428cb9b33051670991ecded73f5ec4bb23242fc26ac73b06acabb13217c947cf",
+      "bytes": 937
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "875054638d44c4c5d6cc1feb76c52660de29795ea4c8782396a863cba0817e9f",
+      "bytes": 1514
+    },
+    "actual-artifacts/accessibility/index.html": {
+      "sha256": "58ae7944d7bdf2acfaf3c92fb4cef4ec912dc59f3915f44acea7ddd34c7b5572",
+      "bytes": 939
+    },
+    "actual-artifacts/evidence/browser-results.json": {
+      "sha256": "41f99c6963675d958a9b7237052ea65cdb0252c5829dc16d4bdecca7dd59d2ea",
+      "bytes": 1534
+    },
+    "actual-artifacts/evidence/narrow-dark.png": {
+      "sha256": "54c1f0cb1c99ad5293514d1542ea45b7d7f2fab8147ee23d9babf682b202f9c6",
+      "bytes": 80614
+    },
+    "actual-artifacts/evidence/narrow.png": {
+      "sha256": "9711a1451583369e7bba7a05aef8ae09b9218562bd795a6aaabba2b7da90c1fb",
+      "bytes": 73411
+    },
+    "actual-artifacts/evidence/verify.cjs": {
+      "sha256": "d76a1aff2d659c6c6953d9a62d9c2a5dd3b8951bbdcf0e50482fdd1ae7313535",
+      "bytes": 4469
+    },
+    "actual-artifacts/evidence/wide.png": {
+      "sha256": "d2eb4c77410a0d099f1910536520429ce944fd6c757656ad4e941308e7479df5",
+      "bytes": 84297
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "5d5633bfe0d755327b5ea4fae70399cef710c68d83a46410823f6d4735ebe1b5",
+      "bytes": 3124
+    },
+    "actual-artifacts/membership/family/index.html": {
+      "sha256": "f5f18319a7c322ac5509471984cb49ffd861fc579b3c4432c7a56baaec1642cc",
+      "bytes": 952
+    },
+    "actual-artifacts/privacy/index.html": {
+      "sha256": "2ffa93667b75b85ae954843b5b425579b5f8a44f3d6fc0a307795adf7a247aeb",
+      "bytes": 936
+    },
+    "actual-artifacts/script.js": {
+      "sha256": "5f975bde7d14aaabd7b09e1cfca34380998921ec4440cd0e718eff3af1a7a068",
+      "bytes": 593
+    },
+    "actual-artifacts/styles.css": {
+      "sha256": "4e58629bfa34b0526b53582a174b9fe1f5ef2f2b6de1fb90022a0992067ed382",
+      "bytes": 6191
+    },
+    "browser/narrow.png": {
+      "sha256": "c1f04c86173ba16b41df888dd6bd7c4002a6d8e41da4e77fc9ddf5a866cba77d",
+      "bytes": 48194
+    },
+    "browser/observations.json": {
+      "sha256": "41710b98a6d4658ed5cb639b5d08a6e6d10883c4f2408415fb5202f60ed6fc82",
+      "bytes": 22694
+    },
+    "browser/wide.png": {
+      "sha256": "45aa8d3ff86f74213ad94546be6c631f83b1b27914ecf422d28591e8a7d45a82",
+      "bytes": 53850
+    },
+    "context.json": {
+      "sha256": "7f939d6d4804e1c6d490232bf34b04fb6ff67a90d132faba8a6bdd3c1bd8ccfd",
+      "bytes": 9511
+    },
+    "events.jsonl": {
+      "sha256": "3fb8f6117fd6b7ccc7554e3cf2c03f96e7869e1e78ad0d0f1941a852267c2fa6",
+      "bytes": 96146
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "57a18ae8247f9b6488c725b2d6579bd5dc59eb822d46b18ee4ac5231e0f03229",
+      "bytes": 782
+    },
+    "response.md": {
+      "sha256": "4a701e4af67106c40521f4be0e8b94d9f2f4764a0d8f9789d5ae12c77a028cf2",
+      "bytes": 1177
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "6e8d314513fbced0634236ff9ce5fb6e8755aa06bf511829116f01d905932285",
+  "bundleManifestDefinition": "SHA256 of UTF-8 canonical JSON of fileBindings with sorted keys and compact separators; each file is bound separately",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "Every declared input/artifact hash and byte count matches; embedded rubric equals the fixed rubric.",
+  "reviewStatus": "Provisional individual review; parent review and remaining F01 bundles pending",
+  "comparison": "No source/operator mapping read, preferred identity inferred, aggregate comparison or efficiency conclusion.",
+  "passes": [
+    {
+      "pass": 1,
+      "name": "Coverage",
+      "evidence": "All six required checks and all five dimensions evaluated from full context, artifacts, browser records, tool events and actual opened screenshots."
+    },
+    {
+      "pass": 2,
+      "name": "Domain evaluation",
+      "evidence": "Checked exact facts, links, stable IDs, typography/color/radius declarations and available computed values, form validation/event/confirmation, narrow layout and keyboard behavior."
+    },
+    {
+      "pass": 3,
+      "name": "Contradiction/error hunt",
+      "evidence": "Separated actual screenshot appearance from observed interaction; retained measurement-context conflicts and view-attribution protocol limits; runtime success is not a behavior pass."
+    },
+    {
+      "pass": 4,
+      "name": "Polish",
+      "evidence": "Ratings cite concrete evidence and keep unresolved checks unverified; immutable per-bundle review with no variant preference or unsupported broader acceptance."
+    }
+  ],
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png",
+    "actual-artifacts/evidence/wide.png",
+    "actual-artifacts/evidence/narrow.png",
+    "actual-artifacts/evidence/narrow-dark.png"
+  ],
+  "checks": [
+    {
+      "id": "requested-sections",
+      "result": "pass",
+      "rationale": "Both text observations and author HTTP screenshots contain introduction, Family details and museum facts with all authoritative amounts/date/benefit. All required stable IDs exist. Actual artifacts also supply membership details, privacy and accessibility local pages."
+    },
+    {
+      "id": "brand-and-facts",
+      "result": "unverified",
+      "rationale": "Facts match. Author HTTP evidence renders styled Georgia, exact default brand tokens and12px CSS radii. Independent browser views render unstyled Times New Roman, despite those asset files existing. Delivered root-relative /styles.css and /script.js require the documented HTTP web root; independent serving context is not recorded in this bundle. Cannot merge these outcomes into a clean brand pass. Dark screenshot is an additional auto-theme using inverse paper/ink and lighter accent; exact supplied light tokens are present, but dark token identity is not the same."
+    },
+    {
+      "id": "working-local-form",
+      "result": "unverified",
+      "rationale": "Actual item_9 HTTP run and browser-results.json observe zero events for empty/invalid emails and exact successful local confirmation/event at both widths. Separate browser keyboardSubmission has reachedJoin=false,events=null,message empty. The independent render lacks script styling/behavior, plausibly from asset resolution; preserve conflicting contexts pending uniform observer clarification."
+    },
+    {
+      "id": "narrow-and-keyboard",
+      "result": "unverified",
+      "rationale": "Author HTTP390px image has clean stacked layout and browser-results reports no overflow and keyboard focus on join-button. Independent390px image is unstyled; its tab sequence skips disabled join and cannot submit. No horizontal overflow alone proves neither keyboard success nor styled responsiveness; context conflict remains unresolved."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Observed tool actions write local source and use Puppeteer browser captures; no image-generation call, remote generation command or generated-image claim. The five actual screenshots are retained render evidence."
+    },
+    {
+      "id": "no-publication",
+      "result": "pass",
+      "rationale": "Author verifier starts a temporary127.0.0.1 HTTP server and closes browser/server in finally. Actual run output records no external requests; no deployment/package-install/public-root invocation appears. Written files remain local, including supporting route pages and README."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 3,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationale": {
+    "brief-and-content-fidelity": "All supplied facts, semantic sections and local form requirement implemented; route pages describe actual local behavior rather than inventing museum policy.",
+    "visual-hierarchy-and-readability": "Provisional score of actual HTTP screenshots: clear large heading, separated price/form card and readable numerical facts at both widths. Independent captures are unstyled and cannot be silently discarded; final aggregate visual acceptance is withheld.",
+    "interaction-or-screen-flow-clarity": "Provisional HTTP evidence shows labeled input, keyboard submit, native invalid-email rejection, local success and working detail links. Conflicting independent keyboard result prevents settled interaction acceptance.",
+    "brand-and-platform-consistency": "Provisional HTTP light screenshots/CSS have Georgia-first family, original default palette and12px card/control radii. Explicit runtime values for control radius are not recorded here; independent browser instead reports Times. Additional dark theme is visually coherent but changes the supplied default tokens. Final brand pass remains unverified.",
+    "scope-and-evidence-honesty": "Final statements correspond to the actual retained HTTP verification output; README explicitly requires serving this directory as web root. A conflicting observer context does not by itself falsify those author claims. No publication/install/external call claim is contradicted by observed actions."
+  },
+  "additionalFindings": [
+    {
+      "id": "serving-context-conflict",
+      "result": "unverified",
+      "evidence": "Independent browser/wide+narrow show browser-default Times and disabled button. Author HTTP screenshots and executed verifier show styled Georgia and passing submit. README explicitly documents HTTP web-root serving; index uses /styles.css,/script.js. Parent will inspect observer contract and consider uniform supplemental HTTP evidence for every implementation output; no rerun performed by reviewer."
+    },
+    {
+      "id": "incidental-guidance-leak",
+      "result": "unverified",
+      "evidence": "events.jsonl line7 item_2 contains an unredacted partial sed read of trial-guidance.md. It surfaced during mandatory event inspection; source/operator files were not opened. Parent confirms frozen redaction intentionally covers full exact bodies only. Partial blinding is weaker for this bundle; do not infer preferred identity."
+    }
+  ],
+  "overall": "unverified",
+  "rationale": "Requested content and authority checks are supported; brand/form/keyboard observations conflict across rendering contexts. Numeric dimensions describe the retained author HTTP output provisionally, not a settled pass or a grade of the unstyled observer output. Frozen rubric forbids certifying a partial/conflicting scenario; preserve both sets until parent adjudicates uniform observer evidence.",
+  "blindingLimits": [
+    "Full first guidance read redacted, but later partial guidance body surfaced from this supplied bundle during tool-event review.",
+    "No operator map, source instruction file or raw trial directory opened; no preferred identity inferred.",
+    "Partial guidance exposure is explicitly retained as a limitation; it does not substitute for output grading."
+  ],
+  "limits": [
+    "Observed author HTTP output is independently visually inspected here; its browser script was read but not executed.",
+    "Independent observation lacks explicit navigation URL in bundle; file-versus-HTTP cause is an inference pending parent review.",
+    "Exact computed final control radii and broader serving behavior were not independently remeasured.",
+    "Scores are provisional under contradictory evidence and must not enter an accepted aggregate as settled results."
+  ]
+}

@@ -7,6 +7,10 @@ import {
   PS_COLLECTION,
   PS_PUBLIC_COMMANDS,
 } from "./ps-skill-catalog.mjs";
+import { ADVANCED_PUBLIC_COMMANDS } from "./advanced-skill-catalog.mjs";
+import { FRONTEND_PUBLIC_COMMANDS } from "./frontend-skill-catalog.mjs";
+import { VIDEO_PUBLIC_COMMANDS } from "./video-skill-catalog.mjs";
+import { EXECUTION_PUBLIC_COMMANDS } from "./execution-skill-catalog.mjs";
 
 function freezeRoutes(routes) {
   return Object.freeze(routes.map((route) => Object.freeze({ ...route })));
@@ -26,12 +30,20 @@ const SPEC_PROGRESS_COMMAND_NAME_SET = new Set(SPEC_PROGRESS_COMMAND_NAMES);
 
 const PREFERRED_COMPOSITE_WORKFLOW_BY_COMMAND = Object.freeze({});
 
+const PRIMARY_HELP_ROUTING = Object.freeze({
+  kind: "available-public-command",
+  referenceFile: "ROUTING.md",
+  availability: "observed-host-literal",
+  automaticInvocation: false,
+});
+
 function defineQsCommand(command) {
   const routes = NEXT_SKILLS_BY_NAME[command.name];
   const collectionId = command.distribution === "core" ? "qs-skills" : "qs-specialists";
   return Object.freeze({
     ...command,
     collectionId,
+    ...(command.name === "qs-help" ? { primaryRouting: PRIMARY_HELP_ROUTING } : {}),
     packageName: collectionId,
     codexPlugin: collectionId,
     codexLiteral: `$${collectionId}:${command.name}`,
@@ -74,15 +86,11 @@ const QS_CORE_COMMANDS = Object.freeze(V3_CORE_SKILLS.map(defineQsCommand));
 const QS_SPECIALIST_COMMANDS = Object.freeze(V3_SPECIALIST_SKILLS.map(defineQsCommand));
 const PS_COMMANDS = Object.freeze(PS_PUBLIC_COMMANDS.map(definePsCommand));
 
-export const PUBLIC_COMMANDS = Object.freeze([
+export const LEGACY_PUBLIC_COMMANDS = Object.freeze([
   ...QS_CORE_COMMANDS,
   ...QS_SPECIALIST_COMMANDS,
   ...PS_COMMANDS,
 ]);
-
-export const PUBLIC_COMMANDS_BY_NAME = new Map(
-  PUBLIC_COMMANDS.map((command) => [command.name, command]),
-);
 
 function defineCompositeWorkflow(id, steps) {
   return Object.freeze({
@@ -150,7 +158,7 @@ function defineCollection({
   });
 }
 
-export const SKILL_COLLECTIONS = Object.freeze([
+export const LEGACY_SKILL_COLLECTIONS = Object.freeze([
   defineCollection({
     id: "qs-skills",
     displayName: "QuickStark Skills",
@@ -189,14 +197,46 @@ export const SKILL_COLLECTIONS = Object.freeze([
   }),
 ]);
 
-export const SKILL_COLLECTIONS_BY_ID = new Map(
-  SKILL_COLLECTIONS.map((collection) => [collection.id, collection]),
-);
+// Candidate metadata is explicit and inert. Ordinary package commands keep the
+// current registry until the adoption acceptance and migration gates pass.
+const ADVANCED_COMMANDS = Object.freeze(ADVANCED_PUBLIC_COMMANDS.map((command) => Object.freeze({
+  ...command, collectionId: "qs-advanced",
+  resultContext: Object.freeze({ specProgress: !["qs-how", "qs-why"].includes(command.name) }),
+})));
+export const TARGET_PUBLIC_COMMANDS = Object.freeze([
+  ...QS_CORE_COMMANDS, ...QS_SPECIALIST_COMMANDS, ...ADVANCED_COMMANDS,
+  ...FRONTEND_PUBLIC_COMMANDS, ...VIDEO_PUBLIC_COMMANDS, ...EXECUTION_PUBLIC_COMMANDS,
+]);
+export const TARGET_PUBLIC_COMMANDS_BY_NAME = new Map(TARGET_PUBLIC_COMMANDS.map((command) => [command.name, command]));
+const OPTIONAL_TARGETS = Object.freeze([
+  ["qs-advanced", "QuickStark Advanced", "engineering", ADVANCED_COMMANDS],
+  ["qs-frontend", "QuickStark Frontend", "engineering", FRONTEND_PUBLIC_COMMANDS],
+  ["qs-video", "QuickStark Video", "video", VIDEO_PUBLIC_COMMANDS],
+  ["qs-execution", "QuickStark Execution", "engineering", EXECUTION_PUBLIC_COMMANDS],
+]);
+export const TARGET_SKILL_COLLECTIONS = Object.freeze([
+  ...LEGACY_SKILL_COLLECTIONS.filter((collection) => collection.id !== "ps-skills"),
+  ...OPTIONAL_TARGETS.map(([id, displayName, bucket, publicCommands]) => defineCollection({
+    id, displayName, packageName: id, codexPlugin: id,
+    claudePackageRoot: `packages/${id}`, codexPackageRoot: `codex/plugins/${id}`,
+    piPackageRoot: `pi/packages/${id}`, canonicalRoot: `skills/${bucket}`,
+    documentationRoot: `docs/${bucket}`, publicCommands,
+  })),
+]);
+export const TARGET_COLLECTION_REGISTRY = Object.freeze({
+  schemaVersion: 1, collections: TARGET_SKILL_COLLECTIONS,
+  publicCommands: TARGET_PUBLIC_COMMANDS, compositeWorkflows: COMPOSITE_WORKFLOWS,
+});
 
+// Changed only by the gated adoption transition. Candidate package projections
+// select target metadata inside the projector; source/current installs stay legacy.
+export const REGISTRY_STATE = "legacy";
+export const PUBLIC_COMMANDS = REGISTRY_STATE === "target" ? TARGET_PUBLIC_COMMANDS : LEGACY_PUBLIC_COMMANDS;
+export const SKILL_COLLECTIONS = REGISTRY_STATE === "target" ? TARGET_SKILL_COLLECTIONS : LEGACY_SKILL_COLLECTIONS;
+export const PUBLIC_COMMANDS_BY_NAME = new Map(PUBLIC_COMMANDS.map((command) => [command.name, command]));
+export const SKILL_COLLECTIONS_BY_ID = new Map(SKILL_COLLECTIONS.map((collection) => [collection.id, collection]));
 export const COLLECTION_REGISTRY = Object.freeze({
-  schemaVersion: 1,
-  collections: SKILL_COLLECTIONS,
-  publicCommands: PUBLIC_COMMANDS,
+  schemaVersion: 1, collections: SKILL_COLLECTIONS, publicCommands: PUBLIC_COMMANDS,
   compositeWorkflows: COMPOSITE_WORKFLOWS,
 });
 
@@ -204,7 +244,7 @@ function requireArray(value, message) {
   if (!Array.isArray(value)) throw new Error(message);
 }
 
-export function validateSkillCollectionRegistryModel(model) {
+export function validateSkillCollectionRegistryModel(model, { target = false } = {}) {
   if (!model || typeof model !== "object" || Array.isArray(model)) {
     throw new Error("The skill collection registry must be an object.");
   }
@@ -219,7 +259,9 @@ export function validateSkillCollectionRegistryModel(model) {
   if (new Set(collectionIds).size !== collectionIds.length) {
     throw new Error("Registered collection identities must be unique.");
   }
-  if (collectionIds.join("\0") !== ["qs-skills", "qs-specialists", "ps-skills"].join("\0")) {
+  const expectedCollections = target ? TARGET_SKILL_COLLECTIONS : SKILL_COLLECTIONS;
+  const expectedCommands = target ? TARGET_PUBLIC_COMMANDS : PUBLIC_COMMANDS;
+  if (collectionIds.join("\0") !== expectedCollections.map((collection) => collection.id).join("\0")) {
     throw new Error("The registry must preserve the confirmed collection order.");
   }
 
@@ -228,8 +270,8 @@ export function validateSkillCollectionRegistryModel(model) {
   if (commandNameSet.size !== commandNames.length) {
     throw new Error("Registered public command names must be unique.");
   }
-  if (model.publicCommands.length !== 33) {
-    throw new Error("The registry must contain exactly 33 public commands.");
+  if (commandNames.join("\0") !== expectedCommands.map((command) => command.name).join("\0")) {
+    throw new Error("The registry must contain exactly the catalog-declared public commands in order.");
   }
 
   const workflowIds = model.compositeWorkflows.map((workflow) => workflow.id);
@@ -289,6 +331,17 @@ export function validateSkillCollectionRegistryModel(model) {
     if (command.name === "qs-deploy-prompt" && command.outputKind !== "goal-workflow-prompt") {
       throw new Error("The deployment prompt command must declare its goal-workflow output kind.");
     }
+    if (command.name === "qs-help") {
+      const routing = command.primaryRouting;
+      if (routing?.kind !== PRIMARY_HELP_ROUTING.kind
+        || routing.referenceFile !== PRIMARY_HELP_ROUTING.referenceFile
+        || routing.availability !== PRIMARY_HELP_ROUTING.availability
+        || routing.automaticInvocation !== false) {
+        throw new Error("qs-help must preserve availability-checked primary routing without automatic invocation.");
+      }
+    } else if (command.primaryRouting !== undefined) {
+      throw new Error(`The public command ${command.name} cannot declare primary Help routing.`);
+    }
     if (typeof command.resultContext?.specProgress !== "boolean") {
       throw new Error(`The public command ${command.name} must define its spec-progress result contract.`);
     }
@@ -316,6 +369,7 @@ export function validateSkillCollectionRegistryModel(model) {
 }
 
 validateSkillCollectionRegistryModel(COLLECTION_REGISTRY);
+validateSkillCollectionRegistryModel(TARGET_COLLECTION_REGISTRY, { target: true });
 
 export function resolvePublicCommand(name) {
   const command = PUBLIC_COMMANDS_BY_NAME.get(name);
@@ -334,4 +388,40 @@ export function claudePublicSkillLiteral(name) {
 export function piPublicSkillLiteral(name) {
   resolvePublicCommand(name);
   return `/skill:${name}`;
+}
+
+/**
+ * Resolve a primary qs-help recommendation against observed host discovery.
+ * Supply exact literals from the active host; installed package names or catalog
+ * membership are insufficient evidence. This function neither invokes nor installs.
+ */
+export function resolvePrimaryHelpRoute(name, { harness = "codex", availableLiterals = [] } = {}) {
+  const command = resolvePublicCommand(name);
+  const literalByHarness = {
+    codex: codexPublicSkillLiteral,
+    claude: claudePublicSkillLiteral,
+    pi: piPublicSkillLiteral,
+  };
+  if (!Object.hasOwn(literalByHarness, harness)) {
+    throw new Error(`Unsupported primary Help routing harness: ${harness}.`);
+  }
+  if (!Array.isArray(availableLiterals)
+    || availableLiterals.some((literal) => typeof literal !== "string" || literal.trim() !== literal || !literal)) {
+    throw new Error("Primary Help routing requires an array of exact observed host literals.");
+  }
+  const literal = literalByHarness[harness](name);
+  const metadata = {
+    name: command.name,
+    collectionId: command.collectionId,
+    description: command.shortDescription,
+    harness,
+  };
+  if (!availableLiterals.includes(literal)) {
+    return Object.freeze({
+      ...metadata,
+      status: "input-required",
+      prerequisite: `Make ${command.collectionId} available in the active ${harness} host and verify discovery of ${name}. Installation or enabling requires user authority.`,
+    });
+  }
+  return Object.freeze({ ...metadata, status: "ready", literal });
 }

@@ -67,6 +67,15 @@ export async function loadManifest(path = DEFAULT_MANIFEST) {
   return normalizeManifest(JSON.parse(await readFile(path, "utf8")));
 }
 
+export function selectManifestResources(manifest, resourceNames) {
+  const normalized = normalizeManifest(manifest);
+  if (resourceNames === undefined) return normalized;
+  assertCondition(Array.isArray(resourceNames) && new Set(resourceNames).size === resourceNames.length
+    && resourceNames.every((name) => typeof name === "string" && normalized.resources.some((item) => item.name === name)),
+  "Resource selection contains unknown or duplicate identities.");
+  return { ...normalized, resources: normalized.resources.filter((item) => resourceNames.includes(item.name)) };
+}
+
 export async function calculateSkillDirectoryHash(root) {
   const files = [];
   async function collect(current) {
@@ -336,7 +345,10 @@ function writeOutput(value, json) {
 }
 
 export async function execute(options, { write = writeOutput } = {}) {
-  const manifest = await loadManifest(options.manifestPath);
+  const completeManifest = await loadManifest(options.manifestPath);
+  assertCondition(options.resourceNames === undefined || ["plan", "sync", "verify"].includes(options.action),
+    "Resource filtering is only supported for plan, sync and verify.");
+  const manifest = selectManifestResources(completeManifest, options.resourceNames);
   if (options.action === "inventory") {
     const report = await inventoryMachine({ manifest, homeDirectory: options.homeDirectory });
     write({ action: "inventory", ...report }, options.json);

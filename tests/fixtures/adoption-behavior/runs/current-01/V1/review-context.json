@@ -1,0 +1,80 @@
+{
+  "case": {
+    "id": "V1",
+    "skill": "qs-video",
+    "source": "skills/video/qs-video/SKILL.md",
+    "references": [
+      "skills/video/qs-video/references/runtime-compatibility.md",
+      "skills/video/qs-video/references/adaptation-policy.md"
+    ],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Write only a Spanish video-generation prompt for a12second9:16 museum announcement. Exact text: Northstar Museum; Family membership $100 / year; founded2020. Preserve supplied brand Georgia/#086b64/#f7f5ef. No generation, rendering, project files or provider calls. The prompt is the final deliverable.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-02",
+      "AC-19",
+      "AC-20"
+    ],
+    "expected": [
+      "Spanish prompt, exact facts and format",
+      "No generation/render/write",
+      "No boilerplate intake after facts supplied"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 17883.348918000003,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 25173,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 373,
+        "reasoning_output_tokens": 105
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 179,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "9d213e07d49e19225d04c5bb8a3da43c86bb4755f0fe116974c1af4e097e78a9",
+    "promptUtf8Bytes": 24518,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-EQmIO3",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "33c2d9f2b26f1fdf4daf1881d9560b4eb7991c0b80e681d54be6f332041bd88e",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

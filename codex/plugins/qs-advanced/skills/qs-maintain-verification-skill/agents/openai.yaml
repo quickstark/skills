@@ -1,0 +1,4 @@
+interface:
+  display_name: "QS Maintain Verification Skill"
+  short_description: "Reconcile verification coverage"
+  default_prompt: "Use $qs-advanced:qs-maintain-verification-skill to reconcile this verification workflow with observed product behavior. Modes: effort=quick|standard|deep and report=brief|full."

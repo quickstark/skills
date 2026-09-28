@@ -1,0 +1,29 @@
+{
+  "exitCode": 1,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:26:10.616Z",
+  "elapsedMs": 182.49760599999718,
+  "wallElapsedMs": 183,
+  "interrupted": false,
+  "modelOutputObserved": false,
+  "promptSHA256": "b6dded7897d5b69070a4134f67aa1a1660dde29ad45e38774af720fc63fe827c",
+  "promptUtf8Bytes": 20219,
+  "modelReportedByRuntime": null,
+  "usage": [],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "8e3330eeb312ddb37b9da73c3ece4a8aa7e2ade4b7bb255573aa487bc89f0f58",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-BbGh1E",
+    "--json",
+    "-"
+  ],
+  "messages": []
+}

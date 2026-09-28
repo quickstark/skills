@@ -1,0 +1,53 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 35,
+    "scenarioId": "P3",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "P3",
+  "inputSHA256": "6758c7bcb32c2aac1e81675f4ba6101114520208c7893cf701d79f02a4b3bc77",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-dpcDml",
+  "startedAt": "2026-09-25T19:39:50.880Z",
+  "completedAt": "2026-09-25T19:40:20.902Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25764,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 763,
+      "reasoning_output_tokens": 274
+    }
+  ],
+  "elapsedMs": 29972.511620000005,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "- [ ] Build — failed, reopened at ~50%; weight 60.\n- [ ] Git — blocked, 0%; weight 10.\n- [ ] Release — blocked, 0%; weight 30.\n\nStatus: Failed\nSkills used: /qs-code-build\nOutcome: The current revision changes CSV escaping and fails a required test, invalidating the earlier Build completion.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — current implementation and review milestones support partial progress, but required validation fails. Input needed: authoritative host goal-tool availability and matching goal state before execution.\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **30%**, down from 60%. Weights remain unchanged; valid partial progress is retained. These are coarse evidence-based estimates, not completion guarantees.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — Progress reassessment from supplied observations. Build is reopened; no operations were executed or artifacts produced in this response. Earlier verification no longer establishes completion at the changed revision.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — failed — first verify supported goal tools and inspect the matching goal with `get_goal`. After the goal gate and context recheck, repair escaping within Build, rerun CSV behavior and existing-screen checks, and review the changed diff. Git and Release remain blocked until Build is verified.\n\nGoal support and state have not been supplied. If support is unavailable, execution must stop with input required. No renewed authorization is needed for the already-authorized scope.\n\nNo deployment artifact/version or health evidence is supplied; staging delivery remains unverified.\n\nNext work prompt: None — repair belongs within the current Build root; Git and Release are already scheduled behind verification gates.",
+    "requestedActions": [
+      "Verify the host's supported goal-tool availability.",
+      "If supported, use get_goal to inspect authoritative state and identify the matching goal before any stage execution; preserve unrelated goals and require input if goal support is unavailable or an unrelated active goal blocks resumption."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

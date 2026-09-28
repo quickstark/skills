@@ -1,0 +1,80 @@
+{
+  "case": {
+    "id": "E1",
+    "skill": "qs-skill-eval",
+    "source": "skills/engineering/qs-skill-eval/SKILL.md",
+    "references": [
+      "skills/advanced/internal/parallel-coverage.md",
+      "skills/advanced/internal/decision-trail.md"
+    ],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Assess whether supplied experiment evidence can support adoption. Candidate workers used revision aaa with20samples ordered1..20. Returned report says revision bbb,18samples, random order; two workers disappeared. Earlier run failed then notes were overwritten with a success. Proposed evaluator receives labels Fast Preferred and Old Bad plus the answer rubric. No new trials or edits authorized.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-07",
+      "AC-12"
+    ],
+    "expected": [
+      "Reject mismatched/dropout evidence",
+      "Keep failure and append correction rather than overwrite",
+      "Neutral labels, hidden rubric from candidates, all output review",
+      "No adoption/efficacy claim"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 34640.87616600003,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 27784,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 913,
+        "reasoning_output_tokens": 343
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 346,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "32277a63c5d8af23eac8a841509c260f6b54e9e9bd5c72a4fce89db102c0312e",
+    "promptUtf8Bytes": 18021,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-DEsykq",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "6cfb40d0222437a744b0180c4fcc44b4eac04d1f60cbd578f0727efc00c21943",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

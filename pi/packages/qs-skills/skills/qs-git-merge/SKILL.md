@@ -22,6 +22,8 @@ Sequence integration into verifiable units. Migrate affected callers before remo
 
 Distinguish the actual cases explicitly: an ahead default branch may require an explicitly requested or approved `git push origin main`, with no branch merge required; a feature branch may require a pull request; an existing pull request may require merge; diverged branches may require merge or rebase conflict resolution. Never describe one case as another.
 
+When an authorized operation creates or updates a PR, lead its description with the concrete problem and resulting behavior. Include concise observed before/after evidence from the actual changed artifact, relevant commands and results, material risks, and the impact on rollback or compatibility. Distinguish measurements from expectations; never fabricate a benchmark or treat rollback documentation as execution authority. Write the exact multiline description to a body file or structured tool argument without shell interpolation.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

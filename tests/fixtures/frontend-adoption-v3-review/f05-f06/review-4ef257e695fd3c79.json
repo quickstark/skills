@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-4ef257e695fd3c79",
+  "scenarioId": "F06",
+  "reviewer": "Independent /root/adoption_hf_probe; capture-infrastructure contributor, not author of these outputs",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-4ef257e695fd3c79",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "3a9203b094f0fec891780410d67c88d5d06e5aff28adbf6d77eeb51a0cf853a2",
+      "bytes": 770
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "47148493d37587eb0a21bb626ed219c4de3151097e43cb5d3d4d3316edfc548b",
+      "bytes": 364
+    },
+    "actual-artifacts/evidence/narrow.png": {
+      "sha256": "bda108b70915dea359281af9da468305d7ddc2123a45f62e7ffcdba30201811a",
+      "bytes": 86065
+    },
+    "actual-artifacts/evidence/wide.png": {
+      "sha256": "fcd3e57fe26b05f851e702baff2ff7bc4ff4448b3df100a65ba8a6d8f35ca58b",
+      "bytes": 92029
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "f6d71cf9b7df8f0f80f0889cd0047258c237355765413efe17707b064ebf7799",
+      "bytes": 2180
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "71f63303d69bdc48a580e2eddb533fca8ac6d7d76f39c989b4bdf1d7397beba3",
+      "bytes": 3301
+    },
+    "browser/narrow.png": {
+      "sha256": "bda108b70915dea359281af9da468305d7ddc2123a45f62e7ffcdba30201811a",
+      "bytes": 86065
+    },
+    "browser/observations.json": {
+      "sha256": "6172599bd0361dfccf9f8b0c770118082fb38639be0c2b299242d74a4c386420",
+      "bytes": 22745
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "247d2dbfe7fbe5b2ada5ac8923f3739b9fe32bcea678328330a0287afb8c1750",
+      "bytes": 4744
+    },
+    "browser/wide.png": {
+      "sha256": "fcd3e57fe26b05f851e702baff2ff7bc4ff4448b3df100a65ba8a6d8f35ca58b",
+      "bytes": 92029
+    },
+    "context.json": {
+      "sha256": "f719ff490738b7767ea56107bcfe90c8c088122b610c5925c41056124fcaa11f",
+      "bytes": 9763
+    },
+    "events.jsonl": {
+      "sha256": "d31b3b009ecbf3b5248f78a1bea44fb54e1593644c3ed963b015131806975bda",
+      "bytes": 324556
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "96c93ef2f173e768aa3942c32121bbec8d0df425ecadc3af3867241f685f7c67",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "2b422bea6b197879eb585279ea81704d73a6179314dc6bd2cd0005a9d9d060c6",
+      "bytes": 1831
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "8678bbebd3990e18178c86998144a8ed3048ff0a3b93bb08b3a5b1a7869cd891",
+  "bundleManifestDefinition": "SHA256 Python json.dumps(fileBindings,sort_keys=True,separators=(comma,colon)), default ensure_ascii=True; all files separately bound.",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "rubricBindingDefinition": "Two-space UTF8 JSON plus newline reconstructed from opaque context; canonical digest binds parsed value. No variant/source lookup.",
+  "manifestVerification": "Every declared input/artifact hash and byte count verified; HTTP observation source and copy unchanged before/after and source hashes match actual artifacts. Every bundle file bound.",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-8aaa4b20-23dc-4021-a454-807c8a626a2e",
+        "eventLine": 48,
+        "type": "command_execution",
+        "itemSha256": "534497271f8e2a786d7a921070f64e32c585a85009b4615c35c1248883aad899",
+        "classification": "Exact authorized bound-guidance read; body withheld by reviewer export.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-f36c90e1-b34b-46b1-a2f4-6d68b75e0947",
+        "eventLine": 54,
+        "type": "command_execution",
+        "itemSha256": "3655e65c3703b0595d1843792f1f3bda2272221c31a7b0c1dfe7c8696423cb94",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-ad10470a-6d82-4b10-bd8b-a5dceacfe842",
+        "eventLine": 132,
+        "type": "command_execution",
+        "itemSha256": "67e2742cc6802d19f0036d6de708d1e8d6bf0f45827b598dbc13717e9d82abfd",
+        "classification": "Inspected local file discovery/read/copy or existing local test invocation; no generation/provider/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2de65eca-7693-4b8d-9946-228bf172c324",
+        "eventLine": 204,
+        "type": "command_execution",
+        "itemSha256": "47842d3225ea033bd89fe07d0131d335683b87e3d12db11185aa1df76c8906b4",
+        "classification": "Inspected local HTML/CSS/JS or evidence-helper edits; no external service/generation/publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-8e5117a5-f005-4c86-94cf-98ae207bbb7a",
+        "eventLine": 212,
+        "type": "command_execution",
+        "itemSha256": "3130aca7b95cf5521d0a9ff106edcfe18d5eb875b3569990599d9a1f2925e19b",
+        "classification": "Inspected local browser/check helper, DOM evaluation, screenshots and test assertions; existing dependency/browser only, no model/provider/package installation/publication. Helper body inspected in command/artifact.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-4e886649-d135-490d-a260-0253fea6e6da",
+        "eventLine": 293,
+        "type": "image_view",
+        "itemSha256": "b82f1bb4062e94c04feb3ed67e71bf2c4d270e0e11f0f399c233777985c3f7bb",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9cfff774-9713-43bd-a73d-1397e7d6e3ef",
+        "eventLine": 295,
+        "type": "image_view",
+        "itemSha256": "700b32e77bae4706f2652354eae5eb74dcd080bcbf671e1491a2db330c78b878",
+        "classification": "View an existing local browser screenshot; no image generation or publication.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0deca-a8d9-7942-a08c-743a30f13a4e",
+        "type": "userMessage",
+        "eventLine": 19,
+        "itemSha256": "b7b3cb86d1fa0a0a8d8213fdffde52e03a020a627826ec4f842eaa8a028ae4b4"
+      },
+      {
+        "id": "msg_02ea68fdb82e6ffd016ab802bd947087d1984043123e390e74",
+        "type": "agent_message",
+        "eventLine": 43,
+        "itemSha256": "5bf00a2526ebbd8421a193bb0985f8383397691875fffa57a323fbe728e3913a"
+      },
+      {
+        "id": "rs_02ea68fdb82e6ffd016ab802d085d487d186357a761baf9282",
+        "type": "reasoning",
+        "eventLine": 58,
+        "itemSha256": "3bbe6fc6d46198c124d8796e72a4d7d2f635ff673930490df4a442a539a367f5"
+      },
+      {
+        "id": "msg_02ea68fdb82e6ffd016ab802d0d66087d1b1b07525afedd2d5",
+        "type": "agent_message",
+        "eventLine": 127,
+        "itemSha256": "76903fd47044a1fa9f97894f7a82e3bbc72d3539c86446380e15cfde47484eab"
+      },
+      {
+        "id": "rs_02ea68fdb82e6ffd016ab802d7b04087d18f045a79f16a0128",
+        "type": "reasoning",
+        "eventLine": 136,
+        "itemSha256": "9af4347d47cafb9ab4febefda4b722917747558964b39345da5681526c6f1dcd"
+      },
+      {
+        "id": "msg_02ea68fdb82e6ffd016ab802dad86087d1ac1e09d4ecb2c708",
+        "type": "agent_message",
+        "eventLine": 198,
+        "itemSha256": "bff8395bc9b6cdc438b3ec2ba7394030a77436a0ff5f3a3320198dbb53ea30f9"
+      },
+      {
+        "id": "rs_02ea68fdb82e6ffd016ab8031ca44087d184661f9ee3b2fccd",
+        "type": "reasoning",
+        "eventLine": 202,
+        "itemSha256": "690499f17f69e3bc9d449eb263708bbbab151fc15fe79fd33f7fb1ff8c557eb2"
+      },
+      {
+        "id": "rs_02ea68fdb82e6ffd016ab8034dc39887d19eae40029d34c38e",
+        "type": "reasoning",
+        "eventLine": 208,
+        "itemSha256": "ca88a9026ad11aa0c036e14174c7cdbe2cda555932f56a6c20ef1403469a86f6"
+      },
+      {
+        "id": "rs_02ea68fdb82e6ffd016ab80370fa6c87d1a904b2e2ae60c3d2",
+        "type": "reasoning",
+        "eventLine": 216,
+        "itemSha256": "b69108b4069aa9f75db39946db3285b33a62c0176675871dbe694c9a0b0b6587"
+      },
+      {
+        "id": "msg_02ea68fdb82e6ffd016ab8037159c487d1a728bc3a5eb8f6d7",
+        "type": "agent_message",
+        "eventLine": 291,
+        "itemSha256": "1fdcb12d11afffb6ee214acc07c0fbde2b766bcb1dce018f186435a615dd3dd9"
+      },
+      {
+        "id": "msg_02ea68fdb82e6ffd016ab8037a71c087d1a9860140ed7beb9d",
+        "type": "agent_message",
+        "eventLine": 486,
+        "itemSha256": "7f05240fe06ddccb2dca079eb3bfce7dcdbcc71e48c924ab7e461fc711b4a471"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2,
+    "limits": "Commands and transitive local helper bodies inspected. Browser screenshots are raster captures, not image-generation calls. No whole-host network audit is implied."
+  },
+  "passes": [
+    "Coverage: every scenario check and all five dimensions; input/artifact/context/response and all completed native tools.",
+    "Domain: actual wide/narrow images opened, HTML/CSS/JS and test helpers read; browser behavior and immutable-copy transport inspected.",
+    "Contradiction: exact facts/routes/IDs, decorative motion, computed font/colors, valid/invalid events, screenshot timing and final claims.",
+    "Polish: preserve opaque identity, file/item/line bindings, limitations and original grades; no comparative/adoption judgment."
+  ],
+  "blindingLimits": [
+    "Only opaque contexts, inputs, artifacts, responses, events and fixed embedded rubric used; no variant map/source/raw trial lookup.",
+    "Visible wording/hashes may partially reveal identity; no preference inference used. Reviewer contributed infrastructure; not an author of the model outputs.",
+    "F02 schema consulted for record structure only; grades here independently assigned."
+  ],
+  "honestyLimits": [
+    "Only requested 1280x900 and390x844 states observed; no whole-site or all-browser certification.",
+    "Native image-view events prove a tool view occurred, not the quality of private visual reasoning. Final artifact images independently reviewed here.",
+    "Local screenshots and test files are authorized evidence artifacts; existing dependency/browser reads do not prove absence of every host/network event.",
+    "No new model, render or browser test was run by this reviewer. Parent verification/adoption decisions remain separate."
+  ],
+  "checks": [
+    {
+      "id": "exact-round-metrics",
+      "result": "pass",
+      "rationale": "Actual HTML, DOM and images retain10,000 members,50,000 annual visits and2020 founded exactly, stable metric IDs and correct labels."
+    },
+    {
+      "id": "exact-date-price-name",
+      "result": "pass",
+      "rationale": "Exact Family membership, $100 / year, January1,2025 and datetime2025-01-01 retained; date moved beneath price, organization and other content unchanged."
+    },
+    {
+      "id": "readable-hierarchy",
+      "result": "pass",
+      "rationale": "Opened both final images: strong teal price with readable adjacent effective date, separated fact columns using large tabular figures and small labels. Three columns fit390px without clipping, with coherent spacing and dividers."
+    },
+    {
+      "id": "no-invented-proof",
+      "result": "pass",
+      "rationale": "No invented exact numbers, testimonials, authority claims or external proof; only supplied facts and preserved existing text."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "All seven completed tools inspected: local guidance/discovery/source read, product edit, inline Puppeteer check and two existing screenshot views. Script only uses existing browser/dependency, file pages, DOM/assertions and local captures; no image-generation/provider/install/publication."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 4,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Requested exact figures/date and price hierarchy preserved and improved without fictitious proof.",
+    "visual-hierarchy-and-readability": "Opened both final images: strong teal price with readable adjacent effective date, separated fact columns using large tabular figures and small labels. Three columns fit390px without clipping, with coherent spacing and dividers.",
+    "interaction-or-screen-flow-clarity": "Associated visible email label, native submit button and3px focus outline; actual invalid blocking and keyboard submission produce one exact event/status. Uniform observer reaches button and corroborates result.",
+    "brand-and-platform-consistency": "Georgia, three museum colors and12px corner controls retained, restrained static responsive layout.",
+    "scope-and-evidence-honesty": "Views293/295 occur after final successful check212 and before final screenshot-inspection claim. Claimed overflow/keyboard/validation/analytics checks exist; no unsupported rendering/generation or external validation claim."
+  },
+  "caseSpecificEvidence": "Product edit204 repairs button/label and removes duplicate click handler while moving pricing date and styling facts. Check212 asserts exact values and geometry, keyboard/empty/invalid behavior and reduced motion; no external model tool.",
+  "overall": "pass",
+  "floorDecision": "All five required checks and all five dimensions meet floor3; parent aggregate decisions separate.",
+  "rationale": "Faithful metric/price improvement with actual readable images and demonstrably operable local form."
+}

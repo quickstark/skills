@@ -1,0 +1,27 @@
+{
+  "run": {
+    "trialId": "corrected-pilot-F10-v84",
+    "scenarioId": "F10",
+    "variant": "v84",
+    "repetition": null
+  },
+  "cwd": "/tmp/qs-frontend-corrected-pilot-Zq6jfR",
+  "comparisonExcluded": true,
+  "failure": false,
+  "before": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "interrupted": false,
+  "classification": "One corrected infrastructure pilot. Independent semantic review pending; no rendered or image quality claim.",
+  "originalFailedPilotRetained": "/tmp/qs-frontend-pilot-20260925",
+  "amendmentSHA256": "db836f3b67e0cc44a714261e42ecc006c41f704efd2edde214182a2445dc40af"
+}

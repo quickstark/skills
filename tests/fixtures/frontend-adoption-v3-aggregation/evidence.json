@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-26T17:19:47.566463+00:00",
+  "scope": "Synthetic-only preparation of read-only final aggregation; real mapping values and actual grade comparisons remain unread.",
+  "files": {
+    "tests/fixtures/frontend-adoption-v3-aggregation/aggregate.mjs": {
+      "sha256": "8daf45cbc8fc2cdbdfeb298ac99191a7f78cd29072770233b48ea54d71a5d45b",
+      "bytes": 31403
+    },
+    "tests/fixtures/frontend-adoption-v3-aggregation/aggregate.test.mjs": {
+      "sha256": "7726caef94f265ea6ba297d1ecc162646fb85ebd0a25c27c96c3b82828cd1d7c",
+      "bytes": 22522
+    },
+    "tests/fixtures/frontend-adoption-v3-aggregation/README.md": {
+      "sha256": "81d1f41a74040f6272f9d46af953226fd613bde9fa7698b377276fe6ec50c614",
+      "bytes": 5578
+    },
+    "tests/fixtures/frontend-adoption-v3-aggregation/initial-controls.log": {
+      "sha256": "dacc3e97597e2dcb72cae14a63eb02076227f702782601469197b280af1ff352",
+      "bytes": 1614
+    },
+    "tests/fixtures/frontend-adoption-v3-aggregation/expanded-controls.log": {
+      "sha256": "fbb0b5bafb1c35b7e440f423e2b3064a718f704e9fc55eca629d654bd4bc6f0b",
+      "bytes": 1828
+    },
+    "tests/fixtures/frontend-adoption-v3-aggregation/final-gate.log": {
+      "sha256": "7c8d4a7796569064f0677dbe34b44edc588860d97ff492f08a4be9edbc881961",
+      "bytes": 1269
+    },
+    "scripts/frontend-native-capture.mjs": {
+      "sha256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+      "bytes": 20259
+    },
+    "tests/fixtures/frontend-adoption-v3/rubric.json": {
+      "sha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+      "bytes": 2561
+    },
+    "tests/fixtures/frontend-adoption-v3/plan.json": {
+      "sha256": "62bb5776078183239fd906cbd063194e1fe1ea8e6e61ca839208dddd69e00455",
+      "bytes": 61005
+    }
+  },
+  "verification": {
+    "passed": 21,
+    "failed": 0,
+    "gate": "leaf-59:G1",
+    "fullSyntheticMatrix": 66,
+    "realComparisonAggregated": false,
+    "modelCalls": 0
+  },
+  "runtime": {
+    "node": "v24.21.0",
+    "python": "Python 3.12.3",
+    "pillow": "10.2.0"
+  },
+  "reviewSerialization": "Confirmed directly with blinded reviewer: Python sorted compact JSON with ensure_ascii=True over normalized reviewed event.item. No grades or mapping requested.",
+  "limitations": [
+    "Synthetic fixtures validate infrastructure, not model behavior or adoption.",
+    "Full evidence status still requires parent interpretation of frozen baseline/candidate labels and original aggregate criterion.",
+    "No pooled protocol results, retries, new noise margin, source-byte-as-token, skill-only efficiency, latency, or causal claim.",
+    "Real final aggregation and independent parent review remain unperformed."
+  ]
+}

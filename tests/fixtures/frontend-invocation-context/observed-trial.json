@@ -1,0 +1,28 @@
+{
+  "trial": "/tmp/qs-frontend-comparison-sampling-amended-20260925/F01-r1-v84",
+  "hashes": {
+    "prompt.txt": "4b9bd70c505688823f8eed1395568958d88447ce119ed3d84fa00f0a1cb9b22b",
+    "events.jsonl": "c5d9930448aaa2963db7b9e861316bc6af3e1c51b33f9a714c6c1d3ee9d9786c",
+    "response.md": "1ef20c88934f5041b46bc149b618a1cb012a2076981f7752b3edc1bc93355d9c"
+  },
+  "handoffRead": [
+    {
+      "eventType": "item.started",
+      "itemId": "item_1",
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!'\"\\\\.git' -g '\"'!*secret*'\"' -g '\"'!*env*'\"' . && cat /home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-flow-handoff/SKILL.md\"",
+      "exitCode": null
+    },
+    {
+      "eventType": "item.completed",
+      "itemId": "item_1",
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!'\"\\\\.git' -g '\"'!*secret*'\"' -g '\"'!*env*'\"' . && cat /home/djn12313/.codex/plugins/cache/quickstark/qs-skills/3.8.0/skills/qs-flow-handoff/SKILL.md\"",
+      "exitCode": 0
+    }
+  ],
+  "finalSkillReport": [
+    "Skills used: /qs-flow-handoff  "
+  ],
+  "embeddedLiteralLine": [
+    "Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-flow-handoff); Claude uses `/qs-flow-handoff`; Pi uses `/skill:qs-flow-handoff`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None \u2014 no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting."
+  ]
+}

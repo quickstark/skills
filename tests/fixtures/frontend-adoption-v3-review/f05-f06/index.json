@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/adoption_hf_probe",
+  "scope": "Twelve opaque F05/F06 independent reviews; original grades preserved; no variant/adoption decision",
+  "validation": {
+    "reviews": 12,
+    "bundleFilesVerified": 242,
+    "completedToolItemsVerified": 123,
+    "requiredChecks": 60,
+    "wideNarrowImagesOpened": 24,
+    "reviewCounts": {
+      "pass": 9,
+      "fail": 3
+    },
+    "validation": "All review/file/item/line/rubric/required-check/dimension bindings verified; this mechanical check does not assign or alter quality grades."
+  },
+  "reviews": [
+    {
+      "trialId": "review-002e18038080c5e6",
+      "scenarioId": "F05",
+      "reviewFile": "review-002e18038080c5e6.json",
+      "reviewSha256": "ceb438a498bb0e690506c74f3c4e2b201bca75df5642071e2b478eacf85ba8b7",
+      "bundleManifestSha256": "66be629928a841fc2633db03b132762fe752a397fca429aa9696079f61397e57",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-26676483dafec741",
+      "scenarioId": "F05",
+      "reviewFile": "review-26676483dafec741.json",
+      "reviewSha256": "27e84f3777628e597f7d06345bb7b124bdaecb76bad27fd9a9d172becb3d5c35",
+      "bundleManifestSha256": "07072e6b759f51bc329b15e81b4a45d7156ea0e109d649d28b956c6fc4d45c1c",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-3ffe58abe512dd78",
+      "scenarioId": "F06",
+      "reviewFile": "review-3ffe58abe512dd78.json",
+      "reviewSha256": "1480b045a11d575dcb914988e3b5735f6c2e0be3a5f24724df32db59e93fff18",
+      "bundleManifestSha256": "112e8a10d4bb45d4b656e5e6938e2789283aa686098d0d9510d96b3f7f47978d",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 2,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-4ef257e695fd3c79",
+      "scenarioId": "F06",
+      "reviewFile": "review-4ef257e695fd3c79.json",
+      "reviewSha256": "6e8d35693f01f8e05d4379e36f2b04e4365207806e66ebc593b59937a427ab55",
+      "bundleManifestSha256": "8678bbebd3990e18178c86998144a8ed3048ff0a3b93bb08b3a5b1a7869cd891",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-5abe9bfbc0250083",
+      "scenarioId": "F06",
+      "reviewFile": "review-5abe9bfbc0250083.json",
+      "reviewSha256": "a3caa268ab7f0a0e54ce7d7b2596a0c725b1d13b661e79c0e6694c1fa3839a4d",
+      "bundleManifestSha256": "266021c4b75311267d823efc9b7012c76844f359ec2a39d295a719d90c10caa1",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-5de7ae1cf53ea683",
+      "scenarioId": "F06",
+      "reviewFile": "review-5de7ae1cf53ea683.json",
+      "reviewSha256": "f3c25682fa2b53db3c09c309a2b0c0a278c05866b8b47fe8140cf68b4db0dd94",
+      "bundleManifestSha256": "7ca18c725990e5bd03f25af8150f7042171367c7bcdd083109db2a583bd1e7df",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 2,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-6ee59ac2e51e1671",
+      "scenarioId": "F05",
+      "reviewFile": "review-6ee59ac2e51e1671.json",
+      "reviewSha256": "1a173b0182928cabb8fade90d4271597319e82f1955322aa0f19eed4c5527ff9",
+      "bundleManifestSha256": "171f02448b82ffc92dacc393c11c42905c88e624b0baca6ee55f36a8cffa65b7",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-73f5682865be7308",
+      "scenarioId": "F05",
+      "reviewFile": "review-73f5682865be7308.json",
+      "reviewSha256": "ca983f82bfdcdde0cd1826ebc72703d776c4d969ba503ae39a23d1575c53210f",
+      "bundleManifestSha256": "920cc020ee20f83e0ea0b8cb5256837760eb47573c6c66ec663401f5d13242f7",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-7bfdf8cd372da93c",
+      "scenarioId": "F05",
+      "reviewFile": "review-7bfdf8cd372da93c.json",
+      "reviewSha256": "ead0eff38b96e843d396c005573367335e8c39a135fecfedf219424ec47590e7",
+      "bundleManifestSha256": "edfb31482ddd07c76a1cd01df10cd72d8e00bc05dc53c4820905d2de958fb0f6",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-7dfcc075c3a3a3a5",
+      "scenarioId": "F06",
+      "reviewFile": "review-7dfcc075c3a3a3a5.json",
+      "reviewSha256": "37d1830e33cbf63f49c106f6ce39cffb4ab655be0db28511f5387a5f74417a13",
+      "bundleManifestSha256": "300b3c1d399e1a95ab7b4b56ef0e932fbedf3bb9a58eb6359dd2b0df93e2e88d",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 2,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-8fa6e0ce7201864c",
+      "scenarioId": "F06",
+      "reviewFile": "review-8fa6e0ce7201864c.json",
+      "reviewSha256": "cb30cc8d6a07d01cb38c3a84d5be3b828ac84618f35d4349ece0a1a7207bf038",
+      "bundleManifestSha256": "1f091f52e7943300d266f63776cef5a9b58cb8e9a9f723c882ce7a7361689f88",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    },
+    {
+      "trialId": "review-ce950fdfcb703690",
+      "scenarioId": "F05",
+      "reviewFile": "review-ce950fdfcb703690.json",
+      "reviewSha256": "72d92de6d34de1e748107e17981fc275012114df8cd41d347f8020367a48c074",
+      "bundleManifestSha256": "a1c607d0543eaf681b4acf36fdcb5a3c52454f540141d070cdbe8aad3af209de",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "requiredChecks": {
+        "pass": 5
+      }
+    }
+  ],
+  "corrections": "classification-corrections.json"
+}

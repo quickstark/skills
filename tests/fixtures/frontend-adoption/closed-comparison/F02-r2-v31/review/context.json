@@ -1,0 +1,237 @@
+{
+  "trialId": "F02-r2-v31",
+  "task": {
+    "id": "F02",
+    "title": "audit only",
+    "mode": "audit",
+    "projectFixture": "project",
+    "input": "Audit this membership flow for the most important usability and accessibility problems. Give prioritized findings with concrete evidence and fixes. Do not edit files or redesign it yet.",
+    "requiredChecks": [
+      "zero-file-mutation",
+      "specific-observed-findings",
+      "prioritized-impact",
+      "no-claimed-implementation",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": false,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "unchanged-input-files"
+    ],
+    "qualityFloor": 3
+  },
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "inputManifest": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "actualArtifactManifest": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "rawToolItems": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g '\"'!node_modules'\"' -g '\"'!package-lock.json'\"' -g '\"'!yarn.lock'\"' -g '\"'!'\"\\\\.git'\"",
+      "aggregated_output": "/tmp/qs-frontend-trial-hRBcmw\nindex.html\nstyle.css\napp.js\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'ls -la && sha256sum index.html style.css app.js'",
+      "aggregated_output": "total 176\ndrwx------    5 djn12313 djn12313   4096 Sep 25 16:11 .\ndrwxrwxrwt 1973 nobody   nogroup  159744 Sep 25 16:11 ..\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 16:11 .agents\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 16:11 .codex\ndr-xr-xr-x    2 djn12313 djn12313     40 Sep 25 16:11 .git\n-rw-rw-r--    1 djn12313 djn12313    447 Sep 25 16:11 app.js\n-rw-rw-r--    1 djn12313 djn12313   2049 Sep 25 16:11 index.html\n-rw-rw-r--    1 djn12313 djn12313   1266 Sep 25 16:11 style.css\ne7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f  index.html\ndde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3  style.css\n3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41  app.js\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/zsh -lc 'nl -ba index.html && nl -ba style.css && nl -ba app.js'",
+      "aggregated_output": "     1\t<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Northstar Museum membership</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>\n     2\t<header id=\"site-header\"><a class=\"wordmark\" href=\"/\">Northstar Museum</a><nav aria-label=\"Main\"><a href=\"/visit\">Visit</a><a href=\"/collections\">Collections</a><a href=\"/membership\" aria-current=\"page\">Membership</a></nav></header>\n     3\t<main><section class=\"intro\"><p class=\"eyebrow\">A place for curiosity</p><h1>Make room for wonder.</h1><p>Family membership keeps discovery close to home.</p></section>\n     4\t<section id=\"membership-panel\" aria-labelledby=\"membership-title\"><div><p class=\"eyebrow\">Family membership</p><h2 id=\"membership-title\">A year of discovery</h2><p>Unlimited entry for two adults and children under 18.</p><p class=\"price\" id=\"price\">$100 <span>/ year</span></p><ul><li>Unlimited gallery visits</li><li>Member preview evenings</li><li>10% off the museum shop</li></ul><a id=\"details-link\" href=\"/membership/family\">View membership details</a></div>\n     5\t<form id=\"join-form\" action=\"/join/checkout?plan=family\"><h3>Your next visit starts here</h3><p>Enter your email to continue.</p><input id=\"member-email\" name=\"email\" type=\"email\" placeholder=\"Email address\" required><div id=\"join-button\" class=\"button\" data-event=\"join_started\">Continue with family membership</div><p id=\"form-message\" role=\"status\"></p><p>By continuing, you accept our <a href=\"/privacy\">privacy notice</a>.</p></form></section>\n     6\t<section class=\"metrics\" aria-label=\"Museum facts\"><p><strong id=\"member-count\" class=\"pulse\">10,000</strong> members</p><p><strong id=\"annual-visits\">50,000</strong> annual visits</p><p><strong id=\"founded\">2020</strong> founded</p><p>Membership pricing effective <time datetime=\"2025-01-01\">January 1, 2025</time>.</p></section></main>\n     7\t<footer id=\"site-footer\"><p>Northstar Museum</p><a href=\"/accessibility\">Accessibility</a><a href=\"/privacy\">Privacy</a></footer><script src=\"app.js\"></script></body></html>\n     1\t:root{--brand:#086b64;--paper:#f7f5ef;--ink:#182d2a;--radius:12px}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,serif}header,footer{display:flex;justify-content:space-between;gap:24px;padding:28px 40px;background:white}a{color:var(--brand)}nav{display:flex;gap:20px}.wordmark{font-size:24px;font-weight:bold;text-decoration:none}main{padding:32px 40px;min-width:960px}.intro{max-width:740px;margin-bottom:24px}h1{font-size:56px;margin:12px 0;line-height:1.1}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:13px}#membership-panel{display:grid;grid-template-columns:1fr 1fr;gap:40px;background:white;border-radius:var(--radius);padding:32px}.price{font-size:48px;margin:20px 0}.price span{font-size:16px}.button{display:block;background:var(--brand);color:white;padding:16px;cursor:pointer;border-radius:var(--radius);margin-top:16px}input{width:100%;padding:14px;border:1px solid #9baea9;border-radius:var(--radius);font:inherit}a:focus,input:focus{outline:none}.metrics{display:flex;gap:32px;margin-top:32px;align-items:center}.metrics strong{font-size:24px}.pulse{display:inline-block;animation:gentle-pulse 2s infinite}footer{margin-top:20px}@keyframes gentle-pulse{50%{transform:scale(1.04)}}\n     1\twindow.__events=[];\n     2\tconst form=document.getElementById('join-form');\n     3\tfunction submitMembership(event){event.preventDefault();if(!form.reportValidity())return;window.__events.push({name:'join_started',plan:'family'});document.getElementById('form-message').textContent='Ready to continue with Family membership.';}\n     4\tform.addEventListener('submit',submitMembership);\n     5\tdocument.getElementById('join-button').addEventListener('click',submitMembership);\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "execution": {
+    "exitCode": null,
+    "timedOut": false,
+    "stopReason": null,
+    "completedTurn": false,
+    "processObservation": {
+      "passes": 243,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "observedOwnedResidualProcesses": []
+  },
+  "browserStatus": "not-applicable",
+  "rubric": {
+    "schemaVersion": 1,
+    "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+    "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+    "scores": {
+      "0": "Missing or unusable requested outcome",
+      "1": "Major task, readability or consistency failures",
+      "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+      "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+      "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+    },
+    "dimensions": [
+      "brief-and-content-fidelity",
+      "visual-hierarchy-and-readability",
+      "interaction-or-screen-flow-clarity",
+      "brand-and-platform-consistency",
+      "scope-and-evidence-honesty"
+    ],
+    "floor": 3,
+    "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+    "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+    "notAutomatic": [
+      "Source-string matching cannot establish behavior.",
+      "Browser metrics are observations for independent review, not aesthetic grades.",
+      "A screenshot cannot prove keyboard behavior.",
+      "An image prompt is not an image.",
+      "A response-only pilot cannot certify rendered or generated-image quality."
+    ],
+    "reviewSchema": {
+      "trialId": "string",
+      "reviewer": "independent identity",
+      "checks": [
+        {
+          "id": "scenario required check",
+          "result": "pass|fail|unverified",
+          "rationale": "cite response/artifact/event/observation"
+        }
+      ],
+      "dimensions": {
+        "dimension": "0..4 or not-applicable with reason"
+      },
+      "overall": "pass|fail|unverified",
+      "rationale": "evidence-backed explanation"
+    }
+  },
+  "reviewStatus": "Pending independent reviewer. Do not infer image/render quality from prose or source matching. Source names may remain visible in raw responses; blinding is partial."
+}

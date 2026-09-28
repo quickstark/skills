@@ -1,0 +1,24 @@
+{
+  "id": "P1",
+  "cwd": "/tmp/qs-behavior-task-FAknNa",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-deploy-prompt/SKILL.md",
+      "sourceSHA256": "f47e615e43d47daa26ea1f313d83a901c2b476356e360e4cae33604e2804763c",
+      "derivedSHA256": "16d02c84b8c53b2baf4d0f57c183dd153091bd25be7dca2b16c0a6a7d881c3c3",
+      "bytes": 17682
+    }
+  ]
+}

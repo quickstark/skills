@@ -1,0 +1,50 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 12,
+    "scenarioId": "G6",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "G6",
+  "inputSHA256": "ffb002ccf7b77c15e14f1c0cd030cf4bc82ea99cc15ee07d989fbb0fd2554775",
+  "sourceSHA256": "f47e615e43d47daa26ea1f313d83a901c2b476356e360e4cae33604e2804763c",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-epIpnL",
+  "startedAt": "2026-09-25T19:19:02.656Z",
+  "completedAt": "2026-09-25T19:19:32.612Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25840,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 772,
+      "reasoning_output_tokens": 372
+    }
+  ],
+  "elapsedMs": 29906.856944,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "- [x] Verified — Review supplied scope, deployment workflow, and authorization (weight 40%).\n- [ ] Blocked — Generate an execution-ready goal prompt (weight 60%).\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: The host exposes no goal tools. This supersedes G1’s earlier capability observation and prevents generating the required goal execution prompt. Provide a goal-capable host; the feature requirements and staging authorization are already settled. Execution has not started.\n\nStage: Prompt generation | Stage estimate: ~0% | Overall estimate: ~40% | blocked — Supplied prerequisites reviewed; required goal capability is absent. Input needed: A host exposing actual goal-state read, create/resume, and update tools.\n\nSpecs: Not located\n\nWork summary:\n- Finished — Reviewed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`: export currently filtered invoices with a header row and CSV escaping while preserving the existing screen. No implementation or specification exists. No commands or product actions were performed.\n- Next — [G1 CSV invoice export/staging](/fixture/ledger-app/docs/deploy.md) — blocked — Provide goal capability, then regenerate the execution prompt. Preserve authorization for repository edits/build/tests, commit/push of `feature/export` to `origin`, and documented staging deployment. Merge, production, unrelated changes, and rollback execution are not authorized.\n\nDeployment evidence supplied: `npm run deploy:staging`; acceptance requires `/health` HTTP 200 and a version matching the built artifact. Credentials are reported present. `npm run rollback:staging` documents a recovery option without granting execution authority.\n\nNext work prompt: None — missing goal capability blocks readiness; ordinary execution cannot substitute for the requested goal workflow.",
+    "requestedActions": [],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

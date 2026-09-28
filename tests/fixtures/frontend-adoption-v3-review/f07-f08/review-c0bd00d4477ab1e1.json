@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-c0bd00d4477ab1e1",
+  "scenarioId": "F07",
+  "reviewer": "adoption_a_ps independent F07-F08 review",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-c0bd00d4477ab1e1",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "bd983fc4575b6a6acb11e9281e81ecbe17383d8b80faa7402af53b188766d384",
+      "bytes": 1580
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/evidence/after-normal-1280.png": {
+      "sha256": "97686bbcef1ae732ca7441873d2e3648cdb49ebf7819fc7f92cf35a948d9946f",
+      "bytes": 87453
+    },
+    "actual-artifacts/evidence/after-normal-390.png": {
+      "sha256": "a5757aac5303b4989212927645b8fdc73121d4bd131eda6defec5936afc2211a",
+      "bytes": 50987
+    },
+    "actual-artifacts/evidence/before-normal-1280.png": {
+      "sha256": "97686bbcef1ae732ca7441873d2e3648cdb49ebf7819fc7f92cf35a948d9946f",
+      "bytes": 87453
+    },
+    "actual-artifacts/evidence/before-normal-390.png": {
+      "sha256": "a5757aac5303b4989212927645b8fdc73121d4bd131eda6defec5936afc2211a",
+      "bytes": 50987
+    },
+    "actual-artifacts/evidence/reduced-motion-1280.png": {
+      "sha256": "976dfc69bcf8c119692a844de021f0f3364903bc8b338bc72de28a80ca71ee85",
+      "bytes": 87143
+    },
+    "actual-artifacts/evidence/reduced-motion-390.png": {
+      "sha256": "90f751ce4796d3e6ea8b7ae826e74e91cef8dff7464cae7e155e83bf04360995",
+      "bytes": 50988
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "24adf8197476e80142fb97405f8abb396268981dedcb39743ddf8132f86dbc77",
+      "bytes": 1329
+    },
+    "browser/narrow.png": {
+      "sha256": "72c3004ab20ff45e918739d63a283f7c1dd3f42ed4842c6c3f93221b12cd25ee",
+      "bytes": 87439
+    },
+    "browser/observations.json": {
+      "sha256": "a5c11475638c6003cc25f57d2f8503460e22da2a2abc2bf1c4d5329ea5416a3d",
+      "bytes": 20739
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "45c03f2b14505553cdbc0334580fee46bf8937dbc3ddbf3c49be206346130224",
+      "bytes": 7284
+    },
+    "browser/wide.png": {
+      "sha256": "3503f23ea823fb0cabe055af9cbc10aa15d55f64417fd4705802b4159d12ccfa",
+      "bytes": 89180
+    },
+    "context.json": {
+      "sha256": "f4ab05b2accff311b09fb9c271e171c94241872c07b542cbc24c300c45612437",
+      "bytes": 10563
+    },
+    "events.jsonl": {
+      "sha256": "9a18cd3384fb4b1171dddddbe22ed32155a15c6f654ab407ae0a6cf26cc929b2",
+      "bytes": 378687
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "10e3f901b0c11aae386115a31dbf52683dc2688a2ada2cd82cb860bbecd93002",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "f79d92ea6d3dfa36b226100ca27c3a8191306ef8ed28e78fd8e2f17faf27d231",
+      "bytes": 1791
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "f01d44709d7e190a4bd3dcf149b3192a8bb235b24b97ada6e6bdaec157bf434d",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "Full file hash/size inventory bound; input/output HTML and JS equal. HTTP transport source/copy before/after manifests match, completed without failure.",
+  "checks": [
+    {
+      "id": "reduced-motion-animation-off",
+      "result": "pass",
+      "rationale": "Native line133 reproduces1 active gentle-pulse under reduce before edit at both widths. Final line308 and uniform reducedMotion observations confirm animation none, transform none and0 active animations at1280/390 and live preference restoration."
+    },
+    {
+      "id": "content-remains-visible",
+      "result": "pass",
+      "rationale": "Opened actual wide/narrow and normal/reduced desktop images. Uniform reducedMotion has no hidden/animated elements; final helper checks identical body text and no hidden content. Early line217 pixel-equality assertion failed; line242 confines measured difference to member-count bounds(41,691,106,710). This is not a claim that reduced and normal screenshots are byte-identical."
+    },
+    {
+      "id": "no-broad-redesign",
+      "result": "pass",
+      "rationale": "Only product modification appends one reduced-motion media rule to style.css. HTML and app.js are byte-identical; line308 reports normal screenshots byte-identical to pre-edit capture at both widths. Existing960px narrow content width remains."
+    },
+    {
+      "id": "analytics-and-form-preserved",
+      "result": "pass",
+      "rationale": "Exact app.js and form DOM preserved. Full line308 browser helper verifies invalid/empty no analytics, valid Enter from email then click exact join_started/family events and expected confirmation. Uniform observer cannot tab to inherited div join control (reachedJoin=false); this differs from pressing Enter in the email and remains outside F07 repair."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Reviewed9 shell commands,1 scoped file change and3 imageView calls. Shell bodies use local file reads/Puppeteer screenshots/Pillow comparisons; none invokes a generator/provider, installs or publishes. Failed python invocation at234 is command-not-found, retried with existing python3 at242."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Exact pulse defect repaired with a one-rule product change; complete facts, routes, IDs and content preserved. Actual preference changes and form behavior verified.",
+    "visual-hierarchy-and-readability": "Actual wide/narrow images keep readable static metric/content and original hierarchy; inherited960px narrow overflow remains. Motion-only scope calls for preservation, not a broader responsive redesign.",
+    "interaction-or-screen-flow-clarity": "Reduced-motion state retains the existing usable click and email-Enter flow and feedback. The inherited nonfocusable div button is not repaired or credited as a new keyboard capability.",
+    "brand-and-platform-consistency": "Computed Georgia, rgb(8,107,100),12px panel radius and unchanged tokens/layout agree with supplied brand; actual reduced-motion preference is respected.",
+    "scope-and-evidence-honesty": "Initial strict pixel assertion and missing python executable remain in native evidence. Subsequent measured bounds and final DOM/form checks support the narrower truthful claim; final response explicitly leaves mobile overflow outside scope."
+  },
+  "blindingLimits": [
+    "Opaque bundle only; source/operator mappings and other reviewer scores were not read.",
+    "Guidance outputs suppressed, including any partial body leakage. Response exposes workflow/reporting conventions and guidance-file link, which can incidentally suggest source identity; no mapping inference is used."
+  ],
+  "overall": "pass",
+  "floorDecision": "All requested F07 checks pass; all applicable dimensions meet3 within the bounded motion repair.",
+  "rationale": "Targeted media-query repair is supported by independent reduced-motion observations and successful final form/analytics checks. Failed pixel-equality/python attempts and inherited overflow/tab-button limitations are preserved explicitly.",
+  "screenshotsOpened": [
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-c0bd00d4477ab1e1/browser/wide.png",
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-c0bd00d4477ab1e1/browser/narrow.png",
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-c0bd00d4477ab1e1/actual-artifacts/evidence/reduced-motion-1280.png",
+    "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-c0bd00d4477ab1e1/actual-artifacts/evidence/after-normal-1280.png"
+  ],
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed tool IDs; native duplicates/deltas are not extra calls.",
+    "classifiedItems": [
+      {
+        "id": "exec-8c0acb5f-7aac-4f85-9683-191f5047a45d",
+        "eventLine": 50,
+        "type": "command_execution",
+        "itemSha256": "1e90622754a3d52f02aa8df534b224bf66ae232138e779f1f8ea632c836af053",
+        "classification": "Exact cat reads bound guidance; source body not inspected by reviewer.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-7cdc730f-4711-4c41-9c17-63a9b19217e7",
+        "eventLine": 56,
+        "type": "command_execution",
+        "itemSha256": "134abbd5fde7eff2172850e5ac445ee6545164152417a54180cf3cb374ae4ad4",
+        "classification": "pwd/rg inventories local task files, excluding guidance; no external action.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-59f5934d-4dd9-4b1e-881e-76bf0a536874",
+        "eventLine": 125,
+        "type": "command_execution",
+        "itemSha256": "15f2edd02a542cbb232a6fb881964ae2c659a2e3424751b16e5d514f3952af6d",
+        "classification": "cat reads local HTML/CSS/JS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d335aba5-aa9c-456f-8d1a-ef8e66981c1b",
+        "eventLine": 133,
+        "type": "command_execution",
+        "itemSha256": "b737a6a9486dd8fefa08722efc3c8ac1c6909956633437eb0f5a6d980a3286ba",
+        "classification": "Inspected inline Puppeteer captures pre-edit local baseline at1280/390, reproduces animation, intercepts non-file requests and closes browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-2873f5a5-e718-4656-8bd6-7b0f1205e8bb",
+        "eventLine": 137,
+        "type": "file_change",
+        "itemSha256": "a3c746c1773158806cb9df3c515187cb36714ebe849d7d806ba8793a3ae727f9",
+        "classification": "Native file patch adds only .pulse animation:none under reduced-motion media query.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-611b3924-9383-4c3a-96b1-b0f53494ce59",
+        "eventLine": 141,
+        "type": "command_execution",
+        "itemSha256": "8c459c5bfd28246b0dc411cff77d3e6380febc6dd4ddd8dc4aff862b5e4d541d",
+        "classification": "tail reads final CSS rule.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-1a7a4806-ab2c-4d62-b543-101b551c0dc0",
+        "eventLine": 217,
+        "type": "command_execution",
+        "itemSha256": "b61172eb22cb281bee24eaffd1c85b792f264ca37c1eee1df0695d334657e46f",
+        "classification": "Inspected local Puppeteer verification/screenshot script; exits1 on exact reduced-vs-normal screenshot assertion. No generator/network/publication; browser closes in finally.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c21c03b9-d4d5-473d-a2bb-225c6a2a6653",
+        "eventLine": 224,
+        "type": "image_view",
+        "itemSha256": "ce89855d16a70beded6c5d8392a03d77c368155631e9cb2185be3a904881cd7f",
+        "classification": "imageView opens local reduced desktop screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-d854f340-5378-4a85-8aea-91c06c2cb7e5",
+        "eventLine": 226,
+        "type": "image_view",
+        "itemSha256": "e40092a068ab941357cf00679414df520984147f647cadbda2f515693b7cc267",
+        "classification": "imageView opens local normal desktop screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9ce49f05-7167-42a1-a223-5ea93274b9d9",
+        "eventLine": 234,
+        "type": "command_execution",
+        "itemSha256": "be678255bea79017b8723a61310333e00f79bd9d713a7e53d055a484d52b503e",
+        "classification": "Pillow comparison attempted with absent python; exit127, no file changes or provider.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-28ac931f-f669-4330-9664-fa3162c9a71b",
+        "eventLine": 242,
+        "type": "command_execution",
+        "itemSha256": "35b349b4504818005945a327929a069c6fc1e13c9b2a33a7a24f4c9c060696aa",
+        "classification": "Existing python3/Pillow reads two local PNGs and prints difference bounds; no image editing or generation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-35dea643-6429-45a9-b331-fa46dc5fd7d8",
+        "eventLine": 308,
+        "type": "command_execution",
+        "itemSha256": "428d18fcec0a9980e1e9780e7cd3060bc87cd6e65d3110d3a5a07a9abc219e03",
+        "classification": "Inspected final local Puppeteer checks pre/post normal PNG equality, visible text, zero motion, preference switching and valid/invalid email Enter/click analytics at both widths; records screenshots, rejects external requests and closes browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-912772df-8bfc-4116-b1c9-6d127af5d0e0",
+        "eventLine": 313,
+        "type": "image_view",
+        "itemSha256": "c88b246b788b4de6763356ad7ce1a957ac301bd3a0531bc0a622e9ae8a7e6180",
+        "classification": "imageView opens local reduced narrow screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 3,
+    "limits": "Every listed action/helper and non-guidance result was inspected without execution/rerender. No semantic absence is inferred from native named count alone. Process evidence covers observed owned PIDs only."
+  },
+  "passes": [
+    "Read exact task/common facts and fixed rubric without source/operator mapping or other reviewer scores.",
+    "Inspect input/output files, complete tool actions/helper bodies and non-guidance runtime results, retaining failures.",
+    "Open actual wide/narrow images and reconcile visual findings with independent uniform HTTP observations and task-specific evidence.",
+    "Bind exact files/items/rubric; record original judgments and inherited/evidence limitations without comparison or adoption."
+  ]
+}

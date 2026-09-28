@@ -1,0 +1,135 @@
+{
+  "commands": [
+    {
+      "rawProtocolLine": 63,
+      "id": "exec-bf8b950f-c0a5-4772-a697-d2555382e48c",
+      "command": "/usr/bin/zsh -lc \"pwd; rg --files -g 'AGENTS.md' -g 'RUNTIME.md' -g 'instructions.md' -g 'BRIEF.md' -g '*'\"",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 68194,
+      "outputSHA256": "8b6866c3c9183a44c94983e3924b13133ecbb01f0261c4dda497eae834944380"
+    },
+    {
+      "rawProtocolLine": 72,
+      "id": "exec-ab8968bd-6f62-4aab-b93c-0279b71d93ea",
+      "command": "/usr/bin/zsh -lc \"cat guidance/instructions.md RUNTIME.md composition/BRIEF.md; rg --files -g AGENTS.md -g '\"'!guidance/modules/**'\"' /tmp 2>/dev/null\"",
+      "exitCode": 2,
+      "status": "failed",
+      "outputBytes": 14968,
+      "outputSHA256": "34c3591cecb09257eb6d909a511d29545176e8ec04ef9ba190a5146c6bab0db1"
+    },
+    {
+      "rawProtocolLine": 227,
+      "id": "exec-d8f3e26b-1b7a-465c-9d5d-5fe442b139ee",
+      "command": "/usr/bin/zsh -lc 'cat guidance/references/runtime-compatibility.md guidance/references/adaptation-policy.md guidance/references/dependency-index.json tools/runtime.mjs tools/runtime-profile.json tools/offline.mjs composition/package.json composition/index.html'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 395006,
+      "outputSHA256": "1fba29a073a4c3e6046a5fd5daea057e01acac7e209f8ef3cade45699778ba1c"
+    },
+    {
+      "rawProtocolLine": 242,
+      "id": "exec-7f7fb53f-48a1-4a47-ac3b-48a8665a9492",
+      "command": "/usr/bin/zsh -lc 'cat guidance/modules/hyperframes-cli/instructions.md guidance/modules/hyperframes-cli/references/preview-render.md guidance/modules/hyperframes-cli/references/lint-validate-inspect.md'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 64429,
+      "outputSHA256": "d6c25823ad4926ced7e2d777e04266b2f437ceee0ffddd9144e7f404bd7bdc93"
+    },
+    {
+      "rawProtocolLine": 245,
+      "id": "exec-3b343f38-fe78-4d9a-a615-0c6a7aabc50a",
+      "command": "/usr/bin/zsh -lc 'node tools/runtime.mjs version'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 7,
+      "outputSHA256": "65fba452812437bad91521ed284d4c624aad19d1564ef319ade51eb177a8d232"
+    },
+    {
+      "rawProtocolLine": 261,
+      "id": "exec-1bb9d296-0a6a-4068-8f54-27c5fbc0af81",
+      "command": "/usr/bin/zsh -lc \"sed -n '1,115p' guidance/modules/hyperframes-cli/references/preview-render.md; sha256sum composition/*\"",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 9161,
+      "outputSHA256": "d73c3e7d879283878db1478a4b92ce2248d79bf1fc627651d6bc65c01ac8f569"
+    },
+    {
+      "rawProtocolLine": 266,
+      "id": "exec-bc340dac-11b2-413c-a1af-bc248a15743a",
+      "command": "/usr/bin/zsh -lc 'node tools/runtime.mjs check'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 1374,
+      "outputSHA256": "4676034c7b98db4d98c84a5c0c4e143d771d64a973ffbfe9ae185525bda277cf"
+    },
+    {
+      "rawProtocolLine": 271,
+      "id": "exec-86d694b6-263b-4341-a0d6-babced3eb27e",
+      "command": "/usr/bin/zsh -lc \"sed -n '116,155p' guidance/modules/hyperframes-cli/references/preview-render.md\"",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 17981,
+      "outputSHA256": "45e5e74fd9a56f293a9873ce233355a87da1706cfc992cc5713473383782570c"
+    },
+    {
+      "rawProtocolLine": 388,
+      "id": "exec-fe0f21cb-867c-4dec-9748-6e3a3d401c3b",
+      "command": "/usr/bin/zsh -lc 'node tools/runtime.mjs render'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 9199,
+      "outputSHA256": "ab5edccbc2a16435952ff335985cf99db4cada645204539277f4c8bcd84bc32c"
+    },
+    {
+      "rawProtocolLine": 393,
+      "id": "exec-bda6fb28-170c-40e2-a24c-a4713abc5c49",
+      "command": "/usr/bin/zsh -lc 'node tools/runtime.mjs inspect'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 4615,
+      "outputSHA256": "95b29496863b66193936151a1715d1cf5c8803644bd40548408841c5111f1765"
+    },
+    {
+      "rawProtocolLine": 412,
+      "id": "exec-bb2bb5ff-1dad-4585-acee-91d02e1dd3d4",
+      "command": "/usr/bin/zsh -lc 'cat output/network.jsonl; sha256sum composition/*; rg --files output'",
+      "exitCode": 0,
+      "status": "completed",
+      "outputBytes": 3866,
+      "outputSHA256": "30b53dfd5acba9213a095c832a495ea9a68fde83f76c302418f6835a0b01a4b2"
+    }
+  ],
+  "views": [
+    {
+      "rawProtocolLine": 397,
+      "id": "exec-e831553a-d581-412c-98e2-3f681aef0f79",
+      "path": "/tmp/qs-video-native-workspace-20260926/output/frame-1.75.png",
+      "archivedPath": "capture/after/output/frame-1.75.png",
+      "sha256": "878ff9f73ee896912ddad108a67fa828d5e51efaf843428a332f61a832975b25",
+      "beforeAbsent": true,
+      "elapsedMs": 64529.35610899999
+    },
+    {
+      "rawProtocolLine": 399,
+      "id": "exec-cc81e73d-d4c5-4444-8391-18b926d81de7",
+      "path": "/tmp/qs-video-native-workspace-20260926/output/frame-0.25.png",
+      "archivedPath": "capture/after/output/frame-0.25.png",
+      "sha256": "4939d8a4b9777b94e2baee253f492ca7cdc7006f04ce0afe7b0ef8988d9dcf55",
+      "beforeAbsent": true,
+      "elapsedMs": 64529.986096
+    },
+    {
+      "rawProtocolLine": 401,
+      "id": "exec-9fab5fbe-0513-4b91-874a-6121a8e63c59",
+      "path": "/tmp/qs-video-native-workspace-20260926/output/frame-1.png",
+      "archivedPath": "capture/after/output/frame-1.png",
+      "sha256": "818c2510eb071c01b3ac177869119b5bade29897bbfaf6675c3aaa8aea50a6f9",
+      "beforeAbsent": true,
+      "elapsedMs": 64538.508339
+    }
+  ],
+  "viewOrdering": "All three completed views follow wrapper inspect completion and precede final agent report. View order is1.75s,0.25s,1s.",
+  "noGenerationEvidence": "All11 commands inspected: file listing/reads/hash checks and the four exact fixed wrapper actions; three native imageView calls. No generation/provider/install/publication command or native imageGeneration item observed. Runtime freshness attempts are separately denied/logged.",
+  "exploratoryFailure": "Second command lists AGENTS.md paths across /tmp and exits2; returned unrelated filenames are not subsequently read. This is inefficient reconnaissance, not a passed required runtime check."
+}

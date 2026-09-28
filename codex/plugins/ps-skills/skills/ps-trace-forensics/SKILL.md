@@ -17,6 +17,8 @@ Analyze one bounded trace, profile, recording, or diagnostic artifact as a read-
 
 Do not repair product behavior or add durable instrumentation. If either is required, return `continuation-required` with a separate debug prompt.
 
+Keep the supplied artifact immutable and record its content hash plus its capture/build/source identity when available. Resolve source symbols against the matching revision; mark a mismatched or unknown mapping as uncertain. Preserve conflicting spans and sample methodology when reducing evidence. A single supplied trace does not establish a before/after change; request the missing paired artifact when that claim requires one. This root does not authorize new live collection.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

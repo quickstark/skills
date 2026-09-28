@@ -1,0 +1,38 @@
+# Decision trail capability
+
+## Purpose
+
+Preserve enough reasoning to explain why each material mutation was kept, revised, or rejected.
+
+## Entry conditions
+
+Use when the owning root may change files, external state, or a measured implementation candidate.
+
+## Method
+
+1. Record run identity and source revision or content hash with the decision point and the evidence available at that moment. Read existing entries before resuming; append a new run boundary when another run has written since.
+2. Name the chosen action and the alternatives actually considered.
+3. Attach a resolvable evidence pointer and the check that accepted or rejected the action. Append corrections linked to earlier entries; never truncate or rewrite prior evidence. Reverify this run's claims and any earlier claims invalidated by its changes.
+4. Keep sensitive or temporary evidence private and summarize only what the result needs.
+
+## Stop conditions
+
+Stop recording when the root reaches its declared outcome or a required decision cannot be made safely.
+
+## Evidence
+
+Return a concise chronological ledger of material decisions as part of the owning root run.
+
+## Owners
+
+`qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup`.
+
+<!-- qs-progress:start -->
+## Progress reporting
+
+Contribute stage status and verification evidence to the parent skill's conversation checklist. Report the current stage, observed progress or waiting state, and any required user input to the parent during long operations, aiming for updates within sixty seconds when the host allows control to return. Distinguish running from confirmed progress; elapsed time alone is not evidence.
+
+Supply relevant artifacts, command results, sources, or observable behavior before the parent checks off a stage. Identify failed checks, skipped work and reasons, blockers, and later evidence that requires reopening a verified stage. Supply findings or changes, passed and failed checks, and remaining work for the parent's final explanation. Never imply configuration in a read-only run. Do not create a separate checklist, completion report, skills-used entry, or continuation. Remain inside the public root regardless of effort or report mode.
+
+Contribute observed partial work, remaining effort, uncertainty, and revision-bound evidence for the parent's stage and overall estimates. Waiting, elapsed time, token consumption, or a running process alone earns no progress. Flag invalidated evidence so the parent can lower estimates and reopen checks. Preserve valid evidence for resumption; do not count the same work twice or report an independent public percentage. Only the parent computes weighted progress and verifies 100% completion.
+<!-- qs-progress:end -->

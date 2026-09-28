@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "note": "Exact frozen metadata bytes; archived without reading variant mapping or comparing grades. Each trial binding and guidance/source bytes are additionally retained in full source archive.",
+  "files": [
+    {
+      "sourcePath": "tests/fixtures/frontend-adoption-v3/plan.json",
+      "archivedPath": "tests/fixtures/frontend-adoption-v3-results/frozen-inputs/plan.json",
+      "bytes": 61005,
+      "sha256": "62bb5776078183239fd906cbd063194e1fe1ea8e6e61ca839208dddd69e00455"
+    },
+    {
+      "sourcePath": "tests/fixtures/frontend-adoption-v3/rubric.json",
+      "archivedPath": "tests/fixtures/frontend-adoption-v3-results/frozen-inputs/rubric.json",
+      "bytes": 2561,
+      "sha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f"
+    },
+    {
+      "sourcePath": "tests/fixtures/frontend-adoption-v3/schedule.json",
+      "archivedPath": "tests/fixtures/frontend-adoption-v3-results/frozen-inputs/schedule.json",
+      "bytes": 6933,
+      "sha256": "5f93b668fa74a664306e9e6dc7478bb3d0bada7d81e175672f851727957802b5"
+    },
+    {
+      "sourcePath": "tests/fixtures/frontend-adoption-v3/common-scope.json",
+      "archivedPath": "tests/fixtures/frontend-adoption-v3-results/frozen-inputs/common-scope.json",
+      "bytes": 2451,
+      "sha256": "0f635f57d5ea05f44c90bbe4bac419e8723af826125b942ab232fb696b24ae75"
+    },
+    {
+      "sourcePath": "tests/fixtures/frontend-adoption-v3/scenarios.json",
+      "archivedPath": "tests/fixtures/frontend-adoption-v3-results/frozen-inputs/scenarios.json",
+      "bytes": 15773,
+      "sha256": "116ed1e6bc3c744b5422051503e76bc1eecb8886fb44f49e1a214f93b9cf56b5"
+    }
+  ]
+}

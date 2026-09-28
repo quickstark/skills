@@ -1,0 +1,34 @@
+{
+  "exitCode": 1,
+  "signal": null,
+  "elapsedMs": 215.72491599999998,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [],
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+  "promptSHA256": "53117348567e7a6b5fa1e622ef96daa6dffe1acd9064c00f79d3c491c1b19759",
+  "promptUtf8Bytes": 21823,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-frontend-trial-jEADlw",
+    "--json",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "8e3330eeb312ddb37b9da73c3ece4a8aa7e2ade4b7bb255573aa487bc89f0f58"
+  }
+}

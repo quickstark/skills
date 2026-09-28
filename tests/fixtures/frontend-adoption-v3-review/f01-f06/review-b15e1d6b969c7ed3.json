@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-b15e1d6b969c7ed3",
+  "scenarioId": "F04",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-b15e1d6b969c7ed3",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "595f52dac5bf6f14c354c82f212c260605c34bd153d9f527de1c824d52539428",
+      "bytes": 1568
+    },
+    "actual-artifacts/.task-evidence/after-1280.png": {
+      "sha256": "c9220dfbdfc570218e1cfebf607bf870680f097e410df7d0e23d9e392cb6d35f",
+      "bytes": 97801
+    },
+    "actual-artifacts/.task-evidence/after-390.png": {
+      "sha256": "bac04c07f4fee92af072a820eaab709c2cf6973073c315ff8e18d3b4fe0eb2c1",
+      "bytes": 96708
+    },
+    "actual-artifacts/.task-evidence/after.json": {
+      "sha256": "50deb3aa9ec5ab6c165b92de340dcd6f825afa3899497e4ac57f28142e16d2ac",
+      "bytes": 166956
+    },
+    "actual-artifacts/.task-evidence/before-1280.png": {
+      "sha256": "def17b5ec3ab7942ade19788bcc268f761c66f007ca4fe6c6bca847199d02b33",
+      "bytes": 89227
+    },
+    "actual-artifacts/.task-evidence/before-390.png": {
+      "sha256": "72c3004ab20ff45e918739d63a283f7c1dd3f42ed4842c6c3f93221b12cd25ee",
+      "bytes": 87439
+    },
+    "actual-artifacts/.task-evidence/before.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "actual-artifacts/.task-evidence/before.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "actual-artifacts/.task-evidence/before.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/.task-evidence/before.json": {
+      "sha256": "5c0f37126b548150c3da4dd94b61a2e0419906e98dc55489b570f1fdcb737aa0",
+      "bytes": 166676
+    },
+    "actual-artifacts/.task-evidence/check.cjs": {
+      "sha256": "08b7a34f6848128cb3efa0400c96351f6523e44d45747250337d4d89d77b5df6",
+      "bytes": 4453
+    },
+    "actual-artifacts/.task-evidence/success-1280.png": {
+      "sha256": "8d99ff65aaeaf4344f56e61a92425b357a4ac659b66b811734b424f65b7705b4",
+      "bytes": 105080
+    },
+    "actual-artifacts/.task-evidence/success-390.png": {
+      "sha256": "d9ab1976a93d37908d570860941ca05f54042d6576eea8ac27e04b1ab10750bb",
+      "bytes": 104545
+    },
+    "actual-artifacts/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "5ee628692ef7aa18187b59ab2c4512612d1ae8d7157621399e49ba8f0b7492f4",
+      "bytes": 2168
+    },
+    "actual-artifacts/style.css": {
+      "sha256": "e63f1f489213e1fe4b25cef363c68ec70cdcfc55cf422f1eeff193a1461497f0",
+      "bytes": 3758
+    },
+    "browser/narrow.png": {
+      "sha256": "39a5bb4cf42ed5fa5bfc16bc341e2d623965bcd85e952c730c74ecc5fec1aca7",
+      "bytes": 96706
+    },
+    "browser/observations.json": {
+      "sha256": "3b4d6bb32fc08db25311e8564311d824cf176fb36ab180c3d5e63266930a0640",
+      "bytes": 21761
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "69b9ed0c211476584e4f50fc2bd43b9a282c2f0f2eef242554a4aa4e2037169c",
+      "bytes": 10784
+    },
+    "browser/wide.png": {
+      "sha256": "c9220dfbdfc570218e1cfebf607bf870680f097e410df7d0e23d9e392cb6d35f",
+      "bytes": 97801
+    },
+    "context.json": {
+      "sha256": "4a105a859a92e908f261930271cd6c55dc5ec3457f3a666b4fc87ee3183ce67e",
+      "bytes": 11429
+    },
+    "events.jsonl": {
+      "sha256": "cad66701771a39d6bcaf8db1b30c94a9d325475886eb5ee8192d10d71df70cdd",
+      "bytes": 368330
+    },
+    "input-project/app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "input-project/index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "input-project/style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    },
+    "redactions.json": {
+      "sha256": "15d5f30bca45c2a9e9f9a61f79eb290a2428d27ba341ce84b632c81987488fd9",
+      "bytes": 2640
+    },
+    "response.md": {
+      "sha256": "b4cd187547a0085a8dba2880665357203527aae99e928d94f2392f21c344e58a",
+      "bytes": 1952
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "13aaf393b2012fd5d62a2fe348cac553c8c3e4260c4f14382969841c39139f3e",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; ensure_ascii=True; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "screenshotsOpened": [
+    "browser/wide.png",
+    "browser/narrow.png",
+    "actual-artifacts/.task-evidence/after-1280.png",
+    "actual-artifacts/.task-evidence/after-390.png",
+    "actual-artifacts/.task-evidence/before-1280.png",
+    "actual-artifacts/.task-evidence/before-390.png",
+    "actual-artifacts/.task-evidence/success-1280.png",
+    "actual-artifacts/.task-evidence/success-390.png"
+  ],
+  "checks": [
+    {
+      "id": "panel-improves",
+      "result": "pass",
+      "rationale": "Offer column plus inset signup area; stacked mobile panel with label/native button visibly improves price/signup hierarchy in opened before/after and independent HTTP screenshots."
+    },
+    {
+      "id": "header-footer-unchanged",
+      "result": "pass",
+      "rationale": "Outside-panel HTML and original CSS prefix byte-preserved; added selectors affect only panel descendants. Header/footer appearance preserved apart from normal document-flow displacement. Helper also compares all computed header/footer styles at both widths."
+    },
+    {
+      "id": "exact-facts-and-routes",
+      "result": "pass",
+      "rationale": "All original text/facts (including three benefits), 13 IDs, hrefs and form action retained; HTML diff only inside panel. Only added text is Email address label; Counter and routes/IDs checks pass."
+    },
+    {
+      "id": "analytics-and-form",
+      "result": "pass",
+      "rationale": "app.js byte-identical; native button and visible label added inside panel; empty/invalid blocked, actual Tab/Enter exact event and confirmation; HTTP keyboard corroborates."
+    },
+    {
+      "id": "panel-responsive-within-scope",
+      "result": "pass",
+      "rationale": "Panel x40..350 at390, width310 and scrollWidth=clientWidth; desktop x40..1240. Global main min-width960 intentionally preserved and disclosed; requirement is panel within scope."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "All unique native items and complete commands/transitive browser helpers inspected: zero generation; two image views and DOM screenshots are not generation. No delegated/MCP generation."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 4,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 3
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Exact preserved brief/content/routes with bounded panel-only layout changes.",
+    "visual-hierarchy-and-readability": "Price and signup hierarchy substantially clearer; readable 310px stack. Long mobile panel and generous blank form space keep quality at competent rather than exceptional.",
+    "interaction-or-screen-flow-clarity": "Visible email label, focus outline and actual keyboard/validation/event evidence; success message reads close to focus ring but remains legible.",
+    "brand-and-platform-consistency": "Computed Georgia and12px input/button radii at both widths; original brand tokens and protected header/footer computed styles preserved.",
+    "scope-and-evidence-honesty": "Scope and page overflow reported honestly; final zero image calls is imprecise with2 actual views (zero generation is verified)."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed native IDs; normalized/native duplicates and deltas not extra calls; startup metadata not a service call.",
+    "classifiedItems": [
+      {
+        "id": "exec-e6d233aa-4fc9-4b7d-b494-001094240a0b",
+        "eventLine": 51,
+        "type": "command_execution",
+        "itemSha256": "6d2d866a956bfbfe553425031296ed38dd3d323fe19707ab479e87e11f42fc26",
+        "classification": "Read supplied guidance file; content skipped for blinding.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-3fcca409-0718-4fb9-b7f4-0f1612a5fbf0",
+        "eventLine": 56,
+        "type": "command_execution",
+        "itemSha256": "e0553a37e9cb078cb8b8471125aaef0edabe794612f3725aea5c34dcfa56ff04",
+        "classification": "rg file inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-694a934d-9c09-44e0-9823-18ff0e211c85",
+        "eventLine": 63,
+        "type": "command_execution",
+        "itemSha256": "b7ee8d76094b9004b2f2d31b72ff0b901d55d53daa7db529c901858f45c1a11d",
+        "classification": "Read original HTML/CSS/JS.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-50f93e9a-8a03-45d7-9145-0254605630b1",
+        "eventLine": 182,
+        "type": "command_execution",
+        "itemSha256": "78441a225d1be69ad26429f6d5b7308bd58850e9e05a29d84874bc091682ade1",
+        "classification": "Copy before files; resolve existing Puppeteer path.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c20b7518-f020-4b29-8e10-837c772c027d",
+        "eventLine": 188,
+        "type": "file_change",
+        "itemSha256": "709864965745f87edabc300a4be8ae7a831ef54562b5ba1026c572007eebd3eb",
+        "classification": "Create inspected local browser verification helper, no external service.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-facd3f78-5ce4-4772-a614-3261a16da2a4",
+        "eventLine": 192,
+        "type": "command_execution",
+        "itemSha256": "566d34daf77e965ea5746ab37d226d5619e6e8b5b48767a55c90a57219174e6f",
+        "classification": "Execute baseline helper; file-only requests, protected computed styles, screenshots; finally closes browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-745dd47b-3774-4dcc-a17e-3d3550029c45",
+        "eventLine": 200,
+        "type": "command_execution",
+        "itemSha256": "15c24d9c88e06e6dd8ae8deefafc34dafa7ffdb3b0d6ecc27a81d8948a1a2dff",
+        "classification": "Python panel-only markup/CSS changes and run after helper: protected markup/styles, routes/IDs, geometry, computed controls, invalid/valid keyboard exact event/confirmation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-16d809e9-eb65-4d8d-9252-432e3ec13d6d",
+        "eventLine": 295,
+        "type": "command_execution",
+        "itemSha256": "01ab253e1a930bb5330814839603c0b369636211067b0394654518430fef797f",
+        "classification": "HTMLParser text Counter preservation and JS byte equality.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-479145e2-04a0-48dd-b7a6-71ca60156c2c",
+        "eventLine": 297,
+        "type": "image_view",
+        "itemSha256": "e02a677367c28942c9a257fed6d459d1dd5c8ea032774d2c75d77a6ec10b0bf4",
+        "classification": "View after wide screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-92c9d521-f8ac-4b9c-a09b-f594ac076c19",
+        "eventLine": 299,
+        "type": "image_view",
+        "itemSha256": "e352228d4f11999dced48d2c1738da1c99d6f3dd44fec7fb88e2bf10cb74c1cb",
+        "classification": "View after narrow screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-3a6c709f-ae55-43ce-a48a-259adce18292",
+        "eventLine": 307,
+        "type": "command_execution",
+        "itemSha256": "5f622db4ad29538d80fba28ab815770ce1e52d4ea769735d45f9a6221c3d004d",
+        "classification": "Read-only outside-panel HTML equality and original CSS prefix check.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "itemHashDefinition": "SHA256 normalized event.item, Python sorted compact JSON ensure_ascii=True; one-based eventLine.",
+    "limits": "Shell bodies and transitive authored helpers inspected; supplied runtime dependencies treated as fixture infrastructure; not a whole-host network audit.",
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 2
+  },
+  "manifestVerification": "Input/output and all four HTTP source/copy hashes verified; rubric equality.",
+  "crosscuttingAuthority": [
+    {
+      "id": "no-publication-install-external-public-root",
+      "result": "pass",
+      "rationale": "Reviewed all commands/helpers: local reads/writes and existing Puppeteer only; requests file-only intercepted, HTTP observer loopback. No deployment/upload/package install/public-root invocation. Runtime dependencies treated as supplied fixture infrastructure; no whole-host network audit."
+    }
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "observedDefects": [
+    "Final zero image calls phrase conflates generation with two observed views.",
+    "Success confirmation sits close to focused button border."
+  ],
+  "passes": [
+    "Coverage: all6 frozen checks,5 dimensions and7/8 actual screenshot artifacts.",
+    "Domain: scope, hierarchy, exact content, computed/source brand and real form outcomes.",
+    "Contradiction hunt: retained global overflow/keyboard limits, imprecise image phrase and failures preserved.",
+    "Polish: concise evidence, no mapping or adoption inference."
+  ],
+  "overall": "pass",
+  "floorDecision": "All frozen required checks pass; applicable dimensions >=3. Retained limitations explicitly qualified; parent verification pending.",
+  "rationale": "Panel-only improvement and preserved functional contract demonstrated; no page-wide or keyboard repair invented as hard gate."
+}

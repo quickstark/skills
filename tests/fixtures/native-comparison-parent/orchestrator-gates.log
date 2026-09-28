@@ -1,0 +1,22 @@
+APPROVAL REQUIRED leaf-55:G1
+    CHECK: node --test --test-name-pattern='fresh preparation|freeze requires|paired failure|parent interruption' tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs
+    EXPECT: pass 4
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-adoption-deploy-approvals/e81e0fd7b9ba8e97a2b7b1d35729a7d98f150b1c089fb00d8e72a8e1970d3e15.json
+APPROVAL REQUIRED leaf-55:G2
+    CHECK: node --test --test-name-pattern='F10|reviewer exports|redaction does' tests/fixtures/frontend-adoption-v3-controls/orchestrator.test.mjs
+    EXPECT: pass 6
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-adoption-deploy-approvals/510c50955edeb279aa851f79d68cf81d34c909dc4e397b68bbc314c34ddc870b.json
+  RUN  leaf-55:G1 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  RUN  leaf-55:G2 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  PASS leaf-55:G1: Test unchanged 66-case inputs, original contributor/candidate byte identity, dependency freeze tamper rejection, explicit launch authority and paired interruption using the v3 native interface; no model calls.
+       exit=0; EXPECT=matched; output=ℹ todo 0 | ℹ duration_ms 5400.595488
+  PASS leaf-55:G2: Verify prompt-only exact read detection rejects native image/dynamic/unknown tools while allowing user messages; reviewer export preserves evidence and image bytes with declared guidance redaction limits. Report defects to parent without editing parent-owned runner or adapter.
+       exit=0; EXPECT=matched; output=ℹ todo 0 | ℹ duration_ms 809.595718
+leaf-55.md: 2 gates
+ALL MET (2 met, reran: 2, previously met reverified: 2)

@@ -1,0 +1,6 @@
+interface:
+  display_name: "QS Video"
+  short_description: "Create, edit, inspect, or render a selected video"
+  default_prompt: "Use $qs-video:qs-video to create, edit, inspect, or render this selected video within the authorized scope. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+policy:
+  allow_implicit_invocation: false

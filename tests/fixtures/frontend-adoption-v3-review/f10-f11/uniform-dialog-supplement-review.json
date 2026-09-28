@@ -1,0 +1,904 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/adoption_hf_probe",
+  "scope": "Append-only independent review of uniform six-product dialog-aware observation; no original trial/grade replacement, comparison, or adoption decision.",
+  "observerSource": {
+    "path": "tests/fixtures/frontend-adoption-v3-f11-http/membership-observe.mjs",
+    "sha256": "4b5c0742ed06f06180d5ee62c926e24108ce0f73ce47e40f39643a52c5f10911",
+    "bytes": 7289
+  },
+  "observerInspection": "Read full observer: state evaluation is read-only; opener, typing, submit and Escape use keyboard events. Status observed alone is not behavioral pass: actual validity/events/message/focus/navigation fields checked.",
+  "counts": {
+    "products": 6,
+    "viewportFlows": 12,
+    "newImagesOpened": 6,
+    "boundFiles": 110
+  },
+  "reviews": [
+    {
+      "reviewId": "review-25dc4ed5efe9a83e",
+      "originalReviewSha256": "67c34960704c81191aa970272d01c713925e63684fb20ad6be22d8362b3559a7",
+      "sourcePath": "/tmp/qs-frontend-f11-dialog-supplement-20260926/review-25dc4ed5efe9a83e",
+      "durableArchivePath": "tests/fixtures/frontend-adoption-v3-f11-http/parent-observation/review-25dc4ed5efe9a83e",
+      "durableArchiveMatched": true,
+      "fileBindings": {
+        "artifact-copy/README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifact-copy/evidence/1280-form.png": {
+          "sha256": "dc019e4754c68626c36368c587218af504b80e64753a87e5cdd7d61fd1a3f3a7",
+          "bytes": 83173
+        },
+        "artifact-copy/evidence/1280.png": {
+          "sha256": "fd53d397d0faca89dae52ed2f625237552a26874d1c890aa7184a54098d8bba1",
+          "bytes": 68070
+        },
+        "artifact-copy/evidence/390-form.png": {
+          "sha256": "64bb7cc65cae5b80b02224df92ffa0d0852980aa2832ea6aaf06e2d3c65e34ae",
+          "bytes": 55138
+        },
+        "artifact-copy/evidence/390.png": {
+          "sha256": "33ecdb7568842c5566b4835066d0d412dac2002d98b132e8235f99e025bcbd87",
+          "bytes": 57486
+        },
+        "artifact-copy/evidence/check.cjs": {
+          "sha256": "2a7c0666df82ba611a72c0d8bf11ccf15dda08509164a8642ba53d2370b3dee9",
+          "bytes": 4035
+        },
+        "artifact-copy/evidence/observations.json": {
+          "sha256": "938fbbc7993186a334f9828f40d1b4aacd1a9a819dd197b1a9a3cc4a4445bbc3",
+          "bytes": 1387
+        },
+        "artifact-copy/index.html": {
+          "sha256": "2475c4374c4776c7a1aad8e6dc9d57ff48bf50d678a4461e556259e07ed727ab",
+          "bytes": 2491
+        },
+        "artifact-copy/reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "artifact-copy/script.js": {
+          "sha256": "2a5c659fc6c457cbc5cc21c2082bf696d06c8bc28537905735e862373132ff87",
+          "bytes": 709
+        },
+        "artifact-copy/styles.css": {
+          "sha256": "01ddccc87eb5725571ca3446552656c8a1be9d4dcd9e1df82f94a69e0dfa57f5",
+          "bytes": 4087
+        },
+        "browser/narrow-dialog.png": {
+          "sha256": "d9afe5668ff9bcb1f6cf6cfe3cd1019e32245bc10c24e0ef2cdd65774e550e24",
+          "bytes": 49179
+        },
+        "browser/narrow-result.png": {
+          "sha256": "503920fb7b22db74860e8747c24663253601d30bd1a24491b978b91e4b70ba4e",
+          "bytes": 55350
+        },
+        "browser/narrow.png": {
+          "sha256": "33ecdb7568842c5566b4835066d0d412dac2002d98b132e8235f99e025bcbd87",
+          "bytes": 57486
+        },
+        "browser/observations.json": {
+          "sha256": "2d4553bb2d49fb99bb0a0480eaed12276d4d381da9a29670407b07fb20709d7d",
+          "bytes": 88881
+        },
+        "browser/wide-dialog.png": {
+          "sha256": "b78a6a07cdbda4bcc5fb9d4baafa76ff26a190798ab2b974323ef984b6045976",
+          "bytes": 75430
+        },
+        "browser/wide-result.png": {
+          "sha256": "c2334ad26fbe61f4a577099f3a520f6cb1228df6093940291fe503bbc6de28e8",
+          "bytes": 83271
+        },
+        "browser/wide.png": {
+          "sha256": "fd53d397d0faca89dae52ed2f625237552a26874d1c890aa7184a54098d8bba1",
+          "bytes": 68070
+        },
+        "transport-evidence.json": {
+          "sha256": "842584d0d679b982e72e07acb57007c22f6910a822a07f8ddb396ddf49e10438",
+          "bytes": 7629
+        }
+      },
+      "observations": {
+        "wide": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "scrollWidth": 1280,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        },
+        "narrow": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "scrollWidth": 390,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        }
+      },
+      "blockedRequests": [],
+      "deniedProxyRequests": [],
+      "baseScreenshotsIdenticalToPreviouslyOpened": {
+        "wide": true,
+        "narrow": true
+      },
+      "newScreenshotsOpened": [
+        "browser/narrow-result.png"
+      ],
+      "visualFinding": "Narrow result screenshot shows readable labelled email, visible focused submit button and exact success status inside unclipped modal. Full-page capture backdrop covers viewport; beyond-viewport page in full-page raster is not evidence of active outside controls.",
+      "eventBufferLimit": "Existing empty buffer remains [] after malformed input; exact single event appears after valid input.",
+      "reducedMotionMatches": true,
+      "animatedElementCount": 0,
+      "originalGradeChange": false,
+      "finding": "Separately observed loopback HTTP keyboard/form behavior supports original working-membership assessment at both widths; original shared-observer failure retained."
+    },
+    {
+      "reviewId": "review-5195ebed3b164b40",
+      "originalReviewSha256": "e4e096b75c7ae77dd831ce4ac5c350b2d7eacc1f90e94fbe6320d827a0c19737",
+      "sourcePath": "/tmp/qs-frontend-f11-dialog-supplement-20260926/review-5195ebed3b164b40",
+      "durableArchivePath": "tests/fixtures/frontend-adoption-v3-f11-http/parent-observation/review-5195ebed3b164b40",
+      "durableArchiveMatched": true,
+      "fileBindings": {
+        "artifact-copy/README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifact-copy/app.js": {
+          "sha256": "668ec39e98f3dbfd4bf1d01eb339f09b000d2fb9e106b5eea3bb9fd2932cf0e4",
+          "bytes": 764
+        },
+        "artifact-copy/evidence/1280.png": {
+          "sha256": "9d376963070f96b77423162b2b4876adacc131dd7c57b9a993d29d0599f139ad",
+          "bytes": 66907
+        },
+        "artifact-copy/evidence/390.png": {
+          "sha256": "2372fc7ff7b2d5ee148b920d1a3b815682ad1a7546295923c4dae1c9bca72c56",
+          "bytes": 56327
+        },
+        "artifact-copy/evidence/check.mjs": {
+          "sha256": "423b6deaac5129ef3aaa55da3919577dfebda95862d3c17ff8657d7cb4ef5990",
+          "bytes": 3342
+        },
+        "artifact-copy/evidence/membership-confirmation.png": {
+          "sha256": "44ab42e3d01fa87f9cb6307dde3fde5f54ecf4947e6a08e211d3bc022473d41b",
+          "bytes": 54637
+        },
+        "artifact-copy/evidence/observations.json": {
+          "sha256": "92788ff8d943f3567a7da6416b4e0ad60fa546bfb86d30bfc36dc01ad0060167",
+          "bytes": 1501
+        },
+        "artifact-copy/index.html": {
+          "sha256": "ede5de538c63a2093d235e17ee8e2069c455a2cd55f50d8591353969b2a026df",
+          "bytes": 2357
+        },
+        "artifact-copy/reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "artifact-copy/styles.css": {
+          "sha256": "cac8fbce24e5225e0a17f5a89f3b7b22d9c7396058a3278e25e39fc2f2d93c80",
+          "bytes": 4179
+        },
+        "browser/narrow-dialog.png": {
+          "sha256": "3c8be07fb002270f673f7dbc4172514d9af9b922c28f04b79158c880d87e57b7",
+          "bytes": 48388
+        },
+        "browser/narrow-result.png": {
+          "sha256": "6c4ba6414033a279afaac71d2e9040f32129e0407c2ebf51cd17e97903a0bb8f",
+          "bytes": 54874
+        },
+        "browser/narrow.png": {
+          "sha256": "2372fc7ff7b2d5ee148b920d1a3b815682ad1a7546295923c4dae1c9bca72c56",
+          "bytes": 56327
+        },
+        "browser/observations.json": {
+          "sha256": "359f171cbd3a3e27503356230cf3a2a3af0847adc3de4d7bbd44bbfcdb45f176",
+          "bytes": 88011
+        },
+        "browser/wide-dialog.png": {
+          "sha256": "a6f810c60524f0e67d002b94881a1ff09f0bf46fbaeed6ebfc632fc679a64a15",
+          "bytes": 74830
+        },
+        "browser/wide-result.png": {
+          "sha256": "62588c3e20b9d654d8192fec805c93b2c64c86a1e2174557d408ee861785779a",
+          "bytes": 82214
+        },
+        "browser/wide.png": {
+          "sha256": "9d376963070f96b77423162b2b4876adacc131dd7c57b9a993d29d0599f139ad",
+          "bytes": 66907
+        },
+        "transport-evidence.json": {
+          "sha256": "9657c91a7356d88755401bd220e056440c56b0630f49fef4dc3622471030e684",
+          "bytes": 7089
+        }
+      },
+      "observations": {
+        "wide": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "scrollWidth": 1280,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        },
+        "narrow": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "scrollWidth": 390,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        }
+      },
+      "blockedRequests": [],
+      "deniedProxyRequests": [],
+      "baseScreenshotsIdenticalToPreviouslyOpened": {
+        "wide": true,
+        "narrow": true
+      },
+      "newScreenshotsOpened": [
+        "browser/narrow-result.png"
+      ],
+      "visualFinding": "Narrow result screenshot shows readable labelled email, visible focused submit button and exact success status inside unclipped modal. Full-page capture backdrop covers viewport; beyond-viewport page in full-page raster is not evidence of active outside controls.",
+      "eventBufferLimit": "Existing empty buffer remains [] after malformed input; exact single event appears after valid input.",
+      "reducedMotionMatches": true,
+      "animatedElementCount": 0,
+      "originalGradeChange": false,
+      "finding": "Separately observed loopback HTTP keyboard/form behavior supports original working-membership assessment at both widths; original shared-observer failure retained."
+    },
+    {
+      "reviewId": "review-51c66d979e683e0b",
+      "originalReviewSha256": "7fb71230841a2e745aacd4bc1fdf831729a94fc6d04c9347a0a6d6384eecc401",
+      "sourcePath": "/tmp/qs-frontend-f11-dialog-supplement-20260926/review-51c66d979e683e0b",
+      "durableArchivePath": "tests/fixtures/frontend-adoption-v3-f11-http/parent-observation/review-51c66d979e683e0b",
+      "durableArchiveMatched": true,
+      "fileBindings": {
+        "artifact-copy/README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifact-copy/evidence/browser-observations.json": {
+          "sha256": "1501b5caca0dbe48f64b6347c19f4d18c52f612a85acbc28d77161fbc51edfd0",
+          "bytes": 1529
+        },
+        "artifact-copy/evidence/form-narrow.png": {
+          "sha256": "53ce72a1a9f848f031b169ee68050595ced4b0e4adb5ad42462eb8c21a61ba88",
+          "bytes": 53502
+        },
+        "artifact-copy/evidence/form-wide.png": {
+          "sha256": "5a66ce56756d5a3f7af8ec217d15540df87348263d6e7ed2e82b5506333c8f10",
+          "bytes": 80367
+        },
+        "artifact-copy/evidence/narrow.png": {
+          "sha256": "c575f386d581020010c4a9fbd8fcfd30879b19def50003a4d473b2fcbbda2c00",
+          "bytes": 57167
+        },
+        "artifact-copy/evidence/wide.png": {
+          "sha256": "961262a786db8b994bee34918ef971842193a4da40f4f04f9e41c6d79988e792",
+          "bytes": 66949
+        },
+        "artifact-copy/index.html": {
+          "sha256": "358cd71057941d2f42fea0cb06efd08f46fff84bdd3650706943ad7def18c520",
+          "bytes": 2421
+        },
+        "artifact-copy/reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "artifact-copy/script.js": {
+          "sha256": "dc4ab024c2ad95e305cb991d9ba3f3fd9e12ffbf66bacde8f4b09da0b0921858",
+          "bytes": 890
+        },
+        "artifact-copy/styles.css": {
+          "sha256": "b18b23f2d90b67c0debd516e9ed5bd87b4cce8f37016e78e8c2a57bbd1039575",
+          "bytes": 4187
+        },
+        "browser/narrow-dialog.png": {
+          "sha256": "4199f6ff7c56a787f3ade265d91d7b38c0f4ea2170ada966f637aad435dd10c7",
+          "bytes": 50642
+        },
+        "browser/narrow-result.png": {
+          "sha256": "a8cf3020119361c60afb66bf53bccc62aa0082594093d08edbf016e7078bc002",
+          "bytes": 53233
+        },
+        "browser/narrow.png": {
+          "sha256": "c575f386d581020010c4a9fbd8fcfd30879b19def50003a4d473b2fcbbda2c00",
+          "bytes": 57167
+        },
+        "browser/observations.json": {
+          "sha256": "9cfd8a57febff04a0fbae9ef7c07bf75b0c34492002223ef5eced01d3cbb6e13",
+          "bytes": 90046
+        },
+        "browser/wide-dialog.png": {
+          "sha256": "d5f476f63536d602bdb7fe56cc3df0487712cb2c8818f146ad00b3f246341662",
+          "bytes": 72505
+        },
+        "browser/wide-result.png": {
+          "sha256": "7096ac25235a892ff61f14c466ab31ac3bbe8f7609604fdf7a1122ca2743bce2",
+          "bytes": 80035
+        },
+        "browser/wide.png": {
+          "sha256": "961262a786db8b994bee34918ef971842193a4da40f4f04f9e41c6d79988e792",
+          "bytes": 66949
+        },
+        "transport-evidence.json": {
+          "sha256": "797e4e228bc361809f652c73bcaba83b9c006b251395a87c0a6944c4a01589bc",
+          "bytes": 7129
+        }
+      },
+      "observations": {
+        "wide": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "scrollWidth": 1280,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": null,
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        },
+        "narrow": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "scrollWidth": 390,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": null,
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        }
+      },
+      "blockedRequests": [],
+      "deniedProxyRequests": [],
+      "baseScreenshotsIdenticalToPreviouslyOpened": {
+        "wide": true,
+        "narrow": true
+      },
+      "newScreenshotsOpened": [
+        "browser/narrow-result.png"
+      ],
+      "visualFinding": "Narrow result screenshot shows readable labelled email, visible focused submit button and exact success status inside unclipped modal. Full-page capture backdrop covers viewport; beyond-viewport page in full-page raster is not evidence of active outside controls.",
+      "eventBufferLimit": "Source initializes __events only in successful submit; null before/after malformed input records absent buffer, not fabricated empty array. Exact single event appears after valid input.",
+      "reducedMotionMatches": true,
+      "animatedElementCount": 0,
+      "originalGradeChange": false,
+      "finding": "Separately observed loopback HTTP keyboard/form behavior supports original working-membership assessment at both widths; original shared-observer failure retained."
+    },
+    {
+      "reviewId": "review-cb3fab72962e7198",
+      "originalReviewSha256": "27c852dccb6cc2dee19fd059fdd691f193cf294f71468865ddf9015ee48ba48d",
+      "sourcePath": "/tmp/qs-frontend-f11-dialog-supplement-20260926/review-cb3fab72962e7198",
+      "durableArchivePath": "tests/fixtures/frontend-adoption-v3-f11-http/parent-observation/review-cb3fab72962e7198",
+      "durableArchiveMatched": true,
+      "fileBindings": {
+        "artifact-copy/README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifact-copy/evidence/narrow-form.png": {
+          "sha256": "a4519b7ad1160539f0c78f7b66f56029b37812dfa1eb513f2820e6dbf0b4b945",
+          "bytes": 55220
+        },
+        "artifact-copy/evidence/narrow.png": {
+          "sha256": "1b8f5765986aac6acd857339c638b2d3cf0cff045c8e425048e58acae417f6aa",
+          "bytes": 57711
+        },
+        "artifact-copy/evidence/wide.png": {
+          "sha256": "2eb0bea90d001a534e5460f87796e1fd9db97c6ed44b2f53cb660901ef2554b3",
+          "bytes": 66598
+        },
+        "artifact-copy/index.html": {
+          "sha256": "f2d8944a9e6de254a8e5f212671985a8eb9c8c1746523219041733b6a61de728",
+          "bytes": 2570
+        },
+        "artifact-copy/reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "artifact-copy/script.js": {
+          "sha256": "7ade38969dc2e118d8457e5c33409757b759b4c23a2228d244c318061751134d",
+          "bytes": 872
+        },
+        "artifact-copy/styles.css": {
+          "sha256": "02f918ecbf75596ea7c8efecf9d1f1d0b3874507eb97c649137fef88264dea5d",
+          "bytes": 4175
+        },
+        "artifact-copy/verify.cjs": {
+          "sha256": "bf279068f63de3e963f1feaccdf162692c0c48a8301e09528ec6fd05e372c85a",
+          "bytes": 5134
+        },
+        "browser/narrow-dialog.png": {
+          "sha256": "d4d047b3566fa4b72f09c4887fe9b5e148caf6f557befd500c30209202fdc1db",
+          "bytes": 51044
+        },
+        "browser/narrow-result.png": {
+          "sha256": "7bfb284a82b64367a53062000e5eeea91cac13cfe3e5f88a020dfcf31802ad63",
+          "bytes": 54966
+        },
+        "browser/narrow.png": {
+          "sha256": "1b8f5765986aac6acd857339c638b2d3cf0cff045c8e425048e58acae417f6aa",
+          "bytes": 57711
+        },
+        "browser/observations.json": {
+          "sha256": "9c3ac6e2846c20194a247e2379dd3cff134aa73134938917c3f3ad0a472f7f07",
+          "bytes": 89859
+        },
+        "browser/wide-dialog.png": {
+          "sha256": "ea554b22c5315b2deb13217d00fdd0f24d8291d4ddaf0f981300f10645257171",
+          "bytes": 74803
+        },
+        "browser/wide-result.png": {
+          "sha256": "a44f0f2b3cb4c708847388d1f886b889f6a2ceff81dd0bc029a3cc3209d14490",
+          "bytes": 82624
+        },
+        "browser/wide.png": {
+          "sha256": "2eb0bea90d001a534e5460f87796e1fd9db97c6ed44b2f53cb660901ef2554b3",
+          "bytes": 66598
+        },
+        "transport-evidence.json": {
+          "sha256": "5f0c51a1ee06a9a8748e2b7bd73da262c69ae4dab4cee85ee69605bae32dfaad",
+          "bytes": 6457
+        }
+      },
+      "observations": {
+        "wide": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "scrollWidth": 1280,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        },
+        "narrow": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "scrollWidth": 390,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        }
+      },
+      "blockedRequests": [],
+      "deniedProxyRequests": [],
+      "baseScreenshotsIdenticalToPreviouslyOpened": {
+        "wide": true,
+        "narrow": true
+      },
+      "newScreenshotsOpened": [
+        "browser/narrow-result.png"
+      ],
+      "visualFinding": "Narrow result screenshot shows readable labelled email, visible focused submit button and exact success status inside unclipped modal. Full-page capture backdrop covers viewport; beyond-viewport page in full-page raster is not evidence of active outside controls.",
+      "eventBufferLimit": "Existing empty buffer remains [] after malformed input; exact single event appears after valid input.",
+      "reducedMotionMatches": true,
+      "animatedElementCount": 0,
+      "originalGradeChange": false,
+      "finding": "Separately observed loopback HTTP keyboard/form behavior supports original working-membership assessment at both widths; original shared-observer failure retained."
+    },
+    {
+      "reviewId": "review-da56342ed230466a",
+      "originalReviewSha256": "405fc9f91b63251bb153c834e242785950aac8a7d820a82a564e3e97cf33d366",
+      "sourcePath": "/tmp/qs-frontend-f11-dialog-supplement-20260926/review-da56342ed230466a",
+      "durableArchivePath": "tests/fixtures/frontend-adoption-v3-f11-http/parent-observation/review-da56342ed230466a",
+      "durableArchiveMatched": true,
+      "fileBindings": {
+        "artifact-copy/README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifact-copy/evidence/browser-results.json": {
+          "sha256": "69487fad6e51878d6a7fe897699a62bb07a81f2261bc315d3123f695edad90ce",
+          "bytes": 778
+        },
+        "artifact-copy/evidence/check.cjs": {
+          "sha256": "d9b86f4324be0f98d2802c821a00e54ff400b2c158f01041f9a80095bb241edb",
+          "bytes": 3296
+        },
+        "artifact-copy/evidence/narrow-form.png": {
+          "sha256": "a2e1638bea90c294ceefc1182d11e3fef569fc5a4508e7b8c9b95208b20d6ffc",
+          "bytes": 52857
+        },
+        "artifact-copy/evidence/narrow.png": {
+          "sha256": "9a931691c7fbb079cd6ba5efd043b066db48a1560b65455bf3db7beb36b17357",
+          "bytes": 57759
+        },
+        "artifact-copy/evidence/wide-form.png": {
+          "sha256": "3edaffda6c700487c46a5f3d9ffdbb5f2ae657da3a71aed3e28401e334df8694",
+          "bytes": 80034
+        },
+        "artifact-copy/evidence/wide.png": {
+          "sha256": "989f5d9753d3593a6f1f1284153b283e3658c4fc7071b1945cc990e1daf42845",
+          "bytes": 66921
+        },
+        "artifact-copy/index.html": {
+          "sha256": "8abe7161df717ac09dbe16bc1e0879a45b245b49d3ce7b5970edc9b73e820744",
+          "bytes": 2330
+        },
+        "artifact-copy/reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "artifact-copy/script.js": {
+          "sha256": "bea5f7ec1e3467702a4d91075e7cf19e18e9466ef889a1e0354ec9f824fb8326",
+          "bytes": 881
+        },
+        "artifact-copy/styles.css": {
+          "sha256": "641e759794e15ff6db52ff01b34c9ec9a18c011f03eaa03fc7b62dab303622c2",
+          "bytes": 3914
+        },
+        "browser/narrow-dialog.png": {
+          "sha256": "86c08b2bc3b439decd2b162f8e025dcad94b21e45cc72a800058c7f337d2200f",
+          "bytes": 50426
+        },
+        "browser/narrow-result.png": {
+          "sha256": "4b45bffc8765a0a72f45bf7db90d5ef895c446ae46c06c233c4a0dd393a9469a",
+          "bytes": 53161
+        },
+        "browser/narrow.png": {
+          "sha256": "9a931691c7fbb079cd6ba5efd043b066db48a1560b65455bf3db7beb36b17357",
+          "bytes": 57759
+        },
+        "browser/observations.json": {
+          "sha256": "bebb511695a2a3985eadd03ad535619d7205ec1e52f2ace00b53ea2516676f71",
+          "bytes": 86318
+        },
+        "browser/wide-dialog.png": {
+          "sha256": "91fd6cc4e19e31c44ac37665be05da9766dd8532b94441e968706a87139cb2f7",
+          "bytes": 73584
+        },
+        "browser/wide-result.png": {
+          "sha256": "08ff9db98292653342faa7d354eec3b64e915fb0ddd35fe096423f68d3d9c101",
+          "bytes": 80562
+        },
+        "browser/wide.png": {
+          "sha256": "989f5d9753d3593a6f1f1284153b283e3658c4fc7071b1945cc990e1daf42845",
+          "bytes": 66921
+        },
+        "transport-evidence.json": {
+          "sha256": "250b9c3e13802e3f9784e2e888cb500097116a77bad33efc27b15d898ea433e0",
+          "bytes": 7661
+        }
+      },
+      "observations": {
+        "wide": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "scrollWidth": 1280,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        },
+        "narrow": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "scrollWidth": 390,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        }
+      },
+      "blockedRequests": [],
+      "deniedProxyRequests": [],
+      "baseScreenshotsIdenticalToPreviouslyOpened": {
+        "wide": true,
+        "narrow": true
+      },
+      "newScreenshotsOpened": [
+        "browser/narrow-result.png"
+      ],
+      "visualFinding": "Narrow result screenshot shows readable labelled email, visible focused submit button and exact success status inside unclipped modal. Full-page capture backdrop covers viewport; beyond-viewport page in full-page raster is not evidence of active outside controls.",
+      "eventBufferLimit": "Existing empty buffer remains [] after malformed input; exact single event appears after valid input.",
+      "reducedMotionMatches": true,
+      "animatedElementCount": 0,
+      "originalGradeChange": false,
+      "finding": "Separately observed loopback HTTP keyboard/form behavior supports original working-membership assessment at both widths; original shared-observer failure retained."
+    },
+    {
+      "reviewId": "review-eb166244f5a4a48f",
+      "originalReviewSha256": "4751d64d4e2bffea0e1f9a688aafc9d8484e500226a47330ba2323d025428aa5",
+      "sourcePath": "/tmp/qs-frontend-f11-dialog-supplement-20260926/review-eb166244f5a4a48f",
+      "durableArchivePath": "tests/fixtures/frontend-adoption-v3-f11-http/parent-observation/review-eb166244f5a4a48f",
+      "durableArchiveMatched": true,
+      "fileBindings": {
+        "artifact-copy/README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifact-copy/artifacts/browser-observations.json": {
+          "sha256": "381ca15c1d1c021a99fea8c404315df5952c576d63e85a20e0d4ad36680a0617",
+          "bytes": 914
+        },
+        "artifact-copy/artifacts/narrow-confirmation.png": {
+          "sha256": "234921e9f19a9ccea7a7c11282d47675623141f2d098dff8909d05ce309d31f2",
+          "bytes": 51739
+        },
+        "artifact-copy/artifacts/narrow.png": {
+          "sha256": "51be0cee82d7c9a4057cffddfc3cc55baf436593908e906e9f475b52eaf075fa",
+          "bytes": 57054
+        },
+        "artifact-copy/artifacts/wide-confirmation.png": {
+          "sha256": "0d3c8c5d01cac58ff1796e9ea03ae36f1a2901f02c0b21060111e7fadaf0c666",
+          "bytes": 80927
+        },
+        "artifact-copy/artifacts/wide.png": {
+          "sha256": "460cdaf9db14c02dcaad0e5d47764ee4586a1694c0b446f60832110e80e049dd",
+          "bytes": 66891
+        },
+        "artifact-copy/index.html": {
+          "sha256": "4331c5c059d85d70c38692a911d742a94c111480643184adc8ad478c294bd310",
+          "bytes": 2643
+        },
+        "artifact-copy/reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "artifact-copy/script.js": {
+          "sha256": "b23e5b2aa4d76698487a5f88f813f459d51f37dea67785a26a68ed23bbad13d2",
+          "bytes": 911
+        },
+        "artifact-copy/styles.css": {
+          "sha256": "1f1cd8fc2f369655828dcb36196ccd6b8a6fdc01b775b41eeec2a64188931d88",
+          "bytes": 4222
+        },
+        "artifact-copy/verify.mjs": {
+          "sha256": "22ef00d2de03fe211e3e4db3bb65928cdb111c93b1ae844fcaf13a8f4df80c71",
+          "bytes": 3409
+        },
+        "browser/narrow-dialog.png": {
+          "sha256": "2ad3d5408178d73bd9f71141e6eee9b47a67cd9069b1a5c25172f266a7fba6f0",
+          "bytes": 48258
+        },
+        "browser/narrow-result.png": {
+          "sha256": "90e15c7c4ec8d9d03d80a42ee5ea6aa89f6c1c9c529a420c05c579327466ab8b",
+          "bytes": 52916
+        },
+        "browser/narrow.png": {
+          "sha256": "51be0cee82d7c9a4057cffddfc3cc55baf436593908e906e9f475b52eaf075fa",
+          "bytes": 57054
+        },
+        "browser/observations.json": {
+          "sha256": "a33e76c30bb33bd15e31cf16ea7d2e4576ec98b64a17be5517482ae326b14344",
+          "bytes": 90507
+        },
+        "browser/wide-dialog.png": {
+          "sha256": "92c5ec0cc4c4146024fd136ad0e1885d1fd38427afc291da6476a8e9652d39b2",
+          "bytes": 77194
+        },
+        "browser/wide-result.png": {
+          "sha256": "e05d0b9b0a0a2fceca9b2b00f7c266495841b55c6bf55f346505d3edb91118fe",
+          "bytes": 82177
+        },
+        "browser/wide.png": {
+          "sha256": "460cdaf9db14c02dcaad0e5d47764ee4586a1694c0b446f60832110e80e049dd",
+          "bytes": 66891
+        },
+        "transport-evidence.json": {
+          "sha256": "aa2ae72231897313aa954f1f2774bd71277c3c752d7a171a255f71be78ae3187",
+          "bytes": 7733
+        }
+      },
+      "observations": {
+        "wide": {
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "scrollWidth": 1280,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        },
+        "narrow": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "scrollWidth": 390,
+          "allKeyboardTargetsReached": true,
+          "modalOpenedEmailFocused": true,
+          "escapeClosedReturnedFocus": true,
+          "invalidEmailRejected": true,
+          "invalidEventsActual": [],
+          "validEventsActual": [
+            {
+              "name": "join_started",
+              "plan": "family"
+            }
+          ],
+          "validMessageActual": "Ready to continue with Family membership.",
+          "navigationOccurred": false,
+          "focusStayedInDialogActual": false,
+          "focusReachedOutsideControlActual": false,
+          "focusLimit": "Sixteen Tab presses; native browser chrome may expose BODY as activeElement. A BODY sample alone is not proof of an escaped modal focus trap."
+        }
+      },
+      "blockedRequests": [],
+      "deniedProxyRequests": [],
+      "baseScreenshotsIdenticalToPreviouslyOpened": {
+        "wide": true,
+        "narrow": true
+      },
+      "newScreenshotsOpened": [
+        "browser/narrow-result.png"
+      ],
+      "visualFinding": "Narrow result screenshot shows readable labelled email, visible focused submit button and exact success status inside unclipped modal. Full-page capture backdrop covers viewport; beyond-viewport page in full-page raster is not evidence of active outside controls.",
+      "eventBufferLimit": "Existing empty buffer remains [] after malformed input; exact single event appears after valid input.",
+      "reducedMotionMatches": true,
+      "animatedElementCount": 0,
+      "originalGradeChange": false,
+      "finding": "Separately observed loopback HTTP keyboard/form behavior supports original working-membership assessment at both widths; original shared-observer failure retained."
+    }
+  ],
+  "limits": [
+    "Sixteen Tab samples include BODY in every case: no outside control observed, but complete focus trap not certified.",
+    "Supplement demonstrates malformed-input flow; empty-required behavior remains in separately inspected original author evidence.",
+    "One exact browser build, supplied viewports/local flow; no all-browser/assistive-technology/exhaustive accessibility or pixel-parity guarantee.",
+    "No new model action or product correction; original native authority/generation review remains unchanged.",
+    "Minor brand/route limitations recorded in original grades are retained."
+  ],
+  "fourPasses": [
+    "Bind unchanged products and original grades.",
+    "Read actual interaction observations and inspect new six narrow result images.",
+    "Compare claimed outcomes with explicit values; retain absent buffer and BODY-focus uncertainty.",
+    "Verify all source/archive hashes and append-only separation."
+  ]
+}

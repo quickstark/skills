@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:14:46.366Z",
+  "elapsedMs": 34852.707559,
+  "wallElapsedMs": 34852,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "a91cab5bb4d5c69f07d8d92986aeca2ed290fa9fa6629c289760d312276dd099",
+  "promptUtf8Bytes": 18994,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25606,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 932,
+      "reasoning_output_tokens": 296
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "e69b4537b6e5ce9ed475ec8a4f3ac3a38a00844b705e994dd3f6111007241e4d",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-UHuhqA",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-deploy-prompt\\nOutcome: An execution-ready prompt is blocked: the deployment environment is unspecified, neither environment has deployment authorization, and goal tools are unavailable. Execution has not started.\\nSpecs: Not located\\n\\n- [ ] Blocked — resolve deployment target, deployment authority, and goal capability before completing prompt generation.\\n\\nStage: Prompt readiness | Stage estimate: ~40% | Overall estimate: ~40% | blocked — supplied repository evidence assessed; required prerequisites remain unresolved. Input needed: selected environment, explicit deployment authorization, and a host with goal tools.\\n\\nOne stage carries all effort weight; the estimate is coarse and reflects evidence assessment only.\\n\\nWork summary:\\n- Finished — assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. CSV export and its specification are absent. Requirements are current filtered invoices, a header row, correct CSV escaping, and preservation of the existing screen. No commands, checks, or mutations were performed.\\n- Next — [CSV export deployment prerequisites](/fixture/ledger-app/docs/deploy.md) — blocked — select and authorize the environment; resolve unavailable goal capability before generating the execution prompt.\\n\\nRepository edit/build/test and commit/push of `feature/export` to `origin` remain authorized. Merge, deployment, rollback execution, and unrelated changes are not authorized. Credentials are reported present. Documentation alone grants no deployment or rollback authority.\\n\\nWhich documented environment—staging or production—do you select, and do you authorize deployment to that environment through its documented workflow?\\n\\nNext work prompt:\\n```text\\n$qs-skills:qs-plan-clarify\\nResolve the CSV invoice export deployment prerequisites for /fixture/ledger-app, branch feature/export, revision abc123.\\n\\nSupplied evidence: export and specification are absent. Required behavior is exporting current filtered invoices with a header row and correct CSV escaping while preserving the existing screen. docs/deploy.md documents staging and production, but neither is selected or authorized. Credentials are reported present; do not read secret values.\\n\\nStanding authority covers repository edit/build/test and commit/push feature/export to origin. It does not cover merge, deployment, rollback execution, or unrelated files. Ask one focused question first: which documented environment does the user select, and do they authorize deployment there through its documented workflow?\\n\\nRecord the answer without treating environment selection alone as deployment authority. Goal tools are unavailable: retain this as a separate capability blocker requiring a host with real goal support. Do not substitute ordinary execution, invent tools or a token budget, install dependencies, or change host settings.\\n\\nThis clarification produces decisions only. Do not implement, publish, deploy, or automatically launch another root. Preserve the unresolved goal-capability blocker in the completion report.\\n```\",\n  \"requestedActions\": [\n    \"Ask which documented environment—staging or production—the user selects and whether they authorize deployment to that environment through its documented workflow.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

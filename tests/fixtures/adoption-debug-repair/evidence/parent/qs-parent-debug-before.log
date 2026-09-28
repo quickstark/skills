@@ -1,0 +1,95 @@
+✖ 204 original failure and body never consumed (1.036076ms)
+✔ JSON values and request semantics remain exact (2.000755ms)
+✔ 401 and 403 remain authentication failures without parsing (0.508485ms)
+✔ other HTTP failures retain status without parsing (0.377135ms)
+✖ malformed successful payload retains the parser cause (0.681723ms)
+✖ transport rejection propagates unchanged (0.301131ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70.259895
+
+✖ failing tests:
+
+test at tests/fixtures/adoption-debug-repair/oracle.mjs:8:1
+✖ 204 original failure and body never consumed (1.036076ms)
+  Error [AuthenticationError]: Sign-in required
+      at savePreferences (file:///tmp/qs-debug-repair-capture-20260925/before/src/preferences.mjs:21:11)
+      at async TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:10:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    [cause]: SyntaxError: empty
+        at Object.json (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:10:93)
+        at savePreferences (file:///tmp/qs-debug-repair-capture-20260925/before/src/preferences.mjs:18:27)
+        at async TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:10:17)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  }
+
+test at tests/fixtures/adoption-debug-repair/oracle.mjs:31:1
+✖ malformed successful payload retains the parser cause (0.681723ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  AuthenticationError: Sign-in required
+      at async TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:33:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AuthenticationError: Sign-in required
+        at savePreferences (file:///tmp/qs-debug-repair-capture-20260925/before/src/preferences.mjs:21:11)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:33:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+      [cause]: SyntaxError: invalid JSON
+          at TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:32:23)
+          at Test.runInAsyncScope (node:async_hooks:227:14)
+          at Test.run (node:internal/test_runner/test:1402:25)
+          at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+          at Test.postRun (node:internal/test_runner/test:1542:19)
+          at Test.run (node:internal/test_runner/test:1467:12)
+          at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/fixtures/adoption-debug-repair/oracle.mjs:35:1
+✖ transport rejection propagates unchanged (0.301131ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  AuthenticationError: Sign-in required
+      at async TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:37:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AuthenticationError: Sign-in required
+        at savePreferences (file:///tmp/qs-debug-repair-capture-20260925/before/src/preferences.mjs:21:11)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:37:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+      [cause]: TypeError: socket disconnected
+          at TestContext.<anonymous> (file:///github/skills/tests/fixtures/adoption-debug-repair/oracle.mjs:36:24)
+          at Test.runInAsyncScope (node:async_hooks:227:14)
+          at Test.run (node:internal/test_runner/test:1402:25)
+          at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+          at Test.postRun (node:internal/test_runner/test:1542:19)
+          at Test.run (node:internal/test_runner/test:1467:12)
+          at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    },
+    operator: 'rejects',
+    diff: 'simple'
+  }

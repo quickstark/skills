@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:44:26.846Z",
+  "elapsedMs": 34484.67935999995,
+  "wallElapsedMs": 34485,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "7c8f5bbe43313f4ab5cc392752cd321492970bb2707ba5637fb31adcce25048d",
+  "promptUtf8Bytes": 9914,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25842,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 725,
+      "reasoning_output_tokens": 188
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "18f33dd4628aa23c4dc5c1ac0580fb482b56205895edd09ddf664b47fee99712",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-CeBcNh",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Complete — Build root only\\nSkills used: /qs-code-build\\nOutcome: Supplied fixture evidence confirms CSV implementation, acceptance tests, existing-screen checks, and diff review pass at the current revision. The overall goal remains incomplete.\\n\\nStage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified — Build complete; Git and Release remain unstarted. Input needed: none for this report.\\n\\n- [x] Build — verified, 100%; weight 60\\n- [ ] Git — pending, 0%; weight 10\\n- [ ] Release — pending, 0%; weight 30\\n\\nOverall: `(60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%`. The newly supplied completion evidence raises the previous overall estimate from 30% to 60%; weights remain unchanged.\\n\\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — CSV export implementation with current passing acceptance/tests/review, as reported by the fixture.\\n- Next — [CSV export publication](/fixture/ledger-app/docs/specs/export.md) — pending — verify host goal support and matching goal state, then advance to the authorized Git stage to publish and verify `origin/feature/export` against the tested revision.\\n- Next — [Staging deployment](/fixture/ledger-app/docs/deploy.md) — pending — after verified publication, deploy and verify HTTP 200 plus the exact deployed version. No deployed artifact/version or health evidence is supplied.\\n\\nNext work prompt: None — Git and Release are already scheduled by the authorized coordinator. No actions were executed in this response.\",\n  \"requestedActions\": [\n    \"Verify availability of the host's supported goal tools and inspect authoritative state with get_goal. Resume the matching goal; create_goal only if a new matching goal is needed. Do not replace an unrelated active goal. If support is unavailable or an unrelated active goal prevents continuation, stop and report input-required.\",\n    \"After confirming the matching goal, preserve the supplied Build completion evidence and 60/10/30 weights using update_goal according to the host's actual contract; keep the overall goal incomplete.\",\n    \"Before starting the authorized Git root, recheck repository, target, skills, references, authorization, tested revision, and publication state. Commit/push only as needed to origin/feature/export and verify the remote equals the tested revision.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

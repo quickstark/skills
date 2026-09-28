@@ -2,7 +2,7 @@ import { readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
+import { PUBLIC_COMMANDS, LEGACY_PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
 import { V3_INTERNAL_CAPABILITIES } from "./qs-skill-catalog.mjs";
 import { PS_INTERNAL_CAPABILITIES } from "./ps-skill-catalog.mjs";
 
@@ -50,8 +50,14 @@ export const STANDALONE_PROGRESS_PATHS = Object.freeze([
 ].map((path) => `skills/${path}/SKILL.md`));
 
 export function progressInventory() {
+  const pathFor = (skill) => `${skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`}/SKILL.md`;
+  const active = new Set(PUBLIC_COMMANDS.map(pathFor));
+  const known = new Set([...LEGACY_PUBLIC_COMMANDS, ...TARGET_PUBLIC_COMMANDS].map(pathFor));
   return {
-    publicSkills: PUBLIC_COMMANDS.map((skill) => `${skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`}/SKILL.md`).sort(),
+    publicSkills: [...active].sort(),
+    // Inactive candidates and retained migration sources are inventoried without
+    // being exposed or rewritten by the active command generator.
+    inactiveSkills: [...known].filter((path) => !active.has(path)).sort(),
     standaloneSkills: [...STANDALONE_PROGRESS_PATHS].sort(),
     internalReferences: [
       ...V3_INTERNAL_CAPABILITIES.map((capability) => `skills/internal/${capability.name}.md`),
@@ -119,7 +125,7 @@ export async function syncProgressContracts({ check = false, root = repositoryRo
   // Preflight every replacement before writing any source, so malformed markers
   // cannot leave a partially synchronized set of canonical documents.
   for (const [kind, paths] of Object.entries(inventory)) {
-    if (kind === "publicSkills") continue; // Public completion renderer owns these.
+    if (kind === "publicSkills" || kind === "inactiveSkills") continue; // Public completion renderer owns these.
     for (const path of paths) {
       const content = await readFile(join(root, path), "utf8");
       let expected;

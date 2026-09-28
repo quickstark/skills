@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "project": "/tmp/qs-frontend-comparison-v2-host-20260926/reviewer-bundles/review-1ca0d52a49091ad7/actual-artifacts",
+  "reference": false,
+  "transport": "Supplementary loopback HTTP over an immutable in-memory snapshot of artifact-copy; original file:// evidence unchanged.",
+  "sourceBefore": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "f9703f63e7b35752f54907ce8fad653d0805bd0fe7096dd8280dec7ad030d067",
+      "bytes": 2729
+    },
+    "evidence/narrow.png": {
+      "sha256": "c0a8644f9134d85bce284e95b74ad1d2b92a1f3dfcf02d47f75d87c83d1811bb",
+      "bytes": 95151
+    },
+    "evidence/verify.cjs": {
+      "sha256": "d571d0946d2f5dd74300dc4fb1a057663e90be2561585ab4a8f5af0a685c262f",
+      "bytes": 5177
+    },
+    "evidence/wide.png": {
+      "sha256": "25510af6f0ddae2d5b08a263fa87cc405a69a148a518686f419f752732fb2aea",
+      "bytes": 113656
+    },
+    "index.html": {
+      "sha256": "eb85c89240ee584dc349c96f13faec5e4a5b98016f52fc77f0ac883ed5d12d55",
+      "bytes": 3924
+    },
+    "script.js": {
+      "sha256": "77d5f40f90c1487730074197e73b5db302163f03e694638ba832b4de77374713",
+      "bytes": 514
+    },
+    "styles.css": {
+      "sha256": "d39db32fc7146f0f9339edb624f03ed6a9a676a42fa88d39e368cd0642b66637",
+      "bytes": 6661
+    }
+  },
+  "sourceAfter": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "f9703f63e7b35752f54907ce8fad653d0805bd0fe7096dd8280dec7ad030d067",
+      "bytes": 2729
+    },
+    "evidence/narrow.png": {
+      "sha256": "c0a8644f9134d85bce284e95b74ad1d2b92a1f3dfcf02d47f75d87c83d1811bb",
+      "bytes": 95151
+    },
+    "evidence/verify.cjs": {
+      "sha256": "d571d0946d2f5dd74300dc4fb1a057663e90be2561585ab4a8f5af0a685c262f",
+      "bytes": 5177
+    },
+    "evidence/wide.png": {
+      "sha256": "25510af6f0ddae2d5b08a263fa87cc405a69a148a518686f419f752732fb2aea",
+      "bytes": 113656
+    },
+    "index.html": {
+      "sha256": "eb85c89240ee584dc349c96f13faec5e4a5b98016f52fc77f0ac883ed5d12d55",
+      "bytes": 3924
+    },
+    "script.js": {
+      "sha256": "77d5f40f90c1487730074197e73b5db302163f03e694638ba832b4de77374713",
+      "bytes": 514
+    },
+    "styles.css": {
+      "sha256": "d39db32fc7146f0f9339edb624f03ed6a9a676a42fa88d39e368cd0642b66637",
+      "bytes": 6661
+    }
+  },
+  "copyBefore": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "f9703f63e7b35752f54907ce8fad653d0805bd0fe7096dd8280dec7ad030d067",
+      "bytes": 2729
+    },
+    "evidence/narrow.png": {
+      "sha256": "c0a8644f9134d85bce284e95b74ad1d2b92a1f3dfcf02d47f75d87c83d1811bb",
+      "bytes": 95151
+    },
+    "evidence/verify.cjs": {
+      "sha256": "d571d0946d2f5dd74300dc4fb1a057663e90be2561585ab4a8f5af0a685c262f",
+      "bytes": 5177
+    },
+    "evidence/wide.png": {
+      "sha256": "25510af6f0ddae2d5b08a263fa87cc405a69a148a518686f419f752732fb2aea",
+      "bytes": 113656
+    },
+    "index.html": {
+      "sha256": "eb85c89240ee584dc349c96f13faec5e4a5b98016f52fc77f0ac883ed5d12d55",
+      "bytes": 3924
+    },
+    "script.js": {
+      "sha256": "77d5f40f90c1487730074197e73b5db302163f03e694638ba832b4de77374713",
+      "bytes": 514
+    },
+    "styles.css": {
+      "sha256": "d39db32fc7146f0f9339edb624f03ed6a9a676a42fa88d39e368cd0642b66637",
+      "bytes": 6661
+    }
+  },
+  "copyAfter": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "f9703f63e7b35752f54907ce8fad653d0805bd0fe7096dd8280dec7ad030d067",
+      "bytes": 2729
+    },
+    "evidence/narrow.png": {
+      "sha256": "c0a8644f9134d85bce284e95b74ad1d2b92a1f3dfcf02d47f75d87c83d1811bb",
+      "bytes": 95151
+    },
+    "evidence/verify.cjs": {
+      "sha256": "d571d0946d2f5dd74300dc4fb1a057663e90be2561585ab4a8f5af0a685c262f",
+      "bytes": 5177
+    },
+    "evidence/wide.png": {
+      "sha256": "25510af6f0ddae2d5b08a263fa87cc405a69a148a518686f419f752732fb2aea",
+      "bytes": 113656
+    },
+    "index.html": {
+      "sha256": "eb85c89240ee584dc349c96f13faec5e4a5b98016f52fc77f0ac883ed5d12d55",
+      "bytes": 3924
+    },
+    "script.js": {
+      "sha256": "77d5f40f90c1487730074197e73b5db302163f03e694638ba832b4de77374713",
+      "bytes": 514
+    },
+    "styles.css": {
+      "sha256": "d39db32fc7146f0f9339edb624f03ed6a9a676a42fa88d39e368cd0642b66637",
+      "bytes": 6661
+    }
+  },
+  "unchanged": true,
+  "requests": [
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "/script.js",
+      "status": 200
+    }
+  ],
+  "deniedProxyRequests": [],
+  "reportComplete": true,
+  "failure": null,
+  "qualityJudgment": "Not evaluated; original rubric and independent review still required."
+}

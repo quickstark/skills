@@ -1,0 +1,30 @@
+{
+  "id": "H1",
+  "cwd": "/tmp/qs-behavior-task-Mn3YIC",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-help/SKILL.md",
+      "sourceSHA256": "c0bd70c6e8192b00e8a0ae508b6a2b398938123598271c75414f2e8811ca1b05",
+      "derivedSHA256": "278ec808fb8251b3a213022f00ea61c8a516481cb121eb4a850d7303e4254557",
+      "bytes": 10294
+    },
+    {
+      "path": "skills/engineering/qs-help/ROUTING.md",
+      "sourceSHA256": "1fdb70b9ea62f03c95db8a670e794216471b0b7ae2392f3a17e4c5a8c47a77d0",
+      "derivedSHA256": "698dd9c6cea7d223aed922d22a561030a9a9407e8849aecd5f9d4df2c79a179f",
+      "bytes": 7306
+    }
+  ]
+}

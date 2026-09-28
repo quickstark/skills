@@ -1,0 +1,19 @@
+{
+  "screenshots": [
+    "evidence/wide.png",
+    "evidence/narrow.png",
+    "evidence/dark.png"
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "checks": [
+    "1280x900: no horizontal overflow",
+    "390x844: no horizontal overflow",
+    "Empty and invalid emails rejected without analytics",
+    "Keyboard submission confirms valid email and records exact local event",
+    "Valid submission stays on page",
+    "Membership, details, privacy and accessibility pages resolve",
+    "Dark appearance and reduced-motion render without overflow",
+    "No browser errors or external requests"
+  ]
+}

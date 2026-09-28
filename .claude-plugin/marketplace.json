@@ -29,15 +29,54 @@
       ]
     },
     {
-      "name": "ps-skills",
-      "source": "./packages/ps-skills",
-      "description": "Optional Cursor-neutral Pstack analysis, verification, evaluation, optimization, and operations workflows.",
+      "name": "qs-advanced",
+      "source": "./packages/qs-advanced",
+      "description": "Optional focused analysis, verification, evaluation and operations workflows.",
       "category": "engineering",
       "keywords": [
         "quickstark",
-        "pstack",
-        "engineering",
-        "verification"
+        "optional"
+      ]
+    },
+    {
+      "name": "qs-frontend",
+      "source": "./packages/qs-frontend",
+      "description": "Optional frontend implementation, reference images and prompt construction.",
+      "category": "engineering",
+      "keywords": [
+        "quickstark",
+        "optional"
+      ]
+    },
+    {
+      "name": "qs-video",
+      "source": "./packages/qs-video",
+      "description": "Optional scoped video creation, editing and rendering with private HyperFrames modules.",
+      "category": "engineering",
+      "keywords": [
+        "quickstark",
+        "optional"
+      ]
+    },
+    {
+      "name": "qs-execution",
+      "source": "./packages/qs-execution",
+      "description": "Optional substantial-work acceptance gates and completion discipline.",
+      "category": "engineering",
+      "keywords": [
+        "quickstark",
+        "optional"
+      ]
+    },
+    {
+      "name": "ps-skills",
+      "source": "./packages/ps-skills",
+      "description": "Legacy migration compatibility only. New installations use the QS catalog; retained for existing native consumers.",
+      "category": "engineering",
+      "keywords": [
+        "quickstark",
+        "legacy",
+        "migration"
       ]
     }
   ]

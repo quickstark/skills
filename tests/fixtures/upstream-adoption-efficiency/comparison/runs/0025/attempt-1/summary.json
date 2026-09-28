@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 25,
+    "scenarioId": "E7",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "E7",
+  "inputSHA256": "c7c476e5e77101c42652159fa277efb612546a4383f4be853913fcc222994d4d",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-ZjLSdJ",
+  "startedAt": "2026-09-25T19:35:32.793Z",
+  "completedAt": "2026-09-25T19:35:59.467Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25834,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 665,
+      "reasoning_output_tokens": 248
+    }
+  ],
+  "elapsedMs": 26621.746470000002,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: The supplied `get_goal` result identifies “Migrate billing database,” not “Deliver CSV invoice export to staging.” Execution is blocked; no mutations are reported.\n\n- [ ] Build — blocked; ~50%; weight 60\n- [ ] Git — pending; 0%; weight 10\n- [ ] Release — pending; 0%; weight 30\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — preserving the supplied current-revision implementation and review milestones. Input needed: resolution of the unrelated active goal.\n\nOverall: `(60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%`. These coarse estimates remain unchanged while blocked; Build is not verified complete.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — identified the goal mismatch from supplied evidence. No new validation results or material outputs.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — establish the matching goal before resuming Build. Required CSV, screen, and final diff checks remain unverified; publication and staging artifact/version/health verification remain pending.\n\nNext work prompt: None — scheduled stages remain gated by the goal conflict.\n\nHow should the active-goal conflict be resolved so the host can establish “Deliver CSV invoice export to staging” while preserving “Migrate billing database”?\n\nThe submitted workflow requires input for unrelated active goals and states: “Never replace an unrelated active goal.” Existing edit, push, and staging authorization remains in force.",
+    "requestedActions": [
+      "Request a user decision resolving the unrelated active-goal conflict before any goal mutation or stage execution; preserve the existing goal."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

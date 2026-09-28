@@ -18,7 +18,7 @@ Never invent a deployment target or external release workflow. Use only the proj
 5. Execute only the documented release/deployment steps.
 6. Verify artifact availability, remote version/tag, marketplace or package surface, health checks, and rollback readiness from authoritative sources.
 
-Failure before publication leaves the previous release available and must not be reported as deployed. End after the approved release outcome; do not start debugging or follow-up work automatically.
+Distinguish failure before publication from partial publication or deployment. Inspect authoritative remote state and report the actual artifact/version, affected target, remaining checks and next permitted recovery action; do not assume the previous release is untouched after a partial operation. Rollback readiness is not authority to execute rollback. End after the approved release outcome; do not start debugging or follow-up work automatically.
 
 ## Completion report and next steps
 

@@ -1,0 +1,52 @@
+{
+  "sourceRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+  "originalSourceRecordsUnchanged": 912,
+  "retainedPrivateFiles": 911,
+  "modules": 21,
+  "relativeImports": 186,
+  "dependencyIndexSha256": "e3f40e839433a31128bdbb1107ee2ecf1c33a792039871769f5dbc79cc5c0136",
+  "focusedTests": {
+    "command": "node --test tests/video-candidate.test.mjs skills/video/qs-video/modules/embedded-captions/scripts/preview-frames.test.mjs skills/video/qs-video/modules/embedded-captions/scripts/make-theme.test.mjs",
+    "exit": 0,
+    "tests": 47,
+    "passed": 47,
+    "failed": 0
+  },
+  "effectiveRuntimeRun": "run-03",
+  "failedRuntimeRun": "run-01",
+  "failedAcquisitionAttempt": "Initial explicit npm acquisition could not write default ~/.npm cache (EROFS); no log/cache write succeeded. Repeated with npm_config_cache=/tmp/qs-embedded-caption/npm-cache, --ignore-scripts; succeeded.",
+  "allOwnedCommandSessionsFinished": true,
+  "ordinaryBrowserSandboxPreserved": true,
+  "isolatedFixtureBrowserOptIn": "QS_VIDEO_BROWSER_NO_SANDBOX=1",
+  "qualification": "No speech-recognition accuracy, all-identity, all-provider, cross-host or final package-adoption conclusion.",
+  "postRunSourceChange": "Trailing whitespace removed from shell comment only. Final source shell rerender exited zero. Encoded file SHA256 differs; decoded pixel/audio oracles passed again. No byte-identical encode claim.",
+  "finalSourceRerenderExit": 0,
+  "finalRerenderSha256": "8bed7114d626f4b1f8cfbb3f15512997c98fc145b668ba4d1660774267ec5474",
+  "finalRerenderOracles": {
+    "samples": [
+      {
+        "frame": 1,
+        "captionChanges": 0,
+        "outsideMeanAbsoluteError": 1.880382429723049
+      },
+      {
+        "frame": 11,
+        "captionChanges": 3750,
+        "outsideMeanAbsoluteError": 1.86657769048202
+      },
+      {
+        "frame": 21,
+        "captionChanges": 0,
+        "outsideMeanAbsoluteError": 1.8046670527908741
+      }
+    ],
+    "alpha": {
+      "subject": 255,
+      "background": 0,
+      "opaque": 78889,
+      "transparent": 148546
+    },
+    "audioCorrelation": 0.9999912664023481,
+    "missingCaptionNegative": "rejected"
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "kind": "regular-file-record-bindings-not-source-snapshot",
+  "entries": {
+    "config/skill-migrations.json": {
+      "bytes": 53486,
+      "sha256": "edfb01cdaeccecf3c61965a3a51f4f4027c21941418d3771f0d1ac254d0cba30"
+    },
+    "docs/specs/quickstark-upstream-adoption-font-amendment.md": {
+      "bytes": 2414,
+      "sha256": "456821cee367a135236a47379a8df002e9d8a6b51e7e3974bbf8ba38b8fc720b"
+    },
+    "docs/specs/quickstark-upstream-adoption.md": {
+      "bytes": 48159,
+      "sha256": "6c4ed3edaaafd573dc1b0cfa841e89844071f5a59e5fd982faa4b8532f942994"
+    },
+    "docs/validation/upstream-adoption-efficiency.md": {
+      "bytes": 3370,
+      "sha256": "8a3b21d3b0446db232e7d64d7590a05b0ec788584118fb0fd8c5d6a80e163859"
+    },
+    "docs/validation/upstream-adoption-evidence-map.md": {
+      "bytes": 27916,
+      "sha256": "c87069ee96f625b29a1ed9b78e9431785b184a49539f5f8da005683d30eaff59"
+    },
+    "scripts/adoption-acceptance.mjs": {
+      "bytes": 5429,
+      "sha256": "52a39b3dc78fc46459d8e89d3cf2a285b0b084996a65af0e59f2eba9bcf1d19e"
+    },
+    "scripts/managed-skill-input.mjs": {
+      "bytes": 25782,
+      "sha256": "0d20114811c4e7e2ca25c7bac10cb177dd3e1b2a94242403a5d4e1d4b1d9f1be"
+    },
+    "tests/adoption-acceptance.test.mjs": {
+      "bytes": 5269,
+      "sha256": "4eb481ef105f322d9215ad112f13685c063b22ac13b3bfe596fb2f9c69a7a533"
+    },
+    "tests/adoption-projection.test.mjs": {
+      "bytes": 9191,
+      "sha256": "b6b5fe2536a3ac1e4a86d463693f4dff1a69092c7e8f91d09f80a298c033c0fc"
+    },
+    "tests/advanced-candidates.test.mjs": {
+      "bytes": 9240,
+      "sha256": "0ba92e54cfb2d977eb2970d67735b3b0b1364f37de8312984630d107157b7ee0"
+    },
+    "tests/execution-candidate.test.mjs": {
+      "bytes": 7556,
+      "sha256": "d05a28f4ac2054cf5784d48f675a090a1f93ee5067c6f3632ea215ff807d5421"
+    },
+    "tests/fixtures/adoption-behavior-review/current-01-review.json": {
+      "bytes": 86578,
+      "sha256": "f5940386608b15e3b17684834b5870a93c37865ef6a85f6c1a981fbbd589c716"
+    },
+    "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json": {
+      "bytes": 903,
+      "sha256": "a113901001164d3c4c849130b5d9660cd26194a5f0f0b461e43553f67b5d1347"
+    },
+    "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log": {
+      "bytes": 509,
+      "sha256": "2dde78908d611a30344bdfbfc2f9928cc6506b13e09d55a8808f554963b0f929"
+    },
+    "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log": {
+      "bytes": 5140,
+      "sha256": "802df6660f53543af7d144dee0d796bf68c83bd20e2401775b05cc69b7c7eb08"
+    },
+    "tests/fixtures/adoption-debug-repair/frozen-plan.json": {
+      "bytes": 3012,
+      "sha256": "04b6d3ece2b98179ec1b83f0c6993f7d125bdf6826b27b5cce2e58afc4079739"
+    },
+    "tests/fixtures/adoption-review-eval/parent/review.json": {
+      "bytes": 1310,
+      "sha256": "cc615f36d397cf73d0a97ac8084f5546aa8d5f8d91eb2ec71627ca6e8a2ff56e"
+    },
+    "tests/fixtures/adoption-video-native-results/REVIEW.md": {
+      "bytes": 5831,
+      "sha256": "a122989b0179677be6da686f6a8a08df19faa802b9d27295293a7663f4988f31"
+    },
+    "tests/fixtures/adoption-video-native-results/parent-review.json": {
+      "bytes": 1654,
+      "sha256": "ea88a1d23439eb2ad3c84ef2daf29a633ae684f9d458123e6cf889b72d914bbe"
+    },
+    "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json": {
+      "bytes": 47335,
+      "sha256": "003c7c52ee3b889a03f52a5e84a7f3979a27a0ce6fae0b042f59a43ff2e4e8d2"
+    },
+    "tests/fixtures/frontend-adoption-v3-image-resolution/README.md": {
+      "bytes": 6364,
+      "sha256": "7e882be771e3702ba96a7aa28c9888ad3d67a8df6bf8ae64efff2d53a1b54ca1"
+    },
+    "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json": {
+      "bytes": 1008,
+      "sha256": "2ea3581f45edeed9f51596ce9841eb7cf152aebd8d2a5be066e869cacfa8144d"
+    },
+    "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json": {
+      "bytes": 39106,
+      "sha256": "5072d44771dc051dc4edcd6751b814e0aa2d9881eec0b8234ab2a9ea3d50e7f2"
+    },
+    "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json": {
+      "bytes": 4372,
+      "sha256": "4b87f9d5643a4a74701f4bfa33949155167252a0148c03bfaa7ce03b37171453"
+    },
+    "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json": {
+      "bytes": 559,
+      "sha256": "4a0a069c564ff24fdf4c1766b31dd8e14a1afd2972f5e0a19f39265af7255967"
+    },
+    "tests/fixtures/frontend-mobile-repair-results/archive.json": {
+      "bytes": 1448,
+      "sha256": "04a50581e447c4c326bea2c35e150bf0f1bfac1dbb9ae0e3f0ffa8ae402c7321"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/parent-review.json": {
+      "bytes": 859,
+      "sha256": "b8ed659343589d5e9b128eec6e9544e0115eb4a1a2995e28db43a25264b15757"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json": {
+      "bytes": 13568,
+      "sha256": "f8c50a664e7b0ec2c6d5a84fcfec9db8cf41962c72958dc5578d09e8ba5f0660"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json": {
+      "bytes": 15439,
+      "sha256": "dab4bb55ce889b95b056ec963bc8232d31b038a7b412d9529390683f368affa4"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json": {
+      "bytes": 13255,
+      "sha256": "c7ff8314e11f870f670c8f9d8f4626790348e13a6be80a30951c0a9d7f23096b"
+    },
+    "tests/fixtures/frontend-mobile-repair/README.md": {
+      "bytes": 3391,
+      "sha256": "41ccc1e72181e33c32e30baa7f59eefa76baf4b9744551f02b5452e818369889"
+    },
+    "tests/fixtures/frontend-mobile-repair/plan.json": {
+      "bytes": 8988,
+      "sha256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c"
+    },
+    "tests/fixtures/hyperframes-adoption/README.md": {
+      "bytes": 4456,
+      "sha256": "e396358f834dbfeef9d81aa37f58ad02fe200832f88e4e855df6b4162df610fa"
+    },
+    "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json": {
+      "bytes": 2147,
+      "sha256": "e227d3ea7626cbe59eddb0d6de1cb8580d7e6b28534e1eb6588948671b964990"
+    },
+    "tests/fixtures/target-activation-probe/README.md": {
+      "bytes": 2396,
+      "sha256": "3d866c3d6494d10c6b02a76837ebf1abedc00ea59cf9329f46bf9c9ba35e7554"
+    },
+    "tests/fixtures/target-documentation-preparation/README.md": {
+      "bytes": 4241,
+      "sha256": "b1c8b15545c0af64ac220661bf257934c59c3b182a59031fbd079a554c49a70a"
+    },
+    "tests/fixtures/target-index-generation/evidence/parent-review.json": {
+      "bytes": 2317,
+      "sha256": "ce6e4501554638545ae27fcde9104025bbe10266914dfd6ec3f7b8fe84d86fcb"
+    },
+    "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json": {
+      "bytes": 20269,
+      "sha256": "3fe924f7e17b1fa3b0ea6a764efbca30af98e312c5051175f905c4e7f690f5c8"
+    },
+    "tests/managed-skill-input.test.mjs": {
+      "bytes": 29194,
+      "sha256": "e3f4877b71fa009ae07df134663bdc5bb0af2aeb304a715bc5f7e762312366f7"
+    },
+    "tests/managed-skill-migration.test.mjs": {
+      "bytes": 57490,
+      "sha256": "0e16b28c3a11a9971b01a79ea71e88b2b2a17e5f602ff1048253b96ce943f23c"
+    },
+    "tests/migration-filesystem.test.mjs": {
+      "bytes": 6889,
+      "sha256": "76d1cadaf2e61805ca77bd4bdc2f398984747cb0206b7e8486c56a052fe5e6b7"
+    },
+    "tests/migration-native-packages.test.mjs": {
+      "bytes": 24707,
+      "sha256": "9f87fb56a776570ca5f212747c0f5daf9d566f1b71dfee42ce8af0cd0692990f"
+    },
+    "tests/migration-owned-paths.test.mjs": {
+      "bytes": 12423,
+      "sha256": "de97f396de85d631b34b4de5eecb650f4f3147fe218231ad377cb05bf49d8622"
+    },
+    "tests/migration-transaction.test.mjs": {
+      "bytes": 21346,
+      "sha256": "7ffdb213fe6963b2085e84bdd8055735c6a86543718ff17cc556714d6b09523f"
+    },
+    "tests/skill-provenance.test.mjs": {
+      "bytes": 18779,
+      "sha256": "dbeb819088150f347080b064c7fc3d2b8971dfc7b5a7e6f707ae9b81fa54262c"
+    },
+    "tests/upstream-adoption-qs.test.mjs": {
+      "bytes": 5160,
+      "sha256": "136f97fd93a47e851865f412111e8118d018fe038221458c1e4db40a62eaab82"
+    },
+    "tests/upstream-adoption-routing.test.mjs": {
+      "bytes": 7900,
+      "sha256": "dca92fbc40cac39088885980cea1002d41a783999c556771e34dc1a2345e95b9"
+    }
+  }
+}

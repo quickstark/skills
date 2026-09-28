@@ -1,0 +1,12 @@
+diff --git a/src/line-total.cjs b/src/line-total.cjs
+--- a/src/line-total.cjs
++++ b/src/line-total.cjs
+@@ -1,5 +1,6 @@
+ 'use strict';
+-function lineTotal(unitPrice, quantity = 1) {
+-  return unitPrice * quantity;
++function lineTotal(unitPrice, quantity) {
++  const count = quantity || 1;
++  return unitPrice * count;
+ }
+ module.exports = { lineTotal };

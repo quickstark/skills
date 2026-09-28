@@ -1,0 +1,22 @@
+{
+  "sourceRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+  "cli": {
+    "package": "hyperframes",
+    "version": "0.8.77",
+    "integrity": "sha512-OOVwxP9ixSwkoH0y5SX7Xwf6NS9ad0mFnqf6jK053piGp2LUsxEywGd5m9KucNdaKwlQfkw+u+U8E5OxKPsa+w=="
+  },
+  "carveCore": {
+    "package": "@hyperframes/core",
+    "version": "0.8.77",
+    "integrity": "sha512-zIrZp6G6OEmI6VtmUHjg6g33yelPknpF4v4j71yagK/MYbVooMZVX7KsYr+uzVwIl3ZrJQIIUylm86WGx4wWWQ=="
+  },
+  "declaredNode": ">=22",
+  "testedProfile": {
+    "platform": "linux-x64",
+    "node": "24.21.0",
+    "chromium": "151.0.7922.34",
+    "ffmpeg": "6.1.1-3ubuntu5",
+    "gsap": "3.14.2"
+  },
+  "coverage": "Local deterministic runtime fixtures only; provider and installed-package gates remain separate."
+}

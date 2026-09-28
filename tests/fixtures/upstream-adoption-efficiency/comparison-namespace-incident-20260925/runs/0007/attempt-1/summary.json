@@ -1,0 +1,50 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 7,
+    "scenarioId": "G4",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "G4",
+  "inputSHA256": "693a5874e899ece828ddd70a2d4d525f97f13e8da45d0c341da334e962633d6a",
+  "sourceSHA256": "9d38c8433311a4730dc5a3c916c900614a90008874a8d4a47f37ae6288963e69",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-zju2Tm",
+  "startedAt": "2026-09-25T19:15:21.274Z",
+  "completedAt": "2026-09-25T19:15:46.841Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25629,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 659,
+      "reasoning_output_tokens": 234
+    }
+  ],
+  "elapsedMs": 25511.902020000038,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-prompt\nOutcome: An execution-ready prompt is blocked because the required implementation workflow, `$qs-skills:qs-code-build`, is not installed. Requirements are already complete; no further specification or clarification is needed.\n\n- [x] Verified — assessed the supplied repository, specification, deployment, authorization, and capability observations.\n- [ ] Blocked — generate the execution prompt after the implementation workflow is available.\n\nStage: Prompt generation | Stage estimate: ~40% | Overall estimate: ~40% | blocked — inputs assessed; required implementation capability is missing. Input needed: verified availability of `$qs-skills:qs-code-build` in the execution host.\n\nThis bounded generation stage carries all effort weight; the estimate reflects input assessment only, not implementation progress.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. The specification covers filtered invoice export, a header row, CSV escaping, and preservation of the existing screen. Readiness failed on the missing build workflow. No commands, changes, installation, goal creation, or deployment occurred.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — provide an execution host with the required build workflow available, then regenerate the prompt.\n\nExisting authority remains limited to repository edits/build/tests, committing and pushing `feature/export` to `origin`, and staging deployment through [the documented workflow](/fixture/ledger-app/docs/deploy.md). Merge, production, unrelated changes, and rollback execution are not authorized. Credentials and goal tools are reported available; no active goal or token budget is specified.\n\nNext work prompt: None — the missing implementation workflow prevents an execution-ready deployment prompt. Execution has not started.",
+    "requestedActions": [],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

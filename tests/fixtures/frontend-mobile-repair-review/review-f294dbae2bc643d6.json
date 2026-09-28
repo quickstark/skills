@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-f294dbae2bc643d6",
+  "scenarioId": "F09",
+  "reviewer": "/root/adoption_hf_probe independent artifact reviewer; prior capture-infrastructure contributor, not output author",
+  "bundlePath": "/tmp/qs-frontend-mobile-native-qualification-20260926/reviewer-bundles/review-f294dbae2bc643d6",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "2d0ac77201c9bbf0cc15ad939878e2a4e7c47632967fd862e1bc3611f5fae97b",
+      "bytes": 706
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "context.json": {
+      "sha256": "efb2e2243b8770f6309e2f519b969f6293ffbd083ae9d09963ad1c6c55c5cdda",
+      "bytes": 9487
+    },
+    "events.jsonl": {
+      "sha256": "09e4b027058712643ec773e395821f4cbd4bfa54b34e71757b072c7746e4c60f",
+      "bytes": 6313454
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "8a6a6eb0c2c7b287f4df281b7f2e7104506fb033dabef4d568eaa0ac95633107",
+      "bytes": 3134
+    },
+    "response.md": {
+      "sha256": "27979039c9d2e41e76e9e4f98a6f7d13b2c3fd4818fdf531c41957dcaebafca5",
+      "bytes": 1249
+    },
+    "tool-images/ca576bbf1517a3590406f724d5f2fcee80d86ba41424cb958b3a3cda649d0317.png": {
+      "sha256": "ca576bbf1517a3590406f724d5f2fcee80d86ba41424cb958b3a3cda649d0317",
+      "bytes": 940015
+    },
+    "tool-images/d25ea4d7ae1fa4fa665abffcd3607b68b3907a2efb02117d210d8318f43c2187.png": {
+      "sha256": "d25ea4d7ae1fa4fa665abffcd3607b68b3907a2efb02117d210d8318f43c2187",
+      "bytes": 1278655
+    },
+    "tool-images.json": {
+      "sha256": "6da446366302e4233eddc12eac997314aaea6551180c6f421a263c2b731932d4",
+      "bytes": 1091
+    }
+  },
+  "bundleManifestSha256": "fbf08b48e7196aef590a431d874d51e42aaa923ce6fc17553e087e5b2257044f",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "rubricCanonicalSha256": "21cb5db7d8d1f56cb9d97af0b81faa2ae3b35e2377738015829d43867f220a7a",
+  "images": [
+    {
+      "eventLine": 128,
+      "source": "/home/djn12313/.codex/generated_images/01a0df04-343f-7c33-8b57-e49a1bbbc0d6/exec-88ecf78a-3f3a-4042-b3d1-5656c39ecf1d.png",
+      "target": "tool-images/ca576bbf1517a3590406f724d5f2fcee80d86ba41424cb958b3a3cda649d0317.png",
+      "sha256": "ca576bbf1517a3590406f724d5f2fcee80d86ba41424cb958b3a3cda649d0317",
+      "bytes": 940015,
+      "width": 887,
+      "height": 1774,
+      "mode": "RGBA",
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "nonOpaquePixels": 1570720,
+      "opaque": false,
+      "nativeResultBytesMatch": true,
+      "openedByReviewer": true
+    },
+    {
+      "eventLine": 200,
+      "source": "/home/djn12313/.codex/generated_images/01a0df04-343f-7c33-8b57-e49a1bbbc0d6/exec-00dd61a0-2134-48d4-9656-2a7d671812e1.png",
+      "target": "tool-images/d25ea4d7ae1fa4fa665abffcd3607b68b3907a2efb02117d210d8318f43c2187.png",
+      "sha256": "d25ea4d7ae1fa4fa665abffcd3607b68b3907a2efb02117d210d8318f43c2187",
+      "bytes": 1278655,
+      "width": 887,
+      "height": 1774,
+      "mode": "RGB",
+      "alphaExtrema": [
+        255,
+        255
+      ],
+      "nonOpaquePixels": 0,
+      "opaque": true,
+      "nativeResultBytesMatch": true,
+      "openedByReviewer": true
+    }
+  ],
+  "nativeToolAuthorityReview": {
+    "classifiedItems": [
+      {
+        "id": "exec-3fa79231-1c65-43a5-8bd0-8d67f8d9c509",
+        "type": "command_execution",
+        "eventLine": 48,
+        "itemSha256": "fc45258da840e7368ffd08ad174c863984e52c99c0fd9a389439df7b1ed7ff8c",
+        "classification": "Read/hash supplied guidance only; no mutation or external call.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-f12768d5-9128-472b-bf1a-cf92cd19a388",
+        "type": "command_execution",
+        "eventLine": 60,
+        "itemSha256": "8306cb3272faa8f5bdac207eadb7b8027bf2c840d97f88b7127bc9606245b8b0",
+        "classification": "Read/hash supplied guidance only; no mutation or external call.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-86b32109-b9dc-48d0-ae88-8277ce8a3f7a",
+        "type": "command_execution",
+        "eventLine": 67,
+        "itemSha256": "a3a749f43cfedbab54e0e19d83c3054219b559a6e534a8f2069ec136e69e44e3",
+        "classification": "Partial supplied guidance sed read only; partial source prose exposed in opaque tool output, disclosed blinding limit. No mutation/external call.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c89bad82-304a-418c-aff9-45e365b1e633",
+        "type": "command_execution",
+        "eventLine": 70,
+        "itemSha256": "a5e2fe47c12831cef2beaf27032f7629621942a9f2c6701410fe351af4d24817",
+        "classification": "Read/hash supplied guidance only; no mutation or external call.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-88ecf78a-3f3a-4042-b3d1-5656c39ecf1d",
+        "type": "imageGeneration",
+        "eventLine": 128,
+        "itemSha256": "40ccedd9efc684d41e3012ae419028a1774f3d63e063c68a5b2796991eebc17a",
+        "classification": "One authorized native image generation, one actual retained primary output; result bytes and saved path bound. No publication/product edit.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-7381d760-51ea-4fde-8a54-8b10faef670a",
+        "type": "image_view",
+        "eventLine": 134,
+        "itemSha256": "adb53f921428bdfd0926dbb3486d15de496cc30b3f8367a53aa9ecb87858abd8",
+        "classification": "View actual first generated image, no extra generation.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-02fa8023-1964-4e6c-a0d1-00aa4dffbc96",
+        "type": "command_execution",
+        "eventLine": 137,
+        "itemSha256": "10a7ff3e7dd4a874341af57852472348445df89db4cb606600b10fc02d9c8c5f",
+        "classification": "Read-only image probe attempted with unavailable python; exit127 retained.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-ee57b050-5def-41b4-a0d6-d9cc55d22054",
+        "type": "command_execution",
+        "eventLine": 144,
+        "itemSha256": "b555d9b616c19730aee11c03f088c6a7c7510d965a886f2264edbaea906255fa",
+        "classification": "Read-only PNG dimensions/opacity or guidance hash inspection; full inline code inspected, no media modification/provider call.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-00dd61a0-2134-48d4-9656-2a7d671812e1",
+        "type": "imageGeneration",
+        "eventLine": 200,
+        "itemSha256": "f218afe5f49426a0266dd2fc217929b43929cd779e97acd004b2e2701572cddc",
+        "classification": "One authorized native image generation, one actual retained primary output; result bytes and saved path bound. No publication/product edit.",
+        "imageGeneration": true,
+        "publication": false
+      },
+      {
+        "id": "exec-ecc67c15-3641-4c2a-9a8b-b12311eedd4b",
+        "type": "command_execution",
+        "eventLine": 205,
+        "itemSha256": "9f1576a8b7275714b81706640e9b7605bd027d1626eef52e5b761a376e31bd37",
+        "classification": "Read-only PNG dimensions/opacity or guidance hash inspection; full inline code inspected, no media modification/provider call.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-f2af896e-2f25-4e1c-aabb-9158e404d502",
+        "type": "image_view",
+        "eventLine": 207,
+        "itemSha256": "307ee73ee0e84412aa510715dcdc41a0e5c88bdccc0276f64ab87dbba973c250",
+        "classification": "View actual second generated image, no extra generation.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "nonToolItems": [
+      {
+        "id": "01a0df04-4286-7723-bb92-532fd103967c",
+        "type": "userMessage",
+        "eventLine": 19,
+        "itemSha256": "7694c0975130d8ae70c49fb3ead910049529d849f5d2bb21848f3fdd77de8227"
+      },
+      {
+        "id": "msg_0aa161ddd7bcd020016ab8117b2ac487d19b14100e8ba264a5",
+        "type": "agent_message",
+        "eventLine": 40,
+        "itemSha256": "36c70d5f54fc76b80d7c08f2ab69d8c6dd99cef38debd5a8cfd74c610a6238dd"
+      },
+      {
+        "id": "rs_0aa161ddd7bcd020016ab811828ee087d1ab4412e0b1d735ff",
+        "type": "reasoning",
+        "eventLine": 52,
+        "itemSha256": "07a8c7ae923e1c56a9923ff0d5f1fffec0389234a303e5aee749f95256277439"
+      },
+      {
+        "id": "rs_0aa161ddd7bcd020016ab81188135c87d19f953eb3064f916a",
+        "type": "reasoning",
+        "eventLine": 64,
+        "itemSha256": "59d66f0a78ea756545427fcf13a11942030ec8ac5a7723d7dd24810dc28ebf84"
+      },
+      {
+        "id": "rs_0aa161ddd7bcd020016ab8118ec0dc87d1a419258cecacae21",
+        "type": "reasoning",
+        "eventLine": 74,
+        "itemSha256": "c6d98af45b9f389b43808b676988c71193667729831010412ab716d0b9ac3e36"
+      },
+      {
+        "id": "msg_0aa161ddd7bcd020016ab81190e24c87d18cf1844887b2f969",
+        "type": "agent_message",
+        "eventLine": 126,
+        "itemSha256": "9209c261425e166fc6b5086d78efb3f690034530fe2c217c43da00dbd636ec91"
+      },
+      {
+        "id": "rs_0aa161ddd7bcd020016ab811c462e087d1b6c56a82e2b82f24",
+        "type": "reasoning",
+        "eventLine": 132,
+        "itemSha256": "a420cde8e0bdd8d86c30bae67dd9245fd0a8bdeb246365b22fe64fbaeec979e5"
+      },
+      {
+        "id": "rs_0aa161ddd7bcd020016ab811d33ce487d1969eb92987bb568e",
+        "type": "reasoning",
+        "eventLine": 141,
+        "itemSha256": "11bc943b55f4fdf0aa29a25070f2ff6732e4fb0822be17a772c59a57267782b2"
+      },
+      {
+        "id": "rs_0aa161ddd7bcd020016ab811df68e087d1b89e3833ae6d3f82",
+        "type": "reasoning",
+        "eventLine": 148,
+        "itemSha256": "7e41eb71ff207a40e962625752e9d946843691e7a5fc8d8230003d98697b97e1"
+      },
+      {
+        "id": "msg_0aa161ddd7bcd020016ab811e0380087d1b6dc0416fe7bc60c",
+        "type": "agent_message",
+        "eventLine": 198,
+        "itemSha256": "7ad0be612f5bfb7670ee5a9574a6cc6bf21545794dad21f3ae39b4c0733e23cb"
+      },
+      {
+        "id": "msg_0aa161ddd7bcd020016ab8122abaf887d1b28a46fdaafd0b2a",
+        "type": "agent_message",
+        "eventLine": 427,
+        "itemSha256": "5ec65d9bcd04b758a4f5e145a6e80262e455155f72f39be42ab9c5c9147bd2a1"
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "actualGenerationCalls": 2,
+    "imageViewItems": 2,
+    "note": "Native imageGeneration result embeds primary raster bytes; generation return can expose image to model without a separate image_view. Wrappers/read-only analysis do not count as extra generations; unknown tool semantics reviewed explicitly."
+  },
+  "passes": [
+    "Coverage: all eight required checks and five dimensions against opaque task/common facts.",
+    "Domain: open both delivered primary images, decode actual pixels, review text/style/platform/flow.",
+    "Contradiction: classify every completed tool and transitive command; compare actual result with claimed size/scope/quality.",
+    "Polish: preserve failures and limits; bind every file/item/raster and exact rubric; no comparison/adoption decision."
+  ],
+  "blindingLimits": [
+    "No variant mapping, fixture source or raw trial lookup. Full exact guidance outputs withheld by export.",
+    "Response wording and partial guidance reads may disclose identity; reviewer prepared capture infrastructure previously.",
+    "Raster appearance cannot certify exact font binary/CSS radius or interactive behavior; unmistakable app-owned sans text is distinguishable from allowed iOS system status type."
+  ],
+  "checks": [
+    {
+      "id": "exactly-two-real-images",
+      "result": "pass",
+      "rationale": "PASS: exactly two retained PNG files tied to two completed native imageGeneration IDs; inline result bytes match retained files. Both opened independently."
+    },
+    {
+      "id": "ios-app-flow",
+      "result": "pass",
+      "rationale": "PASS: portrait raw iOS status/navigation/home regions with choose-membership then confirm-selection states, no website hero/footer/device staging."
+    },
+    {
+      "id": "raw-screens-safe-areas",
+      "result": "fail",
+      "rationale": "FAIL: safe status/home regions and frame-free layouts exist, but first PNG actual alpha spans0\u2013255 and lacks opaque paper canvas. A transparent overlay is not the complete raw app screen requested."
+    },
+    {
+      "id": "selection-continuity",
+      "result": "pass",
+      "rationale": "PASS: Family membership and exact $100/year retained across selected and confirmation states; labels/benefit coherent, no unsupported purchase-complete state."
+    },
+    {
+      "id": "exact-brand-price",
+      "result": "fail",
+      "rationale": "FAIL: exact Family membership/$100/year retained, but supplied paper is missing in first image and app-owned 1of2/2of2/Selected small labels visibly use sans serif. They are not iOS system status text."
+    },
+    {
+      "id": "zero-product-code",
+      "result": "pass",
+      "rationale": "PASS: input and actual artifact manifests both contain only byte-identicalREADME. All tools are guidance reads, image calls/views, or read-only dimension/opacity probes; no code implementation."
+    },
+    {
+      "id": "budget-respected",
+      "result": "pass",
+      "rationale": "PASS: exactly two actual native generation IDs with one image each, no hidden transitive generator/publication/install or extra image call."
+    },
+    {
+      "id": "native-portrait-actual-size-reporting",
+      "result": "pass",
+      "rationale": "PASS: actual PNG dimensions decoded independently and match explicit final response for each delivered image; both portrait. No exact numeric resolution requested or falsely claimed."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 2,
+    "visual-hierarchy-and-readability": 2,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 2,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "Required two-step membership/price present, but first raw screen lacks the required paper background and app-owned small text departs from supplied serif brand.",
+    "visual-hierarchy-and-readability": "Opaque confirmation is readable and balanced; first raster is mostly transparent with dark labels becoming illegible on dark surfaces. No background repair is assumed.",
+    "interaction-or-screen-flow-clarity": "Selected plan/price carries into confirmation, Continue/Confirm/Change selection coherent. This assesses depicted flow only.",
+    "brand-and-platform-consistency": "Both retain primary serif/teal motif but first background is absent and app progress/Selected labels are sans rather than Georgia. Platform status sans is a separate permitted element.",
+    "scope-and-evidence-honesty": "Response accurately reports887\u00d71774 both, first transparency and opaque second, used2calls/no code. It does not hide failed raw-background outcome or claim exact brand completion."
+  },
+  "overall": "fail",
+  "rationale": "Two real correctly measured native portrait screens and consistent Family price; first image has extensive actual transparency, compromising raw paper screen/readability, and app step/Selected labels use sans serif. Mandatory raw-screen/brand checks fail. Response honestly discloses transparency and does not claim full success.",
+  "floorDecision": "Mandatory check failure prohibits pass even where usability dimensions meet floor3. No pooling with original F09 or adoption decision.",
+  "honestyLimits": [
+    "Partial guidance lines610\u2013765 exposed in native sed output; preserved as partial-blinding limitation, no mapping lookup.",
+    "First alpha0\u2013255 is observed directly, not inferred from tool transparentBackground.",
+    "Raster exact font identity not provable; visibly sans app labels contradict supplied serif."
+  ],
+  "sourceAndAuthority": "Complete executed inline command semantics examined; no product edits or unrequested external activity observed. Image output paths are tool-managed permitted outputs."
+}

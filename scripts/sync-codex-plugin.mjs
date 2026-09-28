@@ -1,19 +1,23 @@
 import {
   cp,
   mkdir,
+  lstat,
   readFile,
   readdir,
   rm,
   stat,
   writeFile,
 } from "node:fs/promises";
-import { dirname, join, relative, resolve } from "node:path";
+import { tmpdir } from "node:os";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { formatMetadataForCodex, formatSkillForCodex } from "./codex-skill-format.mjs";
 import { PS_INTERNAL_CAPABILITIES } from "./ps-skill-catalog.mjs";
 import { assertGeneratedPackageRoot, assertGeneratedPiPackageRoot } from "./skill-package-projection.mjs";
-import { PUBLIC_COMMANDS } from "./skill-collection-registry.mjs";
+import { PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS_BY_NAME, REGISTRY_STATE } from "./skill-collection-registry.mjs";
+import { renderSkillOutputContract, renderHelpRoutingReference } from "./sync-skill-output-contracts.mjs";
+import { copyTransitionPayloads, verifyTransitionPayloads } from "./skill-transition-packages.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
@@ -21,6 +25,11 @@ const supportFiles = Object.freeze([
   "ps-skill-catalog.mjs",
   "qs-skill-catalog.mjs",
   "skill-collection-registry.mjs",
+  "advanced-skill-catalog.mjs",
+  "frontend-skill-catalog.mjs",
+  "video-skill-catalog.mjs",
+  "execution-skill-catalog.mjs",
+  "optional-command-definition.mjs",
 ]);
 const qsCapabilityFiles = Object.freeze([
   "domain-modeling.md",
@@ -34,7 +43,7 @@ function commandsFor(collectionId) {
   return PUBLIC_COMMANDS.filter((command) => command.collectionId === collectionId);
 }
 
-const packages = Object.freeze([
+const legacyPackages = Object.freeze([
   {
     name: "qs-skills",
     displayName: "QuickStark Skills",
@@ -78,11 +87,51 @@ const packages = Object.freeze([
   },
 ]);
 
-const cliArguments = process.argv.slice(2);
+const originalArguments = process.argv.slice(2);
+const candidate = originalArguments.includes("--candidate");
+if (originalArguments.filter((argument) => argument === "--candidate").length > 1) throw new Error("Duplicate --candidate option.");
+const output = optionValue(originalArguments, "--output-root");
+if (candidate !== Boolean(output)) throw new Error("Candidate projection requires --candidate and --output-root together.");
+const outputRoot = candidate ? resolve(output) : repositoryRoot;
+if (candidate) {
+  const temporaryRoot = resolve(tmpdir());
+  if (!outputRoot.startsWith(temporaryRoot + sep) || outputRoot === repositoryRoot || outputRoot.startsWith(repositoryRoot + sep) || /(?:^|[\\/])\.(?:agents|codex|claude)(?:[\\/]|$)/.test(outputRoot)) {
+    throw new Error("Candidate output must be a fresh directory under the system temporary directory, outside source and discovery roots.");
+  }
+  let current = dirname(outputRoot);
+  while (true) {
+    const metadata = await lstat(current).catch((error) => error.code === "ENOENT" ? null : Promise.reject(error));
+    if (metadata && (!metadata.isDirectory() || metadata.isSymbolicLink())) throw new Error("Candidate output has a linked/non-directory ancestor.");
+    const parent = dirname(current); if (parent === current) break; current = parent;
+  }
+  if (!originalArguments.includes("--check") && await exists(outputRoot)) throw new Error("Candidate projection requires a new output directory; existing evidence is never overwritten.");
+}
+const cliArguments = originalArguments.filter((argument, index) => argument !== "--candidate" && argument !== "--output-root" && originalArguments[index - 1] !== "--output-root");
+const optionalMetadata = [
+  {name:"qs-advanced",displayName:"QuickStark Advanced",description:"Optional focused analysis, verification, evaluation and operations workflows.",
+    privateTrees:[{source:"skills/advanced",target:"advanced",canonical:"../../advanced/"}],noticeSource:"skills/advanced/THIRD_PARTY_NOTICES.md"},
+  {name:"qs-frontend",displayName:"QuickStark Frontend",description:"Optional frontend implementation, reference images and prompt construction.",
+    privateTrees:[{source:"skills/frontend",target:"frontend",canonical:"../../frontend/"}],noticeSource:"skills/frontend/THIRD_PARTY_NOTICES.md"},
+  {name:"qs-video",displayName:"QuickStark Video",description:"Optional scoped video creation, editing and rendering with private HyperFrames modules.",privateTrees:[]},
+  {name:"qs-execution",displayName:"QuickStark Execution",description:"Optional substantial-work acceptance gates and completion discipline.",privateTrees:[]},
+];
+const targetRegistry = candidate || REGISTRY_STATE === "target";
+const selectedPackages = targetRegistry ? [
+  ...legacyPackages.filter((pkg) => pkg.name !== "ps-skills"),
+  ...optionalMetadata.map((pkg)=>({...pkg,projection:TARGET_PUBLIC_COMMANDS.filter((command)=>command.collectionId===pkg.name),capabilityFiles:[],
+    codexRoot:join(repositoryRoot,"codex/plugins",pkg.name),piRoot:join(repositoryRoot,"pi/packages",pkg.name),claudeRoot:join(repositoryRoot,"packages",pkg.name),
+    defaultPrompt:[pkg.description],keywords:["quickstark","optional"],claudeMarketplaceSource:`./packages/${pkg.name}`,
+    ...(pkg.noticeSource ? {noticeFiles:["THIRD_PARTY_NOTICES.md"]} : {})})),
+] : legacyPackages;
+const packages = Object.freeze(selectedPackages.map((pkg) => candidate ? {
+  ...pkg,codexRoot:join(outputRoot,"codex/plugins",pkg.name),piRoot:join(outputRoot,"pi/packages",pkg.name),
+  claudeRoot:join(outputRoot,"packages",pkg.name),claudeMarketplaceSource:`./packages/${pkg.name}`,
+} : pkg));
 
 if (cliArguments.includes("--check")) await verifyAll(parseCheckSelection(cliArguments));
 else {
   if (cliArguments.length > 0) throw new Error(`Unknown projector option: ${cliArguments[0]}`);
+  if (candidate) await mkdir(outputRoot);
   await syncAll();
 }
 
@@ -127,7 +176,9 @@ async function exists(path) {
 }
 
 async function fileList(root, current = root) {
-  if (!(await exists(root))) return [];
+  const metadata = await lstat(current).catch((error) => error.code === "ENOENT" ? null : Promise.reject(error));
+  if (!metadata && current === root) return [];
+  if (!metadata?.isDirectory() || metadata.isSymbolicLink()) throw new Error(`Projection tree must be a real directory, not a symlink: ${current}`);
   const files = [];
 
   for (const entry of await readdir(current, { withFileTypes: true })) {
@@ -202,13 +253,13 @@ function marketplace() {
     name: "quickstark",
     owner: { name: "QuickStark", url: "https://github.com/quickstark" },
     description: "QuickStark's focused, namespaced engineering and productivity skills.",
-    plugins: packages.map((pkg) => ({
+    plugins: [...packages.map((pkg) => ({
       name: pkg.name,
       source: pkg.claudeMarketplaceSource,
       description: pkg.description,
       category: "engineering",
       keywords: pkg.keywords,
-    })),
+    })), ...(targetRegistry ? [{ name: "ps-skills", source: "./packages/ps-skills", description: "Legacy migration compatibility only. New installations use the QS catalog; retained for existing native consumers.", category: "engineering", keywords: ["quickstark", "legacy", "migration"] }] : [])],
   };
 }
 
@@ -216,13 +267,79 @@ function codexMarketplace() {
   return {
     name: "quickstark",
     interface: { displayName: "QuickStark Skills" },
-    plugins: packages.map((pkg) => ({
+    plugins: [...packages.map((pkg) => ({
       name: pkg.name,
       source: { source: "local", path: `./plugins/${pkg.name}` },
       policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
       category: "Coding",
-    })),
+    })), ...(targetRegistry ? [{ name: "ps-skills", source: { source: "local", path: "./plugins/ps-skills" }, policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" }, category: "Coding" }] : [])],
   };
+}
+
+async function projectedSkillContent(pkg, skill, file, { codex }) {
+  const source = await readFile(join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`, file));
+  let content = source;
+  if (file.endsWith(".md")) {
+    let text = source.toString("utf8");
+    if (candidate && file === "SKILL.md") {
+      const marker = "## Completion report and next steps";
+      if (!text.includes(marker)) throw new Error(`Missing completion contract: ${skill.name}`);
+      text = text.slice(0, text.indexOf(marker)) + renderSkillOutputContract(skill, { commandsByName: TARGET_PUBLIC_COMMANDS_BY_NAME });
+    }
+    if (candidate && skill.name === "qs-help" && file === "ROUTING.md") text = renderHelpRoutingReference(TARGET_PUBLIC_COMMANDS);
+    for (const tree of pkg.privateTrees ?? []) text = text.replaceAll(tree.canonical, `../../capabilities/${tree.target}/`);
+    if (codex && file === "SKILL.md") text = formatSkillForCodex(text, skill);
+    content = Buffer.from(text);
+  } else if (codex && file === join("agents", "openai.yaml")) {
+    content = Buffer.from(formatMetadataForCodex(source.toString("utf8"), skill));
+  }
+  return content;
+}
+
+function hasCapabilities(pkg) { return pkg.capabilityFiles.length > 0 || (pkg.privateTrees?.length ?? 0) > 0; }
+function noticeSource(pkg, file) { return join(repositoryRoot, pkg.noticeSource ?? file); }
+async function expectedCapabilities(pkg) {
+  const files = pkg.capabilityFiles.map((file) => ({ target: file, source: join(pkg.capabilitySourceRoot, file) }));
+  for (const tree of pkg.privateTrees ?? []) {
+    const source = join(repositoryRoot, tree.source);
+    const entries = await fileList(source);
+    if (!entries.length) throw new Error(`Missing required private tree: ${tree.source}`);
+    for (const file of entries) files.push({ target: `${tree.target}/${file}`, source: join(source, file) });
+  }
+  return files.sort((left, right) => left.target.localeCompare(right.target));
+}
+async function writeCapabilities(pkg, root) {
+  const base = join(root, "capabilities");
+  await rm(base, { recursive: true, force: true });
+  for (const file of await expectedCapabilities(pkg)) {
+    await mkdir(dirname(join(base, file.target)), { recursive: true });
+    await cp(file.source, join(base, file.target));
+  }
+}
+async function verifyCapabilities(pkg, root) {
+  const files = await expectedCapabilities(pkg);
+  const actual = await fileList(join(root, "capabilities"));
+  if (JSON.stringify(actual) !== JSON.stringify(files.map((file) => file.target).sort())) throw new Error(`${pkg.name} has an invalid internal-capability projection.`);
+  for (const file of files) {
+    if (!(await readFile(file.source)).equals(await readFile(join(root, "capabilities", file.target)))) throw new Error(`${pkg.name} has stale private content: ${file.target}.`);
+  }
+}
+async function writeSkill(pkg, root, skill, { codex }) {
+  const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+  if (!(await exists(join(source, "SKILL.md")))) throw new Error(`Cannot package missing promoted skill /${skill.name}.`);
+  const files = await fileList(source); // Reject links before copying any source payload.
+  const destination = join(root, "skills", skill.name);
+  await cp(source, destination, { recursive: true, dereference: false });
+  for (const file of files) await writeFile(join(destination, file), await projectedSkillContent(pkg, skill, file, { codex }));
+}
+
+async function supportContent(file) {
+  const bytes = await readFile(join(repositoryRoot, "scripts", file));
+  if (!candidate || file !== "skill-collection-registry.mjs") return bytes;
+  const source = bytes.toString("utf8");
+  const declaration = `export const REGISTRY_STATE = "${REGISTRY_STATE}";`;
+  if (source.split(declaration).length !== 2) throw new Error("Registry projection selector must occur exactly once.");
+  return Buffer.from(source.replace(declaration, 'export const REGISTRY_STATE = "target";'));
 }
 
 async function writeProjection(pkg, root, { codex }) {
@@ -234,38 +351,14 @@ async function writeProjection(pkg, root, { codex }) {
   await mkdir(scriptsRoot, { recursive: true });
 
   for (const file of supportFiles) {
-    await cp(join(repositoryRoot, "scripts", file), join(scriptsRoot, file));
+    await writeFile(join(scriptsRoot, file), await supportContent(file));
   }
 
-  for (const skill of pkg.projection) {
-    const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
-    const destination = join(skillsRoot, skill.name);
-    if (!(await exists(join(source, "SKILL.md")))) {
-      throw new Error(`Cannot package missing promoted skill /${skill.name}.`);
-    }
-    await cp(source, destination, { recursive: true, dereference: true });
-    if (codex && (skill.userInvoked || skill.disableModelInvocation)) {
-      const skillPath = join(destination, "SKILL.md");
-      await writeFile(skillPath, formatSkillForCodex(await readFile(skillPath, "utf8"), skill));
-      const metadataPath = join(destination, "agents", "openai.yaml");
-      await writeFile(
-        metadataPath,
-        formatMetadataForCodex(await readFile(metadataPath, "utf8"), skill),
-      );
-    }
-  }
-
-  const capabilityRoot = join(root, "capabilities");
-  await rm(capabilityRoot, { recursive: true, force: true });
-  if (pkg.capabilityFiles.length > 0) {
-    await mkdir(capabilityRoot, { recursive: true });
-    for (const file of pkg.capabilityFiles) {
-      await cp(join(pkg.capabilitySourceRoot, file), join(capabilityRoot, file));
-    }
-  }
+  for (const skill of pkg.projection) await writeSkill(pkg, root, skill, { codex });
+  await writeCapabilities(pkg, root);
 
   for (const file of pkg.noticeFiles ?? []) {
-    await cp(join(repositoryRoot, file), join(root, file));
+    await cp(noticeSource(pkg, file), join(root, file));
   }
 }
 
@@ -273,16 +366,22 @@ async function writePiProjection(pkg) {
   await rm(pkg.piRoot, { recursive: true, force: true });
   const skillsRoot = join(pkg.piRoot, "skills");
   await mkdir(skillsRoot, { recursive: true });
-  for (const skill of pkg.projection) {
-    const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
-    if (!(await exists(join(source, "SKILL.md")))) throw new Error(`Cannot package missing Pi skill /${skill.name}.`);
-    await cp(source, join(skillsRoot, skill.name), { recursive: true, dereference: true });
-  }
-  for (const file of pkg.noticeFiles ?? []) await cp(join(repositoryRoot, file), join(pkg.piRoot, file));
+  for (const skill of pkg.projection) await writeSkill(pkg, pkg.piRoot, skill, { codex: false });
+  if (targetRegistry) await writeCapabilities(pkg, pkg.piRoot);
+  for (const file of pkg.noticeFiles ?? []) await cp(noticeSource(pkg, file), join(pkg.piRoot, file));
   await writeFile(join(pkg.piRoot, "package.json"), json(piManifest(pkg)));
 }
 
+function coreClaudeManifest() {
+  if (!candidate) return claudeManifest(packages[0]);
+  const manifest = claudeManifest(packages[0], true);
+  return { ...manifest, skills: manifest.skills.map((path) => `./packages/qs-skills/${path.slice(2)}`) };
+}
+
 async function syncAll() {
+  if (targetRegistry && !candidate) await verifyTransitionPayloads(repositoryRoot);
+  await mkdir(join(outputRoot, ".claude-plugin"), { recursive: true });
+  await mkdir(join(outputRoot, "codex", ".agents", "plugins"), { recursive: true });
   for (const pkg of packages) {
     await writeProjection(pkg, pkg.codexRoot, { codex: true });
     await mkdir(join(pkg.codexRoot, ".codex-plugin"), { recursive: true });
@@ -295,10 +394,11 @@ async function syncAll() {
     await writePiProjection(pkg);
   }
 
-  await writeFile(join(repositoryRoot, ".claude-plugin", "plugin.json"), json(claudeManifest(packages[0])));
-  await writeFile(join(repositoryRoot, ".claude-plugin", "marketplace.json"), json(marketplace()));
-  await writeFile(join(repositoryRoot, "codex", ".agents", "plugins", "marketplace.json"), json(codexMarketplace()));
-  console.log("Generated isolated QuickStark v3 core, specialist, and PS projections for Codex, Claude, and Pi.");
+  if (targetRegistry && candidate) await copyTransitionPayloads(repositoryRoot, outputRoot);
+  await writeFile(join(outputRoot, ".claude-plugin", "plugin.json"), json(coreClaudeManifest()));
+  await writeFile(join(outputRoot, ".claude-plugin", "marketplace.json"), json(marketplace()));
+  await writeFile(join(outputRoot, "codex", ".agents", "plugins", "marketplace.json"), json(codexMarketplace()));
+  console.log(`Generated ${candidate ? "isolated candidate" : "active"} projections for ${packages.length} packages across Codex, Claude, and Pi.`);
 }
 
 async function expectedSkillFiles(pkg, { codex }) {
@@ -313,7 +413,7 @@ async function expectedSkillFiles(pkg, { codex }) {
 async function verifyProjection(pkg, root, { codex }) {
   await assertGeneratedPackageRoot(root, {
     manifestDirectory: codex ? ".codex-plugin" : ".claude-plugin",
-    includeCapabilities: pkg.capabilityFiles.length > 0,
+    includeCapabilities: hasCapabilities(pkg),
     noticeFiles: pkg.noticeFiles ?? [],
   });
   const actualSkillFiles = await fileList(join(root, "skills"));
@@ -326,12 +426,7 @@ async function verifyProjection(pkg, root, { codex }) {
     const sourceRoot = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
     const targetRoot = join(root, "skills", skill.name);
     for (const file of await fileList(sourceRoot)) {
-      const source = await readFile(join(sourceRoot, file));
-      const expectedContent = codex && file === "SKILL.md"
-        ? Buffer.from(formatSkillForCodex(source.toString("utf8"), skill))
-        : codex && file === join("agents", "openai.yaml")
-          ? Buffer.from(formatMetadataForCodex(source.toString("utf8"), skill))
-          : source;
+      const expectedContent = await projectedSkillContent(pkg, skill, file, { codex });
       const actual = await readFile(join(targetRoot, file));
       if (!expectedContent.equals(actual)) throw new Error(`${pkg.name} is stale: ${skill.name}/${file}.`);
     }
@@ -342,20 +437,16 @@ async function verifyProjection(pkg, root, { codex }) {
   }
   for (const file of supportFiles) {
     const [source, actual] = await Promise.all([
-      readFile(join(repositoryRoot, "scripts", file)),
+      supportContent(file),
       readFile(join(root, "scripts", file)),
     ]);
     if (!source.equals(actual)) throw new Error(`${pkg.name} has stale runtime support: ${file}.`);
   }
 
-  const capabilityInventory = await fileList(join(root, "capabilities"));
-  const expectedCapabilities = [...pkg.capabilityFiles].sort();
-  if (JSON.stringify(capabilityInventory) !== JSON.stringify(expectedCapabilities)) {
-    throw new Error(`${pkg.name} has an invalid internal-capability projection.`);
-  }
+  await verifyCapabilities(pkg, root);
   for (const file of pkg.noticeFiles ?? []) {
     const [source, actual] = await Promise.all([
-      readFile(join(repositoryRoot, file)),
+      readFile(noticeSource(pkg, file)),
       readFile(join(root, file)),
     ]);
     if (!source.equals(actual)) throw new Error(`${pkg.name} has a stale notice: ${file}.`);
@@ -363,7 +454,7 @@ async function verifyProjection(pkg, root, { codex }) {
 }
 
 async function verifyPiProjection(pkg, root) {
-  await assertGeneratedPiPackageRoot(root, { noticeFiles: pkg.noticeFiles ?? [] });
+  await assertGeneratedPiPackageRoot(root, { noticeFiles: pkg.noticeFiles ?? [], includeCapabilities: targetRegistry && hasCapabilities(pkg) });
   const actualSkillFiles = await fileList(join(root, "skills"));
   const expected = await expectedSkillFiles(pkg, { codex: false });
   if (JSON.stringify(actualSkillFiles) !== JSON.stringify(expected)) {
@@ -374,15 +465,16 @@ async function verifyPiProjection(pkg, root) {
     const targetRoot = join(root, "skills", skill.name);
     for (const file of await fileList(sourceRoot)) {
       const [source, actual] = await Promise.all([
-        readFile(join(sourceRoot, file)),
+        projectedSkillContent(pkg, skill, file, { codex: false }),
         readFile(join(targetRoot, file)),
       ]);
       if (!source.equals(actual)) throw new Error(`${pkg.name} Pi projection is stale: ${skill.name}/${file}.`);
     }
   }
+  if (targetRegistry) await verifyCapabilities(pkg, root);
   for (const file of pkg.noticeFiles ?? []) {
     const [source, actual] = await Promise.all([
-      readFile(join(repositoryRoot, file)),
+      readFile(noticeSource(pkg, file)),
       readFile(join(root, file)),
     ]);
     if (!source.equals(actual)) throw new Error(`${pkg.name} has a stale Pi notice: ${file}.`);
@@ -423,8 +515,9 @@ async function verifyAll(selection = null) {
     await verifyPiProjection(pkg, pkg.piRoot);
     await verifyJson(join(pkg.piRoot, "package.json"), piManifest(pkg), `${pkg.name} Pi manifest`);
   }
-  await verifyJson(join(repositoryRoot, ".claude-plugin", "plugin.json"), claudeManifest(packages[0]), "core Claude manifest");
-  await verifyJson(join(repositoryRoot, ".claude-plugin", "marketplace.json"), marketplace(), "Claude marketplace");
-  await verifyJson(join(repositoryRoot, "codex", ".agents", "plugins", "marketplace.json"), codexMarketplace(), "Codex marketplace");
-  console.log("Verified deterministic QuickStark v3 core, specialist, and PS projections for Codex, Claude, and Pi.");
+  if (targetRegistry) await verifyTransitionPayloads(repositoryRoot, outputRoot);
+  await verifyJson(join(outputRoot, ".claude-plugin", "plugin.json"), coreClaudeManifest(), "core Claude manifest");
+  await verifyJson(join(outputRoot, ".claude-plugin", "marketplace.json"), marketplace(), "Claude marketplace");
+  await verifyJson(join(outputRoot, "codex", ".agents", "plugins", "marketplace.json"), codexMarketplace(), "Codex marketplace");
+  console.log(`Verified deterministic ${candidate ? "candidate" : "active"} projections for ${packages.length} packages across Codex, Claude, and Pi.`);
 }

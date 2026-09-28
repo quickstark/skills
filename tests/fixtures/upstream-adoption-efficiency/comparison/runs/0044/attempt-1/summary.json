@@ -1,0 +1,54 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 44,
+    "scenarioId": "P7",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "P7",
+  "inputSHA256": "144d4861c40cc9b6e288a8aba17f972dda891b0ab121184c44900b7025c052dd",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-9jSnUz",
+  "startedAt": "2026-09-25T19:44:02.077Z",
+  "completedAt": "2026-09-25T19:44:26.745Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25856,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 626,
+      "reasoning_output_tokens": 157
+    }
+  ],
+  "elapsedMs": 24615.253121000016,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-release\nOutcome: Release and the overall goal remain incomplete; pending health verification prevents reporting 100%.\n\n- [x] Build — verified, 100%; weight 60.\n- [x] Git — verified, 100%; weight 10.\n- [ ] Release — active, at most ~95%; weight 30; required health check pending.\n\nStage: Release | Stage estimate: ~95% | Overall estimate: ~95% | active — awaiting staging HTTP 200 and exact matching-version evidence. Input needed: authoritative health/version result and host goal state before further execution.\n\nWeighted calculation: `(60 × 100 + 10 × 100 + 30 × 95) / 100`, capped at ~95% for the unverified overall goal. These are conservative reporting ceilings, not independently established progress measurements. The proposed 99.8% does not justify rounding to completion. The latest supplied Build/Git verification supersedes the earlier partial-progress observation; weights remain unchanged.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — Build and Git are verified according to the supplied fixture. No operations were performed in this response.\n- Next — [Staging release](/fixture/ledger-app/docs/deploy.md) — pending verification — establish the deployed artifact/version, match it to the verified revision, and obtain `/health` HTTP 200. No matching-version health evidence is supplied; the check is pending, not reported failed.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify host goal-tool availability and inspect the matching goal with get_goal before any stage execution; if unavailable or unrelated, stop and request input.",
+      "After confirming authoritative goal state and the authorized staging target, inspect existing deployment status and obtain the pending /health HTTP status and version; compare the deployed artifact with the verified published revision without repeating deployment.",
+      "Update the matching goal under the host's actual contract only after inspecting the verification results; mark complete only when all required acceptance evidence passes."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

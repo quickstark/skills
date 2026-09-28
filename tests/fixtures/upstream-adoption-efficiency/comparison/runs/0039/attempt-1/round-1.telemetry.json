@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:41:40.424Z",
+  "elapsedMs": 26518.079610000015,
+  "wallElapsedMs": 26518,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "f99021936b022da996b1bec6b6483e8d421f069882137a6c7df29db5b58ee91a",
+  "promptUtf8Bytes": 9476,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25770,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 671,
+      "reasoning_output_tokens": 230
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "287967fc407e6f148a3d3c76346759d19cfe507b80ef8abdc95b649b4c6932e4",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-9Ow4Dj",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"- [ ] Build — blocked for execution; observed 50%, weight 60.\\n- [ ] Git — pending; 0%, weight 10.\\n- [ ] Release — pending; 0%, weight 30.\\n- [ ] Optional research — skipped: evidence establishes it is unrelated and out of scope; weight 20 removed, no completion credit.\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — supplied implementation and review milestones support partial progress. Input needed: verified goal-tool availability and matching authoritative goal state before execution.\\n\\nThe denominator changes from **120 to 100**. Earned effort remains **60 × 50% = 30**:\\n\\n- Before scope correction: 30 / 120 = **25%**.\\n- After scope correction: 30 / 100 = **30%**.\\n\\nThe increase reflects scope correction only. Build, Git, and Release weights and estimates remain unchanged. These are coarse estimates based on supplied milestones; no stage is verified complete.\\n\\nStatus: Input required\\nSkills used: /qs-code-build (reporting only)\\nOutcome: Overall estimate recalculated to ~30%; no operational actions executed.\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — progress recalculation from supplied evidence; no files or deployment outputs created.\\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — verify goal support and state, then finish Build and its required checks before the authorized Git and Release stages. Completed test results, publication verification, deployed version, and staging health evidence remain unsupplied.\\n\\nNext work prompt: None — subsequent stages are already scheduled and remain gated by Build verification.\",\n  \"requestedActions\": [\n    \"Verify supported goal-tool availability and inspect authoritative state with get_goal before resuming execution; establish or resume only the matching goal, without replacing an unrelated active goal.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

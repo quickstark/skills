@@ -1,0 +1,10 @@
+{
+  "name": "preferences-incident-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "repro": "node diagnostics/reproduce.mjs",
+    "inspect": "node diagnostics/inspect.mjs"
+  }
+}

@@ -1,90 +1,57 @@
-# QuickStark Skills v3
+# QuickStark Skills
 
-A focused engineering workflow for Codex, Claude Code, and Pi. The default `qs-skills` package exposes twelve lifecycle-ordered commands. The optional `qs-specialists` package adds eight bounded specialist workflows, and the optional explicit-only `ps-skills` package adds thirteen Cursor-neutral Pstack workflows.
+QuickStark's target catalog has six packages and 38 public commands. The twelve
+core commands and eight specialists retain their names and package membership.
+Advanced, frontend, video and execution packages expose distinct optional outcomes.
+Fresh setup selects core only; ordinary updates preserve the saved selection.
 
-QuickStark is adapted from [Matt Pocock's MIT-licensed skills](https://github.com/mattpocock/skills), with an optional adaptation of [Lauren Tan's MIT-licensed pstack](https://github.com/cursor/plugins/tree/main/pstack). The upstream notices are preserved in [third-party notices](./THIRD_PARTY_NOTICES.md).
+Package acceptance, release and installed-host rollout have separate evidence.
+Source presence or this document does not establish that those steps occurred.
 
-To inspect upstream changes without publishing to it, use `git fetch upstream`; personalized changes are pushed only to `origin`.
+| Package | Public commands | Scope |
+| --- | ---: | --- |
+| `qs-skills` | 12 | Core lifecycle, including Help |
+| `qs-specialists` | 8 | Existing specialists, including reusable-skill and goal-prompt authoring |
+| `qs-advanced` | 12 | PS-derived evidence workflows, including dedicated visual parity |
+| `qs-frontend` | 4 | Frontend code, web images/prompts, mobile images/prompts, reference-to-code |
+| `qs-video` | 1 | Video operations backed by 21 private domains and workflows |
+| `qs-execution` | 1 | Substantial-work gates through `qs-unlazy` |
 
-## Skill control plane
+Catalogs own membership, not this count. Every public root has one package owner;
+private references are not extra commands. Help can explain optional capabilities,
+but checks actual availability before offering an executable literal and never
+installs or starts another root automatically.
 
-This repository is the source of truth for QuickStark-owned plugin skills and
-for the pinned manifest of approved third-party skills. Installed global skill
-directories and plugin caches are machine projections; do not copy them back
-into Git.
+## Install and update
 
-Use `npm run skills:update` to inspect, converge, and verify the complete
-maintained-package and approved-resource template on one machine. Optional
-`skills:plan` and `skills:verify` commands remain read-only; the compatibility
-`skills:sync -- --authorize` workflow remains available for a separately
-reviewed plan. The lower-level `personal-skills:*` commands remain available
-for inventory, explicit adoption, and contributor-resource-only reconciliation.
-Start with the [end-user installation and update guide](./docs/install-and-update-skills.md).
-Maintainers can use the deeper [central skill control plane](./docs/personal-skills.md).
-
-## Install
+Use the [installation guide](./docs/install-and-update-skills.md) from a verified
+checkout after target activation. The selected transactional updater supports
+Codex and Pi. Claude projections remain generated compatibility artifacts; a
+verified Claude native transaction adapter is not available.
 
 ```bash
 git clone https://github.com/quickstark/skills.git
 cd skills
-```
-
-Codex core:
-
-```bash
+npm ci
 codex plugin marketplace add ./codex
-codex plugin add qs-skills@quickstark
+npm run skills:plan -- --json --agent codex --agent pi
+npm run skills:update -- --agent codex --agent pi
 ```
 
-Optional Codex specialists:
+Choose only installed hosts; omit the Codex bootstrap on a Pi-only machine.
+Register the existing local `./codex` directory only for first-time Codex setup.
+An existing marketplace identity/path mismatch needs a separate reviewed action;
+these instructions do not authorize automatically repointing it.
+With no selection flags, a fresh machine receives
+`qs-skills`; a managed machine retains its verified or saved capability selection.
+Add an optional package explicitly, for example `--with qs-frontend`, using the
+same flags for plan and update. New optional catalog entries never become selected
+merely because an ordinary update sees them. A Git pull does not prove a cached
+plugin was refreshed; installed discovery must pass verification.
 
-```bash
-codex plugin add qs-specialists@quickstark
-```
-
-Optional Codex Pstack workflows:
-
-```bash
-codex plugin add ps-skills@quickstark
-```
-
-Claude Code core and optional specialists:
-
-```bash
-claude plugin marketplace add .
-claude plugin install qs-skills@quickstark
-claude plugin install qs-specialists@quickstark
-claude plugin install ps-skills@quickstark
-```
-
-Pi core and optional packages:
-
-```bash
-pi install ./pi/packages/qs-skills
-pi install ./pi/packages/qs-specialists
-pi install ./pi/packages/ps-skills
-```
-
-Restart the host or begin a new task after changing installed plugins. A Git pull updates the checkout; it does not automatically refresh a cached installed plugin.
-
-The direct package commands above install QuickStark only. To install or update
-both QuickStark and the approved contributor skills through one reviewed
-operation, select only the harnesses installed on that machine:
-
-```bash
-npm run skills:plan -- --json --agent codex --agent claude-code --agent pi
-npm run skills:update -- --agent codex --agent claude-code --agent pi
-```
-
-The unified command first verifies, without fetching or changing local refs,
-that checkout HEAD exactly matches GitHub's current `origin/main`. It then uses
-the checked-out repository version as "latest", validates all nine generated
-package manifests, and verifies the installed package versions reported by each
-selected manager. A stale clean `main` checkout receives an exact fast-forward
-pull command; other stale checkouts receive an isolated-worktree command so
-local changes are preserved. Pi receives the three maintained QuickStark
-package projections through its native local-package manager; the 18 approved
-contributor skills remain portable Agent Skills.
+The [control-plane guide](./docs/personal-skills.md) explains pinned resources,
+ownership checks, migration journals and recovery. Do not copy installed caches
+back into Git or synchronize machines with one another.
 
 ## Core commands
 
@@ -116,27 +83,47 @@ contributor skills remain portable Agent Skills.
 | [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
 | [`qs-deploy-prompt`](./skills/engineering/qs-deploy-prompt/SKILL.md) | Generate a scoped autonomous deployment prompt. |
 
-## Optional Pstack workflows
+## Advanced and creative outcomes
 
-`ps-skills` contains thirteen explicit-only commands under the `ps-` namespace. It is additive, does not change QS membership, and never chains public commands automatically. Start with [Using PS skills](./docs/pstack/using-ps-skills.md) for a practical command chooser, or browse the [PS command index](./docs/pstack/index.md) for individual references.
+`qs-advanced` supplies `qs-how`, `qs-why`, `qs-blast-radius`,
+`qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`,
+`qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`,
+`qs-visual-parity`, `qs-pr-babysit` and `qs-worktree-cleanup`.
+Visual parity retains its immutable reference, selected tolerance and measured
+residual; it is not absorbed into general frontend implementation.
 
-## v3 behavior
+`qs-frontend` separates `qs-design-frontend`, `qs-design-image-web`,
+`qs-design-image-mobile` and `qs-design-image-to-code`. Image roots also accept
+prompt-only work without generation or product edits. Reference-to-code preserves
+the selected visual authority. `qs-deploy-prompt` remains the separate
+goal-workflow-prompt author; generating a prompt never executes it.
 
-- Domain modeling, module decomposition, ticket decomposition, and TDD are internal capabilities, not commands.
-- `qs-review-code action=refactor target=<scope>` is the refactoring workflow. An unscoped whole-codebase request stays read-only until a target is selected.
-- Every invocation has one root skill and zero automatic public-skill hops.
-- `effort=quick|standard|deep` controls execution depth; `report=brief|full` independently controls presentation. Defaults are `standard` and `brief`.
-- Every non-release result has at most one next-work prompt, tied to an exact verified ticket, specification, issue, or grouped work item. Complete work with no follow-up emits none; release is terminal and always emits none. Build, Review-with-mutation, and Debug finish their authorized implementation, repair, testing, and validation inside one root instead of chaining re-evaluation skills.
+`qs-video` retains 21 private resources, including ten specialized workflows,
+Figma input and Studio guidance. Its [runtime profile](./skills/video/qs-video/references/runtime-compatibility.md)
+documents exact tested local paths and unavailable provider routes. `qs-unlazy`
+has a separate [runtime profile](./skills/engineering/qs-unlazy/references/runtime-compatibility.md);
+optional hooks require their own authorization.
 
-See the [shared skill-run contract](./docs/skill-run-contract.md) and [v2-to-v3 migration guide](./docs/quickstark-v3-migration.md).
+The retained `ps-skills` 3.8.0 payload is a [migration compatibility artifact](./docs/upstream/package-transition.md).
+It stays observable until verified withdrawal and is excluded from fresh target
+selection. Original PS names and contributor names remain provenance, not aliases.
 
-## Results in chat
+## Results and authority
 
-Every promoted run presents one concise result directly in the conversation. Brief output includes status, outcome, decision-grade evidence, material failures or outputs, and three ranked copy-ready next prompts; full output adds supporting evidence. An internal clear-writing pass applies to every QS and PS result, with no external output system or separate credentials.
+Every invocation owns one bounded result in chat. Public roots do not start other
+public roots automatically. Only an explicitly submitted authorized goal workflow
+may coordinate successive roots under the [shared contract](./docs/skill-run-contract.md).
+Effort controls evidence depth, not mutation or publication authority.
 
-## Development
+Tracked results retain status, specs, a compact Work summary and at most one
+eligible copy-ready next-work prompt. Release is terminal. Failed required checks
+and actionable P0/P1 findings prohibit completion. Private helpers do not emit
+separate results or expand authority.
 
-Update the relevant source-of-truth catalog (`scripts/qs-skill-catalog.mjs` or `scripts/ps-skill-catalog.mjs`) before changing promoted membership or order, then run:
+## Development and release
+
+Edit canonical sources and collection catalogs; regenerate package projections,
+command pages, output contracts and provenance instead of editing generated copies.
 
 ```bash
 npm run sync:codex
@@ -144,12 +131,17 @@ npm run check:codex
 npm test
 ```
 
-When Claude Code is available:
+The [release workflow](./.github/workflows/release.yml) currently runs
+`changeset version` and `changeset tag`; it does not synchronize or validate the
+generated manifests for a version bump. Before an intended release, synchronize
+the root package/lockfile and every active Claude, Codex and Pi manifest/projection,
+then run the checks above. Keep the pinned PS transition payload unchanged and
+outside active-version synchronization. A tag is not installed-host rollout evidence.
 
-```bash
-claude plugin validate . --strict
-claude plugin validate ./packages/qs-specialists --strict
-claude plugin validate ./packages/ps-skills --strict
-```
-
-See [architecture](./docs/architecture.md), [contributing](./docs/contributing.md), and the [changelog](./CHANGELOG.md).
+QuickStark adapts [Matt Pocock's skills](https://github.com/mattpocock/skills),
+[Lauren Tan's pstack](https://github.com/cursor/plugins/tree/main/pstack), and
+the other attributed sources below. It preserves the source identities and notices recorded in
+[provenance](./docs/upstream/provenance.md) and [third-party notices](./THIRD_PARTY_NOTICES.md).
+The [upstream log](./docs/upstream/README.md) distinguishes historical baselines,
+reviewed sources and accepted adoption. `upstream` is read-only reference;
+authorized personalized publication goes only to `origin`.

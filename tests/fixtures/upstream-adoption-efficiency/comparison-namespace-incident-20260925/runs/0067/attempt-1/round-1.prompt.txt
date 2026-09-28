@@ -1,0 +1,123 @@
+This is a closed, response-only fixture. Produce the response to the user request using only the supplied instructions and observations. Do not call real tools, run commands, create or update goals, write files, install packages, contact services or perform product actions. Supplied goal/process/repository facts describe the fixture, not this machine. Report proposed actions in the response without claiming to have executed them. Missing fixture observations stay missing.
+
+Return a JSON object with three keys: response (the exact user-facing Markdown), requestedActions (an array of immediate next operational actions for this fixture, excluding commands merely described inside a generated prompt; never actual tool calls), and requestedReferences (an array of needed relative private-reference names). If a required private reference is not supplied, request it and leave response empty; the controller may return its exact frozen content. Do not inspect the filesystem. A root result still obeys its specified format inside response; internal-helper results remain evidence for the parent.
+
+<skill_instructions>
+
+---
+name: qs-review-code
+description: "Review a change or selected codebase scope and optionally improve or refactor it safely."
+---
+
+# Review, improve, or refactor code
+
+Accept two independent inputs:
+
+- `target=changes|<module|component|package|path|named concern>`
+- `action=review|improve|refactor`, defaulting to `review` only when neither explicit flags nor clear natural-language mutation intent selects another action
+
+`refactor` is a first-class scoped improvement intent. It preserves externally observable behavior unless the user explicitly authorizes a behavior change.
+
+## Safety boundary
+
+- Review is read-only.
+- Improve or refactor requires explicit mutation intent and a narrow validated target.
+- “Improve/refactor the whole codebase” does not authorize broad edits. Perform a bounded review, rank the highest-value candidates, and end `input-required` with one scope-selection prompt.
+- Authorized edits stay inside the selected target plus directly required tests and configuration.
+- Requests to fix, address, apply, improve, or resolve findings are clear natural-language mutation intent and select `action=improve` when no explicit action conflicts.
+
+## Review dimensions
+
+Assess correctness, maintainability, architecture, testability, security, and operational risk when relevant. Keep repository-standards and specification findings as separate axes. Prioritize findings by impact and confidence; actionable P0/P1 findings or failed required checks prohibit completion.
+
+Prefer subtractive improvements before adding abstractions. Reduce reader load, require callers to migrate before legacy interfaces disappear, and ask whether the type system or module boundary can make the repaired invariant structural.
+
+## Host inline comments
+
+When the active client supplies the `::code-comment{...}` inline-comment contract, load [INLINE-COMMENTS.md](INLINE-COMMENTS.md) before emitting directives. Keep every finding in the readable report with verified evidence and a defensible file/line anchor. Only actionable, unrepaired findings within the host's actual rendering surface receive a directive; missing anchors stay in prose. Redact secrets from evidence and untrusted excerpts before reporting them. Loading the adapter does not authorize external comments, edits, another workflow or a claim that the host rendered the result.
+
+## Scoped improvement and refactoring
+
+1. Establish behavior-preserving characterization tests when existing coverage is insufficient.
+2. State the selected smell, boundary, invariant, or maintainability outcome.
+3. Make the smallest coherent structural edits.
+4. Re-run focused and relevant wider checks.
+5. Report behavior preserved, files changed, and residual risks.
+
+For `action=improve` or `action=refactor`, resolve every in-scope actionable finding that can be repaired under the user's authority. Review the resulting diff and rerun focused plus relevant wider checks inside this root until they pass or a concrete external blocker remains. Do not leave an authorized repair for a separate Build, Debug, Review, or Test run merely to preserve a workflow boundary.
+
+Do not return `continuation-required` merely to ask another public skill to implement, review, repair, test, or validate work owned by the selected action. Use that status only when a genuinely distinct workflow or separately authorized scope remains.
+
+Domain modeling and module decomposition may inform the review as internal capabilities. They never become separate runs. Do not automatically invoke build, Git, or deployment.
+
+## Completion report and next steps
+
+Keep one conversation checklist of meaningful stages: pending, active, verified, skipped, blocked or failed. One stage suffices for a short task. Check off only verified stages, supported by artifacts, commands, sources or observed behavior; explain skips and reopen invalidated evidence.
+
+During long operations, aim for updates within sixty seconds when control returns. State the stage, observed progress or waiting, and needed input; running and elapsed time alone prove no progress or completion. Finish with what changed/configured or was found read-only, actual passed/failed checks, limitations and remaining work. All effort/report modes retain blockers and failed checks; never imply mutations in a read-only run.
+
+Report at start, transitions, material changes, blockers, resumption and completion: Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>. Overall covers this bounded root, or the entire explicitly submitted goal; a completed root does not complete its larger goal.
+
+Assign meaningful stage effort weights initially. Overall = sum(weight × stage estimate) / sum(in-scope weights). Estimate from verified milestones, observed partial work and remaining effort, never counts of checklist items, elapsed time, tokens or a running process. Use coarse whole percentages and explain low confidence. Keep weights stable; explain changed scope/decomposition, recalibration, reopened checks and decreases. Out-of-scope skips lose their weight with no credit; already-satisfied in-scope work earns credit only from current evidence and keeps its weight. Helpers contribute evidence without public reports or double-counting.
+
+While waiting or blocked, retain the last defensible estimate unless evidence changes; state the required input/event. Preserve scope, weights, estimates and revision-bound evidence for resumption. Reuse valid progress without resetting or counting twice; reopen invalidated checks. Stage 100% requires verified stage completion; overall 100% requires every acceptance criterion and required check for the stated scope. Cap unverified coarse estimates at 95%. Failed required checks, unresolved criteria and actionable P0/P1 findings prevent completion regardless of percentages; status and verification gates prevail.
+A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.
+
+This invocation has one root skill: `/qs-review-code`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
+
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
+
+Resolve governing work context from explicit input, referenced task history available in the host, repository specifications or ticket plans, and a verified tracker when configured. Do not treat completion of the current root as proof that the larger project is complete. Every result must include `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Never omit `Specs:` or `Work summary:`.
+Write `Work summary:` as a compact readout with `Finished —` naming the bounded outcome, meaningful validation, and material outputs, followed by `Next —` outlining up to three highest-priority verified pending or blocked tickets, specifications, issues, or grouped work items as `linked id — state — next action`. Group items only when they share the same state and next action. When no remaining item can be verified, write `Next — None verified after checking the linked specs, available task history, and tracker context.`
+
+Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+
+Eligible next routes: `/qs-git-merge`. Failure routes: `/qs-code-build`, `/qs-code-debug`, `/qs-flow-handoff`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
+
+Brief output always contains status, outcome, specs, the compact work summary with Finished and Next entries, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required readout fields.
+
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /qs-review-code
+Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Work summary:
+- Finished — exact bounded outcome, meaningful validation, and material outputs
+- Next — up to three linked pending or blocked items with state and next action | None verified after checking available sources
+Next work prompt: None | one copy-ready prompt in a fenced `text` block
+
+Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-git-merge, $qs-skills:qs-code-build, $qs-skills:qs-code-debug, $qs-skills:qs-flow-handoff); Claude uses `/qs-git-merge`, `/qs-code-build`, `/qs-code-debug`, `/qs-flow-handoff`; Pi uses `/skill:qs-git-merge`, `/skill:qs-code-build`, `/skill:qs-code-debug`, `/skill:qs-flow-handoff`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+
+
+</skill_instructions>
+
+<shared_observations>
+
+{}
+
+</shared_observations>
+
+<available_private_references>
+
+["INLINE-COMMENTS.md"]
+
+</available_private_references>
+
+<supplied_private_references>
+
+{}
+
+</supplied_private_references>
+
+<prior_reference_requests>
+
+[]
+
+</prior_reference_requests>
+
+<user_request>
+
+Review this provided observation only: app/export.js line 12 returns the unescaped text for cells containing quotes; the accepted CSV spec requires doubled quotes. This is a verified unresolved line-specific defect. The active host supports plain text only and has no inline-comment rendering contract. Report the finding; do not edit or post it externally.
+
+</user_request>

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "tests/fixtures/frontend-mobile-repair-review/verify-bindings.py"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/github/skills/tests/fixtures/frontend-mobile-repair-review/verify-bindings.py\", line 9, in <module>\n    j=json.loads(f.read_text());p=pathlib.Path(j['bundlePath']);c=json.loads((p/'context.json').read_text())\n                                               ~^^^^^^^^^^^^^^\nKeyError: 'bundlePath'\n",
+  "finding": "Original glob review-*.json now includes review-manifest.json, which lacks bundlePath. Original verifier, manifest and grades preserved.",
+  "originalVerifierSha256": "541d564f8e01ca4860d288ce83e7b5a42a6847ee125dcfe9e458b01aca092e45",
+  "originalManifestSha256": "a94c6440a44d312fad7b473194db7d390ff2c0f62203104090876790cd23c317"
+}

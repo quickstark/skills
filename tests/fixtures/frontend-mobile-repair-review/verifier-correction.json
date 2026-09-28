@@ -1,0 +1,20 @@
+{
+  "scope": "Append-only manifest filename filtering repair; no grade/source evidence change",
+  "oldManifestUnchanged": true,
+  "allOldManifestFilesUnchanged": true,
+  "resultExactlyMatchesOriginalPreManifestValidation": true,
+  "files": {
+    "verify-bindings-exact-ids.py": {
+      "sha256": "d419fda6027468e5aea835752f3c907c57f8d0e17767f7006d0139b2eff80a0b",
+      "bytes": 3343
+    },
+    "verifier-manifest-glob-failure.json": {
+      "sha256": "8935824eed4f37705683a82460187788ef90e5d2d061e03b55acdc8745e7b82b",
+      "bytes": 848
+    },
+    "binding-validation-exact-ids.json": {
+      "sha256": "0fc2984fc73c0964654656ae21e038eb211061f4476f421a390c4806f8bb24f0",
+      "bytes": 3165
+    }
+  }
+}

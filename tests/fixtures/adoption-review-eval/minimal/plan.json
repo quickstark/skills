@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-09-25T21:37:28.138Z",
+  "cases": [
+    "A7",
+    "E7"
+  ],
+  "files": {
+    "inputs/A7/SPEC.md": {
+      "sha256": "5ca979d5e05692a155f4ab76cd6fce13402bf12643f0cbd1be467c62e7629f6d",
+      "bytes": 338
+    },
+    "inputs/A7/diff.patch": {
+      "sha256": "11e4b59f17bc8dc1f518436c48fcdbaa60fca98786caf00d13f73149e3775d99",
+      "bytes": 353
+    },
+    "inputs/A7/guidance/entry.md": {
+      "sha256": "4c2080ccb55447d118871a2a92562d4b17633a01b47799fb9646c8b20f69d8b3",
+      "bytes": 439
+    },
+    "inputs/A7/guidance/skills/engineering/qs-review-code/INLINE-COMMENTS.md": {
+      "sha256": "34e01918d8cd20932d533a5397604c990a7099d0a767b6cbcfaec356f501f591",
+      "bytes": 2439
+    },
+    "inputs/A7/guidance/skills/engineering/qs-review-code/SKILL.md": {
+      "sha256": "3d42997336e2dd4a7a20122062b8c3b339211c1c6451b997a48b7bb0fd219e46",
+      "bytes": 11821
+    },
+    "inputs/A7/review-note.txt": {
+      "sha256": "2c556a6c730e156175844a81ff7475a15595a3332efab8f046429c642d50ce93",
+      "bytes": 199
+    },
+    "inputs/A7/src/line-total.cjs": {
+      "sha256": "cd8d3cd56656c9103436d11b2609c6f4d5902edcf837b71bb6009df9c562dcb2",
+      "bytes": 149
+    },
+    "inputs/A7/tests/supplied-cases.json": {
+      "sha256": "8fc4c1619cd27cbff0526a72cf91884992d49046d819263ec6d484ae71e39db1",
+      "bytes": 303
+    },
+    "inputs/E7/experiment/README.md": {
+      "sha256": "a5594be50e12e2230d585c03a4180ae05563de212d325da52d8d07b3d574d607",
+      "bytes": 431
+    },
+    "inputs/E7/experiment/outputs/sample-01/input.json": {
+      "sha256": "6ca4ff69fccc2a93b58051a7c5cb962e30d5a2efdab3231d48b29ccbc8112828",
+      "bytes": 93
+    },
+    "inputs/E7/experiment/outputs/sample-01/response.md": {
+      "sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+      "bytes": 2
+    },
+    "inputs/E7/experiment/outputs/sample-02/input.json": {
+      "sha256": "ccf4c3f2c2876f9ad444c5d41fe8a959363c9d87c52aaa189356d6dda9a1c078",
+      "bytes": 165
+    },
+    "inputs/E7/experiment/outputs/sample-02/response.md": {
+      "sha256": "b04df2ed2049691d738b9ea7f40f6c067ca6f74ef9496d952e6d990e57dcde99",
+      "bytes": 20
+    },
+    "inputs/E7/experiment/outputs/sample-03/input.json": {
+      "sha256": "543779bd231d7548c363508cdc8fe8a3021beaac611fc08e9a1befe4dad0181e",
+      "bytes": 93
+    },
+    "inputs/E7/experiment/outputs/sample-03/response.md": {
+      "sha256": "076320a2a08267b4c026d06573bba408ea68841e73cdc20e62cce59de165ece3",
+      "bytes": 3
+    },
+    "inputs/E7/experiment/plan.json": {
+      "sha256": "593cda3e1bc5bb77acd794bd5f3d6650f64fce70a02e866f2c99953243b14c65",
+      "bytes": 1488
+    },
+    "inputs/E7/experiment/summary.json": {
+      "sha256": "2b144ec336aae7a9c296fe55fc8900fcc3e1706ff2e6ca7cf75afe7efe75f1d0",
+      "bytes": 339
+    },
+    "inputs/E7/guidance/entry.md": {
+      "sha256": "26fcd5005372bc529f220af2c1aa37e6b241428247faa6f0fe5301fc52a2b4d6",
+      "bytes": 1432
+    },
+    "inputs/E7/guidance/skills/advanced/internal/concurrency-ownership.md": {
+      "sha256": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a",
+      "bytes": 2570
+    },
+    "inputs/E7/guidance/skills/advanced/internal/context-discipline.md": {
+      "sha256": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507",
+      "bytes": 2648
+    },
+    "inputs/E7/guidance/skills/advanced/internal/decision-trail.md": {
+      "sha256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    "inputs/E7/guidance/skills/advanced/internal/minimal-change.md": {
+      "sha256": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2",
+      "bytes": 2557
+    },
+    "inputs/E7/guidance/skills/advanced/internal/multi-candidate-exploration.md": {
+      "sha256": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042",
+      "bytes": 2691
+    },
+    "inputs/E7/guidance/skills/advanced/internal/parallel-coverage.md": {
+      "sha256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    "inputs/E7/guidance/skills/advanced/internal/plain-writing.md": {
+      "sha256": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06",
+      "bytes": 2702
+    },
+    "inputs/E7/guidance/skills/advanced/internal/rerunnable-tooling.md": {
+      "sha256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    "inputs/E7/guidance/skills/advanced/internal/structural-enforcement.md": {
+      "sha256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    },
+    "inputs/E7/guidance/skills/advanced/internal/type-system-discipline.md": {
+      "sha256": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd",
+      "bytes": 2814
+    },
+    "inputs/E7/guidance/skills/advanced/internal/typescript-discipline.md": {
+      "sha256": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03",
+      "bytes": 2931
+    },
+    "inputs/E7/guidance/skills/engineering/qs-skill-eval/SKILL.md": {
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    "inputs/E7/history/archive-before-replacement.json": {
+      "sha256": "83aa60df5eaae540b462a5df7f68c8c53103721b5d1f9eb39b462c3a09fc0304",
+      "bytes": 255
+    },
+    "inputs/E7/history/decisions.jsonl": {
+      "sha256": "5ff767a133ade6256223c2fff47d5ddd8744d780c53f94f1472f87fd70c9bf9f",
+      "bytes": 139
+    },
+    "inputs/E7/history/edit-log.json": {
+      "sha256": "15299861eeb233fcd8cb48b027d0c97c69ebac39df1b0d086263c39163b3fc63",
+      "bytes": 264
+    },
+    "oracle-contract.json": {
+      "sha256": "a7a65cf874b12aee90d17acb470de3368943fac54efa5dc9a002a493801b41d5",
+      "bytes": 1129
+    },
+    "payload-minimization.json": {
+      "sha256": "ed955a48ea6de8ecbcf8b56a0d9047ff00172902541ea7b56c8adb704d804405",
+      "bytes": 6156
+    },
+    "runner.mjs": {
+      "sha256": "0bfa47d472c70a5293ff3ef54eb2d4efce227a46cbcdd37b647d00fafa36baf7",
+      "bytes": 7957
+    },
+    "scenarios.json": {
+      "sha256": "267c96326f57b89dabb472d71ab37e83946c6b5f342bfca3061a59b4670d1ff8",
+      "bytes": 1937
+    }
+  },
+  "sources": [
+    {
+      "caseId": "A7",
+      "path": "skills/engineering/qs-review-code/SKILL.md",
+      "sha256": "3d42997336e2dd4a7a20122062b8c3b339211c1c6451b997a48b7bb0fd219e46",
+      "bytes": 11821
+    },
+    {
+      "caseId": "A7",
+      "path": "skills/engineering/qs-review-code/INLINE-COMMENTS.md",
+      "sha256": "34e01918d8cd20932d533a5397604c990a7099d0a767b6cbcfaec356f501f591",
+      "bytes": 2439
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/engineering/qs-skill-eval/SKILL.md",
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/multi-candidate-exploration.md",
+      "sha256": "9a2cd76ce195f8d2364c23a6576122482ca8b6227a18b1c42b3f4a82d677e042",
+      "bytes": 2691
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/decision-trail.md",
+      "sha256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/parallel-coverage.md",
+      "sha256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/typescript-discipline.md",
+      "sha256": "b7dcd8faa166285a2b00f861814922b7a9ce26b9c1296ca863060fe86474fa03",
+      "bytes": 2931
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/plain-writing.md",
+      "sha256": "bf732f97415e4a99702044b1364445dade40918c857741ef24551fcbe681ef06",
+      "bytes": 2702
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/rerunnable-tooling.md",
+      "sha256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/structural-enforcement.md",
+      "sha256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/context-discipline.md",
+      "sha256": "5135fa9d4d58edcdd9e29c1329dbc8a488f04f7bc30f2367674c76c59117a507",
+      "bytes": 2648
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/minimal-change.md",
+      "sha256": "8476c857a13ded1ec0fc58f32c3f36158741758172de4516d9f7848dc66e02a2",
+      "bytes": 2557
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/concurrency-ownership.md",
+      "sha256": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a",
+      "bytes": 2570
+    },
+    {
+      "caseId": "E7",
+      "path": "skills/advanced/internal/type-system-discipline.md",
+      "sha256": "274e5f990e9d5354b7440da70c76f6250ee94d0687b328eecbea3b06ae920ecd",
+      "bytes": 2814
+    }
+  ],
+  "executeHelperSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+  "host": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Unknown unless actual runtime events emit model; configured defaults are not observed identity."
+  },
+  "attemptsPerCase": 1,
+  "retries": 0,
+  "inference": "Two current-guidance behavior observations only; no candidate comparison, adoption or efficiency inference. E7 does not regrade E1.",
+  "isolation": "Fresh temporary task workspace; full source guidance read from files. Unchanged explicit codex execute helper. Prompt authority and post-observation auditing are not a pre-execution security boundary."
+}

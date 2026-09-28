@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Make room for wonder at Northstar Museum. Family membership is $100 per year, with unlimited entry for two adults and children under 18.">
+  <title>Family membership | Northstar Museum</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header wrap">
+    <a class="wordmark" href="/" aria-label="Northstar Museum home">Northstar <span>Museum</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#membership-panel" aria-current="page">Membership</a>
+      <a href="#museum-facts">Our museum</a>
+    </nav>
+  </header>
+  <main id="main" class="wrap" tabindex="-1">
+    <div class="membership-layout">
+      <section class="introduction" aria-labelledby="page-title">
+        <p class="eyebrow">A year of discovery</p>
+        <h1 id="page-title">Make room for wonder.</h1>
+        <p class="intro-copy">Family membership keeps discovery close to home.</p>
+        <a id="details-link" class="text-link" href="/membership/family">Explore membership details <span aria-hidden="true">↗</span></a>
+      </section>
+      <section id="membership-panel" class="membership-panel" aria-labelledby="membership-title">
+        <h2 id="membership-title">Family membership</h2>
+        <p id="price" class="price">$100 <span>/ year</span></p>
+        <p class="benefit">Unlimited entry for two adults and children under 18.</p>
+        <p class="effective">Pricing effective January 1, 2025.</p>
+        <form id="join-form" action="/join/checkout?plan=family" method="post" novalidate>
+          <label for="member-email">Email address</label>
+          <input id="member-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="email-error privacy-note">
+          <p id="email-error" class="error" aria-live="polite"></p>
+          <button id="join-button" type="submit">Continue with Family <span aria-hidden="true">→</span></button>
+          <p id="privacy-note" class="privacy-note">Your email stays in this browser. <a href="/privacy">Privacy</a></p>
+          <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+    <section id="museum-facts" class="museum-facts" aria-labelledby="facts-title">
+      <h2 id="facts-title">Wonder brings us together.</h2>
+      <dl class="facts">
+        <div><dt>Members</dt><dd id="member-count">10,000</dd></div>
+        <div><dt>Annual visits</dt><dd id="annual-visits">50,000</dd></div>
+        <div><dt>Founded</dt><dd id="founded">2020</dd></div>
+      </dl>
+    </section>
+  </main>
+  <footer id="site-footer" class="site-footer wrap">
+    <p>Northstar Museum</p>
+    <div><a href="/privacy">Privacy</a><a href="/accessibility">Accessibility</a></div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "row": {
+    "trialId": "F10-r3-v84",
+    "scenarioId": "F10",
+    "repetition": 3,
+    "variant": "v84"
+  },
+  "cwd": "/tmp/qs-frontend-v2-task-mwxgRu",
+  "planSHA256": "50008084056b8446c04730ecafa627a601fec07666b00af6104f423a813099f7",
+  "guidance": {
+    "path": "/tmp/qs-frontend-v2-task-mwxgRu/trial-guidance.md",
+    "sha256": "67397607745e22b620257a23a98978637878ba042359a94aca724bd60a709f9d",
+    "instructions": [
+      {
+        "key": "qs-design-image-web",
+        "sha256": "cc2b5c8b6f7979930e4c38b18b4212ae6fd6ae9a36703f01056845317ed11c83"
+      },
+      {
+        "key": "brief",
+        "sha256": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a"
+      },
+      {
+        "key": "prompt-construction",
+        "sha256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918"
+      },
+      {
+        "key": "web-images",
+        "sha256": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b"
+      },
+      {
+        "key": "design-direction",
+        "sha256": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386"
+      }
+    ]
+  },
+  "configuredHost": {
+    "cliVersion": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": [],
+    "observedModelPolicy": "Runtime model only when emitted; configured defaults do not prove runtime identity."
+  }
+}

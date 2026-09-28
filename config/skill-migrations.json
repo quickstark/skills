@@ -1,0 +1,1459 @@
+{
+  "schemaVersion": 1,
+  "migrations": [
+    {
+      "id": "ps-to-qs-advanced-v1",
+      "version": 1,
+      "state": "planned",
+      "legacy": [
+        {
+          "kind": "package",
+          "identity": "ps-skills",
+          "capabilityId": "package:ps-skills",
+          "publicSkills": [
+            "ps-help",
+            "ps-how",
+            "ps-why",
+            "ps-blast-radius",
+            "ps-runtime-forensics",
+            "ps-trace-forensics",
+            "ps-create-verification-skill",
+            "ps-maintain-verification-skill",
+            "ps-skill-eval",
+            "ps-hillclimb",
+            "ps-visual-parity",
+            "ps-pr-babysit",
+            "ps-worktree-cleanup"
+          ],
+          "acceptedPrior": [
+            {
+              "version": "3.8.0",
+              "revision": "5d0d0ba1fcf9142c8787f0746209114df90000ea",
+              "digests": {
+                "codex": {
+                  "kind": "portable-directory-sha256",
+                  "value": "13817f5a6f5075a4524bbd2da41c44624a08d4d7148c4b909a863c1010e3c0f9",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "5d0d0ba1fcf9142c8787f0746209114df90000ea",
+                    "sourcePath": "codex/plugins/ps-skills"
+                  }
+                },
+                "claude-code": {
+                  "kind": "portable-directory-sha256",
+                  "value": "3c8e0560bf668cee7113ed5908101ea39f40ce0c54304aeb1b7385c2be3d6a86",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "5d0d0ba1fcf9142c8787f0746209114df90000ea",
+                    "sourcePath": "packages/ps-skills"
+                  }
+                },
+                "pi": {
+                  "kind": "portable-directory-sha256",
+                  "value": "5eefa465eb99f4e377d932dde4d1fb2292a17d0966bd410789f752421ea49788",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "5d0d0ba1fcf9142c8787f0746209114df90000ea",
+                    "sourcePath": "pi/packages/ps-skills"
+                  }
+                }
+              },
+              "publicSkills": [
+                "ps-help",
+                "ps-how",
+                "ps-why",
+                "ps-blast-radius",
+                "ps-runtime-forensics",
+                "ps-trace-forensics",
+                "ps-create-verification-skill",
+                "ps-maintain-verification-skill",
+                "ps-skill-eval",
+                "ps-hillclimb",
+                "ps-visual-parity",
+                "ps-pr-babysit",
+                "ps-worktree-cleanup"
+              ]
+            },
+            {
+              "version": "3.8.0",
+              "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+              "digests": {
+                "codex": {
+                  "kind": "portable-directory-sha256",
+                  "value": "7f97ba6168870b52019399bc8fa1adb8616ca9a50ba0c364110a1ad901d0319b",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+                    "sourcePath": "codex/plugins/ps-skills"
+                  }
+                },
+                "claude-code": {
+                  "kind": "portable-directory-sha256",
+                  "value": "16b48b264b16c4b48febb1dd3c2c5d9b268808ed46e4eef9c59513240f4e8c49",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+                    "sourcePath": "packages/ps-skills"
+                  }
+                },
+                "pi": {
+                  "kind": "portable-directory-sha256",
+                  "value": "f9ed5504dc71b8db1131725554c4782baa439cc68f4c988acd760d100ae3c025",
+                  "authority": {
+                    "repository": "https://github.com/quickstark/skills",
+                    "revision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+                    "sourcePath": "pi/packages/ps-skills"
+                  }
+                }
+              },
+              "publicSkills": [
+                "ps-help",
+                "ps-how",
+                "ps-why",
+                "ps-blast-radius",
+                "ps-runtime-forensics",
+                "ps-trace-forensics",
+                "ps-create-verification-skill",
+                "ps-maintain-verification-skill",
+                "ps-skill-eval",
+                "ps-hillclimb",
+                "ps-visual-parity",
+                "ps-pr-babysit",
+                "ps-worktree-cleanup"
+              ],
+              "note": "Verified task-built transition projection for existing direct-checkout consumers; distinct from the original released3.8.0 baseline."
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "native-manager",
+              "packageId": "ps-skills",
+              "marketplace": "quickstark"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-skills",
+              "command": "qs-help",
+              "capabilityId": "qs:qs-help",
+              "legacyPublicSkill": "ps-help"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-how",
+              "capabilityId": "ps:ps-how",
+              "legacyPublicSkill": "ps-how"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-why",
+              "capabilityId": "ps:ps-why",
+              "legacyPublicSkill": "ps-why"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-blast-radius",
+              "capabilityId": "ps:ps-blast-radius",
+              "legacyPublicSkill": "ps-blast-radius"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-runtime-forensics",
+              "capabilityId": "ps:ps-runtime-forensics",
+              "legacyPublicSkill": "ps-runtime-forensics"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-trace-forensics",
+              "capabilityId": "ps:ps-trace-forensics",
+              "legacyPublicSkill": "ps-trace-forensics"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-create-verification-skill",
+              "capabilityId": "ps:ps-create-verification-skill",
+              "legacyPublicSkill": "ps-create-verification-skill"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-maintain-verification-skill",
+              "capabilityId": "ps:ps-maintain-verification-skill",
+              "legacyPublicSkill": "ps-maintain-verification-skill"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-skill-eval",
+              "capabilityId": "ps:ps-skill-eval",
+              "legacyPublicSkill": "ps-skill-eval"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-hillclimb",
+              "capabilityId": "ps:ps-hillclimb",
+              "legacyPublicSkill": "ps-hillclimb"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-visual-parity",
+              "capabilityId": "ps:ps-visual-parity",
+              "legacyPublicSkill": "ps-visual-parity"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-pr-babysit",
+              "capabilityId": "ps:ps-pr-babysit",
+              "legacyPublicSkill": "ps-pr-babysit"
+            },
+            {
+              "packageId": "qs-advanced",
+              "command": "qs-worktree-cleanup",
+              "capabilityId": "ps:ps-worktree-cleanup",
+              "legacyPublicSkill": "ps-worktree-cleanup"
+            }
+          ]
+        }
+      ],
+      "retirement": {
+        "operation": "unregister-owned-package",
+        "requirements": [
+          "fresh-path-link-version-digest-revalidation",
+          "complete-selected-capability-proof",
+          "replacement-package-closure-and-notices",
+          "no-old-new-duplicate-discovery",
+          "all-shared-consumers-migrated-or-old-resource-retained",
+          "verified-backup-and-durable-journal",
+          "selection-persisted-only-after-success"
+        ]
+      },
+      "rollback": {
+        "scope": "journaled-owned-operations-only",
+        "backup": "preserve-verified-prior-payload-and-selection",
+        "verification": "restore-prior-discovery-and-selection",
+        "onFailure": "retain-journal-backups-and-report-actual-residual-state",
+        "executionAuthority": "separate-from-planning"
+      }
+    },
+    {
+      "id": "frontend-to-qs-v1",
+      "version": 1,
+      "state": "planned",
+      "legacy": [
+        {
+          "kind": "resource",
+          "identity": "design-taste-frontend",
+          "capabilityId": "contributor:design-taste-frontend",
+          "publicSkills": [
+            "design-taste-frontend"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/taste-skill/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/design-taste-frontend"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/design-taste-frontend",
+              "linkTarget": "~/.agents/skills/design-taste-frontend"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/design-taste-frontend",
+              "linkTarget": "~/.agents/skills/design-taste-frontend"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/design-taste-frontend",
+              "linkTarget": "~/.agents/skills/design-taste-frontend"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-frontend",
+              "capabilityId": "contributor:design-taste-frontend",
+              "legacyPublicSkill": "design-taste-frontend"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "redesign-existing-projects",
+          "capabilityId": "contributor:redesign-existing-projects",
+          "publicSkills": [
+            "redesign-existing-projects"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/redesign-skill/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/redesign-existing-projects"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/redesign-existing-projects",
+              "linkTarget": "~/.agents/skills/redesign-existing-projects"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/redesign-existing-projects",
+              "linkTarget": "~/.agents/skills/redesign-existing-projects"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/redesign-existing-projects",
+              "linkTarget": "~/.agents/skills/redesign-existing-projects"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-frontend",
+              "capabilityId": "contributor:redesign-existing-projects",
+              "legacyPublicSkill": "redesign-existing-projects"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "high-end-visual-design",
+          "capabilityId": "contributor:high-end-visual-design",
+          "publicSkills": [
+            "high-end-visual-design"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/soft-skill/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/high-end-visual-design"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/high-end-visual-design",
+              "linkTarget": "~/.agents/skills/high-end-visual-design"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/high-end-visual-design",
+              "linkTarget": "~/.agents/skills/high-end-visual-design"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/high-end-visual-design",
+              "linkTarget": "~/.agents/skills/high-end-visual-design"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-frontend",
+              "capabilityId": "contributor:high-end-visual-design",
+              "legacyPublicSkill": "high-end-visual-design"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "minimalist-ui",
+          "capabilityId": "contributor:minimalist-ui",
+          "publicSkills": [
+            "minimalist-ui"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "08873a3131d3be27bef9bf3304b310b16b44ca6e3561aebe532797be3443f6bd"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/minimalist-skill/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/minimalist-ui"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/minimalist-ui",
+              "linkTarget": "~/.agents/skills/minimalist-ui"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/minimalist-ui",
+              "linkTarget": "~/.agents/skills/minimalist-ui"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/minimalist-ui",
+              "linkTarget": "~/.agents/skills/minimalist-ui"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-frontend",
+              "capabilityId": "contributor:minimalist-ui",
+              "legacyPublicSkill": "minimalist-ui"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "imagegen-frontend-web",
+          "capabilityId": "contributor:imagegen-frontend-web",
+          "publicSkills": [
+            "imagegen-frontend-web"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "65f5ae59fa317567809438310b1c54f78cd133426deb43e4d3d4ca4c8f541628"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/imagegen-frontend-web/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/imagegen-frontend-web"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/imagegen-frontend-web",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-web"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/imagegen-frontend-web",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-web"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/imagegen-frontend-web",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-web"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-image-web",
+              "capabilityId": "contributor:imagegen-frontend-web",
+              "legacyPublicSkill": "imagegen-frontend-web"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "imagegen-frontend-mobile",
+          "capabilityId": "contributor:imagegen-frontend-mobile",
+          "publicSkills": [
+            "imagegen-frontend-mobile"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/imagegen-frontend-mobile/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/imagegen-frontend-mobile"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/imagegen-frontend-mobile",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-mobile"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/imagegen-frontend-mobile",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-mobile"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/imagegen-frontend-mobile",
+              "linkTarget": "~/.agents/skills/imagegen-frontend-mobile"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-image-mobile",
+              "capabilityId": "contributor:imagegen-frontend-mobile",
+              "legacyPublicSkill": "imagegen-frontend-mobile"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "image-to-code",
+          "capabilityId": "contributor:image-to-code",
+          "publicSkills": [
+            "image-to-code"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "58517b03b2a01f4c9ba65861559d03df931400871bbc200978c975b24bb92c73"
+              },
+              "repository": "Leonxlnx/taste-skill",
+              "upstreamPath": "skills/image-to-code-skill/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/image-to-code"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/image-to-code",
+              "linkTarget": "~/.agents/skills/image-to-code"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/image-to-code",
+              "linkTarget": "~/.agents/skills/image-to-code"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/image-to-code",
+              "linkTarget": "~/.agents/skills/image-to-code"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-frontend",
+              "command": "qs-design-image-to-code",
+              "capabilityId": "contributor:image-to-code",
+              "legacyPublicSkill": "image-to-code"
+            }
+          ]
+        }
+      ],
+      "retirement": {
+        "operation": "retire-unchanged-owned-resource-after-all-consumers",
+        "requirements": [
+          "fresh-path-link-version-digest-revalidation",
+          "complete-selected-capability-proof",
+          "replacement-package-closure-and-notices",
+          "no-old-new-duplicate-discovery",
+          "all-shared-consumers-migrated-or-old-resource-retained",
+          "verified-backup-and-durable-journal",
+          "selection-persisted-only-after-success"
+        ]
+      },
+      "rollback": {
+        "scope": "journaled-owned-operations-only",
+        "backup": "preserve-verified-prior-payload-and-selection",
+        "verification": "restore-prior-discovery-and-selection",
+        "onFailure": "retain-journal-backups-and-report-actual-residual-state",
+        "executionAuthority": "separate-from-planning"
+      }
+    },
+    {
+      "id": "hyperframes-to-qs-video-v1",
+      "version": 1,
+      "state": "planned",
+      "legacy": [
+        {
+          "kind": "resource",
+          "identity": "hyperframes",
+          "capabilityId": "contributor:hyperframes",
+          "publicSkills": [
+            "hyperframes"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "3ff3805be0e98ad02ff502c6b5358c99f0b71c05539d69c069412d57b535635b"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes",
+              "linkTarget": "~/.agents/skills/hyperframes"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes",
+              "linkTarget": "~/.agents/skills/hyperframes"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes",
+              "linkTarget": "~/.agents/skills/hyperframes"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes",
+              "legacyPublicSkill": "hyperframes"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-animation",
+          "capabilityId": "contributor:hyperframes-animation",
+          "publicSkills": [
+            "hyperframes-animation"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "dcb152706e225699c3a954e434c094fa8ae23a9061d62d49b0798b20a60b297e"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-animation/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-animation"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-animation",
+              "linkTarget": "~/.agents/skills/hyperframes-animation"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-animation",
+              "linkTarget": "~/.agents/skills/hyperframes-animation"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-animation",
+              "linkTarget": "~/.agents/skills/hyperframes-animation"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-animation",
+              "legacyPublicSkill": "hyperframes-animation"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-audio",
+          "capabilityId": "contributor:hyperframes-audio",
+          "publicSkills": [
+            "hyperframes-audio"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "8fc5b21a8e5dd07a20a7aa589b222b64b3b665c7007a5d20ba14d7f6efe5f100"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-audio/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-audio"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-audio",
+              "linkTarget": "~/.agents/skills/hyperframes-audio"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-audio",
+              "linkTarget": "~/.agents/skills/hyperframes-audio"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-audio",
+              "linkTarget": "~/.agents/skills/hyperframes-audio"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-audio",
+              "legacyPublicSkill": "hyperframes-audio"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-cli",
+          "capabilityId": "contributor:hyperframes-cli",
+          "publicSkills": [
+            "hyperframes-cli"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "397861778a28cf89aef03f2b56d1a7d7891202684259d643d5d7bb9130bb291d"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-cli/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-cli"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-cli",
+              "linkTarget": "~/.agents/skills/hyperframes-cli"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-cli",
+              "linkTarget": "~/.agents/skills/hyperframes-cli"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-cli",
+              "linkTarget": "~/.agents/skills/hyperframes-cli"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-cli",
+              "legacyPublicSkill": "hyperframes-cli"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-core",
+          "capabilityId": "contributor:hyperframes-core",
+          "publicSkills": [
+            "hyperframes-core"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "9ec9fb9d13920d0cf588a8b368f5bb52d57aabf99d9606bf63fa874d7bbf74b8"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-core/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-core"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-core",
+              "linkTarget": "~/.agents/skills/hyperframes-core"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-core",
+              "linkTarget": "~/.agents/skills/hyperframes-core"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-core",
+              "linkTarget": "~/.agents/skills/hyperframes-core"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-core",
+              "legacyPublicSkill": "hyperframes-core"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-creative",
+          "capabilityId": "contributor:hyperframes-creative",
+          "publicSkills": [
+            "hyperframes-creative"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "6da4fd1f681605c15aaab34829261fe10d7f3c81ac79bc0ef3b40ed9cd23ef4c"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-creative/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-creative"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-creative",
+              "linkTarget": "~/.agents/skills/hyperframes-creative"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-creative",
+              "linkTarget": "~/.agents/skills/hyperframes-creative"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-creative",
+              "linkTarget": "~/.agents/skills/hyperframes-creative"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-creative",
+              "legacyPublicSkill": "hyperframes-creative"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-keyframes",
+          "capabilityId": "contributor:hyperframes-keyframes",
+          "publicSkills": [
+            "hyperframes-keyframes"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "ca3056e210808e6382f96384dcfd83fac5f8b369635ab4ae06dae2dda5e2047f"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-keyframes/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-keyframes"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-keyframes",
+              "linkTarget": "~/.agents/skills/hyperframes-keyframes"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-keyframes",
+              "linkTarget": "~/.agents/skills/hyperframes-keyframes"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-keyframes",
+              "linkTarget": "~/.agents/skills/hyperframes-keyframes"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-keyframes",
+              "legacyPublicSkill": "hyperframes-keyframes"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "hyperframes-registry",
+          "capabilityId": "contributor:hyperframes-registry",
+          "publicSkills": [
+            "hyperframes-registry"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "b0cb8f843e5b0302cebd68ea13e9e79bbd8f044e8af7b2a858aa956ce8c36f4d"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/hyperframes-registry/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/hyperframes-registry"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/hyperframes-registry",
+              "linkTarget": "~/.agents/skills/hyperframes-registry"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/hyperframes-registry",
+              "linkTarget": "~/.agents/skills/hyperframes-registry"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/hyperframes-registry",
+              "linkTarget": "~/.agents/skills/hyperframes-registry"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:hyperframes-registry",
+              "legacyPublicSkill": "hyperframes-registry"
+            }
+          ]
+        },
+        {
+          "kind": "resource",
+          "identity": "media-use",
+          "capabilityId": "contributor:media-use",
+          "publicSkills": [
+            "media-use"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "6db9fd6e46127ca866a8b78a09a963e489e810b663fad2c3ec5b4786fd6c944f"
+              },
+              "repository": "heygen-com/hyperframes",
+              "upstreamPath": "skills/media-use/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/media-use"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/media-use",
+              "linkTarget": "~/.agents/skills/media-use"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/media-use",
+              "linkTarget": "~/.agents/skills/media-use"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/media-use",
+              "linkTarget": "~/.agents/skills/media-use"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-video",
+              "command": "qs-video",
+              "capabilityId": "contributor:media-use",
+              "legacyPublicSkill": "media-use"
+            }
+          ]
+        }
+      ],
+      "retirement": {
+        "operation": "retire-unchanged-owned-resource-after-all-consumers",
+        "requirements": [
+          "fresh-path-link-version-digest-revalidation",
+          "complete-selected-capability-proof",
+          "replacement-package-closure-and-notices",
+          "no-old-new-duplicate-discovery",
+          "all-shared-consumers-migrated-or-old-resource-retained",
+          "verified-backup-and-durable-journal",
+          "selection-persisted-only-after-success"
+        ]
+      },
+      "rollback": {
+        "scope": "journaled-owned-operations-only",
+        "backup": "preserve-verified-prior-payload-and-selection",
+        "verification": "restore-prior-discovery-and-selection",
+        "onFailure": "retain-journal-backups-and-report-actual-residual-state",
+        "executionAuthority": "separate-from-planning"
+      }
+    },
+    {
+      "id": "unlazy-to-qs-v1",
+      "version": 1,
+      "state": "planned",
+      "legacy": [
+        {
+          "kind": "resource",
+          "identity": "unlazy",
+          "capabilityId": "contributor:unlazy",
+          "publicSkills": [
+            "unlazy"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "f93525f0a3dc840746eebeb6855b542862c4c92d3e5791b361ed3ed0fd1d7b85"
+              },
+              "repository": "Leonxlnx/unlazy",
+              "upstreamPath": "SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/unlazy"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/unlazy",
+              "linkTarget": "~/.agents/skills/unlazy"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/unlazy",
+              "linkTarget": "~/.agents/skills/unlazy"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/unlazy",
+              "linkTarget": "~/.agents/skills/unlazy"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-execution",
+              "command": "qs-unlazy",
+              "capabilityId": "contributor:unlazy",
+              "legacyPublicSkill": "unlazy"
+            }
+          ]
+        }
+      ],
+      "retirement": {
+        "operation": "retire-unchanged-owned-resource-after-all-consumers",
+        "requirements": [
+          "fresh-path-link-version-digest-revalidation",
+          "complete-selected-capability-proof",
+          "replacement-package-closure-and-notices",
+          "no-old-new-duplicate-discovery",
+          "all-shared-consumers-migrated-or-old-resource-retained",
+          "verified-backup-and-durable-journal",
+          "selection-persisted-only-after-success"
+        ]
+      },
+      "rollback": {
+        "scope": "journaled-owned-operations-only",
+        "backup": "preserve-verified-prior-payload-and-selection",
+        "verification": "restore-prior-discovery-and-selection",
+        "onFailure": "retain-journal-backups-and-report-actual-residual-state",
+        "executionAuthority": "separate-from-planning"
+      }
+    },
+    {
+      "id": "finder-to-qs-v1",
+      "version": 1,
+      "state": "planned",
+      "legacy": [
+        {
+          "kind": "resource",
+          "identity": "find-skills",
+          "capabilityId": "contributor:find-skills",
+          "publicSkills": [
+            "find-skills"
+          ],
+          "acceptedPrior": [
+            {
+              "revision": "c6f69c631292444cc541ac6d91e2226b0ff247da",
+              "digest": {
+                "kind": "portable-directory-sha256",
+                "value": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396"
+              },
+              "repository": "vercel-labs/skills",
+              "upstreamPath": "skills/find-skills/SKILL.md"
+            }
+          ],
+          "ownedLocations": [
+            {
+              "surface": "shared-canonical",
+              "path": "~/.agents/skills/find-skills"
+            },
+            {
+              "surface": "claude-link",
+              "path": "~/.claude/skills/find-skills",
+              "linkTarget": "~/.agents/skills/find-skills"
+            },
+            {
+              "surface": "codex-link",
+              "path": "~/.codex/skills/find-skills",
+              "linkTarget": "~/.agents/skills/find-skills"
+            },
+            {
+              "surface": "pi-link",
+              "path": "~/.pi/agent/skills/find-skills",
+              "linkTarget": "~/.agents/skills/find-skills"
+            }
+          ],
+          "replacements": [
+            {
+              "packageId": "qs-skills",
+              "command": "qs-help",
+              "capabilityId": "qs:qs-help",
+              "legacyPublicSkill": "find-skills"
+            },
+            {
+              "packageId": "qs-skills",
+              "command": "qs-setup",
+              "capabilityId": "qs:qs-setup",
+              "legacyPublicSkill": "find-skills"
+            }
+          ]
+        }
+      ],
+      "retirement": {
+        "operation": "retire-unchanged-owned-resource-after-all-consumers",
+        "requirements": [
+          "fresh-path-link-version-digest-revalidation",
+          "complete-selected-capability-proof",
+          "replacement-package-closure-and-notices",
+          "no-old-new-duplicate-discovery",
+          "all-shared-consumers-migrated-or-old-resource-retained",
+          "verified-backup-and-durable-journal",
+          "selection-persisted-only-after-success"
+        ]
+      },
+      "rollback": {
+        "scope": "journaled-owned-operations-only",
+        "backup": "preserve-verified-prior-payload-and-selection",
+        "verification": "restore-prior-discovery-and-selection",
+        "onFailure": "retain-journal-backups-and-report-actual-residual-state",
+        "executionAuthority": "separate-from-planning"
+      }
+    }
+  ],
+  "sourceManifestSnapshot": {
+    "resources": [
+      {
+        "name": "design-taste-frontend",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/taste-skill/SKILL.md",
+          "upstreamTreeHash": "a6d128e53b4ec0238baee751dde33bf707adb5ec",
+          "contentSha256": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
+        }
+      },
+      {
+        "name": "find-skills",
+        "source": {
+          "kind": "github",
+          "repository": "vercel-labs/skills",
+          "revision": "c6f69c631292444cc541ac6d91e2226b0ff247da",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/find-skills/SKILL.md",
+          "upstreamTreeHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+          "contentSha256": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396"
+        }
+      },
+      {
+        "name": "high-end-visual-design",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/soft-skill/SKILL.md",
+          "upstreamTreeHash": "1b5943432ddd1b980206968c529a323cc992dbec",
+          "contentSha256": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
+        }
+      },
+      {
+        "name": "hyperframes",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes/SKILL.md",
+          "upstreamTreeHash": "ea0e6aa5b3723a9426b232c046c96903271dad04",
+          "contentSha256": "3ff3805be0e98ad02ff502c6b5358c99f0b71c05539d69c069412d57b535635b",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-animation",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-animation/SKILL.md",
+          "upstreamTreeHash": "94f8c91839d5bf9280b4dbe80a3fd1bbcab1917b",
+          "contentSha256": "dcb152706e225699c3a954e434c094fa8ae23a9061d62d49b0798b20a60b297e",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-audio",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-audio/SKILL.md",
+          "upstreamTreeHash": "63107a7f9f0abeaff9966ba6482cfc6926426899",
+          "contentSha256": "8fc5b21a8e5dd07a20a7aa589b222b64b3b665c7007a5d20ba14d7f6efe5f100",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-cli",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-cli/SKILL.md",
+          "upstreamTreeHash": "b862a63fdeb054cd85076fff559c60aaec050869",
+          "contentSha256": "397861778a28cf89aef03f2b56d1a7d7891202684259d643d5d7bb9130bb291d",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-core",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-core/SKILL.md",
+          "upstreamTreeHash": "fe4c63fdd76ad9655e180eca4b407d0da8d11f80",
+          "contentSha256": "9ec9fb9d13920d0cf588a8b368f5bb52d57aabf99d9606bf63fa874d7bbf74b8",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-creative",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-creative/SKILL.md",
+          "upstreamTreeHash": "fdd1567286e98928f85ccc19c64350bc52c1df86",
+          "contentSha256": "6da4fd1f681605c15aaab34829261fe10d7f3c81ac79bc0ef3b40ed9cd23ef4c",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-keyframes",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-keyframes/SKILL.md",
+          "upstreamTreeHash": "96d3e2f95fa1c71886b54c7e5855086e7146bd27",
+          "contentSha256": "ca3056e210808e6382f96384dcfd83fac5f8b369635ab4ae06dae2dda5e2047f",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "hyperframes-registry",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/hyperframes-registry/SKILL.md",
+          "upstreamTreeHash": "c9f76496706aa566ddf6d53429cc05473b2e10fc",
+          "contentSha256": "b0cb8f843e5b0302cebd68ea13e9e79bbd8f044e8af7b2a858aa956ce8c36f4d",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "image-to-code",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/image-to-code-skill/SKILL.md",
+          "upstreamTreeHash": "701b3cb89c061fcf98a98f639e0b0b5c0b492479",
+          "contentSha256": "58517b03b2a01f4c9ba65861559d03df931400871bbc200978c975b24bb92c73"
+        }
+      },
+      {
+        "name": "imagegen-frontend-mobile",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/imagegen-frontend-mobile/SKILL.md",
+          "upstreamTreeHash": "9901fcde67e9506a706912107825fdfb72e01f30",
+          "contentSha256": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f"
+        }
+      },
+      {
+        "name": "imagegen-frontend-web",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/imagegen-frontend-web/SKILL.md",
+          "upstreamTreeHash": "3b5117d349200e33f9c3399344681620079dcc18",
+          "contentSha256": "65f5ae59fa317567809438310b1c54f78cd133426deb43e4d3d4ca4c8f541628"
+        }
+      },
+      {
+        "name": "media-use",
+        "source": {
+          "kind": "github",
+          "repository": "heygen-com/hyperframes",
+          "revision": "de4062a93300cbe1826edfbd8d71fbc44be25cb7",
+          "license": "Apache-2.0",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/media-use/SKILL.md",
+          "upstreamTreeHash": "121f654a28ed2f9582091d9305cabaefbc7730f6",
+          "contentSha256": "6db9fd6e46127ca866a8b78a09a963e489e810b663fad2c3ec5b4786fd6c944f",
+          "pluginName": "core-skills"
+        }
+      },
+      {
+        "name": "minimalist-ui",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/minimalist-skill/SKILL.md",
+          "upstreamTreeHash": "5509c012862cda27e2ed7efae89ed940ecc53add",
+          "contentSha256": "08873a3131d3be27bef9bf3304b310b16b44ca6e3561aebe532797be3443f6bd"
+        }
+      },
+      {
+        "name": "redesign-existing-projects",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/taste-skill",
+          "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "skills/redesign-skill/SKILL.md",
+          "upstreamTreeHash": "d9cffe56d26d4af7687299e391a7be1cfaf46c1b",
+          "contentSha256": "b405eee0e0e80fc243f731d9aa368bca307e356db7e6157d27101d369dac6726"
+        }
+      },
+      {
+        "name": "unlazy",
+        "source": {
+          "kind": "github",
+          "repository": "Leonxlnx/unlazy",
+          "revision": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+          "license": "MIT",
+          "licensePath": "LICENSE",
+          "upstreamPath": "SKILL.md",
+          "upstreamTreeHash": "754d9a68109e39b836cc72a39fb9a823f9d6b613",
+          "contentSha256": "f93525f0a3dc840746eebeb6855b542862c4c92d3e5791b361ed3ed0fd1d7b85"
+        }
+      }
+    ],
+    "sha256": "c38a8879c1ae01e964126f6bdb2f52dc9e69833ce3f9c99f554555889a8145f1"
+  }
+}

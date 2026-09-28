@@ -1,0 +1,30 @@
+--- a/skills/frontend/internal/mobile-images.md
++++ b/skills/frontend/internal/mobile-images.md
+@@ -17,6 +17,17 @@
+ Do not put decorative text inside reserved system regions or shrink a flow into
+ an unreadable collage.
+ 
++Carry the explicit brand typeface through all app-owned text, including small
++navigation labels, selected states, tabs, fields, buttons and confirmation copy.
++Do not introduce a secondary app typeface unless the brief permits it. Preserve
++the platform's own status/system typography; those system regions are distinct
++from app-owned labels. Inspect the actual generated lettering at readable scale.
++
++Raw app screens need a complete opaque background covering the whole canvas,
++including safe areas, unless transparency is explicitly requested. Do not deliver
++a transparent cutout or floating UI in place of a complete screen. Inspect actual
++background/alpha rather than assuming a preview checkerboard is part of the design.
++
+ Keep the first screen clear and subsequent screens purposefully varied. Use real
+ copy/data, strong contrast and legible labels. Image-bearing cards need intentional
+ aspect ratios/crops; background imagery cannot obscure text. Reflect loading, empty,
+@@ -26,3 +37,9 @@
+ uses an available tool and presents the requested images with no product code.
+ Inspect results and refine only unmet requested outcomes within the budget; report
+ missing capability and imperfect rendering honestly.
++
++Inspect each delivered image's actual pixel dimensions. Use only controls exposed
++by the available tool; a prompt's requested dimensions do not prove output size.
++If a numeric target is unmet, report the actual size and unmet target honestly.
++Do not invent a size parameter, silently resize output or spend calls beyond the
++budget. A native portrait output is sufficient only when the brief allows it.

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "kind": "Unapplied target documentation preparation",
+  "files": [
+    {
+      "path": "README.md",
+      "baseSha256": "8ba35bc7923d4b8f174d39168647a65c83dcf894f131c39cba83c4b30ec86cca",
+      "proposedSha256": "f189674838b6b4475f5befd0e8694f3658a2ed03182081d46707b4b80cfcfd9a"
+    },
+    {
+      "path": "CLAUDE.md",
+      "baseSha256": "ad66f2086d4445720574a593cb230c207391d2d36c9cb37c6a5f8ad593326c59",
+      "proposedSha256": "07c442155c5f4c960e81b3e008a8494e0969b1ab277e308cb6c947da64d63271"
+    },
+    {
+      "path": "docs/install-and-update-skills.md",
+      "baseSha256": "7a9656c1b0bc8a0faebd1cf55687f2d33e461b31edc52946dd22d1f48fee4e67",
+      "proposedSha256": "d1c849eec063e706f36b4fc9d8d456a51a4437de5b09b77aafc7087460ab1da7"
+    },
+    {
+      "path": "docs/personal-skills.md",
+      "baseSha256": "3c376e93ba5b01d297faca7ef0fe8a7a5584fa380b7b5a2d543338d144ea779a",
+      "proposedSha256": "fa77a2b465ecc5d54b1a08a7ebd099bdd0c18942e8957823ea58f3e950349154"
+    },
+    {
+      "path": "docs/upstream/README.md",
+      "baseSha256": "8f3313e80accf882d518d46e0bd5ed9bc8e5a69f578c7f283f8b8d18f78f2191",
+      "proposedSha256": "7eb4f61fec83d977a32a2cbfae1503c852093303b7b10b0ecf792d0aefa2e601"
+    }
+  ],
+  "effectiveInstructionPath": {
+    "requested": "AGENTS.md",
+    "symlinkTarget": "CLAUDE.md",
+    "patchTarget": "CLAUDE.md",
+    "preserveSymlink": true
+  },
+  "sourceBindings": {
+    "docs/specs/quickstark-upstream-adoption.md": "6c4ed3edaaafd573dc1b0cfa841e89844071f5a59e5fd982faa4b8532f942994",
+    "scripts/skill-collection-registry.mjs": "6795758f44c240ed020e24c56b775964f0ed9fb6a0311de3c2be991b48a66f0c",
+    "scripts/qs-skill-catalog.mjs": "f545d0fbcafe1bc8b70e45f72ae29724170a82ec8356d5f9f79aa0a8dc123208",
+    "scripts/advanced-skill-catalog.mjs": "b5b6d40fdd32bdf38cfd7841d923f96fb0926f365a9b34c186c96e6ec17679d3",
+    "scripts/frontend-skill-catalog.mjs": "e5474527299cda57dde28c1f68ac842c8cef10acf16a48f129ad6dd55a7aecfb",
+    "scripts/video-skill-catalog.mjs": "6b3120815d52deeb93eb4e258b33cd3de419832fc07a7e9b7f0912cfde30f2dc",
+    "scripts/execution-skill-catalog.mjs": "7c919f401fb208e88343129001a7003168ee1fb637cf6e5faec1baef8060c942",
+    "scripts/managed-skills.mjs": "529fde41ace915043125884fb766d133172ba7fd58d1692ba53bb266c0cc1c66",
+    "scripts/managed-skill-input.mjs": "0d20114811c4e7e2ca25c7bac10cb177dd3e1b2a94242403a5d4e1d4b1d9f1be",
+    "scripts/migration-transaction.mjs": "05f19aafa211fb705dc1fd3b9e444fca55d2f14f0213e203229e203087924a57",
+    "scripts/skill-selection.mjs": "f939a56276e5ab21858d3a51761110d33c87e8bf9f61db836d1c8c01a9bf0831",
+    "config/skill-profiles.json": "d0d252c8227ebc5b9ef6edaac7bf03316ae2360ff34c0594ef1f5c8e59a114c9",
+    "config/skill-transition-packages.json": "c781b4945ce07713b7633b35496fdc2d4f2bee1210d408eb118ee0a567b7ef9b",
+    "config/skill-provenance.json": "5a0df73e60e390cad3b21ae5b09979a1d6ede6e65c5ec490f1200254523f264a",
+    "package.json": "87b69a0698a2cfeca3c8ea30bcfa63645c3761b66e08c80dacc3ec4095aed394",
+    ".github/workflows/release.yml": "34102b4fc91e74ce8138e2a1419583cca4d4e31efa15531e75bd067ad7b8a3e3",
+    ".changeset/config.json": "1b5b33a105a5c1ab67c81b9ae3d0ae2db2ed950f290dbd1537d7f98a4235ba6c",
+    "scripts/sync-v3-docs.mjs": "e157c60a87645782b4e630031a0a84417cc394592876f7a13fd71cd4009dfe16",
+    "scripts/sync-skill-output-contracts.mjs": "1ad09041169f9e29b7684262c7e64ebf08b89e18168ba427c190e789d5ea59b4",
+    "scripts/sync-codex-plugin.mjs": "3e9c8c68fc3bfab04f71da9073f4bfda3bc7f8c59918ad301cb0f92376f920b7",
+    "scripts/sync-upstream-docs.mjs": "75660514930fbf2f0c183f814ef5d398efe4234dbd1d59e09230517fd8f5f8c3",
+    "skills/video/qs-video/references/runtime-compatibility.md": "8c12e3b39d2eb8cd1e8cb243c568cbc157c1d1af34c500f2b001c5528f828699",
+    "skills/engineering/qs-unlazy/references/runtime-compatibility.md": "943f4d82e53472ccb74ce3e9191145a9d25d26ce8362a2fb8bfc3ba367df91b1"
+  },
+  "pending": [
+    "Target source/package acceptance",
+    "Frontend66 actual capture and independent review",
+    "Video report repair validation",
+    "Registry activation",
+    "Version synchronization and release validation",
+    "Publication and installed-host rollout"
+  ],
+  "activationRecheck": [
+    "Temporary pending-trial approval wording was removed from proposed shipped prose and retained only here. Reconcile this inventory to verified parent decisions at activation.",
+    "Reread runtime profiles and acceptance records; do not rewrite unknown provider paths or unreleased upstream labels as verified.",
+    "Confirm target-registry identity and every generated index/page before applying the patch.",
+    "After root versioning, synchronize all active manifests/projections; retain PS transition payload unchanged."
+  ],
+  "generatedOutputsExcluded": [
+    "docs/<bucket>/<registered-command>.md",
+    "docs/upstream/provenance.md",
+    "skills/**/ROUTING.md",
+    "Canonical completion sections",
+    "Codex/Claude/Pi package projections and marketplaces",
+    "Bucket and historical package indexes"
+  ],
+  "patchSha256": "455f9a3d724dd6b6e08c005e4ba192b3a2addb499ddfa2c8c1d5358ad1977fec",
+  "reviewedSourceChanges": [
+    {
+      "path": "scripts/sync-v3-docs.mjs",
+      "previousSha256": "4eb5dbc7191d142557d3e8d7c1ba792d358dcf9fc88ab9d0a528c2bbc14a3b59",
+      "currentSha256": "e157c60a87645782b4e630031a0a84417cc394592876f7a13fd71cd4009dfe16",
+      "reason": "Reviewed target index generation and dedicated prompt roles; focused source/identity/drift/legacy controls pass. Final activation and release checks remain required."
+    }
+  ]
+}

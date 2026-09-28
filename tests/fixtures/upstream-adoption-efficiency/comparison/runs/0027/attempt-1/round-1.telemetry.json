@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:36:25.288Z",
+  "elapsedMs": 25286.57788499999,
+  "wallElapsedMs": 25286,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "f467ac2cda59c042d047107ba181beab2101e6b6907a8dd87e8718ad43801469",
+  "promptUtf8Bytes": 9340,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25727,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 622,
+      "reasoning_output_tokens": 217
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "290105e07bf4915bf65c00b8298c95ee0aeb19689b6ca9cf5bc1ed11bbc25ce8",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-FWB8Pr",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-code-build\\nOutcome: The changed production target conflicts with the submitted authorization, which permits staging and explicitly excludes production. Matching goal confirmed; existing progress is preserved.\\n\\n- [ ] Build — blocked at ~50%; current-revision implementation and review milestones remain valid.\\n- [ ] Git — pending at 0%; requires verified Build completion.\\n- [ ] Release — blocked at 0%; production is unauthorized.\\n\\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — awaiting resolution of the changed target. Input needed: restore staging as the selected target, or explicitly authorize production, supersede its exclusion, and supply a verified production workflow and acceptance criteria.\\n\\nWeights remain Build 60, Git 10, Release 30. Overall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. These coarse estimates retain the supplied milestone evidence; they do not establish completed validation.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — No stage is complete. Supplied observations support partial Build progress; this response performs no edits, checks, publication, or deployment. No deployed version or health result is supplied.\\n- Next — [CSV export delivery](/fixture/ledger-app/docs/specs/export.md) — blocked — resolve the target conflict, then resume remaining implementation and required validation before Git and Release.\\n\\nNext work prompt: None — subsequent stages are already scheduled and remain gated.\",\n  \"requestedActions\": [\n    \"Request a target decision: restore the authorized staging target, or explicitly authorize production, supersede the production exclusion, and provide its verified deployment workflow and revised acceptance criteria. Hold dependent execution until resolved.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

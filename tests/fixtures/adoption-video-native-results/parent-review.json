@@ -1,0 +1,19 @@
+{
+  "scope": "Parent scoped video operation and reporting acceptance; not final package/rollout acceptance",
+  "bindings": {
+    "assessment.json": "63308a0ca5f322774047c19c05e74a73230b7d52e06db846936ec8a937da0233",
+    "archive-sha256.json": "2c0063152af6636cb832423786ba5b7237fa13deefe566f778d344496601a4b1",
+    "command-and-view-audit.json": "67b9fd25f336efdf9487af80d323f73213d9c2087afc75a926788e71f6168984",
+    "independent-oracle.json": "d9d433992b5a4ed7f904062b341770ff10698d1516a448a9b767e651a85685bc",
+    "fixed-rubric.json": "03522ef11e862a80b813876e389ed9c1ccb449fba5e88206da80c55a0e4e1391"
+  },
+  "archiveFilesRehashed": 110,
+  "oracleReexecuted": "python3 tests/fixtures/adoption-video-routing/oracle.py tests/fixtures/adoption-video-native-results/capture/after",
+  "oracleExactlyMatches": true,
+  "commandsReviewed": 11,
+  "nativeViewsReviewed": 3,
+  "decision": "Fixed render/output/preservation/no-redundant-intake and honest visual/audio reporting requirements pass for this one observation. No missing required check is credited from mere metadata or later decoder.",
+  "presentation": "Explicit Status and Skills used fields omitted. Retained as a presentation limitation, not a claim of full shared-contract compliance. Existing source contract still requires them; no contract relaxation or source change follows from this review.",
+  "otherLimits": "Exploratory /tmp filename listing failed; subsequent commands did not read listed unrelated contents. Denied runtime freshness attempts disclosed. No backend attestation, unseen-process absence, universal provider support or pooled old-grade claim.",
+  "noNewModelCall": true
+}

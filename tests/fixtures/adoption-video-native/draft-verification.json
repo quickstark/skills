@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "Draft verified; adapter finalization required before freeze",
+  "tests": {
+    "command": "node --test tests/fixtures/adoption-video-native/support.test.mjs",
+    "passed": 8,
+    "failed": 0,
+    "scope": "Synthetic files/functions only; no model, native server, browser or render"
+  },
+  "syntaxChecks": [
+    "run.mjs",
+    "freeze.mjs",
+    "verify.mjs"
+  ],
+  "fourPasses": {
+    "coverage": "Exact prior task/project/guidance/runtime/budget/oracle and history linked; separate native capture case.",
+    "domain": "Five selected controls, complete protocol requirement, image/tool attribution limitations and signal ownership checked.",
+    "errorHunt": "Control drift, digest mismatch, missing/extra inputs, stale process identity, capture/snapshot failure, incomplete stream/residuals tested.",
+    "polish": "Concise parent-only launch/readme, no trial or recovered-grade claim; freezing waits for reviewed stable adapter."
+  },
+  "currentDraftFiles": {
+    "README.md": "5059d6c3856d8d1c1ab844dcb4bb18442442b6e7887c3791d3d2de65904183a0",
+    "freeze.mjs": "599cfa823485e39ddb8028b19e375aa37c0cbb4d75fdb48433e5f378073ce034",
+    "run.mjs": "fcefb6ceb49c104fd64563d110d75025fe799d01688b9f12f7acc6bd8e240a21",
+    "support.mjs": "4c0636995dba791dc7249ffabdebe6c99c0eace462ad2feff59853b1cc2fa926",
+    "support.test.mjs": "fce44b32f798ed10ea4b797635878fe746857a36a287e4906487cb701e7d8a0f",
+    "verify.mjs": "64e861160f3f91488154b4aadbc3b5964d403412874039207516e392d927ef99"
+  },
+  "launchPerformed": false,
+  "runtimeRerenderPerformed": false
+}

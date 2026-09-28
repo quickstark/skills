@@ -1,0 +1,16 @@
+✔ function-call output retains native name/namespace/output and positive image evidence (2.354837ms)
+✔ ordinary functions.exec output is retained as tool evidence, not unknown or non-tool (0.149594ms)
+✔ function-call output cannot silently pass prompt-only authority (0.216732ms)
+✔ contextCompaction metadata is preserved without inventing a tool call (0.155005ms)
+✔ enteredReviewMode metadata is preserved without inventing a tool call (0.135588ms)
+✔ exitedReviewMode metadata is preserved without inventing a tool call (0.093919ms)
+✔ hookPrompt unsupported authority fails with raw item retained (0.138293ms)
+✔ subAgentActivity unsupported authority fails with raw item retained (0.090392ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67.864312

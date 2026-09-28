@@ -1,0 +1,95 @@
+:root {
+  font-family: Georgia, serif;
+  color: #182d2a;
+  background: #f7f5ef;
+  --primary: #086b64;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 5px;
+}
+#site-header {
+  height: 95px;
+  padding: 0 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #d0dcd8;
+}
+.wordmark { font-size: 26px; font-weight: bold; color: #007c80; text-decoration: none; }
+nav { display: flex; gap: 28px; }
+nav a { text-decoration: none; font-size: 16px; }
+nav a:hover, #details-link:hover { text-decoration: underline; }
+main, #site-footer { max-width: 1080px; margin-inline: auto; }
+main { padding-top: 65px; }
+.eyebrow { margin: 0 0 16px; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #00828a; line-height: 16px; }
+h1 { font-size: 58px; line-height: 62px; margin: 0 0 20px; }
+.description { margin: 0; font-size: 19px; line-height: 28px; color: #001a20; }
+#membership-panel {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  margin-top: 43px;
+  min-height: 316px;
+  border: 1px solid #c8d9d4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: white;
+}
+.benefits, .purchase { padding: 32px; }
+h2 { margin: 0 0 18px; font-size: 30px; line-height: 35px; }
+.benefits p { margin: 0; font-size: 19px; line-height: 28px; color: #001a20; }
+ul { padding-left: 40px; margin: 20px 0 0; font-size: 17px; line-height: 34px; }
+.purchase { background: #e5efea; }
+#details-link { font-size: 14px; line-height: 20px; text-decoration: none; }
+#price { color: #007c80; font-size: 44px; line-height: 53px; margin: 27px 0 29px; }
+#price span { font-size: 14px; line-height: normal; margin-left: 1px; }
+#join-button, #continue-button {
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: white;
+  font-size: 18px;
+  line-height: 26px;
+}
+#join-button:hover, #continue-button:hover { background: #075d57; }
+.statistics { margin: 25px 0 0; font-size: 14px; line-height: 20px; }
+#site-footer { margin-top: 90px; padding-bottom: 40px; font-size: 16px; color: #00828a; }
+dialog { width: min(480px, calc(100% - 32px)); border: 1px solid #c8d9d4; border-radius: var(--radius); padding: 32px; color: #182d2a; background: #f7f5ef; }
+dialog::backdrop { background: rgb(24 45 42 / 45%); }
+dialog h2 { padding-right: 20px; }
+.close { position: absolute; right: 12px; top: 10px; width: 36px; height: 36px; border: 0; border-radius: var(--radius); background: transparent; color: #182d2a; font-size: 28px; }
+label { display: block; margin: 24px 0 8px; }
+input[type="email"] { width: 100%; min-height: 48px; border: 1px solid #78938b; border-radius: var(--radius); padding: 10px 12px; background: white; }
+.privacy { font-size: 14px; }
+#form-message { line-height: 1.5; margin-bottom: 0; }
+#form-message:empty { display: none; }
+@media (max-width: 1159px) { main, #site-footer { margin-inline: 40px; } }
+@media (max-width: 640px) {
+  #site-header { height: auto; min-height: 112px; padding: 22px 24px; flex-direction: column; align-items: flex-start; gap: 18px; }
+  .wordmark { font-size: 25px; }
+  nav { gap: 24px; }
+  main, #site-footer { margin-inline: 24px; }
+  main { padding-top: 38px; }
+  .eyebrow { font-size: 11px; letter-spacing: 2.5px; margin-bottom: 16px; }
+  h1 { font-size: 42px; line-height: 1.08; margin-bottom: 20px; }
+  .description { font-size: 18px; line-height: 27px; }
+  #membership-panel { grid-template-columns: 1fr; margin-top: 30px; }
+  .benefits, .purchase { padding: 25px 24px; }
+  h2 { font-size: 27px; line-height: 33px; }
+  .benefits p { font-size: 18px; line-height: 27px; }
+  ul { padding-left: 23px; margin-top: 16px; font-size: 16px; line-height: 31px; }
+  #price { margin: 18px 0 22px; }
+  #join-button, #continue-button { font-size: 16px; padding-inline: 10px; }
+  .statistics { font-size: 13px; margin-top: 21px; }
+  #site-footer { margin-top: 38px; font-size: 14px; }
+}

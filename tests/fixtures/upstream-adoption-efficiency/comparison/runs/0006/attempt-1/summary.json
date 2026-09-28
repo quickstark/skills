@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 6,
+    "scenarioId": "G3",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "G3",
+  "inputSHA256": "1a8e4cfdeba7235eae269e5128ac27be61e698a3b9ea08455802b9a256aa9d73",
+  "sourceSHA256": "9d38c8433311a4730dc5a3c916c900614a90008874a8d4a47f37ae6288963e69",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-UHuhqA",
+  "startedAt": "2026-09-25T19:14:46.317Z",
+  "completedAt": "2026-09-25T19:15:21.219Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25606,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 932,
+      "reasoning_output_tokens": 296
+    }
+  ],
+  "elapsedMs": 34852.707559,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-prompt\nOutcome: An execution-ready prompt is blocked: the deployment environment is unspecified, neither environment has deployment authorization, and goal tools are unavailable. Execution has not started.\nSpecs: Not located\n\n- [ ] Blocked — resolve deployment target, deployment authority, and goal capability before completing prompt generation.\n\nStage: Prompt readiness | Stage estimate: ~40% | Overall estimate: ~40% | blocked — supplied repository evidence assessed; required prerequisites remain unresolved. Input needed: selected environment, explicit deployment authorization, and a host with goal tools.\n\nOne stage carries all effort weight; the estimate is coarse and reflects evidence assessment only.\n\nWork summary:\n- Finished — assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. CSV export and its specification are absent. Requirements are current filtered invoices, a header row, correct CSV escaping, and preservation of the existing screen. No commands, checks, or mutations were performed.\n- Next — [CSV export deployment prerequisites](/fixture/ledger-app/docs/deploy.md) — blocked — select and authorize the environment; resolve unavailable goal capability before generating the execution prompt.\n\nRepository edit/build/test and commit/push of `feature/export` to `origin` remain authorized. Merge, deployment, rollback execution, and unrelated changes are not authorized. Credentials are reported present. Documentation alone grants no deployment or rollback authority.\n\nWhich documented environment—staging or production—do you select, and do you authorize deployment to that environment through its documented workflow?\n\nNext work prompt:\n```text\n$qs-skills:qs-plan-clarify\nResolve the CSV invoice export deployment prerequisites for /fixture/ledger-app, branch feature/export, revision abc123.\n\nSupplied evidence: export and specification are absent. Required behavior is exporting current filtered invoices with a header row and correct CSV escaping while preserving the existing screen. docs/deploy.md documents staging and production, but neither is selected or authorized. Credentials are reported present; do not read secret values.\n\nStanding authority covers repository edit/build/test and commit/push feature/export to origin. It does not cover merge, deployment, rollback execution, or unrelated files. Ask one focused question first: which documented environment does the user select, and do they authorize deployment there through its documented workflow?\n\nRecord the answer without treating environment selection alone as deployment authority. Goal tools are unavailable: retain this as a separate capability blocker requiring a host with real goal support. Do not substitute ordinary execution, invent tools or a token budget, install dependencies, or change host settings.\n\nThis clarification produces decisions only. Do not implement, publish, deploy, or automatically launch another root. Preserve the unresolved goal-capability blocker in the completion report.\n```",
+    "requestedActions": [
+      "Ask which documented environment—staging or production—the user selects and whether they authorize deployment to that environment through its documented workflow."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

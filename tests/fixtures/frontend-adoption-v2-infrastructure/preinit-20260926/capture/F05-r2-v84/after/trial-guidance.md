@@ -1,0 +1,226 @@
+# Bound task guidance
+
+The following source bodies are supplied verbatim as guidance, not invocations. Relative links are historical labels, NOT paths to open from this copied file. Resolve applicable private references only to the embedded sections below. Do not traverse parent directories, search installed skills, or read other public skill bodies. All scenario-required private guidance is included. The user task and explicit authority remain controlling.
+
+{
+  "skills/frontend/internal/brief.md": "Embedded section 2",
+  "skills/frontend/internal/design-direction.md": "Embedded section 3",
+  "skills/frontend/internal/dimensional-style.md": "Embedded section 4",
+  "skills/frontend/internal/implementation.md": "Embedded section 5",
+  "skills/frontend/internal/mobile-images.md": "Not applicable to the selected scenario; do not load or search for it.",
+  "skills/frontend/internal/prompt-construction.md": "Not applicable to the selected scenario; do not load or search for it.",
+  "skills/frontend/internal/redesign.md": "Not applicable to the selected scenario; do not load or search for it.",
+  "skills/frontend/internal/restrained-style.md": "Not applicable to the selected scenario; do not load or search for it.",
+  "skills/frontend/internal/web-images.md": "Not applicable to the selected scenario; do not load or search for it."
+}
+
+
+## Embedded section 1
+
+
+---
+name: qs-design-frontend
+description: "Build or revise the selected frontend"
+disable-model-invocation: true
+---
+
+# Build or revise the selected frontend
+
+Produce the frontend outcome the user requested. Derive audit-only, preserve or
+overhaul intent from the request and project evidence. Audit-only returns findings
+without code edits. Preserve mode retains URLs, real copy/data, brand, analytics,
+IDs, integrations and behavior. Overhaul changes only its authorized scope.
+
+Recover the [shared brief](../../frontend/internal/brief.md). For a new visual
+direction, read [design direction](../../frontend/internal/design-direction.md).
+For an existing interface, use [redesign](../../frontend/internal/redesign.md).
+Read [implementation](../../frontend/internal/implementation.md) when coding.
+Load [dimensional](../../frontend/internal/dimensional-style.md) or
+[restrained](../../frontend/internal/restrained-style.md) style advice only when
+that treatment fits the selected brief; they are alternatives.
+
+Preserve factual content, including legitimate round metrics and repeated dates.
+Brand and accessibility override preset fonts, icons, spacing and motion. Do not
+interpret an explicit brand token as a loose visual cue: carry its font, color,
+radius and other supplied values into relevant components, including form
+controls. Use secondary variants only when the brief or existing system defines
+them. Check rendered values and states, not just the presence of CSS variables.
+Do not
+apply a marketing-page recipe to a dashboard or multistep product flow. Use its
+actual task, state and project requirements; private advice never launches another
+public root or authorizes publication. Verify changed behavior and responsive,
+keyboard and reduced-motion states with evidence proportional to the change.
+
+## Completion report and next steps
+
+Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.
+
+Start with a concise checklist of meaningful stages; one stage is enough for a short task. Label stages pending, active, verified, skipped, blocked, or failed. Only verified stages receive completed checkboxes; explain skipped stages. Verify each stage against relevant artifacts, command results, sources, or observable behavior before checking it off. A failing required check prevents completion; reopen a verified stage when later evidence invalidates it.
+
+During long operations, aim for updates within sixty seconds when the host allows control to return. State the current stage, observed progress or waiting state, and whether user input is needed. Distinguish a process that is running from confirmed progress; elapsed time alone proves neither progress nor completion. Finish with what changed or was configured, checks passed or failed, and remaining work. Read-only runs describe findings without implying mutations. Apply this contract regardless of effort or report mode; brief output may compress evidence but retains blockers and failed checks.
+
+Report at task start, meaningful stage transitions, material progress changes, blockers, resumption, and completion. Use: `Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>`. Overall means the bounded root task for a standalone skill, or the entire authorized goal for a submitted multi-stage workflow. Within a goal, label a root's own completion separately; finishing one root does not make the goal 100% complete.
+
+Assign meaningful stages approximate effort weights at the start and compute overall progress as sum(weight × stage estimate) / sum(in-scope weights). Base stage estimates on verified milestones, observed partial work, and remaining effort; checklist item counts, elapsed time, token consumption, or a running process alone are not progress. Use coarse estimates without decimal precision and explain low confidence. Keep weights stable unless evidence changes the work breakdown; explain recalibration, added work, reopened checks, and any decrease. Explain skipped stages: remove out-of-scope work from the denominator without awarding credit, and credit previously satisfied in-scope work only with current verification evidence; a skipped label alone earns nothing. Helpers contribute evidence to their parent's estimate without separate public reports or double-counting.
+
+Keep the last defensible estimate while waiting or blocked unless evidence changes it; state the required input or external event. Preserve the scope, weights, estimates, and supporting revision/evidence for resumption; reuse only still-valid evidence and reopen invalidated checks. Never reset valid progress or count resumed work twice. Reserve stage 100% for verified stage completion and overall 100% for verified completion of the whole stated scope. Cap unverified estimates at 95% when rounding to coarse values so rounding cannot imply completion. Failed required checks, unresolved acceptance criteria, or actionable P0/P1 findings prohibit completion regardless of the estimate. Percentages never override status or verification gates.
+A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.
+
+This invocation has one root skill: `/qs-design-frontend`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
+
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
+
+Resolve governing work context from explicit input, referenced task history available in the host, repository specifications or ticket plans, and a verified tracker when configured. Do not treat completion of the current root as proof that the larger project is complete. Every result must include `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Never omit `Specs:` or `Work summary:`.
+Write `Work summary:` as a compact readout with `Finished —` naming the bounded outcome, meaningful validation, and material outputs, followed by `Next —` outlining up to three highest-priority verified pending or blocked tickets, specifications, issues, or grouped work items as `linked id — state — next action`. Group items only when they share the same state and next action. When no remaining item can be verified, write `Next — None verified after checking the linked specs, available task history, and tracker context.`
+
+Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+
+Eligible next routes: `/qs-flow-handoff`. Failure routes: `/qs-flow-handoff`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
+
+Brief output always contains status, outcome, specs, the compact work summary with Finished and Next entries, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required readout fields.
+
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /qs-design-frontend
+Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Work summary:
+- Finished — exact bounded outcome, meaningful validation, and material outputs
+- Next — up to three linked pending or blocked items with state and next action | None verified after checking available sources
+Next work prompt: None | one copy-ready prompt in a fenced `text` block
+
+Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-flow-handoff); Claude uses `/qs-flow-handoff`; Pi uses `/skill:qs-flow-handoff`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+
+
+
+## Embedded section 2
+
+
+# Shared frontend brief
+
+Recover settled decisions from the request and project before asking questions.
+Keep this compact record in working context; create a file only when it is a
+requested deliverable or useful project convention:
+
+- Intent: audit, preserve, overhaul, image-only, prompt-only, or implementation.
+- Audience and concrete task; existing product versus marketing concept.
+- Authoritative references and relevant paths; identity/hash when exact parity
+  matters. Record gaps as gaps, not permission to replace a supplied design.
+- Brand, existing fonts/icons/tokens, exact copy, claims/data, URLs, analytics,
+  stable IDs, integrations and behavior to preserve.
+- Platform, requested states, viewports/screens, safe areas and accessibility.
+- Deliverable, requested image/screen count and device-frame preference; available
+  tool capability, time/iteration budget and already approved changes.
+
+The user's brief and existing design system override style presets. Preserve real
+round metrics, dates, prices, names and claims exactly; never randomize them to
+look less generic. For a new concept, label draft copy and illustrative data.
+Missing real content must not become an invented factual claim.
+
+Carry explicit brand tokens into the components they govern. A declared font or
+radius is not permission to invent a secondary face or smaller control radius.
+Retain existing documented component variants; otherwise use the supplied values
+consistently, including inputs and buttons. Verify computed styles at the target
+sizes so browser defaults and later overrides cannot silently change the brand.
+
+Do not turn this schema into a compulsory interview. Resolve routine choices from
+evidence. Ask only when a missing choice materially changes the authorized result.
+Prompt-only means no image calls, code edits or deployment. Audit-only means no
+implementation edits. Image-only means primary images and no product code.
+
+Private references guide this root; they never expand its authority, create another
+public invocation or authorize dependency installation and external publication.
+
+
+
+## Embedded section 3
+
+
+# Direction from the brief
+
+For a new marketing page, portfolio or selected visual redesign, choose a coherent
+direction that serves the content. A dashboard or multistep product flow needs
+its own task/state hierarchy; a landing-page recipe is not a product UX method.
+
+Set the design bible before making related sections or screens: palette and accent
+logic, type family/scale, spacing, grid, radii, borders/shadows, icon family, image
+framing/treatment, CTA family and navigation. For mobile include platform, device
+scale/frame and safe areas. Carry the bible across outputs while varying composition
+and emphasis according to each section's purpose.
+
+Choose visual density, contrast and ambition from the brief. Typography-led Swiss
+or restrained editorial work can use ample space and solid surfaces; atmospheric
+work can use graded photography and a controlled palette; product-led work needs
+readable product framing and credible proof. Existing brand choices take priority.
+
+Consider centered, asymmetric, stacked, full-bleed, editorial-offset and image-led
+compositions. Use a conventional split if it best serves the content. Vary rhythm
+across a multi-section page without enforcing a quota of unusual components.
+Use one legible concept or motif for continuity, not decorative clutter. Distinguish
+the primary action through hierarchy; do not manufacture CTAs or destinations.
+
+Give headings a clear scale, readable wrapping and intentional line length. Keep
+supporting copy subordinate but legible. Use real imagery or clearly labeled
+concept assets; meaningful charts need labels and truthful data. Avoid meaningless
+glowing shapes, repeated nested cards and visual detail that obscures the task.
+
+Dimensional and restrained references are alternatives. Load only the selected
+treatment; neither requires replacing working fonts/icons or introducing motion.
+
+
+
+## Embedded section 4
+
+
+# Optional dimensional treatment
+
+Use only when the selected brief welcomes depth. Preserve the brand and available
+fonts; never assume a commercial font is installed or licensed. Consistent light
+direction, soft tinted shadows, subtle inner highlights and a few layered surfaces
+can establish depth. A nested outer shell/inner surface can frame a focal object;
+it is not mandatory for every card, input or button.
+
+Choose a coherent material: dark glass with readable contrast, warm editorial paper,
+or airy soft surfaces. Asymmetric grids, restrained overlaps and editorial splits
+are options. Collapse overlaps/rotations where they interfere with narrow screens
+or touch targets. Keep text and controls visible without blur or animation.
+
+Use motion only to explain state or hierarchy. Prefer transform/opacity where
+appropriate, limit expensive blur/large repaints, and verify performance rather
+than promising that any property is free. Respect reduced motion; avoid forced
+scroll interception. Preserve keyboard focus, logical tab order and clear active
+states. A static accessible result can be the correct result.
+
+
+
+## Embedded section 5
+
+
+# Implement and verify the selected design
+
+Inspect the authoritative reference before coding. Extract layout/grid, type sizes,
+line heights/wrapping, spacing, colors, border/radius/shadow rules, assets and visible
+interaction/state intent. Use supplied assets and project tokens where available.
+Record uncertainty rather than replacing a selected reference with a new design.
+
+Implement semantic, responsive components in the actual project stack. Check local
+dependencies and versions before imports/config edits. Preserve URLs, real copy/data,
+stable IDs, analytics and existing interactions unless changing them is authorized.
+Choose breakpoints from content behavior and inspect both narrow and wide sizes.
+
+Use semantic controls, labels, meaningful alternative text, logical headings/tab
+order and visible focus. Decorative images may correctly have empty alt text.
+Exercise keyboard, validation, loading/empty/error states, reduced motion and
+overflow. Do not fabricate legal pages or fake destinations to fill a template.
+
+Compare actual rendered output with the reference across required states/viewports.
+Fix the largest demonstrated discrepancies first and rerun affected checks. Exact
+parity requires an immutable baseline, agreed metric/tolerance, environment and
+coverage; never claim it from subjective resemblance or a replaced target. Preserve
+the independent QS visual-parity outcome and route only when a distinct authorized
+run is needed and actually available; do not automatically invoke it.
+
+Generation is optional only when creating a design is inside this task. In that
+case use private prompt construction and available image tools, then implement the
+selected result. The supplied reference otherwise stays authoritative.

@@ -11,7 +11,7 @@ Use when the selected scope contains TypeScript source or declarations.
 ## Method
 
 1. Prefer inferred local types and explicit boundary types.
-2. Narrow unknown input before use and avoid assertions that erase evidence.
+2. Narrow unknown input before use and avoid assertions that erase evidence. Before hand-writing property guards, look for the repository's existing runtime schema and infer the boundary type from that authoritative schema. Parse external input into a named domain value and verify invalid inputs fail. Do not add a schema dependency for one guard; use the existing local validation convention when no suitable schema library exists.
 3. Model impossible states out of public unions when the surrounding design supports it.
 4. Verify both type checking and the relevant runtime behavior.
 

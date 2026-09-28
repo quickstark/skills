@@ -1,0 +1,14 @@
+✔ selected controls match without returning unrelated configuration (41.510917ms)
+✔ each changed selected control rejects, before any capture can be selected (167.390339ms)
+✔ malformed or missing config cannot expose parser input in diagnostics (235.953451ms)
+✔ successful capture retains actual after files and hashes (8.591322ms)
+✔ throwing capture retains actual after files and hashes (5.892739ms)
+✔ after-copy failure cannot hide original capture failure or suppress manifest (2.661983ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 524.155943

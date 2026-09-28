@@ -1,0 +1,18 @@
+{
+  "scope": "Parent acceptance of completed independent review, not adoption or passing all outputs",
+  "bindings": {
+    "index.json": "9df3bbe1b17ccd13e73c930408c2dabbce933840db78a50fe3542d6416d0aa7f",
+    "review-manifest.json": "ff30e5ded840afc6149548578fba17ad0c2610012c8d82ff8de67473da401bfe",
+    "classification-corrections.json": "e99aef73080fbef2e143d48ef12b657931d938c68ed4462d2864a692e3337d53"
+  },
+  "reverified": {
+    "reviews": 12,
+    "bundleFiles": 242,
+    "toolItems": 123,
+    "imagePaths": 24,
+    "passingOutputs": 9,
+    "failingOutputs": 3
+  },
+  "assessment": "Required factual/scenario checks pass60/60, but three F06 outputs retain inherited non-keyboard div controls and have interaction2/overallfail. Parent read grade/check rationale and directly inspected representative actual mobile images and keyboard observer results (reachedJoin false versus true with exact event/status). The failures remain failures; no introduced-regression or implicit-Enter impossibility claim. F05 minor nested radius and inspection chronology limitations preserved.",
+  "limits": "Independent reviewer performed full per-output inspection. Parent rehashed bindings/review manifest and sampled actual evidence; no claim of an additional24-image review. Known partial-guidance leakage and append-only descriptive correction retained. Fixed aggregate/adoption undecided."
+}

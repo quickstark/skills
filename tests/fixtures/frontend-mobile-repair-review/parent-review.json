@@ -1,0 +1,14 @@
+{
+  "scope": "Parent independent verification, not adoption",
+  "checks": "Read complete verifier and binding helper; preserved original manifest-glob KeyError; reviewed exact-ID-only correction and reran it successfully. Independently rehashed original+correction manifests. Read strict scores/check rationales and sampled actual failed-label and passing primary images.",
+  "results": {
+    "reviews": 6,
+    "bundleFiles": 60,
+    "tools": 52,
+    "actualImages": 12,
+    "requiredChecks": 48,
+    "strictPass": 4,
+    "strictFail": 2
+  },
+  "limits": "All original grades unchanged. App SELECTED sans mismatch is visible; sampled successful image uses serif app labels. Parent did not repeat every image judgment. Proposed user exception has not been granted or applied. Original F09 remainsfailed; no pooling or exactnumeric-resolution support claim."
+}

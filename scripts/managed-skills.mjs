@@ -1,15 +1,22 @@
 import { execFile } from "node:child_process";
-import { lstat, readFile } from "node:fs/promises";
+import { createHash, randomUUID } from "node:crypto";
+import { lstat, open, readFile, unlink } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 
 import { agentSkillResources } from "./personal-skills/manifest.mjs";
+import { inventoryMachine } from "./personal-skills/inventory.mjs";
+import { inferManagedSelection } from "./managed-skill-selection.mjs";
+import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from "./skill-selection.mjs";
 import { piSkillFilterAllows } from "./personal-skills/pi-discovery.mjs";
 import { buildReconciliationPlan } from "./personal-skills/reconcile.mjs";
 import { execute as executePersonalSkills, loadManifest } from "./sync-personal-skills.mjs";
-import { SKILL_COLLECTIONS } from "./skill-collection-registry.mjs";
+import { SKILL_COLLECTIONS, REGISTRY_STATE } from "./skill-collection-registry.mjs";
+import { buildManagedSkillInput } from "./managed-skill-input.mjs";
+import { previewManagedSkillMigration, assembleManagedSkillMigration, executeManagedSkillMigration, restoreManagedSkillMigration } from "./managed-skill-migration.mjs";
+import { assertMigrationParents } from "./migration-filesystem.mjs";
 
 const runFile = promisify(execFile);
 const defaultRepositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -192,6 +199,53 @@ function summarizePersonalPlan(plan) {
     externalActionCount: plan.externalActions.length,
     externalActions: plan.externalActions,
     states: plan.states,
+  };
+}
+
+// Foundation API: builds a selection-bound preview without changing a manager,
+// lock, selection record or discovery directory. Activation uses this same plan
+// only after staged payload and retirement checks have passed.
+export async function buildManagedSelectionPlan({
+  repositoryRoot = defaultRepositoryRoot,
+  homeDirectory = homedir(),
+  agents = ["codex"],
+  manifestPath = join(repositoryRoot, "config", "personal-skills.manifest.json"),
+  profile = null,
+  withPackages = [],
+  inspectManagedPackages = defaultInspectManagedPackages,
+} = {}) {
+  assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
+  const targets = [...new Set(agents)];
+  for (const agent of targets) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}.`);
+  const maintained = await validateMaintainedPackages({ repositoryRoot });
+  const manifest = await loadManifest(manifestPath);
+  const profiles = await readJson(join(repositoryRoot, "config", "skill-profiles.json"));
+  const selectionPath = selectionRecordPath(homeDirectory);
+  const saved = await readSelectionRecord(selectionPath);
+  const machine = await inventoryMachine({ manifest, homeDirectory });
+  const selections = {};
+  const personalPlans = {};
+  const managerStateTokens = {};
+  const actions = [];
+  for (const agent of targets) {
+    const inventory = await inspectPackages(agent, { homeDirectory, repositoryRoot, packages: maintained.packages }, inspectManagedPackages);
+    managerStateTokens[agent] = createHash("sha256").update(JSON.stringify(inventory)).digest("hex");
+    const legacy = inferManagedSelection({ agent, inventory, machine, packages: maintained.packages, resources: manifest.resources, repositoryRoot });
+    const result = resolveTargetSelection({ agent, profiles, packageNames: maintained.packages.map((item) => item.name),
+      resourceNames: manifest.resources.map((item) => item.name), savedRecord: saved.record, legacy, profile, withPackages });
+    assertCondition(result.selection.resources.every((name) => manifest.resources.some((item) => item.name === name && item.placement.targets.includes(agent))),
+      `Selected resource does not support ${agent}.`);
+    selections[agent] = result;
+    const selectedManifest = { ...manifest, resources: manifest.resources.filter((item) => result.selection.resources.includes(item.name)) };
+    personalPlans[agent] = summarizePersonalPlan(await buildReconciliationPlan({ manifest: selectedManifest, homeDirectory, targets: [agent] }));
+    actions.push(...managerActions(repositoryRoot, [agent], maintained.packages.filter((item) => result.selection.packages.includes(item.name))));
+  }
+  return {
+    schemaVersion: 1, repositoryVersion: maintained.version, targets, selections,
+    selectionPath, selectionFingerprint: saved.fingerprint, previousSelection: saved.record,
+    resourceStateToken: machine.stateToken, managerStateTokens, maintainedPackages: maintained.packages,
+    templateRevision: createHash("sha256").update(JSON.stringify({ profiles, manifest, maintained, collections: SKILL_COLLECTIONS })).digest("hex"),
+    managerActions: actions, personalPlans,
   };
 }
 
@@ -400,6 +454,78 @@ async function defaultPersonalAction(options) {
   return executePersonalSkills(options, { write: () => {} });
 }
 
+export async function executeSelectedManagedSkills(options = {}) {
+  const { action, homeDirectory = homedir(), repositoryRoot = defaultRepositoryRoot, authorize = false, resume = null } = options;
+  assertCondition(["plan", "sync", "update", "verify"].includes(action), "Unknown selected managed skill action.");
+  if (["plan", "verify"].includes(action)) return executeSelectedManagedSkillsUnlocked(options);
+  assertCondition(action !== "sync" || authorize, "Selected synchronization requires explicit --authorize after reviewing the plan.");
+  const lockPath = join(homeDirectory, ".quickstark-skills-update.lock");
+  await assertMigrationParents(lockPath);
+  const transactionId = `skills-${randomUUID()}`;
+  const contents = JSON.stringify({ schemaVersion: 1, transactionId, pid: process.pid, action, repositoryRoot, resume });
+  const handle = await open(lockPath, "wx", 0o600).catch((error) => {
+    if (error.code === "EEXIST") throw new Error(`Another updater owns ${lockPath}. Existing locks are never automatically stolen; inspect its transaction and verified owner before explicit recovery.`);
+    throw error;
+  });
+  let owned;
+  try {
+    await handle.writeFile(contents); await handle.sync(); owned = await handle.stat();
+    return await executeSelectedManagedSkillsUnlocked({ ...options, transactionId });
+  } finally {
+    const opened = await handle.stat(); await handle.close();
+    const actual = await lstat(lockPath).catch((error) => error.code === "ENOENT" ? null : Promise.reject(error));
+    const unchanged = actual?.isFile() && !actual.isSymbolicLink() && actual.nlink === 1 && actual.ino === opened.ino && actual.dev === opened.dev
+      && (!owned || actual.size === owned.size && actual.mtimeMs === owned.mtimeMs && actual.ctimeMs === owned.ctimeMs && actual.mode === owned.mode);
+    assertCondition(unchanged, `Updater lock changed; preserve ${lockPath} and inspect the transaction before retry.`);
+    await unlink(lockPath);
+  }
+}
+
+async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = defaultRepositoryRoot,
+  homeDirectory = homedir(), agents = ["codex"], profile = null, withPackages = [],
+  authorize = false, resume = null, auditPath, runtime = {}, transactionId, verifyRepositoryFreshness = verifyOriginMainFreshness } = {}) {
+  assertCondition(["plan", "sync", "update", "verify"].includes(action), "Unknown selected managed skill action.");
+  assertCondition(action !== "sync" || authorize, "Selected synchronization requires explicit --authorize after reviewing the plan.");
+  assertCondition(!resume || ["update", "sync"].includes(action), "Journal resume is only available for update/sync.");
+  const freshness = action === "update" ? await verifyRepositoryFreshness({ repositoryRoot, agents }) : null;
+  if (resume) {
+    assertCondition(!profile && withPackages.length === 0, "Resume uses the frozen journal selection; omit profile/addition flags.");
+    assertCondition(action === "update" || authorize, "Resume synchronization requires explicit --authorize.");
+    const assembly = await restoreManagedSkillMigration({ journalPath: resolve(resume), runtime });
+    assertCondition(assembly.plan.controlPlane.nativeOptions && Object.values(assembly.plan.controlPlane.nativeOptions).every((options) => options.homeDirectory === homeDirectory && options.cwd === repositoryRoot), "Resume journal belongs to another home or repository.");
+    const head = freshness?.head ?? (await defaultGitCommand(["rev-parse", "HEAD"], { repositoryRoot })).stdout.trim();
+    assertCondition(assembly.plan.revision === head, "Resume journal belongs to a different release revision; retain the journal and restore its verified checkout before retry.");
+    const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
+    return { action, ...result, journalPath: assembly.journalPath };
+  }
+  const input = await buildManagedSkillInput({ repositoryRoot, homeDirectory, agents, profile, withPackages, auditPath, runtime });
+  const preview = await previewManagedSkillMigration(input);
+  if (action === "plan") return { action, ...preview };
+  assertCondition(preview.status === "ready", `Selected migration is blocked: ${preview.conflicts.map((entry) => entry.reason).join("; ")}`);
+  if (action === "verify") {
+    for (const agent of agents) {
+      const target = preview.targets[agent];
+      assertCondition(target.migrations.migrations.length === 0, `${agent} still has selected legacy identities requiring migration.`);
+      const bindings = preview.native[agent].options.packages;
+      for (const packageId of target.desired.packages) {
+        const pkg = preview.packages[agent].find((entry) => entry.id === packageId);
+        assertCondition(preview.native[agent].state.native.packages.some((actual) => {
+          const binding = bindings.find((entry) => entry.id === actual.id);
+          return binding.name === packageId && actual.version === pkg.version && !binding.installedOnly;
+        }), `${agent} is missing selected package ${packageId} at the verified release.`);
+      }
+    }
+    return { action, status: "verified", targets: preview.targets, revision: preview.revision, mutationAuthorized: false };
+  }
+  assertCondition(action === "update" || authorize, "Selected synchronization requires explicit --authorize after reviewing the plan.");
+  const stagingRoot = join(homeDirectory, ".local/state/quickstark/skill-migrations", transactionId);
+  const assembly = await assembleManagedSkillMigration(preview, { transactionId, stagingRoot,
+    backupRoot: join(homeDirectory, ".local/state/quickstark/skill-migration-backups", transactionId),
+    journalPath: join(stagingRoot, "transaction.json"), runtime: { ...input.runtime, ...runtime, nativeOptions: input.runtime.nativeOptions } });
+  const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
+  return { action, ...result, journalPath: assembly.journalPath, targets: preview.targets };
+}
+
 export async function executeManagedSkills({
   action,
   repositoryRoot = defaultRepositoryRoot,
@@ -412,7 +538,17 @@ export async function executeManagedSkills({
   runPersonalAction = defaultPersonalAction,
   onManagerAction = () => {},
   verifyRepositoryFreshness = verifyOriginMainFreshness,
+  registryState = REGISTRY_STATE,
+  profile = null,
+  withPackages = [],
+  resume = null,
+  auditPath,
+  runtime = {},
 } = {}) {
+  assertCondition(REGISTRY_STATE !== "target" || registryState === "target", "The activated target registry cannot use the legacy all-package updater.");
+  if (registryState === "target") return executeSelectedManagedSkills({ action, repositoryRoot, homeDirectory, agents, profile, withPackages, resume, auditPath, runtime, authorize, verifyRepositoryFreshness });
+  assertCondition(registryState === "legacy", "Unknown collection registry state.");
+  assertCondition(!profile && withPackages.length === 0 && !resume, "Selected profile/addition/retry flags require the target registry; the inactive legacy updater cannot apply them.");
   assertCondition(["plan", "sync", "update", "verify"].includes(action), "Managed skills action must be plan, sync, update, or verify.");
   if (action === "update") await verifyRepositoryFreshness({ repositoryRoot, agents });
   const plan = await buildManagedSkillsPlan({ repositoryRoot, homeDirectory, agents, manifestPath });
@@ -612,18 +748,21 @@ export async function executeManagedSkills({
   };
 }
 
-function parseArguments(arguments_) {
+export function parseManagedSkillsArguments(arguments_) {
   const [action, ...flags] = arguments_;
-  const options = { action, agents: [], json: false, authorize: false };
+  const options = { action, agents: [], withPackages: [], json: false, authorize: false };
   for (let index = 0; index < flags.length; index += 1) {
     const flag = flags[index];
     if (flag === "--json") { options.json = true; continue; }
     if (flag === "--authorize") { options.authorize = true; continue; }
-    assertCondition(["--agent", "--target", "--home", "--manifest"].includes(flag), `Unknown managed skill option: ${flag}.`);
+    assertCondition(["--agent", "--target", "--home", "--manifest", "--profile", "--with", "--resume"].includes(flag), `Unknown managed skill option: ${flag}.`);
     const value = flags[index + 1];
     assertCondition(value && !value.startsWith("--"), `Missing value for ${flag}.`);
     if (flag === "--agent" || flag === "--target") options.agents.push(value);
     else if (flag === "--home") options.homeDirectory = resolve(value);
+    else if (flag === "--profile") { assertCondition(!options.profile, "Choose one explicit profile."); options.profile = value; }
+    else if (flag === "--with") options.withPackages.push(value);
+    else if (flag === "--resume") { assertCondition(!options.resume, "Choose one transaction journal."); options.resume = resolve(value); }
     else options.manifestPath = resolve(value);
     index += 1;
   }
@@ -636,12 +775,13 @@ if (invokedDirectly) {
   let options;
   const managerActionResults = [];
   try {
-    options = parseArguments(process.argv.slice(2));
+    options = parseManagedSkillsArguments(process.argv.slice(2));
     const result = await executeManagedSkills({
       ...options,
       onManagerAction: (result) => managerActionResults.push(result),
     });
     process.stdout.write(`${options.json ? JSON.stringify(result) : JSON.stringify(result, null, 2)}\n`);
+    if (["failed", "blocked", "conflict"].includes(result.status)) process.exitCode = 1;
   } catch (error) {
     if (options?.json) {
       process.stderr.write(`${JSON.stringify({

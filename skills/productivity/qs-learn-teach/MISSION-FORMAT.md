@@ -1,6 +1,8 @@
 # MISSION.md Format
 
-`MISSION.md` lives at the workspace root. It captures the _reason_ the user is learning this topic. Every teaching decision — what to teach next, which resources to surface, which exercises to design — should trace back to this document.
+Use this format only for a requested durable learning workspace and only within its selected write scope. Reuse the user's existing location and format. Loading this reference does not create a course, directories or files, and does not authorize external posting or joining a community. Ordinary explanation and practice remain in chat.
+
+When selected, `MISSION.md` normally lives at the learning workspace root. It captures the _reason_ the user is learning this topic. Each decision in the selected learning plan — what to teach next, which resources to surface, which exercises to design — should trace back to this document.
 
 ## Template
 
@@ -24,8 +26,8 @@
 
 ## Rules
 
-- **One mission per workspace.** If the user wants to learn two unrelated things, that is two workspaces.
+- **Keep the mission bounded.** Separate unrelated topics in the learning plan; create additional workspaces only when requested.
 - **Concrete over abstract.** "Run a half marathon by October" beats "get fitter." "Ship a Rust CLI to my team" beats "learn Rust."
-- **Push back on vagueness.** If the user cannot articulate why, interview them before writing anything. A bad mission is worse than no mission.
+- **Resolve material ambiguity.** Use the stated learning goal and existing evidence; ask only when an unresolved choice changes the teaching outcome.
 - **Revise when reality shifts.** Missions change. When the user's goal moves, update this file — don't leave a stale mission steering future sessions.
 - **Keep it short.** If `MISSION.md` runs past a screen, it has stopped being a compass and started being a plan.

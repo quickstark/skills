@@ -1,0 +1,31 @@
+--- /tmp/qs-debug-repair-capture-20260925/before/src/preferences.mjs	2026-09-25 16:14:12.082853138 -0500
++++ /tmp/qs-debug-repair-capture-20260925/after/src/preferences.mjs	2026-09-25 16:16:15.224779682 -0500
+@@ -6,18 +6,18 @@
+ export class PayloadError extends Error { name = 'PayloadError'; }
+ 
+ export async function savePreferences({ transport, credential, patch }) {
++  const response = await transport('/preferences', {
++    method: 'PATCH', headers: { Authorization: `Bearer ${credential}` },
++    body: JSON.stringify(patch)
++  });
++  if (response.status === 401 || response.status === 403) {
++    throw new AuthenticationError('Sign-in required');
++  }
++  if (!response.ok) throw new HttpError(response.status);
++  if (response.status === 204) return null;
+   try {
+-    const response = await transport('/preferences', {
+-      method: 'PATCH', headers: { Authorization: `Bearer ${credential}` },
+-      body: JSON.stringify(patch)
+-    });
+-    if (response.status === 401 || response.status === 403) {
+-      throw new AuthenticationError('Sign-in required');
+-    }
+-    if (!response.ok) throw new HttpError(response.status);
+     return await response.json();
+   } catch (error) {
+-    if (error instanceof HttpError) throw error;
+-    throw new AuthenticationError('Sign-in required', { cause: error });
++    throw new PayloadError('Invalid preferences payload', { cause: error });
+   }
+ }

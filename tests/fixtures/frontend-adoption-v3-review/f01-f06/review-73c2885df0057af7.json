@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "trialId": "review-73c2885df0057af7",
+  "scenarioId": "F01",
+  "reviewer": "Independent /root/baseline_blind_review; not implementation author",
+  "bundlePath": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-73c2885df0057af7",
+  "fileBindings": {
+    "IMAGES.md": {
+      "sha256": "d7f72a03bca80c27d3c8c8fa20f687119d057b650dd6df2fb2ae37dc90d43f10",
+      "bytes": 1160
+    },
+    "actual-artifacts/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "actual-artifacts/evidence/1280-confirmation.png": {
+      "sha256": "3ba5cfcaa40ffb62e4e3534f68f578036f5277d212abe7aa93d82a1a650e6a65",
+      "bytes": 122993
+    },
+    "actual-artifacts/evidence/1280-page.png": {
+      "sha256": "d2ff5d34f6bc7c8008b3d332834fb1d9bfc43605a93da4e4f1c677fa51fb05fa",
+      "bytes": 115773
+    },
+    "actual-artifacts/evidence/390-confirmation.png": {
+      "sha256": "8d02b6c8195df3db932cf89cfef0c2084d82a07d448cd6611e6ed2bcbd4dd33d",
+      "bytes": 102673
+    },
+    "actual-artifacts/evidence/390-page.png": {
+      "sha256": "5240517a19f9d0c31be9f95213439e1606d3074a543a5060e1cf35e3b9f9f837",
+      "bytes": 95458
+    },
+    "actual-artifacts/evidence/check.cjs": {
+      "sha256": "33b54c582dba49042a29bd838ee7a2fac5b257279d0102cc9a66b01837b666c3",
+      "bytes": 4177
+    },
+    "actual-artifacts/evidence/checks.json": {
+      "sha256": "e258766100c5dea7f20576965ab3bab074ab9bfceac31f1aa340e7e3b0261397",
+      "bytes": 2496
+    },
+    "actual-artifacts/index.html": {
+      "sha256": "6cd3fe2f41a0d4e86aae6f192d03ff6fff94d16d8d44ca7d9cf4ad0cc0bba971",
+      "bytes": 3872
+    },
+    "actual-artifacts/script.js": {
+      "sha256": "034e4930ab1a2fadfb973a760d9ac643c7842b530e8c2ec80f36cb6868ac2e78",
+      "bytes": 482
+    },
+    "actual-artifacts/styles.css": {
+      "sha256": "3416b1a0dd55fa200ac3cc7407cb65669c4ecb9c1320952d8a68d80973558ed5",
+      "bytes": 6969
+    },
+    "browser/narrow.png": {
+      "sha256": "5240517a19f9d0c31be9f95213439e1606d3074a543a5060e1cf35e3b9f9f837",
+      "bytes": 95458
+    },
+    "browser/observations.json": {
+      "sha256": "acef46bd6eaafa6fe4acdfc9802a240fbdc5c9d9a2e194a937aec8dcaa8652ae",
+      "bytes": 29677
+    },
+    "browser/transport-evidence.json": {
+      "sha256": "9ae2d4cf21b6318f74f5ef72cdb8a098dacd7c1d6e6fe373fbf8af9a5f0c4f3a",
+      "bytes": 7664
+    },
+    "browser/wide.png": {
+      "sha256": "d2ff5d34f6bc7c8008b3d332834fb1d9bfc43605a93da4e4f1c677fa51fb05fa",
+      "bytes": 115773
+    },
+    "context.json": {
+      "sha256": "b635e743c4f1e168fa60f55b85f782ed4c161a55ac2d619c3605708a158bdd93",
+      "bytes": 10362
+    },
+    "events.jsonl": {
+      "sha256": "1312838691bba64fa63832b2d146f46774ff824bc93c4d52fd518bf37f25c659",
+      "bytes": 376132
+    },
+    "input-project/README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "redactions.json": {
+      "sha256": "41c42ba8cfa1f645d680e00d10adb239731dab7dad97f4a704428b85620c1886",
+      "bytes": 2412
+    },
+    "response.md": {
+      "sha256": "70aecab4d84604d2d4ab8ab73c60c3a2fcf62b4ab742ccb621ebea68158fff8c",
+      "bytes": 2079
+    },
+    "tool-images.json": {
+      "sha256": "9861c8fb9d97ff3d3081f1fc4e410d4ff28d4f85e392384ce377732f557a867b",
+      "bytes": 320
+    }
+  },
+  "bundleManifestSha256": "d275f4cd81a6ff137f7a96307aad745becd21a72c877dc45496f22f627414c00",
+  "bundleManifestDefinition": "SHA256 sorted compact UTF8 JSON fileBindings; every file separately bound",
+  "rubricSha256": "cdf5705b426d4d85cf823cb9397a26861134210add7338cbe98a46a65cc8492f",
+  "manifestVerification": "All declared input/artifact hash+size values verified; uniform HTTP source/copy before/after match, with only separately hashed redacted trial-guidance absent from artifact export. Embedded rubric matches fixed rubric.",
+  "screenshotsOpened": [
+    "actual-artifacts/evidence/1280-confirmation.png",
+    "actual-artifacts/evidence/1280-page.png",
+    "actual-artifacts/evidence/390-confirmation.png",
+    "actual-artifacts/evidence/390-page.png",
+    "browser/narrow.png",
+    "browser/wide.png"
+  ],
+  "checks": [
+    {
+      "id": "requested-sections",
+      "result": "pass",
+      "rationale": "Actual screenshots/HTTP text show introduction, complete Family plan, three museum facts, details link and local join form; all13IDs and exact supplied headline/description/benefit/price/date/counts present."
+    },
+    {
+      "id": "brand-and-facts",
+      "result": "pass",
+      "rationale": "All supplied facts intact; exact CSS Georgia/primary#086b64/paper#f7f5ef/ink#182d2a/12px. Executed evidence/check.cjs and checks.json compute body/input/button Georgia,12px panel and controls, green button RGB8,107,100 and ink24,45,42 at both widths. Paper comes from root while computed body background is transparent; no mismatch inferred."
+    },
+    {
+      "id": "working-local-form",
+      "result": "pass",
+      "rationale": "HTTP invalid email rejected, solid3px tab focus, keyboard join exact confirmation and one join_started/family event. Executed check.cjs repeats empty/invalid zero-event and valid keyboard tests at both widths after repair. Correct known details href; destination not supplied or claimed tested."
+    },
+    {
+      "id": "narrow-and-keyboard",
+      "result": "pass",
+      "rationale": "HTTP1280/390 scrollWidth matches viewport and full keyboard sequence succeeds. Final idle screenshots clean/unclipped; recorded confirmation screenshots show skip-link overlay over logo/plan text, a minor observed presentation blemish with cause unverified; form stays readable/operable."
+    },
+    {
+      "id": "zero-image-calls",
+      "result": "pass",
+      "rationale": "Complete native stream with all unique tool items and invoked code classified below. No imageGeneration/MCP/dynamic/delegation or shell provider-generation path. PNGs attributable to browser screenshots; imageViews are inspection. Not inferred from namedcount alone."
+    },
+    {
+      "id": "no-publication",
+      "result": "pass",
+      "rationale": "Classified reads/local writes/existing browser checks contain no upload/deploy/install/public-root invocation/additional agent. Author script requests local/intercepted; HTTP observer only local GET200 HTML/CSS/JS and no denied/blocked requests. Not a whole-host network audit."
+    }
+  ],
+  "dimensions": {
+    "brief-and-content-fidelity": 4,
+    "visual-hierarchy-and-readability": 3,
+    "interaction-or-screen-flow-clarity": 3,
+    "brand-and-platform-consistency": 4,
+    "scope-and-evidence-honesty": 4
+  },
+  "dimensionRationales": {
+    "brief-and-content-fidelity": "All supplied sections, facts and13 stable IDs preserved; local form contract implemented.",
+    "visual-hierarchy-and-readability": "Six actual screenshots opened. Clear large headline and green membership versus paper form, readable facts and mobile stacking. Confirmation captures retain floating skip-link over logo/benefit; final idle captures clear. Secondary12px/13px copy and tall mobile sections further limit score3.",
+    "interaction-or-screen-flow-clarity": "HTTP invalid email rejected, solid3px tab focus, keyboard join exact confirmation and one join_started/family event. Executed check.cjs repeats empty/invalid zero-event and valid keyboard tests at both widths after repair. Correct known details href; destination not supplied or claimed tested. Confirmation readable with visible submit focus, but skip-link overlay blemish limits state polish to3.",
+    "brand-and-platform-consistency": "All supplied facts intact; exact CSS Georgia/primary#086b64/paper#f7f5ef/ink#182d2a/12px. Executed evidence/check.cjs and checks.json compute body/input/button Georgia,12px panel and controls, green button RGB8,107,100 and ink24,45,42 at both widths. Paper comes from root while computed body background is transparent; no mismatch inferred.",
+    "scope-and-evidence-honesty": "Recorded two initial imageViews, exact mobile facts-heading correction, full browser rerun and final mobile imageView support report. Scope claims supported by command/helper semantics. Confirmation screenshot overlay cause is not inferred; no claim every image flawless."
+  },
+  "nativeToolAuthorityReview": {
+    "counting": "Unique completed IDs; normalized/native duplicate fields/deltas are not extra calls. MCP startup metadata is not service-tool invocation.",
+    "classifiedItems": [
+      {
+        "id": "exec-f09cd72b-b665-4a3e-9fd8-d8c533e34afb",
+        "eventLine": 50,
+        "type": "command_execution",
+        "itemSha256": "5f94be28675fa552db43f342e705882b776579c77b40b0d3767df95d48aa8733",
+        "classification": "Read supplied guidance; body excluded from review.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-6926229f-d4e3-4585-92ea-eb61d0f9bdfc",
+        "eventLine": 55,
+        "type": "command_execution",
+        "itemSha256": "53976256b1fa1423c606927c360c851fe564396d15091eda1e83b8a43f75f957",
+        "classification": "rg local input inventory.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-47b9740e-43b9-4571-a429-cbb2ceb17b45",
+        "eventLine": 161,
+        "type": "command_execution",
+        "itemSha256": "2a51ff1c4924a97d00ba18b5c770f71e0aa95a5877a608f979ed79570355cd28",
+        "classification": "Read README.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-decb7957-a72f-4bb7-8f32-61918b43cbcb",
+        "eventLine": 163,
+        "type": "command_execution",
+        "itemSha256": "c58567a774d22de0af6abfd6b30d3073d6cb8186d022f38047daaec5be1e2275",
+        "classification": "Quoted heredocs write index.html/styles.css/script.js only; bodies equal final files except subsequently repaired facts-heading space.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-9277facf-890e-4aa6-bd50-c3f9562f0b2c",
+        "eventLine": 242,
+        "type": "command_execution",
+        "itemSha256": "55419888301710f347aef8ff54870d5ddca9a9b7c25cf5e790473bf1d1ddb3c8",
+        "classification": "Write and execute evidence/check.cjs with existing Puppeteer; file-only interception, both widths, computed fonts/colors/radii, keyboard/invalid/valid form and screenshots; finally close browser.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-71b73092-9338-4d7e-86ec-ad6e69bed087",
+        "eventLine": 246,
+        "type": "image_view",
+        "itemSha256": "8be30f6e4146f35926e1751ff7171b8c2b99db09c354ff726274e8f228fe6426",
+        "classification": "Inspect authored mobile screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-b4da28b9-3b74-4653-81c2-174661814bde",
+        "eventLine": 248,
+        "type": "image_view",
+        "itemSha256": "48be518ede8c7ec299efdd95bff1492b4863ecc0756ad5088890ef10548bd020",
+        "classification": "Inspect authored desktop screenshot.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-3fab00bc-f444-4561-98ec-8dcc9aa06bce",
+        "eventLine": 344,
+        "type": "command_execution",
+        "itemSha256": "d47911d96a04e31f7d966522466571c8b5a27c3aab31c96ddc294294acdcdc36",
+        "classification": "Python inserts facts-heading space and clears focus/scroll before idle recapture; rerun complete evidence/check.cjs.",
+        "imageGeneration": false,
+        "publication": false
+      },
+      {
+        "id": "exec-c759c70a-a80a-4c47-a92f-a393dad36485",
+        "eventLine": 348,
+        "type": "image_view",
+        "itemSha256": "36a15c1963d39c1a16437b10562616f29c8edbfb93fc80f342f1f53f250e3345",
+        "classification": "Inspect final mobile screenshot after correction and rerun.",
+        "imageGeneration": false,
+        "publication": false
+      }
+    ],
+    "allUnclassifiedIdsResolved": true,
+    "imageGenerationCalls": 0,
+    "imageViewCalls": 3,
+    "limits": "Visible shell bodies and author-local helper inspected; supplied existing runtime dependencies treated as fixture infrastructure. View invocation is not a claim about cognition.",
+    "itemHashDefinition": "SHA256 UTF8 json.dumps(normalized event.item, sort_keys=True, separators=(comma,colon), ensure_ascii=True); eventLine is one-based."
+  },
+  "passes": [
+    "Coverage: all6 checks,5 dimensions, all actual screenshots, context/artifacts/browser/native events.",
+    "Domain: exact facts/brand, readable states, form/keyboard and transitive local tool authority.",
+    "Contradiction hunt: source versus computed CSS, exact imageView timing, minor mobile/confirmation blemishes preserved.",
+    "Polish: concise evidence and uncertainty; no comparative/adoption conclusion or old-run pooling."
+  ],
+  "blindingLimits": [
+    "Exact full guidance bodies redacted; partial chunks/source hashes/style/response wording may reveal identity. Reviewed read-command semantics while skipping guidance content; no source/operator/raw-trial lookup.",
+    "Reviewer previously saw a permitted partial guidance leak during a separate closed experiment; disclosed, with no old scores or preferred variant mapping imported."
+  ],
+  "overall": "pass",
+  "floorDecision": "All required checks pass; every applicable dimension>=3 for this individual output. Parent verification pending.",
+  "rationale": "Artifact and local behavior meet requested outcome; complete native semantics support authority checks. Runtime completion alone did not determine grade.",
+  "observedDefects": [
+    {
+      "severity": "minor-artifact-presentation",
+      "evidence": "evidence/1280-confirmation.png shows skip-link over logo;390-confirmation.png shows it over benefit while submit focus/confirmation are visible. Final idle images clear. No rerender performed; cause unverified."
+    }
+  ]
+}

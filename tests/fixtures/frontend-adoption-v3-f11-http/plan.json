@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 1,
+  "kind": "uniform F11 native-dialog-aware supplementary observation; no original replacement",
+  "files": {
+    "observer.mjs": "da3ae49427a54ae4339cc657de415982542080190c758f0702579d8a2b15377d",
+    "browser-observe-http.mjs": "c7813b0c26882b7b201bf8e55b6bbe13b4fde034e569cf656d400aac13f7ee48",
+    "membership-observe.mjs": "4b5c0742ed06f06180d5ee62c926e24108ce0f73ce47e40f39643a52c5f10911",
+    "observer.test.mjs": "2438491298148e7ff69ebafc5dfccf1b78fcc5ac3292d6cf704ba7da701e2168",
+    "observe-all.mjs": "19f931723c71d75a5b83b7bbf09af968d602a87e8e0a86865c5bf1704e92ecb6",
+    "freeze.mjs": "056eb79d1749c0bb1c70b65baa9d32f25078720aef869b5ca6717c40b8d33c73",
+    "README.md": "cfdfe76635337d8e303c660c42f5741e6e8dc17511e4db8c8ffcfb1213148ab4",
+    "initial-control-failure.json": "208b9711a1c98c2d863dfb75d089ffe312f41bfe80b98701e9cc6227b103777b",
+    "control-test-results.txt": "e199d33a95962952a70e1b3b5bb0d76f02ba455a2ae9b1b8f7726ebcce93a7be",
+    "../frontend-adoption-v2-http/observer.mjs": "da3ae49427a54ae4339cc657de415982542080190c758f0702579d8a2b15377d",
+    "../frontend-adoption-v2-http/browser-observe-http.mjs": "2f02477d71b3abb2257c643b835b7f4c673c9e846fd30f122ad30c4ffea6fc42",
+    "../frontend-adoption-v2-http/plan.json": "e715f85666c1de3f73da3715bb9a0a588e95a11897ed2ac2409d84bcbb8f276d"
+  },
+  "runtime": {
+    "node": "v24.21.0",
+    "browserPath": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+    "browserSHA256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f",
+    "puppeteerPath": "/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js",
+    "puppeteerSHA256": "059b251260c5499581d308029e4a207102624d35f1390b6b0fdad6563f5d186d",
+    "transitiveDependencyLimit": "Entry and binary identities are bound; supplied transitive installation must remain unchanged."
+  },
+  "bundles": [
+    {
+      "reviewId": "review-25dc4ed5efe9a83e",
+      "context": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-25dc4ed5efe9a83e/context.json",
+      "contextSha256": "9a31fdb6437fed424b7eafb5e19efe993e4482e57c54ebbc25f1b2e187baa348",
+      "project": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-25dc4ed5efe9a83e/actual-artifacts",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "evidence/1280-form.png": {
+          "sha256": "dc019e4754c68626c36368c587218af504b80e64753a87e5cdd7d61fd1a3f3a7",
+          "bytes": 83173
+        },
+        "evidence/1280.png": {
+          "sha256": "fd53d397d0faca89dae52ed2f625237552a26874d1c890aa7184a54098d8bba1",
+          "bytes": 68070
+        },
+        "evidence/390-form.png": {
+          "sha256": "64bb7cc65cae5b80b02224df92ffa0d0852980aa2832ea6aaf06e2d3c65e34ae",
+          "bytes": 55138
+        },
+        "evidence/390.png": {
+          "sha256": "33ecdb7568842c5566b4835066d0d412dac2002d98b132e8235f99e025bcbd87",
+          "bytes": 57486
+        },
+        "evidence/check.cjs": {
+          "sha256": "2a7c0666df82ba611a72c0d8bf11ccf15dda08509164a8642ba53d2370b3dee9",
+          "bytes": 4035
+        },
+        "evidence/observations.json": {
+          "sha256": "938fbbc7993186a334f9828f40d1b4aacd1a9a819dd197b1a9a3cc4a4445bbc3",
+          "bytes": 1387
+        },
+        "index.html": {
+          "sha256": "2475c4374c4776c7a1aad8e6dc9d57ff48bf50d678a4461e556259e07ed727ab",
+          "bytes": 2491
+        },
+        "reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "script.js": {
+          "sha256": "2a5c659fc6c457cbc5cc21c2082bf696d06c8bc28537905735e862373132ff87",
+          "bytes": 709
+        },
+        "styles.css": {
+          "sha256": "01ddccc87eb5725571ca3446552656c8a1be9d4dcd9e1df82f94a69e0dfa57f5",
+          "bytes": 4087
+        }
+      }
+    },
+    {
+      "reviewId": "review-5195ebed3b164b40",
+      "context": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-5195ebed3b164b40/context.json",
+      "contextSha256": "0641f1164c084b6008db6332a3d3cb6d15890187852a3d7e57a6e0642190ba66",
+      "project": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-5195ebed3b164b40/actual-artifacts",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "app.js": {
+          "sha256": "668ec39e98f3dbfd4bf1d01eb339f09b000d2fb9e106b5eea3bb9fd2932cf0e4",
+          "bytes": 764
+        },
+        "evidence/1280.png": {
+          "sha256": "9d376963070f96b77423162b2b4876adacc131dd7c57b9a993d29d0599f139ad",
+          "bytes": 66907
+        },
+        "evidence/390.png": {
+          "sha256": "2372fc7ff7b2d5ee148b920d1a3b815682ad1a7546295923c4dae1c9bca72c56",
+          "bytes": 56327
+        },
+        "evidence/check.mjs": {
+          "sha256": "423b6deaac5129ef3aaa55da3919577dfebda95862d3c17ff8657d7cb4ef5990",
+          "bytes": 3342
+        },
+        "evidence/membership-confirmation.png": {
+          "sha256": "44ab42e3d01fa87f9cb6307dde3fde5f54ecf4947e6a08e211d3bc022473d41b",
+          "bytes": 54637
+        },
+        "evidence/observations.json": {
+          "sha256": "92788ff8d943f3567a7da6416b4e0ad60fa546bfb86d30bfc36dc01ad0060167",
+          "bytes": 1501
+        },
+        "index.html": {
+          "sha256": "ede5de538c63a2093d235e17ee8e2069c455a2cd55f50d8591353969b2a026df",
+          "bytes": 2357
+        },
+        "reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "styles.css": {
+          "sha256": "cac8fbce24e5225e0a17f5a89f3b7b22d9c7396058a3278e25e39fc2f2d93c80",
+          "bytes": 4179
+        }
+      }
+    },
+    {
+      "reviewId": "review-51c66d979e683e0b",
+      "context": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-51c66d979e683e0b/context.json",
+      "contextSha256": "2a346112e766dadfb42c0ad27e426817a2a26c2d337fc0875b12b112f45cbfbc",
+      "project": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-51c66d979e683e0b/actual-artifacts",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "evidence/browser-observations.json": {
+          "sha256": "1501b5caca0dbe48f64b6347c19f4d18c52f612a85acbc28d77161fbc51edfd0",
+          "bytes": 1529
+        },
+        "evidence/form-narrow.png": {
+          "sha256": "53ce72a1a9f848f031b169ee68050595ced4b0e4adb5ad42462eb8c21a61ba88",
+          "bytes": 53502
+        },
+        "evidence/form-wide.png": {
+          "sha256": "5a66ce56756d5a3f7af8ec217d15540df87348263d6e7ed2e82b5506333c8f10",
+          "bytes": 80367
+        },
+        "evidence/narrow.png": {
+          "sha256": "c575f386d581020010c4a9fbd8fcfd30879b19def50003a4d473b2fcbbda2c00",
+          "bytes": 57167
+        },
+        "evidence/wide.png": {
+          "sha256": "961262a786db8b994bee34918ef971842193a4da40f4f04f9e41c6d79988e792",
+          "bytes": 66949
+        },
+        "index.html": {
+          "sha256": "358cd71057941d2f42fea0cb06efd08f46fff84bdd3650706943ad7def18c520",
+          "bytes": 2421
+        },
+        "reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "script.js": {
+          "sha256": "dc4ab024c2ad95e305cb991d9ba3f3fd9e12ffbf66bacde8f4b09da0b0921858",
+          "bytes": 890
+        },
+        "styles.css": {
+          "sha256": "b18b23f2d90b67c0debd516e9ed5bd87b4cce8f37016e78e8c2a57bbd1039575",
+          "bytes": 4187
+        }
+      }
+    },
+    {
+      "reviewId": "review-cb3fab72962e7198",
+      "context": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-cb3fab72962e7198/context.json",
+      "contextSha256": "02ce499c4aca64480f36a63b02841054ddf6c78320d85d37e51b40ca39060cfd",
+      "project": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-cb3fab72962e7198/actual-artifacts",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "evidence/narrow-form.png": {
+          "sha256": "a4519b7ad1160539f0c78f7b66f56029b37812dfa1eb513f2820e6dbf0b4b945",
+          "bytes": 55220
+        },
+        "evidence/narrow.png": {
+          "sha256": "1b8f5765986aac6acd857339c638b2d3cf0cff045c8e425048e58acae417f6aa",
+          "bytes": 57711
+        },
+        "evidence/wide.png": {
+          "sha256": "2eb0bea90d001a534e5460f87796e1fd9db97c6ed44b2f53cb660901ef2554b3",
+          "bytes": 66598
+        },
+        "index.html": {
+          "sha256": "f2d8944a9e6de254a8e5f212671985a8eb9c8c1746523219041733b6a61de728",
+          "bytes": 2570
+        },
+        "reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "script.js": {
+          "sha256": "7ade38969dc2e118d8457e5c33409757b759b4c23a2228d244c318061751134d",
+          "bytes": 872
+        },
+        "styles.css": {
+          "sha256": "02f918ecbf75596ea7c8efecf9d1f1d0b3874507eb97c649137fef88264dea5d",
+          "bytes": 4175
+        },
+        "verify.cjs": {
+          "sha256": "bf279068f63de3e963f1feaccdf162692c0c48a8301e09528ec6fd05e372c85a",
+          "bytes": 5134
+        }
+      }
+    },
+    {
+      "reviewId": "review-da56342ed230466a",
+      "context": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-da56342ed230466a/context.json",
+      "contextSha256": "17feeb03518b1ca395318c31fde7fecbd3bcce884741f22e30b6a77377cc8e17",
+      "project": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-da56342ed230466a/actual-artifacts",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "evidence/browser-results.json": {
+          "sha256": "69487fad6e51878d6a7fe897699a62bb07a81f2261bc315d3123f695edad90ce",
+          "bytes": 778
+        },
+        "evidence/check.cjs": {
+          "sha256": "d9b86f4324be0f98d2802c821a00e54ff400b2c158f01041f9a80095bb241edb",
+          "bytes": 3296
+        },
+        "evidence/narrow-form.png": {
+          "sha256": "a2e1638bea90c294ceefc1182d11e3fef569fc5a4508e7b8c9b95208b20d6ffc",
+          "bytes": 52857
+        },
+        "evidence/narrow.png": {
+          "sha256": "9a931691c7fbb079cd6ba5efd043b066db48a1560b65455bf3db7beb36b17357",
+          "bytes": 57759
+        },
+        "evidence/wide-form.png": {
+          "sha256": "3edaffda6c700487c46a5f3d9ffdbb5f2ae657da3a71aed3e28401e334df8694",
+          "bytes": 80034
+        },
+        "evidence/wide.png": {
+          "sha256": "989f5d9753d3593a6f1f1284153b283e3658c4fc7071b1945cc990e1daf42845",
+          "bytes": 66921
+        },
+        "index.html": {
+          "sha256": "8abe7161df717ac09dbe16bc1e0879a45b245b49d3ce7b5970edc9b73e820744",
+          "bytes": 2330
+        },
+        "reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "script.js": {
+          "sha256": "bea5f7ec1e3467702a4d91075e7cf19e18e9466ef889a1e0354ec9f824fb8326",
+          "bytes": 881
+        },
+        "styles.css": {
+          "sha256": "641e759794e15ff6db52ff01b34c9ec9a18c011f03eaa03fc7b62dab303622c2",
+          "bytes": 3914
+        }
+      }
+    },
+    {
+      "reviewId": "review-eb166244f5a4a48f",
+      "context": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-eb166244f5a4a48f/context.json",
+      "contextSha256": "c1a3278174900f616c1008939c28dc906bca1817b008a48d95586cf773bc4a42",
+      "project": "/tmp/qs-frontend-comparison-v3-native-20260926/reviewer-bundles/review-eb166244f5a4a48f/actual-artifacts",
+      "manifest": {
+        "README.md": {
+          "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+          "bytes": 180
+        },
+        "artifacts/browser-observations.json": {
+          "sha256": "381ca15c1d1c021a99fea8c404315df5952c576d63e85a20e0d4ad36680a0617",
+          "bytes": 914
+        },
+        "artifacts/narrow-confirmation.png": {
+          "sha256": "234921e9f19a9ccea7a7c11282d47675623141f2d098dff8909d05ce309d31f2",
+          "bytes": 51739
+        },
+        "artifacts/narrow.png": {
+          "sha256": "51be0cee82d7c9a4057cffddfc3cc55baf436593908e906e9f475b52eaf075fa",
+          "bytes": 57054
+        },
+        "artifacts/wide-confirmation.png": {
+          "sha256": "0d3c8c5d01cac58ff1796e9ea03ae36f1a2901f02c0b21060111e7fadaf0c666",
+          "bytes": 80927
+        },
+        "artifacts/wide.png": {
+          "sha256": "460cdaf9db14c02dcaad0e5d47764ee4586a1694c0b446f60832110e80e049dd",
+          "bytes": 66891
+        },
+        "index.html": {
+          "sha256": "4331c5c059d85d70c38692a911d742a94c111480643184adc8ad478c294bd310",
+          "bytes": 2643
+        },
+        "reference.png": {
+          "sha256": "944a6a0bb1241d727501267db091e578c05ef73b38f709731363b10ef0023786",
+          "bytes": 66799
+        },
+        "script.js": {
+          "sha256": "b23e5b2aa4d76698487a5f88f813f459d51f37dea67785a26a68ed23bbad13d2",
+          "bytes": 911
+        },
+        "styles.css": {
+          "sha256": "1f1cd8fc2f369655828dcb36196ccd6b8a6fdc01b775b41eeec2a64188931d88",
+          "bytes": 4222
+        },
+        "verify.mjs": {
+          "sha256": "22ef00d2de03fe211e3e4db3bb65928cdb111c93b1ae844fcaf13a8f4df80c71",
+          "bytes": 3409
+        }
+      }
+    }
+  ],
+  "authority": {
+    "preparationOnly": true,
+    "actualObservation": "Parent-owned after source/control review; no F11 rendering performed during preparation.",
+    "generation": false,
+    "productEdits": false,
+    "qualityGrading": false
+  },
+  "derivation": "observer.mjs transport byte-identical to frozen HTTP module. Browser launch/confinement, wide/narrow base measurements,14-tab trace and reduced-motion measurements retained. Replace hidden-email assumption with per-viewport keyboard opener, actual submit, invalid/valid/status/events, Escape/focus observations. Never force showModal/requestSubmit or mutate product DOM.",
+  "limitations": [
+    "48 Tab limit per target; inaccessible or broken opener remains explicit failure.",
+    "Native Chromium may expose BODY when focus moves through browser chrome; preserve raw sequence/documentHasFocus, not a trap-quality grade.",
+    "Runtime binary and Puppeteer entry bound as in original; transitive installation assumed unchanged.",
+    "Original native capture/HTTP failures and all product bytes stay immutable; supplement cannot change model/tool counts or earlier grades."
+  ]
+}

@@ -1,0 +1,1372 @@
+{
+  "schemaVersion": 1,
+  "decision": "Original fixed comparison fails adoption. No grades changed.",
+  "method": "Descriptive join of all66 immutable independent reviews, including6F11 whose original shared observer failed. Their supplemental local observation resolves specific interaction evidence separately; not a passing original aggregation. No missing row excluded from this descriptive grade table.",
+  "originalAggregationSHA256": "6d650042a58e9b7c54d1c09a6454bba472c8ea2473f51609df997ec1326d93f6",
+  "summary": {
+    "v31": {
+      "rows": 33,
+      "counts": {
+        "pass": 27,
+        "fail": 6
+      },
+      "applicableDimensionCount": 153,
+      "meanApplicableGrade": 3.5686274509803924,
+      "failedRows": [
+        "F06-r1-v31",
+        "F06-r2-v31",
+        "F06-r3-v31",
+        "F09-r1-v31",
+        "F09-r2-v31",
+        "F09-r3-v31"
+      ]
+    },
+    "v84": {
+      "rows": 33,
+      "counts": {
+        "pass": 30,
+        "fail": 3
+      },
+      "applicableDimensionCount": 153,
+      "meanApplicableGrade": 3.7450980392156863,
+      "failedRows": [
+        "F09-r1-v84",
+        "F09-r2-v84",
+        "F09-r3-v84"
+      ]
+    }
+  },
+  "records": [
+    {
+      "row": {
+        "trialId": "F01-r1-v31",
+        "scenarioId": "F01",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-72f1212ca93f07c8",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-72f1212ca93f07c8.json",
+      "reviewSHA256": "e103bfce58327812f6ab5fb1f282d8ff3c114ac3cf04bde14b387c0d938dba3f",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F01-r1-v84",
+        "scenarioId": "F01",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-ea86c5011e4c94be",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-ea86c5011e4c94be.json",
+      "reviewSHA256": "cd514ba5bfedee104db81640788154d2b9c0eed43da9896352f97121ef012f32",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F01-r2-v84",
+        "scenarioId": "F01",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-8a4ee0da2fb6504b",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-8a4ee0da2fb6504b.json",
+      "reviewSHA256": "5a09b1405318c62087ad2b07287b4038bb992a23d5bcc47a3794f693037e50b5",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F01-r2-v31",
+        "scenarioId": "F01",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-cef4fa89f15833af",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-cef4fa89f15833af.json",
+      "reviewSHA256": "96a8b1d0dac74db9d1aeae7dd66189851158ecf86b5d830de59310e63d8a61cf",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F01-r3-v31",
+        "scenarioId": "F01",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-46c97632de02124c",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-46c97632de02124c.json",
+      "reviewSHA256": "a4c8530adaa5d1e98cbfe68462006c63299c211d1f9087692840f9b915b6a2b1",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F01-r3-v84",
+        "scenarioId": "F01",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-73c2885df0057af7",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-73c2885df0057af7.json",
+      "reviewSHA256": "cdb97e0000e6481faa024d3486ca4c29502ecd55e44166af417c00794bcb2158",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F02-r1-v31",
+        "scenarioId": "F02",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-a3900ade09ea254a",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f02/review-a3900ade09ea254a.json",
+      "reviewSHA256": "a6faa42e07a2c468cf2aa83ed06bc12227f7588420fff436a6fe8a4c3c54367d",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": "not-applicable",
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F02-r1-v84",
+        "scenarioId": "F02",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-2bb109b6771ea5a0",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f02/review-2bb109b6771ea5a0.json",
+      "reviewSHA256": "d203d51f741938695f8e62acd71d73db1eba9fc46013c424e307e1d97add7dad",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": "not-applicable",
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F02-r2-v84",
+        "scenarioId": "F02",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-cda0e8925981af84",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f02/review-cda0e8925981af84.json",
+      "reviewSHA256": "d17cffff09b9f13d77ebdb304ec6339bd6d1288f47d61da7b645303118f318aa",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": "not-applicable",
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F02-r2-v31",
+        "scenarioId": "F02",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-fb2c595fcf5cf6e6",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f02/review-fb2c595fcf5cf6e6.json",
+      "reviewSHA256": "4e3d317332ae0bfa7079c8c7e868d3dc0f6d3f539f62ea57f10af12de2b41cba",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": "not-applicable",
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F02-r3-v31",
+        "scenarioId": "F02",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-9e44d4f826560154",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f02/review-9e44d4f826560154.json",
+      "reviewSHA256": "3998b51f775c868ab45a11eaaf9aaa9df354ff7f0e43b7016ec2ccd0da411ae4",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": "not-applicable",
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F02-r3-v84",
+        "scenarioId": "F02",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-7047d8bcd9d77b6a",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f02/review-7047d8bcd9d77b6a.json",
+      "reviewSHA256": "ffec85f87aacd86f21af50a6f509885fb4e140881ceb25b7d02ed45f7fdd6b20",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": "not-applicable",
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F03-r1-v31",
+        "scenarioId": "F03",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-5de4852a755c721c",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-5de4852a755c721c.json",
+      "reviewSHA256": "cd20b5e1e9b64a3c3b2cb99e87bf11620520eef686f40cc38dc4c3337dd3e39d",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F03-r1-v84",
+        "scenarioId": "F03",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-75fa2df7770a17eb",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-75fa2df7770a17eb.json",
+      "reviewSHA256": "ec74a5b7b2ff24d9083e006edc7cf7ff0f458fe5412787012bfdcffd98201045",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F03-r2-v84",
+        "scenarioId": "F03",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-306622f1e86eefb5",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-306622f1e86eefb5.json",
+      "reviewSHA256": "d3e872225fafd414824251ca641b39da35bcdd6558de72272ee551cc00eea128",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F03-r2-v31",
+        "scenarioId": "F03",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-f3e99dcdfedcce34",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-f3e99dcdfedcce34.json",
+      "reviewSHA256": "8daaf17fa617158dcd0714ebad6daf68a76e19f2f007f437db183f24189953f1",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F03-r3-v31",
+        "scenarioId": "F03",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-908c949191162e56",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-908c949191162e56.json",
+      "reviewSHA256": "7629a7dad2d4b47f7b31dbfe53f6d5472a4d49628cbf4c916d5bfa1a430bdf71",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F03-r3-v84",
+        "scenarioId": "F03",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-57e6dedabe059934",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-57e6dedabe059934.json",
+      "reviewSHA256": "458b0ef442328e98e31838aee1fc86a9ca75110ce771ed2bec76dfc49c504384",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F04-r1-v31",
+        "scenarioId": "F04",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-e339a52a79026b91",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-e339a52a79026b91.json",
+      "reviewSHA256": "be4a2540a728c4c365a7b11d2f5c6a9594f0350c725fdfab61335e25e0714994",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F04-r1-v84",
+        "scenarioId": "F04",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-b15e1d6b969c7ed3",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-b15e1d6b969c7ed3.json",
+      "reviewSHA256": "d101250ae54e88df8ba551ef643a524abcba6f48624b082f7b4a9eb37b8ee1f3",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F04-r2-v84",
+        "scenarioId": "F04",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-1de579e104eba5d7",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-1de579e104eba5d7.json",
+      "reviewSHA256": "68088790b839baa793f880a95052445b6df9ada724a1a577ed3680eda97b95ac",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F04-r2-v31",
+        "scenarioId": "F04",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-85db1cddc9f2190e",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-85db1cddc9f2190e.json",
+      "reviewSHA256": "d08507e654737f2fc8e9e479dfd4b1d49fd8492dbca978a0a975a2bcaa145a1e",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F04-r3-v31",
+        "scenarioId": "F04",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-eed46b0b272d9d28",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-eed46b0b272d9d28.json",
+      "reviewSHA256": "7a9ad16e2f891c15bb4ad18995d2bc5e0b6d915aebba018252db8c0435833b44",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F04-r3-v84",
+        "scenarioId": "F04",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-a31bf122603c7612",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f01-f06/review-a31bf122603c7612.json",
+      "reviewSHA256": "7d3e407e9f10fa7bf4c3372f929afdd7a3accf043854d98f5c7a4d690c337f77",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F05-r1-v31",
+        "scenarioId": "F05",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-002e18038080c5e6",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-002e18038080c5e6.json",
+      "reviewSHA256": "ceb438a498bb0e690506c74f3c4e2b201bca75df5642071e2b478eacf85ba8b7",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F05-r1-v84",
+        "scenarioId": "F05",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-26676483dafec741",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-26676483dafec741.json",
+      "reviewSHA256": "27e84f3777628e597f7d06345bb7b124bdaecb76bad27fd9a9d172becb3d5c35",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F05-r2-v84",
+        "scenarioId": "F05",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-73f5682865be7308",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-73f5682865be7308.json",
+      "reviewSHA256": "ca983f82bfdcdde0cd1826ebc72703d776c4d969ba503ae39a23d1575c53210f",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F05-r2-v31",
+        "scenarioId": "F05",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-7bfdf8cd372da93c",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-7bfdf8cd372da93c.json",
+      "reviewSHA256": "ead0eff38b96e843d396c005573367335e8c39a135fecfedf219424ec47590e7",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F05-r3-v31",
+        "scenarioId": "F05",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-6ee59ac2e51e1671",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-6ee59ac2e51e1671.json",
+      "reviewSHA256": "1a173b0182928cabb8fade90d4271597319e82f1955322aa0f19eed4c5527ff9",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F05-r3-v84",
+        "scenarioId": "F05",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-ce950fdfcb703690",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-ce950fdfcb703690.json",
+      "reviewSHA256": "72d92de6d34de1e748107e17981fc275012114df8cd41d347f8020367a48c074",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F06-r1-v31",
+        "scenarioId": "F06",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-5de7ae1cf53ea683",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-5de7ae1cf53ea683.json",
+      "reviewSHA256": "f3c25682fa2b53db3c09c309a2b0c0a278c05866b8b47fe8140cf68b4db0dd94",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 2,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F06-r1-v84",
+        "scenarioId": "F06",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-4ef257e695fd3c79",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-4ef257e695fd3c79.json",
+      "reviewSHA256": "6e8d35693f01f8e05d4379e36f2b04e4365207806e66ebc593b59937a427ab55",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F06-r2-v84",
+        "scenarioId": "F06",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-5abe9bfbc0250083",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-5abe9bfbc0250083.json",
+      "reviewSHA256": "a3caa268ab7f0a0e54ce7d7b2596a0c725b1d13b661e79c0e6694c1fa3839a4d",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F06-r2-v31",
+        "scenarioId": "F06",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-3ffe58abe512dd78",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-3ffe58abe512dd78.json",
+      "reviewSHA256": "1480b045a11d575dcb914988e3b5735f6c2e0be3a5f24724df32db59e93fff18",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 2,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F06-r3-v31",
+        "scenarioId": "F06",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-7dfcc075c3a3a3a5",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-7dfcc075c3a3a3a5.json",
+      "reviewSHA256": "37d1830e33cbf63f49c106f6ce39cffb4ab655be0db28511f5387a5f74417a13",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 2,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F06-r3-v84",
+        "scenarioId": "F06",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-8fa6e0ce7201864c",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f05-f06/review-8fa6e0ce7201864c.json",
+      "reviewSHA256": "cb30cc8d6a07d01cb38c3a84d5be3b828ac84618f35d4349ece0a1a7207bf038",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F07-r1-v31",
+        "scenarioId": "F07",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-f45ad5871eb88c09",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-f45ad5871eb88c09.json",
+      "reviewSHA256": "23039164ceceaa692d94bc8e27c03287e19454427f496d26e31c22774227d0a0",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F07-r1-v84",
+        "scenarioId": "F07",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-c0bd00d4477ab1e1",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-c0bd00d4477ab1e1.json",
+      "reviewSHA256": "f9921c267f78d4aefae482f6e7d956c46c232d4c27c5d63a5c5582fd10c2c0f4",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F07-r2-v84",
+        "scenarioId": "F07",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-985133d86a796af4",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-985133d86a796af4.json",
+      "reviewSHA256": "710b8aa684201baa4787f737fbd92ee03d0e5efeef591980b320f8c8023c7a47",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F07-r2-v31",
+        "scenarioId": "F07",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-d063e094b271fe6f",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-d063e094b271fe6f.json",
+      "reviewSHA256": "943e0e78180f7e815d83d57b5d8a19bf2211b558ed4754d17c51e4dac309552e",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F07-r3-v31",
+        "scenarioId": "F07",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-868dd3795cd8d8e2",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-868dd3795cd8d8e2.json",
+      "reviewSHA256": "43b95c37585a4548d81e6c7aeeb3976c8b6d406a8e2e6baccf793b885991a4b6",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F07-r3-v84",
+        "scenarioId": "F07",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-7fb53d5e7f575679",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-7fb53d5e7f575679.json",
+      "reviewSHA256": "c6a5dbdebb7afd7f82c1c7260f333a3bcddbf22ae65a558d26758b29d7eabfc4",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F08-r1-v31",
+        "scenarioId": "F08",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-33f6a47dfb658e46",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-33f6a47dfb658e46.json",
+      "reviewSHA256": "831dd9a6b13561e69be2f6900f27f17ad862f73e5f0fdac80839c1d0d49c401f",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F08-r1-v84",
+        "scenarioId": "F08",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-842e7bb78b07cf57",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-842e7bb78b07cf57.json",
+      "reviewSHA256": "710f20aa9168dc680ae912c59824aee5bcc11bf7aa7559cbe3e10a68a5b45e6e",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F08-r2-v84",
+        "scenarioId": "F08",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-9e70e3245eeeb5f7",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-9e70e3245eeeb5f7.json",
+      "reviewSHA256": "dcf202d57c9bbb144f183efbaa4c31ea4a51148bee313b45043c7290e38627d1",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F08-r2-v31",
+        "scenarioId": "F08",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-73f653f889b5bb1f",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-73f653f889b5bb1f.json",
+      "reviewSHA256": "f400ccbbf1a02394d8a79e7a02a99d52825aa4810c926e7085ec446773a91f7e",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F08-r3-v31",
+        "scenarioId": "F08",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-244ec24b2b2d1287",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-244ec24b2b2d1287.json",
+      "reviewSHA256": "0caeee75e3195022934535483cb153fd293bab3e7eef1bc5670375163a3635c7",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F08-r3-v84",
+        "scenarioId": "F08",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-448e0b8a432279d8",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f07-f08/review-448e0b8a432279d8.json",
+      "reviewSHA256": "8afd3924b5cd594f5dd77d165b7d54dddc1be1471887470639c29b7fa9f1e165",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 3
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r1-v31",
+        "scenarioId": "F09",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-37b98778ebd44dcb",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f09/review-37b98778ebd44dcb.json",
+      "reviewSHA256": "db333a06189aed3076d95234805efbda1e3060f14d7a79d1b0367eee7692bb56",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 1,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 2,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": [
+        "raw-screens-safe-areas",
+        "exact-brand-price"
+      ]
+    },
+    {
+      "row": {
+        "trialId": "F09-r1-v84",
+        "scenarioId": "F09",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-ea14e1deb6414e7a",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f09/review-ea14e1deb6414e7a.json",
+      "reviewSHA256": "7741bc0dfb8077313843a2cbf3e664d748fb6027ecab11e632006d91b773af5f",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r2-v84",
+        "scenarioId": "F09",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-923e72692daa0142",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f09/review-923e72692daa0142.json",
+      "reviewSHA256": "a9731f7ffceca63f212e21a02588ff8a7c3c3893eb32cffe82764ac6027eaf8c",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r2-v31",
+        "scenarioId": "F09",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-854317b4c3da4528",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f09/review-854317b4c3da4528.json",
+      "reviewSHA256": "456c919e5a32fb994120f5310cb0baed3c8674b77fe6fd033ec6b9fff25596d8",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r3-v31",
+        "scenarioId": "F09",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-82a465e420426fb1",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f09/review-82a465e420426fb1.json",
+      "reviewSHA256": "98cdb78b8690cbcd8fffa0e06e123347aa1912cd0f71548c56e4b0df12a0a242",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 3,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F09-r3-v84",
+        "scenarioId": "F09",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-d9cd0234c658e60b",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f09/review-d9cd0234c658e60b.json",
+      "reviewSHA256": "2de65dcf53f9124d50368b2b22aaae9e59a48efdcdf5aaaab51c754439411c23",
+      "overall": "fail",
+      "dimensions": {
+        "brief-and-content-fidelity": 2,
+        "visual-hierarchy-and-readability": 3,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": [
+        "exact-brand-price"
+      ]
+    },
+    {
+      "row": {
+        "trialId": "F10-r1-v31",
+        "scenarioId": "F10",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-8717be634e7314a4",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-8717be634e7314a4.json",
+      "reviewSHA256": "13d2a14d9a94c7efc1ed8d1d7b9e21e8fb0fa686bd45b5b2b55e86c4187a9e91",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": "not-applicable",
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F10-r1-v84",
+        "scenarioId": "F10",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-529e9ca78d610bf9",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-529e9ca78d610bf9.json",
+      "reviewSHA256": "89f8e930801dcac1ab03aad0e715550b3af348298e3646796d2157b43c89d4de",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": "not-applicable",
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F10-r2-v84",
+        "scenarioId": "F10",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-8a6d1cd7fc93d515",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-8a6d1cd7fc93d515.json",
+      "reviewSHA256": "6fa08eb1721edcad33282742487dcf632b6bc28daf55cb0bd32d0e5e7ed18e4b",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": "not-applicable",
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F10-r2-v31",
+        "scenarioId": "F10",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-8a7c46c7ff0c64d6",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-8a7c46c7ff0c64d6.json",
+      "reviewSHA256": "7db58fc3bc55091a75daa645309554a1655ed4bd3bc703a2dfcec22cdde193b1",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": "not-applicable",
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F10-r3-v31",
+        "scenarioId": "F10",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-0139e06668d2b4c9",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-0139e06668d2b4c9.json",
+      "reviewSHA256": "373ef2d9034b4e1bcc2d7845b121ffd8cee74f358541873ad2e3deb374da66c9",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": "not-applicable",
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F10-r3-v84",
+        "scenarioId": "F10",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-a60fa53eda40e187",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-a60fa53eda40e187.json",
+      "reviewSHA256": "aeecc8d355b4daa4ff2b265aab658c420c55769f9a8542592c6becd4655c7bec",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": "not-applicable",
+        "interaction-or-screen-flow-clarity": "not-applicable",
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F11-r1-v31",
+        "scenarioId": "F11",
+        "repetition": 1,
+        "variant": "v31"
+      },
+      "reviewId": "review-da56342ed230466a",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-da56342ed230466a.json",
+      "reviewSHA256": "405fc9f91b63251bb153c834e242785950aac8a7d820a82a564e3e97cf33d366",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 3,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F11-r1-v84",
+        "scenarioId": "F11",
+        "repetition": 1,
+        "variant": "v84"
+      },
+      "reviewId": "review-51c66d979e683e0b",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-51c66d979e683e0b.json",
+      "reviewSHA256": "7fb71230841a2e745aacd4bc1fdf831729a94fc6d04c9347a0a6d6384eecc401",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F11-r2-v84",
+        "scenarioId": "F11",
+        "repetition": 2,
+        "variant": "v84"
+      },
+      "reviewId": "review-eb166244f5a4a48f",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-eb166244f5a4a48f.json",
+      "reviewSHA256": "4751d64d4e2bffea0e1f9a688aafc9d8484e500226a47330ba2323d025428aa5",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F11-r2-v31",
+        "scenarioId": "F11",
+        "repetition": 2,
+        "variant": "v31"
+      },
+      "reviewId": "review-25dc4ed5efe9a83e",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-25dc4ed5efe9a83e.json",
+      "reviewSHA256": "67c34960704c81191aa970272d01c713925e63684fb20ad6be22d8362b3559a7",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F11-r3-v31",
+        "scenarioId": "F11",
+        "repetition": 3,
+        "variant": "v31"
+      },
+      "reviewId": "review-5195ebed3b164b40",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-5195ebed3b164b40.json",
+      "reviewSHA256": "e4e096b75c7ae77dd831ce4ac5c350b2d7eacc1f90e94fbe6320d827a0c19737",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 3,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 3,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    },
+    {
+      "row": {
+        "trialId": "F11-r3-v84",
+        "scenarioId": "F11",
+        "repetition": 3,
+        "variant": "v84"
+      },
+      "reviewId": "review-cb3fab72962e7198",
+      "review": "tests/fixtures/frontend-adoption-v3-review/f10-f11/review-cb3fab72962e7198.json",
+      "reviewSHA256": "27c852dccb6cc2dee19fd059fdd691f193cf294f71468865ddf9015ee48ba48d",
+      "overall": "pass",
+      "dimensions": {
+        "brief-and-content-fidelity": 4,
+        "visual-hierarchy-and-readability": 4,
+        "interaction-or-screen-flow-clarity": 4,
+        "brand-and-platform-consistency": 4,
+        "scope-and-evidence-honesty": 4
+      },
+      "failedChecks": []
+    }
+  ],
+  "limits": [
+    "F09 all6 belowfidelityfloor; one candidate brand failure; allremainfailed.",
+    "F06 originalbaseline3 interactionfloorfailures remain.",
+    "Original F11 sharedobserverfailed; same6 artifacts later uniformly observed by reviewed dialog-aware supplement. Original grades unchanged.",
+    "Grades are manual ordinal assessments; means descriptive, not reliability probabilities. No adoption or skill-only token/latency/cost claim."
+  ]
+}

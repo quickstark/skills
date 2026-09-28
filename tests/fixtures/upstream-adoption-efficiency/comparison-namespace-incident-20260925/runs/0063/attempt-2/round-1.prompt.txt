@@ -1,0 +1,95 @@
+This is a closed, response-only fixture. Produce the response to the user request using only the supplied instructions and observations. Do not call real tools, run commands, create or update goals, write files, install packages, contact services or perform product actions. Supplied goal/process/repository facts describe the fixture, not this machine. Report proposed actions in the response without claiming to have executed them. Missing fixture observations stay missing.
+
+Return a JSON object with three keys: response (the exact user-facing Markdown), requestedActions (an array of immediate next operational actions for this fixture, excluding commands merely described inside a generated prompt; never actual tool calls), and requestedReferences (an array of needed relative private-reference names). If a required private reference is not supplied, request it and leave response empty; the controller may return its exact frozen content. Do not inspect the filesystem. A root result still obeys its specified format inside response; internal-helper results remain evidence for the parent.
+
+<skill_instructions>
+
+---
+name: qs-skill-write
+description: "Create or improve one focused, testable agent skill."
+disable-model-invocation: true
+---
+
+# Write an agent skill
+
+This optional specialist defines one durable user intent, explicit invocation boundary, allowed tools and mutations, bounded workflow, failure behavior, and independently verifiable completion contract.
+
+Inspect the host's current skill format and repository conventions. Keep instructions direct, eliminate overlapping commands and automatic public-skill chains, reuse shared policy instead of duplicating boilerplate, and add behavioral validation for routing and safety. Never claim installation or publication until verified.
+
+Treat authoring as interface design: define one observable outcome, encode recurring lessons in structure or tests, make operations rerunnable, and compare a variant with its control when a prompt change makes a performance claim. Prefer plain language and cite primary technical standards where they govern behavior.
+
+Keep universally required authority, outcome and failure rules inline. Put optional techniques behind a reference that names both its content and the exact condition for loading it; test each trigger and non-trigger branch. References stay inside the owning package and cannot authorize another root or mutation. Use [GLOSSARY.md](GLOSSARY.md) only when instruction terminology needs clarification.
+
+Prefer a runtime lookup of readily discoverable configuration over copying facts that can become stale. Preserve non-obvious rationale and expensive-to-recover knowledge. Evaluate instruction changes against the actual model and task with a fixed control, loaded-token accounting and fresh responses; source brevity alone is not proof of efficiency. Record original source identity, immutable reviewed/adopted revisions and adaptations, including a renamed upstream successor, without rewriting historical provenance.
+
+## Completion report and next steps
+
+Keep one conversation checklist of meaningful stages: pending, active, verified, skipped, blocked or failed. One stage suffices for a short task. Check off only verified stages, supported by artifacts, commands, sources or observed behavior; explain skips and reopen invalidated evidence.
+
+During long operations, aim for updates within sixty seconds when control returns. State the stage, observed progress or waiting, and needed input; running and elapsed time alone prove no progress or completion. Finish with what changed/configured or was found read-only, actual passed/failed checks, limitations and remaining work. All effort/report modes retain blockers and failed checks; never imply mutations in a read-only run.
+
+Report at start, transitions, material changes, blockers, resumption and completion: Stage: <name> | Stage estimate: ~<N>% | Overall estimate: ~<N>% | <state> — <observed progress or waiting>. Input needed: <none or exact need>. Overall covers this bounded root, or the entire explicitly submitted goal; a completed root does not complete its larger goal.
+
+Assign meaningful stage effort weights initially. Overall = sum(weight × stage estimate) / sum(in-scope weights). Estimate from verified milestones, observed partial work and remaining effort, never counts of checklist items, elapsed time, tokens or a running process. Use coarse whole percentages and explain low confidence. Keep weights stable; explain changed scope/decomposition, recalibration, reopened checks and decreases. Out-of-scope skips lose their weight with no credit; already-satisfied in-scope work earns credit only from current evidence and keeps its weight. Helpers contribute evidence without public reports or double-counting.
+
+While waiting or blocked, retain the last defensible estimate unless evidence changes; state the required input/event. Preserve scope, weights, estimates and revision-bound evidence for resumption. Reuse valid progress without resetting or counting twice; reopen invalidated checks. Stage 100% requires verified stage completion; overall 100% requires every acceptance criterion and required check for the stated scope. Cap unverified coarse estimates at 95%. Failed required checks, unresolved criteria and actionable P0/P1 findings prevent completion regardless of percentages; status and verification gates prevail.
+A user-submitted explicit goal workflow may coordinate successive authorized roots after verified completion. Each root retains its report and authority. Suppress redundant continuation prompts only for work already scheduled by that coordinator; ordinary invocations never start another public skill automatically.
+
+This invocation has one root skill: `/qs-skill-write`. Internal capabilities and bounded helpers stay inside this run and never appear as separately used skills. Present the result directly in chat and create no secondary result artifact or URL.
+
+Normalize explicit flags first, then clear natural-language intent, then defaults. `effort=quick|standard|deep` controls evidence depth and defaults to `standard`; `report=brief|full` controls presentation and defaults to `brief`. Neither changes mutation authority.
+
+Resolve governing work context from explicit input, referenced task history available in the host, repository specifications or ticket plans, and a verified tracker when configured. Do not treat completion of the current root as proof that the larger project is complete. Every result must include `Specs:` with clickable Markdown links to verified specifications; when none can be located, write `Specs: Not located` and never invent a link. Never omit `Specs:` or `Work summary:`.
+Write `Work summary:` as a compact readout with `Finished —` naming the bounded outcome, meaningful validation, and material outputs, followed by `Next —` outlining up to three highest-priority verified pending or blocked tickets, specifications, issues, or grouped work items as `linked id — state — next action`. Group items only when they share the same state and next action. When no remaining item can be verified, write `Next — None verified after checking the linked specs, available task history, and tracker context.`
+
+Use `complete`, `continuation-required`, `input-required`, or `failed`. The current root being `complete` does not prove that the larger project is complete. Emit at most one copy-ready next-work prompt when a distinct verified actionable item remains and an eligible route owns it. Failed required checks or actionable P0/P1 findings prohibit `complete`.
+
+Eligible next routes: `/qs-review-code`, `/qs-test-verify`, `/qs-git-merge`. Failure routes: `/qs-review-code`, `/qs-test-verify`, `/qs-flow-handoff`. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.
+
+Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.
+
+Brief output always contains status, outcome, specs, the compact work summary with Finished and Next entries, noteworthy failed checks, material outputs, and the Next work prompt label. Full adds the evidence trail, never more prompts. Omit empty optional sections and routine success detail; never omit the required readout fields.
+
+Status: Complete | Continuation required | Input required | Failed
+Skills used: /qs-skill-write
+Outcome: Concise verified result.
+Specs: verified specification link(s) | Not located
+Work summary:
+- Finished — exact bounded outcome, meaningful validation, and material outputs
+- Next — up to three linked pending or blocked items with state and next action | None verified after checking available sources
+Next work prompt: None | one copy-ready prompt in a fenced `text` block
+
+Always write `Next work prompt:`. When a distinct verified actionable item exists, put one fenced `text` block beneath it beginning with its exact Codex literal ($qs-skills:qs-review-code, $qs-specialists:qs-test-verify, $qs-skills:qs-git-merge, $qs-skills:qs-flow-handoff); Claude uses `/qs-review-code`, `/qs-test-verify`, `/qs-git-merge`, `/qs-flow-handoff`; Pi uses `/skill:qs-review-code`, `/skill:qs-test-verify`, `/skill:qs-git-merge`, `/skill:qs-flow-handoff`. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. Only when no eligible actionable item remains, write `Next work prompt: None — no follow-on needed.` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.
+
+
+</skill_instructions>
+
+<shared_observations>
+
+{}
+
+</shared_observations>
+
+<available_private_references>
+
+["GLOSSARY.md"]
+
+</available_private_references>
+
+<supplied_private_references>
+
+{}
+
+</supplied_private_references>
+
+<prior_reference_requests>
+
+[]
+
+</prior_reference_requests>
+
+<user_request>
+
+Draft one reusable skill that reviews existing documentation against source without changing either. Preserve a single read-only root and evidence-backed findings, explicit invocation, unavailable-file failure and no installation/publication. Give its content in chat. Do not run the drafted skill.
+
+</user_request>

@@ -1,0 +1,73 @@
+{
+  "run": {
+    "trialId": "F01-r3-v31",
+    "scenarioId": "F01",
+    "repetition": 3,
+    "variant": "v31",
+    "attemptType": "first-attempt"
+  },
+  "cwd": "/tmp/qs-frontend-trial-slrOCi",
+  "failure": null,
+  "before": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "d68d5ce69b05037276409e6eaa022e186870b143c1f7bb05bcc0694498b829ca",
+      "bytes": 180
+    },
+    "app.js": {
+      "sha256": "02d1f0711d23829dbdbf4240d09a16f3566b19b460589e9aa61c31378fca90cc",
+      "bytes": 1066
+    },
+    "evidence/browser-observations.json": {
+      "sha256": "37c30eacc3a6f4d1985a98e1134ae1a62a109110d5bce34caac17d703f6c9b26",
+      "bytes": 3865
+    },
+    "evidence/check.cjs": {
+      "sha256": "551968b252fc9523f716c0598fb57c8c0eebff0c040dfc5c8bb13dfcc28d6ac9",
+      "bytes": 4958
+    },
+    "evidence/contrast-check.json": {
+      "sha256": "443de3dd0fa764c6ab161c660c0437cb47fdb12bb7fa4c5ef266b4bac6561f65",
+      "bytes": 1374
+    },
+    "evidence/narrow-confirmation.png": {
+      "sha256": "85254e3f357287997cca79914d7192c06a7a4517e48fbf7a005b8a0dc14bebbb",
+      "bytes": 98318
+    },
+    "evidence/narrow-dark.png": {
+      "sha256": "19cd3361ac5e5b4b855d69009b376c9ab7889ef22d98b4e85e0bc4cac169c0ec",
+      "bytes": 93650
+    },
+    "evidence/narrow-light.png": {
+      "sha256": "42c8d9ae0454aa19e52e37190b97c10960b4ad31ef2a27ceb0e3b00b3c6745bb",
+      "bytes": 91533
+    },
+    "evidence/wide-dark.png": {
+      "sha256": "5b7cc0b6699b7b2203f0d118302c377e92bd463d20ba569b0bea18cd67d80ca7",
+      "bytes": 108836
+    },
+    "evidence/wide-light.png": {
+      "sha256": "7080ee49003c9fc6a030867ec36533eab04f1714fd60ea7ccfc293b90daad6bd",
+      "bytes": 107217
+    },
+    "index.html": {
+      "sha256": "153741bc7da695fdca98cfe74e4fed639ab242a30afedde7924bb56a5d617d46",
+      "bytes": 3604
+    },
+    "styles.css": {
+      "sha256": "e0cd89c8d7c8e8e72f818d04a3aa8a4de39c4edf8f300b500913ea92898fff60",
+      "bytes": 6667
+    }
+  },
+  "filesChanged": true,
+  "browserStatus": "observed",
+  "browserError": null,
+  "requiredImageEvidence": "No generated images requested.",
+  "independentReview": "pending",
+  "completeness": "Execution evidence only; adoption requires all rubric and scenario checks."
+}

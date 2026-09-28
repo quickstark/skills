@@ -1,0 +1,52 @@
+{
+  "id": "batch-17",
+  "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sampleDefinition": "one completed response for each listed task",
+  "sampleCount": 4,
+  "executionOrder": [
+    "sample-01",
+    "sample-02",
+    "sample-03",
+    "sample-04"
+  ],
+  "control": null,
+  "taskSources": [
+    {
+      "id": "sample-01",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sourceCase": "H1",
+      "originalIndexSha256": "8949441860a5ef4aa95ff5b58dcb425dc63c0fdc689adb966e5eddd313c3065b",
+      "files": {
+        "response.md": "6327d3cb5c0f610fd3d777850b7e813114b743fc0c9123342eff109b6ba13e97",
+        "events.jsonl": "23e546c3b61631b0ceba0eee76b7dba56c5fb5da59e4e483c047a553660719e1",
+        "telemetry.json": "57b366c05a99ff7d86703d374f4d7f85fddcb047550d66c5b828a6c5915013ee"
+      }
+    },
+    {
+      "id": "sample-02",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sourceCase": "A5",
+      "originalIndexSha256": "8949441860a5ef4aa95ff5b58dcb425dc63c0fdc689adb966e5eddd313c3065b",
+      "files": {
+        "response.md": "d75c86a048eb54baff8132e8c831945f6f6a47f53383d68eaae1c7d877c11304",
+        "events.jsonl": "61f09af03d72426b87bba0b959bcdddd24da7f18997d31c9a4e75891f0cce1b8",
+        "telemetry.json": "76a3fd97b23547a38e57a79e999cb6e75645a44ce2cdc10da72af605f9817ca1"
+      }
+    },
+    {
+      "id": "sample-03",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sourceCase": "V3",
+      "originalIndexSha256": "8949441860a5ef4aa95ff5b58dcb425dc63c0fdc689adb966e5eddd313c3065b",
+      "files": {
+        "response.md": "6f2532eaf41668c366c69aea7e4039e6ce5a2925a22a1afffdef7511f7295b97",
+        "events.jsonl": "4cee4ba960b13b42a16aad9cb6eaae7f88531d83e24d4272724ab23c045f54b4",
+        "telemetry.json": "639f41c09600ada5fd7453b12f565bd54fc49c14c113b536840a021b25bafd02"
+      }
+    }
+  ],
+  "missingRecord": {
+    "id": "sample-04",
+    "state": "dispatched; no returned output recorded"
+  }
+}

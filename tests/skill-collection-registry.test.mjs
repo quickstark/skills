@@ -5,35 +5,41 @@ import {
   COMPOSITE_WORKFLOWS,
   COLLECTION_REGISTRY,
   PUBLIC_COMMANDS,
+  LEGACY_PUBLIC_COMMANDS,
+  LEGACY_SKILL_COLLECTIONS,
+  REGISTRY_STATE,
   codexPublicSkillLiteral,
   renderCompositeWorkflowPrompt,
   resolvePublicCommand,
   validateSkillCollectionRegistryModel,
 } from "../scripts/skill-collection-registry.mjs";
 
-test("PS-02 resolves QS core, QS specialist, and PS commands through registered collections", () => {
+const target = REGISTRY_STATE === "target";
+const legacyCounts = [["qs-skills", 12], ["qs-specialists", 8], ["ps-skills", 13]];
+const targetCounts = [["qs-skills", 12], ["qs-specialists", 8], ["qs-advanced", 12], ["qs-frontend", 4], ["qs-video", 1], ["qs-execution", 1]];
+const expectedCore = ["qs-help", "qs-setup", "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build", "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release", "qs-flow-triage", "qs-flow-handoff"];
+const expectedSpecialists = ["qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-test-author", "qs-test-verify", "qs-learn-teach", "qs-skill-write", "qs-deploy-prompt"];
+const expectedAdvanced = ["qs-how", "qs-why", "qs-blast-radius", "qs-runtime-forensics", "qs-trace-forensics", "qs-create-verification-skill", "qs-maintain-verification-skill", "qs-skill-eval", "qs-hillclimb", "qs-visual-parity", "qs-pr-babysit", "qs-worktree-cleanup"];
+const expectedPs = ["ps-help", "ps-how", "ps-why", "ps-blast-radius", "ps-runtime-forensics", "ps-trace-forensics", "ps-create-verification-skill", "ps-maintain-verification-skill", "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit", "ps-worktree-cleanup"];
+
+test("registry preserves independently specified legacy and active public identities", () => {
+  assert.ok(["legacy", "target"].includes(REGISTRY_STATE));
   assert.equal(validateSkillCollectionRegistryModel(COLLECTION_REGISTRY), true);
-  assert.equal(PUBLIC_COMMANDS.length, 33);
-
-  assert.deepEqual(
-    COLLECTION_REGISTRY.collections.map((collection) => [collection.id, collection.publicCommands.length]),
-    [["qs-skills", 12], ["qs-specialists", 8], ["ps-skills", 13]],
-  );
-
-  assert.deepEqual(
-    ["qs-help", "qs-plan-research", "ps-how"].map((name) => {
-      const command = resolvePublicCommand(name);
-      return [command.name, command.collectionId, command.codexLiteral, command.claudeLiteral];
-    }),
-    [
-      ["qs-help", "qs-skills", "$qs-skills:qs-help", "/qs-help"],
-      ["qs-plan-research", "qs-specialists", "$qs-specialists:qs-plan-research", "/qs-plan-research"],
-      ["ps-how", "ps-skills", "$ps-skills:ps-how", "/ps-how"],
-    ],
-  );
-  assert.equal(codexPublicSkillLiteral("ps-how"), "$ps-skills:ps-how");
-  assert.equal(resolvePublicCommand("ps-how").invocationPolicy, "explicit");
-  assert.equal(resolvePublicCommand("ps-how").readoutProfile, undefined);
+  assert.equal(PUBLIC_COMMANDS.length, target ? 38 : 33);
+  assert.deepEqual(LEGACY_SKILL_COLLECTIONS.map(collection => [collection.id, collection.publicCommands.length]), legacyCounts);
+  assert.deepEqual(LEGACY_PUBLIC_COMMANDS.map(command => command.name), [...expectedCore, ...expectedSpecialists, ...expectedPs]);
+  assert.deepEqual(COLLECTION_REGISTRY.collections.map(collection => [collection.id, collection.publicCommands.length]), target ? targetCounts : legacyCounts);
+  assert.deepEqual(PUBLIC_COMMANDS.map(command => command.name), target
+    ? [...expectedCore, ...expectedSpecialists, ...expectedAdvanced, "qs-design-frontend", "qs-design-image-web", "qs-design-image-mobile", "qs-design-image-to-code", "qs-video", "qs-unlazy"]
+    : [...expectedCore, ...expectedSpecialists, ...expectedPs]);
+  const selected = target ? ["qs-how", "qs-advanced", "$qs-advanced:qs-how", "/qs-how"] : ["ps-how", "ps-skills", "$ps-skills:ps-how", "/ps-how"];
+  assert.deepEqual(["qs-help", "qs-plan-research", selected[0]].map(name => {
+    const command = resolvePublicCommand(name); return [command.name, command.collectionId, command.codexLiteral, command.claudeLiteral];
+  }), [["qs-help", "qs-skills", "$qs-skills:qs-help", "/qs-help"], ["qs-plan-research", "qs-specialists", "$qs-specialists:qs-plan-research", "/qs-plan-research"], selected]);
+  assert.equal(codexPublicSkillLiteral(selected[0]), selected[2]);
+  assert.equal(resolvePublicCommand(selected[0]).invocationPolicy, "explicit");
+  assert.equal(resolvePublicCommand(selected[0]).readoutProfile, undefined);
+  if (target) { assert.ok(PUBLIC_COMMANDS.every(command => command.name.startsWith("qs-"))); assert.throws(() => resolvePublicCommand("ps-how"), /unknown public command/); }
 });
 
 test("composite continuation renders an explicit build review test merge workflow prompt", () => {
@@ -92,7 +98,7 @@ test("PS-02 rejects unknown commands, duplicate identities, and missing continua
   const invalidModels = [
     ["duplicate name", (model) => { model.publicCommands[1].name = model.publicCommands[0].name; }, /command names must be unique/i],
     ["duplicate literal", (model) => { model.publicCommands[1].codexLiteral = model.publicCommands[0].codexLiteral; }, /Codex literals must be unique/i],
-    ["missing target", (model) => { model.publicCommands.find((item) => item.name === "ps-how").continuation.normal[0].name = "ps-missing"; }, /unknown continuation target/i],
+    ["missing target", (model) => { model.publicCommands.find((item) => item.name === (target ? "qs-how" : "ps-how")).continuation.normal[0].name = "ps-missing"; }, /unknown continuation target/i],
     ["ambiguous membership", (model) => { model.collections[1].publicCommands.push("qs-help"); }, /exactly one registered collection/i],
     ["unknown collection command", (model) => { model.collections[0].publicCommands[0] = "qs-missing"; }, /unknown command/i],
   ];

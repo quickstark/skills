@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 13,
+    "scenarioId": "E1",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "E1",
+  "inputSHA256": "5def85f1f2b4e78be0ac0f0255aa141659cc57b9832f81ad446f0fc5a4935400",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-1oiQI5",
+  "startedAt": "2026-09-25T19:19:32.667Z",
+  "completedAt": "2026-09-25T19:19:54.477Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25844,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 536,
+      "reasoning_output_tokens": 194
+    }
+  ],
+  "elapsedMs": 21757.314408999984,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 remains live; its last output was “124/180 tests passed” 70 seconds ago. No new progress is confirmed. Input needed: none.\n\n- [ ] Build — active, ~50%; validation remains pending.\n- [ ] Git — pending, 0%; awaits verified Build completion.\n- [ ] Release — pending, 0%; awaits verified Git completion.\n\nKeeping the observed milestone estimates and weights unchanged: (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Process liveness and elapsed time do not increase completion or establish failure.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — Observed implementation and review milestones support Build’s partial estimate; the last test output reports 124/180 passed. Build completion is unverified.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — active — check process 81 for new output or completion, then finish required validation. Publication and staging artifact/version/health verification remain pending.\n\nNext work prompt: None — authorized later stages are already scheduled and remain gated on verification.",
+    "requestedActions": [
+      "Poll existing process 81 for new output or completion with a bounded wait of at most 60 seconds; preserve the current estimates unless new evidence supports a change."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

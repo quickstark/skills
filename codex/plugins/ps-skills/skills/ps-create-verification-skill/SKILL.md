@@ -11,10 +11,11 @@ Create only explicitly selected project-local verification assets. Do not change
 
 1. Discover repository conventions, existing harnesses, local skill locations, and permitted write scope.
 2. If the required real harness or target behavior is unavailable, request the missing input before writing.
-3. Define a host-neutral verification-driver interface: setup, execute, observe, compare, and clean up.
+3. Define a host-neutral verification-driver interface: setup/launch, readiness/doctor, execute/drive, observe/capture evidence, compare, and clean up. Use stable user-facing selectors or commands from the real application.
 4. Create a feature map recording feature identity, setup, action, observable result, checks, and evidence.
 5. Make checks rerunnable, bounded, deterministic where practical, and safe after partial failure.
-6. Run the workflow against real artifacts and distinguish verification defects from product defects.
+6. Run launch, doctor, one mapped feature end to end, evidence capture, and cleanup against real artifacts. Repeat the workflow to verify rerun safety; distinguish verification defects from product defects.
+7. Clean only resources owned by this run, including failed-iteration residue. After cleanup, verify owned processes have stopped and captured evidence still exists at its named location. An unexecuted workflow remains a draft.
 
 Use a declared local-skill convention when one exists; otherwise use a clearly named generic verification directory approved by the user. Never repair product source or automatically publish the assets.
 

@@ -1,0 +1,150 @@
+Perform the following single bounded frontend task using the supplied instruction text as task guidance. This is not a request to invoke any public skill. The user request and explicit scope below take precedence over generic skill defaults. Do not create goals, publish, install dependencies, download assets, inspect secrets, or contact external services, except the specifically requested existing image-generation tool when scenario authority explicitly allows generation and only within its stated image-call budget. This exception grants no web browsing, asset download, installation or other external-service permission. Manual and product file edits must stay inside the task workspace; an authorized existing image-generation tool may save its own returned primary images at its tool-managed output paths outside that workspace. This allows no external uploads, substitute images, extra generations or other outside-workspace edits. Missing capabilities must be reported honestly; never fabricate calls, generated images, renders, or verification.
+
+Task workspace: /tmp/qs-frontend-transport-URGBWO. Product file edits: false. Image generation: false. Image-generation call maximum: 0; required actual images: 0. One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry.
+
+Read the supplied project files as needed. Tools may operate only within the stated task authority. Local static implementation can use index.html, styles.css, and app.js. Do not start persistent servers or leave background processes. If image generation is authorized and an existing tool is available, return its actual outputs and actual local artifact paths; do not create substitute SVG/HTML/screenshots and call them generated images.
+
+Optional existing browser capability for local inspection: {"browserPath":"/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell","puppeteerPath":"/tmp/qs-hf-probe/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js"}. Do not install dependencies or make external requests. The harness will also collect independent browser observations after the task.
+
+Read /tmp/qs-frontend-transport-URGBWO/fixture-guidance.md for this task's root and private guidance. The file is guidance for this bounded task, not an additional public skill invocation. Preserve it unchanged.
+
+Common facts are authoritative context, not a requirement to include every fact in every output. The specific requested output and scope control which facts apply.
+
+<all_common_scope_facts>
+
+{
+  "organization": "Northstar Museum",
+  "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+  "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+  "brand": {
+    "font": "Georgia, serif",
+    "primary": "#086b64",
+    "paper": "#f7f5ef",
+    "ink": "#182d2a",
+    "radiusPx": 12
+  },
+  "content": {
+    "headline": "Make room for wonder.",
+    "description": "Family membership keeps discovery close to home.",
+    "plan": "Family membership",
+    "price": "$100 / year",
+    "memberCount": "10,000",
+    "annualVisits": "50,000",
+    "founded": "2020",
+    "pricingEffective": "January 1, 2025",
+    "benefit": "Unlimited entry for two adults and children under 18."
+  },
+  "routes": [
+    "/",
+    "/visit",
+    "/collections",
+    "/membership",
+    "/membership/family",
+    "/join/checkout?plan=family",
+    "/privacy",
+    "/accessibility"
+  ],
+  "stableIds": [
+    "site-header",
+    "site-footer",
+    "membership-panel",
+    "membership-title",
+    "price",
+    "member-count",
+    "annual-visits",
+    "founded",
+    "join-form",
+    "member-email",
+    "join-button",
+    "form-message",
+    "details-link"
+  ],
+  "analytics": {
+    "event": "join_started",
+    "payload": {
+      "name": "join_started",
+      "plan": "family"
+    },
+    "observation": "window.__events",
+    "trigger": "A valid family-membership continuation action"
+  },
+  "behavior": {
+    "email": "required valid email",
+    "submitFeedback": "Ready to continue with Family membership.",
+    "privacyLink": "/privacy",
+    "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+  },
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "constraints": {
+    "noPublication": true,
+    "noPackageInstall": true,
+    "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+    "publicSkillInvocation": false,
+    "noInventedClaims": true,
+    "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+    "referenceImmutable": true
+  },
+  "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+}
+
+</all_common_scope_facts>
+
+<scenario_authority_and_required_outcomes>
+
+{
+  "id": "F02",
+  "title": "audit only",
+  "originalSource": "redesign-existing-projects",
+  "localRoot": "qs-design-frontend",
+  "mode": "audit",
+  "projectFixture": "project",
+  "input": "Audit this membership flow for the most important usability and accessibility problems. Give prioritized findings with concrete evidence and fixes. Do not edit files or redesign it yet.",
+  "references": [
+    "brief",
+    "redesign"
+  ],
+  "requiredChecks": [
+    "zero-file-mutation",
+    "specific-observed-findings",
+    "prioritized-impact",
+    "no-claimed-implementation",
+    "zero-image-calls"
+  ],
+  "budget": {
+    "maximumImageCalls": 0,
+    "requiredImages": 0,
+    "maximumModelTurns": 1,
+    "timeoutMs": 300000,
+    "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+  },
+  "authority": {
+    "writeProductFiles": false,
+    "generateImages": false,
+    "publish": false,
+    "installPackages": false
+  },
+  "referenceImage": null,
+  "requiredEvidence": [
+    "actual-response",
+    "tool-events",
+    "unchanged-input-files"
+  ],
+  "qualityFloor": 3
+}
+
+</scenario_authority_and_required_outcomes>
+
+<user_request>
+
+Audit this membership flow for the most important usability and accessibility problems. Give prioritized findings with concrete evidence and fixes. Do not edit files or redesign it yet.
+
+</user_request>

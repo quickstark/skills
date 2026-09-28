@@ -24,6 +24,10 @@ Never create remote resources, credentials, releases, or deployments unless sepa
 - Standard: verify and safely repair the normal project configuration.
 - Deep: include wider integration and documentation checks without expanding project scope.
 
+## Conditional project references
+
+For a confirmed tracker, read only its adapter: [GitHub](issue-tracker-github.md), [GitLab](issue-tracker-gitlab.md), or [local Markdown](issue-tracker-local.md). Read [triage-labels.md](triage-labels.md) only when configuring an existing triage workflow, and [domain.md](domain.md) when domain documentation exists or terminology affects setup. Use verified project conventions rather than imposing the examples. These references describe formats and operations; loading them never authorizes issue creation, claiming, comments, closing, or another public workflow.
+
 ## Completion report and next steps
 
 Keep a checklist in the conversation. Report the current stage and estimated stage and overall completion, whether progress is continuing, and whether you need anything from me. Verify each completed stage. Finish with a short explanation of what was configured, which checks passed, and what remains.

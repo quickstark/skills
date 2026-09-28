@@ -1,0 +1,16 @@
+{
+  "status": "failed-before-model",
+  "cause": "Caller omitted required executable argument; spawn rejected undefined before any process creation.",
+  "affected": "H1 preparation only; no model or tool response existed.",
+  "decision": "Correct explicit executable binding, retain prior plan/runner/raw attempt, run one new complete24-case capture. No semantic retry or changed task/source/rubric/host configuration.",
+  "files": {
+    "attempt/H1/binding.json": "7511f0bfa2457e16e5d90606a852ae1770bd3acd94e67573fb28f605f42b8078",
+    "attempt/H1/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt/H1/prompt.txt": "eabd8422592089dc5275940dbe692bbdd999d5082615b3aaa5dc031f08ccd9b0",
+    "attempt/H1/stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt/run-binding.json": "3533c98388a92dfea16460db470bd4fbd19a6c8f4c2dbc9494055b5d89af96a6",
+    "plan.json": "1eb0567a33a360681ba3d7adbb5c7334671fce36ed0d653f4914eee509e5df6a",
+    "runner.mjs": "7eabb8942056ccbdee8741122ff28f59a0fea7c20cc25fee28fab38f19853d93",
+    "supervisor.log": "f2050f31bcefb626ce19518ea2d9d31c3d37a4a5eb74aa709e7d4ed4199f7d25"
+  }
+}

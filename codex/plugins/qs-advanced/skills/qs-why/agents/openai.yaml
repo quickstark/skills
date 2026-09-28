@@ -1,0 +1,4 @@
+interface:
+  display_name: "QS Why"
+  short_description: "Explain attributable rationale"
+  default_prompt: "Use $qs-advanced:qs-why to explain why this behavior or design exists from attributable evidence. Modes: effort=quick|standard|deep and report=brief|full."

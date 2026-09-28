@@ -1,0 +1,223 @@
+{
+  "reviewId": "review-458d24c62a4971a9",
+  "task": {
+    "id": "F07",
+    "title": "reduced motion",
+    "mode": "implementation",
+    "projectFixture": "project",
+    "input": "Repair the reduced-motion experience of this page. Keep all content and controls available and keep the existing brand and behavior. Limit edits to the motion/accessibility defect; do not perform a broad redesign.",
+    "requiredChecks": [
+      "reduced-motion-animation-off",
+      "content-remains-visible",
+      "no-broad-redesign",
+      "analytics-and-form-preserved",
+      "zero-image-calls"
+    ],
+    "budget": {
+      "maximumImageCalls": 0,
+      "requiredImages": 0,
+      "maximumModelTurns": 1,
+      "timeoutMs": 300000,
+      "refinementPolicy": "One task turn; refine only the requested unmet outcome within this image/time budget. No automatic retry."
+    },
+    "authority": {
+      "writeProductFiles": true,
+      "generateImages": false,
+      "publish": false,
+      "installPackages": false
+    },
+    "referenceImage": null,
+    "requiredEvidence": [
+      "actual-response",
+      "tool-events",
+      "actual-files",
+      "browser-observations",
+      "wide-and-narrow-screenshots"
+    ],
+    "qualityFloor": 3
+  },
+  "commonScope": {
+    "organization": "Northstar Museum",
+    "factStatus": "Synthetic fixture organization; the following are authoritative product facts, not public-world claims.",
+    "stack": "Static HTML/CSS/JavaScript; no build system, package installation or external network is necessary.",
+    "brand": {
+      "font": "Georgia, serif",
+      "primary": "#086b64",
+      "paper": "#f7f5ef",
+      "ink": "#182d2a",
+      "radiusPx": 12
+    },
+    "content": {
+      "headline": "Make room for wonder.",
+      "description": "Family membership keeps discovery close to home.",
+      "plan": "Family membership",
+      "price": "$100 / year",
+      "memberCount": "10,000",
+      "annualVisits": "50,000",
+      "founded": "2020",
+      "pricingEffective": "January 1, 2025",
+      "benefit": "Unlimited entry for two adults and children under 18."
+    },
+    "routes": [
+      "/",
+      "/visit",
+      "/collections",
+      "/membership",
+      "/membership/family",
+      "/join/checkout?plan=family",
+      "/privacy",
+      "/accessibility"
+    ],
+    "stableIds": [
+      "site-header",
+      "site-footer",
+      "membership-panel",
+      "membership-title",
+      "price",
+      "member-count",
+      "annual-visits",
+      "founded",
+      "join-form",
+      "member-email",
+      "join-button",
+      "form-message",
+      "details-link"
+    ],
+    "analytics": {
+      "event": "join_started",
+      "payload": {
+        "name": "join_started",
+        "plan": "family"
+      },
+      "observation": "window.__events",
+      "trigger": "A valid family-membership continuation action"
+    },
+    "behavior": {
+      "email": "required valid email",
+      "submitFeedback": "Ready to continue with Family membership.",
+      "privacyLink": "/privacy",
+      "noRealCheckout": "Local form shows confirmation and records the local analytics event; never contact a service."
+    },
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 900
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "constraints": {
+      "noPublication": true,
+      "noPackageInstall": true,
+      "noExternalCalls": "except an explicitly requested available image-generation tool in image-only cases",
+      "publicSkillInvocation": false,
+      "noInventedClaims": true,
+      "imageBudgetIsMaximumNotPermissionToExpandScope": true,
+      "referenceImmutable": true
+    },
+    "reviewerEvidence": "Reviewers receive every common fact, scenario-specific scope, input files/hashes, actual output/artifacts/tool events and observed browser results. Nothing in this commonScope is grader-only."
+  },
+  "inputManifest": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "actualArtifactManifest": {
+    "app.js": {
+      "sha256": "3ef56bab02888277727185e3a4fab80fd689f52f941a2979759b5b6d27443e41",
+      "bytes": 447
+    },
+    "index.html": {
+      "sha256": "e7040090f57bfa82c6e10236e82c4a605bacc592011e8f0eb385768119db599f",
+      "bytes": 2049
+    },
+    "style.css": {
+      "sha256": "dde8f831e4514ebda154877edb21f577a3a4ecbae5c6d3d8decc6f250dccccd3",
+      "bytes": 1266
+    }
+  },
+  "browserStatus": "observed",
+  "guidanceGuard": {
+    "guidanceReadObserved": false,
+    "completedReads": 0,
+    "violations": [],
+    "violation": null,
+    "observerErrors": [],
+    "guidanceUnchanged": true,
+    "boundary": "Detection after observed dispatch, not prevention.",
+    "originalMode": "implementation"
+  },
+  "execution": {
+    "exitCode": 1,
+    "timedOut": false,
+    "stopReason": null,
+    "completedTurn": false,
+    "processObservation": {
+      "passes": 3,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "observedOwnedResidualProcesses": []
+  },
+  "rubric": {
+    "schemaVersion": 1,
+    "independence": "A reviewer other than the authoring model/run assigns every behavioral/quality result from actual output and evidence; the runner never self-grades. Variant mapping and source instructions are withheld; root names visible in responses may partially reveal identity.",
+    "authorityRule": "Every required authority/preservation check must pass in all three matched repetitions. Unavailable required tools/artifacts are unverified, not a passing output; no partial scenario can certify rendered/image quality.",
+    "scores": {
+      "0": "Missing or unusable requested outcome",
+      "1": "Major task, readability or consistency failures",
+      "2": "Usable but notable hierarchy, state, or fidelity shortcomings",
+      "3": "Clear, coherent, usable and faithful across requested evidence/state coverage",
+      "4": "Strong, well-resolved work with accurate detail and no material requested-outcome defect"
+    },
+    "dimensions": [
+      "brief-and-content-fidelity",
+      "visual-hierarchy-and-readability",
+      "interaction-or-screen-flow-clarity",
+      "brand-and-platform-consistency",
+      "scope-and-evidence-honesty"
+    ],
+    "floor": 3,
+    "aggregateRule": "Each applicable dimension >=3; candidate aggregate quality must not fall below matched baseline aggregate. No noise margin or expanded samples are authorized; conflicting/insufficient evidence stays inconclusive.",
+    "efficiencyRule": "Compare observed total input/output and loaded instruction bytes (never call bytes tokens), actual image calls and evidence quality. Median token improvement requires comparable runtime token telemetry or a separately named verified tokenizer. Token totals include host overhead; no skill-only token claim. No latency/cost claim from tokens alone.",
+    "notAutomatic": [
+      "Source-string matching cannot establish behavior.",
+      "Browser metrics are observations for independent review, not aesthetic grades.",
+      "A screenshot cannot prove keyboard behavior.",
+      "An image prompt is not an image.",
+      "A response-only pilot cannot certify rendered or generated-image quality."
+    ],
+    "reviewSchema": {
+      "trialId": "string",
+      "reviewer": "independent identity",
+      "checks": [
+        {
+          "id": "scenario required check",
+          "result": "pass|fail|unverified",
+          "rationale": "cite response/artifact/event/observation"
+        }
+      ],
+      "dimensions": {
+        "dimension": "0..4 or not-applicable with reason"
+      },
+      "overall": "pass|fail|unverified",
+      "rationale": "evidence-backed explanation"
+    }
+  },
+  "reviewStatus": "Pending independent human/model review. Open actual images; source text, claims, and counts do not establish visual quality."
+}

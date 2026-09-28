@@ -1,0 +1,36 @@
+{
+  "id": "E1",
+  "cwd": "/tmp/qs-behavior-task-DEsykq",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-skill-eval/SKILL.md",
+      "sourceSHA256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "derivedSHA256": "7e1b9b2a260b55d2edf029e3286a8994cc5130ed670e975b3957e8ae6ddd3b94",
+      "bytes": 11066
+    },
+    {
+      "path": "skills/advanced/internal/parallel-coverage.md",
+      "sourceSHA256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "derivedSHA256": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc",
+      "bytes": 2864
+    },
+    {
+      "path": "skills/advanced/internal/decision-trail.md",
+      "sourceSHA256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "derivedSHA256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    }
+  ]
+}

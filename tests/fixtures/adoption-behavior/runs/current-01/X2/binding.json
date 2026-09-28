@@ -1,0 +1,42 @@
+{
+  "id": "X2",
+  "cwd": "/tmp/qs-behavior-task-DzKA79",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-maintain-verification-skill/SKILL.md",
+      "sourceSHA256": "1994f25aae8ea00bbc6bb7157461fbbea0cf128d1ff998783912071e93d18ed4",
+      "derivedSHA256": "6db6b252351465dd202b677d248a5117ba42e6e275b0cf32b04d9fdfb8e6c680",
+      "bytes": 10756
+    },
+    {
+      "path": "skills/advanced/internal/decision-trail.md",
+      "sourceSHA256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "derivedSHA256": "76d14a173caeba4cf7fac0cfd00295c53c88f931f3cae16b7babfbba393cbe71",
+      "bytes": 2822
+    },
+    {
+      "path": "skills/advanced/internal/rerunnable-tooling.md",
+      "sourceSHA256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "derivedSHA256": "c864c9168e0443f24e47665872a8e4b06f347dd447edd30fe12e604aeb18e70d",
+      "bytes": 2452
+    },
+    {
+      "path": "skills/advanced/internal/structural-enforcement.md",
+      "sourceSHA256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "derivedSHA256": "649314b4685ea247c368437b534a57efc1b271602251308bcda09bbbd9afd3e5",
+      "bytes": 2621
+    }
+  ]
+}

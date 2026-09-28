@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:24:32.509Z",
+  "elapsedMs": 37187.58382399997,
+  "wallElapsedMs": 37187,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "78ca87aa04fcd29d9e63b042a82a6ca4520f16117a2614d8583753940d60e3e5",
+  "promptUtf8Bytes": 9447,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25764,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1011,
+      "reasoning_output_tokens": 503
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "c637dd62f46eff694506b1b62ba52d0faf0c3c5144da12cf49ad9a7c7fc03185",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-NJQsfy",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required\\nSkills used: /qs-deploy-release (reporting contract only)\\nOutcome: Supplied evidence verifies staging delivery; authoritative host goal-state confirmation remains pending.\\n\\n- [x] Build — verified complete at `abc123`: required build, tests, existing-screen validation, and diff review are current.\\n- [x] Git — verified complete: supplied Git evidence confirms the tested revision `abc123` on `origin/feature/export`.\\n- [x] Release — verified complete: authoritative deployment `J42` completed on staging; `/health` returned HTTP 200 and version `export:abc123`. CSV smoke checks verified filters, header, and escaping. Rollback readiness is verified.\\n\\nStage: Release | Stage estimate: ~100% | Overall estimate: ~100% | verified — delivery checks pass; host goal completion has not been confirmed. Input needed: supported goal-tool availability and authoritative matching goal state.\\n\\nWeights remain Build/Git/Release = 60/10/30. Earlier progress was `(60×50 + 10×0 + 30×0)/100 = 30%`. Current revision-bound completion evidence supersedes that snapshot: `(60×100 + 10×100 + 30×100)/100 = 100%`. This measures verified delivery, not a claimed host goal update.\\n\\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n- Finished — Supplied observations establish CSV export delivery to staging as `export:abc123`, with required validation and healthy deployment `J42`. No operations were executed in this response.\\n- Next — Confirm the matching host goal through supported goal tools, then record completion under the host’s actual contract. No build, push, deployment, or rollback retry is indicated.\\n\\nNext prompts: None — release is terminal.\",\n  \"requestedActions\": [\n    \"Verify that the host supports get_goal and update_goal and obtain their actual contracts.\",\n    \"Use get_goal to inspect the resumed matching goal for CSV invoice export to staging; preserve any unrelated active goal.\",\n    \"If the authoritative matching goal and completion contract permit, use update_goal to record the supplied abc123 and J42 completion evidence, then verify the resulting goal state. If goal support is unavailable or state conflicts, report input-required without mutations.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

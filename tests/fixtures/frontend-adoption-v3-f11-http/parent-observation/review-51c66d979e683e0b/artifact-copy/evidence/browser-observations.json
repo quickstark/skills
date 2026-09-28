@@ -1,0 +1,90 @@
+[
+  {
+    "width": 1280,
+    "overflow": false,
+    "panel": {
+      "x": 100,
+      "y": 345,
+      "width": 1080,
+      "height": 316,
+      "top": 345,
+      "right": 1180,
+      "bottom": 661,
+      "left": 100
+    },
+    "button": {
+      "x": 721,
+      "y": 507,
+      "width": 426,
+      "height": 56,
+      "top": 507,
+      "right": 1147,
+      "bottom": 563,
+      "left": 721
+    },
+    "font": "Georgia, serif",
+    "radius": "12px"
+  },
+  {
+    "width": 1280,
+    "confirmation": "Ready to continue with Family membership.",
+    "events": [
+      {
+        "name": "join_started",
+        "plan": "family"
+      }
+    ],
+    "dialogOpen": true
+  },
+  {
+    "focusTrapped": true
+  },
+  {
+    "closed": true,
+    "focusReturned": true
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "panel": {
+      "x": 24,
+      "y": 376.71875,
+      "width": 342,
+      "height": 526,
+      "top": 376.71875,
+      "right": 366,
+      "bottom": 902.71875,
+      "left": 24
+    },
+    "button": {
+      "x": 49,
+      "y": 779.71875,
+      "width": 292,
+      "height": 56,
+      "top": 779.71875,
+      "right": 341,
+      "bottom": 835.71875,
+      "left": 49
+    },
+    "font": "Georgia, serif",
+    "radius": "12px"
+  },
+  {
+    "width": 390,
+    "confirmation": "Ready to continue with Family membership.",
+    "events": [
+      {
+        "name": "join_started",
+        "plan": "family"
+      }
+    ],
+    "dialogOpen": true
+  },
+  {
+    "focusTrapped": true
+  },
+  {
+    "closed": true,
+    "focusReturned": true
+  }
+]

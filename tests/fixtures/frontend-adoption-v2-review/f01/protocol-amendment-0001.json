@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "type": "append-only protocol correction",
+  "appliesTo": [
+    "review-61af6737213b5ca7",
+    "review-ccddcb5734b46fff"
+  ],
+  "preservesOriginalRecords": true,
+  "source": "Parent independently inspected exact CLI enum/mapper, reported rust-v0.153.4 commit3d2ee51ca2d5db578f328aa75e20aa22c0197c9a",
+  "finding": "Exec ThreadItemDetails omits ImageView/ImageGeneration and JSONL mapper drops unhandled notifications. Missing event proves neither absent inspection nor zero generation.",
+  "supersedingDecisions": {
+    "zero-image-calls": "unverified for strict invocation count; no positive violation observed",
+    "overall": "unverified for both original records; all original artifact quality ratings and other checks preserved"
+  },
+  "qualityImpact": "No penalty or deception inference solely from missing image events.",
+  "originalRecordBindings": {
+    "review-61af6737213b5ca7": "1a03482d9343b36b2eb55555e06df3ec2c6e12edf9cf0ae9c3b042b365add3b5",
+    "review-ccddcb5734b46fff": "3c25c51b23388fc7147221f35f96fd74cb11f9a9c5127f0140824555309c8772"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 37,
+    "scenarioId": "P4",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "P4",
+  "inputSHA256": "5f97aeb6d603a19bbf993d820177604b90a27356cc9e00dbb5478dd1478cb371",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-Lg2SjP",
+  "startedAt": "2026-09-25T19:40:48.153Z",
+  "completedAt": "2026-09-25T19:41:14.781Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25863,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 688,
+      "reasoning_output_tokens": 201
+    }
+  ],
+  "elapsedMs": 26577.948939000024,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Stage: Release | Stage estimate: ~50% | Overall estimate: ~85% | active — Resuming from valid evidence at the unchanged revision. Job J42 remains live; no new progress is observed. Input needed: none.\n\n- [x] Build — verified, 100%; weight 60.\n- [x] Git — verified, 100%; weight 10.\n- [ ] Release — active, 50%; weight 30; waiting on J42.\n\nOverall: (60 × 100 + 10 × 100 + 30 × 50) / 100 = 85%. Persisted weights and estimates remain unchanged.\n\nStatus: Continuation required\nSkills used: /qs-deploy-release\nOutcome: Deployment remains unverified. The proposed next action is to inspect the matching host goal, then monitor existing job J42 without restarting deployment.\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — Supplied evidence verifies CSV implementation, behavior and existing-screen checks, diff review, and publication of the tested revision to origin/feature/export.\n- Next — [Staging release](/fixture/ledger-app/docs/deploy.md) — active — await J42, then verify the deployed artifact matches the tested revision and staging /health returns HTTP 200 with the exact version. Artifact/version and health results are not yet supplied.\n\nNo operational actions were executed in this response.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify host goal-tool availability and use get_goal to inspect the existing matching goal and persisted evidence. Do not replace an unrelated goal; if goal support is unavailable or state conflicts, stop dependent execution and report input-required.",
+      "After confirming the matching goal, inspect existing job J42 and publication/deployment state at the unchanged revision. Preserve valid Build and Git verification; do not restart deployment or duplicate publication.",
+      "If J42 remains live without new evidence, continue monitoring and retain Release 50% and Overall 85%. When it finishes, verify the authoritative staging artifact/version, matching tested revision, and /health HTTP 200 before recording completion through the host's supported goal-state contract."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

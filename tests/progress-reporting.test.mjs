@@ -8,7 +8,7 @@ import {
   ESTIMATED_PROGRESS_CONTRACT, HELPER_PROGRESS_CONTRACT, PUBLIC_PROGRESS_CONTRACT, progressInventory,
   syncProgressContracts, validateProgressInventory, withProgressContract,
 } from "../scripts/progress-reporting-contract.mjs";
-import { PUBLIC_COMMANDS } from "../scripts/skill-collection-registry.mjs";
+import { PUBLIC_COMMANDS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
 import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
 
 const original = '---\nname: preserved\ndescription: "Keep literal $HOME and `code`."\n---\n\n# Original\n\nText with trailing spaces.  \n\n## Completion report and next steps\n\nOriginal completion policy.\n';
@@ -27,14 +27,15 @@ test("repository inventory accounts for every canonical skill and internal refer
   const inventory = await validateProgressInventory();
   assert.equal(inventory.standaloneSkills.length, 19);
   assert.equal(inventory.internalReferences.length, 20);
-  assert.equal(inventory.publicSkills.length, 33, "twelve core, eight specialists, thirteen PS commands");
-  assert.equal(inventory.publicSkills.length + inventory.standaloneSkills.length, 52);
-  assert.equal(new Set(Object.values(inventory).flat()).size, inventory.publicSkills.length + 39);
+  assert.equal(inventory.publicSkills.length, REGISTRY_STATE === "target" ? 38 : 33, "explicit target or legacy public inventory");
+  assert.equal(inventory.publicSkills.length + inventory.standaloneSkills.length, REGISTRY_STATE === "target" ? 57 : 52);
+  assert.equal(inventory.inactiveSkills.length, REGISTRY_STATE === "target" ? 13 : 18, "explicit candidates are inventoried without active exposure");
+  assert.equal(new Set(Object.values(inventory).flat()).size, 90);
 });
 
 test("every actual canonical skill and helper receives the correct progress contract", async () => {
   const inventory = await validateProgressInventory();
-  for (const path of [...inventory.publicSkills, ...inventory.standaloneSkills]) {
+  for (const path of [...inventory.publicSkills, ...inventory.inactiveSkills, ...inventory.standaloneSkills]) {
     const source = await readFile(new URL(`../${path}`, import.meta.url), "utf8");
     assert.ok(source.includes(PUBLIC_PROGRESS_CONTRACT), path);
   }
@@ -83,9 +84,9 @@ test("sync covers every standalone and helper, preserving public source and unre
   assert.equal(result.updated, 39);
   assert.equal(result.standaloneSkills, 19);
   assert.equal(result.internalReferences, 20);
-  for (const path of inventory.publicSkills) assert.equal(await readFile(join(root, path), "utf8"), original);
+  for (const path of [...inventory.publicSkills, ...inventory.inactiveSkills]) assert.equal(await readFile(join(root, path), "utf8"), original);
   for (const [kind, paths] of Object.entries(inventory)) {
-    if (kind === "publicSkills") continue;
+    if (kind === "publicSkills" || kind === "inactiveSkills") continue;
     for (const path of paths) {
       const actual = await readFile(join(root, path), "utf8");
       const insertAt = original.indexOf("## Completion report and next steps");
@@ -127,7 +128,7 @@ test("unknown public, standalone, internal, and new bucket sources cannot disapp
 });
 
 test("missing public, standalone, or helper source fails inventory before writes", async (t) => {
-  for (const kind of ["publicSkills", "standaloneSkills", "internalReferences"]) {
+  for (const kind of ["publicSkills", "inactiveSkills", "standaloneSkills", "internalReferences"]) {
     await t.test(kind, async (t) => {
       const root = await fixture(t);
       const missing = progressInventory()[kind][0];

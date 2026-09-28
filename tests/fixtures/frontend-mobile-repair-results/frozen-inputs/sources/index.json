@@ -1,0 +1,35 @@
+{
+  "imagegen-frontend-mobile": {
+    "path": "sources/original-imagegen-frontend-mobile.md",
+    "revision": "e988add20dab0fa97d7a76781c48961c8184288e",
+    "upstreamPath": "skills/imagegen-frontend-mobile/SKILL.md",
+    "sha256": "8a33389979f3074fa0926678e266ad2eb9234624472254469fc1ad916b9caa24",
+    "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee"
+  },
+  "qs-design-image-mobile": {
+    "path": "sources/local-qs-design-image-mobile.md",
+    "canonicalPath": "skills/engineering/qs-design-image-mobile/SKILL.md",
+    "sha256": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+    "priorExperimentSHA256": "975e607ff9b78f23938a60735afe218cc3663220f1292e5c943529f1ec9743a8"
+  },
+  "brief": {
+    "path": "sources/private-brief.md",
+    "canonicalPath": "skills/frontend/internal/brief.md",
+    "sha256": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a",
+    "priorExperimentSHA256": "345512810e4a4d721429c7516ead1f6b16cd5b928d9077a1f06a8efaace87e53"
+  },
+  "prompt-construction": {
+    "path": "sources/private-prompt-construction.md",
+    "canonicalPath": "skills/frontend/internal/prompt-construction.md",
+    "sha256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+    "priorExperimentSHA256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918"
+  },
+  "mobile-images": {
+    "path": "sources/private-mobile-images.md",
+    "canonicalPath": "skills/frontend/internal/mobile-images.md",
+    "sha256": "c25f1805343b461d13e394d77fe73f2debf8c36a1dda1ac50d2c180557eb45b4",
+    "priorExperimentSHA256": "172b8fe046e4ac4dce7a2b7fbafaed350d5437863d54aeae409062fddcc35c36",
+    "priorQualificationSourceSha256": "172b8fe046e4ac4dce7a2b7fbafaed350d5437863d54aeae409062fddcc35c36",
+    "proposedPatch": "mobile-guidance.patch"
+  }
+}

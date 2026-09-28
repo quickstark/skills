@@ -1,0 +1,53 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 34,
+    "scenarioId": "P2",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "P2",
+  "inputSHA256": "fe63dd630ac7dc6f3b8f87c49be238020375597eaa229296357550490967fbf2",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "2ead4ad067e58e0c8a6d245c4befb411428dce04661b96575df16aa78d2e75da",
+  "planSHA256": "e278c13482aa70fe134afa58eedb240a6fcab87b4e6bbbfddef6851360cee5bb",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-PWgk91",
+  "startedAt": "2026-09-25T19:39:26.576Z",
+  "completedAt": "2026-09-25T19:39:50.830Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25755,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 622,
+      "reasoning_output_tokens": 256
+    }
+  ],
+  "elapsedMs": 24203.468324000016,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 remains authoritatively live after 70 seconds without new output. Waiting for output or completion; no new progress is verified. Input needed: none.\n\n- [ ] Build — active, ~50%; weight 60\n- [ ] Git — pending, 0%; weight 10\n- [ ] Release — pending, 0%; weight 30\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. The same revision evidence remains valid, so estimates stay unchanged. Elapsed time and process liveness do not establish progress or failure.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Previously observed implementation and review milestones remain valid; Build completion is unverified.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — active — monitor process 81 for output or completion, then assess required checks. Git and staging remain pending.\n\nNext work prompt: None — authorized later stages are already scheduled and await verified Build completion.",
+    "requestedActions": [
+      "Verify availability of the host's goal tools and inspect the matching goal with get_goal before resuming stage execution; preserve unrelated goals. If support is unavailable, report input-required.",
+      "Once the matching goal is confirmed, poll or wait on existing process 81 for at most 60 seconds. Do not restart it solely because output is absent; report any new evidence or continued waiting."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

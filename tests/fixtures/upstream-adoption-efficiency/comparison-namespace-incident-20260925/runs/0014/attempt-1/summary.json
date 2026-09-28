@@ -1,0 +1,52 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 14,
+    "scenarioId": "E1",
+    "repetition": 1,
+    "variant": "r42"
+  },
+  "attempt": 1,
+  "scenarioId": "E1",
+  "inputSHA256": "5def85f1f2b4e78be0ac0f0255aa141659cc57b9832f81ad446f0fc5a4935400",
+  "sourceSHA256": "ab6b5893e227eacbb24e411a86ca7e00faeed30461d839f18df27e4f86f9b24c",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-kptF5p",
+  "startedAt": "2026-09-25T19:19:54.526Z",
+  "completedAt": "2026-09-25T19:20:17.642Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25752,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 595,
+      "reasoning_output_tokens": 211
+    }
+  ],
+  "elapsedMs": 23065.839935000055,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 remains live, but its last output was “124/180 tests passed” 70 seconds ago. No further progress is confirmed. Input needed: none.\n\n- [ ] Build — active; validation pending.\n- [ ] Git — pending Build verification.\n- [ ] Release — pending Git verification.\n\nWeights remain Build 60, Git 10, Release 30. Overall = (60 × 50 + 10 × 0 + 30 × 0) / 100 = 30%. Estimates retain the observed implementation and review milestones; elapsed time and process liveness earn no additional credit. Silence alone does not establish failure.\n\nStatus: Continuation required — continue the active Build; no stage advancement.\nSkills used: /qs-code-build\nOutcome: Build completion remains unverified. The proposed next action is to poll process 81 for new output or an exit result.\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — No complete stage is verified. Supplied evidence supports partial implementation/review milestones and 124 passing tests; no failed check is reported.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — active — collect the remaining validation evidence before advancing. Publication and staging deployment remain pending; no deployed version or health evidence is available.\n\nNext work prompt: None — subsequent stages are already scheduled and remain gated on verification.",
+    "requestedActions": [
+      "Poll existing process 81 for new output or its exit result, yielding within 60 seconds so another progress update is possible."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

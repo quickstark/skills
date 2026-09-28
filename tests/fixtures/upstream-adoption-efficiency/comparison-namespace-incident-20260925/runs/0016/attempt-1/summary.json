@@ -1,0 +1,54 @@
+{
+  "kind": "matched-response-attempt",
+  "run": {
+    "run": 16,
+    "scenarioId": "E2",
+    "repetition": 1,
+    "variant": "r17"
+  },
+  "attempt": 1,
+  "scenarioId": "E2",
+  "inputSHA256": "79e3d4829866d665a98275a04a6a6c2a87ff3ad25fdd37345785a5e6eb44ed83",
+  "sourceSHA256": "abd13e58607d45590e7da99b3b5cd176b91506c6527f52c975dc7ba3dd2121bf",
+  "runnerSHA256": "9fbd35f2b48cd6bda763706408de8e56af4e9251f032deb91828334409cc732c",
+  "planSHA256": "f45d9da213609631eedb6b96db276efd7affc6829012c7e5277c77a69b58f1d0",
+  "host": {
+    "model": "gpt-6-astra",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "cli": "codex-cli 0.153.4"
+  },
+  "cwd": "/tmp/qs-matched-response-Sbo9Hv",
+  "startedAt": "2026-09-25T19:20:52.196Z",
+  "completedAt": "2026-09-25T19:21:22.942Z",
+  "failure": null,
+  "infrastructureFailure": false,
+  "modelOutputObserved": true,
+  "referenceRequests": [],
+  "referenceHashes": {},
+  "tokenUsage": [
+    {
+      "input_tokens": 25830,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 818,
+      "reasoning_output_tokens": 254
+    }
+  ],
+  "elapsedMs": 30694.90494899999,
+  "roundCount": 1,
+  "remainingFiles": [],
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-code-build\nOutcome: Build verification at `abc123` no longer covers `def456`: CSV escaping changed and a relevant test fails. The scheduled push and staging deployment are blocked.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — current-revision evidence supports partial implementation and review, but required validation fails. Input needed: none; standing grants remain confirmed.\n\n- [ ] Build — failed; reopen verification for `def456` (weight 60, estimate 50%).\n- [ ] Git — blocked by Build; not started (weight 10, estimate 0%).\n- [ ] Release — blocked by Build and Git; not started (weight 30, estimate 0%).\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **30%**. Weights remain unchanged. Invalidated Build completion reduces its estimate from 100% to 50%, and overall credit from 60% to 30%. These coarse estimates retain supported milestones without treating the failed check as complete.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — historical Build verification at `abc123`; current verification is invalidated. This response performs no edits, goal updates, publication, or deployment. No deployed artifact/version or health evidence is supplied.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — failed — repair escaping within the Build root, then verify CSV cases, the existing screen, required wider checks, and the final diff at the resulting revision. Git and Release remain scheduled behind those gates.\n\nNext work prompt: None — repair remains within this Build root; scheduled downstream stages need no duplicate prompt.",
+    "requestedActions": [
+      "Before execution, verify supported goal tools and inspect the confirmed matching goal with get_goal. Update it under the host's actual contract to reflect invalidated Build verification and blocked downstream stages; verify the resulting state. If goal support is unavailable, stop and report input-required.",
+      "Recheck repository scope, instructions, dirty state, current revision, available skills, specification, target, and standing authorization before making changes.",
+      "Within the Build root, inspect the failing test and CSV escaping change at def456, repair the scoped defect, and run focused CSV checks, existing-screen validation, required wider checks, and final diff review at the resulting revision. Keep Git push and deployment blocked until Build is verified."
+    ],
+    "requestedReferences": []
+  },
+  "runtimeModels": [],
+  "actualToolEvents": [],
+  "semanticReview": "ungraded; independent blinded reviewer required"
+}

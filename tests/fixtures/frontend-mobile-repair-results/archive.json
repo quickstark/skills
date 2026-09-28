@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "format": "POSIX pax tar compressed as one Zstandard stream; reconstruct parts in listed byte order",
+  "archiveTopLevel": "qs-frontend-mobile-native-qualification-20260926",
+  "compression": "zstd -T2 -10",
+  "fileCount": 182,
+  "directoryCount": 49,
+  "uncompressedFileBytes": 172299619,
+  "compressedBytes": 87671976,
+  "compressedSHA256": "cbba04fd1ac9c4fd8d63b394f3def3ee3228c0c123fbb57228735cb8f9a73798",
+  "parts": [
+    {
+      "file": "mobile-native.tar.zst.part-001",
+      "bytes": 67108864,
+      "sha256": "a4359a97237969ea50ede20d00eed27329c9ab3dfc50ef7b9b4ed699b0100fc2"
+    },
+    {
+      "file": "mobile-native.tar.zst.part-002",
+      "bytes": 20563112,
+      "sha256": "921787477f54a2338f3cc8fb6fd7e105eac30cbe9f897fb7e88a60e011993012"
+    }
+  ],
+  "fileManifestSHA256": "df3ff43cb4189230a4d00c5078ebb436c719b7267b0ee8c5725573c5fdafce57",
+  "frozenBindingsSHA256": "a00cd1e7317034228755a1b9927b252318387c59455d042c07aa7ba5ad0feafd",
+  "planSHA256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c",
+  "captureFacts": {
+    "requested": 6,
+    "recorded": 6,
+    "captureFailures": 0,
+    "interrupted": false,
+    "reviewerBundles": 6
+  },
+  "limit": "Capture completion is not quality acceptance or adoption. Independent review pending; parent reports a candidate brand defect. Original F09 failures remain unchanged; no pooling or exact-size support claim. No quality exclusions."
+}

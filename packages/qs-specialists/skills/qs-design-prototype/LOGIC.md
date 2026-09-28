@@ -1,79 +1,21 @@
-# Logic Prototype
+# Logic prototype reference
 
-A tiny interactive terminal app that lets the user drive a state model by hand. Use this when the question is about **business logic, state transitions, or data shape** — the kind of thing that looks reasonable on paper but only feels wrong once you push it through real cases.
+Use inside the selected prototype root when the question concerns business rules, state transitions or data shape. For visual alternatives, use [UI.md](UI.md) instead; this is a conditional reference, not another public run.
 
-## When this is the right shape
+## State the question and choose the shell
 
-- "I'm not sure if this state machine handles the edge case where X then Y."
-- "Does this data model actually let me represent the case where..."
-- "I want to feel out what the API should look like before writing it."
-- Anything where the user wants to **press buttons and watch state change**.
+State the hypothesis, valid/invalid states, candidate criteria and known initial state before authoring. For a non-developer evaluating state behavior, prefer a self-contained HTML/CSS/JavaScript demo that opens locally without installation. For a terminal-oriented or runtime-specific question, use the project's existing language and a small CLI/TUI. Do not add a runtime, package manager or framework merely for the shell.
 
-If the question is "what should this look like" — wrong branch. Use [UI.md](UI.md).
+Keep the demo under an isolated, selected prototype path. Existing production entry points, scripts or configuration are outside scope unless their modification was explicitly included. Show the exact local open/run instruction; do not publish or send the artifact to anyone automatically.
 
-## Process
+## Separate rules from presentation
 
-### 1. State the question
+Express the rules as a small reducer, state machine or pure function module with no DOM, terminal or database effects. A shell dispatches actions through its public interface and renders the returned state. Use in-memory fixtures; access a real service only when the question and authority specifically require it. Portability makes the model easier to test, but does not make the prototype production-ready.
 
-Before writing code, write down what state model and what question you're prototyping. One paragraph, in the prototype's README or a comment at the top of the file. A logic prototype that answers the wrong question is pure waste — make the question explicit so it can be checked later, whether the user is watching now or returning to it AFK.
+Use domain terms for actions and fields. Display relevant state, an explanation of the last change and available actions. Include free play plus reproducible scenarios: a valid path, an awkward boundary and an attempted invalid transition. Reset before each guided scenario. An illegal action must show why it is rejected and leave the appropriate state unchanged; silently disabling every difficult action hides the hypothesis.
 
-### 2. Pick the language
+Evaluate each candidate against the same criteria. Exercise the selected scenarios, and add a small automated check when it materially proves the disputed rule; there is no blanket ban on prototype tests. Avoid unrelated hardening or generalization.
 
-Use whatever the host project uses. If the project has no obvious runtime (e.g. a docs repo), ask.
+## Record the decision without promotion
 
-Match the project's existing conventions for tooling — don't add a new package manager or runtime just for the prototype.
-
-### 3. Isolate the logic in a portable module
-
-Put the actual logic — the bit that's answering the question — behind a small, pure interface that could be lifted out and dropped into the real codebase later. The TUI around it is throwaway; the logic module shouldn't be.
-
-The right shape depends on the question:
-
-- **A pure reducer** — `(state, action) => state`. Good when actions are discrete events and state is a single value.
-- **A state machine** — explicit states and transitions. Good when "which actions are even legal right now" is part of the question.
-- **A small set of pure functions** over a plain data type. Good when there's no implicit current state — just transformations.
-- **A class or module with a clear method surface** when the logic genuinely owns ongoing internal state.
-
-Pick whichever shape best fits the question being asked, *not* whichever is easiest to wire to a TUI. Keep it pure: no I/O, no terminal code, no `console.log` for control flow. The TUI imports it and calls into it; nothing flows the other direction.
-
-This is what makes the prototype useful past its own lifetime: when the question's been answered, the validated reducer / machine / function set can be lifted into the real module on its own.
-
-### 4. Build the smallest TUI that exposes the state
-
-Build it as a **lightweight TUI** — on every tick, clear the screen (`console.clear()` / `print("\033[2J\033[H")` / equivalent) and re-render the whole frame. The user should always see one stable view, not an ever-growing scrollback.
-
-Each frame has two parts, in this order:
-
-1. **Current state**, pretty-printed and diff-friendly (one field per line, or formatted JSON). Use **bold** for field names or section headers and **dim** for less important context (timestamps, IDs, derived values). Native ANSI escape codes are fine — `\x1b[1m` bold, `\x1b[2m` dim, `\x1b[0m` reset. No need to pull in a styling library unless one is already in the project.
-2. **Keyboard shortcuts**, listed at the bottom: `[a] add user  [d] delete user  [t] tick clock  [q] quit`. Bold the key, dim the description, or vice-versa — whatever reads cleanly.
-
-Behaviour:
-
-1. **Initialise state** — a single in-memory object/struct. Render the first frame on start.
-2. **Read one keystroke (or one line)** at a time, dispatch to a handler that mutates state.
-3. **Re-render** the full frame after every action — don't append, replace.
-4. **Loop until quit.**
-
-The whole frame should fit on one screen.
-
-### 5. Make it runnable in one command
-
-Add a script to the project's existing task runner (`package.json` scripts, `Makefile`, `justfile`, `pyproject.toml`). The user should run `pnpm run <prototype-name>` or equivalent — never need to remember a path.
-
-If the host project has no task runner, just put the command at the top of the prototype's README.
-
-### 6. Hand it over
-
-Give the user the run command. They'll drive it themselves; the interesting moments are when they say "wait, that shouldn't be possible" or "huh, I assumed X would be different" — those are the bugs in the _idea_, which is the whole point. If they want new actions added, add them. Prototypes evolve.
-
-### 7. Capture the answer and the prototype
-
-Once the prototype has answered its question, capture the answer, then capture the prototype the way the [SKILL](SKILL.md) describes. The logic-specific mapping: the validated reducer / machine / function set lifts into the real module (the decision, absorbed); the TUI shell rides along to the throwaway branch that keeps the prototype as a primary source.
-
-## Anti-patterns
-
-- **Don't add tests.** A prototype that needs tests is no longer a prototype.
-- **Don't wire it to the real database.** Use an in-memory store unless the question is specifically about persistence.
-- **Don't generalise.** No "what if we wanted to support X later." The prototype answers one question.
-- **Don't blur the logic and the TUI together.** If the reducer / state machine references `console.log`, prompts, or terminal escape codes, it's no longer portable. Keep the TUI as a thin shell over a pure module.
-- **Don't ship the TUI shell into production.** The shell is optimised for being driven by hand from a terminal. The logic module behind it is the bit worth keeping.
+Preserve the candidates, run/open instructions, observed states and decision rationale at the selected prototype location. Identify what failed or remains unproven. The model and shell remain disposable evidence: do not lift the logic into production or modify real routes automatically. Cleanup covers only authorized, run-owned disposable artifacts after necessary evidence is retained; leave unrelated work intact.

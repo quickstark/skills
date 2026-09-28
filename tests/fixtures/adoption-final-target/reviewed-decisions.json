@@ -1,0 +1,823 @@
+{
+  "kind": "parent-reviewed-adoption-decisions",
+  "scope": "Implementation acceptance before publication. Source snapshots and exact release version are rebound after Changesets. Reported image-font exception only; original failed grades unchanged, B baseline retained; no actual-machine success preclaimed.",
+  "criteria": {
+    "AC-01": {
+      "status": "passed",
+      "note": "Disposition machinery covers original identities and owner mappings with missing/duplicate/ownerless rejection controls. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "config/skill-migrations.json",
+        "tests/skill-provenance.test.mjs",
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-provenance-final/review.json",
+        "tests/fixtures/adoption-provenance-final/decisions.json",
+        "config/skill-provenance.json"
+      ]
+    },
+    "AC-02": {
+      "status": "passed",
+      "note": "P1 and P2 preserve distinct self-contained deployment-prompt and reusable-skill outputs without execution. V1 preserves Spanish video prompt-only facts/format. F10 preserves frontend prompt-only scope. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-03": {
+      "status": "passed",
+      "note": "H1\u2013H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/upstream-adoption-routing.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-04": {
+      "status": "passed",
+      "note": "A1\u2013A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-05": {
+      "status": "passed",
+      "note": "Actual synthetic-auth repair preserves redaction, discriminates the wrong premise, demonstrates original failure then six repaired independent oracle passes. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-debug-repair/frozen-plan.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-06": {
+      "status": "passed",
+      "note": "A4/A6 preserve all-consumer contraction barrier and non-independently-green integration exception, independent known-bad oracle reasoning and legitimate absence/configuration cases. Executed defect/parity controls are sensitive. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+        "tests/advanced-candidates.test.mjs",
+        "tests/upstream-adoption-qs.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-07": {
+      "status": "passed",
+      "note": "E4 rejects wrong revision/sample comparisons; X1/X2 actually doctor and account for features, preserve evidence after cleanup and leave product failures visible. Actual E7 reviews all available outputs and appends correction without replacing originals. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-08": {
+      "status": "retained-baseline",
+      "note": "Explicit Group B fallback retains the post-A reporting contract after incomplete 45/222 comparison; full generation/execution/progress matrix did not qualify. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "docs/specs/quickstark-upstream-adoption.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-09": {
+      "status": "retained-baseline",
+      "note": "No qualifying loaded-instruction measurement/completed matched comparison exists, so retain baseline and claim no efficiency, cost, latency or quality improvement. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "docs/specs/quickstark-upstream-adoption.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-10": {
+      "status": "passed",
+      "note": "Original native66 supports nonmobile mapped contracts, with uniform F11 dialog observations supplementing original observer failures. Separate native-portrait six support mobile adoption under the explicit 2026-09-28 font amendment: QS r1 discloses sole font mismatch with every dimension >=3; QS r2/r3 strict-pass. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json",
+        "tests/fixtures/frontend-adoption-v3-image-resolution/README.md",
+        "tests/fixtures/frontend-mobile-repair/README.md",
+        "tests/fixtures/frontend-mobile-repair/plan.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
+        "tests/fixtures/frontend-mobile-repair-results/archive.json",
+        "tests/fixtures/frontend-mobile-repair-review/parent-review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-11": {
+      "status": "passed",
+      "note": "Independent parity root retains immutable baseline/fixed tolerance. Behavioral E6 rejects replacement, relaxed thresholds, missing state and environment mismatch; actual sensitive RGBA helper controls reject those defects. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/advanced-candidates.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-12": {
+      "status": "passed",
+      "note": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2\u2013E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/advanced-candidates.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-13": {
+      "status": "passed",
+      "note": "Every target owner has an explicit source decision, original identities/revisions/notices and separate digests. 71historical identities and113original source records remain unchanged;82source adaptations adopted and7bodies retained. Full validation and independent provenance verifier pass; compression remains unadopted.",
+      "evidence": [
+        "tests/skill-provenance.test.mjs",
+        "config/skill-migrations.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-provenance-final/review.json",
+        "tests/fixtures/adoption-provenance-final/decisions.json",
+        "config/skill-provenance.json"
+      ]
+    },
+    "AC-14": {
+      "status": "passed",
+      "note": "Production caller and isolated transaction controls establish core-only fresh defaults, saved/partial selection, no implicit new-package selection, and equivalent managed legacy capabilities. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/managed-skill-input.test.mjs",
+        "tests/fixtures/target-activation-probe/README.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-15": {
+      "status": "passed",
+      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/target-activation-probe/README.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-16": {
+      "status": "passed",
+      "note": "Dirty/foreign/unknown-owner/hash/path/symlink controls reject retirement; unrelated bytes and shared-host aliases have explicit preservation tests. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/managed-skill-input.test.mjs",
+        "tests/migration-filesystem.test.mjs",
+        "tests/migration-owned-paths.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-17": {
+      "status": "passed",
+      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/migration-transaction.test.mjs",
+        "tests/migration-native-packages.test.mjs",
+        "tests/managed-skill-migration.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-18": {
+      "status": "passed",
+      "note": "Video closure preserves nine domains,21 private modules,912 original records/911 retained files and186 imports after caption adaptation; required-resource removal fails. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-19": {
+      "status": "passed",
+      "note": "Measured Linux CLI/core0.8.77 profile has actual render/audio/caption/seek fixtures. Separate native observation records three real frame views and honest audio-content limitation; independent decoder verifies the measured crossfade. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "tests/fixtures/adoption-video-native-results/REVIEW.md",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-20": {
+      "status": "passed",
+      "note": "Prompt/resume/creation/render evidence preserves pin/scope and shows no route-driven feedback, skill install/upgrade, publication or extra image calls outside selected authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "tests/fixtures/adoption-video-native-results/REVIEW.md",
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-21": {
+      "status": "passed",
+      "note": "Reviewed upstream suite and installed/moved controls establish Linux Node16 floor/Node24 execution, stale-definition rejection, abandonment non-success, dependency reverify, import portability and opt-in hook preservation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "docs/validation/upstream-adoption-evidence-map.md",
+        "tests/execution-candidate.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-22": {
+      "status": "passed",
+      "note": "Target generation/check and all462tests pass at the synchronized implementation version3.8.0;18active manifests agree and legacyPS stays3.8.0. The major Changeset prepares4.0.0; versioning must regenerate/rebind these artifacts before publication. Claude CLI absent: generated integrity checked, no native Claude claim.",
+      "evidence": [
+        "tests/fixtures/target-index-generation/evidence/parent-review.json",
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-23": {
+      "status": "passed",
+      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate.",
+      "evidence": [
+        "tests/fixtures/target-index-generation/evidence/parent-review.json",
+        "tests/fixtures/target-documentation-preparation/README.md",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-provenance-final/review.json",
+        "tests/fixtures/adoption-provenance-final/decisions.json",
+        "config/skill-provenance.json",
+        "README.md",
+        "CLAUDE.md",
+        "CONTEXT.md",
+        "docs/architecture.md",
+        "docs/contributing.md",
+        "docs/install-and-update-skills.md",
+        "docs/personal-skills.md",
+        "docs/upstream/README.md"
+      ]
+    },
+    "AC-24": {
+      "status": "passed",
+      "note": "Pre-rollout acceptance gate passes: exact package capabilities, sources, criteria, selected hosts, runtime checks and evidence bindings are verified. Production caller rejects dirty/untracked/stale acceptance or unsupported host state. This is a rollout prerequisite, not a claim that publication or this machine migration has occurred; those remain separate goal gates.",
+      "evidence": [
+        "scripts/adoption-acceptance.mjs",
+        "scripts/managed-skill-input.mjs",
+        "tests/adoption-acceptance.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    }
+  },
+  "packages": {
+    "qs-skills": {
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-specialists": {
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-advanced": {
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-frontend": {
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-video": {
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "video-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+              "tests/fixtures/adoption-video-native-results/parent-review.json",
+              "skills/video/qs-video/references/runtime-compatibility.md"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "video-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+              "tests/fixtures/adoption-video-native-results/parent-review.json",
+              "skills/video/qs-video/references/runtime-compatibility.md"
+            ]
+          }
+        }
+      }
+    },
+    "qs-execution": {
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "unlazy-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "skills/engineering/qs-unlazy/references/runtime-compatibility.md"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "unlazy-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "skills/engineering/qs-unlazy/references/runtime-compatibility.md"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

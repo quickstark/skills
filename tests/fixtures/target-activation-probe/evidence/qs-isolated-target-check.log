@@ -1,0 +1,8 @@
+
+> qs-skills@3.8.0 check:codex
+> node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check
+
+Verified concise v3 documentation for 38 commands.
+Verified bounded v3 output contracts for all 38 public commands.
+Verified deterministic active projections for 6 packages across Codex, Claude, and Pi.
+Verified provenance documentation for 71 capabilities.

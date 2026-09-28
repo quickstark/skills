@@ -1,0 +1,70 @@
+{
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900,
+      "overflow": false,
+      "title": "Make room for wonder.",
+      "brandFont": "Georgia, \"Times New Roman\", serif",
+      "skip": "Skip to content",
+      "focus": "join-button",
+      "emptyEvents": 0,
+      "invalidEvents": 0,
+      "submission": {
+        "message": "Ready to continue with Family membership.",
+        "events": [
+          {
+            "name": "join_started",
+            "plan": "family"
+          }
+        ],
+        "url": "/"
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "title": "Make room for wonder.",
+      "brandFont": "Georgia, \"Times New Roman\", serif",
+      "skip": "Skip to content",
+      "focus": "join-button",
+      "emptyEvents": 0,
+      "invalidEvents": 0,
+      "submission": {
+        "message": "Ready to continue with Family membership.",
+        "events": [
+          {
+            "name": "join_started",
+            "plan": "family"
+          }
+        ],
+        "url": "/"
+      }
+    }
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "darkMode": {
+    "background": "rgba(0, 0, 0, 0)",
+    "ink": "rgb(247, 245, 239)",
+    "overflow": false
+  },
+  "routes": [
+    {
+      "route": "/membership/family",
+      "status": 200,
+      "title": "Family membership"
+    },
+    {
+      "route": "/privacy",
+      "status": 200,
+      "title": "Privacy"
+    },
+    {
+      "route": "/accessibility",
+      "status": 200,
+      "title": "Accessibility"
+    }
+  ]
+}

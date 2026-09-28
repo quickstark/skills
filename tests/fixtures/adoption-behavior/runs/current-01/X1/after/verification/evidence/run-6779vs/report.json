@@ -1,0 +1,62 @@
+{
+  "dir": "/tmp/qs-behavior-task-kRpc7q/verification/evidence/run-6779vs",
+  "startedAt": "2026-09-25T21:07:06.106Z",
+  "node": "v24.21.0",
+  "hashes": {
+    "app.cjs": "e5e46d1ee0870fe4ca9a0358bbe24fbaf14ff0d9051c63cb9169e518d4287e5d",
+    "README.md": "bdfabc29c16f080104dde35fb0af838ad979d15eac0d571f3288cdd0ae7f810d",
+    "verification/run.cjs": "eab654919e326b954a8fb0973fe43cc037c70f43f27b25cbae89c035529dd148",
+    "verification/features.json": "5b1980e876f84c152dcd194331a26fbc6461509f36ea33e762ad54661716015f"
+  },
+  "observations": {
+    "readiness": {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "raw": "{\"ready\":true}",
+      "body": {
+        "ready": true
+      }
+    },
+    "sum7+5": {
+      "method": "GET",
+      "path": "/sum?a=7&b=5",
+      "status": 200,
+      "raw": "{\"result\":12}",
+      "body": {
+        "result": 12
+      }
+    },
+    "export": {
+      "method": "GET",
+      "path": "/export",
+      "status": 404,
+      "raw": "{\"error\":\"not found\"}",
+      "body": {
+        "error": "not found"
+      }
+    }
+  },
+  "checks": [
+    "readiness",
+    "known-bad sum rejected",
+    "sum7+5",
+    "export"
+  ],
+  "stdout": "{\"port\":34245}\n",
+  "stderr": "",
+  "pid": 9,
+  "closed": true,
+  "port": 34245,
+  "exit": {
+    "code": 0,
+    "signal": null
+  },
+  "cleanup": {
+    "ownedProcessStopped": true,
+    "evidencePreserved": true
+  },
+  "finishedAt": "2026-09-25T21:07:06.187Z",
+  "productUnchanged": true,
+  "passed": true
+}

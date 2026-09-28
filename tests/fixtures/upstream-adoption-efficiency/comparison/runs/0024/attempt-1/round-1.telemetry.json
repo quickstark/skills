@@ -1,0 +1,39 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "timedOut": false,
+  "toolEvent": null,
+  "startedAt": "2026-09-25T19:25:09.796Z",
+  "elapsedMs": 36893.47462200001,
+  "wallElapsedMs": 36893,
+  "interrupted": false,
+  "modelOutputObserved": true,
+  "promptSHA256": "afdb64da6424410c61106e9510226efce9c4c76dc37f3eeba14979d8fdbfc287",
+  "promptUtf8Bytes": 9957,
+  "modelReportedByRuntime": null,
+  "usage": [
+    {
+      "input_tokens": 25849,
+      "cached_input_tokens": 11520,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1025,
+      "reasoning_output_tokens": 516
+    }
+  ],
+  "referenceToolCalls": 0,
+  "imageToolCalls": 0,
+  "stdoutSHA256": "eae88221d03a9d99b9dd39b82dcde3e8ad4909a53ec576bb68529ac7cdfbbb9b",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-matched-response-ahLl4J",
+    "--json",
+    "-"
+  ],
+  "messages": [
+    "{\n  \"response\": \"Status: Input required — host goal finalization; release root: Complete.\\nSkills used: /qs-deploy-release\\nOutcome: Supplied evidence verifies CSV invoice export delivered to staging at `abc123`. No actions were executed in this response.\\n\\nStage: Release | Stage estimate: ~100% | Overall estimate: ~100% | verified — J42 completed on staging; `/health` returned HTTP 200 with version `export:abc123`. Input needed: supported goal tools and current authoritative goal state to finalize tracking.\\n\\n- [x] Build — verified complete at `abc123`; required tests and diff review passed. Weight: 60.\\n- [x] Git — verified complete; supplied current evidence confirms the tested revision on `origin/feature/export`. Weight: 10.\\n- [x] Release — verified complete; deployment, health/version, CSV smoke, and rollback readiness confirmed. Weight: 30.\\n\\nThe resumed evidence supersedes the earlier Build 50% milestone: overall progress advances from `(60×50 + 10×0 + 30×0)/100 = 30%` to `(60×100 + 10×100 + 30×100)/100 = 100%`. This measures verified delivery; host goal closure remains unconfirmed.\\n\\nSpecs: [CSV export requirements](/fixture/ledger-app/docs/specs/export.md)\\n\\nWork summary:\\n\\n- Finished — CSV export, required build/review/tests including the existing screen, and staging delivery are verified by supplied observations. CSV smoke confirms filters, header, and escaping; J42 identifies healthy artifact `export:abc123`. No failed checks were reported.\\n- Next — Confirm supported goal tools, inspect the resumed matching goal, and record completion under the host’s actual contract. No further implementation, push, deployment, or rollback is needed.\\n\\nNext prompts: None — release is terminal.\",\n  \"requestedActions\": [\n    \"Verify availability and contracts of the host's goal tools; if unavailable, report input-required without mutations.\",\n    \"Use get_goal to inspect the resumed matching goal for Deliver CSV invoice export to staging; do not create a duplicate or replace an unrelated goal.\",\n    \"If the authoritative goal matches and its contract permits completion, use update_goal to record the supplied verified abc123 and J42 staging evidence, then verify the resulting goal state.\"\n  ],\n  \"requestedReferences\": []\n}"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "date": "2026-09-28",
+  "registry": "target",
+  "version": "3.8.0",
+  "publicCommands": 38,
+  "packages": 6,
+  "tests": {
+    "pass": 462,
+    "fail": 0,
+    "skipped": 0
+  },
+  "generation": "sync and deterministic check passed",
+  "nativeDiscovery": {
+    "codex": 38,
+    "pi": 38,
+    "modelTurns": 0
+  },
+  "claude": "CLI absent; generated projections and relocated helpers checked, no native transaction",
+  "acceptance": {
+    "criteria": 24,
+    "retainedBaseline": [
+      "AC-08",
+      "AC-09"
+    ],
+    "sourcePaths": 71,
+    "hostPackageVerifications": 12
+  },
+  "fontAmendment": "docs/specs/quickstark-upstream-adoption-font-amendment.md",
+  "publication": "not performed",
+  "actualMachineRollout": "not performed",
+  "bindings": {
+    "final-sync.log": "6fa2919fb907e88cb72753051c6f06b4080a7bf5f95948269a6cad3b6b911505",
+    "final-check.log": "e3e6975b10108e0882a5a9ada89fee9f922f0ef4f14a9e3fee77764c51fd99b1",
+    "final-tests.log": "e51ca228fd827617c6afa61cd12f61c05bee4dba8baea442bab5371d8a41bb84",
+    "criterion-review.json": "c089412290f27e3d260141f66f6d8e9848281128b788c17ccc171b80659df77d"
+  }
+}

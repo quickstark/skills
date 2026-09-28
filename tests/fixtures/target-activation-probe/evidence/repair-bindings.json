@@ -1,0 +1,37 @@
+{
+  "baseHEAD": "5bcf30281c40a747e15b8a44e8ef2a834cb751c6",
+  "testedSourceHashes": {
+    "tests/managed-skill-input.test.mjs": "e3f4877b71fa009ae07df134663bdc5bb0af2aeb304a715bc5f7e762312366f7",
+    "tests/pi-package-projection.test.mjs": "84e9b582b4aa6f9050994b286df050f18a3f3286dd4ec406caa6bff1efcc6da0",
+    "tests/progress-reporting.test.mjs": "432a2a6d517ae7ed61d5b5f36794889c8c7ff833ab3544801628aa5bf82e5be8",
+    "tests/ps-projection-integrity.test.mjs": "89e2012cf048b3fc9ca305bcf556cc1161dfb49103cc9786eedcfa58accb34e0",
+    "tests/ps-skills.test.mjs": "464643a3313f3d95f9af18a24f369271f1785172971d87ec9ca3776f4f5e3a99",
+    "tests/qs-skills.test.mjs": "77b2e15ebe95851cffcd1b8b5504930c819c361c5a6a93b8494f15b2b0b30a46",
+    "tests/qs-v3.test.mjs": "d54dc68f8d813e336fca228192ab76b46beb36524089a56d6ad6d51a5e7e3206",
+    "tests/skill-collection-registry.test.mjs": "a0de6c6280e1afe2ecc9579170a0da7e2f9f591eaf75add9a7b616cf6f20e726",
+    "tests/upstream-adoption-routing.test.mjs": "dca92fbc40cac39088885980cea1002d41a783999c556771e34dc1a2345e95b9",
+    "skills/video/qs-video/SKILL.md": "654a6c49b259b3f47f30b78348f6408f59c743d92bbafbff014a6e4357f9f7ef",
+    "config/skill-provenance.json": "5a0df73e60e390cad3b21ae5b09979a1d6ede6e65c5ec490f1200254523f264a",
+    "skills/engineering/qs-design-frontend/agents/openai.yaml": "de566145d06644f9f0469b580636a04fcab3efe6cd959dc9b8d38b58597e1a6d",
+    "skills/engineering/qs-design-image-web/agents/openai.yaml": "f006af5a59cf4ce108f72056557826566a4c2f6ffd45692ca10fa2f5dd6078a9",
+    "skills/engineering/qs-design-image-mobile/agents/openai.yaml": "5348ca3041bd46973586d5ce051a9335d9231a8825f5e35975bf037570594b47",
+    "skills/engineering/qs-design-image-to-code/agents/openai.yaml": "fde8afbb9722c8dca37825e69a1156cb27e9fd3c87415400b36b91f135897812",
+    "skills/engineering/qs-unlazy/agents/openai.yaml": "3fc9bcb082b7acf1364ad8fcfbc857b6fb937fcbe0069b5bfe35938c168d00d0",
+    "skills/video/qs-video/agents/openai.yaml": "9faa9d70958c2547402b5beaca9e6e3ba631d1facc11b412074bd95f6d486788"
+  },
+  "result": {
+    "legacy": {
+      "tests": 456,
+      "passed": 456,
+      "failed": 0,
+      "skipped": 0
+    },
+    "isolatedTarget": {
+      "tests": 456,
+      "passed": 456,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "limits": "Target registry active only in separate temporary rehearsal. Not release acceptance or actual-machine rollout."
+}

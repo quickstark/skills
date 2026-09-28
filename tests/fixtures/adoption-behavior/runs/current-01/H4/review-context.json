@@ -1,0 +1,77 @@
+{
+  "case": {
+    "id": "H4",
+    "skill": "qs-help",
+    "source": "skills/engineering/qs-help/SKILL.md",
+    "references": [
+      "skills/engineering/qs-help/ROUTING.md"
+    ],
+    "request": "This isolated task has no tracker and no open PR. All facts marked supplied below are authoritative fixture observations. Do not invent repository, publication, goal or installed-host evidence. Supplied host catalog contains only $qs-skills:qs-help and $qs-skills:qs-flow-handoff. I need visual parity. Tell me how to proceed; optional packages are not selected.",
+    "mode": "response-only",
+    "files": {},
+    "criteria": [
+      "AC-03"
+    ],
+    "expected": [
+      "Identify missing advanced/parity prerequisite",
+      "No executable unavailable command prompt",
+      "No installation or claim package availability"
+    ],
+    "timeoutMs": 300000
+  },
+  "before": {},
+  "after": {},
+  "execution": {
+    "exitCode": 0,
+    "signal": null,
+    "elapsedMs": 17412.829397999994,
+    "timedOut": false,
+    "interrupted": false,
+    "stopReason": null,
+    "malformedLines": 0,
+    "observedModel": null,
+    "usage": [
+      {
+        "input_tokens": 63258,
+        "cached_input_tokens": 11520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 376,
+        "reasoning_output_tokens": 130
+      }
+    ],
+    "completedTurn": true,
+    "responsePresent": true,
+    "toolItems": [],
+    "processCleanup": [],
+    "observedOwnedResidualProcesses": [],
+    "processObservation": {
+      "passes": 174,
+      "skippedTicks": 0,
+      "errors": [],
+      "maximumInFlight": 1,
+      "cleanupErrors": [],
+      "complete": true,
+      "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+    },
+    "toolCount": 0,
+    "observedNamedImageCalls": 0,
+    "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+    "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+    "promptSHA256": "a42128142db2d0a3e9a28f407edf084da3c8d9e09f04b13a7997dcbd5ae9fd66",
+    "promptUtf8Bytes": 18607,
+    "args": [
+      "exec",
+      "--ephemeral",
+      "--skip-git-repo-check",
+      "--cd",
+      "/tmp/qs-behavior-task-7yvrXn",
+      "--json",
+      "-"
+    ],
+    "runtimeFiles": {
+      "events": "ac6ed9e4a90a3ad82f3c6a48833111e924f5a424a9b73687932215b8bb7b138c",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reviewStatus": "Independent review required; no automatic behavioral score"
+}

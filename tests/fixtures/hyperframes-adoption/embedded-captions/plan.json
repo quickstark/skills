@@ -1,0 +1,38 @@
+{
+  "dna": "cream",
+  "width": 640,
+  "height": 360,
+  "duration": 4,
+  "fps": 6,
+  "caption_layer": "bg",
+  "planes": {
+    "narr": "top: 3.7%; left: 68.8%; width: 29.2%; height: 44.4%;"
+  },
+  "groups": [
+    {
+      "id": "identity",
+      "plane": "narr",
+      "in": 0.5,
+      "out": 3.1,
+      "tone": "present",
+      "css": "font-size:32px; line-height:1.2; font-weight:700;",
+      "words": [
+        {
+          "text": "Nancy",
+          "start": 0.5,
+          "end": 0.9
+        },
+        {
+          "text": "Grace",
+          "start": 0.95,
+          "end": 1.3
+        },
+        {
+          "text": "Roman",
+          "start": 1.35,
+          "end": 2.8
+        }
+      ]
+    }
+  ]
+}

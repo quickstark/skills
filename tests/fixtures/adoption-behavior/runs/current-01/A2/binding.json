@@ -1,0 +1,36 @@
+{
+  "id": "A2",
+  "cwd": "/tmp/qs-behavior-task-WgzHna",
+  "host": {
+    "cli": "codex-cli 0.153.4",
+    "configured": {
+      "model": "gpt-6-astra",
+      "model_reasoning_effort": "high",
+      "sandbox_mode": "workspace-write",
+      "approval_policy": "on-request"
+    },
+    "platform": "linux",
+    "node": "v24.21.0",
+    "overrides": []
+  },
+  "instructions": [
+    {
+      "path": "skills/engineering/qs-setup/SKILL.md",
+      "sourceSHA256": "75adcdbd2819030d47f36444fbdb3b17eb0e99b5e4ef3ae94a0944473e65aa25",
+      "derivedSHA256": "f494491652d589278e1fc1d25deaeca3d2eb13a6f7cbf6fdf8ba6f22a84fc990",
+      "bytes": 8449
+    },
+    {
+      "path": "skills/engineering/qs-setup/issue-tracker-local.md",
+      "sourceSHA256": "92c3101a54d1c811c03750fe1871b316f2746c708bd50d7a4483c8bc62e45187",
+      "derivedSHA256": "92c3101a54d1c811c03750fe1871b316f2746c708bd50d7a4483c8bc62e45187",
+      "bytes": 2414
+    },
+    {
+      "path": "skills/engineering/qs-setup/triage-labels.md",
+      "sourceSHA256": "1e9475eba342318d506f4a0026ccc4aaade379bde43fc03cda572dcb59e99f38",
+      "derivedSHA256": "1e9475eba342318d506f4a0026ccc4aaade379bde43fc03cda572dcb59e99f38",
+      "bytes": 1139
+    }
+  ]
+}

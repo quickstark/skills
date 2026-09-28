@@ -13,7 +13,7 @@ Use when traces, histories, logs, or cross-module searches are too large for dir
 1. Define the exact question and smallest useful return shape.
 2. Partition or filter large evidence before interpretation.
 3. Optional bounded helpers may inspect partitions when available and inherit the parent model.
-4. Validate reduced findings against their cited source before relying on them.
+4. Preserve source/capture identity, sample method and contradictory evidence through reduction. Validate reduced findings against their cited source before relying on them; a summary alone does not prove causality.
 
 ## Stop conditions
 

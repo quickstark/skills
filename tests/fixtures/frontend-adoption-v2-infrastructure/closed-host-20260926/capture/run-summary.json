@@ -1,0 +1,49 @@
+{
+  "requested": 66,
+  "recorded": 8,
+  "interrupted": true,
+  "failures": [],
+  "results": [
+    {
+      "trialId": "F01-r1-v31",
+      "failed": false,
+      "reviewId": "review-ccddcb5734b46fff"
+    },
+    {
+      "trialId": "F01-r1-v84",
+      "failed": false,
+      "reviewId": "review-61af6737213b5ca7"
+    },
+    {
+      "trialId": "F01-r2-v84",
+      "failed": false,
+      "reviewId": "review-ebf921892d7dfc7d"
+    },
+    {
+      "trialId": "F01-r2-v31",
+      "failed": false,
+      "reviewId": "review-a1652b054b884178"
+    },
+    {
+      "trialId": "F01-r3-v31",
+      "failed": false,
+      "reviewId": "review-7280421d45c3e13c"
+    },
+    {
+      "trialId": "F01-r3-v84",
+      "failed": false,
+      "reviewId": "review-1ca0d52a49091ad7"
+    },
+    {
+      "trialId": "F02-r1-v31",
+      "failed": false,
+      "reviewId": "review-0b338d1df6946083"
+    },
+    {
+      "trialId": "F02-r1-v84",
+      "failed": true,
+      "reviewId": "review-c6b9927b63bad2ad"
+    }
+  ],
+  "adoption": "Not graded. New comparison is separate from the failed original experiment."
+}

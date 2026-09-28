@@ -1,0 +1,43 @@
+{
+  "passed": false,
+  "features": [
+    {
+      "name": "sum",
+      "action": "GET /sum?a=7&b=5",
+      "expected": 12,
+      "response": {
+        "route": "/sum?a=7&b=5",
+        "status": 200,
+        "body": "{\"result\":2}",
+        "json": {
+          "result": 2
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "status": "failed",
+      "classification": "product",
+      "reason": "Expected JSON result 12"
+    },
+    {
+      "name": "export",
+      "action": "GET /export",
+      "expected": "download",
+      "response": {
+        "route": "/export",
+        "status": 404,
+        "body": "{\"error\":\"not found\"}",
+        "json": {
+          "error": "not found"
+        },
+        "contentType": "application/json",
+        "contentDisposition": null
+      },
+      "status": "failed",
+      "classification": "product",
+      "reason": "Expected a nonempty attachment download; documented 404 remains a product gap"
+    }
+  ],
+  "evidence": "/tmp/qs-reviewed-X2-xw2mwgam/workspace/verification/evidence/2026-09-25T21-24-57-324Z-52.json",
+  "cleanupConfirmed": true
+}
