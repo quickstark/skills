@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.0.2
+
+### Patch Changes
+
+- [#48](https://github.com/quickstark/skills/pull/48) [`3ad26ec`](https://github.com/quickstark/skills/commit/3ad26ece52aed2e19b07c3a6ffbc94b962fea878) Thanks [@quickstark](https://github.com/quickstark)! - Allow the measured full two-host adoption transaction within finite plan and journal bounds, preserving all evidence, ownership, state-size, and phase checks.
+
 ## 4.0.1
 
 ### Patch Changes
