@@ -40,6 +40,12 @@ non-mutating `origin/main` query. Plan and verification do not converge state.
 The exclusive `.quickstark-skills-update.lock` protects mutation; journal and backup
 directories live under `~/.local/state/quickstark/`.
 
+Release acceptance schema2 binds source paths, bytes and executable bits using Git
+semantics, so ordinary checkout permission differences do not invalidate identical
+artifacts. Local transaction snapshots still bind full modes and physical identity
+to detect changes after planning. Existing overlaps solely between unrelated vendor
+skill names remain untouched; collisions involving managed commands still block.
+
 Accepted replacement payloads are staged and verified before retired discovery is
 withdrawn and replacements exposed. Selection and ownership state are saved only after
 verification. Failed transactions retain their journal, backups and exact residuals;

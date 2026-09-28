@@ -1,0 +1,17 @@
+{
+  "kind": "append-only-review-resolution",
+  "finding": "R1",
+  "status": "resolved",
+  "reviewer": "/root/final_criteria",
+  "sourceReview": "Both adoptionSourceContentSha256 and gitIdentity now use0o100. Independent expected-tree tests accept0645 as nonexecutable and reject0755\u21920655. Strict local snapshots are unchanged.",
+  "independentVerification": "node --test tests/adoption-acceptance.test.mjs:8passed0failed0skipped; pure mixed-bit helper probe passed.",
+  "remainingActionableFindings": [],
+  "limits": "No repeat native-manager or full-suite run by reviewer; no model or real installation effect; parent owns final release-bound acceptance.",
+  "bindings": {
+    "scripts/adoption-acceptance.mjs": "374a969dfae5d4107ec7dc2d12c8d412bb3bdcbff016acf00819909aca3ca059",
+    "scripts/managed-skill-input.mjs": "1b266963c9408f8d4674ae8a77a1f9d1d412647f49fb3341024b8dbcde5ee9b9",
+    "tests/adoption-acceptance.test.mjs": "64539f6f3bbd19936e531487f13e01dfcb40a627f0fb6baf2807361e921b6919",
+    "tests/fixtures/adoption-native-overlap-review/acceptance-after-owner-bit.log": "dc9b2c7a10cfe906eb70f3d2f4e04ffa0c3668a2bbde4c54e1e53545f11b1648",
+    "tests/fixtures/adoption-native-overlap-review/digest-mode-probe-after.json": "ade523363f8e1521f2209ec6b07c5af0e6a02fe929074179402b6e042dadbc3d"
+  }
+}

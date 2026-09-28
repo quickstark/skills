@@ -1,0 +1,21 @@
+✖ portable acceptance permits checkout umask differences but retains strict transaction snapshots (12.882746ms)
+✔ portable acceptance rejects executable changes, extra paths, changed bytes and unknown digest formats (20.606732ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93.514308
+
+✖ failing tests:
+
+test at tests/adoption-acceptance.test.mjs:90:1
+✖ portable acceptance permits checkout umask differences but retains strict transaction snapshots (12.882746ms)
+  Error: Unsupported acceptance audit.
+      at check (file:///github/skills-adoption-release/scripts/adoption-acceptance.mjs:6:63)
+      at verifyAdoptionAcceptance (file:///github/skills-adoption-release/scripts/adoption-acceptance.mjs:36:3)
+      at async TestContext.<anonymous> (file:///github/skills-adoption-release/tests/adoption-acceptance.test.mjs:93:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

@@ -223,3 +223,43 @@ test('observed unrelated public names block a future conflicting exposure before
   assert.deepEqual(noncolliding.evidence.unrelatedPublicNames,['vendor-command']);
   assert.doesNotThrow(()=>predictNativePackageTransition(noncolliding.state,{packageId:'new',phase:'expose',packages:args.options.packages}));
 });
+
+for (const host of ['codex', 'pi']) test(`real isolated ${host} preserves overlapping unrelated vendor names while rejecting a managed collision`, { skip: !available(host) ? 'Native host executable unavailable.' : false }, async (t) => {
+  const args = await fixture(t, host, { real: true });
+  const market = args.options.packages[0].marketplaceRoot;
+  const vendorRoots = [];
+  for (const name of ['vendor-a', 'vendor-b']) {
+    const source = path.join(market, 'plugins', name);
+    await mkdir(path.join(source, 'skills/meeting-prep'), { recursive: true });
+    await writeFile(path.join(source, 'skills/meeting-prep/SKILL.md'), '---\nname: meeting-prep\ndescription: Independent vendor helper.\n---\nVendor content.\n');
+    if (host === 'codex') {
+      await mkdir(path.join(source, '.codex-plugin'));
+      await writeFile(path.join(source, '.codex-plugin/plugin.json'), JSON.stringify({ name, version: '1.0.0', skills: './skills/' }));
+      const file = path.join(market, '.agents/plugins/marketplace.json');
+      const index = JSON.parse(await readFile(file));
+      index.plugins.push({ name, source: { source: 'local', path: `./plugins/${name}` } });
+      await writeFile(file, JSON.stringify(index));
+      await args.command(['plugin', 'add', `${name}@qs-native-fixture`, '--json']);
+      vendorRoots.push(path.join(args.options.homeDirectory, '.codex/plugins/cache/qs-native-fixture', name, '1.0.0'));
+    } else {
+      await writeFile(path.join(source, 'package.json'), JSON.stringify({ name, version: '1.0.0', pi: { skills: ['./skills'] } }));
+      await args.command(['install', source]); vendorRoots.push(source);
+    }
+  }
+  const vendorSnapshots = await Promise.all(vendorRoots.map(captureMigrationPath));
+  const before = (await observeNativePackages(args.options)).state;
+  assert.deepEqual(before.unrelatedPublicNames, ['meeting-prep']);
+  const withdraw = args.step(before, 'old', 'withdraw');
+  await args.adapter.prepare(withdraw, args.context); await args.adapter.apply(withdraw, args.context);
+  const expose = args.step(withdraw.after, 'new', 'expose');
+  await args.adapter.prepare(expose, args.context); await args.adapter.apply(expose, args.context);
+  const after = (await observeNativePackages(args.options)).state;
+  assert.deepEqual(after, expose.after);
+  assert.equal(after.unrelatedHash, before.unrelatedHash);
+  assert.equal(after.config.unrelatedHash, before.config.unrelatedHash);
+  for (let i = 0; i < vendorRoots.length; i++) assert.equal((await captureMigrationPath(vendorRoots[i])).contentSha256, vendorSnapshots[i].contentSha256);
+  const vendorSkill = path.join(vendorRoots[0], 'skills/meeting-prep');
+  await writeFile(path.join(vendorSkill, 'SKILL.md'), '---\nname: qs-probe\ndescription: Conflicting independent vendor.\n---\nVendor content.\n');
+  await (await import('node:fs/promises')).rename(vendorSkill, path.join(vendorRoots[0], 'skills/qs-probe'));
+  await assert.rejects(observeNativePackages(args.options), /Duplicate native public identities/);
+});

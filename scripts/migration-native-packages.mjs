@@ -193,9 +193,13 @@ export async function observeNativePackages(input) {
     const { packages: ignored, ...other } = settings;
     config = { selected: active.map((pkg) => pkg.source).sort(), unrelatedHash: digest({ other, packages: unrelated.map((item) => item.entry) }) };
   }
-  const allNames = [...active.flatMap((item) => item.publicNames), ...unrelated.flatMap((item) => item.observedPublicNames ?? [])];
-  check(new Set(allNames).size === allNames.length, 'Duplicate native public identities are exposed.');
+  // Independent vendor packages may share local names (Codex qualifies them by
+  // plugin). Preserve every registration/payload in unrelatedHash; existing
+  // vendor-to-vendor overlap must not block an unrelated managed transition.
+  // Managed-to-managed and managed-to-vendor collisions still fail closed.
   const unrelatedPublicNames = [...new Set(unrelated.flatMap((item) => item.observedPublicNames ?? []))].sort();
+  const allNames = [...active.flatMap((item) => item.publicNames), ...unrelatedPublicNames];
+  check(new Set(allNames).size === allNames.length, 'Duplicate native public identities are exposed.');
   const data = { host, scope: 'native-packages-only', configPath, config, unrelatedDiscoveryComplete, unrelatedPublicNames, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources: sourcePayloads, caches, unrelatedHash: digest(unrelated) };
   return { state: { snapshotHash: digest(data), ...data }, evidence: { configSnapshot, rawConfigSha256: sha(bytes), unrelatedPublicNames, unrelatedDiscoveryComplete } };
 }

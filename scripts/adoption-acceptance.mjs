@@ -6,6 +6,14 @@ import { captureMigrationPath, revalidateMigrationPath } from './migration-files
 const check = (condition, message) => { if (!condition) throw new Error(message); };
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
+// Cross-checkout release identity follows Git's executable-bit semantics.
+// Keep captureMigrationPath snapshots unchanged for strict local revalidation.
+export function adoptionSourceContentSha256(snapshot) {
+  check(['file', 'directory'].includes(snapshot.kind) && Array.isArray(snapshot.entries), 'Regular source snapshot required.');
+  return sha(JSON.stringify(snapshot.entries.map(entry => ({ ...entry,
+    mode: entry.kind === 'directory' || (entry.mode & 0o100) ? 0o755 : 0o644,
+  }))));
+}
 const unique = (value) => Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === 'string' && item.length > 0) && new Set(value).size === value.length;
 const equal = (a, b) => unique(a) && unique(b) && [...a].sort().join('\0') === [...b].sort().join('\0');
 
@@ -33,7 +41,7 @@ export async function verifyAdoptionAcceptance({ repositoryRoot, auditPath,
   const auditBytes = await readFile(auditSnapshot.path);
   await revalidateMigrationPath(auditSnapshot); snapshots.push(auditSnapshot);
   const audit = JSON.parse(auditBytes);
-  check(audit.schemaVersion === 1 && audit.kind === 'reviewed-adoption-acceptance', 'Unsupported acceptance audit.');
+  check((audit.schemaVersion === 1 || audit.schemaVersion === 2 && audit.sourceBinding === 'git-content-and-executable-bits-sha256') && audit.kind === 'reviewed-adoption-acceptance', 'Unsupported acceptance audit.');
   const pkg = audit.packages?.[packageId];
   check(pkg && equal(pkg.capabilityIds, capabilityIds) && equal(pkg.sourcePaths, sourcePaths)
     && equal(pkg.criteria, requiredCriteria), 'Acceptance obligations differ from selected catalog.');
@@ -58,7 +66,8 @@ export async function verifyAdoptionAcceptance({ repositoryRoot, auditPath,
     const expected = audit.sources?.[relative];
     check(expected && ['file', 'directory'].includes(expected.kind) && digest(expected.contentSha256), 'Source binding is missing.');
     const snapshot = await captureMigrationPath(locate(relative));
-    check(snapshot.kind === expected.kind && snapshot.contentSha256 === expected.contentSha256, `Acceptance source changed: ${relative}.`);
+    const sourceDigest = audit.schemaVersion === 2 && ['file', 'directory'].includes(snapshot.kind) ? adoptionSourceContentSha256(snapshot) : snapshot.contentSha256;
+    check(snapshot.kind === expected.kind && sourceDigest === expected.contentSha256, `Acceptance source changed: ${relative}.`);
     snapshots.push(snapshot);
   }
   references.push({ path: auditSnapshot.path, sha256: sha(auditBytes) });

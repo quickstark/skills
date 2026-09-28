@@ -1,0 +1,30 @@
+✖ real isolated codex preserves overlapping unrelated vendor names while rejecting a managed collision (179.590461ms)
+✖ real isolated pi preserves overlapping unrelated vendor names while rejecting a managed collision (692.934508ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 934.431968
+
+✖ failing tests:
+
+test at tests/migration-native-packages.test.mjs:227:37
+✖ real isolated codex preserves overlapping unrelated vendor names while rejecting a managed collision (179.590461ms)
+  Error: Duplicate native public identities are exposed.
+      at check (file:///github/skills-adoption-release/scripts/migration-native-packages.mjs:10:63)
+      at observeNativePackages (file:///github/skills-adoption-release/scripts/migration-native-packages.mjs:197:3)
+      at async TestContext.<anonymous> (file:///github/skills-adoption-release/tests/migration-native-packages.test.mjs:250:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/migration-native-packages.test.mjs:227:37
+✖ real isolated pi preserves overlapping unrelated vendor names while rejecting a managed collision (692.934508ms)
+  Error: Duplicate native public identities are exposed.
+      at check (file:///github/skills-adoption-release/scripts/migration-native-packages.mjs:10:63)
+      at observeNativePackages (file:///github/skills-adoption-release/scripts/migration-native-packages.mjs:197:3)
+      at async TestContext.<anonymous> (file:///github/skills-adoption-release/tests/migration-native-packages.test.mjs:250:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

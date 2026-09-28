@@ -1,0 +1,32 @@
+{
+  "kind": "independent-bounded-repair-review",
+  "reviewer": "/root/final_criteria",
+  "observedSHA256": {
+    "scripts/adoption-acceptance.mjs": "374a969dfae5d4107ec7dc2d12c8d412bb3bdcbff016acf00819909aca3ca059",
+    "scripts/managed-skill-input.mjs": "1b266963c9408f8d4674ae8a77a1f9d1d412647f49fb3341024b8dbcde5ee9b9",
+    "scripts/migration-native-packages.mjs": "8f3e14b44d75e7cfd27d12c0474fc2cebccab8a051f80f57ef2a06435f964306",
+    "tests/adoption-acceptance.test.mjs": "64539f6f3bbd19936e531487f13e01dfcb40a627f0fb6baf2807361e921b6919",
+    "tests/migration-native-packages.test.mjs": "8b30932850b9e55e72c169050b6d38bd949c224c22b6a40f5a76a55a7f9ae49f",
+    "tests/fixtures/adoption-final-target/assemble-audit.mjs": "985f9b1b00e6a191c599a04a2d7eb30073adcc1d4de45fac17bef0da430f266f",
+    "tests/fixtures/adoption-native-overlap-repair/before.log": "86cafc4ba5c803fc5248532114ac59837129a4045ce5e273e9ca15d069a4abfc",
+    "tests/fixtures/adoption-native-overlap-repair/after.log": "71ad6b023c73eb77f183c9d98cc9ac6db9da17e587a1fa2ed5d45db20bb1ed0d",
+    "tests/fixtures/adoption-native-overlap-repair/portable-audit-before.log": "5ab4c0cf54a0b4645a322c3d3d4e59d2722d1ba1c0b035e5d7e289c2e09eb2f3",
+    "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log": "60ff84c5366892ff277e8680c8b59d3db3e403bd2f95eede9d957cb3b9c54c43"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "priority": "P2",
+      "file": "scripts/adoption-acceptance.mjs",
+      "line": 14,
+      "title": "Use owner executable bit for Git source identity",
+      "status": "open-at-review",
+      "observed": "Any-executable normalization equates0755/0655 and distinguishes0644/0645 contrary to actual Git index modes.",
+      "requested": "Normalize with0o100 and align managed-skill-input gitIdentity; test mixed-bit acceptance and owner-executable loss."
+    }
+  ],
+  "vendorOverlap": "Scoped correction supported by source review and retained actual isolated before/after execution logs.",
+  "strictSnapshots": "Unchanged; capture/revalidation still binds full local modes and physical root identity.",
+  "newActions": "One removed review-local Git index probe plus pure synthetic helper probe. No new native/model/product trial, commit or installed-host effect.",
+  "finalQualification": "Pending executable-bit repair, parent full checks, rebuilt audit and patch-release/host outcome."
+}

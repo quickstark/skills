@@ -44,6 +44,7 @@ export function derivePackageAcceptanceObligations(packageId, document) {
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, collection.codexPackageRoot, collection.piPackageRoot, collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
       'config/skill-migrations.json', 'config/skill-provenance.json', 'config/skill-profiles.json', 'docs/skill-run-contract.md',
+      ...['adoption-acceptance', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
       ...['qs-skill-catalog', 'ps-skill-catalog', 'skill-collection-registry', 'advanced-skill-catalog', 'frontend-skill-catalog', 'video-skill-catalog', 'execution-skill-catalog', 'optional-command-definition'].map((name) => `scripts/${name}.mjs`)]),
     requiredCriteria: unique([...commonCriteria, ...packageCriteria[packageId]]), requiredChecks: ['package-closure', 'notices', 'behavior', 'native-discovery', ...(packageId === 'qs-video' ? ['video-runtime'] : packageId === 'qs-execution' ? ['unlazy-runtime'] : [])] };
 }
@@ -66,7 +67,7 @@ function nativeJson(result) {
 async function gitIdentity(payload, relative, revisions, repositoryRoot, git) {
   const files = payload.snapshot.entries.filter((entry) => entry.kind === 'file');
   const actual = new Map();
-  for (const entry of files) { const bytes = await readFile(path.join(payload.snapshot.path, entry.path)); actual.set(`${relative}/${entry.path}`, { mode: entry.mode & 0o111 ? '100755' : '100644', oid: createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex') }); }
+  for (const entry of files) { const bytes = await readFile(path.join(payload.snapshot.path, entry.path)); actual.set(`${relative}/${entry.path}`, { mode: entry.mode & 0o100 ? '100755' : '100644', oid: createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex') }); }
   await revalidateMigrationPath(payload.snapshot);
   for (const revision of revisions) {
     let tree; try { tree = await git(['ls-tree', '-rz', '--full-tree', revision, '--', relative], repositoryRoot); } catch { continue; }
