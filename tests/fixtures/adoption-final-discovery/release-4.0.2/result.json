@@ -1,0 +1,741 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "repository": "/github/skills-adoption-release",
+  "version": "4.0.2",
+  "checkedAt": "2026-09-28T14:56:05.873Z",
+  "runtime": {
+    "node": "v24.21.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "modelRequests": 0,
+  "commands": [
+    {
+      "args": [
+        "codex",
+        "--version"
+      ],
+      "cwd": "/github/skills-adoption-release",
+      "status": 0,
+      "signal": null,
+      "stdout": "codex-cli 0.153.4\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)\n"
+    },
+    {
+      "args": [
+        "pi",
+        "--version"
+      ],
+      "cwd": "/github/skills-adoption-release",
+      "status": 0,
+      "signal": null,
+      "stdout": "0.87.1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "python3",
+        "/github/skills-adoption-release/tests/fixtures/target-activation-probe/native-discovery.py",
+        "--repository",
+        "/github/skills-adoption-release",
+        "--output",
+        "/github/skills-adoption-release/tests/fixtures/adoption-final-discovery/release-4.0.2/native"
+      ],
+      "cwd": "/github/skills-adoption-release",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"status\": \"passed\", \"error\": null, \"counts\": {\"codex\": 38, \"pi\": 38}, \"modelRequests\": 0, \"home\": \"/tmp/qs-target-native-uxnyqp8y/home\"}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/video/scripts/verify-closure.mjs"
+      ],
+      "cwd": "/github/skills-adoption-release",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"ok\":true,\"modules\":21,\"sourceFiles\":912,\"privateFiles\":911,\"relativeImports\":186,\"sourceRevision\":\"2734ee2c02ef858f3c877c18b56ebcfbb846cb4c\"}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "usage: gate-check.mjs [options] [file ...]\n\nrun modes:\n  (default)             run unmet runnable gates and update their ledgers\n  --status              report only; never execute, approve, or write\n  --reverify            re-run every runnable gate and demote stale failures\n  --approve             approve each exact pending oracle, then run it\n  --jobs N              rolling concurrency, integer 1..64 (default 1)\n  --timeout S           per-check timeout, integer seconds 1..86400 (default 120)\n  --shell PATH          command shell (UNLAZY_SHELL, then platform default)\n  --cwd DIR             default CHECK directory (explicit: file dir; discovered: --root)\n\npipeline actions:\n  --claim --scope ID [--leaf NAME]   atomically claim the leaf's OWNS paths\n  --release --scope ID [--leaf NAME] release serialized ownership leases\n  --log TEXT --scope ID              append one status line\n  --bind SESSION --scope ID          bind a session to one pipeline\n  --list-scopes                      list .unlazy pipelines\n\ntargeting:\n  --scope ID             use .unlazy/ID (or UNLAZY_SCOPE)\n  --root DIR             repository/pipeline root (default current directory)\n  file ...               explicit regular ledger files; all are honored\n\nCHECK execution requires prior approval keyed to the exact CHECK, EXPECT,\nresolved CWD, resolved shell, timeout, output/regex limits, platform, and PATH.\nApprovals live outside the repository under ~/.unlazy/approved by default.\n\nexit codes: 0 all met/action succeeded; 1 unmet; 2 usage/parse/infrastructure;\n            3 lease conflict.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-lint.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "usage: gate-lint.mjs [--strict] [--json] <ledger.md ...>\n\nAudit gate quality, not gate completion. Report lexical signs of fixed-output\noracles, weak expectations, manual measurements, and titles that name an\nactivity instead of an outcome. Never executes a CHECK.\n\nexit codes: 0 no strict failures, 1 strict findings, 2 usage or parse error.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/dispatch-check.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "Usage:\n  dispatch-check.mjs open --scope ID --wave ID --leaf ID [--leaf ID ...] [--root PATH]\n  dispatch-check.mjs start --scope ID --wave ID --leaf ID --handle OPAQUE_ID [--root PATH]\n  dispatch-check.mjs seal --scope ID --wave ID [--root PATH]\n  dispatch-check.mjs return --scope ID --wave ID --leaf ID [--root PATH]\n  dispatch-check.mjs abandon --scope ID --wave ID --reason TEXT [--root PATH]\n  dispatch-check.mjs status --scope ID --wave ID [--root PATH]\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--approve",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "APPROVAL REQUIRED GATES:G1\n    CHECK: node oracle.mjs\n    EXPECT: ORACLE-OK\n    CWD: /tmp/qs-final-projected-JGZ0VG/claude/checker\n    SHELL: /bin/sh\n    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n    APPROVED: /tmp/qs-final-projected-JGZ0VG/claude/approvals/07834c9ef97b6368a6e64185c13280c93e3c2ee1b5cca954dc6f99b2aeab8724.json\n  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/claude/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Projected checker works\n       exit=0; EXPECT=matched; output=sha256=3cad54d5f84b7c85a7e7a4676274f97f0294bc4f11362f1f337251004cd30b9a; bytes=10\nGATES.md: 1 gates\nALL MET (1 met)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "  UNMET GATES:G1 (checked but automatic evidence is stale or unbound): Projected checker works\nGATES.md: 1 gates\nUNMET: 1 (met: 0)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "GATES.md: 1 gates\nALL MET (1 met)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--reverify",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/claude/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  FAIL GATES:G1: Projected checker works\n       exit=0; EXPECT=not matched; output=BROKEN\nGATES.md: 1 gates\nUNMET: 1 (met: 0, reran: 1, previously met reverified: 1)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--reverify",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/claude/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Projected checker works\n       exit=0; EXPECT=matched; output=sha256=3cad54d5f84b7c85a7e7a4676274f97f0294bc4f11362f1f337251004cd30b9a; bytes=10\nGATES.md: 1 gates\nALL MET (1 met, reran: 1, previously met reverified: 0)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/claude/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/claude/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "GATES.md: 1 gates\nHANDOFF REQUIRED: 1 abandoned (met: 0)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/video/scripts/verify-closure.mjs"
+      ],
+      "cwd": "/github/skills-adoption-release",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"ok\":true,\"modules\":21,\"sourceFiles\":912,\"privateFiles\":911,\"relativeImports\":186,\"sourceRevision\":\"2734ee2c02ef858f3c877c18b56ebcfbb846cb4c\"}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "usage: gate-check.mjs [options] [file ...]\n\nrun modes:\n  (default)             run unmet runnable gates and update their ledgers\n  --status              report only; never execute, approve, or write\n  --reverify            re-run every runnable gate and demote stale failures\n  --approve             approve each exact pending oracle, then run it\n  --jobs N              rolling concurrency, integer 1..64 (default 1)\n  --timeout S           per-check timeout, integer seconds 1..86400 (default 120)\n  --shell PATH          command shell (UNLAZY_SHELL, then platform default)\n  --cwd DIR             default CHECK directory (explicit: file dir; discovered: --root)\n\npipeline actions:\n  --claim --scope ID [--leaf NAME]   atomically claim the leaf's OWNS paths\n  --release --scope ID [--leaf NAME] release serialized ownership leases\n  --log TEXT --scope ID              append one status line\n  --bind SESSION --scope ID          bind a session to one pipeline\n  --list-scopes                      list .unlazy pipelines\n\ntargeting:\n  --scope ID             use .unlazy/ID (or UNLAZY_SCOPE)\n  --root DIR             repository/pipeline root (default current directory)\n  file ...               explicit regular ledger files; all are honored\n\nCHECK execution requires prior approval keyed to the exact CHECK, EXPECT,\nresolved CWD, resolved shell, timeout, output/regex limits, platform, and PATH.\nApprovals live outside the repository under ~/.unlazy/approved by default.\n\nexit codes: 0 all met/action succeeded; 1 unmet; 2 usage/parse/infrastructure;\n            3 lease conflict.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-lint.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "usage: gate-lint.mjs [--strict] [--json] <ledger.md ...>\n\nAudit gate quality, not gate completion. Report lexical signs of fixed-output\noracles, weak expectations, manual measurements, and titles that name an\nactivity instead of an outcome. Never executes a CHECK.\n\nexit codes: 0 no strict failures, 1 strict findings, 2 usage or parse error.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/dispatch-check.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "Usage:\n  dispatch-check.mjs open --scope ID --wave ID --leaf ID [--leaf ID ...] [--root PATH]\n  dispatch-check.mjs start --scope ID --wave ID --leaf ID --handle OPAQUE_ID [--root PATH]\n  dispatch-check.mjs seal --scope ID --wave ID [--root PATH]\n  dispatch-check.mjs return --scope ID --wave ID --leaf ID [--root PATH]\n  dispatch-check.mjs abandon --scope ID --wave ID --reason TEXT [--root PATH]\n  dispatch-check.mjs status --scope ID --wave ID [--root PATH]\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--approve",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "APPROVAL REQUIRED GATES:G1\n    CHECK: node oracle.mjs\n    EXPECT: ORACLE-OK\n    CWD: /tmp/qs-final-projected-JGZ0VG/codex/checker\n    SHELL: /bin/sh\n    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n    APPROVED: /tmp/qs-final-projected-JGZ0VG/codex/approvals/f31c536b519c0d96c3235ca9d5921ef2fef2bf408faa17f5f17a33705e320ae9.json\n  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/codex/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Projected checker works\n       exit=0; EXPECT=matched; output=sha256=3cad54d5f84b7c85a7e7a4676274f97f0294bc4f11362f1f337251004cd30b9a; bytes=10\nGATES.md: 1 gates\nALL MET (1 met)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "  UNMET GATES:G1 (checked but automatic evidence is stale or unbound): Projected checker works\nGATES.md: 1 gates\nUNMET: 1 (met: 0)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "GATES.md: 1 gates\nALL MET (1 met)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--reverify",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/codex/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  FAIL GATES:G1: Projected checker works\n       exit=0; EXPECT=not matched; output=BROKEN\nGATES.md: 1 gates\nUNMET: 1 (met: 0, reran: 1, previously met reverified: 1)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--reverify",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/codex/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Projected checker works\n       exit=0; EXPECT=matched; output=sha256=3cad54d5f84b7c85a7e7a4676274f97f0294bc4f11362f1f337251004cd30b9a; bytes=10\nGATES.md: 1 gates\nALL MET (1 met, reran: 1, previously met reverified: 0)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/codex/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/codex/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "GATES.md: 1 gates\nHANDOFF REQUIRED: 1 abandoned (met: 0)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/video/scripts/verify-closure.mjs"
+      ],
+      "cwd": "/github/skills-adoption-release",
+      "status": 0,
+      "signal": null,
+      "stdout": "{\"ok\":true,\"modules\":21,\"sourceFiles\":912,\"privateFiles\":911,\"relativeImports\":186,\"sourceRevision\":\"2734ee2c02ef858f3c877c18b56ebcfbb846cb4c\"}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "usage: gate-check.mjs [options] [file ...]\n\nrun modes:\n  (default)             run unmet runnable gates and update their ledgers\n  --status              report only; never execute, approve, or write\n  --reverify            re-run every runnable gate and demote stale failures\n  --approve             approve each exact pending oracle, then run it\n  --jobs N              rolling concurrency, integer 1..64 (default 1)\n  --timeout S           per-check timeout, integer seconds 1..86400 (default 120)\n  --shell PATH          command shell (UNLAZY_SHELL, then platform default)\n  --cwd DIR             default CHECK directory (explicit: file dir; discovered: --root)\n\npipeline actions:\n  --claim --scope ID [--leaf NAME]   atomically claim the leaf's OWNS paths\n  --release --scope ID [--leaf NAME] release serialized ownership leases\n  --log TEXT --scope ID              append one status line\n  --bind SESSION --scope ID          bind a session to one pipeline\n  --list-scopes                      list .unlazy pipelines\n\ntargeting:\n  --scope ID             use .unlazy/ID (or UNLAZY_SCOPE)\n  --root DIR             repository/pipeline root (default current directory)\n  file ...               explicit regular ledger files; all are honored\n\nCHECK execution requires prior approval keyed to the exact CHECK, EXPECT,\nresolved CWD, resolved shell, timeout, output/regex limits, platform, and PATH.\nApprovals live outside the repository under ~/.unlazy/approved by default.\n\nexit codes: 0 all met/action succeeded; 1 unmet; 2 usage/parse/infrastructure;\n            3 lease conflict.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-lint.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "usage: gate-lint.mjs [--strict] [--json] <ledger.md ...>\n\nAudit gate quality, not gate completion. Report lexical signs of fixed-output\noracles, weak expectations, manual measurements, and titles that name an\nactivity instead of an outcome. Never executes a CHECK.\n\nexit codes: 0 no strict failures, 1 strict findings, 2 usage or parse error.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/dispatch-check.mjs",
+        "--help"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "Usage:\n  dispatch-check.mjs open --scope ID --wave ID --leaf ID [--leaf ID ...] [--root PATH]\n  dispatch-check.mjs start --scope ID --wave ID --leaf ID --handle OPAQUE_ID [--root PATH]\n  dispatch-check.mjs seal --scope ID --wave ID [--root PATH]\n  dispatch-check.mjs return --scope ID --wave ID --leaf ID [--root PATH]\n  dispatch-check.mjs abandon --scope ID --wave ID --reason TEXT [--root PATH]\n  dispatch-check.mjs status --scope ID --wave ID [--root PATH]\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--approve",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "APPROVAL REQUIRED GATES:G1\n    CHECK: node oracle.mjs\n    EXPECT: ORACLE-OK\n    CWD: /tmp/qs-final-projected-JGZ0VG/pi/checker\n    SHELL: /bin/sh\n    PATH: /home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n    APPROVED: /tmp/qs-final-projected-JGZ0VG/pi/approvals/688d36bb1e359e49309498bbe3d1cd9208c014982470758b76bea1751701c29d.json\n  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/pi/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Projected checker works\n       exit=0; EXPECT=matched; output=sha256=3cad54d5f84b7c85a7e7a4676274f97f0294bc4f11362f1f337251004cd30b9a; bytes=10\nGATES.md: 1 gates\nALL MET (1 met)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "  UNMET GATES:G1 (checked but automatic evidence is stale or unbound): Projected checker works\nGATES.md: 1 gates\nUNMET: 1 (met: 0)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "GATES.md: 1 gates\nALL MET (1 met)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--reverify",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/pi/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  FAIL GATES:G1: Projected checker works\n       exit=0; EXPECT=not matched; output=BROKEN\nGATES.md: 1 gates\nUNMET: 1 (met: 0, reran: 1, previously met reverified: 1)\n  GATES:G1\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--reverify",
+        "--shell",
+        "/bin/sh",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 0,
+      "signal": null,
+      "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-final-projected-JGZ0VG/pi/checker PATH=/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Projected checker works\n       exit=0; EXPECT=matched; output=sha256=3cad54d5f84b7c85a7e7a4676274f97f0294bc4f11362f1f337251004cd30b9a; bytes=10\nGATES.md: 1 gates\nALL MET (1 met, reran: 1, previously met reverified: 0)\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "/usr/bin/node",
+        "/tmp/qs-final-projected-JGZ0VG/pi/relocated/execution/modules/unlazy/scripts/gate-check.mjs",
+        "--status",
+        "--root",
+        "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+        "GATES.md"
+      ],
+      "cwd": "/tmp/qs-final-projected-JGZ0VG/pi/checker",
+      "status": 1,
+      "signal": null,
+      "stdout": "GATES.md: 1 gates\nHANDOFF REQUIRED: 1 abandoned (met: 0)\n  GATES:G1\n",
+      "stderr": ""
+    }
+  ],
+  "closure": [
+    {
+      "host": "claude",
+      "video": {
+        "ok": true,
+        "modules": 21,
+        "sourceFiles": 912,
+        "privateFiles": 911,
+        "relativeImports": 186,
+        "sourceRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c"
+      },
+      "executionFiles": 23,
+      "sfx": "known bytes retained; missing cue reported",
+      "checker": "moved imports, positive, stale definition, changed artifact reverify, restored oracle and abandoned gate checks passed"
+    },
+    {
+      "host": "codex",
+      "video": {
+        "ok": true,
+        "modules": 21,
+        "sourceFiles": 912,
+        "privateFiles": 911,
+        "relativeImports": 186,
+        "sourceRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c"
+      },
+      "executionFiles": 23,
+      "sfx": "known bytes retained; missing cue reported",
+      "checker": "moved imports, positive, stale definition, changed artifact reverify, restored oracle and abandoned gate checks passed"
+    },
+    {
+      "host": "pi",
+      "video": {
+        "ok": true,
+        "modules": 21,
+        "sourceFiles": 912,
+        "privateFiles": 911,
+        "relativeImports": 186,
+        "sourceRevision": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c"
+      },
+      "executionFiles": 23,
+      "sfx": "known bytes retained; missing cue reported",
+      "checker": "moved imports, positive, stale definition, changed artifact reverify, restored oracle and abandoned gate checks passed"
+    }
+  ],
+  "bindings": [
+    {
+      "path": "codex/plugins/qs-skills",
+      "kind": "directory",
+      "contentSha256": "ba679f1d8f79557098d7251754a8e62ecba6fd4f8e713e271b272b2db88ca8f9",
+      "files": 47,
+      "bytes": 281829
+    },
+    {
+      "path": "pi/packages/qs-skills",
+      "kind": "directory",
+      "contentSha256": "f6398e81ba9040e544eb8516ca097ca3f08225cd0bd8a383d4c86ff30fa649e3",
+      "files": 39,
+      "bytes": 173014
+    },
+    {
+      "path": "codex/plugins/qs-specialists",
+      "kind": "directory",
+      "contentSha256": "318bdb80cb9d38f6d93ab3b3ef7a806e439c580a16bcbc41804c774562370e85",
+      "files": 32,
+      "bytes": 234097
+    },
+    {
+      "path": "pi/packages/qs-specialists",
+      "kind": "directory",
+      "contentSha256": "a35e52e41f4457952695376dd4339d51675db38499ff2e89e36b2ae53275be7e",
+      "files": 24,
+      "bytes": 124920
+    },
+    {
+      "path": "packages/qs-specialists",
+      "kind": "directory",
+      "contentSha256": "199472e844fae6c4833d7f9222847a259854faa05b30a8f1a980813087b79fe5",
+      "files": 32,
+      "bytes": 234160
+    },
+    {
+      "path": "codex/plugins/qs-advanced",
+      "kind": "directory",
+      "contentSha256": "1f1942acfc47b95f564d329fa02788fcc7d7c198fcde034ba7c4506116ed92cf",
+      "files": 52,
+      "bytes": 289241
+    },
+    {
+      "path": "pi/packages/qs-advanced",
+      "kind": "directory",
+      "contentSha256": "6e9e9c86f4863008f522622f2526d5a72b7ba07abb3de5fb542e3e6bccc71aa2",
+      "files": 44,
+      "bytes": 180612
+    },
+    {
+      "path": "packages/qs-advanced",
+      "kind": "directory",
+      "contentSha256": "f03adc976ffc3405224620f62606be8bd561ffe769945c1895cd2ba25ae5e245",
+      "files": 52,
+      "bytes": 289993
+    },
+    {
+      "path": "codex/plugins/qs-frontend",
+      "kind": "directory",
+      "contentSha256": "c888b1fce02aa839cb8979ce9444710b61508bd2cc77995644368f834bee8479",
+      "files": 29,
+      "bytes": 172480
+    },
+    {
+      "path": "pi/packages/qs-frontend",
+      "kind": "directory",
+      "contentSha256": "1750d8307bbce9d6d767a4a7a0d6876d2769f9b33773ca2e875c31cf194765ce",
+      "files": 21,
+      "bytes": 63265
+    },
+    {
+      "path": "packages/qs-frontend",
+      "kind": "directory",
+      "contentSha256": "039958432191df44dd10fdd663912ee08845b4a92be35ee852e9f45adeae7818",
+      "files": 29,
+      "bytes": 172396
+    },
+    {
+      "path": "codex/plugins/qs-video",
+      "kind": "directory",
+      "contentSha256": "fe42df48ea31229c215a5aa8e983cbca430f2841acd967c53ab2f141f7d39de4",
+      "files": 932,
+      "bytes": 16922324
+    },
+    {
+      "path": "pi/packages/qs-video",
+      "kind": "directory",
+      "contentSha256": "062f3ff9170d1eeefed2357df3d2bb66502bb236faec97dd5d713457f267fb44",
+      "files": 924,
+      "bytes": 16812854
+    },
+    {
+      "path": "packages/qs-video",
+      "kind": "directory",
+      "contentSha256": "8b4e13bfcbcfc5b5461f66820e90594991a775a9231bc97be8eeb2328f4bf9c1",
+      "files": 932,
+      "bytes": 16921860
+    },
+    {
+      "path": "codex/plugins/qs-execution",
+      "kind": "directory",
+      "contentSha256": "68c37e9dbf358315b9138718213e1446a453f13a03f290059f9170dbd2862d5f",
+      "files": 36,
+      "bytes": 345142
+    },
+    {
+      "path": "pi/packages/qs-execution",
+      "kind": "directory",
+      "contentSha256": "f7d1e8f90e473b664714d12afe29aece07e7ac477057320c20b3e74cdb396494",
+      "files": 28,
+      "bytes": 235722
+    },
+    {
+      "path": "packages/qs-execution",
+      "kind": "directory",
+      "contentSha256": "ea5d87389ffd98e15edefb78b94e7ab4ff0965d59ecef313a0244bc5a7062340",
+      "files": 36,
+      "bytes": 344729
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "kind": "file",
+      "contentSha256": "eec79216058ba946a14e0abe8e92fc25730f80572714bd72e81e4eec1d93a795",
+      "files": 1,
+      "bytes": 936
+    },
+    {
+      "path": "package.json",
+      "kind": "file",
+      "contentSha256": "a6781974584d0e88460110c95fb8a5fef66c419f710d9983f3efac9eb80f8a0b",
+      "files": 1,
+      "bytes": 2093
+    },
+    {
+      "path": "skills/engineering",
+      "kind": "directory",
+      "contentSha256": "12c03125ca97805c114e90966dc31823f57173dcd1a4a170a7ef6b322c24d404",
+      "files": 106,
+      "bytes": 637426
+    },
+    {
+      "path": "skills/productivity",
+      "kind": "directory",
+      "contentSha256": "0c3049d09c1a2fc07fd5d0ad0abcd311139723dd694f7245af2e0209dd2600b8",
+      "files": 12,
+      "bytes": 57410
+    },
+    {
+      "path": "skills/frontend",
+      "kind": "directory",
+      "contentSha256": "59797c684491e22c8fff31713543425f600fb58337b073796d9a86998300641f",
+      "files": 11,
+      "bytes": 21031
+    },
+    {
+      "path": "skills/video",
+      "kind": "directory",
+      "contentSha256": "03fe2c31427f5faf0134ac5495219d0e04b59bfe69e3b1d24f0bece544145219",
+      "files": 924,
+      "bytes": 16813046
+    },
+    {
+      "path": "scripts/skill-collection-registry.mjs",
+      "kind": "file",
+      "contentSha256": "5b115967fc1b5844df3ac26dac25c08b92742e1bfd14f43e9fced34bdd799f2e",
+      "files": 1,
+      "bytes": 18560
+    },
+    {
+      "path": "scripts/migration-filesystem.mjs",
+      "kind": "file",
+      "contentSha256": "2b4946c07b9f5e732365f3af23dd0b93b8346a3e41c8fda03bf15ac87fa9db2e",
+      "files": 1,
+      "bytes": 5626
+    },
+    {
+      "path": "tests/fixtures/target-activation-probe/native-discovery.py",
+      "kind": "file",
+      "contentSha256": "de1a712fc466087f0b623466e563d54c41327ee98b027cf831f3b12cc5a7c757",
+      "files": 1,
+      "bytes": 6268
+    },
+    {
+      "path": "tests/fixtures/adoption-final-discovery/run.mjs",
+      "kind": "file",
+      "contentSha256": "fd7e4cf2cdd6714d60927bbc5b7a177f99808095f93c06f541f1197f1b47ab2b",
+      "files": 1,
+      "bytes": 8831
+    }
+  ],
+  "evidence": [
+    {
+      "path": "native/result.json",
+      "sha256": "a9717d41eb979a9ebf90e42958ea9e0129e7764d0dacd9a06fcea25478d59ef0"
+    }
+  ],
+  "limitations": [
+    "Native enumeration is not model routing or actual machine migration.",
+    "This run checks projected private closure and relocated local helpers; no fresh render, provider or speech-model execution.",
+    "Unlazy checker status binds definitions, not transitive input contents; explicit reverify is required.",
+    "Only this Linux runtime is exercised; historical Node16 and media-runtime evidence remains separately scoped."
+  ],
+  "nativeVersions": {
+    "codex": "codex-cli 0.153.4",
+    "pi": "0.87.1"
+  },
+  "native": {
+    "counts": {
+      "codex": 38,
+      "pi": 38
+    },
+    "modelRequests": 0,
+    "home": "/tmp/qs-target-native-uxnyqp8y/home"
+  },
+  "scratch": "/tmp/qs-final-projected-JGZ0VG"
+}
