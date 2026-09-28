@@ -1,0 +1,14 @@
+{
+  "kind": "readonly-real-plan-capacity-observation",
+  "inputSha256": "8ad22353b7b69561e798a0b64609691bdab2e6bf4c277848a771d357bb2c3a78",
+  "canonicalBytes": 1967815,
+  "planBound": 4194304,
+  "journalBound": 16777216,
+  "steps": 48,
+  "largestPlannedStateBytes": 10022,
+  "sumLargestPlannedStatePerStepBytes": 108587,
+  "controlPlaneBytes": 1146627,
+  "productionValidation": true,
+  "journalOrManagerEffects": false,
+  "limits": "Validation only. Future journal bytes depend on actual backup records, residual observations and retry count; this is not an executed transaction."
+}

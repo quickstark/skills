@@ -285,3 +285,31 @@ test('a failed final inspection prohibits completion even after every side effec
   assert.equal(result.status, 'failed'); assert.match(result.error, /Final required inspection failed/);
   assert.equal(args.controls.effects.length, 5);
 });
+
+test('full-adoption-size evidence survives durable execution, retry and authorized recovery', async (t) => {
+  const args = await fixture(t);
+  // The actual two-host/six-package release plan exceeds the old 1 MiB bound.
+  // Exercise the durable reader/writer with a larger bound evidence payload.
+  args.plan.controlPlane = { evidence: 'x'.repeat(3 * 1024 * 1024) };
+  args.controls.fail = 'expose'; args.controls.when = 'after';
+  const failed = await runMigrationTransaction(args);
+  assert.equal(failed.status, 'failed');
+  assert.equal(failed.failedStep, 'expose');
+  assert.deepEqual((await readMigrationJournal(args.journalPath)).plan, args.plan);
+  args.controls.fail = null;
+  assert.equal((await runMigrationTransaction(args)).status, 'complete');
+  assert.equal(args.controls.effects.filter(id => id === 'expose').length, 1);
+  assert.equal((await recover(args)).status, 'rolled-back');
+  assert.deepEqual((await jsonFile(args.files.manager)).packages, [oldPackage]);
+  assert.equal(await missingOrText(args.files.state), 'old-selection');
+  assert.equal(await missingOrText(args.files.stage), null);
+});
+
+test('oversized evidence still fails before any journal or adapter effect', async (t) => {
+  const args = await fixture(t);
+  args.plan.controlPlane = { evidence: 'x'.repeat(4 * 1024 * 1024) };
+  await assert.rejects(runMigrationTransaction(args), /Transaction plan exceeds size bound/);
+  assert.equal(await missingOrText(args.journalPath), null);
+  assert.deepEqual(args.controls.effects, []);
+  assert.deepEqual((await jsonFile(args.files.manager)).packages, [oldPackage]);
+});

@@ -1,0 +1,5 @@
+# Full adoption transaction capacity
+
+The first actual-machine4.0.1update stopped during plan assembly, before staging, journal creation or native manager effects. Its read-only preview was ready with no conflicts. The complete six-package/two-host plan measures1,967,815serialized bytes across48steps;1,146,627bytes belong to bound control-plane source/evidence snapshots. Its largest adapter observation is10,022bytes. This exceeds the initial1MiB plan bound; it is valid complete evidence, not a request to discard safeguards.
+
+Increase the finite plan bound to4MiB and journal bound to16MiB, leaving nesting,128-step,256KiB-per-state, ownership, before/after, race, hash-chain and recovery-authorization checks intact. A3MiB evidence transaction uses actual fixture files and durable journal IO, fails after exposure, resumes without duplicate effects and recovers only with explicit isolated-fixture authority. A4MiB-plus plan still fails before creating a journal or changing fixture files. No actual-machine recovery was requested or executed.

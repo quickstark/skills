@@ -5,7 +5,10 @@ import { hostname } from 'node:os';
 import path from 'node:path';
 import { assertMigrationParents } from './migration-filesystem.mjs';
 
-const MAX_JOURNAL = 8 * 1024 * 1024;
+// Full six-package/two-host adoption includes reviewed source and resource snapshots.
+// Keep finite bounds with room for durable intents, verified backups and residuals.
+const MAX_JOURNAL = 16 * 1024 * 1024;
+const MAX_PLAN = 4 * 1024 * 1024;
 const MAX_STATE = 256 * 1024;
 const PHASES = ['stage', 'withdraw', 'expose', 'retire', 'state'];
 const require = (condition, message) => { if (!condition) throw new Error(message); };
@@ -106,7 +109,7 @@ export function validateMigrationTransactionPlan(plan, journalPath) {
     for (let index = 1; index < group.length; index++) require(hash(group[index - 1].after) === hash(group[index].before), 'Shared target state transitions must form a continuous chain.');
   }
   const paths = [...targets]; require(paths.every((entry, i) => paths.every((other, j) => i === j || !inside(entry, other))), 'Nested owned targets are forbidden.');
-  require(Buffer.byteLength(canonical(plan)) <= 1024 * 1024, 'Transaction plan exceeds size bound.');
+  require(Buffer.byteLength(canonical(plan)) <= MAX_PLAN, 'Transaction plan exceeds size bound.');
   return true;
 }
 
