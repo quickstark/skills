@@ -1,6 +1,6 @@
 {
   "kind": "parent-reviewed-adoption-decisions",
-  "scope": "Reviewed4.0.0pre-publication acceptance, exact source/projection snapshots. Reported image-font exception only; original failedgrades unchanged; Bbaseline retained. No actual-machine success preclaimed.",
+  "scope": "Reviewed4.0.1pre-publication acceptance, exact Git-content/executable source bindings and projection snapshots. Reported image-font exception only; original failed grades unchanged; B baseline retained. No actual-machine success preclaimed.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -26,7 +26,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-02": {
@@ -48,7 +51,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-03": {
@@ -70,7 +76,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-04": {
@@ -92,7 +101,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-05": {
@@ -116,7 +128,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-06": {
@@ -140,7 +155,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-07": {
@@ -163,7 +181,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-08": {
@@ -186,7 +207,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-09": {
@@ -209,7 +233,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-10": {
@@ -242,7 +269,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-11": {
@@ -264,7 +294,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-12": {
@@ -288,7 +321,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-13": {
@@ -313,7 +349,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-14": {
@@ -336,7 +375,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-15": {
@@ -359,7 +401,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-16": {
@@ -383,7 +428,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-17": {
@@ -407,7 +455,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-18": {
@@ -429,7 +480,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-19": {
@@ -453,7 +507,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-20": {
@@ -480,7 +537,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-21": {
@@ -503,12 +563,15 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-22": {
       "status": "passed",
-      "note": "Current4.0.0implementation plus forward4.0.1repair candidate passes467tests and synchronized projections. All18active manifests agree; legacyPS remains3.8.0. Fresh4.0.0native discovery remains byte-bound; repaired native adapter has new actual isolated migration tests. Planned4.0.1versioning must rebind regenerated artifacts before release.",
+      "note": "Current4.0.1release candidate passes467tests with zero failures/skips and synchronized projections. All18active manifests agree; legacyPS remains3.8.0. Fresh4.0.1Codex/Pi discovery finds38commands each and relocated resources pass on allthree projections. The installer repair preserves unrelated vendors and portable release identity with strict transaction snapshots.",
       "evidence": [
         "tests/fixtures/target-index-generation/evidence/parent-review.json",
         "tests/adoption-projection.test.mjs",
@@ -526,7 +589,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-23": {
@@ -559,7 +625,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     },
     "AC-24": {
@@ -582,7 +651,10 @@
         "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
         "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
         "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-        "tests/fixtures/adoption-native-overlap-review/resolution.json"
+        "tests/fixtures/adoption-native-overlap-review/resolution.json",
+        "tests/fixtures/adoption-release-4.0.1/check.log",
+        "tests/fixtures/adoption-release-4.0.1/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
       ]
     }
   },
@@ -605,7 +677,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -623,7 +698,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -641,7 +719,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -659,7 +740,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         },
@@ -679,7 +763,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -697,7 +784,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -715,7 +805,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -733,7 +826,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         }
@@ -757,7 +853,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -775,7 +874,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -793,7 +895,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -811,7 +916,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         },
@@ -831,7 +939,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -849,7 +960,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -867,7 +981,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -885,7 +1002,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         }
@@ -909,7 +1029,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -927,7 +1050,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -945,7 +1071,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -963,7 +1092,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         },
@@ -983,7 +1115,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1001,7 +1136,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1019,7 +1157,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1037,7 +1178,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         }
@@ -1061,7 +1205,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1079,7 +1226,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1097,7 +1247,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1115,7 +1268,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         },
@@ -1135,7 +1291,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1153,7 +1312,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1171,7 +1333,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1189,7 +1354,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         }
@@ -1213,7 +1381,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1231,7 +1402,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1249,7 +1423,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1267,7 +1444,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "video-runtime": {
@@ -1288,7 +1468,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         },
@@ -1308,7 +1491,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1326,7 +1512,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1344,7 +1533,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1362,7 +1554,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "video-runtime": {
@@ -1383,7 +1578,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         }
@@ -1407,7 +1605,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1425,7 +1626,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1443,7 +1647,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1461,7 +1668,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "unlazy-runtime": {
@@ -1480,7 +1690,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         },
@@ -1500,7 +1713,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "notices": {
@@ -1518,7 +1734,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "behavior": {
@@ -1536,7 +1755,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "native-discovery": {
@@ -1554,7 +1776,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           },
           "unlazy-runtime": {
@@ -1573,7 +1798,10 @@
               "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
               "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
               "tests/fixtures/adoption-native-overlap-repair/final-check.log",
-              "tests/fixtures/adoption-native-overlap-review/resolution.json"
+              "tests/fixtures/adoption-native-overlap-review/resolution.json",
+              "tests/fixtures/adoption-release-4.0.1/check.log",
+              "tests/fixtures/adoption-release-4.0.1/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.1/result.json"
             ]
           }
         }
