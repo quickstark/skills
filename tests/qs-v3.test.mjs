@@ -144,18 +144,23 @@ test("Codex projections keep explicit commands visible without weakening other h
 test("generated packages are isolated, synchronized, and free of reporting runtime", async () => {
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
   const lock = JSON.parse(await readFile(join(root, "package-lock.json"), "utf8"));
-  const manifests = await Promise.all([
-    ".claude-plugin/plugin.json",
-    "packages/qs-specialists/.claude-plugin/plugin.json",
-    "packages/ps-skills/.claude-plugin/plugin.json",
-    "codex/plugins/qs-skills/.codex-plugin/plugin.json",
-    "codex/plugins/qs-specialists/.codex-plugin/plugin.json",
-    "codex/plugins/ps-skills/.codex-plugin/plugin.json",
-  ].map((path) => readFile(join(root, path), "utf8").then(JSON.parse)));
+  const manifestPaths = SKILL_COLLECTIONS.flatMap(collection => [
+    `${collection.claudePackageRoot}/.claude-plugin/plugin.json`,
+    `${collection.codexPackageRoot}/.codex-plugin/plugin.json`,
+    `${collection.piPackageRoot}/package.json`,
+  ]);
+  const manifests = await Promise.all(manifestPaths.map(path => readFile(join(root, path), "utf8").then(JSON.parse)));
 
   assert.equal(lock.version, project.version);
   assert.equal(lock.packages[""].version, project.version);
   for (const manifest of manifests) assert.equal(manifest.version, project.version);
+  if (REGISTRY_STATE === "target") {
+    for (const retainedPath of ["packages/ps-skills/.claude-plugin/plugin.json", "codex/plugins/ps-skills/.codex-plugin/plugin.json", "pi/packages/ps-skills/package.json"]) {
+      const retained = JSON.parse(await readFile(join(root, retainedPath), "utf8"));
+      assert.equal(retained.name, "ps-skills");
+      assert.equal(retained.version, "3.8.0", "retained transition must not follow active release version");
+    }
+  }
   assert.deepEqual(await directories(join(root, "codex", "plugins", "qs-skills", "skills")), [...coreNames].sort());
   assert.deepEqual(await directories(join(root, "codex", "plugins", "qs-specialists", "skills")), [...specialistNames].sort());
   await assert.rejects(stat(join(root, "codex", "plugins", "qs-specialists", "capabilities")), /ENOENT/);

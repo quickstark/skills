@@ -1,0 +1,1628 @@
+{
+  "repository": "/github/skills-adoption-release",
+  "workspace": "/tmp/qs-target-native-8fy1wdb0/workspace",
+  "home": "/tmp/qs-target-native-8fy1wdb0/home",
+  "modelRequests": 0,
+  "expected": [
+    "qs-blast-radius",
+    "qs-code-build",
+    "qs-code-debug",
+    "qs-code-document",
+    "qs-create-verification-skill",
+    "qs-deploy-prompt",
+    "qs-deploy-release",
+    "qs-design-frontend",
+    "qs-design-image-mobile",
+    "qs-design-image-to-code",
+    "qs-design-image-web",
+    "qs-design-prototype",
+    "qs-flow-handoff",
+    "qs-flow-triage",
+    "qs-git-merge",
+    "qs-help",
+    "qs-hillclimb",
+    "qs-how",
+    "qs-learn-teach",
+    "qs-maintain-verification-skill",
+    "qs-plan-clarify",
+    "qs-plan-research",
+    "qs-plan-roadmap",
+    "qs-plan-spec",
+    "qs-pr-babysit",
+    "qs-review-code",
+    "qs-runtime-forensics",
+    "qs-setup",
+    "qs-skill-eval",
+    "qs-skill-write",
+    "qs-test-author",
+    "qs-test-verify",
+    "qs-trace-forensics",
+    "qs-unlazy",
+    "qs-video",
+    "qs-visual-parity",
+    "qs-why",
+    "qs-worktree-cleanup"
+  ],
+  "commands": [
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "marketplace",
+        "add",
+        "/github/skills-adoption-release/codex"
+      ],
+      "exitCode": 0,
+      "stdout": "Added marketplace `quickstark` from /github/skills-adoption-release/codex.\nInstalled marketplace root: /github/skills-adoption-release/codex\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "add",
+        "qs-skills@quickstark",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"qs-skills@quickstark\",\n  \"name\": \"qs-skills\",\n  \"marketplaceName\": \"quickstark\",\n  \"version\": \"4.0.0\",\n  \"installedPath\": \"/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "add",
+        "qs-specialists@quickstark",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"qs-specialists@quickstark\",\n  \"name\": \"qs-specialists\",\n  \"marketplaceName\": \"quickstark\",\n  \"version\": \"4.0.0\",\n  \"installedPath\": \"/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "add",
+        "qs-advanced@quickstark",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"qs-advanced@quickstark\",\n  \"name\": \"qs-advanced\",\n  \"marketplaceName\": \"quickstark\",\n  \"version\": \"4.0.0\",\n  \"installedPath\": \"/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "add",
+        "qs-frontend@quickstark",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"qs-frontend@quickstark\",\n  \"name\": \"qs-frontend\",\n  \"marketplaceName\": \"quickstark\",\n  \"version\": \"4.0.0\",\n  \"installedPath\": \"/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-frontend/4.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "add",
+        "qs-video@quickstark",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"qs-video@quickstark\",\n  \"name\": \"qs-video\",\n  \"marketplaceName\": \"quickstark\",\n  \"version\": \"4.0.0\",\n  \"installedPath\": \"/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-video/4.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "add",
+        "qs-execution@quickstark",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"pluginId\": \"qs-execution@quickstark\",\n  \"name\": \"qs-execution\",\n  \"marketplaceName\": \"quickstark\",\n  \"version\": \"4.0.0\",\n  \"installedPath\": \"/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-execution/4.0.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    },
+    {
+      "args": [
+        "codex",
+        "plugin",
+        "list",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"qs-skills@quickstark\",\n      \"name\": \"qs-skills\",\n      \"marketplaceName\": \"quickstark\",\n      \"version\": \"4.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/github/skills-adoption-release/codex/plugins/qs-skills\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/github/skills-adoption-release/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    },\n    {\n      \"pluginId\": \"qs-specialists@quickstark\",\n      \"name\": \"qs-specialists\",\n      \"marketplaceName\": \"quickstark\",\n      \"version\": \"4.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/github/skills-adoption-release/codex/plugins/qs-specialists\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/github/skills-adoption-release/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    },\n    {\n      \"pluginId\": \"qs-advanced@quickstark\",\n      \"name\": \"qs-advanced\",\n      \"marketplaceName\": \"quickstark\",\n      \"version\": \"4.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/github/skills-adoption-release/codex/plugins/qs-advanced\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/github/skills-adoption-release/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    },\n    {\n      \"pluginId\": \"qs-frontend@quickstark\",\n      \"name\": \"qs-frontend\",\n      \"marketplaceName\": \"quickstark\",\n      \"version\": \"4.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/github/skills-adoption-release/codex/plugins/qs-frontend\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/github/skills-adoption-release/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    },\n    {\n      \"pluginId\": \"qs-video@quickstark\",\n      \"name\": \"qs-video\",\n      \"marketplaceName\": \"quickstark\",\n      \"version\": \"4.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/github/skills-adoption-release/codex/plugins/qs-video\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/github/skills-adoption-release/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    },\n    {\n      \"pluginId\": \"qs-execution@quickstark\",\n      \"name\": \"qs-execution\",\n      \"marketplaceName\": \"quickstark\",\n      \"version\": \"4.0.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/github/skills-adoption-release/codex/plugins/qs-execution\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/github/skills-adoption-release/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))\n"
+    }
+  ],
+  "rpc": {
+    "codex": {
+      "args": [
+        "codex",
+        "app-server",
+        "--listen",
+        "stdio://"
+      ],
+      "requests": [
+        {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "method": "initialize",
+          "params": {
+            "clientInfo": {
+              "name": "qs-target-discovery",
+              "version": "1"
+            }
+          }
+        },
+        {
+          "jsonrpc": "2.0",
+          "method": "initialized",
+          "params": {}
+        },
+        {
+          "jsonrpc": "2.0",
+          "id": 2,
+          "method": "skills/list",
+          "params": {
+            "cwds": [
+              "/tmp/qs-target-native-8fy1wdb0/workspace"
+            ],
+            "forceReload": true
+          }
+        }
+      ],
+      "responses": [
+        {
+          "id": 1,
+          "result": {
+            "userAgent": "qs-target-discovery/0.153.4 (Ubuntu 24.4.0; x86_64) dumb (qs-target-discovery; 1)",
+            "codexHome": "/tmp/qs-target-native-8fy1wdb0/home/.codex",
+            "platformFamily": "unix",
+            "platformOs": "linux"
+          }
+        },
+        {
+          "method": "remoteControl/status/changed",
+          "params": {
+            "status": "disabled",
+            "serverName": "gmtek5000",
+            "installationId": "4658cb32-94a1-4e66-887c-8904dec2cbb1",
+            "environmentId": null
+          },
+          "emittedAtMs": 1790605255618
+        },
+        {
+          "id": 2,
+          "result": {
+            "data": [
+              {
+                "cwd": "/tmp/qs-target-native-8fy1wdb0/workspace",
+                "skills": [
+                  {
+                    "name": "qs-advanced:qs-blast-radius",
+                    "description": "Map the impact of one proposed change across callers, contracts, data, tests, and operations.",
+                    "interface": {
+                      "displayName": "QS Blast Radius",
+                      "shortDescription": "Map impact of one proposed change",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-blast-radius to map callers, contracts, data, tests, and operations affected by this proposed change. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-blast-radius/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-create-verification-skill",
+                    "description": "Create a project-local rerunnable verification workflow and feature map.",
+                    "interface": {
+                      "displayName": "QS Create Verification Skill",
+                      "shortDescription": "Create a rerunnable verification workflow",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-create-verification-skill to create a project-local verification workflow and feature map. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-create-verification-skill/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-hillclimb",
+                    "description": "Improve one declared metric through bounded measured experiments.",
+                    "interface": {
+                      "displayName": "QS Hillclimb",
+                      "shortDescription": "Improve one metric experimentally",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-hillclimb to improve one declared metric through bounded measured experiments. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-hillclimb/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-how",
+                    "description": "Explain how a selected subsystem works from code and observed interfaces.",
+                    "interface": {
+                      "displayName": "QS How",
+                      "shortDescription": "Explain how a subsystem works",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-how to explain how this subsystem works from code and observed interfaces. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-how/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-maintain-verification-skill",
+                    "description": "Reconcile an existing verification workflow with observed product behavior.",
+                    "interface": {
+                      "displayName": "QS Maintain Verification Skill",
+                      "shortDescription": "Reconcile verification coverage",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-maintain-verification-skill to reconcile this verification workflow with observed product behavior. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-maintain-verification-skill/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-pr-babysit",
+                    "description": "Drive one selected pull request to a truthful merge-ready assessment.",
+                    "interface": {
+                      "displayName": "QS PR Babysit",
+                      "shortDescription": "Drive one PR toward readiness",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-pr-babysit to assess and, only if authorized, repair this selected pull request without merging it. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-pr-babysit/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-runtime-forensics",
+                    "description": "Diagnose one live runtime symptom from actual measurements without repairing it.",
+                    "interface": {
+                      "displayName": "QS Runtime Forensics",
+                      "shortDescription": "Diagnose a live runtime symptom",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-runtime-forensics to diagnose this live runtime symptom from measurements without repairing it. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-runtime-forensics/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-skill-eval",
+                    "description": "Compare a skill or prompt variant with its control through blinded recorded trials.",
+                    "interface": {
+                      "displayName": "QS Skill Evaluation",
+                      "shortDescription": "Compare blinded skill variants",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-skill-eval to compare this skill or prompt variant with its control through blinded trials. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-skill-eval/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-trace-forensics",
+                    "description": "Diagnose one supplied profiling or trace artifact without changing product behavior.",
+                    "interface": {
+                      "displayName": "QS Trace Forensics",
+                      "shortDescription": "Diagnose a supplied trace artifact",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-trace-forensics to diagnose this supplied trace or profile without changing product behavior. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-trace-forensics/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-visual-parity",
+                    "description": "Converge a selected implementation toward a verified immutable visual baseline.",
+                    "interface": {
+                      "displayName": "QS Visual Parity",
+                      "shortDescription": "Converge to an immutable baseline",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-visual-parity to converge this implementation toward its immutable visual baseline using a declared tolerance. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-visual-parity/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-why",
+                    "description": "Explain why a behavior or design exists from attributable evidence.",
+                    "interface": {
+                      "displayName": "QS Why",
+                      "shortDescription": "Explain attributable rationale",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-why to explain why this behavior or design exists from attributable evidence. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-why/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-advanced:qs-worktree-cleanup",
+                    "description": "Audit reclaimable worktrees and remove only explicitly confirmed exact targets.",
+                    "interface": {
+                      "displayName": "QS Worktree Cleanup",
+                      "shortDescription": "Audit and remove confirmed worktrees",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-advanced:qs-worktree-cleanup to audit reclaimable worktrees and remove only explicitly confirmed exact targets. Modes: effort=quick|standard|deep and report=brief|full."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-advanced/4.0.0/skills/qs-worktree-cleanup/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-advanced@quickstark"
+                  },
+                  {
+                    "name": "qs-execution:qs-unlazy",
+                    "description": "Complete substantial scoped work using explicit acceptance gates and verified evidence.",
+                    "interface": {
+                      "displayName": "QS Unlazy",
+                      "shortDescription": "Complete substantial work against acceptance gates",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-execution:qs-unlazy to complete this substantial scoped work using explicit acceptance gates and verified evidence. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-execution/4.0.0/skills/qs-unlazy/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-execution@quickstark"
+                  },
+                  {
+                    "name": "qs-frontend:qs-design-frontend",
+                    "description": "Build or revise the selected frontend",
+                    "interface": {
+                      "displayName": "QS Design Frontend",
+                      "shortDescription": "Build or revise a frontend within its existing constraints",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-frontend:qs-design-frontend to build or revise this selected frontend while preserving its authorized scope. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-frontend/4.0.0/skills/qs-design-frontend/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-frontend@quickstark"
+                  },
+                  {
+                    "name": "qs-frontend:qs-design-image-mobile",
+                    "description": "Create mobile screen images or prompts",
+                    "interface": {
+                      "displayName": "QS Design Image Mobile",
+                      "shortDescription": "Create platform-aware mobile images or design prompts",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-frontend:qs-design-image-mobile to create the requested mobile screen images or prompt-only output. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-frontend/4.0.0/skills/qs-design-image-mobile/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-frontend@quickstark"
+                  },
+                  {
+                    "name": "qs-frontend:qs-design-image-to-code",
+                    "description": "Implement an authoritative design reference",
+                    "interface": {
+                      "displayName": "QS Design Image to Code",
+                      "shortDescription": "Implement a selected design reference as responsive code",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-frontend:qs-design-image-to-code to implement this authoritative design reference as responsive working code. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-frontend/4.0.0/skills/qs-design-image-to-code/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-frontend@quickstark"
+                  },
+                  {
+                    "name": "qs-frontend:qs-design-image-web",
+                    "description": "Create web design images or prompts",
+                    "interface": {
+                      "displayName": "QS Design Image Web",
+                      "shortDescription": "Create web design images or reusable design prompts",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-frontend:qs-design-image-web to create the requested web design images or prompt-only output. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-frontend/4.0.0/skills/qs-design-image-web/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-frontend@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-code-build",
+                    "description": "Implement one scoped change with an evidence-based test and validation strategy.",
+                    "interface": {
+                      "displayName": "QS Code: Build",
+                      "shortDescription": "Implement a specification or tracked ticket",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-code-build to implement this specification or ticket with appropriate tests. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-code-build/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-code-debug",
+                    "description": "Diagnose and repair one reproducible defect before changing behavior.",
+                    "interface": {
+                      "displayName": "QS Code: Debug",
+                      "shortDescription": "Reproduce and diagnose a bug or regression",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-code-debug to reproduce, diagnose, and fix this bug with a regression test. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-code-debug/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-deploy-release",
+                    "description": "Validate and execute an explicitly approved documented release or deployment.",
+                    "interface": {
+                      "displayName": "QS Deploy: Release",
+                      "shortDescription": "Safely verify and run a documented deployment",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-deploy-release to verify and run this project's documented release workflow. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-deploy-release/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-flow-handoff",
+                    "description": "Preserve verified state and ranked next actions for another operator or invocation.",
+                    "interface": {
+                      "displayName": "QS Flow: Handoff",
+                      "shortDescription": "Prepare a concise handoff for another session",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-flow-handoff to prepare a concise handoff so another session can continue this work. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-flow-handoff/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-flow-triage",
+                    "description": "Assess incoming work and record one bounded recommended route.",
+                    "interface": {
+                      "displayName": "QS Flow: Triage",
+                      "shortDescription": "Triage incoming issues into actionable work",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-flow-triage to triage these incoming issues into clear, actionable work. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-flow-triage/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-git-merge",
+                    "description": "Inspect and safely integrate only explicitly selected Git and GitHub changes.",
+                    "interface": {
+                      "displayName": "QS Git: Merge",
+                      "shortDescription": "Safely integrate and publish verified GitHub changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-git-merge to verify and complete the actual Git integration, pull request, or GitHub publication. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-git-merge/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-help",
+                    "description": "Choose one bounded QuickStark workflow from the v3 core or optional specialists.",
+                    "interface": {
+                      "displayName": "QS Help",
+                      "shortDescription": "Find the right QuickStark skill or workflow",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-help to find the right skill or workflow for my current task. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-help/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-plan-clarify",
+                    "description": "Turn ambiguity into a confirmed problem, scope, constraints, and decisions.",
+                    "interface": {
+                      "displayName": "QS Plan: Clarify",
+                      "shortDescription": "Clarify a plan and capture durable decisions",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-plan-clarify to clarify this project and document the resulting decisions. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-plan-clarify/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-plan-roadmap",
+                    "description": "Sequence confirmed outcomes, decisions, and dependencies into a practical roadmap.",
+                    "interface": {
+                      "displayName": "QS Plan: Roadmap",
+                      "shortDescription": "Map large projects into manageable decisions",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-plan-roadmap to map this large project into a practical sequence of decisions. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-plan-roadmap/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-plan-spec",
+                    "description": "Produce an actionable specification, dependency-aware tickets, or both.",
+                    "interface": {
+                      "displayName": "QS Plan: Specs & Tickets",
+                      "shortDescription": "Turn agreed requirements into a spec or tickets",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-plan-spec to turn the agreed requirements into an actionable specification or dependency-aware implementation tickets. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-plan-spec/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-review-code",
+                    "description": "Review a change or selected codebase scope and optionally improve or refactor it safely.",
+                    "interface": {
+                      "displayName": "QS Review: Code",
+                      "shortDescription": "Review, improve, or refactor selected code safely",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-review-code to review, improve, or refactor the explicitly selected code scope safely. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-review-code/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-skills:qs-setup",
+                    "description": "Prepare or verify QuickStark configuration for one project.",
+                    "interface": {
+                      "displayName": "QS Setup",
+                      "shortDescription": "Configure project trackers, labels, and docs",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-skills:qs-setup to configure this project for the QuickStark engineering skills. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-setup/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-skills@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-code-document",
+                    "description": "Write concise documentation from verified project behavior and interfaces.",
+                    "interface": {
+                      "displayName": "QS Code: Document",
+                      "shortDescription": "Write accurate, verified project documentation",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-code-document to write or update accurate documentation for the actual project and its verified behavior. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-code-document/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-deploy-prompt",
+                    "description": "Generate one execution-ready goal prompt for autonomous feature delivery without executing it.",
+                    "interface": {
+                      "displayName": "QS Deploy: Prompt",
+                      "shortDescription": "Generate a scoped autonomous deployment prompt",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-deploy-prompt to generate one scoped goal-mode execution prompt for planning, building, verifying, and deploying the requested feature. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-deploy-prompt/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-design-prototype",
+                    "description": "Build a disposable prototype to answer one design question.",
+                    "interface": {
+                      "displayName": "QS Design: Prototype",
+                      "shortDescription": "Prototype an interface or design decision",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-design-prototype to build a focused prototype to answer this design question. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-design-prototype/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-learn-teach",
+                    "description": "Teach one bounded subject through explanation, practice, and feedback.",
+                    "interface": {
+                      "displayName": "QS Learn: Teach",
+                      "shortDescription": "Learn a subject through a guided study plan",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-learn-teach to teach me this subject through a practical, guided study plan. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-learn-teach/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-plan-research",
+                    "description": "Answer one bounded question using reliable, attributable evidence.",
+                    "interface": {
+                      "displayName": "QS Plan: Research",
+                      "shortDescription": "Research a question using reliable sources",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-plan-research to research this question and capture evidence-backed findings. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-plan-research/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-skill-write",
+                    "description": "Create or improve one focused, testable agent skill.",
+                    "interface": {
+                      "displayName": "QS Skill: Write",
+                      "shortDescription": "Create and improve focused, reliable AI skills",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-skill-write to create or improve an effective, reliable agent skill. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-skill-write/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-test-author",
+                    "description": "Add or improve focused automated tests for already-established behavior.",
+                    "interface": {
+                      "displayName": "QS Test: Author",
+                      "shortDescription": "Add focused tests for existing behavior",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-test-author to add or improve focused automated tests for this existing behavior. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-test-author/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-specialists:qs-test-verify",
+                    "description": "Run and report a selected software verification matrix without changing the software.",
+                    "interface": {
+                      "displayName": "QS Test: Verify",
+                      "shortDescription": "Run and report selected software verification",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-specialists:qs-test-verify to run and report the selected test suites and environments without changing the software. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-test-verify/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-specialists@quickstark"
+                  },
+                  {
+                    "name": "qs-video:qs-video",
+                    "description": "Create, edit, inspect, or render a selected video with preserved project and provider boundaries.",
+                    "interface": {
+                      "displayName": "QS Video",
+                      "shortDescription": "Create, edit, inspect, or render a selected video",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $qs-video:qs-video to create, edit, inspect, or render this selected video within the authorized scope. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/plugins/cache/quickstark/qs-video/4.0.0/skills/qs-video/SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "qs-video@quickstark"
+                  },
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/imagegen/assets/imagegen-small.svg",
+                      "iconLarge": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/imagegen/assets/imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/imagegen/SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge\u2014including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex\u2014and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/openai-docs/assets/openai-small.svg",
+                      "iconLarge": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/openai-docs/assets/openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/openai-docs/SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "plugin-creator",
+                    "description": "Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow.",
+                    "interface": {
+                      "displayName": "Plugin Creator",
+                      "shortDescription": "Scaffold plugins and marketplace entries",
+                      "iconSmall": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/plugin-creator/assets/plugin-creator-small.svg",
+                      "iconLarge": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/plugin-creator/assets/plugin-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $plugin-creator to scaffold a valid plugin in the personal marketplace, then validate it before handing it back."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/plugin-creator/SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/review-agent/SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/skill-creator/assets/skill-creator-small.svg",
+                      "iconLarge": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/skill-creator/assets/skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/skill-creator/SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/skill-installer/assets/skill-installer-small.svg",
+                      "iconLarge": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/skill-installer/assets/skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "/tmp/qs-target-native-8fy1wdb0/home/.codex/skills/.system/skill-installer/SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          }
+        }
+      ],
+      "stderr": [
+        "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/qs-target-native-8fy1wdb0/home/.codex\"))"
+      ],
+      "exitCode": -15
+    },
+    "pi": {
+      "args": [
+        "pi",
+        "--mode",
+        "rpc"
+      ],
+      "requests": [
+        {
+          "id": "discovery",
+          "type": "get_commands"
+        }
+      ],
+      "responses": [
+        {
+          "id": "discovery",
+          "type": "response",
+          "command": "get_commands",
+          "success": true,
+          "data": {
+            "commands": [
+              {
+                "name": "llama",
+                "description": "Manage llama.cpp router models",
+                "source": "extension",
+                "sourceInfo": {
+                  "path": "<inline:llama.cpp>",
+                  "source": "inline",
+                  "scope": "temporary",
+                  "origin": "top-level"
+                }
+              },
+              {
+                "name": "skill:qs-code-build",
+                "description": "Implement one scoped change with an evidence-based test and validation strategy.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-code-build/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-code-debug",
+                "description": "Diagnose and repair one reproducible defect before changing behavior.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-code-debug/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-deploy-release",
+                "description": "Validate and execute an explicitly approved documented release or deployment.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-deploy-release/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-flow-handoff",
+                "description": "Preserve verified state and ranked next actions for another operator or invocation.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-flow-handoff/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-flow-triage",
+                "description": "Assess incoming work and record one bounded recommended route.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-flow-triage/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-git-merge",
+                "description": "Inspect and safely integrate only explicitly selected Git and GitHub changes.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-git-merge/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-help",
+                "description": "Choose one bounded QuickStark workflow from the v3 core or optional specialists.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-help/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-plan-clarify",
+                "description": "Turn ambiguity into a confirmed problem, scope, constraints, and decisions.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-plan-clarify/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-plan-roadmap",
+                "description": "Sequence confirmed outcomes, decisions, and dependencies into a practical roadmap.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-plan-roadmap/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-plan-spec",
+                "description": "Produce an actionable specification, dependency-aware tickets, or both.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-plan-spec/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-review-code",
+                "description": "Review a change or selected codebase scope and optionally improve or refactor it safely.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-review-code/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-setup",
+                "description": "Prepare or verify QuickStark configuration for one project.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-skills/skills/qs-setup/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-skills",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-skills"
+                }
+              },
+              {
+                "name": "skill:qs-code-document",
+                "description": "Write concise documentation from verified project behavior and interfaces.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-code-document/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-deploy-prompt",
+                "description": "Generate one execution-ready goal prompt for autonomous feature delivery without executing it.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-deploy-prompt/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-design-prototype",
+                "description": "Build a disposable prototype to answer one design question.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-design-prototype/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-learn-teach",
+                "description": "Teach one bounded subject through explanation, practice, and feedback.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-learn-teach/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-plan-research",
+                "description": "Answer one bounded question using reliable, attributable evidence.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-plan-research/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-skill-write",
+                "description": "Create or improve one focused, testable agent skill.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-skill-write/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-test-author",
+                "description": "Add or improve focused automated tests for already-established behavior.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-test-author/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-test-verify",
+                "description": "Run and report a selected software verification matrix without changing the software.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-specialists/skills/qs-test-verify/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-specialists",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-specialists"
+                }
+              },
+              {
+                "name": "skill:qs-blast-radius",
+                "description": "Map the impact of one proposed change across callers, contracts, data, tests, and operations.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-blast-radius/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-create-verification-skill",
+                "description": "Create a project-local rerunnable verification workflow and feature map.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-create-verification-skill/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-hillclimb",
+                "description": "Improve one declared metric through bounded measured experiments.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-hillclimb/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-how",
+                "description": "Explain how a selected subsystem works from code and observed interfaces.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-how/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-maintain-verification-skill",
+                "description": "Reconcile an existing verification workflow with observed product behavior.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-maintain-verification-skill/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-pr-babysit",
+                "description": "Drive one selected pull request to a truthful merge-ready assessment.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-pr-babysit/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-runtime-forensics",
+                "description": "Diagnose one live runtime symptom from actual measurements without repairing it.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-runtime-forensics/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-skill-eval",
+                "description": "Compare a skill or prompt variant with its control through blinded recorded trials.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-skill-eval/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-trace-forensics",
+                "description": "Diagnose one supplied profiling or trace artifact without changing product behavior.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-trace-forensics/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-visual-parity",
+                "description": "Converge a selected implementation toward a verified immutable visual baseline.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-visual-parity/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-why",
+                "description": "Explain why a behavior or design exists from attributable evidence.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-why/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-worktree-cleanup",
+                "description": "Audit reclaimable worktrees and remove only explicitly confirmed exact targets.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-advanced/skills/qs-worktree-cleanup/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-advanced",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-advanced"
+                }
+              },
+              {
+                "name": "skill:qs-design-frontend",
+                "description": "Build or revise the selected frontend",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-frontend/skills/qs-design-frontend/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-frontend",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-frontend"
+                }
+              },
+              {
+                "name": "skill:qs-design-image-mobile",
+                "description": "Create mobile screen images or prompts",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-frontend/skills/qs-design-image-mobile/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-frontend",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-frontend"
+                }
+              },
+              {
+                "name": "skill:qs-design-image-to-code",
+                "description": "Implement an authoritative design reference",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-frontend/skills/qs-design-image-to-code/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-frontend",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-frontend"
+                }
+              },
+              {
+                "name": "skill:qs-design-image-web",
+                "description": "Create web design images or prompts",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-frontend/skills/qs-design-image-web/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-frontend",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-frontend"
+                }
+              },
+              {
+                "name": "skill:qs-video",
+                "description": "Create, edit, inspect, or render a selected video with preserved project and provider boundaries.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-video/skills/qs-video/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-video",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-video"
+                }
+              },
+              {
+                "name": "skill:qs-unlazy",
+                "description": "Complete substantial scoped work using explicit acceptance gates and verified evidence.",
+                "source": "skill",
+                "sourceInfo": {
+                  "path": "/github/skills-adoption-release/pi/packages/qs-execution/skills/qs-unlazy/SKILL.md",
+                  "source": "/github/skills-adoption-release/pi/packages/qs-execution",
+                  "scope": "user",
+                  "origin": "package",
+                  "baseDir": "/github/skills-adoption-release/pi/packages/qs-execution"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "stderr": [],
+      "exitCode": 0
+    }
+  },
+  "limitations": "Enumeration proves native discovery only, not model routing or full installed-machine migration.",
+  "inventory": {
+    "installed": [
+      {
+        "pluginId": "qs-skills@quickstark",
+        "name": "qs-skills",
+        "marketplaceName": "quickstark",
+        "version": "4.0.0",
+        "installed": true,
+        "enabled": true,
+        "source": {
+          "source": "local",
+          "path": "/github/skills-adoption-release/codex/plugins/qs-skills"
+        },
+        "marketplaceSource": {
+          "sourceType": "local",
+          "source": "/github/skills-adoption-release/codex"
+        },
+        "installPolicy": "AVAILABLE",
+        "authPolicy": "ON_INSTALL"
+      },
+      {
+        "pluginId": "qs-specialists@quickstark",
+        "name": "qs-specialists",
+        "marketplaceName": "quickstark",
+        "version": "4.0.0",
+        "installed": true,
+        "enabled": true,
+        "source": {
+          "source": "local",
+          "path": "/github/skills-adoption-release/codex/plugins/qs-specialists"
+        },
+        "marketplaceSource": {
+          "sourceType": "local",
+          "source": "/github/skills-adoption-release/codex"
+        },
+        "installPolicy": "AVAILABLE",
+        "authPolicy": "ON_INSTALL"
+      },
+      {
+        "pluginId": "qs-advanced@quickstark",
+        "name": "qs-advanced",
+        "marketplaceName": "quickstark",
+        "version": "4.0.0",
+        "installed": true,
+        "enabled": true,
+        "source": {
+          "source": "local",
+          "path": "/github/skills-adoption-release/codex/plugins/qs-advanced"
+        },
+        "marketplaceSource": {
+          "sourceType": "local",
+          "source": "/github/skills-adoption-release/codex"
+        },
+        "installPolicy": "AVAILABLE",
+        "authPolicy": "ON_INSTALL"
+      },
+      {
+        "pluginId": "qs-frontend@quickstark",
+        "name": "qs-frontend",
+        "marketplaceName": "quickstark",
+        "version": "4.0.0",
+        "installed": true,
+        "enabled": true,
+        "source": {
+          "source": "local",
+          "path": "/github/skills-adoption-release/codex/plugins/qs-frontend"
+        },
+        "marketplaceSource": {
+          "sourceType": "local",
+          "source": "/github/skills-adoption-release/codex"
+        },
+        "installPolicy": "AVAILABLE",
+        "authPolicy": "ON_INSTALL"
+      },
+      {
+        "pluginId": "qs-video@quickstark",
+        "name": "qs-video",
+        "marketplaceName": "quickstark",
+        "version": "4.0.0",
+        "installed": true,
+        "enabled": true,
+        "source": {
+          "source": "local",
+          "path": "/github/skills-adoption-release/codex/plugins/qs-video"
+        },
+        "marketplaceSource": {
+          "sourceType": "local",
+          "source": "/github/skills-adoption-release/codex"
+        },
+        "installPolicy": "AVAILABLE",
+        "authPolicy": "ON_INSTALL"
+      },
+      {
+        "pluginId": "qs-execution@quickstark",
+        "name": "qs-execution",
+        "marketplaceName": "quickstark",
+        "version": "4.0.0",
+        "installed": true,
+        "enabled": true,
+        "source": {
+          "source": "local",
+          "path": "/github/skills-adoption-release/codex/plugins/qs-execution"
+        },
+        "marketplaceSource": {
+          "sourceType": "local",
+          "source": "/github/skills-adoption-release/codex"
+        },
+        "installPolicy": "AVAILABLE",
+        "authPolicy": "ON_INSTALL"
+      }
+    ],
+    "available": []
+  },
+  "status": "passed",
+  "counts": {
+    "codex": 38,
+    "pi": 38
+  }
+}

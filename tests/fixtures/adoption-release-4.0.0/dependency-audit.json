@@ -1,0 +1,353 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@changesets/apply-release-plan": {
+      "name": "@changesets/apply-release-plan",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@changesets/config",
+        "@changesets/git",
+        "@changesets/should-skip-package",
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/cli"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/apply-release-plan"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/assemble-release-plan": {
+      "name": "@changesets/assemble-release-plan",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@changesets/get-dependents-graph",
+        "@changesets/should-skip-package",
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/cli",
+        "@changesets/get-release-plan"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/assemble-release-plan"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/cli": {
+      "name": "@changesets/cli",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "@changesets/apply-release-plan",
+        "@changesets/assemble-release-plan",
+        "@changesets/config",
+        "@changesets/get-dependents-graph",
+        "@changesets/get-release-plan",
+        "@changesets/git",
+        "@changesets/pre",
+        "@changesets/read",
+        "@changesets/should-skip-package",
+        "@manypkg/get-packages"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/cli"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/config": {
+      "name": "@changesets/config",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@changesets/get-dependents-graph",
+        "@changesets/should-skip-package",
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/apply-release-plan",
+        "@changesets/cli",
+        "@changesets/get-release-plan"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/config"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/get-dependents-graph": {
+      "name": "@changesets/get-dependents-graph",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/assemble-release-plan",
+        "@changesets/cli",
+        "@changesets/config"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/get-dependents-graph"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/get-release-plan": {
+      "name": "@changesets/get-release-plan",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@changesets/assemble-release-plan",
+        "@changesets/config",
+        "@changesets/pre",
+        "@changesets/read",
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/cli"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/get-release-plan"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/git": {
+      "name": "@changesets/git",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/apply-release-plan",
+        "@changesets/cli",
+        "@changesets/read"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/git"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/parse": {
+      "name": "@changesets/parse",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "js-yaml"
+      ],
+      "effects": [
+        "@changesets/read"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/parse"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/pre": {
+      "name": "@changesets/pre",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/cli",
+        "@changesets/get-release-plan"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/pre"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/read": {
+      "name": "@changesets/read",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@changesets/git",
+        "@changesets/parse"
+      ],
+      "effects": [
+        "@changesets/cli",
+        "@changesets/get-release-plan"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/read"
+      ],
+      "fixAvailable": false
+    },
+    "@changesets/should-skip-package": {
+      "name": "@changesets/should-skip-package",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "@manypkg/get-packages"
+      ],
+      "effects": [
+        "@changesets/apply-release-plan",
+        "@changesets/assemble-release-plan",
+        "@changesets/cli",
+        "@changesets/config"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@changesets/should-skip-package"
+      ],
+      "fixAvailable": false
+    },
+    "@manypkg/get-packages": {
+      "name": "@manypkg/get-packages",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "read-yaml-file"
+      ],
+      "effects": [
+        "@changesets/apply-release-plan",
+        "@changesets/assemble-release-plan",
+        "@changesets/cli",
+        "@changesets/config",
+        "@changesets/get-dependents-graph",
+        "@changesets/get-release-plan",
+        "@changesets/git",
+        "@changesets/pre",
+        "@changesets/should-skip-package"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@manypkg/get-packages"
+      ],
+      "fixAvailable": false
+    },
+    "js-yaml": {
+      "name": "js-yaml",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1138114,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported",
+          "url": "https://github.com/advisories/GHSA-5p4m-2wfm-xmqj",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=3.0.0 <3.15.1"
+        },
+        {
+          "source": 1138115,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported",
+          "url": "https://github.com/advisories/GHSA-5p4m-2wfm-xmqj",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.1"
+        },
+        {
+          "source": 1193726,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+          "url": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=3.0.0 <3.15.2"
+        },
+        {
+          "source": 1193727,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+          "url": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.2"
+        }
+      ],
+      "effects": [
+        "@changesets/parse",
+        "read-yaml-file"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/js-yaml",
+        "node_modules/read-yaml-file/node_modules/js-yaml"
+      ],
+      "fixAvailable": false
+    },
+    "read-yaml-file": {
+      "name": "read-yaml-file",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "js-yaml"
+      ],
+      "effects": [
+        "@manypkg/get-packages"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/read-yaml-file"
+      ],
+      "fixAvailable": false
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 14,
+      "critical": 0,
+      "total": 14
+    },
+    "dependencies": {
+      "prod": 1,
+      "dev": 109,
+      "optional": 0,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 109
+    }
+  }
+}

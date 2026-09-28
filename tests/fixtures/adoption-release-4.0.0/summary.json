@@ -1,0 +1,27 @@
+{
+  "kind": "release-preparation-not-publication",
+  "version": "4.0.0",
+  "tests": {
+    "passed": 462,
+    "failed": 0,
+    "skipped": 0
+  },
+  "nativeDiscovery": {
+    "counts": {
+      "codex": 38,
+      "pi": 38
+    },
+    "modelRequests": 0,
+    "home": "/tmp/qs-target-native-8fy1wdb0/home"
+  },
+  "activeManifests": 18,
+  "retainedPS": "3.8.0",
+  "workflowVersionBranch": "82fb8245df2b2239cabe5988a3754e6b927bfde7",
+  "workflowFailure": "Actions cannot createPR; authorized account createsPR without settings change",
+  "bindings": {
+    "sync.log": "a3777d0c1b847d1030418517c18300708951ef9a7ec9fbcb57d21549d9802a4e",
+    "check.log": "ff737c75a7a86342b3e2184bf1cb4e2d8efdb6b62d1d0aa51693adbd5b691e7a",
+    "tests.log": "a5bc62a992de0a079268b3da820439b47e3bdd5e11c31787b513c2cd8ebd7af8",
+    "focused-tests.log": "8abae4138f082d39e9e857bc00644416bcbb225368a651d27edde0133d2e2b86"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "kind": "parent-reviewed-adoption-decisions",
-  "scope": "Implementation acceptance before publication. Source snapshots and exact release version are rebound after Changesets. Reported image-font exception only; original failed grades unchanged, B baseline retained; no actual-machine success preclaimed.",
+  "scope": "Reviewed4.0.0pre-publication acceptance, exact source/projection snapshots. Reported image-font exception only; original failedgrades unchanged; Bbaseline retained. No actual-machine success preclaimed.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -16,7 +16,10 @@
         "tests/fixtures/adoption-final-target/criterion-review.json",
         "tests/fixtures/adoption-provenance-final/review.json",
         "tests/fixtures/adoption-provenance-final/decisions.json",
-        "config/skill-provenance.json"
+        "config/skill-provenance.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-02": {
@@ -28,7 +31,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-03": {
@@ -40,7 +46,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-04": {
@@ -52,7 +61,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-05": {
@@ -66,7 +78,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-06": {
@@ -80,7 +95,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-07": {
@@ -93,7 +111,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-08": {
@@ -106,7 +127,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-09": {
@@ -119,7 +143,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-10": {
@@ -142,7 +169,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-11": {
@@ -154,7 +184,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-12": {
@@ -168,7 +201,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-13": {
@@ -183,7 +219,10 @@
         "tests/fixtures/adoption-final-target/criterion-review.json",
         "tests/fixtures/adoption-provenance-final/review.json",
         "tests/fixtures/adoption-provenance-final/decisions.json",
-        "config/skill-provenance.json"
+        "config/skill-provenance.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-14": {
@@ -196,7 +235,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-15": {
@@ -209,7 +251,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-16": {
@@ -223,7 +268,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-17": {
@@ -237,7 +285,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-18": {
@@ -249,7 +300,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-19": {
@@ -263,7 +317,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-20": {
@@ -280,7 +337,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-21": {
@@ -293,12 +353,15 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-22": {
       "status": "passed",
-      "note": "Target generation/check and all462tests pass at the synchronized implementation version3.8.0;18active manifests agree and legacyPS stays3.8.0. The major Changeset prepares4.0.0; versioning must regenerate/rebind these artifacts before publication. Claude CLI absent: generated integrity checked, no native Claude claim.",
+      "note": "Changesets4.0.0 root/lock and all18active manifests are synchronized; legacyPS remains3.8.0. Final sync/check and462tests pass; fresh isolated Codex/Pi discovery and relocated resources pass at4.0.0. ClaudeCLI absent: generated integrity checked, no nativeClaude claim. Publication and actual machine rollout remain separate goals.",
       "evidence": [
         "tests/fixtures/target-index-generation/evidence/parent-review.json",
         "tests/adoption-projection.test.mjs",
@@ -306,7 +369,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-23": {
@@ -329,7 +395,10 @@
         "docs/contributing.md",
         "docs/install-and-update-skills.md",
         "docs/personal-skills.md",
-        "docs/upstream/README.md"
+        "docs/upstream/README.md",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     },
     "AC-24": {
@@ -342,7 +411,10 @@
         "tests/fixtures/adoption-final-target/final-check.log",
         "tests/fixtures/adoption-final-target/final-tests.log",
         "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-        "tests/fixtures/adoption-final-target/criterion-review.json"
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-release-4.0.0/check.log",
+        "tests/fixtures/adoption-release-4.0.0/tests.log",
+        "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
       ]
     }
   },
@@ -355,7 +427,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -363,7 +438,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -371,7 +449,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -379,7 +460,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         },
@@ -389,7 +473,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -397,7 +484,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -405,7 +495,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -413,7 +506,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         }
@@ -427,7 +523,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -435,7 +534,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -443,7 +545,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -451,7 +556,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         },
@@ -461,7 +569,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -469,7 +580,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -477,7 +591,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -485,7 +602,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         }
@@ -499,7 +619,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -507,7 +630,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -515,7 +641,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -523,7 +652,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         },
@@ -533,7 +665,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -541,7 +676,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -549,7 +687,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -557,7 +698,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         }
@@ -571,7 +715,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -579,7 +726,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -587,7 +737,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -595,7 +748,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         },
@@ -605,7 +761,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -613,7 +772,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -621,7 +783,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -629,7 +794,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         }
@@ -643,7 +811,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -651,7 +822,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -659,7 +833,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -667,7 +844,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "video-runtime": {
@@ -678,7 +858,10 @@
               "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
               "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
               "tests/fixtures/adoption-video-native-results/parent-review.json",
-              "skills/video/qs-video/references/runtime-compatibility.md"
+              "skills/video/qs-video/references/runtime-compatibility.md",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         },
@@ -688,7 +871,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -696,7 +882,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -704,7 +893,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -712,7 +904,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "video-runtime": {
@@ -723,7 +918,10 @@
               "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
               "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
               "tests/fixtures/adoption-video-native-results/parent-review.json",
-              "skills/video/qs-video/references/runtime-compatibility.md"
+              "skills/video/qs-video/references/runtime-compatibility.md",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         }
@@ -737,7 +935,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -745,7 +946,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -753,7 +957,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -761,7 +968,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "unlazy-runtime": {
@@ -770,7 +980,10 @@
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
               "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-              "skills/engineering/qs-unlazy/references/runtime-compatibility.md"
+              "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         },
@@ -780,7 +993,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "notices": {
@@ -788,7 +1004,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "behavior": {
@@ -796,7 +1015,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "native-discovery": {
@@ -804,7 +1026,10 @@
             "evidence": [
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
-              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           },
           "unlazy-runtime": {
@@ -813,7 +1038,10 @@
               "tests/fixtures/adoption-final-target/final-check.log",
               "tests/fixtures/adoption-final-target/final-tests.log",
               "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-              "skills/engineering/qs-unlazy/references/runtime-compatibility.md"
+              "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+              "tests/fixtures/adoption-release-4.0.0/check.log",
+              "tests/fixtures/adoption-release-4.0.0/tests.log",
+              "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json"
             ]
           }
         }
