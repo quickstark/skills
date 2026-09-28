@@ -1,5 +1,13 @@
 # QuickStark Skills changelog
 
+## 4.0.1
+
+### Patch Changes
+
+- [#46](https://github.com/quickstark/skills/pull/46) [`d455db6`](https://github.com/quickstark/skills/commit/d455db63d9371f656f90506a8d88ba3bb748c77a) Thanks [@quickstark](https://github.com/quickstark)! - Allow selection-preserving migration when unrelated vendor packages share local skill names. Preserve their exact registrations and bytes while continuing to reject every collision involving managed QS commands.
+
+  Bind release acceptance to Git content and executable bits so independent checkout permissions do not reject identical artifacts. Keep strict local transaction snapshots and bind the migration implementation itself in each package acceptance record.
+
 ## 4.0.0
 
 ### Major Changes
