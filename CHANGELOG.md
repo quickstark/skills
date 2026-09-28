@@ -1,5 +1,13 @@
 # QuickStark Skills changelog
 
+## 4.0.0
+
+### Major Changes
+
+- [#44](https://github.com/quickstark/skills/pull/44) [`52854ae`](https://github.com/quickstark/skills/commit/52854ae9377e8ab80ae0dfb7e58e956797c41ad5) Thanks [@quickstark](https://github.com/quickstark)! - Normalize maintained skills into the QS namespace and split advanced, frontend, video and execution workflows into explicitly selected optional packages. Preserve dedicated prompt authoring, visual parity, required video modules, upstream provenance and notices. Add selection-aware Codex/Pi migration with ownership checks and durable recovery evidence; retain legacy PS 3.8.0 only as a transition payload.
+
+  Improve scoped instruction clarity and mobile image inspection. Preserve existing reporting instructions because the efficiency experiment did not qualify. Mobile image concepts may have explicitly reported generator font limitations; exact-size generation and untested provider/runtime paths are not guaranteed.
+
 ## 3.8.0
 
 ### Minor Changes
