@@ -1,0 +1,30 @@
+{
+  "scope": "Fresh isolated Git index inside review-owned directory; no commit, native-manager call or host mutation. Probe removed after observation.",
+  "observations": [
+    {
+      "filesystemMode": "0o644",
+      "gitIndexMode": "100644",
+      "currentNormalization": "0o644"
+    },
+    {
+      "filesystemMode": "0o645",
+      "gitIndexMode": "100644",
+      "currentNormalization": "0o755"
+    },
+    {
+      "filesystemMode": "0o654",
+      "gitIndexMode": "100644",
+      "currentNormalization": "0o755"
+    },
+    {
+      "filesystemMode": "0o744",
+      "gitIndexMode": "100755",
+      "currentNormalization": "0o755"
+    },
+    {
+      "filesystemMode": "0o755",
+      "gitIndexMode": "100755",
+      "currentNormalization": "0o755"
+    }
+  ]
+}

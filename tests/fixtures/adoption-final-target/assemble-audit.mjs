@@ -10,13 +10,13 @@ import { TARGET_SKILL_COLLECTIONS } from '../../../scripts/skill-collection-regi
 import { derivePackageAcceptanceObligations } from '../../../scripts/managed-skill-input.mjs';
 import { captureMigrationPath } from '../../../scripts/migration-filesystem.mjs';
 import { captureManagedSkillPayload } from '../../../scripts/managed-skill-migration.mjs';
-import { verifyAdoptionAcceptance } from '../../../scripts/adoption-acceptance.mjs';
+import { verifyAdoptionAcceptance, adoptionSourceContentSha256 } from '../../../scripts/adoption-acceptance.mjs';
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const read = async p => JSON.parse(await readFile(path.join(root,p),'utf8'));
 const decisions = await read('tests/fixtures/adoption-final-target/reviewed-decisions.json');
 assert.equal(decisions.kind,'parent-reviewed-adoption-decisions');
 const auditPath = 'docs/validation/upstream-adoption-acceptance.json';
-const audit = {schemaVersion:1,kind:'reviewed-adoption-acceptance',scope:decisions.scope,criteria:{},packages:{},sources:{},evidence:{}};
+const audit = {schemaVersion:2,sourceBinding:'git-content-and-executable-bits-sha256',kind:'reviewed-adoption-acceptance',scope:decisions.scope,criteria:{},packages:{},sources:{},evidence:{}};
 const evidenceId = async relative => {
   assert(!path.isAbsolute(relative) && !relative.split('/').includes('..'));
   const id = relative;
@@ -46,7 +46,7 @@ for (const collection of TARGET_SKILL_COLLECTIONS) {
   for(const relative of obligations.sourcePaths) {
     const snapshot=await captureMigrationPath(path.join(root,relative));
     assert(['file','directory'].includes(snapshot.kind));
-    audit.sources[relative]={kind:snapshot.kind,contentSha256:snapshot.contentSha256};
+    audit.sources[relative]={kind:snapshot.kind,contentSha256:adoptionSourceContentSha256(snapshot)};
   }
 }
 await writeFile(path.join(root,auditPath),JSON.stringify(audit,null,2)+'\n');

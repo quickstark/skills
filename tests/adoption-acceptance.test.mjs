@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, mkdir, writeFile, readFile, rm, symlink } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm, symlink, chmod } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { verifyAdoptionAcceptance } from '../scripts/adoption-acceptance.mjs';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
+import { captureMigrationPath, revalidateMigrationPath } from '../scripts/migration-filesystem.mjs';
 
 const sha = (text) => createHash('sha256').update(text).digest('hex');
 async function fixture(t) {
@@ -73,4 +73,52 @@ test('failed host checks, missing source bindings and escaping/symlink evidence 
     if (change === 'symlink') { await writeFile(path.join(root, 'actual.json'), await readFile(path.join(root, 'trial.json'))); await rm(path.join(root, 'trial.json')); await symlink('actual.json', path.join(root, 'trial.json')); }
     await save(); await assert.rejects(verifyAdoptionAcceptance(options), /Unresolved|binding|relative|evidence changed/);
   }
+});
+
+async function portableFixture(t) {
+  const result = await fixture(t);
+  result.document.schemaVersion = 2;
+  result.document.sourceBinding = 'git-content-and-executable-bits-sha256';
+  // Explicit independent expected tree: Git retains executable intent, not umask.
+  result.document.sources.source.contentSha256 = sha(JSON.stringify([
+    { path: '', kind: 'directory', mode: 0o755 },
+    { path: 'skill.md', kind: 'file', mode: 0o644, bytes: Buffer.byteLength('fixture instruction'), sha256: sha('fixture instruction') },
+  ]));
+  await result.save(); return result;
+}
+
+test('portable acceptance permits checkout umask differences but retains strict transaction snapshots', async (t) => {
+  const { root, options } = await portableFixture(t);
+  await chmod(path.join(root, 'source'), 0o700); await chmod(path.join(root, 'source/skill.md'), 0o600);
+  const first = await verifyAdoptionAcceptance(options);
+  await chmod(path.join(root, 'source'), 0o775); await chmod(path.join(root, 'source/skill.md'), 0o664);
+  await verifyAdoptionAcceptance(options);
+  await chmod(path.join(root, 'source/skill.md'), 0o645);
+  await verifyAdoptionAcceptance(options); // Group/other execution does not set Git's executable bit.
+  const sourceSnapshot = first.evidenceSnapshots.find(entry => entry.path === path.join(root, 'source'));
+  await assert.rejects(revalidateMigrationPath(sourceSnapshot), /changed after planning/);
+});
+
+test('portable acceptance rejects executable changes, extra paths, changed bytes and unknown digest formats', async (t) => {
+  for (const change of ['executable', 'extra', 'bytes', 'format']) {
+    const { root, options, document, save } = await portableFixture(t);
+    if (change === 'executable') await chmod(path.join(root, 'source/skill.md'), 0o755);
+    if (change === 'extra') await writeFile(path.join(root, 'source/.hidden'), 'extra');
+    if (change === 'bytes') await writeFile(path.join(root, 'source/skill.md'), 'changed');
+    if (change === 'format') { document.sourceBinding = 'ignore-everything'; await save(); }
+    await assert.rejects(verifyAdoptionAcceptance(options), /Acceptance source changed|Unsupported acceptance audit/);
+  }
+});
+
+
+test('portable acceptance rejects loss of owner execution even when other execute bits remain', async (t) => {
+  const { root, options, document, save } = await portableFixture(t);
+  document.sources.source.contentSha256 = sha(JSON.stringify([
+    { path: '', kind: 'directory', mode: 0o755 },
+    { path: 'skill.md', kind: 'file', mode: 0o755, bytes: Buffer.byteLength('fixture instruction'), sha256: sha('fixture instruction') },
+  ]));
+  await chmod(path.join(root, 'source/skill.md'), 0o755); await save();
+  await verifyAdoptionAcceptance(options);
+  await chmod(path.join(root, 'source/skill.md'), 0o655);
+  await assert.rejects(verifyAdoptionAcceptance(options), /Acceptance source changed/);
 });
