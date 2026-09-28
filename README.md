@@ -1,57 +1,99 @@
 # QuickStark Skills
 
-QuickStark's target catalog has six packages and 38 public commands. The twelve
-core commands and eight specialists retain their names and package membership.
-Advanced, frontend, video and execution packages expose distinct optional outcomes.
-Fresh setup selects core only; ordinary updates preserve the saved selection.
-
-Package acceptance, release and installed-host rollout have separate evidence.
-Source presence or this document does not establish that those steps occurred.
+QuickStark is a collection of concise skills for planning, building, reviewing,
+documenting and delivering work. All 38 public commands use the `qs-` namespace
+and belong to one of six packages. Fresh setup selects the twelve-command core;
+add optional packages for the workflows you use. Ordinary updates preserve that
+selection. See the [changelog](./CHANGELOG.md) for release history.
 
 | Package | Public commands | Scope |
 | --- | ---: | --- |
 | `qs-skills` | 12 | Core lifecycle, including Help |
-| `qs-specialists` | 8 | Existing specialists, including reusable-skill and goal-prompt authoring |
+| `qs-specialists` | 8 | Specialists, including reusable-skill and goal-prompt authoring |
 | `qs-advanced` | 12 | PS-derived evidence workflows, including dedicated visual parity |
 | `qs-frontend` | 4 | Frontend code, web images/prompts, mobile images/prompts, reference-to-code |
-| `qs-video` | 1 | Video operations backed by 21 private domains and workflows |
+| `qs-video` | 1 | Video operations backed by 21 private modules and workflows |
 | `qs-execution` | 1 | Substantial-work gates through `qs-unlazy` |
 
-Catalogs own membership, not this count. Every public root has one package owner;
-private references are not extra commands. Help can explain optional capabilities,
+The [collection registry](./scripts/skill-collection-registry.mjs) and its catalogs
+own package membership; 38 is the current total, not a policy cap. Every public
+root has one package owner; private references are not extra dropdown commands.
+Help can explain optional capabilities,
 but checks actual availability before offering an executable literal and never
 installs or starts another root automatically.
 
 ## Install and update
 
-Use the [installation guide](./docs/install-and-update-skills.md) from a verified
-checkout after target activation. The selected transactional updater supports
-Codex and Pi. Claude projections remain generated compatibility artifacts; a
-verified Claude native transaction adapter is not available.
+Use an existing Node/npm installation and the CLI for your selected host. Keep
+the repository checkout at a stable path: native package registrations refer to
+it. The transactional updater supports Codex and Pi. Claude packages are generated,
+but this updater does not support Claude installation or migration. The
+[installation guide](./docs/install-and-update-skills.md) covers both supported hosts.
+
+For a fresh Codex setup:
 
 ```bash
 git clone https://github.com/quickstark/skills.git
 cd skills
 npm ci
 codex plugin marketplace add ./codex
-npm run skills:plan -- --json --agent codex --agent pi
-npm run skills:update -- --agent codex --agent pi
+npm run skills:plan -- --json --agent codex
+npm run skills:update -- --agent codex
 ```
 
-Choose only installed hosts; omit the Codex bootstrap on a Pi-only machine.
-Register the existing local `./codex` directory only for first-time Codex setup.
+Use `--agent pi` for Pi, or repeat `--agent` to select both installed hosts. Omit
+the Codex marketplace command on a Pi-only machine. Register the existing local
+`./codex` directory only for first-time Codex setup.
 An existing marketplace identity/path mismatch needs a separate reviewed action;
 these instructions do not authorize automatically repointing it.
-With no selection flags, a fresh machine receives
-`qs-skills`; a managed machine retains its verified or saved capability selection.
-Add an optional package explicitly, for example `--with qs-frontend`, using the
-same flags for plan and update. New optional catalog entries never become selected
-merely because an ordinary update sees them. A Git pull does not prove a cached
-plugin was refreshed; installed discovery must pass verification.
+The plan is read-only; inspect its selection and conflicts before running update.
+With no selection flags, a fresh machine receives `qs-skills`; a managed machine
+retains its verified or saved capability selection. The selection is saved in
+`~/.config/quickstark/skills-selection.json` after a successful transaction.
+
+For an ordinary update, refresh the checkout with `git pull --ff-only origin main`,
+then run plan and update with the same hosts. The updater requires checkout HEAD
+to match `origin/main` and checks ownership and release acceptance before effects.
+If it reports a conflict, preserve local changes and follow the installation
+guide's recovery instructions.
+
+Add an optional package explicitly using matching plan/update flags:
+
+```bash
+npm run skills:plan -- --json --agent codex --with qs-frontend
+npm run skills:update -- --agent codex --with qs-frontend
+```
+
+Repeat `--with` for other packages. New optional catalog entries never become
+selected merely because an ordinary update sees them. Verify the installed
+selection without rerunning the repository test suite:
+
+```bash
+node scripts/managed-skills.mjs verify --json --agent codex
+```
+
+Use the same host flags as the update. Restart the host or begin a new task to
+refresh its skill catalog. A Git pull alone does not refresh cached plugins.
 
 The [control-plane guide](./docs/personal-skills.md) explains pinned resources,
 ownership checks, migration journals and recovery. Do not copy installed caches
 back into Git or synchronize machines with one another.
+
+## Use a skill
+
+Start with Help to choose a workflow. Invoke optional commands only after their
+package is installed and the host exposes them:
+
+| Workflow | Codex | Pi |
+| --- | --- | --- |
+| Choose a workflow | `$qs-skills:qs-help` | `/skill:qs-help` |
+| Build a deployment prompt | `$qs-specialists:qs-deploy-prompt` | `/skill:qs-deploy-prompt` |
+| Match a visual reference | `$qs-advanced:qs-visual-parity` | `/skill:qs-visual-parity` |
+| Create mobile images or prompts | `$qs-frontend:qs-design-image-mobile` | `/skill:qs-design-image-mobile` |
+
+For a separately installed Claude package, use `/<command>`, such as `/qs-help`.
+The [shared contract](./docs/skill-run-contract.md) defines `effort=quick|standard|deep`
+and `report=brief|full`; their defaults are `standard` and `brief`.
 
 ## Core commands
 
@@ -105,8 +147,14 @@ has a separate [runtime profile](./skills/engineering/qs-unlazy/references/runti
 optional hooks require their own authorization.
 
 The retained `ps-skills` 3.8.0 payload is a [migration compatibility artifact](./docs/upstream/package-transition.md).
-It stays observable until verified withdrawal and is excluded from fresh target
+It stays observable until verified withdrawal and is excluded from fresh
 selection. Original PS names and contributor names remain provenance, not aliases.
+
+The [adoption acceptance record](./docs/validation/upstream-adoption-acceptance.json)
+links decisions to their evidence. Reporting compression retained the existing
+baseline because the efficiency experiment did not qualify. Mobile image adoption
+allows only the [explicitly reported image-font limitation](./docs/specs/quickstark-upstream-adoption-font-amendment.md);
+it does not guarantee exact fonts or image dimensions.
 
 ## Results and authority
 
@@ -124,6 +172,8 @@ separate results or expand authority.
 
 Edit canonical sources and collection catalogs; regenerate package projections,
 command pages, output contracts and provenance instead of editing generated copies.
+The [architecture guide](./docs/architecture.md) maps catalogs and canonical
+sources through the shared registry to each package's self-contained projection.
 
 ```bash
 npm run sync:codex
@@ -137,6 +187,8 @@ generated manifests for a version bump. Before an intended release, synchronize
 the root package/lockfile and every active Claude, Codex and Pi manifest/projection,
 then run the checks above. Keep the pinned PS transition payload unchanged and
 outside active-version synchronization. A tag is not installed-host rollout evidence.
+
+## Upstreams and provenance
 
 QuickStark adapts [Matt Pocock's skills](https://github.com/mattpocock/skills),
 [Lauren Tan's pstack](https://github.com/cursor/plugins/tree/main/pstack), and
