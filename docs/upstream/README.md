@@ -1,6 +1,6 @@
 # Upstream sources and review log
 
-The generated [capability provenance index](provenance.md) tabulates every current public and private owner, original source identities, reviewed and adopted revisions, licenses, and planned replacements. Its source is [`config/skill-provenance.json`](../../config/skill-provenance.json); `npm run check:upstream` checks the record and generated document. Planned replacements do not activate packages.
+The generated [capability provenance index](provenance.md) preserves every baseline identity and tabulates target public and private owners, original source identities, reviewed and adopted revisions, licenses, and planned replacements. Its source is [`config/skill-provenance.json`](../../config/skill-provenance.json); `npm run check:upstream` checks the record and generated document. Planned replacements do not activate packages.
 
 
 QuickStark keeps abbreviated, host-neutral workflows. Upstream changes are
@@ -33,12 +33,61 @@ The [per-skill review](./skill-review-2026-09-25.md) records proposed owners,
 preserved capabilities, consolidation risks, and acceptance checks. It supersedes
 earlier command-count proposals: frequently used workflows should have QS names;
 distinct specialists need not disappear to meet an arbitrary total. Prompt
-building and visual parity remain explicit capabilities. Proposed names and
-groupings are not installed or implemented migrations.
+building and visual parity remain explicit capabilities. That dated review is historical evidence; target catalogs and transaction code now exist. Their presence does not prove activation or installation.
 
 The [adoption specification](../specs/quickstark-upstream-adoption.md) defines
 groups A–E, optional-package selection, capability mappings, migration safeguards
-and acceptance evidence. Its implementation remains pending.
+and acceptance evidence. Source implementation, behavioral acceptance, activation and installed-host rollout remain distinct states.
+
+## Target ownership and acceptance status
+
+The target registry declares six packages and 38 public roots: unchanged core 12
+and specialists 8, advanced 12, frontend 4, video 1 and execution 1. The advanced
+mapping preserves visual parity as a dedicated root; frontend preserves separate
+prompt/image/code outcomes. Video retains all 21 private modules and execution
+retains the complete Unlazy module closure. Original public and contributor names
+remain source records, not QS aliases.
+
+The provenance schema keeps 71 baseline capability records and all 113 source
+records, including many-to-one origins, stable migration IDs, original revisions,
+notices and separate original/derived digests. Target owners are separate records.
+Reviewed is not adopted; a pinned baseline is not a claim about current upstream;
+unknown evidence remains unknown. Regenerate [provenance](provenance.md) from the
+record rather than manually editing its tables. Preserve the dated source/review
+sections below as history when recording later decisions.
+
+Source-body and package acceptance require their own recorded evidence; this
+documentation alone does not mark them complete. Local runtime evidence is bounded: HyperFrames 0.8.77
+with Linux x64/Node 24.21.0/Chrome 151/FFmpeg 6.1.1 supports the recorded local
+render/audio/seek and supplied-caption pipeline fixtures. It does not establish
+authenticated generation, speech-model accuracy, interactive Studio or other hosts.
+The CLI requires Node >=22 and an existing compatible Chromium plus full
+FFmpeg/FFprobe; media-use also needs those binaries on PATH. Audio carving resolves
+the separate `@hyperframes/core` 0.8.77 dependency, not the CLI's bundled copy.
+The caption helper preflights the exact ONNX cache/model rather than downloading
+missing resources. Denied runtime freshness/font fetch attempts remain recorded;
+successful local output does not mean zero attempted requests.
+
+The [video runtime profile](../../skills/video/qs-video/references/runtime-compatibility.md)
+also records the unavailable named animate-text dependency and unpinned local voice
+resolver branch. A missing selected capability blocks that outcome. The
+[execution profile](../../skills/engineering/qs-unlazy/references/runtime-compatibility.md)
+records Linux Node 16.20.2/24.21.0 checks against an unreleased upstream target,
+definition-hash limits, process-group containment limits and opt-in hooks.
+Windows integration is unverified. Definition hashes do not fingerprint every
+transitive artifact used by a check, and detached processes can escape a process
+group. Video browser launches retain the sandbox; the explicit isolated-fixture
+opt-in never becomes an automatic fallback for ordinary users.
+
+[PS transition metadata](../../config/skill-transition-packages.json) preserves
+the observed legacy 3.8.0 package while registrations are safely withdrawn.
+Its retained presence is not a seventh target package or an alias. Supported target
+native transactions are Codex and Pi; generated Claude packaging alone does not
+prove a supported Claude migration.
+
+Release preparation must synchronize all active manifests/projections after the
+root version changes. The current Changesets action versions and tags only;
+neither versioning nor this review log proves publication or installed rollout.
 
 ## Source inventory
 
@@ -172,8 +221,9 @@ public commands.
    overwrite local edits or edit an installed copy as the source of truth.
 5. Run `npm run sync:codex`, `npm run check:codex`, and `npm test` after repository
    skill, catalog, capability, documentation, or plugin changes. When Claude is
-   available, validate all three package roots with `claude plugin validate
-   <root> --strict`: `.`, `./packages/qs-specialists`, and `./packages/ps-skills`.
+   available, validate every active generated Claude package root with
+   `claude plugin validate <root> --strict`. Retained transition payloads are
+   verified separately and are not regenerated as current packages.
 6. Update this review log. Publish only to `origin` when authorized. The
    `upstream` Git remote is Matt Pocock's read-only reference. Contributor updates
    reach machines through the [installation/update workflow](../install-and-update-skills.md)

@@ -1,0 +1,4 @@
+interface:
+  display_name: "QS Design Image to Code"
+  short_description: "Implement a selected design reference as responsive code"
+  default_prompt: "Use $qs-frontend:qs-design-image-to-code to implement this authoritative design reference as responsive working code. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."

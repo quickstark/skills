@@ -1,0 +1,21 @@
+
+> qs-skills@3.8.0 check:codex
+> node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check
+
+Verified concise v3 documentation for 38 commands and 5 target indexes.
+Verified bounded v3 output contracts for all 38 public commands.
+Verified deterministic active projections for 6 packages across Codex, Claude, and Pi.
+file:///github/skills-adoption-release/scripts/skill-provenance.mjs:336
+  if (!result.valid) throw new Error(`Invalid skill provenance:\n${result.errors.join('\n')}`);
+                           ^
+
+Error: Invalid skill provenance:
+qs-video: local derived digest mismatch
+    at assertSkillProvenance (file:///github/skills-adoption-release/scripts/skill-provenance.mjs:336:28)
+    at syncUpstreamDocs (file:///github/skills-adoption-release/scripts/sync-upstream-docs.mjs:9:18)
+    at file:///github/skills-adoption-release/scripts/sync-upstream-docs.mjs:23:24
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

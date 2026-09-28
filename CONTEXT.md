@@ -1,6 +1,6 @@
 # QuickStark Skills context
 
-QuickStark is a personal collection of namespaced skills for Codex, Claude Code, and Pi. The QS packages adapt Matt Pocock's MIT-licensed work; the optional PS package adapts Lauren Tan's MIT-licensed pstack without Cursor-specific mechanisms.
+QuickStark is a personal collection of namespaced skills for Codex, Claude Code, and Pi. The QS packages preserve attributed upstream adaptations, including Matt Pocock and Lauren Tan, plus the frontend, HyperFrames and Unlazy sources listed in docs/upstream/provenance.md.
 
 ## Language
 
@@ -10,7 +10,7 @@ QuickStark is a personal collection of namespaced skills for Codex, Claude Code,
 
 **Specialist command**: One of eight optional commands in `qs-specialists`. Core commands never require this package to complete.
 
-**PS command**: One of thirteen explicit-only commands in `ps-skills`. Its Codex literal is `$ps-skills:<command>`.
+**Advanced command**: One of twelve distinct PS-derived outcomes in optional `qs-advanced`. Historical PS names remain provenance and transition records, not aliases.
 
 **Internal capability**: Non-command instructions used inside one root run. It never produces a separate status, skills-used entry, result, or continuation.
 
@@ -28,7 +28,7 @@ QuickStark is a personal collection of namespaced skills for Codex, Claude Code,
 
 **Clear-writing pass**: The internal final synthesis applied to every QS and PS result. It leads with the outcome, uses concrete language, preserves necessary qualifications, and removes repetition.
 
-**Next prompt**: One of three ranked copy-ready continuations emitted by every non-release command. The first is preferred and the other two are alternatives. Each appears in its own fenced `text` block and begins with the exact installed plugin literal in Codex, slash command in Claude, or `/skill:<command>` in Pi. `/qs-deploy-release` is terminal and emits none.
+**Next prompt**: At most one eligible copy-ready continuation tied to verified unfinished work. It uses the exact installed host literal. Release is terminal and emits none.
 
 **Finding priority**: An explicitly assessed `P0`, `P1`, `P2`, or `P3`. Omit it when urgency was not assessed.
 
@@ -59,17 +59,17 @@ The core catalog order is:
 
 Optional specialists are `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-test-author`, `qs-test-verify`, `qs-learn-teach`, `qs-skill-write`, and `qs-deploy-prompt`.
 
-The PS catalog contains `ps-help`, `ps-how`, `ps-why`, `ps-blast-radius`, `ps-runtime-forensics`, `ps-trace-forensics`, `ps-create-verification-skill`, `ps-maintain-verification-skill`, `ps-skill-eval`, `ps-hillclimb`, `ps-visual-parity`, `ps-pr-babysit`, and `ps-worktree-cleanup`.
+Optional advanced, frontend, video and execution membership is defined by the respective collection catalogs. Frontend has four output-specific roots; video and execution have one root each with private modules.
 
 ## Invariants
 
-- The registry contains exactly 12 core, 7 specialist, and 13 PS commands.
+- The registry contains 12 core, 8 specialist, 12 advanced, 4 frontend, 1 video and 1 execution commands. Optional selection determines installed exposure; no arbitrary global cap applies.
 - Every public command belongs to exactly one package and has matching canonical source, metadata, documentation, and generated projections.
-- All PS commands are explicit-only; QS invocation policy remains catalog-owned.
+- Invocation policy remains catalog-owned; preserve the generated Codex compatibility exception.
 - Public commands never automatically invoke another public command.
 - Internal capabilities remain inside the owning root run.
 - TDD remains internal to `qs-code-build`; ticket decomposition remains internal to `qs-plan-spec`.
-- Every non-release result has exactly three catalog-approved continuations in ranked order.
+- Every non-release result includes the Next work prompt label and at most one eligible catalog-approved continuation.
 - Every result receives the same internal clear-writing pass and appears directly in chat.
 - Commands return their results in the current conversation without an external output system or separate credentials.
 - Generated Claude, Codex, and Pi package snapshots are never edited independently.

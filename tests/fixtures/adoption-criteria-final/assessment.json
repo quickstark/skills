@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-criterion-assessment-not-production-acceptance",
+  "date": "2026-09-28",
+  "reviewer": "/root/final_criteria",
+  "scope": "Independent reading of criterion semantics, immutable reviews/parent closures, test sources and historical run records. No model trials, fresh product tests, image reinterpretation, final activation certification, publication or actual-host effects. Parent owns final evidence binding and decision.",
+  "fourPasses": [
+    "Complete all24 criteria and trace each decisive observation to its record.",
+    "Read exact spec, amendment and domain reviews; distinguish source tests, historical execution and actual model behavior.",
+    "Challenge strict failures, typography exception boundaries, presentation omissions, unsupported providers and future rollout claims.",
+    "Verify24 unique criteria, existing regular references with hashes, exact retained-baseline scope and explicit remaining obligations."
+  ],
+  "criteria": [
+    {
+      "criterion": "AC-01",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Disposition machinery covers original identities and owner mappings with missing/duplicate/ownerless rejection controls.",
+      "limitationsAndRemainingWork": "Final activated disposition/provenance counts and source bindings must pass; source inventory alone is not adoption.",
+      "evidence": [
+        "config/skill-migrations.json",
+        "tests/skill-provenance.test.mjs",
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-02",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "P1 and P2 preserve distinct self-contained deployment-prompt and reusable-skill outputs without execution. V1 preserves Spanish video prompt-only facts/format. F10 preserves frontend prompt-only scope.",
+      "limitationsAndRemainingWork": "Keep separate Skill Write/Deploy Prompt identities and all image-only roots in final discovery; no general model reliability claim.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json"
+      ]
+    },
+    {
+      "criterion": "AC-03",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "H1\u2013H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation.",
+      "limitationsAndRemainingWork": "Supplied fixture catalog facts do not prove final actual host availability; final native discovery remains required.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/upstream-adoption-routing.test.mjs"
+      ]
+    },
+    {
+      "criterion": "AC-04",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "A1\u2013A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation.",
+      "limitationsAndRemainingWork": "A7 omitted root-used and final checklist/progress closure. These are retained presentation defects; scoped authority evidence is passing, not full completion-contract compliance.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json"
+      ]
+    },
+    {
+      "criterion": "AC-05",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Actual synthetic-auth repair preserves redaction, discriminates the wrong premise, demonstrates original failure then six repaired independent oracle passes.",
+      "limitationsAndRemainingWork": "Advice-only A5 remains unverified for regression retention. One actual repair is not universal causal reliability.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-debug-repair/frozen-plan.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+      ]
+    },
+    {
+      "criterion": "AC-06",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "A4/A6 preserve all-consumer contraction barrier and non-independently-green integration exception, independent known-bad oracle reasoning and legitimate absence/configuration cases. Executed defect/parity controls are sensitive.",
+      "limitationsAndRemainingWork": "A6 is actual advice, not an executed implementation or Test Author run. Final targeted tests must still pass on activated sources.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+        "tests/advanced-candidates.test.mjs",
+        "tests/upstream-adoption-qs.test.mjs"
+      ]
+    },
+    {
+      "criterion": "AC-07",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "E4 rejects wrong revision/sample comparisons; X1/X2 actually doctor and account for features, preserve evidence after cleanup and leave product failures visible. Actual E7 reviews all available outputs and appends correction without replacing originals.",
+      "limitationsAndRemainingWork": "Original E1 remains unverified. E7 candidate records are synthetic and presentation fields were missing; actual reviewer actions establish evidence discipline only.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json"
+      ]
+    },
+    {
+      "criterion": "AC-08",
+      "assessment": "retained-baseline",
+      "recommendedProductionStatus": "retained-baseline",
+      "decision": "Explicit Group B fallback retains the post-A reporting contract after incomplete 45/222 comparison; full generation/execution/progress matrix did not qualify.",
+      "limitationsAndRemainingWork": "Do not mark the matched matrix passed. Identity/routing generator changes remain separately subject to functional checks. Existing presentation defects are not corrected or waived.",
+      "evidence": [
+        "docs/specs/quickstark-upstream-adoption.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json"
+      ]
+    },
+    {
+      "criterion": "AC-09",
+      "assessment": "retained-baseline",
+      "recommendedProductionStatus": "retained-baseline",
+      "decision": "No qualifying loaded-instruction measurement/completed matched comparison exists, so retain baseline and claim no efficiency, cost, latency or quality improvement.",
+      "limitationsAndRemainingWork": "Source word counts and opaque total host tokens are not isolated instruction-cost evidence. No repeat trial is necessary merely to select the permitted fallback.",
+      "evidence": [
+        "docs/specs/quickstark-upstream-adoption.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json"
+      ]
+    },
+    {
+      "criterion": "AC-10",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Original native66 supports nonmobile mapped contracts, with uniform F11 dialog observations supplementing original observer failures. Separate native-portrait six support mobile adoption under the explicit 2026-09-28 font amendment: QS r1 discloses sole font mismatch with every dimension >=3; QS r2/r3 strict-pass.",
+      "limitationsAndRemainingWork": "No regrading or pooling. All original F09 exact-size failures remain; no numeric-size/font guarantee. Transparency, wrong content/flow, poor platform treatment, authority violations, undisclosed fonts or scores below floor are not excused. Minor F11 limits and incomplete exhaustive accessibility remain disclosed.",
+      "evidence": [
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json",
+        "tests/fixtures/frontend-adoption-v3-image-resolution/README.md",
+        "tests/fixtures/frontend-mobile-repair/README.md",
+        "tests/fixtures/frontend-mobile-repair/plan.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
+        "tests/fixtures/frontend-mobile-repair-results/archive.json",
+        "tests/fixtures/frontend-mobile-repair-review/parent-review.json"
+      ]
+    },
+    {
+      "criterion": "AC-11",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Independent parity root retains immutable baseline/fixed tolerance. Behavioral E6 rejects replacement, relaxed thresholds, missing state and environment mismatch; actual sensitive RGBA helper controls reject those defects.",
+      "limitationsAndRemainingWork": "Fixture parity is not parity for a user product. Every future declared residual must meet its own unchanged tolerance; final installed root/helper resolution is pending.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/advanced-candidates.test.mjs"
+      ]
+    },
+    {
+      "criterion": "AC-12",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2\u2013E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority.",
+      "limitationsAndRemainingWork": "Final exact public/private resolution is pending; do not merge distinct workflow authorities or replace actual native discovery with catalog counts.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/advanced-candidates.test.mjs"
+      ]
+    },
+    {
+      "criterion": "AC-13",
+      "assessment": "pending-final-artifacts",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Schema and failure controls preserve original identities/revisions, separate adoption and derived digests, multiple origins, notices and unknown-adoption state.",
+      "limitationsAndRemainingWork": "Parent final provenance decisions/derived hashes are in progress and not bound here. Verify every final owner and complete disposition; do not overwrite original upstream digests.",
+      "evidence": [
+        "tests/skill-provenance.test.mjs",
+        "config/skill-migrations.json"
+      ]
+    },
+    {
+      "criterion": "AC-14",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Production caller and isolated transaction controls establish core-only fresh defaults, saved/partial selection, no implicit new-package selection, and equivalent managed legacy capabilities.",
+      "limitationsAndRemainingWork": "Reobserve actual saved/equivalent machine selection before effects; unrelated Pi themes/vendor packages stay intact. This is not a completed live migration.",
+      "evidence": [
+        "tests/managed-skill-input.test.mjs",
+        "tests/fixtures/target-activation-probe/README.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-15",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery.",
+      "limitationsAndRemainingWork": "Run fresh native discovery on final projections and again after real rollout. Claude is packaged/structurally validated here, not a supported live transaction adapter.",
+      "evidence": [
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/target-activation-probe/README.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-16",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Dirty/foreign/unknown-owner/hash/path/symlink controls reject retirement; unrelated bytes and shared-host aliases have explicit preservation tests.",
+      "limitationsAndRemainingWork": "Reobserve under final host lock before effects/retry. Opaque remote discovery must be qualified; it is not proof of ownership or global absence.",
+      "evidence": [
+        "tests/managed-skill-input.test.mjs",
+        "tests/migration-filesystem.test.mjs",
+        "tests/migration-owned-paths.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-17",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures.",
+      "limitationsAndRemainingWork": "Final composed caller checks plus actual durable journal/backups are pending. Fixture recovery authorization is not authority to run a live rollback.",
+      "evidence": [
+        "tests/migration-transaction.test.mjs",
+        "tests/migration-native-packages.test.mjs",
+        "tests/managed-skill-migration.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-18",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Video closure preserves nine domains,21 private modules,912 original records/911 retained files and186 imports after caption adaptation; required-resource removal fails.",
+      "limitationsAndRemainingWork": "Verify latest final projected installed closure including ignored caption transcript. Earlier178-import evidence is superseded, not silently reused.",
+      "evidence": [
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json"
+      ]
+    },
+    {
+      "criterion": "AC-19",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Measured Linux CLI/core0.8.77 profile has actual render/audio/caption/seek fixtures. Separate native observation records three real frame views and honest audio-content limitation; independent decoder verifies the measured crossfade.",
+      "limitationsAndRemainingWork": "One runtime profile only; no universal provider, voice intelligibility or full perceptual-quality guarantee. Required unavailable ASR/TTS/provider paths block that requested workflow. Supplied audio is not a silent substitute. Missing Status/Skills used remains a presentation defect.",
+      "evidence": [
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "tests/fixtures/adoption-video-native-results/REVIEW.md"
+      ]
+    },
+    {
+      "criterion": "AC-20",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Prompt/resume/creation/render evidence preserves pin/scope and shows no route-driven feedback, skill install/upgrade, publication or extra image calls outside selected authority.",
+      "limitationsAndRemainingWork": "Published runtime attempted refused freshness/font requests; do not claim zero attempts. No new provider install/account/cloud/paid generation authority follows from adoption.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "tests/fixtures/adoption-video-native-results/REVIEW.md",
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json"
+      ]
+    },
+    {
+      "criterion": "AC-21",
+      "assessment": "supported-pending-final-binding",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Reviewed upstream suite and installed/moved controls establish Linux Node16 floor/Node24 execution, stale-definition rejection, abandonment non-success, dependency reverify, import portability and opt-in hook preservation.",
+      "limitationsAndRemainingWork": "Final projected moved-import/checker validation still required. Status alone does not detect changed transitive artifacts; reverify does. No Windows execution claim; hooks stay uninstalled.",
+      "evidence": [
+        "docs/validation/upstream-adoption-evidence-map.md",
+        "tests/execution-candidate.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-22",
+      "assessment": "pending-final-artifacts",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Prior legacy/inactive and isolated target runs support deterministic generators, exact metadata and Codex explicit-marker compatibility exception.",
+      "limitationsAndRemainingWork": "Run required sync/check/full tests on final target bytes, exact version/lock/registered-manifest equality, available Claude strict validation. Earlier462 passes do not certify later bytes.",
+      "evidence": [
+        "tests/fixtures/target-index-generation/evidence/parent-review.json",
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+      ]
+    },
+    {
+      "criterion": "AC-23",
+      "assessment": "pending-final-artifacts",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Prepared target docs/index generator have link/shape controls and preserve historical PS compatibility plus dormant-source separation.",
+      "limitationsAndRemainingWork": "Applied final docs must match activated membership, actual provenance decisions, chosen breaking release, installer flags, supported host/runtime limitations and retained-baseline outcome.",
+      "evidence": [
+        "tests/fixtures/target-index-generation/evidence/parent-review.json",
+        "tests/fixtures/target-documentation-preparation/README.md"
+      ]
+    },
+    {
+      "criterion": "AC-24",
+      "assessment": "pending-final-artifacts",
+      "recommendedProductionStatus": "passed-only-after-final-prerequisites",
+      "decision": "Acceptance verifier and production caller enforce exact package capability/source/criterion/host obligations, clean tracked final evidence and release-bound receipt.",
+      "limitationsAndRemainingWork": "Parent must assemble genuine pre-rollout gate after all prerequisites. Origin release and actual Codex/Pi update are future outcomes requiring separate records; neither documentation nor queued operations is completion.",
+      "evidence": [
+        "scripts/adoption-acceptance.mjs",
+        "scripts/managed-skill-input.mjs",
+        "tests/adoption-acceptance.test.mjs"
+      ]
+    }
+  ],
+  "unresolvedFinalGates": [
+    "Final source/provenance disposition and exact source bindings (AC01/13).",
+    "Final generated package closure/version/literals/metadata and required checks (AC15/18/21/22).",
+    "Fresh isolated native Codex/Pi discovery and package/runtime checks against final payload (AC14/15/18/19/21).",
+    "Final documentation matches actual package/runtime/release state (AC23).",
+    "Reviewed production pre-rollout audit with exact package/host obligations (AC24).",
+    "After publication: observe current machine, run authorized selection-preserving transaction, retain journal/backups and verify actual native discovery; separate final outcome evidence (AC14\u201317/24)."
+  ],
+  "substantiveDecisionBlockersFromReviewedBehavior": [],
+  "presentationDecision": "A7/E7/video omit some shared report fields, so full presentation compliance is not proved. Their scoped authority/evidence/runtime criteria can pass without describing those whole responses as contract passes. Group B explicitly retains baseline, including known defects; no compressed candidate or new presentation guarantee is adopted. If a broader claim of fixed presentation is made, that claim lacks evidence and must be removed or separately established."
+}

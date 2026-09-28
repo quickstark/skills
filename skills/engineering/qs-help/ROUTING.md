@@ -28,16 +28,21 @@ Select one route and one copy-ready prompt at most. A primary Help recommendatio
 | qs-learn-teach | qs-specialists | Learn a subject through a guided study plan | `$qs-specialists:qs-learn-teach` | `/qs-learn-teach` | `/skill:qs-learn-teach` |
 | qs-skill-write | qs-specialists | Create and improve focused, reliable AI skills | `$qs-specialists:qs-skill-write` | `/qs-skill-write` | `/skill:qs-skill-write` |
 | qs-deploy-prompt | qs-specialists | Generate a scoped autonomous deployment prompt | `$qs-specialists:qs-deploy-prompt` | `/qs-deploy-prompt` | `/skill:qs-deploy-prompt` |
-| ps-help | ps-skills | Choose the right PS or QS workflow | `$ps-skills:ps-help` | `/ps-help` | `/skill:ps-help` |
-| ps-how | ps-skills | Explain how a selected subsystem works | `$ps-skills:ps-how` | `/ps-how` | `/skill:ps-how` |
-| ps-why | ps-skills | Explain why a behavior or design exists | `$ps-skills:ps-why` | `/ps-why` | `/skill:ps-why` |
-| ps-blast-radius | ps-skills | Map the impact of one proposed change | `$ps-skills:ps-blast-radius` | `/ps-blast-radius` | `/skill:ps-blast-radius` |
-| ps-runtime-forensics | ps-skills | Diagnose one live runtime symptom | `$ps-skills:ps-runtime-forensics` | `/ps-runtime-forensics` | `/skill:ps-runtime-forensics` |
-| ps-trace-forensics | ps-skills | Diagnose one supplied trace artifact | `$ps-skills:ps-trace-forensics` | `/ps-trace-forensics` | `/skill:ps-trace-forensics` |
-| ps-create-verification-skill | ps-skills | Create a rerunnable verification workflow | `$ps-skills:ps-create-verification-skill` | `/ps-create-verification-skill` | `/skill:ps-create-verification-skill` |
-| ps-maintain-verification-skill | ps-skills | Reconcile a verification workflow with reality | `$ps-skills:ps-maintain-verification-skill` | `/ps-maintain-verification-skill` | `/skill:ps-maintain-verification-skill` |
-| ps-skill-eval | ps-skills | Compare skill variants through blinded trials | `$ps-skills:ps-skill-eval` | `/ps-skill-eval` | `/skill:ps-skill-eval` |
-| ps-hillclimb | ps-skills | Improve one metric through bounded experiments | `$ps-skills:ps-hillclimb` | `/ps-hillclimb` | `/skill:ps-hillclimb` |
-| ps-visual-parity | ps-skills | Converge toward a verified visual baseline | `$ps-skills:ps-visual-parity` | `/ps-visual-parity` | `/skill:ps-visual-parity` |
-| ps-pr-babysit | ps-skills | Drive one PR toward merge readiness | `$ps-skills:ps-pr-babysit` | `/ps-pr-babysit` | `/skill:ps-pr-babysit` |
-| ps-worktree-cleanup | ps-skills | Audit and remove confirmed worktrees | `$ps-skills:ps-worktree-cleanup` | `/ps-worktree-cleanup` | `/skill:ps-worktree-cleanup` |
+| qs-how | qs-advanced | Explain how a selected subsystem works | `$qs-advanced:qs-how` | `/qs-how` | `/skill:qs-how` |
+| qs-why | qs-advanced | Explain why a behavior or design exists | `$qs-advanced:qs-why` | `/qs-why` | `/skill:qs-why` |
+| qs-blast-radius | qs-advanced | Map the impact of one proposed change | `$qs-advanced:qs-blast-radius` | `/qs-blast-radius` | `/skill:qs-blast-radius` |
+| qs-runtime-forensics | qs-advanced | Diagnose one live runtime symptom | `$qs-advanced:qs-runtime-forensics` | `/qs-runtime-forensics` | `/skill:qs-runtime-forensics` |
+| qs-trace-forensics | qs-advanced | Diagnose one supplied trace artifact | `$qs-advanced:qs-trace-forensics` | `/qs-trace-forensics` | `/skill:qs-trace-forensics` |
+| qs-create-verification-skill | qs-advanced | Create a rerunnable verification workflow | `$qs-advanced:qs-create-verification-skill` | `/qs-create-verification-skill` | `/skill:qs-create-verification-skill` |
+| qs-maintain-verification-skill | qs-advanced | Reconcile a verification workflow with reality | `$qs-advanced:qs-maintain-verification-skill` | `/qs-maintain-verification-skill` | `/skill:qs-maintain-verification-skill` |
+| qs-skill-eval | qs-advanced | Compare skill variants through blinded trials | `$qs-advanced:qs-skill-eval` | `/qs-skill-eval` | `/skill:qs-skill-eval` |
+| qs-hillclimb | qs-advanced | Improve one metric through bounded experiments | `$qs-advanced:qs-hillclimb` | `/qs-hillclimb` | `/skill:qs-hillclimb` |
+| qs-visual-parity | qs-advanced | Converge toward a verified visual baseline | `$qs-advanced:qs-visual-parity` | `/qs-visual-parity` | `/skill:qs-visual-parity` |
+| qs-pr-babysit | qs-advanced | Drive one PR toward merge readiness | `$qs-advanced:qs-pr-babysit` | `/qs-pr-babysit` | `/skill:qs-pr-babysit` |
+| qs-worktree-cleanup | qs-advanced | Audit and remove confirmed worktrees | `$qs-advanced:qs-worktree-cleanup` | `/qs-worktree-cleanup` | `/skill:qs-worktree-cleanup` |
+| qs-design-frontend | qs-frontend | Build or revise a frontend within its existing constraints | `$qs-frontend:qs-design-frontend` | `/qs-design-frontend` | `/skill:qs-design-frontend` |
+| qs-design-image-web | qs-frontend | Create web design images or reusable design prompts | `$qs-frontend:qs-design-image-web` | `/qs-design-image-web` | `/skill:qs-design-image-web` |
+| qs-design-image-mobile | qs-frontend | Create platform-aware mobile images or design prompts | `$qs-frontend:qs-design-image-mobile` | `/qs-design-image-mobile` | `/skill:qs-design-image-mobile` |
+| qs-design-image-to-code | qs-frontend | Implement a selected design reference as responsive code | `$qs-frontend:qs-design-image-to-code` | `/qs-design-image-to-code` | `/skill:qs-design-image-to-code` |
+| qs-video | qs-video | Create, edit, inspect, or render a selected video | `$qs-video:qs-video` | `/qs-video` | `/skill:qs-video` |
+| qs-unlazy | qs-execution | Complete substantial work against explicit acceptance gates | `$qs-execution:qs-unlazy` | `/qs-unlazy` | `/skill:qs-unlazy` |

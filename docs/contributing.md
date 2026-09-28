@@ -2,9 +2,9 @@
 
 ## Start from the source of truth
 
-Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, `scripts/ps-skill-catalog.mjs` owns PS membership and dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
+Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `scripts/ps-skill-catalog.mjs` retains historical PS dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
 
-Canonical QS files live in `skills/engineering/` and `skills/productivity/`; canonical PS files live in `skills/pstack/commands/`. Internal capabilities live in `skills/internal/` and `skills/pstack/internal/`. All generated package trees are projections, not independent sources.
+Canonical public QS files live in `skills/engineering/`, `skills/productivity/` and `skills/video/`; historical PS sources remain in `skills/pstack/commands/`. Internal capabilities live in `skills/internal/` and `skills/pstack/internal/`. All generated package trees are projections, not independent sources.
 
 ## Install and verify
 
@@ -21,7 +21,7 @@ The project test suite checks all promoted skills, plugin versions, generated sn
 ## Change a promoted skill
 
 1. Update the owning collection catalog first when adding or renaming a skill, adjusting invocation mode, or changing its valid next steps.
-2. Edit its canonical QS or PS `SKILL.md` and matching `agents/openai.yaml`.
+2. Edit its canonical QS `SKILL.md` and matching `agents/openai.yaml`.
 3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `scripts/sync-v3-docs.mjs` owns concise command pages.
 4. Assign the command to one catalog package projection; generated manifests must not be hand-edited.
 5. Add behavior-focused tests to `tests/qs-skills.test.mjs`.
@@ -38,12 +38,15 @@ npm run check:codex
 npm test
 ```
 
-When Claude Code is installed and manifests changed, run all three:
+When Claude Code is installed and manifests changed, validate all six active roots:
 
 ```bash
 claude plugin validate . --strict
 claude plugin validate ./packages/qs-specialists --strict
-claude plugin validate ./packages/ps-skills --strict
+claude plugin validate ./packages/qs-advanced --strict
+claude plugin validate ./packages/qs-frontend --strict
+claude plugin validate ./packages/qs-video --strict
+claude plugin validate ./packages/qs-execution --strict
 ```
 
 Do not claim that a Claude validation ran if the CLI is unavailable.
@@ -56,7 +59,7 @@ Update the existing authoritative document before adding another page:
 - Use `docs/architecture.md` for component ownership and trust boundaries.
 - Use `docs/skill-run-contract.md` for completion states, direct-chat presentation, clear writing, and continuation behavior.
 - Use `docs/engineering/` and `docs/productivity/` for promoted-skill reference pages.
-- Use `docs/pstack/` for generated PS command reference pages and its package index.
+- Use `docs/pstack/` for historical PS references and migration successors.
 - Use `CHANGELOG.md` for observed QuickStark version changes and preserved upstream history.
 - Use `/qs-code-document` to keep setup, architecture, deployment, module, API, and release documentation grounded in actual project sources.
 
@@ -80,7 +83,7 @@ npm run check:codex
 npm test
 ```
 
-Keep `package.json`, `package-lock.json`, all three Claude manifests, and all three Codex manifests synchronized. Publishing a commit, Git tag, plugin release, or deployed service is a separate, explicitly approved operation.
+Keep `package.json`, `package-lock.json`, all six active Claude, Codex and Pi manifests synchronized. Preserve the separate PS 3.8.0 transition payload unchanged. Publishing a commit, Git tag, plugin release, or deployed service is a separate, explicitly approved operation.
 
 Put active release changesets for the `qs-skills` package directly in `.changeset/`, and keep the Changesets GitHub configuration pointed at `quickstark/skills`. Matt Pocock's original `mattpocock-skills` changesets are preserved in `docs/upstream/changesets/` as MIT-licensed historical reference; do not place them in the active Changesets directory.
 

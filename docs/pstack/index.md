@@ -1,32 +1,31 @@
-# Optional Pstack skills
+# Historical PS compatibility and QS successors
 
-`ps-skills` is an independently installable package of thirteen explicit-only, Cursor-neutral workflows. Every invocation owns one bounded result presented directly in chat; no command starts another public skill automatically.
+The current catalog uses QS names. The retained `ps-skills` 3.8.0 artifact exists only for verified existing consumers during migration; it is excluded from fresh/default selections and the target public catalog. Historical names below are provenance identities, not current aliases or new installation recommendations.
 
-For outcome-based selection, required inputs, and PS-to-QS handoff boundaries, start with [Using PS skills](./using-ps-skills.md).
+Twelve distinct outcomes remain in optional `qs-advanced`; Help is owned by core `qs-help`. Optional `qs-specialists` preserves dedicated deployment-goal prompting in [qs-deploy-prompt](../engineering/qs-deploy-prompt.md) and reusable skill/prompt writing in [qs-skill-write](../productivity/qs-skill-write.md). Visual parity remains its own advanced root. Packages are independently selected; a partial selection must not silently add broader packages.
 
-Install it after adding the QuickStark marketplace:
+## Original identities and current roots
 
-```bash
-codex plugin marketplace add ./codex
-codex plugin add ps-skills@quickstark
-```
+| Historical identity | Current root | Selected package | Codex literal after verified discovery |
+| --- | --- | --- | --- |
+| `ps-help` | [`qs-help`](../engineering/qs-help.md) | `qs-skills` | `$qs-skills:qs-help` |
+| `ps-how` | [`qs-how`](../engineering/qs-how.md) | `qs-advanced` | `$qs-advanced:qs-how` |
+| `ps-why` | [`qs-why`](../engineering/qs-why.md) | `qs-advanced` | `$qs-advanced:qs-why` |
+| `ps-blast-radius` | [`qs-blast-radius`](../engineering/qs-blast-radius.md) | `qs-advanced` | `$qs-advanced:qs-blast-radius` |
+| `ps-runtime-forensics` | [`qs-runtime-forensics`](../engineering/qs-runtime-forensics.md) | `qs-advanced` | `$qs-advanced:qs-runtime-forensics` |
+| `ps-trace-forensics` | [`qs-trace-forensics`](../engineering/qs-trace-forensics.md) | `qs-advanced` | `$qs-advanced:qs-trace-forensics` |
+| `ps-create-verification-skill` | [`qs-create-verification-skill`](../engineering/qs-create-verification-skill.md) | `qs-advanced` | `$qs-advanced:qs-create-verification-skill` |
+| `ps-maintain-verification-skill` | [`qs-maintain-verification-skill`](../engineering/qs-maintain-verification-skill.md) | `qs-advanced` | `$qs-advanced:qs-maintain-verification-skill` |
+| `ps-skill-eval` | [`qs-skill-eval`](../engineering/qs-skill-eval.md) | `qs-advanced` | `$qs-advanced:qs-skill-eval` |
+| `ps-hillclimb` | [`qs-hillclimb`](../engineering/qs-hillclimb.md) | `qs-advanced` | `$qs-advanced:qs-hillclimb` |
+| `ps-visual-parity` | [`qs-visual-parity`](../engineering/qs-visual-parity.md) | `qs-advanced` | `$qs-advanced:qs-visual-parity` |
+| `ps-pr-babysit` | [`qs-pr-babysit`](../engineering/qs-pr-babysit.md) | `qs-advanced` | `$qs-advanced:qs-pr-babysit` |
+| `ps-worktree-cleanup` | [`qs-worktree-cleanup`](../engineering/qs-worktree-cleanup.md) | `qs-advanced` | `$qs-advanced:qs-worktree-cleanup` |
 
-Claude uses `claude plugin install ps-skills@quickstark`. Codex commands use `$ps-skills:<command>` and Claude commands use `/<command>`.
+Claude uses `/<current-root>`; Pi uses `/skill:<current-root>`. Invoke a root only after its exact installed host literal is verified. Neither this table nor a retained marketplace entry proves current availability.
 
-## Commands
+See [using the QS successors](./using-ps-skills.md) for workflow distinctions and authority. The [package transition record](../upstream/package-transition.md) explains retained native registrations, immutable payloads, and controlled withdrawal before replacement exposure.
 
-1. [`ps-help`](./ps-help.md) — choose a PS or QS workflow without starting it.
-2. [`ps-how`](./ps-how.md) — explain how a subsystem works.
-3. [`ps-why`](./ps-why.md) — explain attributable rationale.
-4. [`ps-blast-radius`](./ps-blast-radius.md) — map the impact of one proposed change.
-5. [`ps-runtime-forensics`](./ps-runtime-forensics.md) — diagnose one live runtime symptom.
-6. [`ps-trace-forensics`](./ps-trace-forensics.md) — diagnose one supplied trace artifact.
-7. [`ps-create-verification-skill`](./ps-create-verification-skill.md) — create a rerunnable verification workflow.
-8. [`ps-maintain-verification-skill`](./ps-maintain-verification-skill.md) — reconcile verification coverage with reality.
-9. [`ps-skill-eval`](./ps-skill-eval.md) — compare a control and variant through blinded trials.
-10. [`ps-hillclimb`](./ps-hillclimb.md) — improve one metric through bounded experiments.
-11. [`ps-visual-parity`](./ps-visual-parity.md) — converge to an immutable visual baseline using a declared tolerance.
-12. [`ps-pr-babysit`](./ps-pr-babysit.md) — assess and, when authorized, repair one pull request without merging it.
-13. [`ps-worktree-cleanup`](./ps-worktree-cleanup.md) — audit and remove only exact confirmed worktrees by default.
+## Provenance
 
-The adaptation is based on pstack `0.14.1` at commit `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e`. See [third-party notices](../../THIRD_PARTY_NOTICES.md).
+The historical adaptation includes Lauren Tan's Pstack material from [cursor/plugins](https://github.com/cursor/plugins/tree/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack), version 0.14.1. The [provenance table](../upstream/provenance.md) and [machine-readable source records](../../config/skill-provenance.json) distinguish original identities, reviewed revisions, adopted revisions and local changes. Preserve the [MIT notices](../../THIRD_PARTY_NOTICES.md). Historical provenance is not a claim that every reviewed update was adopted.

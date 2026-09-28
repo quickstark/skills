@@ -29,6 +29,54 @@
       "category": "Coding"
     },
     {
+      "name": "qs-advanced",
+      "source": {
+        "source": "local",
+        "path": "./plugins/qs-advanced"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "qs-frontend",
+      "source": {
+        "source": "local",
+        "path": "./plugins/qs-frontend"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "qs-video",
+      "source": {
+        "source": "local",
+        "path": "./plugins/qs-video"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "qs-execution",
+      "source": {
+        "source": "local",
+        "path": "./plugins/qs-execution"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
       "name": "ps-skills",
       "source": {
         "source": "local",

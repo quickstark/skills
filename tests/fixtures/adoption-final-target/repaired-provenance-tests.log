@@ -1,0 +1,32 @@
+✔ current catalogs, private owners and all managed contributors have complete provenance (520.717084ms)
+✔ missing private capability and lost secondary owner fail coverage (467.753706ms)
+✔ missing canonical owner, unknown current identity and duplicate IDs fail (700.521999ms)
+✔ planned owners neither need an existing path nor activate a command (218.014633ms)
+✔ mutable, absent and ambiguous revisions are rejected (658.344445ms)
+✔ unknown or not-adopted status is explicit and never invents a revision (840.199798ms)
+✔ byte identity needs actual manifest authority, not just a plausible digest (897.981496ms)
+✔ a source digest cannot prove an adapted repository file is byte-identical (236.276872ms)
+✔ derived content digest is independently verified against current file bytes (473.494442ms)
+✔ repository-authored records are allowed without invented upstream origin (222.675875ms)
+✔ writer original and successor identities remain separate (0.296593ms)
+✔ original PS72 inventory and every historical disposition survive independently (935.617817ms)
+✔ unsafe paths, dormant promotion and missing evidence are rejected (960.064373ms)
+✔ directories cannot stand in for canonical files, evidence or historical snapshots (700.614307ms)
+✔ malformed records return diagnostic failures rather than throwing TypeError (1310.377318ms)
+✔ rendering is deterministic, read-only and exposes revision distinctions (12.348034ms)
+✔ baseline identities and all original113 sources survive target mapping unchanged (0.735037ms)
+✔ target catalog omissions, duplicates and owner loss are rejected (1276.503382ms)
+✔ pending, unknown, reviewed, retained and adopted decisions remain distinct (641.896451ms)
+✔ target and closure digests reject stale bytes independently of upstream pins (1333.211941ms)
+✔ malformed target records return diagnostics (855.700211ms)
+✔ complete private closure rejects missing, duplicate, changed and unindexed resources (1709.967058ms)
+✔ generated document includes target ownership and matches the checked-in file (6.879589ms)
+✔ target notices and explicit closure adoption cannot disappear or be inferred (1054.433121ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16144.346279

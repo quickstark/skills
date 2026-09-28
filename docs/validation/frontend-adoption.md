@@ -157,3 +157,7 @@ authority check, or whether to retain the current mobile contributor and delay
 its migration. That decision is pending at this checkpoint. Neither silence nor
 approval of the earlier test batches grants this acceptance change. The registry
 remains legacy, and no publication or actual-machine update has occurred.
+
+## 2026-09-28 approved font limitation boundary
+
+The user explicitly approved reported image-font limitations. The [acceptance amendment](../specs/quickstark-upstream-adoption-font-amendment.md) permits the candidly reported small-label font mismatch in candidate `review-82f1387ba536341b` while preserving all original strict grades and every other quality, content, opacity, platform and authority requirement. The separate qualification's other two candidate trials passed the strict checks. This supports adopting the patched mobile guidance within that measured native portrait scope; it does not repair the original exact-size failures or establish guaranteed typography. Final package activation, acceptance bindings, publication and machine rollout require their own evidence.

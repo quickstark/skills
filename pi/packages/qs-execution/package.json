@@ -1,0 +1,22 @@
+{
+  "name": "qs-execution",
+  "version": "3.8.0",
+  "private": true,
+  "description": "Optional substantial-work acceptance gates and completion discipline.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "optional",
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

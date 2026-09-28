@@ -1,0 +1,1724 @@
+{
+  "schemaVersion": 1,
+  "kind": "reviewed-adoption-acceptance",
+  "scope": "Implementation acceptance before publication. Source snapshots and exact release version are rebound after Changesets. Reported image-font exception only; original failed grades unchanged, B baseline retained; no actual-machine success preclaimed.",
+  "criteria": {
+    "AC-01": {
+      "status": "passed",
+      "note": "Disposition machinery covers original identities and owner mappings with missing/duplicate/ownerless rejection controls. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "config/skill-migrations.json",
+        "tests/skill-provenance.test.mjs",
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-provenance-final/review.json",
+        "tests/fixtures/adoption-provenance-final/decisions.json",
+        "config/skill-provenance.json"
+      ]
+    },
+    "AC-02": {
+      "status": "passed",
+      "note": "P1 and P2 preserve distinct self-contained deployment-prompt and reusable-skill outputs without execution. V1 preserves Spanish video prompt-only facts/format. F10 preserves frontend prompt-only scope. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-03": {
+      "status": "passed",
+      "note": "H1–H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/upstream-adoption-routing.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-04": {
+      "status": "passed",
+      "note": "A1–A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-05": {
+      "status": "passed",
+      "note": "Actual synthetic-auth repair preserves redaction, discriminates the wrong premise, demonstrates original failure then six repaired independent oracle passes. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-debug-repair/frozen-plan.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-06": {
+      "status": "passed",
+      "note": "A4/A6 preserve all-consumer contraction barrier and non-independently-green integration exception, independent known-bad oracle reasoning and legitimate absence/configuration cases. Executed defect/parity controls are sensitive. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+        "tests/advanced-candidates.test.mjs",
+        "tests/upstream-adoption-qs.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-07": {
+      "status": "passed",
+      "note": "E4 rejects wrong revision/sample comparisons; X1/X2 actually doctor and account for features, preserve evidence after cleanup and leave product failures visible. Actual E7 reviews all available outputs and appends correction without replacing originals. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-08": {
+      "status": "retained-baseline",
+      "note": "Explicit Group B fallback retains the post-A reporting contract after incomplete 45/222 comparison; full generation/execution/progress matrix did not qualify. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "docs/specs/quickstark-upstream-adoption.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-09": {
+      "status": "retained-baseline",
+      "note": "No qualifying loaded-instruction measurement/completed matched comparison exists, so retain baseline and claim no efficiency, cost, latency or quality improvement. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "docs/specs/quickstark-upstream-adoption.md",
+        "docs/validation/upstream-adoption-efficiency.md",
+        "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-10": {
+      "status": "passed",
+      "note": "Original native66 supports nonmobile mapped contracts, with uniform F11 dialog observations supplementing original observer failures. Separate native-portrait six support mobile adoption under the explicit 2026-09-28 font amendment: QS r1 discloses sole font mismatch with every dimension >=3; QS r2/r3 strict-pass. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+        "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json",
+        "tests/fixtures/frontend-adoption-v3-image-resolution/README.md",
+        "tests/fixtures/frontend-mobile-repair/README.md",
+        "tests/fixtures/frontend-mobile-repair/plan.json",
+        "docs/specs/quickstark-upstream-adoption-font-amendment.md",
+        "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
+        "tests/fixtures/frontend-mobile-repair-results/archive.json",
+        "tests/fixtures/frontend-mobile-repair-review/parent-review.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-11": {
+      "status": "passed",
+      "note": "Independent parity root retains immutable baseline/fixed tolerance. Behavioral E6 rejects replacement, relaxed thresholds, missing state and environment mismatch; actual sensitive RGBA helper controls reject those defects. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/advanced-candidates.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-12": {
+      "status": "passed",
+      "note": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2–E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+        "tests/fixtures/adoption-review-eval/parent/review.json",
+        "tests/advanced-candidates.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-13": {
+      "status": "passed",
+      "note": "Every target owner has an explicit source decision, original identities/revisions/notices and separate digests. 71historical identities and113original source records remain unchanged;82source adaptations adopted and7bodies retained. Full validation and independent provenance verifier pass; compression remains unadopted.",
+      "evidence": [
+        "tests/skill-provenance.test.mjs",
+        "config/skill-migrations.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-provenance-final/review.json",
+        "tests/fixtures/adoption-provenance-final/decisions.json",
+        "config/skill-provenance.json"
+      ]
+    },
+    "AC-14": {
+      "status": "passed",
+      "note": "Production caller and isolated transaction controls establish core-only fresh defaults, saved/partial selection, no implicit new-package selection, and equivalent managed legacy capabilities. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/managed-skill-input.test.mjs",
+        "tests/fixtures/target-activation-probe/README.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-15": {
+      "status": "passed",
+      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/target-activation-probe/README.md",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-16": {
+      "status": "passed",
+      "note": "Dirty/foreign/unknown-owner/hash/path/symlink controls reject retirement; unrelated bytes and shared-host aliases have explicit preservation tests. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/managed-skill-input.test.mjs",
+        "tests/migration-filesystem.test.mjs",
+        "tests/migration-owned-paths.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-17": {
+      "status": "passed",
+      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/migration-transaction.test.mjs",
+        "tests/migration-native-packages.test.mjs",
+        "tests/managed-skill-migration.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-18": {
+      "status": "passed",
+      "note": "Video closure preserves nine domains,21 private modules,912 original records/911 retained files and186 imports after caption adaptation; required-resource removal fails. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-19": {
+      "status": "passed",
+      "note": "Measured Linux CLI/core0.8.77 profile has actual render/audio/caption/seek fixtures. Separate native observation records three real frame views and honest audio-content limitation; independent decoder verifies the measured crossfade. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "tests/fixtures/adoption-video-native-results/REVIEW.md",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-20": {
+      "status": "passed",
+      "note": "Prompt/resume/creation/render evidence preserves pin/scope and shows no route-driven feedback, skill install/upgrade, publication or extra image calls outside selected authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "tests/fixtures/adoption-behavior-review/current-01-review.json",
+        "tests/fixtures/adoption-video-native-results/parent-review.json",
+        "tests/fixtures/adoption-video-native-results/REVIEW.md",
+        "tests/fixtures/hyperframes-adoption/README.md",
+        "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+        "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-21": {
+      "status": "passed",
+      "note": "Reviewed upstream suite and installed/moved controls establish Linux Node16 floor/Node24 execution, stale-definition rejection, abandonment non-success, dependency reverify, import portability and opt-in hook preservation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "evidence": [
+        "docs/validation/upstream-adoption-evidence-map.md",
+        "tests/execution-candidate.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-22": {
+      "status": "passed",
+      "note": "Target generation/check and all462tests pass at the synchronized implementation version3.8.0;18active manifests agree and legacyPS stays3.8.0. The major Changeset prepares4.0.0; versioning must regenerate/rebind these artifacts before publication. Claude CLI absent: generated integrity checked, no native Claude claim.",
+      "evidence": [
+        "tests/fixtures/target-index-generation/evidence/parent-review.json",
+        "tests/adoption-projection.test.mjs",
+        "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    },
+    "AC-23": {
+      "status": "passed",
+      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate.",
+      "evidence": [
+        "tests/fixtures/target-index-generation/evidence/parent-review.json",
+        "tests/fixtures/target-documentation-preparation/README.md",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json",
+        "tests/fixtures/adoption-provenance-final/review.json",
+        "tests/fixtures/adoption-provenance-final/decisions.json",
+        "config/skill-provenance.json",
+        "README.md",
+        "CLAUDE.md",
+        "CONTEXT.md",
+        "docs/architecture.md",
+        "docs/contributing.md",
+        "docs/install-and-update-skills.md",
+        "docs/personal-skills.md",
+        "docs/upstream/README.md"
+      ]
+    },
+    "AC-24": {
+      "status": "passed",
+      "note": "Pre-rollout acceptance gate passes: exact package capabilities, sources, criteria, selected hosts, runtime checks and evidence bindings are verified. Production caller rejects dirty/untracked/stale acceptance or unsupported host state. This is a rollout prerequisite, not a claim that publication or this machine migration has occurred; those remain separate goal gates.",
+      "evidence": [
+        "scripts/adoption-acceptance.mjs",
+        "scripts/managed-skill-input.mjs",
+        "tests/adoption-acceptance.test.mjs",
+        "tests/fixtures/adoption-final-target/final-check.log",
+        "tests/fixtures/adoption-final-target/final-tests.log",
+        "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+        "tests/fixtures/adoption-final-target/criterion-review.json"
+      ]
+    }
+  },
+  "packages": {
+    "qs-skills": {
+      "capabilityIds": [
+        "qs-internal:domain-modeling",
+        "qs-internal:module-decomposition",
+        "qs-internal:tdd-loop",
+        "qs-internal:ticket-decomposition",
+        "qs:qs-code-build",
+        "qs:qs-code-debug",
+        "qs:qs-deploy-release",
+        "qs:qs-flow-handoff",
+        "qs:qs-flow-triage",
+        "qs:qs-git-merge",
+        "qs:qs-help",
+        "qs:qs-plan-clarify",
+        "qs:qs-plan-roadmap",
+        "qs:qs-plan-spec",
+        "qs:qs-review-code",
+        "qs:qs-setup"
+      ],
+      "sourcePaths": [
+        ".claude-plugin/plugin.json",
+        "codex/plugins/qs-skills",
+        "config/skill-migrations.json",
+        "config/skill-profiles.json",
+        "config/skill-provenance.json",
+        "docs/skill-run-contract.md",
+        "pi/packages/qs-skills",
+        "scripts/advanced-skill-catalog.mjs",
+        "scripts/execution-skill-catalog.mjs",
+        "scripts/frontend-skill-catalog.mjs",
+        "scripts/optional-command-definition.mjs",
+        "scripts/ps-skill-catalog.mjs",
+        "scripts/qs-skill-catalog.mjs",
+        "scripts/skill-collection-registry.mjs",
+        "scripts/video-skill-catalog.mjs",
+        "skills/engineering/qs-code-build",
+        "skills/engineering/qs-code-debug",
+        "skills/engineering/qs-deploy-release",
+        "skills/engineering/qs-flow-triage",
+        "skills/engineering/qs-git-merge",
+        "skills/engineering/qs-help",
+        "skills/engineering/qs-plan-clarify",
+        "skills/engineering/qs-plan-roadmap",
+        "skills/engineering/qs-plan-spec",
+        "skills/engineering/qs-review-code",
+        "skills/engineering/qs-setup",
+        "skills/internal",
+        "skills/productivity/qs-flow-handoff"
+      ],
+      "criteria": [
+        "AC-01",
+        "AC-03",
+        "AC-04",
+        "AC-05",
+        "AC-06",
+        "AC-08",
+        "AC-09",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-22",
+        "AC-23",
+        "AC-24"
+      ],
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-specialists": {
+      "capabilityIds": [
+        "qs:qs-code-document",
+        "qs:qs-deploy-prompt",
+        "qs:qs-design-prototype",
+        "qs:qs-learn-teach",
+        "qs:qs-plan-research",
+        "qs:qs-skill-write",
+        "qs:qs-test-author",
+        "qs:qs-test-verify"
+      ],
+      "sourcePaths": [
+        "codex/plugins/qs-specialists",
+        "config/skill-migrations.json",
+        "config/skill-profiles.json",
+        "config/skill-provenance.json",
+        "docs/skill-run-contract.md",
+        "packages/qs-specialists",
+        "pi/packages/qs-specialists",
+        "scripts/advanced-skill-catalog.mjs",
+        "scripts/execution-skill-catalog.mjs",
+        "scripts/frontend-skill-catalog.mjs",
+        "scripts/optional-command-definition.mjs",
+        "scripts/ps-skill-catalog.mjs",
+        "scripts/qs-skill-catalog.mjs",
+        "scripts/skill-collection-registry.mjs",
+        "scripts/video-skill-catalog.mjs",
+        "skills/engineering/qs-code-document",
+        "skills/engineering/qs-deploy-prompt",
+        "skills/engineering/qs-design-prototype",
+        "skills/engineering/qs-plan-research",
+        "skills/engineering/qs-test-author",
+        "skills/engineering/qs-test-verify",
+        "skills/productivity/qs-learn-teach",
+        "skills/productivity/qs-skill-write"
+      ],
+      "criteria": [
+        "AC-01",
+        "AC-02",
+        "AC-04",
+        "AC-08",
+        "AC-09",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-22",
+        "AC-23",
+        "AC-24"
+      ],
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-advanced": {
+      "capabilityIds": [
+        "ps-internal:boundary-discipline",
+        "ps-internal:bounded-autonomous-loop",
+        "ps-internal:concurrency-ownership",
+        "ps-internal:context-discipline",
+        "ps-internal:decision-trail",
+        "ps-internal:experience-first",
+        "ps-internal:idempotent-operations",
+        "ps-internal:minimal-change",
+        "ps-internal:multi-candidate-exploration",
+        "ps-internal:outcome-oriented-execution",
+        "ps-internal:parallel-coverage",
+        "ps-internal:plain-writing",
+        "ps-internal:rerunnable-tooling",
+        "ps-internal:structural-enforcement",
+        "ps-internal:type-system-discipline",
+        "ps-internal:typescript-discipline",
+        "ps:ps-blast-radius",
+        "ps:ps-create-verification-skill",
+        "ps:ps-hillclimb",
+        "ps:ps-how",
+        "ps:ps-maintain-verification-skill",
+        "ps:ps-pr-babysit",
+        "ps:ps-runtime-forensics",
+        "ps:ps-skill-eval",
+        "ps:ps-trace-forensics",
+        "ps:ps-visual-parity",
+        "ps:ps-why",
+        "ps:ps-worktree-cleanup"
+      ],
+      "sourcePaths": [
+        "codex/plugins/qs-advanced",
+        "config/skill-migrations.json",
+        "config/skill-profiles.json",
+        "config/skill-provenance.json",
+        "docs/skill-run-contract.md",
+        "packages/qs-advanced",
+        "pi/packages/qs-advanced",
+        "scripts/advanced-skill-catalog.mjs",
+        "scripts/execution-skill-catalog.mjs",
+        "scripts/frontend-skill-catalog.mjs",
+        "scripts/optional-command-definition.mjs",
+        "scripts/ps-skill-catalog.mjs",
+        "scripts/qs-skill-catalog.mjs",
+        "scripts/skill-collection-registry.mjs",
+        "scripts/video-skill-catalog.mjs",
+        "skills/advanced",
+        "skills/engineering/qs-blast-radius",
+        "skills/engineering/qs-create-verification-skill",
+        "skills/engineering/qs-hillclimb",
+        "skills/engineering/qs-how",
+        "skills/engineering/qs-maintain-verification-skill",
+        "skills/engineering/qs-pr-babysit",
+        "skills/engineering/qs-runtime-forensics",
+        "skills/engineering/qs-skill-eval",
+        "skills/engineering/qs-trace-forensics",
+        "skills/engineering/qs-visual-parity",
+        "skills/engineering/qs-why",
+        "skills/engineering/qs-worktree-cleanup"
+      ],
+      "criteria": [
+        "AC-01",
+        "AC-07",
+        "AC-08",
+        "AC-09",
+        "AC-11",
+        "AC-12",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-22",
+        "AC-23",
+        "AC-24"
+      ],
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-frontend": {
+      "capabilityIds": [
+        "contributor:design-taste-frontend",
+        "contributor:high-end-visual-design",
+        "contributor:image-to-code",
+        "contributor:imagegen-frontend-mobile",
+        "contributor:imagegen-frontend-web",
+        "contributor:minimalist-ui",
+        "contributor:redesign-existing-projects",
+        "frontend-internal:brief",
+        "frontend-internal:design-direction",
+        "frontend-internal:dimensional-style",
+        "frontend-internal:implementation",
+        "frontend-internal:mobile-images",
+        "frontend-internal:prompt-construction",
+        "frontend-internal:redesign",
+        "frontend-internal:restrained-style",
+        "frontend-internal:web-images",
+        "qs:qs-design-frontend",
+        "qs:qs-design-image-mobile",
+        "qs:qs-design-image-to-code",
+        "qs:qs-design-image-web"
+      ],
+      "sourcePaths": [
+        "codex/plugins/qs-frontend",
+        "config/skill-migrations.json",
+        "config/skill-profiles.json",
+        "config/skill-provenance.json",
+        "docs/skill-run-contract.md",
+        "packages/qs-frontend",
+        "pi/packages/qs-frontend",
+        "scripts/advanced-skill-catalog.mjs",
+        "scripts/execution-skill-catalog.mjs",
+        "scripts/frontend-skill-catalog.mjs",
+        "scripts/optional-command-definition.mjs",
+        "scripts/ps-skill-catalog.mjs",
+        "scripts/qs-skill-catalog.mjs",
+        "scripts/skill-collection-registry.mjs",
+        "scripts/video-skill-catalog.mjs",
+        "skills/engineering/qs-design-frontend",
+        "skills/engineering/qs-design-image-mobile",
+        "skills/engineering/qs-design-image-to-code",
+        "skills/engineering/qs-design-image-web",
+        "skills/frontend"
+      ],
+      "criteria": [
+        "AC-01",
+        "AC-02",
+        "AC-08",
+        "AC-09",
+        "AC-10",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-20",
+        "AC-22",
+        "AC-23",
+        "AC-24"
+      ],
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          }
+        }
+      }
+    },
+    "qs-video": {
+      "capabilityIds": [
+        "contributor:hyperframes",
+        "contributor:hyperframes-animation",
+        "contributor:hyperframes-audio",
+        "contributor:hyperframes-cli",
+        "contributor:hyperframes-core",
+        "contributor:hyperframes-creative",
+        "contributor:hyperframes-keyframes",
+        "contributor:hyperframes-registry",
+        "contributor:media-use",
+        "qs:qs-video",
+        "video-internal:embedded-captions",
+        "video-internal:faceless-explainer",
+        "video-internal:figma",
+        "video-internal:general-video",
+        "video-internal:hyperframes",
+        "video-internal:hyperframes-animation",
+        "video-internal:hyperframes-audio",
+        "video-internal:hyperframes-cli",
+        "video-internal:hyperframes-core",
+        "video-internal:hyperframes-creative",
+        "video-internal:hyperframes-keyframes",
+        "video-internal:hyperframes-registry",
+        "video-internal:hyperframes-studio",
+        "video-internal:media-use",
+        "video-internal:motion-graphics",
+        "video-internal:music-to-video",
+        "video-internal:pr-to-video",
+        "video-internal:product-launch-video",
+        "video-internal:remotion-to-hyperframes",
+        "video-internal:slideshow",
+        "video-internal:talking-head-recut"
+      ],
+      "sourcePaths": [
+        "codex/plugins/qs-video",
+        "config/skill-migrations.json",
+        "config/skill-profiles.json",
+        "config/skill-provenance.json",
+        "docs/skill-run-contract.md",
+        "packages/qs-video",
+        "pi/packages/qs-video",
+        "scripts/advanced-skill-catalog.mjs",
+        "scripts/execution-skill-catalog.mjs",
+        "scripts/frontend-skill-catalog.mjs",
+        "scripts/optional-command-definition.mjs",
+        "scripts/ps-skill-catalog.mjs",
+        "scripts/qs-skill-catalog.mjs",
+        "scripts/skill-collection-registry.mjs",
+        "scripts/video-skill-catalog.mjs",
+        "skills/video/qs-video"
+      ],
+      "criteria": [
+        "AC-01",
+        "AC-02",
+        "AC-08",
+        "AC-09",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-18",
+        "AC-19",
+        "AC-20",
+        "AC-22",
+        "AC-23",
+        "AC-24"
+      ],
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "video-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+              "tests/fixtures/adoption-video-native-results/parent-review.json",
+              "skills/video/qs-video/references/runtime-compatibility.md"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "video-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+              "tests/fixtures/adoption-video-native-results/parent-review.json",
+              "skills/video/qs-video/references/runtime-compatibility.md"
+            ]
+          }
+        }
+      }
+    },
+    "qs-execution": {
+      "capabilityIds": [
+        "contributor:unlazy",
+        "execution-internal:unlazy",
+        "qs:qs-unlazy"
+      ],
+      "sourcePaths": [
+        "codex/plugins/qs-execution",
+        "config/skill-migrations.json",
+        "config/skill-profiles.json",
+        "config/skill-provenance.json",
+        "docs/skill-run-contract.md",
+        "packages/qs-execution",
+        "pi/packages/qs-execution",
+        "scripts/advanced-skill-catalog.mjs",
+        "scripts/execution-skill-catalog.mjs",
+        "scripts/frontend-skill-catalog.mjs",
+        "scripts/optional-command-definition.mjs",
+        "scripts/ps-skill-catalog.mjs",
+        "scripts/qs-skill-catalog.mjs",
+        "scripts/skill-collection-registry.mjs",
+        "scripts/video-skill-catalog.mjs",
+        "skills/engineering/qs-unlazy"
+      ],
+      "criteria": [
+        "AC-01",
+        "AC-08",
+        "AC-09",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-21",
+        "AC-22",
+        "AC-23",
+        "AC-24"
+      ],
+      "checks": {
+        "codex": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "unlazy-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "skills/engineering/qs-unlazy/references/runtime-compatibility.md"
+            ]
+          }
+        },
+        "pi": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json"
+            ]
+          },
+          "unlazy-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-final-target/final-check.log",
+              "tests/fixtures/adoption-final-target/final-tests.log",
+              "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+              "skills/engineering/qs-unlazy/references/runtime-compatibility.md"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "sources": {
+    ".claude-plugin/plugin.json": {
+      "kind": "file",
+      "contentSha256": "f6e93e14eaa7c78c6c3e16bba2f337ac7df568bf36abd8533e8db355a487a408"
+    },
+    "codex/plugins/qs-skills": {
+      "kind": "directory",
+      "contentSha256": "0129de8de55eb8d9edbd9dcf89fc99bd1c7beaf86c2bbb5f9820ee2e077628bb"
+    },
+    "config/skill-migrations.json": {
+      "kind": "file",
+      "contentSha256": "499903a32a76958779c20f30b3902b5b1827252f4310649e57c3a4c4e1e4043f"
+    },
+    "config/skill-profiles.json": {
+      "kind": "file",
+      "contentSha256": "567cc3d6e24207a55ecb95b0bc3518b7c26882fd559015606c62b4a8275cdc24"
+    },
+    "config/skill-provenance.json": {
+      "kind": "file",
+      "contentSha256": "5ef49015fe722489a377a629e7bd15173e192eac0b7a4585dc5d152a37ee3472"
+    },
+    "docs/skill-run-contract.md": {
+      "kind": "file",
+      "contentSha256": "d2ebbc6136be1a64ef440a0a6b2a489ef0e32b1888f338082ad5e0b363183b82"
+    },
+    "pi/packages/qs-skills": {
+      "kind": "directory",
+      "contentSha256": "0752e18191b294943aabe04db9b1d0190a755cdfc69e346737bfb03559580914"
+    },
+    "scripts/advanced-skill-catalog.mjs": {
+      "kind": "file",
+      "contentSha256": "3262081d2a2ca2dc0966bb80871aed8865b23687617b0bf1903a1c542d9bed77"
+    },
+    "scripts/execution-skill-catalog.mjs": {
+      "kind": "file",
+      "contentSha256": "9656a87a1ecf985d6afc818e41652786ecae2f17dfc5e186e753e9d9aa536384"
+    },
+    "scripts/frontend-skill-catalog.mjs": {
+      "kind": "file",
+      "contentSha256": "716ebe547bdb0a58eb80c7e130555ff79b798e05ed5948893acee789e93ca92c"
+    },
+    "scripts/optional-command-definition.mjs": {
+      "kind": "file",
+      "contentSha256": "1ed72eafa16e3d1021499b23136ce4c9e9d9652870c557f8fb5d22b8c179f7d2"
+    },
+    "scripts/ps-skill-catalog.mjs": {
+      "kind": "file",
+      "contentSha256": "b8847afcd56c302961184a9c3976bba506ad6f6fcdadfbd3fb57a91a2f7ea233"
+    },
+    "scripts/qs-skill-catalog.mjs": {
+      "kind": "file",
+      "contentSha256": "4cc65054dfde39a1a13ae1af5eea3865c39b774e71ff337eede21ce0428180bf"
+    },
+    "scripts/skill-collection-registry.mjs": {
+      "kind": "file",
+      "contentSha256": "5b115967fc1b5844df3ac26dac25c08b92742e1bfd14f43e9fced34bdd799f2e"
+    },
+    "scripts/video-skill-catalog.mjs": {
+      "kind": "file",
+      "contentSha256": "65bec2c618ad5385391e915b6f552647056b47b089604efab03bcdb9109144fd"
+    },
+    "skills/engineering/qs-code-build": {
+      "kind": "directory",
+      "contentSha256": "709e4f3f5880bcdd58e4713b18563840544e91dc3de01ccdbcf618e4d3484ce8"
+    },
+    "skills/engineering/qs-code-debug": {
+      "kind": "directory",
+      "contentSha256": "8cff7ac612a56b6e0aea116e5867f1756b0f7294f7ecba8a2a06f1105391342c"
+    },
+    "skills/engineering/qs-deploy-release": {
+      "kind": "directory",
+      "contentSha256": "788188d1c2f9194ffe7e74d8efe4a42e692396a73e5624d517b0f91c02cd1529"
+    },
+    "skills/engineering/qs-flow-triage": {
+      "kind": "directory",
+      "contentSha256": "7b92b3af70c343e40f0b1706a209e4227a7f93978cbed8fc4084396fcdd3e098"
+    },
+    "skills/engineering/qs-git-merge": {
+      "kind": "directory",
+      "contentSha256": "b38208a880c8fda579cce14f6234ae25ebd3f549059103bbd5852036a928316e"
+    },
+    "skills/engineering/qs-help": {
+      "kind": "directory",
+      "contentSha256": "67d3a4c87012961e9040dce0852e58aebd8409eb324dead8c6d35eec9a4a889e"
+    },
+    "skills/engineering/qs-plan-clarify": {
+      "kind": "directory",
+      "contentSha256": "c8dd6616a862d281f4d5f527d3c653d198ea95977c97ae4b0efa668a37a74a7f"
+    },
+    "skills/engineering/qs-plan-roadmap": {
+      "kind": "directory",
+      "contentSha256": "411ecfb722a3f85c82b6c66856da071473e21aa43503fe4a75270e465d74dc25"
+    },
+    "skills/engineering/qs-plan-spec": {
+      "kind": "directory",
+      "contentSha256": "183c37f00d3e97d828bec49c973768eb17724a87030a09093d80d8431e646ed8"
+    },
+    "skills/engineering/qs-review-code": {
+      "kind": "directory",
+      "contentSha256": "5603156ea3e57879ee8353a5691a27d4b01c59cb0c05102bbe65a0cf48c453ad"
+    },
+    "skills/engineering/qs-setup": {
+      "kind": "directory",
+      "contentSha256": "b9b2939916238788aac7240e941df062498e7f573b758b14f89f0d162d319225"
+    },
+    "skills/internal": {
+      "kind": "directory",
+      "contentSha256": "95201915e3b39da62cdaf6d368e2c571efc78328c538adab1b92a61f507123ad"
+    },
+    "skills/productivity/qs-flow-handoff": {
+      "kind": "directory",
+      "contentSha256": "8082b39ee0cd3223e981451e22afe0f93a3b2695e085fc0bb178dda09ddf441e"
+    },
+    "codex/plugins/qs-specialists": {
+      "kind": "directory",
+      "contentSha256": "fe342e3fbd86840dd1e7a0da43a24ef8e9904fb634c0c9c96c9c342fb763ff97"
+    },
+    "packages/qs-specialists": {
+      "kind": "directory",
+      "contentSha256": "be95458b7bc45031ebed07ee7993bd6ef4dd7036098145c1fb683c58e2e15ffe"
+    },
+    "pi/packages/qs-specialists": {
+      "kind": "directory",
+      "contentSha256": "9f8f1bfb5f327cfedcd315aa760745305b6b8c28df4e770ed6cc73c6fecc0e6f"
+    },
+    "skills/engineering/qs-code-document": {
+      "kind": "directory",
+      "contentSha256": "0e4c3a746fda49c0c01ed420e9ef690e4ca5039cae1f550c7a789ce0b40ec144"
+    },
+    "skills/engineering/qs-deploy-prompt": {
+      "kind": "directory",
+      "contentSha256": "4ded418c5fa21ad39bee29c2c39b2038b450f889ae00670a30b2d44b090d1fd0"
+    },
+    "skills/engineering/qs-design-prototype": {
+      "kind": "directory",
+      "contentSha256": "7f04c132c82f61e6136d80055039d0bc8829af8573f9dba99b55a271335e778d"
+    },
+    "skills/engineering/qs-plan-research": {
+      "kind": "directory",
+      "contentSha256": "9f1489d5fa231b55d2882601ab9ef609fe287fbc11b6ea279685649c492fbc4c"
+    },
+    "skills/engineering/qs-test-author": {
+      "kind": "directory",
+      "contentSha256": "67561ec1a184fe0ab9e0d6e429ce1dbcfb4679ea64c3b14a66d9087e41f3f2b3"
+    },
+    "skills/engineering/qs-test-verify": {
+      "kind": "directory",
+      "contentSha256": "0306d397e31be6c6fc1d0a9359f40fd7598e03d661f4b7bd9739b9275af800f5"
+    },
+    "skills/productivity/qs-learn-teach": {
+      "kind": "directory",
+      "contentSha256": "ac5e1a3f0e1c81f53ea1912c8a97dcd79d0d298538218019b6e6c88f33fe1d8e"
+    },
+    "skills/productivity/qs-skill-write": {
+      "kind": "directory",
+      "contentSha256": "4b8dd264c549560f97ead84b3af5fa398141200a056767237e9918286436f7c5"
+    },
+    "codex/plugins/qs-advanced": {
+      "kind": "directory",
+      "contentSha256": "160f23af60d7c5d39620c7829e52b95dd9013c91d8249b0a62a5e21213294c6c"
+    },
+    "packages/qs-advanced": {
+      "kind": "directory",
+      "contentSha256": "417ea1e24505af20f2747c7400b178594620db816bc87a10e56054f9d1d7d8a1"
+    },
+    "pi/packages/qs-advanced": {
+      "kind": "directory",
+      "contentSha256": "2e1e71e42c74abfc2753797deb1ad2813fafc89da7f51484be6ded38a1435733"
+    },
+    "skills/advanced": {
+      "kind": "directory",
+      "contentSha256": "918877c8c2973a02546f18e10662c0ec2447433221c8a5d6383abb7d619f2f74"
+    },
+    "skills/engineering/qs-blast-radius": {
+      "kind": "directory",
+      "contentSha256": "961ac66352e8ab09b4a54ec12978e38b8dae95c1722468e5f9dfa9a6b05ee7f7"
+    },
+    "skills/engineering/qs-create-verification-skill": {
+      "kind": "directory",
+      "contentSha256": "19a5f348b54f5481d48ec9520700ca2adf2aeae56f07ff831ace2707edafaefc"
+    },
+    "skills/engineering/qs-hillclimb": {
+      "kind": "directory",
+      "contentSha256": "1606a55509a701179e0496c617b128bbba7e18971775578fbab0a7c3d4145e54"
+    },
+    "skills/engineering/qs-how": {
+      "kind": "directory",
+      "contentSha256": "92c276c2b8cf76380ed518c9e3a54325282283af0ae0ce1c0636cb0f9254de15"
+    },
+    "skills/engineering/qs-maintain-verification-skill": {
+      "kind": "directory",
+      "contentSha256": "7f9191ad614fb1f9489d76b0d283e54611748c209efce7a7eb05a2ad2ef5a95e"
+    },
+    "skills/engineering/qs-pr-babysit": {
+      "kind": "directory",
+      "contentSha256": "e1753b3a32342cc0a465703a359cb5d44e91eb3555cde59b792da6683b2e3b03"
+    },
+    "skills/engineering/qs-runtime-forensics": {
+      "kind": "directory",
+      "contentSha256": "a3ec346b57800a5f39a3bff0e29d37158bd5793469a376e5b8957de95c300498"
+    },
+    "skills/engineering/qs-skill-eval": {
+      "kind": "directory",
+      "contentSha256": "43eb9a2ad90bb3d6722c04fc8ced4a24011236b21ae2d4400aecabe03fd073fd"
+    },
+    "skills/engineering/qs-trace-forensics": {
+      "kind": "directory",
+      "contentSha256": "a0ed8e2d95a3203f97651f6ca25b3978ab0e622d2d09d001283d94a251b5511d"
+    },
+    "skills/engineering/qs-visual-parity": {
+      "kind": "directory",
+      "contentSha256": "5bbeca1d8fadaef7e9f54a644c982342297811341c75bd9fa950fc9a9c8a8cf6"
+    },
+    "skills/engineering/qs-why": {
+      "kind": "directory",
+      "contentSha256": "7a90c0273d88a3ecb968de2dea0a7599db5bfb7503cb4ade839498a4558d92f7"
+    },
+    "skills/engineering/qs-worktree-cleanup": {
+      "kind": "directory",
+      "contentSha256": "d27cccb05ddaf8dbf5ebc543750d4a50146ea0d9d7ba679ab1279ed5d03c1317"
+    },
+    "codex/plugins/qs-frontend": {
+      "kind": "directory",
+      "contentSha256": "215b3b885a25e530b637c1b1e3dfaa609d1fc387045d82c215c3614e678fc3af"
+    },
+    "packages/qs-frontend": {
+      "kind": "directory",
+      "contentSha256": "cbee4243b96e2a31c2ea8aa19723741faba5c59f417eb135dfd05dc7d63cdb68"
+    },
+    "pi/packages/qs-frontend": {
+      "kind": "directory",
+      "contentSha256": "e7519405cf417f82e5848bba191d5ff936e7f5e3ba951c8d19178f05a90e3e62"
+    },
+    "skills/engineering/qs-design-frontend": {
+      "kind": "directory",
+      "contentSha256": "3b4f3444c8771f1bbb9d978da31f8362fea09432870af6f08db88e1f1ebf1454"
+    },
+    "skills/engineering/qs-design-image-mobile": {
+      "kind": "directory",
+      "contentSha256": "e8816e2e1ebc2a85e3b6424366d64b47197b479a0ac5584c08d06344bed8de1c"
+    },
+    "skills/engineering/qs-design-image-to-code": {
+      "kind": "directory",
+      "contentSha256": "8ed958a76755c33fee6a7a37bb0ec293effe6350f8fa51192d70a569a9284a8b"
+    },
+    "skills/engineering/qs-design-image-web": {
+      "kind": "directory",
+      "contentSha256": "63b4060f976e4d9fec647336d611efe1a8f3ecc590b60a524736a78ca38997a4"
+    },
+    "skills/frontend": {
+      "kind": "directory",
+      "contentSha256": "59797c684491e22c8fff31713543425f600fb58337b073796d9a86998300641f"
+    },
+    "codex/plugins/qs-video": {
+      "kind": "directory",
+      "contentSha256": "e99356356750eed7f6923ec0e445b02d369749d25e5484cf5cd7565a09584397"
+    },
+    "packages/qs-video": {
+      "kind": "directory",
+      "contentSha256": "10424ca3e5cff661fac4ad0906773d8be4190f897ff66833c0b05c04048fc396"
+    },
+    "pi/packages/qs-video": {
+      "kind": "directory",
+      "contentSha256": "c02a05afab8847bc0e870862f1b5fad849d006a0460f6622372a31e88192cb7c"
+    },
+    "skills/video/qs-video": {
+      "kind": "directory",
+      "contentSha256": "5ec36eda00fe32574f68a5be1e515f88328c930a32f2b07740113c4e91aef99b"
+    },
+    "codex/plugins/qs-execution": {
+      "kind": "directory",
+      "contentSha256": "bd89b5f34f2866efdf221b813f6bd619339a82ef3f4045cc461e728d833876eb"
+    },
+    "packages/qs-execution": {
+      "kind": "directory",
+      "contentSha256": "f66ed8c534748f5044f6caddd2a19a58bc3fd2c90d601a125900fbb38a4e10db"
+    },
+    "pi/packages/qs-execution": {
+      "kind": "directory",
+      "contentSha256": "0eee5424012956d4e929219fb72e2fd79cc14ece7ecec4d8fe576b03a131c50b"
+    },
+    "skills/engineering/qs-unlazy": {
+      "kind": "directory",
+      "contentSha256": "691d1eba62a91729d395516ffafe7d100163676758813045f0f2c9077aaa9461"
+    }
+  },
+  "evidence": {
+    "tests/skill-provenance.test.mjs": {
+      "path": "tests/skill-provenance.test.mjs",
+      "sha256": "1f9e8855f30fac2a09030e629be60a775a201231de9221ea415d22f4d95eb6f8"
+    },
+    "tests/adoption-projection.test.mjs": {
+      "path": "tests/adoption-projection.test.mjs",
+      "sha256": "b6b5fe2536a3ac1e4a86d463693f4dff1a69092c7e8f91d09f80a298c033c0fc"
+    },
+    "config/skill-migrations.json": {
+      "path": "config/skill-migrations.json",
+      "sha256": "edfb01cdaeccecf3c61965a3a51f4f4027c21941418d3771f0d1ac254d0cba30"
+    },
+    "tests/fixtures/adoption-final-target/final-check.log": {
+      "path": "tests/fixtures/adoption-final-target/final-check.log",
+      "sha256": "e3e6975b10108e0882a5a9ada89fee9f922f0ef4f14a9e3fee77764c51fd99b1"
+    },
+    "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+      "sha256": "4a0a069c564ff24fdf4c1766b31dd8e14a1afd2972f5e0a19f39265af7255967"
+    },
+    "tests/fixtures/adoption-final-target/final-tests.log": {
+      "path": "tests/fixtures/adoption-final-target/final-tests.log",
+      "sha256": "e51ca228fd827617c6afa61cd12f61c05bee4dba8baea442bab5371d8a41bb84"
+    },
+    "tests/fixtures/adoption-final-target/criterion-review.json": {
+      "path": "tests/fixtures/adoption-final-target/criterion-review.json",
+      "sha256": "c089412290f27e3d260141f66f6d8e9848281128b788c17ccc171b80659df77d"
+    },
+    "tests/fixtures/adoption-provenance-final/review.json": {
+      "path": "tests/fixtures/adoption-provenance-final/review.json",
+      "sha256": "72cc0f35253e7ffc1e8e8fb697209ea08dcbc918fb4814e2b77fe9f286b2fc62"
+    },
+    "tests/fixtures/adoption-provenance-final/decisions.json": {
+      "path": "tests/fixtures/adoption-provenance-final/decisions.json",
+      "sha256": "b0332e63750805ade86435c71ff37983f7770e311e1b62f9716ec7d3ab23839d"
+    },
+    "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
+      "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+      "sha256": "3ffdc8065d684ac3542adee13232d658a2451bcb65fbdca1c26b189cd154c774"
+    },
+    "config/skill-provenance.json": {
+      "path": "config/skill-provenance.json",
+      "sha256": "78071146a590ac6a6fb225ef942a4e0a89c63ef53d412cdc0fee8a19508e966d"
+    },
+    "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json": {
+      "path": "tests/fixtures/frontend-adoption-v3-review/f10-f11/parent-review.json",
+      "sha256": "2ea3581f45edeed9f51596ce9841eb7cf152aebd8d2a5be066e869cacfa8144d"
+    },
+    "tests/fixtures/adoption-behavior-review/current-01-review.json": {
+      "path": "tests/fixtures/adoption-behavior-review/current-01-review.json",
+      "sha256": "f5940386608b15e3b17684834b5870a93c37865ef6a85f6c1a981fbbd589c716"
+    },
+    "tests/upstream-adoption-routing.test.mjs": {
+      "path": "tests/upstream-adoption-routing.test.mjs",
+      "sha256": "dca92fbc40cac39088885980cea1002d41a783999c556771e34dc1a2345e95b9"
+    },
+    "tests/fixtures/adoption-review-eval/parent/review.json": {
+      "path": "tests/fixtures/adoption-review-eval/parent/review.json",
+      "sha256": "cc615f36d397cf73d0a97ac8084f5546aa8d5f8d91eb2ec71627ca6e8a2ff56e"
+    },
+    "tests/fixtures/adoption-debug-repair/frozen-plan.json": {
+      "path": "tests/fixtures/adoption-debug-repair/frozen-plan.json",
+      "sha256": "04b6d3ece2b98179ec1b83f0c6993f7d125bdf6826b27b5cce2e58afc4079739"
+    },
+    "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log": {
+      "path": "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-before.log",
+      "sha256": "802df6660f53543af7d144dee0d796bf68c83bd20e2401775b05cc69b7c7eb08"
+    },
+    "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log": {
+      "path": "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log",
+      "sha256": "2dde78908d611a30344bdfbfc2f9928cc6506b13e09d55a8808f554963b0f929"
+    },
+    "tests/advanced-candidates.test.mjs": {
+      "path": "tests/advanced-candidates.test.mjs",
+      "sha256": "0ba92e54cfb2d977eb2970d67735b3b0b1364f37de8312984630d107157b7ee0"
+    },
+    "tests/upstream-adoption-qs.test.mjs": {
+      "path": "tests/upstream-adoption-qs.test.mjs",
+      "sha256": "136f97fd93a47e851865f412111e8118d018fe038221458c1e4db40a62eaab82"
+    },
+    "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json": {
+      "path": "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
+      "sha256": "a113901001164d3c4c849130b5d9660cd26194a5f0f0b461e43553f67b5d1347"
+    },
+    "docs/specs/quickstark-upstream-adoption.md": {
+      "path": "docs/specs/quickstark-upstream-adoption.md",
+      "sha256": "6c4ed3edaaafd573dc1b0cfa841e89844071f5a59e5fd982faa4b8532f942994"
+    },
+    "docs/validation/upstream-adoption-efficiency.md": {
+      "path": "docs/validation/upstream-adoption-efficiency.md",
+      "sha256": "8a3b21d3b0446db232e7d64d7590a05b0ec788584118fb0fd8c5d6a80e163859"
+    },
+    "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json": {
+      "path": "tests/fixtures/upstream-adoption-efficiency/comparison/inconclusive-retained-baseline.json",
+      "sha256": "3fe924f7e17b1fa3b0ea6a764efbca30af98e312c5051175f905c4e7f690f5c8"
+    },
+    "docs/specs/quickstark-upstream-adoption-font-amendment.md": {
+      "path": "docs/specs/quickstark-upstream-adoption-font-amendment.md",
+      "sha256": "456821cee367a135236a47379a8df002e9d8a6b51e7e3974bbf8ba38b8fc720b"
+    },
+    "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json": {
+      "path": "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+      "sha256": "003c7c52ee3b889a03f52a5e84a7f3979a27a0ce6fae0b042f59a43ff2e4e8d2"
+    },
+    "tests/fixtures/frontend-adoption-v3-image-resolution/README.md": {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/README.md",
+      "sha256": "7e882be771e3702ba96a7aa28c9888ad3d67a8df6bf8ae64efff2d53a1b54ca1"
+    },
+    "tests/fixtures/frontend-mobile-repair/README.md": {
+      "path": "tests/fixtures/frontend-mobile-repair/README.md",
+      "sha256": "41ccc1e72181e33c32e30baa7f59eefa76baf4b9744551f02b5452e818369889"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
+      "sha256": "f8c50a664e7b0ec2c6d5a84fcfec9db8cf41962c72958dc5578d09e8ba5f0660"
+    },
+    "tests/fixtures/frontend-mobile-repair/plan.json": {
+      "path": "tests/fixtures/frontend-mobile-repair/plan.json",
+      "sha256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c"
+    },
+    "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+      "sha256": "4b87f9d5643a4a74701f4bfa33949155167252a0148c03bfaa7ce03b37171453"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-review/review-e242a7f3905c690f.json",
+      "sha256": "c7ff8314e11f870f670c8f9d8f4626790348e13a6be80a30951c0a9d7f23096b"
+    },
+    "tests/fixtures/frontend-mobile-repair-results/archive.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-results/archive.json",
+      "sha256": "04a50581e447c4c326bea2c35e150bf0f1bfac1dbb9ae0e3f0ffa8ae402c7321"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/parent-review.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-review/parent-review.json",
+      "sha256": "b8ed659343589d5e9b128eec6e9544e0115eb4a1a2995e28db43a25264b15757"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
+      "sha256": "dab4bb55ce889b95b056ec963bc8232d31b038a7b412d9529390683f368affa4"
+    },
+    "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json": {
+      "path": "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+      "sha256": "5072d44771dc051dc4edcd6751b814e0aa2d9881eec0b8234ab2a9ea3d50e7f2"
+    },
+    "tests/managed-skill-input.test.mjs": {
+      "path": "tests/managed-skill-input.test.mjs",
+      "sha256": "e3f4877b71fa009ae07df134663bdc5bb0af2aeb304a715bc5f7e762312366f7"
+    },
+    "tests/fixtures/target-activation-probe/README.md": {
+      "path": "tests/fixtures/target-activation-probe/README.md",
+      "sha256": "3d866c3d6494d10c6b02a76837ebf1abedc00ea59cf9329f46bf9c9ba35e7554"
+    },
+    "tests/migration-filesystem.test.mjs": {
+      "path": "tests/migration-filesystem.test.mjs",
+      "sha256": "76d1cadaf2e61805ca77bd4bdc2f398984747cb0206b7e8486c56a052fe5e6b7"
+    },
+    "tests/migration-owned-paths.test.mjs": {
+      "path": "tests/migration-owned-paths.test.mjs",
+      "sha256": "de97f396de85d631b34b4de5eecb650f4f3147fe218231ad377cb05bf49d8622"
+    },
+    "tests/migration-transaction.test.mjs": {
+      "path": "tests/migration-transaction.test.mjs",
+      "sha256": "7ffdb213fe6963b2085e84bdd8055735c6a86543718ff17cc556714d6b09523f"
+    },
+    "tests/migration-native-packages.test.mjs": {
+      "path": "tests/migration-native-packages.test.mjs",
+      "sha256": "9f87fb56a776570ca5f212747c0f5daf9d566f1b71dfee42ce8af0cd0692990f"
+    },
+    "tests/managed-skill-migration.test.mjs": {
+      "path": "tests/managed-skill-migration.test.mjs",
+      "sha256": "0e16b28c3a11a9971b01a79ea71e88b2b2a17e5f602ff1048253b96ce943f23c"
+    },
+    "tests/fixtures/hyperframes-adoption/README.md": {
+      "path": "tests/fixtures/hyperframes-adoption/README.md",
+      "sha256": "e396358f834dbfeef9d81aa37f58ad02fe200832f88e4e855df6b4162df610fa"
+    },
+    "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json": {
+      "path": "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+      "sha256": "e227d3ea7626cbe59eddb0d6de1cb8580d7e6b28534e1eb6588948671b964990"
+    },
+    "tests/fixtures/adoption-video-native-results/parent-review.json": {
+      "path": "tests/fixtures/adoption-video-native-results/parent-review.json",
+      "sha256": "ea88a1d23439eb2ad3c84ef2daf29a633ae684f9d458123e6cf889b72d914bbe"
+    },
+    "tests/fixtures/adoption-video-native-results/REVIEW.md": {
+      "path": "tests/fixtures/adoption-video-native-results/REVIEW.md",
+      "sha256": "a122989b0179677be6da686f6a8a08df19faa802b9d27295293a7663f4988f31"
+    },
+    "tests/execution-candidate.test.mjs": {
+      "path": "tests/execution-candidate.test.mjs",
+      "sha256": "d05a28f4ac2054cf5784d48f675a090a1f93ee5067c6f3632ea215ff807d5421"
+    },
+    "docs/validation/upstream-adoption-evidence-map.md": {
+      "path": "docs/validation/upstream-adoption-evidence-map.md",
+      "sha256": "c87069ee96f625b29a1ed9b78e9431785b184a49539f5f8da005683d30eaff59"
+    },
+    "tests/fixtures/target-index-generation/evidence/parent-review.json": {
+      "path": "tests/fixtures/target-index-generation/evidence/parent-review.json",
+      "sha256": "ce6e4501554638545ae27fcde9104025bbe10266914dfd6ec3f7b8fe84d86fcb"
+    },
+    "README.md": {
+      "path": "README.md",
+      "sha256": "fd2a8673642f0d65259b18a92ff28c55d113439307f4383f711c1c35f40fe3b7"
+    },
+    "CLAUDE.md": {
+      "path": "CLAUDE.md",
+      "sha256": "07c442155c5f4c960e81b3e008a8494e0969b1ab277e308cb6c947da64d63271"
+    },
+    "CONTEXT.md": {
+      "path": "CONTEXT.md",
+      "sha256": "48450c3460b6a595bc7eb6bea2ad936a229633e3285bf1cd13bedbe31f1c9de2"
+    },
+    "docs/architecture.md": {
+      "path": "docs/architecture.md",
+      "sha256": "4d36c349369e86bcfd5472807f204a9272dfc0786cb086bf7145e18d20277ae1"
+    },
+    "docs/contributing.md": {
+      "path": "docs/contributing.md",
+      "sha256": "b4c67f9212561a19b2a421058ab730179c058f99e63c6266b1e778739a3a4cef"
+    },
+    "docs/personal-skills.md": {
+      "path": "docs/personal-skills.md",
+      "sha256": "fa77a2b465ecc5d54b1a08a7ebd099bdd0c18942e8957823ea58f3e950349154"
+    },
+    "docs/install-and-update-skills.md": {
+      "path": "docs/install-and-update-skills.md",
+      "sha256": "d1c849eec063e706f36b4fc9d8d456a51a4437de5b09b77aafc7087460ab1da7"
+    },
+    "docs/upstream/README.md": {
+      "path": "docs/upstream/README.md",
+      "sha256": "7eb4f61fec83d977a32a2cbfae1503c852093303b7b10b0ecf792d0aefa2e601"
+    },
+    "tests/fixtures/target-documentation-preparation/README.md": {
+      "path": "tests/fixtures/target-documentation-preparation/README.md",
+      "sha256": "b1c8b15545c0af64ac220661bf257934c59c3b182a59031fbd079a554c49a70a"
+    },
+    "scripts/adoption-acceptance.mjs": {
+      "path": "scripts/adoption-acceptance.mjs",
+      "sha256": "52a39b3dc78fc46459d8e89d3cf2a285b0b084996a65af0e59f2eba9bcf1d19e"
+    },
+    "scripts/managed-skill-input.mjs": {
+      "path": "scripts/managed-skill-input.mjs",
+      "sha256": "0d20114811c4e7e2ca25c7bac10cb177dd3e1b2a94242403a5d4e1d4b1d9f1be"
+    },
+    "tests/adoption-acceptance.test.mjs": {
+      "path": "tests/adoption-acceptance.test.mjs",
+      "sha256": "4eb481ef105f322d9215ad112f13685c063b22ac13b3bfe596fb2f9c69a7a533"
+    },
+    "skills/video/qs-video/references/runtime-compatibility.md": {
+      "path": "skills/video/qs-video/references/runtime-compatibility.md",
+      "sha256": "82436dce157e2d8db0c393da0afb5995ba7597399c9e33d00fdc5ade924d0742"
+    },
+    "skills/engineering/qs-unlazy/references/runtime-compatibility.md": {
+      "path": "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+      "sha256": "943f4d82e53472ccb74ce3e9191145a9d25d26ce8362a2fb8bfc3ba367df91b1"
+    }
+  }
+}

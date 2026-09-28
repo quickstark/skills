@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/Leonxlnx/taste-skill",
+  "licensePath": "THIRD_PARTY_NOTICES.md",
+  "sources": [
+    {
+      "legacyName": "design-taste-frontend",
+      "sourcePath": "skills/taste-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89",
+      "privateReferences": [
+        "design-direction",
+        "implementation"
+      ],
+      "state": "candidate"
+    },
+    {
+      "legacyName": "high-end-visual-design",
+      "sourcePath": "skills/soft-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "e1e32f5e2d420872c6c7332b53d5ff7721946766b78c4822b424c2d512c8fdbc",
+      "privateReferences": [
+        "dimensional-style"
+      ],
+      "state": "candidate"
+    },
+    {
+      "legacyName": "image-to-code",
+      "sourcePath": "skills/image-to-code-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "4c060a8064a8b13380bc2ef3d6e6a1d0b1e316aa093cd9807d0ce9e4eeb037fa",
+      "privateReferences": [
+        "implementation",
+        "prompt-construction"
+      ],
+      "state": "candidate"
+    },
+    {
+      "legacyName": "imagegen-frontend-mobile",
+      "sourcePath": "skills/imagegen-frontend-mobile/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "8a33389979f3074fa0926678e266ad2eb9234624472254469fc1ad916b9caa24",
+      "privateReferences": [
+        "mobile-images",
+        "prompt-construction",
+        "brief"
+      ],
+      "state": "candidate"
+    },
+    {
+      "legacyName": "imagegen-frontend-web",
+      "sourcePath": "skills/imagegen-frontend-web/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "6b5c2256522fdba1e3313eafa3d743b960a7b13ec029d3e6586e04b23327c1f8",
+      "privateReferences": [
+        "web-images",
+        "prompt-construction",
+        "design-direction"
+      ],
+      "state": "candidate"
+    },
+    {
+      "legacyName": "minimalist-ui",
+      "sourcePath": "skills/minimalist-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "36bc7328f085405f43b476938e62460fa573bf7e984e949e072bcf014831a44c",
+      "privateReferences": [
+        "restrained-style"
+      ],
+      "state": "candidate"
+    },
+    {
+      "legacyName": "redesign-existing-projects",
+      "sourcePath": "skills/redesign-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "98ad3e5b051bfb71b2795f7e8a6aa0d32b51ee095606c098a4b2822ac07926c9",
+      "privateReferences": [
+        "redesign"
+      ],
+      "state": "candidate"
+    }
+  ],
+  "derivedFiles": [
+    {
+      "path": "internal/brief.md",
+      "sha256": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a"
+    },
+    {
+      "path": "internal/design-direction.md",
+      "sha256": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386"
+    },
+    {
+      "path": "internal/dimensional-style.md",
+      "sha256": "f47bdc0ad77bed396f0fabd77f285f31eae2d6f8f5519b8afa65a6c2925b42ee"
+    },
+    {
+      "path": "internal/implementation.md",
+      "sha256": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5"
+    },
+    {
+      "path": "internal/mobile-images.md",
+      "sha256": "c25f1805343b461d13e394d77fe73f2debf8c36a1dda1ac50d2c180557eb45b4"
+    },
+    {
+      "path": "internal/prompt-construction.md",
+      "sha256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918"
+    },
+    {
+      "path": "internal/redesign.md",
+      "sha256": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76"
+    },
+    {
+      "path": "internal/restrained-style.md",
+      "sha256": "f045ec15981c732f9210704060a4520f7841277828eace9a181a225c294bba90"
+    },
+    {
+      "path": "internal/web-images.md",
+      "sha256": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b"
+    }
+  ]
+}

@@ -152,7 +152,8 @@ test('baseline identities and all original113 sources survive target mapping unc
   assert.deepEqual(help.baselineIds, ['contributor:find-skills', 'ps:ps-help', 'qs:qs-help']);
   const frontend = baseline.target.capabilities.find(entry => entry.name === 'qs-design-frontend');
   assert.equal(frontend.baselineIds.length, 4);
-  assert.equal(baseline.target.capabilities.every(entry => entry.decision.status === 'pending'), true);
+  assert.ok(baseline.target.capabilities.every(entry => ['pending', 'reviewed', 'retained-baseline', 'adopted', 'unknown'].includes(entry.decision.status)));
+  assert.ok(baseline.target.capabilities.every(entry => ['pending', 'unknown'].includes(entry.decision.status) || entry.decision.evidence.length > 0 && /^[a-f0-9]{40}$/.test(entry.decision.revision)), 'evidenced decisions cannot inherit unknown revision/evidence');
 });
 
 test('target catalog omissions, duplicates and owner loss are rejected', () => {
@@ -167,13 +168,13 @@ test('target catalog omissions, duplicates and owner loss are rejected', () => {
 
 test('pending, unknown, reviewed, retained and adopted decisions remain distinct', () => {
   for (const status of ['pending', 'unknown']) {
-    const doc = structuredClone(baseline); doc.target.capabilities[0].decision.status = status;
+    const doc = structuredClone(baseline); doc.target.capabilities[0].decision = { status, revision: null, evidence: [], note: 'Synthetic unresolved fixture; never persisted.' };
     assert.equal(validateSkillProvenance(doc, { checkFiles: false }).valid, true);
     doc.target.capabilities[0].decision.revision = 'a'.repeat(40);
     assert.match(validateSkillProvenance(doc, { checkFiles: false }).errors.join('\n'), /decision revision/);
   }
   for (const status of ['reviewed', 'retained-baseline', 'adopted']) {
-    rejects(doc => { doc.target.capabilities[0].decision.status = status; }, /decision evidence|decision revision/);
+    rejects(doc => { doc.target.capabilities[0].decision = { status, revision: null, evidence: [], note: 'Missing evidence negative control.' }; }, /decision evidence|decision revision/);
     const doc = structuredClone(baseline);
     doc.target.capabilities[0].decision = { status, revision: 'a'.repeat(40), evidence: ['docs/specs/quickstark-upstream-adoption.md'], note: 'Schema-only synthetic decision; not persisted or an acceptance decision.' };
     assert.equal(validateSkillProvenance(doc, { checkFiles: false }).valid, true);
@@ -185,7 +186,7 @@ test('target and closure digests reject stale bytes independently of upstream pi
   rejects(doc => { doc.target.capabilities[0].derivedDigest.value = 'e'.repeat(64); }, /target derived digest mismatch/);
   rejects(doc => { doc.target.closures[0].sha256 = 'e'.repeat(64); }, /closure digest mismatch/);
   rejects(doc => { doc.target.closures[0].reviewedRevision = 'e'.repeat(40); }, /reviewed closure pin/);
-  rejects(doc => { doc.target.closures[0].adoptedRevision = doc.target.closures[0].reviewedRevision; }, /not an adopted revision/);
+  rejects(doc => { doc.target.closures[0].adoptionStatus = 'unknown'; doc.target.closures[0].adoptedRevision = doc.target.closures[0].reviewedRevision; }, /not an adopted revision/);
   rejects(doc => { doc.target.closures = []; }, /missing closure/);
   rejects(doc => { doc.target.closures.push(structuredClone(doc.target.closures[0])); }, /duplicate closure owner/);
   rejects(doc => { doc.target.closures[0].owner = 'qs-invented'; }, /ownerless closure/);
@@ -244,14 +245,17 @@ test('generated document includes target ownership and matches the checked-in fi
   const reversed = structuredClone(baseline); reversed.target.capabilities.reverse(); reversed.target.closures.reverse();
   assert.equal(renderSkillProvenanceMarkdown(reversed), rendered);
   assert.match(rendered, /Owner-context/);
-  assert.match(rendered, /pending \(no revision claimed\)/);
+  const pending = structuredClone(baseline);
+  pending.target.capabilities[0].decision = { status: 'pending', revision: null, evidence: [], note: 'Synthetic pending rendering fixture.' };
+  assert.match(renderSkillProvenanceMarkdown(pending), /pending \(no revision claimed\)/);
 });
 
 test('target notices and explicit closure adoption cannot disappear or be inferred', () => {
   rejects(doc => { doc.target.notices.pop(); }, /notice coverage differs/);
   rejects(doc => { doc.target.notices.push(structuredClone(doc.target.notices[0])); }, /notice coverage differs/);
   rejects(doc => { doc.target.notices[0].sha256 = 'b'.repeat(64); }, /notice digest mismatch/);
-  rejects(doc => { const closure = doc.target.closures[0]; closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; }, /adoption evidence|adopted owner decision/);
+  rejects(doc => { const closure = doc.target.closures[0]; closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; closure.adoptionEvidence = []; }, /adoption evidence|adopted owner decision/);
+  rejects(doc => { const closure = doc.target.closures[0]; doc.target.capabilities.find(entry => entry.role === 'public' && entry.name === closure.owner).decision = { status: 'pending', revision: null, evidence: [], note: 'Unresolved owner negative control.' }; }, /adopted owner decision/);
   const doc = structuredClone(baseline), closure = doc.target.closures[0];
   const evidence = ['docs/specs/quickstark-upstream-adoption.md'];
   closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; closure.adoptionEvidence = evidence;

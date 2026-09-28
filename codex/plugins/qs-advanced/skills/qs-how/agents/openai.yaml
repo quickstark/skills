@@ -1,0 +1,4 @@
+interface:
+  display_name: "QS How"
+  short_description: "Explain how a subsystem works"
+  default_prompt: "Use $qs-advanced:qs-how to explain how this subsystem works from code and observed interfaces. Modes: effort=quick|standard|deep and report=brief|full."

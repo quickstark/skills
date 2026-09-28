@@ -230,7 +230,7 @@ export const TARGET_COLLECTION_REGISTRY = Object.freeze({
 
 // Changed only by the gated adoption transition. Candidate package projections
 // select target metadata inside the projector; source/current installs stay legacy.
-export const REGISTRY_STATE = "legacy";
+export const REGISTRY_STATE = "target";
 export const PUBLIC_COMMANDS = REGISTRY_STATE === "target" ? TARGET_PUBLIC_COMMANDS : LEGACY_PUBLIC_COMMANDS;
 export const SKILL_COLLECTIONS = REGISTRY_STATE === "target" ? TARGET_SKILL_COLLECTIONS : LEGACY_SKILL_COLLECTIONS;
 export const PUBLIC_COMMANDS_BY_NAME = new Map(PUBLIC_COMMANDS.map((command) => [command.name, command]));

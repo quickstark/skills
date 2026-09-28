@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-28",
+  "scope": "Source provenance decisions only; no model trial, publication or machine mutation",
+  "passes": [
+    "inventory historical and target records",
+    "assess package-specific implementation and bounded behavior evidence",
+    "challenge adoption/retention/runtime/efficiency claims",
+    "review diff and verify exact source/evidence bindings"
+  ],
+  "historicalRecordsUnchanged": 71,
+  "targetOwners": 89,
+  "targetDecisions": {
+    "adopted": 82,
+    "retained-baseline": 7
+  },
+  "reportingCompression": "retained-baseline",
+  "closurePins": {
+    "qs-video": "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
+    "qs-unlazy": "16671491f6679ad9378f52604d3bc2415b4120c7"
+  },
+  "sourceVerifier": {
+    "command": "node tests/fixtures/adoption-provenance-final/verify.mjs",
+    "exit": 0,
+    "qualification": "Successful after parent refreshed video runtime dependency-index and this leaf bound the updated closure SHA. Earlier concurrent source/closure mismatches were real and repaired without changing upstream records."
+  },
+  "focusedTests": {
+    "command": "node --test tests/skill-provenance.test.mjs",
+    "exit": 1,
+    "pass": 19,
+    "fail": 5,
+    "log": "tests/fixtures/adoption-provenance-final/provenance-test.log",
+    "logSha256": "4654b085b723e5880b41f5c268582bd688941ca4d24adb5e48253195d58b2c7d",
+    "cause": "Assertions and negative fixtures assume every target remains pending and closure is not adopted. Production validator passes current actual records; test repair is parent-owned unless explicitly delegated. No assertion silently weakened."
+  },
+  "outstanding": [
+    "Parent review and final required target checks",
+    "Final production acceptance audit",
+    "Publication and real selected-host outcome"
+  ],
+  "focusedTestFollowup": "Parent explicitly repaired the pending-state test fixtures and is running its focused check. The original19/24 failure log here remains unchanged; parent records its new result separately.",
+  "gateCheck": {
+    "exit": 0,
+    "met": 2,
+    "qualification": "Initial G2 invocation used the default ledger directory and could not resolve verifier path. Explicit CWD ../../.. corrected the invocation; verifier and assertions unchanged."
+  }
+}

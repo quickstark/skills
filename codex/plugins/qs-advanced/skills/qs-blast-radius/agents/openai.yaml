@@ -1,0 +1,4 @@
+interface:
+  display_name: "QS Blast Radius"
+  short_description: "Map impact of one proposed change"
+  default_prompt: "Use $qs-advanced:qs-blast-radius to map callers, contracts, data, tests, and operations affected by this proposed change. Modes: effort=quick|standard|deep and report=brief|full."
