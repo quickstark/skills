@@ -1,0 +1,27 @@
+✔ fresh installation needs no withdrawal or retirement and recovery restores actual absence (159.357831ms)
+✔ phase subsets reject empty plans, no-op effects, and state before exposure (4.811635ms)
+✔ durable five-phase transaction verifies actual source/version/discovery and saves selection last (178.748195ms)
+✔ failures at every side of every phase remain durable and explicit recovery restores prior files (1670.316747ms)
+✔ apply interruption after a real effect resumes from observed after-state without duplication (186.222825ms)
+✔ changed owned local state blocks resumed application and recovery while preserving edits (126.8866ms)
+✔ recovery requires exact explicit authority and failed rollback retains observed residuals/backups (203.720557ms)
+✔ changed plan, corrupt journal and unsafe targets fail before further effects (103.98673ms)
+✔ linked, hardlinked and directory journals cannot be used as transaction records (44.59022ms)
+✔ exclusive lock refuses a live concurrent owner and cannot be stolen (149.087841ms)
+✔ an actually terminated owner requires explicit verified-dead unlock before resumption (193.082487ms)
+✔ same-host PID absence in a different namespace or boot never authorizes lock retirement (9.053555ms)
+✔ booleans alone cannot be accepted as meaningful observation evidence (22.64744ms)
+✔ journal write conflict reports actual residual selection instead of a false completion (128.486544ms)
+✔ changed backups cannot restore state and adapter attempts cannot rewrite the bound plan (216.876007ms)
+✔ interrupted recovery resumes observed restored state without repeating the restore effect (207.72169ms)
+✔ a failed final inspection prohibits completion even after every side effect succeeded (123.01833ms)
+✔ full-adoption-size evidence survives durable execution, retry and authorized recovery (774.521244ms)
+✔ oversized evidence still fails before any journal or adapter effect (19.180985ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4605.761213

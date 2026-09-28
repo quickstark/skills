@@ -1,0 +1,27 @@
+✔ fresh installation needs no withdrawal or retirement and recovery restores actual absence (140.14657ms)
+✔ phase subsets reject empty plans, no-op effects, and state before exposure (2.845474ms)
+✔ durable five-phase transaction verifies actual source/version/discovery and saves selection last (165.719519ms)
+✔ failures at every side of every phase remain durable and explicit recovery restores prior files (1279.54401ms)
+✔ apply interruption after a real effect resumes from observed after-state without duplication (135.817042ms)
+✔ changed owned local state blocks resumed application and recovery while preserving edits (106.067858ms)
+✔ recovery requires exact explicit authority and failed rollback retains observed residuals/backups (174.635663ms)
+✔ changed plan, corrupt journal and unsafe targets fail before further effects (59.870888ms)
+✔ linked, hardlinked and directory journals cannot be used as transaction records (40.242761ms)
+✔ exclusive lock refuses a live concurrent owner and cannot be stolen (121.216852ms)
+✔ an actually terminated owner requires explicit verified-dead unlock before resumption (190.512062ms)
+✔ same-host PID absence in a different namespace or boot never authorizes lock retirement (8.802208ms)
+✔ booleans alone cannot be accepted as meaningful observation evidence (26.06796ms)
+✔ journal write conflict reports actual residual selection instead of a false completion (113.192884ms)
+✔ changed backups cannot restore state and adapter attempts cannot rewrite the bound plan (162.742463ms)
+✔ interrupted recovery resumes observed restored state without repeating the restore effect (177.048514ms)
+✔ a failed final inspection prohibits completion even after every side effect succeeded (112.941797ms)
+✔ full-adoption-size evidence survives durable execution, retry and authorized recovery (646.259922ms)
+✔ oversized evidence still fails before any journal or adapter effect (15.573562ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3755.09744

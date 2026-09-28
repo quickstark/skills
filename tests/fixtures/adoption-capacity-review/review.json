@@ -1,0 +1,24 @@
+{
+  "kind": "independent-bounded-capacity-review",
+  "reviewer": "/root/final_criteria",
+  "findings": [],
+  "decision": "Finite4MiBplan/16MiBjournal bounds are reasonable for measured1,967,815-byte48-step plan; no universal capacity claim.",
+  "independentChecks": {
+    "productionPlanValidation": "passed-readonly",
+    "transactionSuite": {
+      "tests": 19,
+      "pass": 19,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "preserved": "Ownership, ordering, before/after and local race bindings, hash-chain, per-state/nesting/step bounds and explicit recovery authority unchanged.",
+  "limits": "Measured actual plan only validated; isolated file fixtures executed. New16MiBjournal ceiling not exhaustion-tested. Fullsuite/acceptance/publication/realhosteffects remain parent-owned.",
+  "sha256": {
+    "scripts/migration-transaction.mjs": "65e127ce00629f174bb4ba7971694729c3ee6bc805e5af85b206026ea18d0025",
+    "tests/migration-transaction.test.mjs": "b542fdc8fd00089ec1704635b97acb8430a57f58c7b5237f67cacd942ed66fe1",
+    "tests/fixtures/adoption-capacity-repair/README.md": "d3504f73476684d94cdf601799115f44d2f3cabad99e2721badc7f7471a5f5c7",
+    "tests/fixtures/adoption-capacity-review/real-plan-observation.json": "28405963f9b512c9d82e0d4b42f13e827cad74e24a85838be487873dd49c60b3",
+    "tests/fixtures/adoption-capacity-review/transaction-tests.log": "da004323177808c9564445d015bee9010e5d8c3614b9281522cf6418eb862f9e"
+  }
+}
