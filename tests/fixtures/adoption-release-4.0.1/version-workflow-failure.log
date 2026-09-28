@@ -1,0 +1,42 @@
+Version	Create Version Pull Request	﻿2026-09-28T14:46:04.5869437Z ##[group]Run changesets/action@v1
+Version	Create Version Pull Request	2026-09-28T14:46:04.5870005Z with:
+Version	Create Version Pull Request	2026-09-28T14:46:04.5870311Z   version: npx changeset version
+Version	Create Version Pull Request	2026-09-28T14:46:04.5870721Z   publish: npx changeset tag
+Version	Create Version Pull Request	2026-09-28T14:46:04.5871145Z   commit: chore: version skills
+Version	Create Version Pull Request	2026-09-28T14:46:04.5871546Z   title: chore: version skills
+Version	Create Version Pull Request	2026-09-28T14:46:04.5876451Z   github-token: ***
+Version	Create Version Pull Request	2026-09-28T14:46:04.5876804Z   setupGitUser: true
+Version	Create Version Pull Request	2026-09-28T14:46:04.5877166Z   createGithubReleases: true
+Version	Create Version Pull Request	2026-09-28T14:46:04.5877555Z   commitMode: git-cli
+Version	Create Version Pull Request	2026-09-28T14:46:04.5877899Z env:
+Version	Create Version Pull Request	2026-09-28T14:46:04.5882726Z   GITHUB_TOKEN: ***
+Version	Create Version Pull Request	2026-09-28T14:46:04.5883048Z ##[endgroup]
+Version	Create Version Pull Request	2026-09-28T14:46:04.6917761Z using resolved cwd: /home/runner/work/skills/skills
+Version	Create Version Pull Request	2026-09-28T14:46:04.6935164Z setting git user
+Version	Create Version Pull Request	2026-09-28T14:46:04.6976882Z [command]/usr/bin/git config user.name "github-actions[bot]"
+Version	Create Version Pull Request	2026-09-28T14:46:04.7067383Z [command]/usr/bin/git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+Version	Create Version Pull Request	2026-09-28T14:46:04.7658292Z setting GitHub credentials
+Version	Create Version Pull Request	2026-09-28T14:46:04.7757954Z [command]/usr/bin/git checkout changeset-release/main
+Version	Create Version Pull Request	2026-09-28T14:46:04.7844470Z error: pathspec 'changeset-release/main' did not match any file(s) known to git
+Version	Create Version Pull Request	2026-09-28T14:46:04.7869382Z [command]/usr/bin/git checkout -b changeset-release/main
+Version	Create Version Pull Request	2026-09-28T14:46:04.7930798Z Switched to a new branch 'changeset-release/main'
+Version	Create Version Pull Request	2026-09-28T14:46:04.7944888Z [command]/usr/bin/git reset --hard ca1627bcdc5bbcd6e2aae8f6f5fd4736b0ef6115
+Version	Create Version Pull Request	2026-09-28T14:46:06.1276042Z HEAD is now at ca1627b Merge pull request #46 from quickstark/codex/qs-native-overlap-fix
+Version	Create Version Pull Request	2026-09-28T14:46:06.1338246Z [command]/opt/hostedtoolcache/node/22.23.2/x64/bin/npx changeset version
+Version	Create Version Pull Request	2026-09-28T14:46:09.4929377Z 🦋  All files have been updated. Review them and commit at your leisure
+Version	Create Version Pull Request	2026-09-28T14:46:09.8447975Z Existing pull requests: []
+Version	Create Version Pull Request	2026-09-28T14:46:09.8461304Z [command]/usr/bin/git status --porcelain
+Version	Create Version Pull Request	2026-09-28T14:46:09.9242383Z  D .changeset/qs-preserve-vendor-overlap.md
+Version	Create Version Pull Request	2026-09-28T14:46:09.9243055Z  M CHANGELOG.md
+Version	Create Version Pull Request	2026-09-28T14:46:09.9251655Z  M package.json
+Version	Create Version Pull Request	2026-09-28T14:46:09.9262586Z [command]/usr/bin/git add .
+Version	Create Version Pull Request	2026-09-28T14:46:10.0050147Z [command]/usr/bin/git commit -m chore: version skills
+Version	Create Version Pull Request	2026-09-28T14:46:10.0363344Z [changeset-release/main b50709c] chore: version skills
+Version	Create Version Pull Request	2026-09-28T14:46:10.0364213Z  3 files changed, 9 insertions(+), 8 deletions(-)
+Version	Create Version Pull Request	2026-09-28T14:46:10.0364930Z  delete mode 100644 .changeset/qs-preserve-vendor-overlap.md
+Version	Create Version Pull Request	2026-09-28T14:46:10.0387687Z [command]/usr/bin/git push origin HEAD:changeset-release/main --force
+Version	Create Version Pull Request	2026-09-28T14:46:12.0770856Z To https://github.com/quickstark/skills
+Version	Create Version Pull Request	2026-09-28T14:46:12.0771401Z    3633ed9..b50709c  HEAD -> changeset-release/main
+Version	Create Version Pull Request	2026-09-28T14:46:12.0818829Z creating pull request
+Version	Create Version Pull Request	2026-09-28T14:46:12.3115563Z ##[error]HttpError: GitHub Actions is not permitted to create or approve pull requests. - https://docs.github.com/rest/pulls/pulls#create-a-pull-request
+Version	Create Version Pull Request	2026-09-28T14:46:12.3124611Z ##[error]GitHub Actions is not permitted to create or approve pull requests. - https://docs.github.com/rest/pulls/pulls#create-a-pull-request
