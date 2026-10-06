@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
-import { chmod, mkdir, mkdtemp, rm } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, realpath, rm } from "node:fs/promises";
 import { constants as osConstants, tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { delimiter, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
@@ -14,7 +14,7 @@ const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const FORWARDED_SIGNALS = ["SIGHUP", "SIGINT", "SIGTERM"];
 
 async function createPrivateTempRoot() {
-  const directory = await mkdtemp(join(tmpdir(), "qs-test-"));
+  const directory = await mkdtemp(join(await realpath(tmpdir()), "qs-test-"));
   await chmod(directory, 0o700);
   return directory;
 }
@@ -108,6 +108,12 @@ export async function runTestSuite({
 
     const environment = sanitizeTestEnvironment({
       ...sourceEnvironment,
+      // Strict migration snapshots reject linked ancestors. macOS /tmp and
+      // /var are aliases; put every fixture under the canonical private root.
+      TMPDIR: tempRoot, TMP: tempRoot, TEMP: tempRoot,
+      // Fixture shebangs must use this Node, not a version-manager shim that
+      // writes launcher state or needs user trust in the isolated HOME.
+      PATH: [dirname(process.execPath), sourceEnvironment.PATH].filter(Boolean).join(delimiter),
     }, roots);
     exitCode = await spawnTests({
       cwd: checkoutRoot,

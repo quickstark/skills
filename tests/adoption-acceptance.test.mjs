@@ -27,6 +27,30 @@ async function fixture(t) {
     revision: 'a'.repeat(40), version: '4.0.0', payloadDigest: { kind: 'portable-directory-sha256', value: 'b'.repeat(64) }, contentSha256: 'c'.repeat(64) } };
 }
 
+test('repository acceptance evidence stays synchronized, including the reviewed README', async () => {
+  const root = new URL('../', import.meta.url);
+  const audit = JSON.parse(await readFile(new URL('docs/validation/upstream-adoption-acceptance.json', root)));
+  assert.ok(audit.criteria['AC-23'].evidence.includes('README.md'));
+  assert.ok(audit.criteria['AC-23'].evidence.includes('docs/validation/readme-transition-portability-review.md'));
+  for (const [id, evidence] of Object.entries(audit.evidence)) {
+    assert.equal(sha(await readFile(new URL(evidence.path, root))), evidence.sha256, `Acceptance evidence changed: ${id}`);
+  }
+});
+
+test('README evidence changes fail until reviewed and still bind strict local snapshots', async (t) => {
+  const { root, document, save, options } = await fixture(t);
+  document.evidence.trial.path = 'README.md';
+  await writeFile(path.join(root, 'README.md'), await readFile(path.join(root, 'trial.json')));
+  await save();
+  const before = await verifyAdoptionAcceptance(options);
+  await writeFile(path.join(root, 'README.md'), 'Reviewed installation documentation');
+  await assert.rejects(verifyAdoptionAcceptance(options), /Acceptance evidence changed/);
+  document.evidence.trial.sha256 = sha(await readFile(path.join(root, 'README.md')));
+  await save(); await verifyAdoptionAcceptance(options);
+  const snapshot = before.evidenceSnapshots.find(entry => entry.path === path.join(root, 'README.md'));
+  await assert.rejects(revalidateMigrationPath(snapshot), /changed after planning/);
+});
+
 test('recorded acceptance derives release receipt read-only, preserving original evidence snapshots', async (t) => {
   const { root, options } = await fixture(t), before = await captureMigrationPath(root);
   const { receipt, evidenceSnapshots } = await verifyAdoptionAcceptance(options);

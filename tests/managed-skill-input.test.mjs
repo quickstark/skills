@@ -14,6 +14,7 @@ import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
 import { TARGET_SKILL_COLLECTIONS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
 import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
 import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
+import { fixtureHomeState } from './helpers/fixture-home-state.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 const nativeTest = (name, callback) => test(name, { skip: !available('codex') || name.startsWith('actual Pi') && !available('pi') ? 'Required native executable unavailable; no host support claimed.' : false }, callback);
@@ -54,11 +55,27 @@ async function fixture(t, {bootstrap = true} = {}) {
   await git(repositoryRoot,['init','--quiet']); await git(repositoryRoot,['add','.']); await git(repositoryRoot,['commit','--quiet','-m','Synthetic fixture']);
   const revision=(await git(repositoryRoot,['rev-parse','HEAD'])).stdout.trim();
   const nativeOptions={homeDirectory,cwd:repositoryRoot};
+  // Initialize launcher state before the nonmutation baseline; version managers
+  // may create HOME-local state (including symlinks) even for read-only commands.
+  await runNativePackageCommand('codex',['--version'],nativeOptions);
   if(bootstrap) await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(repositoryRoot,'codex')],nativeOptions);
   await writeJSON(path.join(homeDirectory,'.pi/agent/settings.json'),{theme:'community-preserved',packages:['npm:fixture-community-theme'],quietStartup:true});
   const options={repositoryRoot,homeDirectory,agents:['codex'],registryState:'target',verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
   return {base,repositoryRoot,homeDirectory,revision,document,options,nativeOptions,audit};
 }
+
+test('home nonmutation oracle observes links without following them and leaves payload rejection strict',async t=>{
+  const base=await mkdtemp(path.join(tmpdir(),'qs-home-oracle-'));t.after(()=>rm(base,{recursive:true,force:true}));
+  const home=path.join(base,'home');await mkdir(home);await writeFile(path.join(base,'external'),'original');
+  const link=path.join(home,'link');await symlink('../external',link);
+  const before=await fixtureHomeState(home);
+  await writeFile(path.join(base,'external'),'outside home');assert.deepEqual(await fixtureHomeState(home),before);
+  await assert.rejects(captureMigrationPath(home),/descendant symbolic link/);
+  await rm(link);await symlink('../missing',link);assert.notDeepEqual(await fixtureHomeState(home),before);
+  await rm(link);await symlink('../external',link);assert.deepEqual(await fixtureHomeState(home),before);
+  await writeFile(path.join(home,'.hidden'),'new');assert.notDeepEqual(await fixtureHomeState(home),before);
+  const withFile=await fixtureHomeState(home);await writeFile(path.join(home,'.hidden'),'changed');assert.notDeepEqual(await fixtureHomeState(home),withFile);
+});
 
 test('catalog obligations retain prompt, parity, all video modules and measured efficiency decisions',async()=>{
   const document=await readJSON(path.join(actualRoot,'config/skill-migrations.json'));
@@ -69,9 +86,9 @@ test('catalog obligations retain prompt, parity, all video modules and measured 
 });
 
 nativeTest('actual isolated Codex bootstrap remains explicit, then selected fresh update exposes only core',async t=>{
-  const args=await fixture(t,{bootstrap:false}); const before=await captureMigrationPath(args.homeDirectory);
+  const args=await fixture(t,{bootstrap:false}); const before=await fixtureHomeState(args.homeDirectory);
   await assert.rejects(executeManagedSkills({...args.options,action:'plan'}),/Codex prerequisite.*marketplace add/);
-  assert.equal((await captureMigrationPath(args.homeDirectory)).contentSha256,before.contentSha256);
+  assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
   await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(args.repositoryRoot,'codex')],args.nativeOptions);
   const plan=await executeManagedSkills({...args.options,action:'plan'}); assert.equal(plan.status,'ready',JSON.stringify(plan.conflicts)); assert.deepEqual(plan.targets.codex.desired.packages,['qs-skills']);
   const result=await executeManagedSkills({...args.options,action:'update'}); assert.equal(result.status,'complete',result.error);
@@ -81,7 +98,7 @@ nativeTest('actual isolated Codex bootstrap remains explicit, then selected fres
 
 nativeTest('read-only production input needs no handcrafted ownership receipt and rejects modified installed cache',async t=>{
   const args=await fixture(t); await runNativePackageCommand('codex',['plugin','add','qs-skills@quickstark','--json'],args.nativeOptions);
-  const before=await captureMigrationPath(args.homeDirectory); const input=await buildManagedSkillInput(args.options); assert.equal(input.observations.length,1); assert.equal(input.observations[0].revision,args.revision); assert.equal((await captureMigrationPath(args.homeDirectory)).contentSha256,before.contentSha256);
+  const before=await fixtureHomeState(args.homeDirectory); const input=await buildManagedSkillInput(args.options); assert.equal(input.observations.length,1); assert.equal(input.observations[0].revision,args.revision); assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
   const preview=await previewManagedSkillMigration(input); assert.equal(preview.status,'ready',JSON.stringify(preview.conflicts));
   const file=path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-help/SKILL.md'); await appendFile(file,'local edit');
   await assert.rejects(buildManagedSkillInput(args.options),/trusted prior release tree/); assert.ok((await readFile(file,'utf8')).endsWith('local edit'));
@@ -98,7 +115,7 @@ nativeTest('actual Pi update preserves unknown community package entries and sav
 
 nativeTest('unresolved or stale criterion audit blocks native update before effects',async t=>{
   const args=await fixture(t); const auditPath=path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'); args.audit.criteria['AC-09'].status='failed'; await writeJSON(auditPath,args.audit);
-  const before=await captureMigrationPath(args.homeDirectory); await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Unresolved acceptance criterion/); assert.equal((await captureMigrationPath(args.homeDirectory)).contentSha256,before.contentSha256);
+  const before=await fixtureHomeState(args.homeDirectory); await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Unresolved acceptance criterion/); assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
   args.audit.criteria['AC-09'].status='passed'; await writeJSON(auditPath,args.audit); await appendFile(path.join(args.repositoryRoot,'skills/engineering/qs-help/fixture.txt'),'new unreviewed source');
   await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Acceptance source changed/);
 });
@@ -173,9 +190,9 @@ nativeTest('independent standalone public identity blocks selected native exposu
 nativeTest('a locally edited passing audit is not published acceptance authority',async t=>{
   const args=await fixture(t);args.audit.criteria['AC-09'].note='Locally changed passing claim.';
   await writeJSON(path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'),args.audit);
-  const before=await captureMigrationPath(args.homeDirectory);
+  const before=await fixtureHomeState(args.homeDirectory);
   await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/uncommitted audit decisions/);
-  assert.equal((await captureMigrationPath(args.homeDirectory)).contentSha256,before.contentSha256);
+  assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
 });
 
 nativeTest('invalid native inventory output is redacted and never becomes ownership evidence',async t=>{

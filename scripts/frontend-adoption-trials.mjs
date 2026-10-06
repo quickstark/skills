@@ -211,7 +211,18 @@ export async function cleanupObservedProcesses({ owned, reader, signal = (pid, k
   return { cleanup, errors, residual, complete: errors.length === 0 };
 }
 
+export function captureProcessSupport({ platform = process.platform, read = readFileSync } = {}) {
+  if (platform !== 'linux') throw new Error('Capture process observation requires Linux /proc; no child was started.');
+  const bootId = read('/proc/sys/kernel/random/boot_id', 'utf8').trim();
+  if (!/^[a-f0-9-]{36}$/.test(bootId)) throw new Error('Invalid capture boot identity; no child was started.');
+  // Check the observation interface before spawning, not after acquiring a child.
+  read('/proc/self/stat', 'utf8');
+  read(`/proc/self/task/${process.pid}/children`, 'utf8');
+  return bootId;
+}
+
 export async function execute({ prompt, cwd, directory, scenario, executable, referenceImage }) {
+  const bootId = captureProcessSupport();
   const args = ['exec', '--ephemeral', '--skip-git-repo-check', '--cd', cwd, '--json'];
   if (referenceImage) args.push('--image', referenceImage);
   args.push('-');
@@ -224,15 +235,17 @@ export async function execute({ prompt, cwd, directory, scenario, executable, re
   child.stdin.on('error', () => {});
   const identity = processIdentity(child.pid);
   const ownedProcesses = new Map();
-  const reader = scopedProcessReader({ bootId: readFileSync('/proc/sys/kernel/random/boot_id', 'utf8').trim() });
+  const reader = scopedProcessReader({ bootId });
   const stop = () => {
     if (!identity || processIdentity(child.pid) !== identity) return;
     try { process.kill(-child.pid, 'SIGTERM'); } catch {}
     killTimer ??= setTimeout(() => { if (processIdentity(child.pid) === identity) { try { process.kill(-child.pid, 'SIGKILL'); } catch {} } }, 5000);
   };
+  let sampler, timer, cleanupFinished = false;
   activeStops.add(stop);
+  try {
   writeFileSync(join(directory, 'process.json'), JSON.stringify({ pid: child.pid ?? null, identity, args, cwd, startedAt: new Date().toISOString() }, null, 2) + '\n', { flag: 'wx' });
-  const sampler = createBoundedSampler({
+  sampler = createBoundedSampler({
     scan: async () => {
       if (!child.pid || !identity) throw new Error('Initial child process identity unavailable.');
       await discoverOwnedProcesses({ leader: { pid: child.pid, identity }, owned: ownedProcesses, reader });
@@ -253,11 +266,12 @@ export async function execute({ prompt, cwd, directory, scenario, executable, re
   child.stdout.on('data', data => { appendFileSync(join(directory, 'events.jsonl'), data); pending += data.toString(); let n; while ((n = pending.indexOf('\n')) >= 0) { inspect(pending.slice(0, n)); pending = pending.slice(n + 1); } });
   child.stderr.on('data', data => appendFileSync(join(directory, 'stderr.txt'), data));
   child.stdin.end(prompt);
-  const timer = setTimeout(() => { timedOut = true; stop(); }, scenario.budget.timeoutMs);
+  timer = setTimeout(() => { timedOut = true; stop(); }, scenario.budget.timeoutMs);
   const result = await childCompletion;
   clearTimeout(timer); clearTimeout(killTimer);
   const sampling = await sampler.finish();
   const observedCleanup = await cleanupObservedProcesses({ owned: ownedProcesses, reader });
+  cleanupFinished = true;
   const { cleanup, residual } = observedCleanup;
   const processObservation = { ...sampling, cleanupErrors: observedCleanup.errors,
     complete: sampling.errors.length === 0 && observedCleanup.complete,
@@ -275,6 +289,23 @@ export async function execute({ prompt, cwd, directory, scenario, executable, re
     imageCallClassification: toolItems.length ? 'Named matches are a lower bound; inspect raw events/commands for indirect or unidentified image calls.' : 'No tool items observed; contingent on complete event stream.',
     runnerSHA256: sha(await readFile(runnerPath)), promptSHA256: sha(prompt), promptUtf8Bytes: Buffer.byteLength(prompt), args, runtimeFiles: { events: sha(await readFile(join(directory, 'events.jsonl'))), stderr: sha(await readFile(join(directory, 'stderr.txt'))) } };
   await json(join(directory, 'telemetry.json'), telemetry); return telemetry;
+  } finally {
+    clearTimeout(timer); clearTimeout(killTimer);
+    await sampler?.finish();
+    activeStops.delete(stop);
+    // An initialization/write failure must not strand the child on open stdin.
+    // Group signals require the original identity; direct ChildProcess.kill is
+    // restricted to a child whose exit has not yet been observed by Node.
+    if (child.exitCode === null && child.signalCode === null) {
+      if (identity && processIdentity(child.pid) === identity) {
+        try { process.kill(-child.pid, 'SIGKILL'); } catch (error) { if (!processGone(error)) throw error; }
+      }
+      child.kill('SIGKILL');
+      child.stdin.destroy();
+    }
+    await childCompletion;
+    if (!cleanupFinished) await cleanupObservedProcesses({ owned: ownedProcesses, reader });
+  }
 }
 
 export async function reviewerBundle({ root, directory, scenario, common, before, after, trialId, telemetry, browserStatus }) {

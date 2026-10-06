@@ -453,6 +453,8 @@
       "note": "Production caller and isolated transaction controls establish core-only fresh defaults, saved/partial selection, no implicit new-package selection, and equivalent managed legacy capabilities. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/managed-skill-input.test.mjs",
+        "tests/helpers/fixture-home-state.mjs",
+        "docs/validation/validation-host-portability-review.md",
         "tests/fixtures/target-activation-probe/README.md",
         "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
         "tests/fixtures/adoption-final-target/final-check.log",
@@ -519,6 +521,8 @@
       "note": "Dirty/foreign/unknown-owner/hash/path/symlink controls reject retirement; unrelated bytes and shared-host aliases have explicit preservation tests. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/managed-skill-input.test.mjs",
+        "tests/helpers/fixture-home-state.mjs",
+        "docs/validation/validation-host-portability-review.md",
         "tests/migration-filesystem.test.mjs",
         "tests/migration-owned-paths.test.mjs",
         "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
@@ -553,6 +557,7 @@
       "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/migration-transaction.test.mjs",
+        "docs/validation/validation-host-portability-review.md",
         "tests/migration-native-packages.test.mjs",
         "tests/managed-skill-migration.test.mjs",
         "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
@@ -765,6 +770,7 @@
         "tests/fixtures/adoption-provenance-final/decisions.json",
         "config/skill-provenance.json",
         "README.md",
+        "docs/validation/readme-transition-portability-review.md",
         "CLAUDE.md",
         "CONTEXT.md",
         "docs/architecture.md",
@@ -3311,7 +3317,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "e3f4877b71fa009ae07df134663bdc5bb0af2aeb304a715bc5f7e762312366f7"
+      "sha256": "472440aa249980dcbab7eb40e8e61f6ab45c4dddaa61337876c187203911e021"
     },
     "tests/fixtures/target-activation-probe/README.md": {
       "path": "tests/fixtures/target-activation-probe/README.md",
@@ -3327,7 +3333,7 @@
     },
     "tests/migration-transaction.test.mjs": {
       "path": "tests/migration-transaction.test.mjs",
-      "sha256": "b542fdc8fd00089ec1704635b97acb8430a57f58c7b5237f67cacd942ed66fe1"
+      "sha256": "71bf6a7cfad679a17c2daac990349bc389f3988fae9267bea5b6c5f97a96c4d3"
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
@@ -3369,9 +3375,21 @@
       "path": "CLAUDE.md",
       "sha256": "07c442155c5f4c960e81b3e008a8494e0969b1ab277e308cb6c947da64d63271"
     },
+    "tests/helpers/fixture-home-state.mjs": {
+      "path": "tests/helpers/fixture-home-state.mjs",
+      "sha256": "c8a8ab661b14fca646b8fb39dd2a6e83111c929882ad9cf4d40e8efb6a0264ee"
+    },
+    "docs/validation/validation-host-portability-review.md": {
+      "path": "docs/validation/validation-host-portability-review.md",
+      "sha256": "5df4668567f58c88ea13aaebcd96b70614aeed2b6909023c5406c6b1ea0638f1"
+    },
     "README.md": {
       "path": "README.md",
-      "sha256": "fd2a8673642f0d65259b18a92ff28c55d113439307f4383f711c1c35f40fe3b7"
+      "sha256": "07e7c8c7ae4471446baedcb0a2172d433cb9cbb864e372dcbdd64b42ec5ea20b"
+    },
+    "docs/validation/readme-transition-portability-review.md": {
+      "path": "docs/validation/readme-transition-portability-review.md",
+      "sha256": "b3e474c9c3061905401b08f35f17e8f8e7354840bd9bd231adb6846c7f7b7940"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -3407,7 +3425,7 @@
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
-      "sha256": "64539f6f3bbd19936e531487f13e01dfcb40a627f0fb6baf2807361e921b6919"
+      "sha256": "7680be871677cdb2a89c394ab3c8cb6f1b3ebb5f1ead40afed84b572903132a7"
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",

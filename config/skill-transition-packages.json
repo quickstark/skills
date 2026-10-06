@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "packages": [
     {
       "id": "ps-skills",
@@ -25,6 +25,10 @@
         "codex": {
           "path": "codex/plugins/ps-skills",
           "contentSha256": "c40814a231bd18d4b8c5a1f876a6c0ff66fbfb9520da24d3bf25a4142e208e19",
+          "checkoutDigest": {
+            "kind": "git-content-and-executable-bits-sha256",
+            "value": "8b732cc0d1acbf5a784cff1652efaf36d04bda38a2db23e408536ebc129b9c9f"
+          },
           "payloadDigest": {
             "kind": "portable-directory-sha256",
             "value": "7f97ba6168870b52019399bc8fa1adb8616ca9a50ba0c364110a1ad901d0319b"
@@ -33,6 +37,10 @@
         "claude-code": {
           "path": "packages/ps-skills",
           "contentSha256": "7340c4eaab7a9394122fc1a417073da83820cad27c8f366d02d60ed076b103bd",
+          "checkoutDigest": {
+            "kind": "git-content-and-executable-bits-sha256",
+            "value": "a00601b097e9f1d9040cb4b3914ef041505dc441cd86e59ad1e8ad26f748fe7b"
+          },
           "payloadDigest": {
             "kind": "portable-directory-sha256",
             "value": "16b48b264b16c4b48febb1dd3c2c5d9b268808ed46e4eef9c59513240f4e8c49"
@@ -41,6 +49,10 @@
         "pi": {
           "path": "pi/packages/ps-skills",
           "contentSha256": "5dd892e526a4b28ca5c8e049a2bfc4fb63fa8d261ee2a0ac274748b2b5b98129",
+          "checkoutDigest": {
+            "kind": "git-content-and-executable-bits-sha256",
+            "value": "948e3b8750f1eb6a1b02bfa6a984d29db34a2f324365cfd9dc1e760f75cefde9"
+          },
           "payloadDigest": {
             "kind": "portable-directory-sha256",
             "value": "f9ed5504dc71b8db1131725554c4782baa439cc68f4c988acd760d100ae3c025"
