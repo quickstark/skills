@@ -200,11 +200,12 @@ test('exclusive lock refuses a live concurrent owner and cannot be stolen', asyn
   const running = runMigrationTransaction(args); await started;
   await assert.rejects(runMigrationTransaction({ ...args, ownerId: 'competitor' }), /EEXIST/);
   const owner = await readMigrationTransactionLock(args.journalPath);
-  await assert.rejects(unlockAbandonedMigrationTransaction({ journalPath: args.journalPath, expectedOwnerToken: owner.token }), /live or cannot be proven dead/);
+  await assert.rejects(unlockAbandonedMigrationTransaction({ journalPath: args.journalPath, expectedOwnerToken: owner.token }), process.platform === 'linux' ? /live or cannot be proven dead/ : /namespace\/boot identity/);
+  assert.deepEqual(await readMigrationTransactionLock(args.journalPath), owner);
   release(); assert.equal((await running).status, 'complete');
 });
 
-test('an actually terminated owner requires explicit verified-dead unlock before resumption', async (t) => {
+test('terminated owners unlock only with verified namespace identity; unsupported hosts retain the lock', async (t) => {
   const args = await fixture(t);
   const modulePath = fileURLToPath(new URL('../scripts/migration-transaction.mjs', import.meta.url));
   const script = `import {runMigrationTransaction} from ${JSON.stringify('file://' + modulePath)};const input=JSON.parse(process.argv[1]);const adapter={inspect:async()=>{console.log('locked');await new Promise(()=>setInterval(()=>{},1000));},prepare(){},inspectBackup(){},apply(){},recover(){}};await runMigrationTransaction({...input,adapters:{fixture:adapter}});`;
@@ -213,16 +214,25 @@ test('an actually terminated owner requires explicit verified-dead unlock before
   await once(child.stdout, 'data'); const exited = once(child, 'exit'); child.kill('SIGKILL'); await exited;
   const owner = await readMigrationTransactionLock(args.journalPath);
   await assert.rejects(runMigrationTransaction(args), /EEXIST/);
-  assert.equal((await unlockAbandonedMigrationTransaction({ journalPath: args.journalPath, expectedOwnerToken: owner.token })).unlocked, true);
-  assert.equal((await runMigrationTransaction(args)).status, 'complete');
+  if (process.platform === 'linux') {
+    assert.equal((await unlockAbandonedMigrationTransaction({ journalPath: args.journalPath, expectedOwnerToken: owner.token })).unlocked, true);
+    assert.equal((await runMigrationTransaction(args)).status, 'complete');
+  } else {
+    assert.equal(owner.processIdentity, null);
+    await assert.rejects(unlockAbandonedMigrationTransaction({ journalPath: args.journalPath, expectedOwnerToken: owner.token }), /namespace\/boot identity/);
+    assert.deepEqual(await readMigrationTransactionLock(args.journalPath), owner);
+    await assert.rejects(runMigrationTransaction(args), /EEXIST/);
+  }
 });
 
-test('same-host PID absence in a different namespace or boot never authorizes lock retirement', async (t) => {
+test('same-host PID absence with unknown or different namespace/boot never authorizes lock retirement', async (t) => {
   const args = await fixture(t); const directory = args.journalPath + '.lock';
   await mkdir(directory, { recursive: true });
   const ownerPath = path.join(directory, 'owner.json');
-  const pidNamespace = await readlink('/proc/self/ns/pid');
-  const bootId = (await readFile('/proc/sys/kernel/random/boot_id', 'utf8')).trim();
+  // Unsupported hosts must reject even plausible synthetic identity records;
+  // these values are negative-test input, never observed identity evidence.
+  const pidNamespace = process.platform === 'linux' ? await readlink('/proc/self/ns/pid') : 'pid:[123]';
+  const bootId = process.platform === 'linux' ? (await readFile('/proc/sys/kernel/random/boot_id', 'utf8')).trim() : '1'.repeat(36);
   const owner = { ownerId: 'external-context', token: 'fixture-external-token', hostname: hostname(), pid: 2147483647, processIdentity: { bootId, pidNamespace, startTime: '1' } };
   assert.throws(() => process.kill(owner.pid, 0), { code: 'ESRCH' }, 'this context cannot see the recorded PID');
   for (const identity of [null, { ...owner.processIdentity, pidNamespace: 'pid:[0]' }, { ...owner.processIdentity, bootId: '0'.repeat(36) }]) {

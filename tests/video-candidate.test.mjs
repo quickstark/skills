@@ -120,13 +120,23 @@ test('caption transcription rejects missing runtime before source/project mutati
  assert.notEqual(run.status,0);assert.match(run.stderr,/QS_VIDEO_CLI/);assert.deepEqual(readdirSync(project),['input.mp4']);
 }));
 
+test('portable runtime instrumentation accepts only a temporary descendant and keeps transport disabled',()=>fixture(dir=>{
+ const user=join(dir,'user');mkdirSync(user);
+ const script=resolve('tests/helpers/isolated-video-runtime.mjs'), log=join(dir,'network.jsonl');
+ const run=(home,code)=>spawnSync(process.execPath,['--import',script,'--input-type=module','-e',code],{env:{...process.env,HF_TEST_USER_DIRECTORY:home,HF_TEST_NETWORK_LOG:log},encoding:'utf8'});
+ const success=run(user,"import os from 'node:os';import {realpathSync} from 'node:fs';if(os.homedir()!==realpathSync(process.env.HF_TEST_USER_DIRECTORY))throw Error('wrong home');try{await fetch('https://invalid.example');throw Error('network permitted');}catch(e){if(e.message!=='fixture transport disabled')throw e;}");
+ assert.equal(success.status,0,success.stderr);assert.match(readFileSync(log,'utf8'),/invalid.example/);
+ for(const home of [tmpdir(),root]){const failure=run(home,"throw Error('must not run')");assert.notEqual(failure.status,0);assert.match(failure.stderr,/isolated temporary directory/);}
+ const link=join(dir,'escape');symlinkSync(root,link);assert.match(run(link,'').stderr,/isolated temporary directory/);
+}));
+
 test('caption adapter runs exact injected CLI with explicit engine and normalizes real output shape',()=>fixture(dir=>{
  const project=join(dir,'project'),user=join(dir,'user');mkdirSync(project);mkdirSync(user);
  writeFileSync(join(project,'source.mp4'),'fixture');writeFileSync(join(project,'audio.mp3'),'fixture');writeFileSync(join(project,'package.json'),JSON.stringify({devDependencies:{hyperframes:'0.8.77'}}));
  const cache=join(user,'.cache/hyperframes/whisper/models');mkdirSync(cache,{recursive:true});writeFileSync(join(cache,'ggml-small.bin'),'fixture model; not real speech evidence');
  const argvLog=join(dir,'argv.jsonl'),cli=join(dir,'injected-cli.mjs');
  writeFileSync(cli,`#!/usr/bin/env node\nimport fs from 'node:fs';import path from 'node:path';\nconst args=process.argv.slice(2);fs.appendFileSync(${JSON.stringify(argvLog)},JSON.stringify(args)+'\\n');\nif(args[0]==='--version'){console.log('0.8.77');process.exit(0);}\nif(args[0]!=='transcribe')process.exit(4);const dest=path.join(args[args.indexOf('-d')+1],'transcript.json');\nfs.writeFileSync(dest,JSON.stringify([{word:'Hola',start:0.1,end:0.5},{word:'mundo',start:0.6,end:1.0}]));console.log(JSON.stringify({transcriptPath:dest}));\n`,{mode:0o755});
- const env={...process.env,QS_VIDEO_CLI:cli,QS_VIDEO_VERIFIED_LOCAL_PROVIDERS:'whisper',HYPERFRAMES_WHISPER_PATH:process.execPath,TRANSCRIBE_ENGINE:'whisper',HF_TEST_USER_DIRECTORY:user,HF_TEST_NETWORK_LOG:join(dir,'network.jsonl'),NODE_OPTIONS:'--import='+resolve('tests/fixtures/hyperframes-adoption/isolated-runtime.mjs')};
+ const env={...process.env,QS_VIDEO_CLI:cli,QS_VIDEO_VERIFIED_LOCAL_PROVIDERS:'whisper',HYPERFRAMES_WHISPER_PATH:process.execPath,TRANSCRIBE_ENGINE:'whisper',HF_TEST_USER_DIRECTORY:user,HF_TEST_NETWORK_LOG:join(dir,'network.jsonl'),NODE_OPTIONS:'--import='+resolve('tests/helpers/isolated-video-runtime.mjs')};
  const script=join(root,'modules/embedded-captions/scripts/transcribe.cjs');
  const run=spawnSync(process.execPath,[script,project,'small','es'],{env,encoding:'utf8'});assert.equal(run.status,0,run.stderr);
  const calls=readFileSync(argvLog,'utf8').trim().split('\n').map(JSON.parse);
@@ -158,7 +168,7 @@ test('matte missing or corrupt cached model cannot call download-capable CLI com
  const pkg=join(dir,'node_modules/sharp');mkdirSync(pkg,{recursive:true});writeFileSync(join(pkg,'index.js'),'module.exports = {};');
  const log=join(dir,'cli-calls.jsonl'),cli=join(dir,'cli.mjs');
  writeFileSync(cli,`#!/usr/bin/env node\nimport fs from 'node:fs';const args=process.argv.slice(2);fs.appendFileSync(${JSON.stringify(log)},JSON.stringify(args)+'\\n');if(args[0]==='--version')console.log('0.8.77');else throw new Error('download-capable command must never run');`,{mode:0o755});
- const env={...process.env,QS_VIDEO_CLI:cli,HF_TEST_USER_DIRECTORY:user,HF_TEST_NETWORK_LOG:join(dir,'network.jsonl'),NODE_OPTIONS:'--import='+resolve('tests/fixtures/hyperframes-adoption/isolated-runtime.mjs')};
+ const env={...process.env,QS_VIDEO_CLI:cli,HF_TEST_USER_DIRECTORY:user,HF_TEST_NETWORK_LOG:join(dir,'network.jsonl'),NODE_OPTIONS:'--import='+resolve('tests/helpers/isolated-video-runtime.mjs')};
  const script=join(root,'modules/embedded-captions/scripts/matte.cjs');
  const missing=spawnSync(process.execPath,[script,project],{env,encoding:'utf8'});
  assert.notEqual(missing.status,0);assert.match(missing.stderr,/Cached u2net_human_seg model/);

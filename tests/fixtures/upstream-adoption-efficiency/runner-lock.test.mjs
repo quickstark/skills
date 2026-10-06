@@ -28,14 +28,15 @@ test('incomplete lock also fails closed without creating an owner', async () => 
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('new isolated lock records this namespace and cannot be acquired twice', async () => {
+test('new isolated lock records namespace availability and cannot be acquired twice', async () => {
   const root = await mkdtemp(join(tmpdir(), 'qs-lock-new-'));
   try {
     const lock = join(root, '.runner-lock');
     await acquireComparisonLock(lock, 'test-runner');
     const owner = JSON.parse(await readFile(join(lock, 'owner.json'), 'utf8'));
     assert.equal(owner.pid, process.pid);
-    assert.match(owner.pidNamespace, /^pid:\[\d+\]$/);
+    if (process.platform === 'linux') assert.match(owner.pidNamespace, /^pid:\[\d+\]$/);
+    else assert.equal(owner.pidNamespace, null, 'unsupported namespace observation is not invented');
     assert.equal(owner.runnerSHA256, 'test-runner');
     await assert.rejects(acquireComparisonLock(lock, 'duplicate'), /already exists/);
   } finally { await rm(root, { recursive: true, force: true }); }

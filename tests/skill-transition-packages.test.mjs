@@ -1,12 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
-import { cp, mkdtemp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
+import { cp, mkdtemp, mkdir, readFile, writeFile, rm, chmod } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { copyTransitionPayloads, readTransitionPackages, verifyTransitionPayloads } from '../scripts/skill-transition-packages.mjs';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
+import { captureMigrationPath, revalidateMigrationPath } from '../scripts/migration-filesystem.mjs';
 import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
 import { TARGET_SKILL_COLLECTIONS } from '../scripts/skill-collection-registry.mjs';
 
@@ -35,6 +36,92 @@ test('changed, missing and unrecognized retained payloads fail without overwriti
   await rm(changed); await assert.rejects(verifyTransitionPayloads(target), /legacy payload changed/);
   const doc = JSON.parse(await readFile(file)); doc.packages[0].id = 'unrelated'; await writeFile(file, JSON.stringify(doc));
   await assert.rejects(readTransitionPackages(target), /Unknown legacy/);
+});
+
+async function copiedFixture(t) {
+  const target = await temporary(t); await mkdir(path.join(target, 'config'));
+  const file = path.join(target, 'config/skill-transition-packages.json');
+  await cp(path.join(root, 'config/skill-transition-packages.json'), file);
+  await copyTransitionPayloads(root, target);
+  return { target, file, document: JSON.parse(await readFile(file)) };
+}
+
+async function setModes(directory, directoryMode, fileMode) {
+  const snapshot = await captureMigrationPath(directory);
+  for (const entry of snapshot.entries) await chmod(path.join(directory, entry.path), entry.kind === 'directory' ? directoryMode : fileMode);
+}
+
+const sha = (value) => createHash('sha256').update(value).digest('hex');
+
+test('checkout digests retain the exact historical full-mode and portable identities for every host', async () => {
+  const [pkg] = await readTransitionPackages(root);
+  for (const payload of Object.values(pkg.payloads)) {
+    const snapshot = await captureMigrationPath(path.join(root, payload.path));
+    // Independently reconstruct the recorded transition snapshot, not a new
+    // baseline silently replacing it. The original files were all non-executable.
+    const historical = snapshot.entries.map(entry => ({ ...entry, mode: entry.kind === 'directory' ? 0o775 : 0o664 }));
+    assert.equal(sha(JSON.stringify(historical)), payload.contentSha256);
+    const portable = snapshot.entries.map(entry => ({ ...entry, mode: entry.kind === 'directory' ? 0o755 : 0o644 }));
+    assert.equal(sha(JSON.stringify(portable)), payload.checkoutDigest.value);
+  }
+  await verifyTransitionPayloads(root);
+});
+
+test('755/644 and 775/664 retained checkouts verify but permission changes invalidate local snapshots', async (t) => {
+  const { target, document } = await copiedFixture(t);
+  for (const payload of Object.values(document.packages[0].payloads)) await setModes(path.join(target, payload.path), 0o755, 0o644);
+  await verifyTransitionPayloads(target);
+  const snapshots = await Promise.all(Object.values(document.packages[0].payloads).map(payload => captureMigrationPath(path.join(target, payload.path))));
+  for (const payload of Object.values(document.packages[0].payloads)) await setModes(path.join(target, payload.path), 0o775, 0o664);
+  await verifyTransitionPayloads(target);
+  for (const snapshot of snapshots) await assert.rejects(revalidateMigrationPath(snapshot), /changed after planning/);
+  const destination = await temporary(t);
+  await copyTransitionPayloads(target, destination);
+  await verifyTransitionPayloads(target, destination);
+});
+
+test('retained identity rejects executable changes and added hidden files or empty directories for every host', async (t) => {
+  const { target, document } = await copiedFixture(t);
+  for (const payload of Object.values(document.packages[0].payloads)) {
+    const directory = path.join(target, payload.path);
+    const snapshot = await captureMigrationPath(directory);
+    const entry = snapshot.entries.find(entry => entry.kind === 'file');
+    const file = path.join(directory, entry.path);
+    await chmod(file, entry.mode | 0o100);
+    await assert.rejects(verifyTransitionPayloads(target), /legacy payload changed/);
+    await chmod(file, entry.mode);
+    for (const kind of ['file', 'directory']) {
+      const extra = path.join(directory, '.extra');
+      if (kind === 'file') await writeFile(extra, 'unrecorded'); else await mkdir(extra);
+      await assert.rejects(verifyTransitionPayloads(target), /legacy payload changed/);
+      await rm(extra, { recursive: true });
+    }
+  }
+  await verifyTransitionPayloads(target);
+});
+
+test('transition schema versions fail closed and schema 1 retains full-mode semantics', async (t) => {
+  const { target, file, document } = await copiedFixture(t);
+  for (const schemaVersion of [0, 3]) {
+    await writeFile(file, JSON.stringify({ ...document, schemaVersion }));
+    await assert.rejects(readTransitionPackages(target), /inventory required/);
+  }
+  for (const digest of [undefined, { kind: 'ignore-modes', value: 'a'.repeat(64) }, { kind: 'git-content-and-executable-bits-sha256', value: 'bad' }]) {
+    const changed = structuredClone(document); changed.packages[0].payloads.codex.checkoutDigest = digest;
+    await writeFile(file, JSON.stringify(changed));
+    await assert.rejects(readTransitionPackages(target), /checkout digest required/);
+  }
+  document.schemaVersion = 1;
+  await writeFile(file, JSON.stringify(document));
+  await assert.rejects(readTransitionPackages(target), /requires transition schema 2/);
+  for (const payload of Object.values(document.packages[0].payloads)) {
+    delete payload.checkoutDigest;
+    await setModes(path.join(target, payload.path), 0o775, 0o664);
+  }
+  await writeFile(file, JSON.stringify(document));
+  await verifyTransitionPayloads(target);
+  await setModes(path.join(target, document.packages[0].payloads.codex.path), 0o755, 0o644);
+  await assert.rejects(verifyTransitionPayloads(target), /legacy payload changed/);
 });
 
 const codexAvailable = (process.env.PATH ?? '').split(path.delimiter).some((dir) => existsSync(path.join(dir, 'codex')));

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { constants as osConstants } from "node:os";
+import { delimiter, dirname } from "node:path";
 import test from "node:test";
 
 import {
@@ -157,6 +158,8 @@ test("the runner creates private homes, executes the suite, and cleans up", asyn
   assert.equal(made.length, 3);
   assert.deepEqual(removed, ["/tmp/private-suite"]);
   assert.equal(observed.environment.HOME, "/tmp/private-suite/home");
+  for (const name of ['TMPDIR', 'TMP', 'TEMP']) assert.equal(observed.environment[name], '/tmp/private-suite');
+  assert.equal(observed.environment.PATH, dirname(process.execPath) + delimiter + '/usr/bin');
   assert.equal(observed.environment.CODEX_THREAD_ID, undefined);
   assert.deepEqual(observed.testFiles, TEST_FILES);
 });
