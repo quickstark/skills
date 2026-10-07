@@ -892,7 +892,8 @@
         "skills/engineering/qs-review-code",
         "skills/engineering/qs-setup",
         "skills/internal",
-        "skills/productivity/qs-flow-handoff"
+        "skills/productivity/qs-flow-handoff",
+        "scripts/managed-skill-paths.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -1186,7 +1187,8 @@
         "skills/engineering/qs-test-author",
         "skills/engineering/qs-test-verify",
         "skills/productivity/qs-learn-teach",
-        "skills/productivity/qs-skill-write"
+        "skills/productivity/qs-skill-write",
+        "scripts/managed-skill-paths.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -1503,7 +1505,8 @@
         "skills/engineering/qs-trace-forensics",
         "skills/engineering/qs-visual-parity",
         "skills/engineering/qs-why",
-        "skills/engineering/qs-worktree-cleanup"
+        "skills/engineering/qs-worktree-cleanup",
+        "scripts/managed-skill-paths.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -1805,7 +1808,8 @@
         "skills/engineering/qs-design-image-mobile",
         "skills/engineering/qs-design-image-to-code",
         "skills/engineering/qs-design-image-web",
-        "skills/frontend"
+        "skills/frontend",
+        "scripts/managed-skill-paths.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -2114,7 +2118,8 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/video-skill-catalog.mjs",
-        "skills/video/qs-video"
+        "skills/video/qs-video",
+        "scripts/managed-skill-paths.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -2458,7 +2463,8 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/video-skill-catalog.mjs",
-        "skills/engineering/qs-unlazy"
+        "skills/engineering/qs-unlazy",
+        "scripts/managed-skill-paths.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -2811,15 +2817,15 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "bc01abfe76a02d1c34fb22f2540c03b9a1304c3f4855a2292a7b655da7a64dcc"
+      "contentSha256": "e691c77c1c9546c97cefd17452d74a73fb1acf5cdeb53f6c004622eca0306c08"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
-      "contentSha256": "4a1cc72402d72e9ad0a0908f735593b5c46ccd026c6e1c45958aea3441cddc20"
+      "contentSha256": "42100a274ef195a0d0e14a4d832bbdebf4dc27f2329f1ee530ba53f9af58fd4d"
     },
     "scripts/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "8bf7d77e660b3cbfd660defa58b7d79248b0043cef38ea68d569a96c49a6f780"
+      "contentSha256": "7c1c9a807c41c605a13c67792899e1f2ae7f164a2a9262134554ba42bdb59ed3"
     },
     "scripts/migration-filesystem.mjs": {
       "kind": "file",
@@ -2827,7 +2833,7 @@
     },
     "scripts/migration-native-packages.mjs": {
       "kind": "file",
-      "contentSha256": "900faeaec91ee2f47987a6bc010ac9bb8042c7445d0e78f0cc03cdc28accb5c2"
+      "contentSha256": "ade08a00033d962775063c31087534ccd62bdf4b156d73c2b7c04979d8d6613b"
     },
     "scripts/migration-owned-paths.mjs": {
       "kind": "file",
@@ -2855,7 +2861,7 @@
     },
     "scripts/skill-migrations.mjs": {
       "kind": "file",
-      "contentSha256": "c56641db73da7238b1b3d7e205016393a86dab809020bb9e1b022cd62b5da185"
+      "contentSha256": "c7e8c5660794ac7610bd60bc619adcf8daad1c70308c11fca510631d9508e6aa"
     },
     "scripts/skill-selection.mjs": {
       "kind": "file",
@@ -3088,6 +3094,10 @@
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
       "contentSha256": "6008c2ff39db96c5997f47d749105682930483223dc1a610281cc6a135008308"
+    },
+    "scripts/managed-skill-paths.mjs": {
+      "kind": "file",
+      "contentSha256": "b52241e5d3d59361c737f52ff103e3c901eb98d7db5f71e66b770a1ae6326fbe"
     }
   },
   "evidence": {
@@ -3317,7 +3327,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "472440aa249980dcbab7eb40e8e61f6ab45c4dddaa61337876c187203911e021"
+      "sha256": "1b1940472c365cd3818e5965cabb8554805c57c38602afab5d509373de2d0613"
     },
     "tests/fixtures/target-activation-probe/README.md": {
       "path": "tests/fixtures/target-activation-probe/README.md",
@@ -3337,7 +3347,7 @@
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
-      "sha256": "8b30932850b9e55e72c169050b6d38bd949c224c22b6a40f5a76a55a7f9ae49f"
+      "sha256": "a7fb74bc13f440ba9078f46991d296daea22dc6476c5892d419306871c333720"
     },
     "tests/managed-skill-migration.test.mjs": {
       "path": "tests/managed-skill-migration.test.mjs",
@@ -3385,7 +3395,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "07e7c8c7ae4471446baedcb0a2172d433cb9cbb864e372dcbdd64b42ec5ea20b"
+      "sha256": "5182aa3b05a3acc275c7038815c0ae8d6727ff9a67b7f56560db8d3b9f4f27d3"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -3409,7 +3419,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "d1c849eec063e706f36b4fc9d8d456a51a4437de5b09b77aafc7087460ab1da7"
+      "sha256": "30674a0d8cbdc0250164efe872514330cd0357d3527f01c7ac54c3704119dd03"
     },
     "docs/upstream/README.md": {
       "path": "docs/upstream/README.md",
@@ -3429,7 +3439,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",
-      "sha256": "1b266963c9408f8d4674ae8a77a1f9d1d412647f49fb3341024b8dbcde5ee9b9"
+      "sha256": "e691c77c1c9546c97cefd17452d74a73fb1acf5cdeb53f6c004622eca0306c08"
     },
     "skills/video/qs-video/references/runtime-compatibility.md": {
       "path": "skills/video/qs-video/references/runtime-compatibility.md",

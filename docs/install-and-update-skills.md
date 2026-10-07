@@ -30,6 +30,9 @@ The implemented addition flag is `--with`, not `--with-package`. Unknown IDs and
 duplicate additions fail. New optional packages do not join an ordinary update.
 The selection file is `~/.config/quickstark/skills-selection.json`; it is saved
 only after the transaction succeeds. Do not edit it to bypass a migration conflict.
+For a non-default Codex home, selection, updater locks, journals and backups use a
+Codex-home-specific state directory instead, so profiles cannot inherit or replace
+one another's saved selection or interrupted transaction.
 
 ## First setup
 
@@ -55,6 +58,37 @@ The plan is read-only. Inspect its desired selection, ownership, retirement,
 acceptance and conflict evidence. Update is the mutation command and revalidates
 live state. A missing accepted package receipt, modified managed content,
 unexpected exposure or unsupported native state blocks mutation.
+
+## Target a separate Codex home
+
+Use `--codex-home` when the Codex configuration profile is not the default
+`~/.codex`. Resolution is explicit `--codex-home`, then inherited `CODEX_HOME`,
+then `<resolved user home>/.codex`. `--home` still selects the operating-system
+user home; `--profile` selects a QuickStark package profile; neither substitutes
+for `--codex-home`. A custom Codex home currently supports a Codex-only transaction,
+so do not combine it with `--agent pi`.
+
+Register the QuickStark marketplace in the selected profile before planning:
+
+```bash
+CODEX_HOME="$HOME/.codex-demo" codex plugin marketplace add ./codex
+```
+
+Then use the same target for every operation:
+
+```bash
+git pull --ff-only origin main
+CODEX_HOME="$HOME/.codex-demo" codex plugin marketplace add ./codex
+npm run skills:plan -- --json --agent codex --codex-home "$HOME/.codex-demo"
+npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo"
+npm run skills:verify -- --agent codex --codex-home "$HOME/.codex-demo"
+npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo" --resume /absolute/path/to/transaction.json
+```
+
+The selected profile's `config.toml`, plugin cache and discovery paths remain
+under that Codex home. Native commands still receive the actual user home through
+`HOME` and `USERPROFILE`, and receive the selected profile through `CODEX_HOME`.
+Resume refuses a journal created for another normalized Codex home.
 
 ## Normal update and explicit additions
 

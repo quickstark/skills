@@ -55,6 +55,16 @@ async function fixture(t, host, { real = false } = {}) {
   return { base, options, configPath, context, step, command, adapter: createNativePackageAdapter(options) };
 }
 
+test('native commands preserve the user home and pass the selected Codex home', async (t) => {
+  const base = await mkdtemp(path.join(tmpdir(), 'qs-native-environment-')); t.after(() => rm(base, { recursive: true, force: true }));
+  const homeDirectory = path.join(base, 'home'); const codexHomeDirectory = path.join(homeDirectory, '.codex-demo');
+  await mkdir(codexHomeDirectory, { recursive: true });
+  const result = await runNativePackageCommand(process.execPath, ['-e', 'console.log(JSON.stringify({HOME:process.env.HOME,USERPROFILE:process.env.USERPROFILE,CODEX_HOME:process.env.CODEX_HOME}))'], {
+    homeDirectory, codexHomeDirectory, cwd: base,
+  });
+  assert.deepEqual(JSON.parse(result.stdout), { HOME: homeDirectory, USERPROFILE: homeDirectory, CODEX_HOME: codexHomeDirectory });
+});
+
 for (const real of [false, true]) for (const host of ['codex', 'pi']) test(`${real ? 'real isolated' : 'executable fixture'} ${host} withdrawal/exposure matches predicted exact selected discovery and recovers`, { skip: real && !available(host) ? 'Native host executable is unavailable; executable fixture remains covered.' : false }, async (t) => {
   const fixture_ = await fixture(t, host, { real }); const { options, adapter, context, step, configPath } = fixture_;
   const original = (await observeNativePackages(options)).state;
