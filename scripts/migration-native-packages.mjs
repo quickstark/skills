@@ -34,11 +34,11 @@ async function boundedRead(file, maximum = 1024 * 1024) {
 }
 
 /** No shell, bounded output, isolated path overrides, and no command output in errors. */
-export async function runNativePackageCommand(command, args, { homeDirectory, cwd, timeout = 30000 } = {}) {
-  check(absolute(homeDirectory) && absolute(cwd), 'Explicit native home and working directory required.');
+export async function runNativePackageCommand(command, args, { homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), cwd, timeout = 30000 } = {}) {
+  check(absolute(homeDirectory) && absolute(codexHomeDirectory) && absolute(cwd), 'Explicit native user/Codex homes and working directory required.');
   try {
     return await execute(command, args, { cwd, encoding: 'utf8', timeout, killSignal: 'SIGKILL', maxBuffer: 4 * 1024 * 1024,
-      env: { ...process.env, HOME: homeDirectory, USERPROFILE: homeDirectory, CODEX_HOME: path.join(homeDirectory, '.codex'), PI_CODING_AGENT_DIR: path.join(homeDirectory, '.pi/agent'), PI_OFFLINE: '1', PI_TELEMETRY: '0' } });
+      env: { ...process.env, HOME: homeDirectory, USERPROFILE: homeDirectory, CODEX_HOME: codexHomeDirectory, PI_CODING_AGENT_DIR: path.join(homeDirectory, '.pi/agent'), PI_OFFLINE: '1', PI_TELEMETRY: '0' } });
   } catch (error) { throw new Error(`Native ${path.basename(command)} ${args[0]} command failed (${error.code ?? error.signal ?? 'unknown'}); output withheld.`); }
 }
 
@@ -54,8 +54,10 @@ function optionsFor(options) {
   }
   check(new Set(options.packages.map((pkg) => options.host === 'codex' ? `${pkg.name}@${pkg.marketplace}/${pkg.version}` : pkg.source)).size === options.packages.length, 'Package selector/version bindings must be unique within an adapter.');
   check(options.packages.every((pkg) => !pkg.installedOnly || options.host === 'codex'), 'Installed-cache-only bindings are specific to Codex.');
-  return { ...options, packages: JSON.parse(JSON.stringify(options.packages)), runCommand: options.runCommand ?? runNativePackageCommand, command: options.command ?? options.host,
-    configPath: path.join(options.homeDirectory, options.host === 'codex' ? '.codex/config.toml' : '.pi/agent/settings.json') };
+  const codexHomeDirectory = options.codexHomeDirectory ?? path.join(options.homeDirectory, '.codex');
+  check(absolute(codexHomeDirectory), 'Explicit normalized Codex home required.');
+  return { ...options, codexHomeDirectory, packages: JSON.parse(JSON.stringify(options.packages)), runCommand: options.runCommand ?? runNativePackageCommand, command: options.command ?? options.host,
+    configPath: options.host === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(options.homeDirectory, '.pi/agent/settings.json') };
 }
 const selector = (options, pkg) => options.host === 'codex' ? `${pkg.name}@${pkg.marketplace}` : pkg.source;
 
@@ -143,7 +145,7 @@ export async function observeNativePackages(input) {
       const matchingSelector = registrations.filter((entry) => entry.pluginId === selector(options, pkg)); check(matchingSelector.length <= 1, 'Duplicate native package registration.');
       const installed = matchingSelector.filter((entry) => entry.version === pkg.version);
       check(!matchingSelector.length || packages.some((candidate) => selector(options, candidate) === selector(options, pkg) && candidate.version === matchingSelector[0].version), 'Installed native version has no approved binding.');
-      const cache = path.join(options.homeDirectory, '.codex/plugins/cache', pkg.marketplace, pkg.name, pkg.version);
+      const cache = path.join(options.codexHomeDirectory, 'plugins/cache', pkg.marketplace, pkg.name, pkg.version);
       const cacheParent = path.dirname(cache);
       if (await optional(cacheParent)) {
         const tree = await captureMigrationPath(cacheParent);
@@ -165,7 +167,7 @@ export async function observeNativePackages(input) {
     for (const item of unrelated) {
       if (!/^[a-z0-9-]+$/.test(item.marketplaceName) || !/^[a-z0-9-]+$/.test(item.name) || !/^[a-zA-Z0-9.+-]+$/.test(item.version)) { unrelatedDiscoveryComplete = false; continue; }
       if (item.enabled === false) continue;
-      const root = path.join(options.homeDirectory, '.codex/plugins/cache', item.marketplaceName, item.name, item.version);
+      const root = path.join(options.codexHomeDirectory, 'plugins/cache', item.marketplaceName, item.name, item.version);
       let snapshot; try { snapshot = await captureMigrationPath(root); } catch { unrelatedDiscoveryComplete = false; continue; }
       if (snapshot.kind !== 'directory') { unrelatedDiscoveryComplete = false; continue; }
       const names = [];
@@ -240,15 +242,15 @@ async function syncTree(root) {
  */
 export function createNativePackageAdapter(input) {
   const options = optionsFor(input); check(absolute(options.backupRoot), 'Explicit backup root required.');
-  check(['.codex', '.pi'].every((directory) => { const root = path.join(options.homeDirectory, directory); return options.backupRoot !== root && !within(options.backupRoot, root) && !within(root, options.backupRoot); }), 'Backups must remain outside host discovery roots.');
+  check([options.codexHomeDirectory, path.join(options.homeDirectory, '.pi')].every((root) => options.backupRoot !== root && !within(options.backupRoot, root) && !within(root, options.backupRoot)), 'Backups must remain outside host discovery roots.');
   check(options.packages.every((pkg) => options.backupRoot !== pkg.source && !within(options.backupRoot, pkg.source) && !within(pkg.source, options.backupRoot)), 'Backups must remain separate from bound source payloads.');
   const contextCheck = (step, context) => {
     check(context && /^[a-z0-9][a-z0-9-]*$/.test(context.transactionId) && /^[a-z0-9][a-z0-9-]*$/.test(step.id), 'Bounded transaction/step identity required.');
     check(['withdraw', 'expose'].includes(step.phase) && step.operation === `native-${step.phase}` && step.native?.host === options.host, 'Native adapter only accepts explicit package withdrawal/exposure.');
     const pkg = options.packages.find((item) => item.id === step.native.packageId); check(pkg, 'Step package lacks approved ownership binding.');
     const required = [options.configPath];
-    if (options.host === 'codex') required.push(path.join(options.homeDirectory, '.codex/plugins/cache', pkg.marketplace, pkg.name, pkg.version));
-    const allowed = new Set([options.configPath, ...(options.host === 'codex' ? options.packages.map((binding) => path.join(options.homeDirectory, '.codex/plugins/cache', binding.marketplace, binding.name, binding.version)) : [])]);
+    if (options.host === 'codex') required.push(path.join(options.codexHomeDirectory, 'plugins/cache', pkg.marketplace, pkg.name, pkg.version));
+    const allowed = new Set([options.configPath, ...(options.host === 'codex' ? options.packages.map((binding) => path.join(options.codexHomeDirectory, 'plugins/cache', binding.marketplace, binding.name, binding.version)) : [])]);
     check(step.ownedTargets.length === allowed.size && new Set(step.ownedTargets.map((target) => target.path)).size === allowed.size && step.ownedTargets.every((target) => allowed.has(target.path)), 'Native step ownership must cover the exact config and all bound cache targets.');
     check(required.every((file) => step.ownedTargets.some((target) => target.path === file && target.ownershipRecord === pkg.ownershipRecord)), 'Native effect targets/ownership do not bind config and cache.');
     return pkg;
@@ -315,7 +317,7 @@ export function createNativePackageAdapter(input) {
           }
         }
         if (options.host === 'codex' && step.phase === 'withdraw') {
-          const cache = path.join(options.homeDirectory, '.codex/plugins/cache', pkg.marketplace, pkg.name, pkg.version);
+          const cache = path.join(options.codexHomeDirectory, 'plugins/cache', pkg.marketplace, pkg.name, pkg.version);
           const index = step.ownedTargets.findIndex((target) => target.path === cache);
           await mkdir(path.join(reference, 'market/.agents/plugins'), { recursive: true });
           // Supported transient marketplace override; live registration is untouched.

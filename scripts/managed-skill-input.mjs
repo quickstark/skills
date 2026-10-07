@@ -44,7 +44,7 @@ export function derivePackageAcceptanceObligations(packageId, document) {
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, collection.codexPackageRoot, collection.piPackageRoot, collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
       'config/skill-migrations.json', 'config/skill-provenance.json', 'config/skill-profiles.json', 'docs/skill-run-contract.md',
-      ...['adoption-acceptance', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
+      ...['adoption-acceptance', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
       ...['qs-skill-catalog', 'ps-skill-catalog', 'skill-collection-registry', 'advanced-skill-catalog', 'frontend-skill-catalog', 'video-skill-catalog', 'execution-skill-catalog', 'optional-command-definition'].map((name) => `scripts/${name}.mjs`)]),
     requiredCriteria: unique([...commonCriteria, ...packageCriteria[packageId]]), requiredChecks: ['package-closure', 'notices', 'behavior', 'native-discovery', ...(packageId === 'qs-video' ? ['video-runtime'] : packageId === 'qs-execution' ? ['unlazy-runtime'] : [])] };
 }
@@ -91,12 +91,13 @@ function ownedObservation(value, nativeOwner = null) { return { ...value, dirty:
 
 /** Observe production inputs without creating receipts, staging, or changing managers.
  * Inject command execution only for isolated caller fixtures; it is not evidence. */
-export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, agents = ['codex'], profile = null, withPackages = [], auditPath = 'docs/validation/upstream-adoption-acceptance.json', runtime = {} }) {
-  check(path.isAbsolute(repositoryRoot) && path.isAbsolute(homeDirectory), 'Absolute repository/home required.');
+export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), selectionPath = selectionRecordPath(homeDirectory), agents = ['codex'], profile = null, withPackages = [], auditPath = 'docs/validation/upstream-adoption-acceptance.json', runtime = {} }) {
+  check(path.isAbsolute(repositoryRoot) && path.isAbsolute(homeDirectory) && path.isAbsolute(codexHomeDirectory) && path.isAbsolute(selectionPath), 'Absolute repository/user home/Codex home/state paths required.');
   check(agents.length > 0 && new Set(agents).size === agents.length && agents.every((agent) => ['codex', 'pi'].includes(agent)), 'Target-registry transactions support Codex and Pi only; Claude projections require a separately verified native transaction adapter.');
   const git = runtime.runGit ?? runGit; const command = runtime.runCommand ?? runNativePackageCommand;
+  const customCodexHome = codexHomeDirectory !== path.join(homeDirectory, '.codex');
   const revision = (await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim(); check(/^[a-f0-9]{40}$/.test(revision), 'Release HEAD is invalid.');
-  const [migrationFile, profileFile, repositoryPackage, saved] = await Promise.all([jsonFile(path.join(repositoryRoot, 'config/skill-migrations.json')), jsonFile(path.join(repositoryRoot, 'config/skill-profiles.json')), jsonFile(path.join(repositoryRoot, 'package.json')), readSelectionRecord(selectionRecordPath(homeDirectory))]);
+  const [migrationFile, profileFile, repositoryPackage, saved] = await Promise.all([jsonFile(path.join(repositoryRoot, 'config/skill-migrations.json')), jsonFile(path.join(repositoryRoot, 'config/skill-profiles.json')), jsonFile(path.join(repositoryRoot, 'package.json')), readSelectionRecord(selectionPath)]);
   const document = migrationFile.value; const validation = validateSkillMigrations(document); check(validation.valid, 'Migration authority is invalid.');
   const version = repositoryPackage.value.version; check(/^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(version), 'Release version is invalid.');
   const knownRevisions = [...new Set([revision, ...(/^[a-f0-9]{40}$/.test(saved.record?.templateRevision) ? [saved.record.templateRevision] : []), ...document.migrations.flatMap((migration) => migration.legacy.filter((entry) => entry.kind === 'package').flatMap((entry) => entry.acceptedPrior.map((prior) => prior.revision)))])];
@@ -114,9 +115,9 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, ag
   const allCollections = [...TARGET_SKILL_COLLECTIONS, LEGACY_SKILL_COLLECTIONS.find((entry) => entry.id === 'ps-skills')];
   const evidenceSnapshots = [];
   for (const agent of agents) {
-    const configPath = path.join(homeDirectory, agent === 'codex' ? '.codex/config.toml' : '.pi/agent/settings.json');
+    const configPath = agent === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(homeDirectory, '.pi/agent/settings.json');
     const configSnapshot = await captureMigrationPath(configPath); check(['file', 'absent'].includes(configSnapshot.kind), 'Native config must be a regular file.'); configs[agent] = configSnapshot;
-    const nativeOptions = { host: agent, homeDirectory, cwd: repositoryRoot, runCommand: command, command: runtime.commands?.[agent] ?? agent };
+    const nativeOptions = { host: agent, homeDirectory, codexHomeDirectory, cwd: repositoryRoot, runCommand: command, command: runtime.commands?.[agent] ?? agent };
     let installed;
     if (agent === 'codex') {
       const inventory = nativeJson(await command(nativeOptions.command, ['plugin', 'list', '--json'], nativeOptions));
@@ -144,7 +145,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, ag
       check(/^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(item.version ?? ''), 'Native installed version must be an exact semantic version.');
       check(item.installed === true && item.enabled === true && item.source?.source === 'local' && item.source.path === path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : collection.piPackageRoot), 'Native ownership requires enabled exact local package registration.');
       if (agent === 'codex') check(item.pluginId === `${name}@quickstark` && item.marketplaceName === 'quickstark', 'Native package owner conflicts with the observed QuickStark marketplace.');
-      const canonicalPath = agent === 'codex' ? path.join(homeDirectory, '.codex/plugins/cache/quickstark', name, item.version) : item.source.path;
+      const canonicalPath = agent === 'codex' ? path.join(codexHomeDirectory, 'plugins/cache/quickstark', name, item.version) : item.source.path;
       const payload = await captureManagedSkillPayload(canonicalPath); const observedNames = await publicNames(canonicalPath, payload);
       check(same(observedNames, [...collection.publicCommands].sort()), 'Installed public names differ from the known package catalog.');
       const legacy = document.migrations.flatMap((migration) => migration.legacy).find((entry) => entry.kind === 'package' && entry.identity === name);
@@ -167,13 +168,20 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, ag
     await revalidateMigrationPath(configSnapshot);
     native[agent] = { packages: bindings, command: nativeOptions.command }; configs[agent] = observedNative.evidence.configSnapshot;
   }
-  const lockPath = path.join(homeDirectory, '.agents/.skill-lock.json'); const lock = await jsonFile(lockPath, { version: 3, skills: {} });
-  check(lock.value.version === 3 && lock.value.skills && !Array.isArray(lock.value.skills), 'Contributor lock must use version3.');
-  for (const legacy of document.migrations.flatMap((migration) => migration.legacy).filter((entry) => entry.kind === 'resource')) {
+  if (customCodexHome) {
+    for (const legacy of document.migrations.flatMap((migration) => migration.legacy).filter((entry) => entry.kind === 'resource')) {
+      const local = await captureMigrationPath(path.join(codexHomeDirectory, 'skills', legacy.identity));
+      check(local.kind === 'absent', `Custom Codex profile contains legacy standalone resource ${legacy.identity}; preserve it and reconcile explicitly.`);
+    }
+  } else {
+    const lockPath = path.join(homeDirectory, '.agents/.skill-lock.json'); const lock = await jsonFile(lockPath, { version: 3, skills: {} });
+    check(lock.value.version === 3 && lock.value.skills && !Array.isArray(lock.value.skills), 'Contributor lock must use version3.');
+    for (const legacy of document.migrations.flatMap((migration) => migration.legacy).filter((entry) => entry.kind === 'resource')) {
     const canonicalPath = path.join(homeDirectory, '.agents/skills', legacy.identity); const canonical = await captureMigrationPath(canonicalPath);
     const aliases = {};
     for (const [agent, root] of Object.entries(roots)) {
-      const alias = await captureMigrationPath(path.join(homeDirectory, root, legacy.identity));
+      const aliasPath = agent === 'codex' ? path.join(codexHomeDirectory, 'skills', legacy.identity) : path.join(homeDirectory, root, legacy.identity);
+      const alias = await captureMigrationPath(aliasPath);
       if (alias.kind !== 'absent') { check(alias.kind === 'symlink' && path.resolve(path.dirname(alias.path), alias.target) === canonicalPath, `Changed or duplicate ${agent} standalone resource ${legacy.identity}; preserve and reconcile.`); aliases[agent] = alias; }
     }
     if (canonical.kind === 'absent') { check(!Object.keys(aliases).length && !lock.value.skills[legacy.identity], `Contributor ${legacy.identity} has stale lock/link state.`); continue; }
@@ -182,11 +190,12 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, ag
     const payload = await captureManagedSkillPayload(canonicalPath);
     check(legacy.acceptedPrior.some((prior) => prior.revision === authority.source.revision && prior.digest.value === payload.payloadDigest.value), `Contributor ${legacy.identity} has modified or unknown content; retain it.`);
     const consumers = unique([...agents, ...Object.keys(aliases), ...Object.keys(configs)]);
-    for (const [other, config] of [['codex', '.codex/config.toml'], ['pi', '.pi/agent/settings.json']]) if (!consumers.includes(other) && (await captureMigrationPath(path.join(homeDirectory, config))).kind !== 'absent') consumers.push(other);
+    for (const [other, config] of [['codex', path.join(codexHomeDirectory, 'config.toml')], ['pi', path.join(homeDirectory, '.pi/agent/settings.json')]]) if (!consumers.includes(other) && (await captureMigrationPath(config)).kind !== 'absent') consumers.push(other);
     for (const agent of agents) {
       const alias = aliases[agent]; const observed = ownedObservation({ kind: 'resource', identity: legacy.identity, agent, path: alias?.path ?? canonicalPath, canonicalPath, linkTarget: alias ? canonicalPath : null, version: null, revision: authority.source.revision, digest: payload.payloadDigest, publicSkills: legacy.publicSkills, consumers });
       observations.push(observed); verifiedOwnership.set(observed.ownership.recordId, { binding: proofBinding(observed), evidenceSnapshots: [lock.snapshot, migrationFile.snapshot] });
     }
+  }
   }
   for (const agent of agents) {
     const observed = observations.filter((entry) => entry.agent === agent);
@@ -195,8 +204,10 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, ag
     const replacements = document.migrations.flatMap((migration) => migration.legacy.filter((entry) => selection[entry.kind === 'package' ? 'packages' : 'resources'].includes(entry.identity)).flatMap((entry) => entry.replacements.map((replacement) => replacement.packageId)));
     const selectedNames = packages.filter((pkg) => selection.packages.includes(pkg.id) || replacements.includes(pkg.id)).flatMap((pkg) => pkg.publicSkills);
     check(!selectedNames.some((name) => unrelatedNames[agent].includes(name)), 'Selected future public identities conflict with an observed unrelated native package; preserve and reconcile before update.');
-    for (const root of ['.agents/skills', roots[agent]]) for (const name of selectedNames) {
-      const exactPath = path.join(homeDirectory, root, name); const existing = await captureMigrationPath(exactPath);
+    for (const root of ['shared', agent]) for (const name of selectedNames) {
+      const exactPath = root === 'shared' ? path.join(homeDirectory, '.agents/skills', name)
+        : agent === 'codex' ? path.join(codexHomeDirectory, 'skills', name) : path.join(homeDirectory, roots[agent], name);
+      const existing = await captureMigrationPath(exactPath);
       check(existing.kind === 'absent', `Selected public identity ${name} already has an independently managed standalone path; preserve and reconcile before update.`);
       evidenceSnapshots.push(existing);
     }
@@ -211,7 +222,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, ag
     check((await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim() === revision, 'Release HEAD changed during evidence verification.');
     return verified;
   };
-  return { revision, cwd: repositoryRoot, homeDirectory, agents, profile, withPackages, profiles: profileFile.value, document, packages, observations, native, evidenceSnapshots,
+  return { revision, cwd: repositoryRoot, homeDirectory, codexHomeDirectory, selectionPath, agents, profile, withPackages, profiles: profileFile.value, document, packages, observations, native, evidenceSnapshots,
     runtime: { observeNativePackages: (options) => observeNativePackages({ ...options, runCommand: command }), verifyAcceptance: acceptance,
       verifyOwnership: async (observed) => { const proof = verifiedOwnership.get(observed.ownership.recordId); check(proof && same(proof.binding, proofBinding(observed)), 'Ownership observation changed after native/lock verification.'); for (const snapshot of proof.evidenceSnapshots) await revalidateMigrationPath(snapshot); return proof; },
       nativeOptions: Object.fromEntries(agents.map((agent) => [agent, { runCommand: command }])) } };

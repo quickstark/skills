@@ -20,6 +20,7 @@ const same = (first, second) => hash(first) === hash(second);
 const names = (value) => Array.isArray(value) && value.every((name) => typeof name === 'string' && /^[a-z0-9][a-z0-9.:-]*$/.test(name)) && new Set(value).size === value.length;
 const absolute = (value) => typeof value === 'string' && path.isAbsolute(value) && path.normalize(value) === value && value !== '/' && !/[\0-\x1f]/.test(value);
 const sorted = (values) => [...new Set(values)].sort();
+const inside = (value, root) => value.startsWith(root + path.sep);
 const key = (value) => `${value.agent}:${value.kind}:${value.identity}`;
 const freeze = (value) => { if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); } return value; };
 const clone = (value) => JSON.parse(canonical(value));
@@ -99,7 +100,8 @@ async function checkedObservation(observed, snapshots, input) {
   if (input.runtime?.verifyOwnership) {
     const verified = await input.runtime.verifyOwnership(observed, { homeDirectory: input.homeDirectory, document: input.document, native: input.native?.[observed.agent] });
     check(verified && same(verified.binding, binding) && Array.isArray(verified.evidenceSnapshots) && verified.evidenceSnapshots.length > 0, 'Derived ownership requires an exact binding and original evidence snapshots.');
-    const originalPath = observed.kind === 'resource' ? path.join(input.homeDirectory, '.agents/.skill-lock.json') : path.join(input.homeDirectory, observed.agent === 'codex' ? '.codex/config.toml' : '.pi/agent/settings.json');
+    const originalPath = observed.kind === 'resource' ? path.join(input.homeDirectory, '.agents/.skill-lock.json')
+      : observed.agent === 'codex' ? path.join(input.codexHomeDirectory ?? path.join(input.homeDirectory, '.codex'), 'config.toml') : path.join(input.homeDirectory, '.pi/agent/settings.json');
     check(verified.evidenceSnapshots.some((snapshot) => snapshot.path === originalPath), 'Derived ownership must bind the existing manager config or Agent Skills lock.');
     for (const snapshot of verified.evidenceSnapshots) { check(snapshot.kind === 'file', 'Ownership evidence must bind original regular files.'); await revalidateMigrationPath(snapshot); proofSnapshots.push(snapshot); }
   } else {
@@ -120,7 +122,8 @@ async function checkedObservation(observed, snapshots, input) {
 /** Read-only planning. Runtime seams must be independently validated observations,
  * never production acceptance fabricated from the synthetic integration fixtures. */
 export async function previewManagedSkillMigration(input) {
-  check(input && /^[a-f0-9]{40}$/.test(input.revision) && absolute(input.homeDirectory) && absolute(input.cwd), 'Bound release revision/home/checkout required.');
+  check(input && /^[a-f0-9]{40}$/.test(input.revision) && absolute(input.homeDirectory) && absolute(input.codexHomeDirectory ?? path.join(input.homeDirectory, '.codex')) && absolute(input.cwd), 'Bound release revision/user home/Codex home/checkout required.');
+  const codexHomeDirectory = input.codexHomeDirectory ?? path.join(input.homeDirectory, '.codex');
   check(names(input.agents) && input.agents.length > 0 && input.agents.every((agent) => ['codex', 'pi'].includes(agent)), 'Select supported native harnesses explicitly.');
   check(Array.isArray(input.packages) && new Set(input.packages.map((pkg) => pkg.id)).size === input.packages.length && Array.isArray(input.observations), 'Explicit package catalog and ownership observations required.');
   const document = input.document ?? readSkillMigrations(); const legacyEntries = document.migrations.flatMap((entry) => entry.legacy);
@@ -128,10 +131,10 @@ export async function previewManagedSkillMigration(input) {
   const selectionSnapshot = await captureMigrationPath(selectionPath); const snapshots = [selectionSnapshot]; const conflicts = []; const observations = [];
   check(input.evidenceSnapshots === undefined || Array.isArray(input.evidenceSnapshots), 'Additional input evidence requires original path snapshots, not an asserted receipt.');
   const publicNames = sorted(input.packages.flatMap((pkg) => Array.isArray(pkg.publicSkills) ? pkg.publicSkills.filter((name) => names([name])) : []));
-  const skillRoots = ['.agents/skills', ...input.agents.map((agent) => agent === 'codex' ? '.codex/skills' : '.pi/agent/skills')];
+  const skillRoots = [path.join(input.homeDirectory, '.agents/skills'), ...input.agents.map((agent) => agent === 'codex' ? path.join(codexHomeDirectory, 'skills') : path.join(input.homeDirectory, '.pi/agent/skills'))];
   const evidencePaths = new Set([
-    ...skillRoots.flatMap((root) => publicNames.map((name) => path.join(input.homeDirectory, root, name))),
-    ...input.agents.map((agent) => path.join(input.homeDirectory, agent === 'codex' ? '.codex/config.toml' : '.pi/agent/settings.json')),
+    ...skillRoots.flatMap((root) => publicNames.map((name) => path.join(root, name))),
+    ...input.agents.map((agent) => agent === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(input.homeDirectory, '.pi/agent/settings.json')),
   ]);
   for (const snapshot of input.evidenceSnapshots ?? []) {
     try {
@@ -162,7 +165,7 @@ export async function previewManagedSkillMigration(input) {
     }
     checkedPackages[agent] = metadata;
     let plan;
-    try { plan = planSkillMigrations({ document, agent, homeDirectory: input.homeDirectory, selection: resolved.selection, packages: metadata, observations: owned,
+    try { plan = planSkillMigrations({ document, agent, homeDirectory: input.homeDirectory, codexHomeDirectory, selection: resolved.selection, packages: metadata, observations: owned,
       explicitPackages: input.withPackages ?? [], explicitProfile: input.profile ? { source: 'user-request', id: input.profile, packages: input.profiles.profiles[input.profile].packages } : null }); }
     catch (error) { conflicts.push({ agent, reason: error.message }); plan = { schemaVersion: 1, agent, status: 'blocked', selection: resolved.selection, migrations: [], mutationAuthorized: false }; }
     for (const migration of plan.migrations) {
@@ -184,12 +187,12 @@ export async function previewManagedSkillMigration(input) {
     const nativeInput = input.native?.[agent];
     try {
       check(nativeInput && Array.isArray(nativeInput.packages), 'Native bindings are unavailable.');
-      const options = { ...nativeInput, host: agent, homeDirectory: input.homeDirectory, cwd: input.cwd };
+      const options = { ...nativeInput, host: agent, homeDirectory: input.homeDirectory, codexHomeDirectory, cwd: input.cwd };
       const observation = await (input.runtime?.observeNativePackages ?? observeNativePackages)(options);
       for (const actual of observation.state.native.packages) {
         const binding = nativeInput.packages.find((entry) => entry.id === actual.id); check(binding, 'Observed native package lacks an ownership binding.');
         if (resolved.selection.packages.includes(binding.name)) {
-          const livePath = agent === 'codex' ? path.join(input.homeDirectory, '.codex/plugins/cache', binding.marketplace, binding.name, actual.version) : binding.source;
+          const livePath = agent === 'codex' ? path.join(codexHomeDirectory, 'plugins/cache', binding.marketplace, binding.name, actual.version) : binding.source;
           check(owned.some((entry) => entry.kind === 'package' && entry.identity === binding.name && entry.version === actual.version && entry.canonicalPath === livePath && entry.canonicalSnapshot.contentSha256 === binding.payloadSha256 && same([...entry.publicSkills].sort(), [...actual.publicNames].sort())), 'Selected native ownership does not bind actual live cache/source bytes; retained archives are separate evidence.');
         }
       }
@@ -201,7 +204,7 @@ export async function previewManagedSkillMigration(input) {
         const binding = nativeInput.packages.find((entry) => entry.name === id && entry.version === pkg.version && entry.source === pkg.artifact.source && entry.payloadSha256 === pkg.artifact.snapshot.contentSha256 && !entry.installedOnly);
         check(binding && same([...binding.publicNames].sort(), [...pkg.publicSkills].sort()), 'Desired package does not match exact native source/version/public-identity bindings.');
       }
-      native[agent] = { options: { host: agent, homeDirectory: input.homeDirectory, cwd: input.cwd, packages: nativeInput.packages, ...(nativeInput.command ? { command: nativeInput.command } : {}) }, state: observation.state };
+      native[agent] = { options: { host: agent, homeDirectory: input.homeDirectory, codexHomeDirectory, cwd: input.cwd, packages: nativeInput.packages, ...(nativeInput.command ? { command: nativeInput.command } : {}) }, state: observation.state };
       if (observation.evidence?.configSnapshot) snapshots.push(observation.evidence.configSnapshot);
     } catch (error) { conflicts.push({ agent, reason: error.message }); }
   }
@@ -224,7 +227,7 @@ export async function previewManagedSkillMigration(input) {
   const snapshotMap = new Map();
   for (const snapshot of snapshots) { const prior = snapshotMap.get(snapshot.path); check(!prior || same(prior, snapshot), 'Evidence changed while building the migration preview.'); snapshotMap.set(snapshot.path, snapshot); }
   const uniqueSnapshots = [...snapshotMap.values()];
-  const result = { schemaVersion: 1, revision: input.revision, homeDirectory: input.homeDirectory, cwd: input.cwd, agents: input.agents, status: conflicts.length ? 'blocked' : 'ready', conflicts,
+  const result = { schemaVersion: 1, revision: input.revision, homeDirectory: input.homeDirectory, codexHomeDirectory, cwd: input.cwd, agents: input.agents, status: conflicts.length ? 'blocked' : 'ready', conflicts,
     targets, native, packages: checkedPackages, observations, resources: [...selectedResources.values()], selectionPath, previousSelection: saved.record, selectionFingerprint: saved.fingerprint, selectionSnapshot,
     lock: lock ? { path: lockPath, value: lock, snapshot: lockSnapshot } : null, snapshots: uniqueSnapshots, inputHash: hash({ document, profiles: input.profiles, profile: input.profile ?? null, withPackages: input.withPackages ?? [] }), mutationAuthorized: false };
   return freeze({ ...clone(result), previewHash: hash(result) });
@@ -242,7 +245,8 @@ export async function assembleManagedSkillMigration(preview, { transactionId, st
   check(/^[a-z0-9][a-z0-9-]*$/.test(transactionId) && absolute(stagingRoot) && absolute(backupRoot) && absolute(journalPath), 'Exact transaction/staging/backup/journal locations required.');
   check(path.dirname(journalPath) === stagingRoot, 'Journal parent must establish the outside-discovery staging root before copy phases.');
   for (const snapshot of preview.snapshots) await revalidateMigrationPath(snapshot);
-  const discoveryRoots = sorted(['.agents/skills', '.claude/skills', '.codex/skills', '.pi/agent/skills', ...(preview.agents.includes('codex') ? ['.codex/plugins/cache'] : [])].map((directory) => path.join(preview.homeDirectory, directory)));
+  const discoveryRoots = sorted([path.join(preview.homeDirectory, '.agents/skills'), path.join(preview.homeDirectory, '.claude/skills'), path.join(preview.homeDirectory, '.pi/agent/skills'),
+    ...(preview.agents.includes('codex') ? [path.join(preview.codexHomeDirectory, 'skills'), path.join(preview.codexHomeDirectory, 'plugins/cache')] : [])]);
   const steps = []; const adapters = { owned: (runtime.createOwnedPathAdapter ?? createOwnedPathAdapter)({ backupRoot: path.join(backupRoot, 'paths'), discoveryRoots }) };
   const staged = new Set();
   for (const agent of preview.agents) for (const pkg of preview.packages[agent]) {
@@ -258,7 +262,7 @@ export async function assembleManagedSkillMigration(preview, { transactionId, st
     const adapterId = `native-${agent}`; adapters[adapterId] = (runtime.createNativePackageAdapter ?? createNativePackageAdapter)(options);
     let before = native.state; const desired = preview.targets[agent].desired.packages;
     const required = new Map(desired.map((id) => [id, preview.packages[agent].find((pkg) => pkg.id === id)]));
-    const ownedTargets = [{ path: native.state.configPath, ownershipRecord: native.options.packages[0].ownershipRecord }, ...(agent === 'codex' ? native.options.packages.map((pkg) => ({ path: path.join(preview.homeDirectory, '.codex/plugins/cache', pkg.marketplace, pkg.name, pkg.version), ownershipRecord: pkg.ownershipRecord })) : [])];
+    const ownedTargets = [{ path: native.state.configPath, ownershipRecord: native.options.packages[0].ownershipRecord }, ...(agent === 'codex' ? native.options.packages.map((pkg) => ({ path: path.join(preview.codexHomeDirectory, 'plugins/cache', pkg.marketplace, pkg.name, pkg.version), ownershipRecord: pkg.ownershipRecord })) : [])];
     const change = (binding, phase) => {
       const after = predictNativePackageTransition(before, { packageId: binding.id, phase, packages: native.options.packages });
       const targets = clone(ownedTargets); targets[0].ownershipRecord = binding.ownershipRecord;
@@ -295,7 +299,9 @@ export async function assembleManagedSkillMigration(preview, { transactionId, st
   const record = normalizeSelectionRecord({ schemaVersion: 1, targets: { ...(preview.previousSelection?.targets ?? {}), ...Object.fromEntries(preview.agents.map((agent) => [agent, preview.targets[agent].desired])) }, templateRevision: preview.revision, lastSuccessfulTransaction: transactionId });
   const contentsToSave = JSON.stringify(record, null, 2) + '\n'; const mode = preview.selectionSnapshot.kind === 'file' ? preview.selectionSnapshot.entries[0].mode : 0o600;
   steps.push(ownedStep('save-selection', 'state', preview.selectionPath, preview.selectionSnapshot, ownedFileState(preview.selectionPath, contentsToSave, mode), { kind: 'write-state', contents: contentsToSave, mode }, 'verified-saved-selection'));
-  const plan = { schemaVersion: 1, id: transactionId, revision: preview.revision, evidenceHash: preview.previewHash, discoveryRoots, stagingRoots: [stagingRoot], ownedRoots: sorted([preview.homeDirectory, stagingRoot]), steps,
+  const ownedRoots = sorted([preview.homeDirectory, stagingRoot,
+    ...(!inside(preview.codexHomeDirectory, preview.homeDirectory) ? [preview.codexHomeDirectory] : [])]);
+  const plan = { schemaVersion: 1, id: transactionId, revision: preview.revision, evidenceHash: preview.previewHash, discoveryRoots, stagingRoots: [stagingRoot], ownedRoots, steps,
     controlPlane: { schemaVersion: 1, backupRoot, nativeOptions: Object.fromEntries(preview.agents.map((agent) => [agent, preview.native[agent].options])), evidenceSnapshots: preview.snapshots } };
   validateMigrationTransactionPlan(plan, journalPath);
   return { plan: freeze(clone(plan)), journalPath, adapters, preview, runtime };

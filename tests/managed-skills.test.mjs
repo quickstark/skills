@@ -6,10 +6,12 @@ import test from "node:test";
 
 import {
   executeManagedSkills,
+  parseManagedSkillsArguments,
   verifyOriginMainFreshness,
   verifyManagedPackageInventory,
   validateMaintainedPackages,
 } from "../scripts/managed-skills.mjs";
+import { resolveManagedSkillPaths } from "../scripts/managed-skill-paths.mjs";
 import { SKILL_COLLECTIONS } from "../scripts/skill-collection-registry.mjs";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
@@ -62,6 +64,68 @@ test("skills:update freshness accepts an exact origin/main checkout without muta
     ["status", "--porcelain", "--untracked-files=all"],
     ["ls-remote", "--exit-code", "origin", "refs/heads/main"],
   ]);
+});
+
+test("Codex home targeting parses explicitly and rejects duplicate or missing values", () => {
+  assert.equal(
+    parseManagedSkillsArguments(["plan", "--agent", "codex", "--codex-home", "/profiles/demo"]).codexHomeDirectory,
+    "/profiles/demo",
+  );
+  assert.throws(
+    () => parseManagedSkillsArguments(["plan", "--codex-home", "/profiles/one", "--codex-home", "/profiles/two"]),
+    /one Codex home/i,
+  );
+  assert.throws(() => parseManagedSkillsArguments(["plan", "--codex-home"]), /Missing value/);
+});
+
+test("Codex home resolution honors explicit, environment, and default precedence", () => {
+  const homeDirectory = "/users/work";
+  assert.equal(resolveManagedSkillPaths({
+    homeDirectory,
+    codexHomeDirectory: "/profiles/explicit/../demo",
+    environment: { CODEX_HOME: "/profiles/inherited" },
+    agents: ["codex"],
+  }).codexHomeDirectory, "/profiles/demo");
+  assert.equal(resolveManagedSkillPaths({
+    homeDirectory,
+    environment: { CODEX_HOME: "/profiles/inherited" },
+    agents: ["codex"],
+  }).codexHomeDirectory, "/profiles/inherited");
+  assert.equal(resolveManagedSkillPaths({ homeDirectory, environment: {}, agents: ["codex"] }).codexHomeDirectory, "/users/work/.codex");
+  assert.equal(resolveManagedSkillPaths({ homeDirectory, environment: { CODEX_HOME: "/profiles/inherited" }, agents: ["pi"] }).codexHomeDirectory, "/users/work/.codex");
+});
+
+test("custom Codex homes isolate state while the default preserves legacy locations", () => {
+  const defaults = resolveManagedSkillPaths({ homeDirectory: "/users/work", environment: {}, agents: ["codex"] });
+  assert.equal(defaults.selectionPath, "/users/work/.config/quickstark/skills-selection.json");
+  assert.equal(defaults.lockPath, "/users/work/.quickstark-skills-update.lock");
+
+  const custom = resolveManagedSkillPaths({
+    homeDirectory: "/users/work",
+    codexHomeDirectory: "/users/work/.codex-demo",
+    environment: {},
+    agents: ["codex"],
+  });
+  assert.notEqual(custom.selectionPath, defaults.selectionPath);
+  assert.notEqual(custom.lockPath, defaults.lockPath);
+  assert.match(custom.selectionPath, /^\/users\/work\/\.config\/quickstark\/codex-homes\/[a-f0-9]{64}\/skills-selection\.json$/);
+  assert.match(custom.lockPath, /^\/users\/work\/\.local\/state\/quickstark\/codex-homes\/[a-f0-9]{64}\/skills-update\.lock$/);
+  assert.match(custom.transactionRoot, /^\/users\/work\/\.local\/state\/quickstark\/codex-homes\/[a-f0-9]{64}\/skill-migrations$/);
+  assert.match(custom.backupRoot, /^\/users\/work\/\.local\/state\/quickstark\/codex-homes\/[a-f0-9]{64}\/skill-migration-backups$/);
+  assert.throws(() => resolveManagedSkillPaths({
+    homeDirectory: "/users/work",
+    codexHomeDirectory: "/users/work/.codex-demo",
+    environment: {},
+    agents: ["codex", "pi"],
+  }), /custom Codex home.*Codex-only/i);
+  for (const unsafe of ["/", "/users/work", "\u0000bad"]) {
+    assert.throws(() => resolveManagedSkillPaths({ homeDirectory: "/users/work", codexHomeDirectory: unsafe, environment: {}, agents: ["codex"] }), /Codex home/i);
+  }
+  for (const overlapping of ["/users/work/.codex/demo", "/users/work/.codex/plugins/cache", "/users/work/.agents/skills",
+    "/users/work/.claude", "/users/work/.pi/agent", "/users/work/.config/quickstark/profile"]) {
+    assert.throws(() => resolveManagedSkillPaths({ homeDirectory: "/users/work", codexHomeDirectory: overlapping, environment: {}, agents: ["codex"] }), /separate/i);
+  }
+  assert.throws(() => resolveManagedSkillPaths({ homeDirectory: "/users/work", codexHomeDirectory: "/profiles/demo", environment: {}, agents: ["pi"] }), /only be selected for a Codex transaction/i);
 });
 
 test("skills:update freshness rejects unsupported agents before querying Git", async () => {

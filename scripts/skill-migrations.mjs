@@ -102,7 +102,7 @@ function safeAbsolute(value) {
   return text(value) && path.isAbsolute(value) && path.normalize(value) === value && value !== path.parse(value).root;
 }
 
-function observationConflicts(entry, observed, agent, homeDirectory) {
+function observationConflicts(entry, observed, agent, homeDirectory, codexHomeDirectory) {
   if (!object(observed)) return ['missing-observation'];
   const failures = [];
   const owned = observed.ownership;
@@ -117,7 +117,8 @@ function observationConflicts(entry, observed, agent, homeDirectory) {
   if (observed.linkTarget !== null && !safeAbsolute(observed.linkTarget)) failures.push('unsafe-link-target');
   if (entry.kind === 'resource') {
     const canonical = path.join(homeDirectory, '.agents', 'skills', entry.identity);
-    const alias = path.join(homeDirectory, resourceAliases[agent].directory, entry.identity);
+    const alias = agent === 'codex' ? path.join(codexHomeDirectory, 'skills', entry.identity)
+      : path.join(homeDirectory, resourceAliases[agent].directory, entry.identity);
     if (observed.canonicalPath !== canonical || !(observed.path === canonical && observed.linkTarget === null || observed.path === alias && observed.linkTarget === canonical)) failures.push('outside-managed-location');
     if (!entry.acceptedPrior.some((prior) => prior.revision === observed.revision && prior.digest.value === observed.digest?.value)) failures.push('unaccepted-prior-pin-or-digest');
     if (!names(observed.consumers) || observed.consumers.some((consumer) => !['codex', 'claude-code', 'pi'].includes(consumer)) || !observed.consumers.includes(agent)) failures.push('unproven-shared-consumers');
@@ -134,10 +135,10 @@ function observationConflicts(entry, observed, agent, homeDirectory) {
  * Observations/evidence must come from independent current manager/filesystem checks.
  * ready-to-stage never authorizes exposure, retirement, deletion, or rollback execution.
  */
-export function planSkillMigrations({ document = readSkillMigrations(), agent, homeDirectory, selection, packages, observations, explicitPackages = [], explicitProfile = null, manifest } = {}) {
+export function planSkillMigrations({ document = readSkillMigrations(), agent, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), selection, packages, observations, explicitPackages = [], explicitProfile = null, manifest } = {}) {
   const validated = validateSkillMigrations(document, { manifest });
   if (!validated.valid) throw new Error(`Invalid migration records: ${validated.errors.join('; ')}`);
-  if (!['codex', 'claude-code', 'pi'].includes(agent) || !safeAbsolute(homeDirectory)) throw new Error('Migration preview requires the selected agent and exact home directory.');
+  if (!['codex', 'claude-code', 'pi'].includes(agent) || !safeAbsolute(homeDirectory) || !safeAbsolute(codexHomeDirectory)) throw new Error('Migration preview requires the selected agent and exact user/Codex home directories.');
   if (!object(selection) || !names(selection.packages) || !names(selection.resources) || !names(explicitPackages)) throw new Error('Migration preview requires exact package/resource selections.');
   if (!Array.isArray(packages) || !Array.isArray(observations)) throw new Error('Package metadata and independent observations are required.');
   if (explicitProfile !== null && (!object(explicitProfile) || explicitProfile.source !== 'user-request' || !name(explicitProfile.id) || !names(explicitProfile.packages))) throw new Error('Only a user-requested explicit profile authorizes expanded package selection; saved/fresh defaults do not.');
@@ -172,7 +173,7 @@ export function planSkillMigrations({ document = readSkillMigrations(), agent, h
     const bindings = [];
     for (const entry of selected) {
       const observed = observedById.get(key(entry));
-      const issues = observationConflicts(entry, observed, agent, homeDirectory);
+      const issues = observationConflicts(entry, observed, agent, homeDirectory, codexHomeDirectory);
       conflicts.push(...issues.map((reason) => ({ identity: entry.identity, reason })));
       if (observed) bindings.push(structuredClone({ kind: observed.kind, identity: observed.identity, agent: observed.agent, path: observed.path, canonicalPath: observed.canonicalPath, linkTarget: observed.linkTarget, version: observed.version, revision: observed.revision, digest: observed.digest, publicSkills: observed.publicSkills, consumers: observed.consumers ?? [], ownershipRecord: observed.ownership?.recordId }));
     }

@@ -13,7 +13,9 @@ import { previewManagedSkillMigration, captureManagedSkillPayload } from '../scr
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
 import { TARGET_SKILL_COLLECTIONS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
 import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
+import { readMigrationJournal } from '../scripts/migration-transaction.mjs';
 import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
+import { resolveManagedSkillPaths } from '../scripts/managed-skill-paths.mjs';
 import { fixtureHomeState } from './helpers/fixture-home-state.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
@@ -60,7 +62,7 @@ async function fixture(t, {bootstrap = true} = {}) {
   await runNativePackageCommand('codex',['--version'],nativeOptions);
   if(bootstrap) await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(repositoryRoot,'codex')],nativeOptions);
   await writeJSON(path.join(homeDirectory,'.pi/agent/settings.json'),{theme:'community-preserved',packages:['npm:fixture-community-theme'],quietStartup:true});
-  const options={repositoryRoot,homeDirectory,agents:['codex'],registryState:'target',verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
+  const options={repositoryRoot,homeDirectory,environment:{},agents:['codex'],registryState:'target',verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
   return {base,repositoryRoot,homeDirectory,revision,document,options,nativeOptions,audit};
 }
 
@@ -96,6 +98,40 @@ nativeTest('actual isolated Codex bootstrap remains explicit, then selected fres
   assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
 });
 
+nativeTest('custom Codex home update isolates native and updater state from the default profile',async t=>{
+  const args=await fixture(t,{bootstrap:false});const codexHomeDirectory=path.join(args.homeDirectory,'.codex-demo');await mkdir(codexHomeDirectory,{recursive:true});
+  const sharedResource=path.join(args.homeDirectory,'.agents/skills/unlazy');await mkdir(sharedResource,{recursive:true});await writeFile(path.join(sharedResource,'SKILL.md'),'---\nname: unlazy\ndescription: Default-profile contributor fixture.\n---\nPreserve.\n');
+  const digest=(await captureManagedSkillPayload(sharedResource)).payloadDigest;const legacy=args.document.migrations.flatMap(entry=>entry.legacy).find(entry=>entry.identity==='unlazy');legacy.acceptedPrior[0].digest=digest;
+  const baseline=args.document.sourceManifestSnapshot.resources.find(entry=>entry.name==='unlazy');baseline.source.contentSha256=digest.value;args.document.sourceManifestSnapshot.sha256=sha(JSON.stringify(args.document.sourceManifestSnapshot.resources));
+  await writeJSON(path.join(args.repositoryRoot,'config/skill-migrations.json'),args.document);const lockPath=path.join(args.homeDirectory,'.agents/.skill-lock.json');await writeJSON(lockPath,{version:3,skills:{unlazy:desiredLockFields({type:'agent-skill',source:baseline.source})}});await refreshFixtureAudit(args);
+  const nativeOptions={...args.nativeOptions,codexHomeDirectory};
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(args.repositoryRoot,'codex')],nativeOptions);
+  const defaultSelectionPath=path.join(args.homeDirectory,'.config/quickstark/skills-selection.json');
+  const defaultSelection={schemaVersion:1,targets:{codex:{packages:['qs-skills','qs-advanced'],resources:[],profile:'advanced',additions:[]}},templateRevision:args.revision,lastSuccessfulTransaction:'default-profile-sentinel'};
+  await writeJSON(defaultSelectionPath,defaultSelection);await writeFile(path.join(args.homeDirectory,'.codex','default-profile-sentinel'),'preserve\n');
+  const defaultBefore=await captureMigrationPath(path.join(args.homeDirectory,'.codex'));const sharedBefore=await captureMigrationPath(path.join(args.homeDirectory,'.agents'));
+  const options={...args.options,codexHomeDirectory};const paths=resolveManagedSkillPaths({homeDirectory:args.homeDirectory,codexHomeDirectory,environment:{},agents:['codex']});
+  const customSelection={schemaVersion:1,targets:{codex:{packages:['qs-skills'],resources:[],profile:'core',additions:[]}},templateRevision:args.revision,lastSuccessfulTransaction:'custom-profile-sentinel'};await writeJSON(paths.selectionPath,customSelection);
+  const plan=await executeManagedSkills({...options,action:'plan',environment:{}});assert.equal(plan.status,'ready',JSON.stringify(plan.conflicts));assert.equal(plan.selectionPath,paths.selectionPath);assert.equal(plan.codexHomeDirectory,codexHomeDirectory);assert.equal(plan.targets.codex.basis,'saved');assert.deepEqual(plan.targets.codex.desired.packages,['qs-skills']);assert.deepEqual(plan.targets.codex.desired.resources,[]);
+  const result=await executeManagedSkills({...options,action:'update',environment:{}});assert.equal(result.status,'complete',result.error);
+  assert.ok(result.journalPath.startsWith(paths.transactionRoot+path.sep));const journal=await readMigrationJournal(result.journalPath);assert.ok(journal.plan.controlPlane.backupRoot.startsWith(paths.backupRoot+path.sep));
+  const inventory=JSON.parse((await runNativePackageCommand('codex',['plugin','list','--json'],nativeOptions)).stdout);assert.deepEqual(inventory.installed.map(entry=>entry.name),['qs-skills']);
+  assert.equal((await executeManagedSkills({...options,action:'verify',environment:{}})).status,'verified');
+  assert.deepEqual((await readJSON(paths.selectionPath)).targets.codex.packages,['qs-skills']);assert.deepEqual(await readJSON(defaultSelectionPath),defaultSelection);
+  assert.deepEqual(await captureMigrationPath(path.join(args.homeDirectory,'.codex')),defaultBefore);
+  assert.deepEqual(await captureMigrationPath(path.join(args.homeDirectory,'.agents')),sharedBefore);
+  const localLegacy=path.join(codexHomeDirectory,'skills/unlazy');await mkdir(localLegacy,{recursive:true});await writeFile(path.join(localLegacy,'SKILL.md'),'custom legacy');
+  await assert.rejects(executeManagedSkills({...options,action:'plan',environment:{}}),/Custom Codex profile contains legacy standalone resource unlazy/);
+});
+
+nativeTest('external Codex home completes an isolated transaction',async t=>{
+  const args=await fixture(t,{bootstrap:false});const codexHomeDirectory=path.join(args.base,'external-codex-home');await mkdir(codexHomeDirectory,{recursive:true});
+  const nativeOptions={...args.nativeOptions,codexHomeDirectory};await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(args.repositoryRoot,'codex')],nativeOptions);
+  const options={...args.options,codexHomeDirectory};const result=await executeManagedSkills({...options,action:'update',environment:{}});assert.equal(result.status,'complete',result.error);
+  const journal=await readMigrationJournal(result.journalPath);assert.ok(journal.plan.ownedRoots.includes(codexHomeDirectory));
+  assert.equal((await executeManagedSkills({...options,action:'verify',environment:{}})).status,'verified');
+});
+
 nativeTest('read-only production input needs no handcrafted ownership receipt and rejects modified installed cache',async t=>{
   const args=await fixture(t); await runNativePackageCommand('codex',['plugin','add','qs-skills@quickstark','--json'],args.nativeOptions);
   const before=await fixtureHomeState(args.homeDirectory); const input=await buildManagedSkillInput(args.options); assert.equal(input.observations.length,1); assert.equal(input.observations[0].revision,args.revision); assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
@@ -126,6 +162,8 @@ nativeTest('explicit package addition installs only named broader selection and 
   const result=await executeManagedSkills({...args.options,action:'update',withPackages:['qs-advanced'],runtime}); assert.equal(result.status,'failed');
   assert.equal((await captureMigrationPath(path.join(args.homeDirectory,'.config/quickstark/skills-selection.json'))).kind,'absent');
   await assert.rejects(executeManagedSkills({...args.options,action:'update',resume:result.journalPath,withPackages:['qs-video']}),/frozen journal selection/);
+  const otherCodexHome=path.join(args.homeDirectory,'.codex-other');await mkdir(otherCodexHome,{recursive:true});
+  await assert.rejects(executeManagedSkills({...args.options,action:'update',resume:result.journalPath,codexHomeDirectory:otherCodexHome,environment:{}}),/another Codex home/);
   const resumed=await executeManagedSkills({...args.options,action:'update',resume:result.journalPath,runtime:{nativeOptions:{codex:{runCommand:runtime.runCommand}}}}); assert.equal(resumed.status,'complete',resumed.error);
   const inventory=JSON.parse((await runNativePackageCommand('codex',['plugin','list','--json'],args.nativeOptions)).stdout); assert.deepEqual(inventory.installed.map(entry=>entry.name).sort(),['qs-advanced','qs-skills']); assert.equal(commands.filter(entry=>entry===commands[0]).length,1);
 });

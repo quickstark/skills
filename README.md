@@ -75,6 +75,22 @@ node scripts/managed-skills.mjs verify --json --agent codex
 Use the same host flags as the update. Restart the host or begin a new task to
 refresh its skill catalog. A Git pull alone does not refresh cached plugins.
 
+To update a separate Codex profile, register the marketplace in that profile and
+pass the same Codex home to plan, update and verification:
+
+```bash
+git pull --ff-only origin main
+CODEX_HOME="$HOME/.codex-demo" codex plugin marketplace add ./codex
+npm run skills:plan -- --json --agent codex --codex-home "$HOME/.codex-demo"
+npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo"
+npm run skills:verify -- --agent codex --codex-home "$HOME/.codex-demo"
+```
+
+`--codex-home` overrides inherited `CODEX_HOME`; otherwise the updater uses
+`<user home>/.codex`. It isolates saved selection and transaction state by Codex
+home. `--home` remains the operating-system user home, while `--profile` chooses
+a QuickStark package selection. Custom Codex homes are Codex-only transactions.
+
 The [control-plane guide](./docs/personal-skills.md) explains pinned resources,
 ownership checks, migration journals and recovery. Do not copy installed caches
 back into Git or synchronize machines with one another.
