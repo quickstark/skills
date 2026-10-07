@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.1.0
+
+### Minor Changes
+
+- [#52](https://github.com/quickstark/skills/pull/52) [`b373dde`](https://github.com/quickstark/skills/commit/b373ddedb40be0c8c5cfb0aefe9868f65cf36c94) Thanks [@quickstark](https://github.com/quickstark)! - Add profile-safe `--codex-home` targeting with `CODEX_HOME` precedence, isolated updater state, and default-profile compatibility.
+
 ## 4.0.2
 
 ### Patch Changes
