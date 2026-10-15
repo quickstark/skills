@@ -1,0 +1,6 @@
+{
+  "baseline-failure.txt": "KNOWN_BASELINE_ISSUE\n",
+  "candidate.txt": "retired candidate\n",
+  "tools/check.mjs": "import fs from 'node:fs';if(!fs.existsSync('candidate.txt')){console.error('NEW_FAILURE: retained external consumer requires candidate.txt');process.exit(2)}console.error('BASELINE_FAILURE: unrelated known defect');process.exit(1);\n",
+  "user-note.txt": "UNTRACKED_USER_WORK\n"
+}

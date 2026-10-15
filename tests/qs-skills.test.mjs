@@ -31,7 +31,7 @@ async function filesRecursively(path) {
 }
 
 test("every public command has matching source, metadata, documentation, and package projection", async () => {
-  assert.equal(PUBLIC_COMMANDS.length, REGISTRY_STATE === "target" ? 38 : 33);
+  assert.equal(PUBLIC_COMMANDS.length, REGISTRY_STATE === "target" ? 39 : 34);
   for (const command of PUBLIC_COMMANDS) {
     const sourceRoot = join(root, command.sourcePath ?? `skills/${command.bucket}/${command.name}`);
     const documentation = join(root, command.documentationPath ?? `docs/${command.bucket}/${command.name}.md`);
@@ -74,7 +74,7 @@ test("direct-chat output is self-contained and concise across the complete comma
 
 test("active repository guidance contains no reporting-service dependency", async () => {
   const activePaths = [
-    "README.md", "AGENTS.md", "CLAUDE.md", "CONTEXT.md",
+    "README.md", "AGENTS.md", ".claude/CLAUDE.md", "CONTEXT.md",
     "docs/architecture.md", "docs/contributing.md", "docs/skill-run-contract.md",
     "docs/pstack/index.md",
   ];

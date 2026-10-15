@@ -1,0 +1,20 @@
+✖ additive specialist release accepts the exact prior catalog and rejects modified prior cache (785.592723ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 882.842106
+
+✖ failing tests:
+
+test at tests/managed-skill-input.test.mjs:19:40
+✖ additive specialist release accepts the exact prior catalog and rejects modified prior cache (785.592723ms)
+  Error: Installed public names differ from the known package catalog.
+      at check (file:///github/skills/scripts/managed-skill-input.mjs:21:63)
+      at buildManagedSkillInput (file:///github/skills/scripts/managed-skill-input.mjs:149:7)
+      at async TestContext.<anonymous> (file:///github/skills/tests/managed-skill-input.test.mjs:158:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

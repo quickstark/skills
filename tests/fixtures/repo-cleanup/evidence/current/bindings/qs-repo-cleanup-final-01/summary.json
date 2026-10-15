@@ -1,0 +1,37 @@
+{
+  "cases": [
+    {
+      "id": "T01-audit-modes",
+      "transportPassed": true
+    },
+    {
+      "id": "T02-clean",
+      "transportPassed": true
+    },
+    {
+      "id": "T03-dependency",
+      "transportPassed": true
+    },
+    {
+      "id": "T04-lock-churn",
+      "transportPassed": true
+    },
+    {
+      "id": "T05-recovery",
+      "transportPassed": true
+    },
+    {
+      "id": "T06-boundaries",
+      "transportPassed": true
+    },
+    {
+      "id": "T07-noop",
+      "transportPassed": true
+    },
+    {
+      "id": "T08-concurrent-guard",
+      "transportPassed": true
+    }
+  ],
+  "behavioralVerdict": "Requires independent action and state review"
+}

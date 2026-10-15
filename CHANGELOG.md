@@ -1,5 +1,15 @@
 # QuickStark Skills changelog
 
+## 4.2.0
+
+### Minor Changes
+
+- Add the explicit `qs-repo-cleanup` specialist for repository hygiene without refactoring. Cover verified-unused code, files, assets and dependencies; disposable generated artifacts; ignore rules; stale documentation; and demonstrably obsolete tests and fixtures. Preserve user changes, credentials, local data, lockfiles, intentional deliverables and historical evidence.
+
+  Move repository guidance to the supported `.claude/CLAUDE.md` location shared through `AGENTS.md`, preserving its contents and strict validation. Include catalog, metadata, provenance, documentation, host projections and behavioral acceptance evidence. Preserve the PS 3.8.0 transition payload.
+
+  Allow unchanged, trusted prior active packages to update when a release adds commands. Retain exact prior Git-tree verification, same-version checks, explicit migration requirements for removed identities, and committed rollout evidence.
+
 ## 4.1.0
 
 ### Minor Changes

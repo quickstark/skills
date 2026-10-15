@@ -147,7 +147,12 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       if (agent === 'codex') check(item.pluginId === `${name}@quickstark` && item.marketplaceName === 'quickstark', 'Native package owner conflicts with the observed QuickStark marketplace.');
       const canonicalPath = agent === 'codex' ? path.join(codexHomeDirectory, 'plugins/cache/quickstark', name, item.version) : item.source.path;
       const payload = await captureManagedSkillPayload(canonicalPath); const observedNames = await publicNames(canonicalPath, payload);
-      check(same(observedNames, [...collection.publicCommands].sort()), 'Installed public names differ from the known package catalog.');
+      // An older active package may lack newly added commands. It must still
+      // match an entire trusted Git tree below; a subset alone proves no ownership.
+      // Removed/renamed commands and the retained PS payload need explicit migration.
+      const additivePrior = item.version !== version && TARGET_SKILL_COLLECTIONS.includes(collection)
+        && observedNames.every((name) => collection.publicCommands.includes(name));
+      check(same(observedNames, [...collection.publicCommands].sort()) || additivePrior, 'Installed public names differ from the known package catalog.');
       const legacy = document.migrations.flatMap((migration) => migration.legacy).find((entry) => entry.kind === 'package' && entry.identity === name);
       const revisions = legacy ? legacy.acceptedPrior.filter((prior) => prior.version === item.version && prior.digests[agent]?.value === payload.payloadDigest.value).map((prior) => prior.revision) : knownRevisions;
       check(revisions.length > 0, 'Retained package version and bytes have no accepted immutable baseline.');

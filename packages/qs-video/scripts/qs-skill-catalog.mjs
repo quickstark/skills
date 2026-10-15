@@ -226,6 +226,22 @@ const V3_ONLY_SKILLS = Object.freeze([
   {
     bucket: "engineering",
     upstreamName: null,
+    name: "qs-repo-cleanup",
+    displayName: "QS Repo: Cleanup",
+    shortDescription: "Audit and clean repository hygiene without refactoring",
+    prompt: "audit this repository for verified hygiene cleanup candidates without refactoring",
+    userInvoked: true,
+    documentationNotes: Object.freeze([
+      "Explicit-only. A bare invocation audits; `action=audit` stays read-only even alongside cleanup language. Clear cleanup intent or `action=clean` authorizes supported hygiene batches.",
+      "Example audit: `$qs-specialists:qs-repo-cleanup target=. action=audit`. Example cleanup: `$qs-specialists:qs-repo-cleanup target=packages/app action=clean`.",
+      "Covers unused private code/assets/dependencies, disposable artifacts, ignore rules, stale documentation, and demonstrably obsolete tests. Missing imports or filenames alone never justify removal.",
+      "Preserves user changes, local data, credentials, lockfiles, intentional deliverables, live tests, and historical evidence. No refactoring, dependency upgrades, hooks, installation, or publication.",
+      "Use `qs-review-code` for a selected live-code refactoring concern and `qs-worktree-cleanup` for worktree removal. Neither runs automatically.",
+    ]),
+  },
+  {
+    bucket: "engineering",
+    upstreamName: null,
     name: "qs-deploy-prompt",
     displayName: "QS Deploy: Prompt",
     shortDescription: "Generate a scoped autonomous deployment prompt",
@@ -308,6 +324,7 @@ const V3_SPECIALIST_COMMAND_DEFINITIONS = Object.freeze([
   ["qs-learn-teach", "learn", 180],
   ["qs-skill-write", "skill", 190],
   ["qs-deploy-prompt", "deploy", 200],
+  ["qs-repo-cleanup", "repo", 210],
 ]);
 
 function defineV3Continuation(
@@ -320,6 +337,12 @@ function defineV3Continuation(
 }
 
 const V3_CONTINUATIONS_BY_NAME = Object.freeze({
+  "qs-repo-cleanup": Object.freeze([
+    defineV3Continuation("qs-review-code", "to assess the separately identified live-code refactoring target", "Use only for a verified concern outside hygiene scope.", { availability: "success" }),
+    defineV3Continuation("qs-plan-clarify", "to resolve the exact cleanup scope or ownership decision", "Use when a material decision prevents safe cleanup.", { recovery: true }),
+    defineV3Continuation("qs-code-debug", "to diagnose the separate pre-existing defect blocking verification", "Do not hand off cleanup regressions that this root can repair.", { recovery: true, availability: "failure" }),
+    defineV3Continuation("qs-flow-handoff", "to preserve the cleanup evidence and concrete external blocker", "Use when another session must resume blocked work."),
+  ]),
   "qs-deploy-prompt": Object.freeze([
     defineV3Continuation("qs-plan-clarify", "to resolve missing scope or deployment authorization", "Use when a material execution input is unresolved.", { availability: "failure", recovery: true }),
     defineV3Continuation("qs-flow-handoff", "to preserve a verified missing execution prerequisite", "Use when host capabilities or credentials block execution readiness.", { availability: "failure", recovery: true }),
@@ -786,6 +809,9 @@ function defineModelGuidance(model, thinking, reason) {
 }
 
 export const MODEL_GUIDANCE_BY_NAME = Object.freeze({
+  "qs-repo-cleanup": defineModelGuidance(
+    "gpt-5.6-sol", "high", "Repository hygiene requires careful usage evidence, preservation, and bounded recovery.",
+  ),
   "qs-help": defineModelGuidance(
     "gpt-5.6-terra", "low", "Workflow routing usually needs quick, focused orientation.",
   ),

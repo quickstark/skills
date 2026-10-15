@@ -14,7 +14,7 @@ transaction adapter exists. It must not silently fall back to the legacy updater
 
 Updates move from a verified repository checkout to one machine. They do not copy
 installed caches back into Git, synchronize machines, or adopt upstream changes.
-The six packages are core `qs-skills` (12 roots), `qs-specialists` (8),
+The six packages are core `qs-skills` (12 roots), `qs-specialists` (9),
 `qs-advanced` (12), `qs-frontend` (4), `qs-video` (1) and `qs-execution` (1).
 
 | Situation | Selection |

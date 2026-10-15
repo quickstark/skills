@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-15T00:29:37.551961+00:00",
+  "acceptance": "AC01-AC20 verified; original failed records retained",
+  "guidanceSHA256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456",
+  "canonicalSkillSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "tests": {
+    "command": "npm test",
+    "exitCode": 0,
+    "passed": 478,
+    "failed": 0,
+    "skipped": 0,
+    "log": "npm-test-after-guidance-repair.log",
+    "logSHA256": "0410908107494cd3a76d502e31d2e8136c1379fb64a169aaab12a26aeca2f967"
+  },
+  "strictValidationRecord": "claude-validation-after-guidance-repair.json",
+  "checks": [
+    {
+      "command": "npm run check:codex",
+      "exitCode": 0,
+      "output": "\n> qs-skills@4.0.2 check:codex\n> node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check\n\nVerified concise v3 documentation for 39 commands and 5 target indexes.\nVerified bounded v3 output contracts for all 39 public commands.\nVerified deterministic active projections for 6 packages across Codex, Claude, and Pi.\nVerified provenance documentation for 72 capabilities.\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "secondSynchronization": {
+    "exitCode": 0,
+    "filesCompared": 12220,
+    "changedPaths": [],
+    "beforeSHA256": "0ff88de4f8ccbce9b2db4e2004055a0c802241149b626d1afbdd9ddfad395010",
+    "afterSHA256": "0ff88de4f8ccbce9b2db4e2004055a0c802241149b626d1afbdd9ddfad395010",
+    "output": "\n> qs-skills@4.0.2 sync:codex\n> node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs && node scripts/sync-upstream-docs.mjs\n\nSynchronized 0 concise v3 documentation pages and indexes.\nSynchronized 0 bounded v3 skill and documentation output contracts.\nGenerated active projections for 6 packages across Codex, Claude, and Pi.\nSynchronized provenance documentation for 72 capabilities.\n"
+  },
+  "limits": "No host installation, commit, push or publication. Canonical cleanup instructions unchanged; existing nine source-bound trials remain applicable. Validator nested-core skill-discovery limitation is recorded in the diagnosis."
+}

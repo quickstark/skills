@@ -28,6 +28,7 @@ Select one route and one copy-ready prompt at most. A primary Help recommendatio
 | qs-learn-teach | qs-specialists | Learn a subject through a guided study plan | `$qs-specialists:qs-learn-teach` | `/qs-learn-teach` | `/skill:qs-learn-teach` |
 | qs-skill-write | qs-specialists | Create and improve focused, reliable AI skills | `$qs-specialists:qs-skill-write` | `/qs-skill-write` | `/skill:qs-skill-write` |
 | qs-deploy-prompt | qs-specialists | Generate a scoped autonomous deployment prompt | `$qs-specialists:qs-deploy-prompt` | `/qs-deploy-prompt` | `/skill:qs-deploy-prompt` |
+| qs-repo-cleanup | qs-specialists | Audit and clean repository hygiene without refactoring | `$qs-specialists:qs-repo-cleanup` | `/qs-repo-cleanup` | `/skill:qs-repo-cleanup` |
 | qs-how | qs-advanced | Explain how a selected subsystem works | `$qs-advanced:qs-how` | `/qs-how` | `/skill:qs-how` |
 | qs-why | qs-advanced | Explain why a behavior or design exists | `$qs-advanced:qs-why` | `/qs-why` | `/skill:qs-why` |
 | qs-blast-radius | qs-advanced | Map the impact of one proposed change | `$qs-advanced:qs-blast-radius` | `/qs-blast-radius` | `/skill:qs-blast-radius` |

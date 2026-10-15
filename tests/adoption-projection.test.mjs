@@ -30,9 +30,9 @@ async function files(root) {
 
 test('target registry owns exactly the specified six collections and rejects missing, duplicate and misowned commands', () => {
   assert.deepEqual(TARGET_SKILL_COLLECTIONS.map((item) => [item.id, item.publicCommands.length]), [
-    ['qs-skills', 12], ['qs-specialists', 8], ['qs-advanced', 12], ['qs-frontend', 4], ['qs-video', 1], ['qs-execution', 1],
+    ['qs-skills', 12], ['qs-specialists', 9], ['qs-advanced', 12], ['qs-frontend', 4], ['qs-video', 1], ['qs-execution', 1],
   ]);
-  assert.equal(TARGET_PUBLIC_COMMANDS.length, 38);
+  assert.equal(TARGET_PUBLIC_COMMANDS.length, 39);
   for (const mutate of [
     (model) => model.publicCommands.pop(),
     (model) => model.publicCommands.push(model.publicCommands[0]),
@@ -77,7 +77,7 @@ test('isolated projections expose only public roots, preserve private dependenci
       }
       if (format !== 'pi') {
         const imported = await run(process.execPath, ['--input-type=module', '-e', 'const m=await import(process.argv[1]); console.log(m.PUBLIC_COMMANDS.length); console.log(m.codexPublicSkillLiteral("qs-visual-parity"));', join(root, 'scripts/skill-collection-registry.mjs')]);
-        assert.equal(imported.stdout.trim(), '38\n$qs-advanced:qs-visual-parity');
+        assert.equal(imported.stdout.trim(), '39\n$qs-advanced:qs-visual-parity');
       }
       if (collection.id === 'qs-frontend') {
         const body = await readFile(join(root, 'skills/qs-design-image-web/SKILL.md'), 'utf8');

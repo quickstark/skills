@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, readdir, stat, lstat, realpath } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -38,12 +38,20 @@ const coreNames = [
 ];
 const specialistNames = [
   "qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-test-author",
-  "qs-test-verify", "qs-learn-teach", "qs-skill-write", "qs-deploy-prompt",
+  "qs-test-verify", "qs-learn-teach", "qs-skill-write", "qs-deploy-prompt", "qs-repo-cleanup",
 ];
 const retiredNames = [
   "qs-plan-explore", "qs-plan-interview", "qs-plan-tickets", "qs-design-domain",
   "qs-design-modules", "qs-design-architecture", "qs-test-tdd",
 ];
+
+test("repository guidance remains shared in Claude's project-instruction location", async () => {
+  const guidance = join(root, ".claude", "CLAUDE.md");
+  assert.equal((await lstat(guidance)).isFile(), true);
+  assert.equal(await realpath(join(root, "AGENTS.md")), guidance);
+  assert.ok((await readFile(guidance, "utf8")).trim().length > 0);
+  await assert.rejects(lstat(join(root, "CLAUDE.md")), { code: "ENOENT" });
+});
 
 async function directories(path) {
   return (await readdir(path, { withFileTypes: true }))
@@ -68,7 +76,7 @@ test("v3 exposes the exact ordered core and specialist command surfaces", () => 
   assert.deepEqual(V3_CORE_SKILLS.map((skill) => skill.name), coreNames);
   assert.deepEqual(V3_SPECIALIST_SKILLS.map((skill) => skill.name), specialistNames);
   assert.deepEqual(SKILLS.map((skill) => skill.name), [...coreNames, ...specialistNames]);
-  assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 20 }, (_, index) => (index + 1) * 10));
+  assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 21 }, (_, index) => (index + 1) * 10));
   assert.deepEqual(V3_INTERNAL_CAPABILITIES.map((item) => item.name), [
     "domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop",
   ]);
@@ -109,7 +117,7 @@ test("Codex projections keep explicit commands visible without weakening other h
   const explicitCommands = PUBLIC_COMMANDS.filter(
     (command) => command.userInvoked || command.disableModelInvocation,
   );
-  assert.equal(explicitCommands.length, REGISTRY_STATE === "target" ? 32 : 27);
+  assert.equal(explicitCommands.length, REGISTRY_STATE === "target" ? 33 : 28);
 
   for (const command of explicitCommands) {
     const sourcePath = command.sourcePath ?? `skills/${command.bucket}/${command.name}`;
@@ -271,6 +279,7 @@ test("execution skills finish authorized code work", async () => {
 
 test("applicable engineering results link governing specs and summarize verified work", () => {
   const expected = [
+    "qs-repo-cleanup",
     "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
     "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
     "qs-flow-triage", "qs-flow-handoff", "qs-plan-research", "qs-design-prototype",

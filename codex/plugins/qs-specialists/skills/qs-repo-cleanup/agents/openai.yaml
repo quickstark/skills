@@ -1,0 +1,4 @@
+interface:
+  display_name: "QS Repo: Cleanup"
+  short_description: "Audit and clean repository hygiene without refactoring"
+  default_prompt: "Use $qs-specialists:qs-repo-cleanup to audit this repository for verified hygiene cleanup candidates without refactoring. QuickStark modes: effort=quick|standard|deep and report=brief|full; defaults are standard and brief. Model selection remains task-level."

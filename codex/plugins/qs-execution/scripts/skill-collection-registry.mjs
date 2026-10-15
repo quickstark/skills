@@ -17,6 +17,7 @@ function freezeRoutes(routes) {
 }
 
 export const SPEC_PROGRESS_COMMAND_NAMES = Object.freeze([
+  "qs-repo-cleanup",
   "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
   "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release",
   "qs-flow-triage", "qs-flow-handoff", "qs-plan-research", "qs-design-prototype",

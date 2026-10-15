@@ -1,0 +1,60 @@
+{
+  "id": "T07-noop",
+  "acceptance": [
+    "AC16",
+    "AC17"
+  ],
+  "mode": "implementation",
+  "before": {
+    "README.md": {
+      "sha256": "b359dac71529557534db6d17d0f6cb6086549886b07c8f5566bb880ae9318005",
+      "bytes": 44
+    },
+    "check.mjs": {
+      "sha256": "31c0efd10ff6c1c8fb3e7a2f1e81ea4683ba7eca511cbb20bc76cbbeed1b716b",
+      "bytes": 21
+    },
+    "docs/adr.md": {
+      "sha256": "9fef57cc2965f9b78d113740312c0b8963ad6424058e19e8dbcae7a7a5735a9f",
+      "bytes": 59
+    },
+    "package.json": {
+      "sha256": "8959fd8c93f891cf980514244403d56b4fffa19a3f171d661306aee24e25e7d3",
+      "bytes": 53
+    }
+  },
+  "after": {
+    "README.md": {
+      "sha256": "b359dac71529557534db6d17d0f6cb6086549886b07c8f5566bb880ae9318005",
+      "bytes": 44
+    },
+    "check.mjs": {
+      "sha256": "31c0efd10ff6c1c8fb3e7a2f1e81ea4683ba7eca511cbb20bc76cbbeed1b716b",
+      "bytes": 21
+    },
+    "docs/adr.md": {
+      "sha256": "9fef57cc2965f9b78d113740312c0b8963ad6424058e19e8dbcae7a7a5735a9f",
+      "bytes": 59
+    },
+    "package.json": {
+      "sha256": "8959fd8c93f891cf980514244403d56b4fffa19a3f171d661306aee24e25e7d3",
+      "bytes": 53
+    }
+  },
+  "outsideBefore": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "outsideAfter": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "sourceSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "fixtureSHA256": "0bb8da4ba9dd6b02f388afcd010845b535acbb5714b4e3a893b5d8769f5ef6c5",
+  "transportPassed": true,
+  "review": "Pending parent review of actual actions and response; transport success is not behavioral acceptance."
+}

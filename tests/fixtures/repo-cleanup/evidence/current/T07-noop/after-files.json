@@ -1,0 +1,6 @@
+{
+  "README.md": "# Maintained repository\nRun node check.mjs.\n",
+  "check.mjs": "console.log('PASS');\n",
+  "docs/adr.md": "# Historical decision\nKeep the simple single-file checker.\n",
+  "package.json": "{\"private\":true,\"scripts\":{\"test\":\"node check.mjs\"}}\n"
+}

@@ -16,7 +16,7 @@ env = dict(os.environ, HOME=str(home), USERPROFILE=str(home), CODEX_HOME=str(hom
            PI_CODING_AGENT_DIR=str(home/'.pi/agent'), PI_OFFLINE='1', PI_TELEMETRY='0')
 packages = ['qs-skills', 'qs-specialists', 'qs-advanced', 'qs-frontend', 'qs-video', 'qs-execution']
 expected = '''qs-help qs-setup qs-plan-clarify qs-plan-roadmap qs-plan-spec qs-code-build qs-code-debug qs-review-code qs-git-merge qs-deploy-release qs-flow-triage qs-flow-handoff
-qs-plan-research qs-design-prototype qs-code-document qs-test-author qs-test-verify qs-learn-teach qs-skill-write qs-deploy-prompt
+qs-plan-research qs-design-prototype qs-code-document qs-test-author qs-test-verify qs-learn-teach qs-skill-write qs-deploy-prompt qs-repo-cleanup
 qs-how qs-why qs-blast-radius qs-runtime-forensics qs-trace-forensics qs-create-verification-skill qs-maintain-verification-skill qs-skill-eval qs-hillclimb qs-visual-parity qs-pr-babysit qs-worktree-cleanup
 qs-design-frontend qs-design-image-web qs-design-image-mobile qs-design-image-to-code qs-video qs-unlazy'''.split()
 record = {'repository': str(repo), 'workspace': str(work), 'home': str(home), 'modelRequests': 0,
@@ -77,7 +77,7 @@ try:
     assert not entries[0].get('errors'),entries[0].get('errors')
     skills=entries[0]['skills']
     qs=[s for s in skills if str(s.get('pluginId','')).endswith('@quickstark')]
-    lengths=[12,8,12,4,1,1]
+    lengths=[12,9,12,4,1,1]
     expected_literals=[];offset=0
     for package,length in zip(packages,lengths):
         expected_literals.extend(package+':'+name for name in expected[offset:offset+length])

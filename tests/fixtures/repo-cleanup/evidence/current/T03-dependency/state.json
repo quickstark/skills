@@ -1,0 +1,92 @@
+{
+  "id": "T03-dependency",
+  "acceptance": [
+    "AC05",
+    "AC06"
+  ],
+  "mode": "implementation",
+  "before": {
+    "ci.yml": {
+      "sha256": "38eb8b80a7f974ee49e9f5b8c0e0609132025426639dba0aff9cb5c0b5ea55bf",
+      "bytes": 17
+    },
+    "config.json": {
+      "sha256": "bfb27b01f0b2823c8fa66199d5b7fee9cb9f8f04e038c0d5ae0c4eb556b1e1f4",
+      "bytes": 68
+    },
+    "docs/retirement.md": {
+      "sha256": "fa17d25ef129911232cac1d0ea35dd079a69d5f8a7c3d838b53785f2598d9fc3",
+      "bytes": 111
+    },
+    "fixture-lock.json": {
+      "sha256": "a28a48359dd099e0d5ae707bc32caeb4696c731d10df4376f3eb1695ff0c9010",
+      "bytes": 146
+    },
+    "package.json": {
+      "sha256": "f1b9eded842282c50546fe0c2f2397b6aff64e40e135850f60c320f277c67752",
+      "bytes": 208
+    },
+    "src/main.mjs": {
+      "sha256": "557b1691927a122d04846c6c064a22f46b9f681c71f138ed7c6b07f66c7fbbb5",
+      "bytes": 50
+    },
+    "tools/check.mjs": {
+      "sha256": "e4a5cb0154186f0819ad07d5a549231257547050dbcd90c175c9948e3b13044e",
+      "bytes": 288
+    },
+    "tools/fixture-pm.mjs": {
+      "sha256": "8994c7fbb6f5f96544a66ac3241c1dce8d13a35ef698e4b9a83c2b86c4575207",
+      "bytes": 280
+    }
+  },
+  "after": {
+    "ci.yml": {
+      "sha256": "38eb8b80a7f974ee49e9f5b8c0e0609132025426639dba0aff9cb5c0b5ea55bf",
+      "bytes": 17
+    },
+    "config.json": {
+      "sha256": "bfb27b01f0b2823c8fa66199d5b7fee9cb9f8f04e038c0d5ae0c4eb556b1e1f4",
+      "bytes": 68
+    },
+    "docs/retirement.md": {
+      "sha256": "fa17d25ef129911232cac1d0ea35dd079a69d5f8a7c3d838b53785f2598d9fc3",
+      "bytes": 111
+    },
+    "fixture-lock.json": {
+      "sha256": "fb0270c54af1b35c6d98c0e93f57a173d32806cf0c2a6817e3271e2907453ed7",
+      "bytes": 117
+    },
+    "package.json": {
+      "sha256": "99c5e54e71d110ecdb6eca0f99a42115bb72c44467042eefeb0b16fa8f133380",
+      "bytes": 174
+    },
+    "src/main.mjs": {
+      "sha256": "557b1691927a122d04846c6c064a22f46b9f681c71f138ed7c6b07f66c7fbbb5",
+      "bytes": 50
+    },
+    "tools/check.mjs": {
+      "sha256": "e4a5cb0154186f0819ad07d5a549231257547050dbcd90c175c9948e3b13044e",
+      "bytes": 288
+    },
+    "tools/fixture-pm.mjs": {
+      "sha256": "8994c7fbb6f5f96544a66ac3241c1dce8d13a35ef698e4b9a83c2b86c4575207",
+      "bytes": 280
+    }
+  },
+  "outsideBefore": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "outsideAfter": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "sourceSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "fixtureSHA256": "33917c04226494701d59e1b38895a926093c8f5b69c0966e85ae1a9fc6b35f3a",
+  "transportPassed": true,
+  "review": "Pending parent review of actual actions and response; transport success is not behavioral acceptance."
+}

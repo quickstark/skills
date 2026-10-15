@@ -1,0 +1,36 @@
+{
+  "id": "T01-audit-modes",
+  "acceptance": [
+    "AC01",
+    "AC17"
+  ],
+  "mode": "response-only",
+  "before": {
+    "sentinel": {
+      "sha256": "d59c2a5f721ce135ce54628b1ad8ad8b8eb26c8bbe2e2abe1cdca97e2d6ab446",
+      "bytes": 9
+    }
+  },
+  "after": {
+    "sentinel": {
+      "sha256": "d59c2a5f721ce135ce54628b1ad8ad8b8eb26c8bbe2e2abe1cdca97e2d6ab446",
+      "bytes": 9
+    }
+  },
+  "outsideBefore": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "outsideAfter": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "sourceSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "fixtureSHA256": "409e5cde5400f4929be3a01bbce95de6357463416f784ac7632cdc8c04622b77",
+  "transportPassed": true,
+  "review": "Pending parent review of actual actions and response; transport success is not behavioral acceptance."
+}

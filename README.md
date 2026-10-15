@@ -1,7 +1,7 @@
 # QuickStark Skills
 
 QuickStark is a collection of concise skills for planning, building, reviewing,
-documenting and delivering work. All 38 public commands use the `qs-` namespace
+documenting and delivering work. All 39 public commands use the `qs-` namespace
 and belong to one of six packages. Fresh setup selects the twelve-command core;
 add optional packages for the workflows you use. Ordinary updates preserve that
 selection. See the [changelog](./CHANGELOG.md) for release history.
@@ -9,14 +9,14 @@ selection. See the [changelog](./CHANGELOG.md) for release history.
 | Package | Public commands | Scope |
 | --- | ---: | --- |
 | `qs-skills` | 12 | Core lifecycle, including Help |
-| `qs-specialists` | 8 | Specialists, including reusable-skill and goal-prompt authoring |
+| `qs-specialists` | 9 | Specialists, including repository hygiene, reusable-skill and goal-prompt authoring |
 | `qs-advanced` | 12 | PS-derived evidence workflows, including dedicated visual parity |
 | `qs-frontend` | 4 | Frontend code, web images/prompts, mobile images/prompts, reference-to-code |
 | `qs-video` | 1 | Video operations backed by 21 private modules and workflows |
 | `qs-execution` | 1 | Substantial-work gates through `qs-unlazy` |
 
 The [collection registry](./scripts/skill-collection-registry.mjs) and its catalogs
-own package membership; 38 is the current total, not a policy cap. Every public
+own package membership; 39 is the current total, not a policy cap. Every public
 root has one package owner; private references are not extra dropdown commands.
 Help can explain optional capabilities,
 but checks actual availability before offering an executable literal and never

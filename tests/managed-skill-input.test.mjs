@@ -194,6 +194,37 @@ nativeTest('ordinary same-selector release update binds saved prior Git tree and
   const inventory=JSON.parse((await runNativePackageCommand('codex',['plugin','list','--json'],args.nativeOptions)).stdout); assert.deepEqual(inventory.installed.map(entry=>[entry.name,entry.version]),[['qs-skills','4.1.0']]);
 });
 
+nativeTest('additive specialist release accepts the exact prior catalog and rejects modified prior cache',async t=>{
+  const args=await fixture(t);
+  const collection=TARGET_SKILL_COLLECTIONS.find(entry=>entry.id==='qs-specialists');
+  const skill='qs-repo-cleanup';
+  const locations=[collection.codexPackageRoot,collection.piPackageRoot].map(relative=>path.join(args.repositoryRoot,relative,'skills',skill));
+  const contents=await Promise.all(locations.map(location=>readFile(path.join(location,'SKILL.md'),'utf8')));
+  for(const location of locations) await rm(location,{recursive:true});
+  await git(args.repositoryRoot,['add','.']); await git(args.repositoryRoot,['commit','--quiet','-m','Synthetic prior specialist catalog']);
+  const priorRevision=(await git(args.repositoryRoot,['rev-parse','HEAD'])).stdout.trim();
+  await runNativePackageCommand('codex',['plugin','add','qs-specialists@quickstark','--json'],args.nativeOptions);
+  await writeJSON(path.join(args.homeDirectory,'.config/quickstark/skills-selection.json'),{schemaVersion:1,targets:{codex:{packages:['qs-specialists'],resources:[],profile:null,additions:[]}},templateRevision:priorRevision,lastSuccessfulTransaction:'synthetic-prior-specialists'});
+  for(let index=0;index<locations.length;index++) { await mkdir(locations[index],{recursive:true});await writeFile(path.join(locations[index],'SKILL.md'),contents[index]); }
+  await writeJSON(path.join(args.repositoryRoot,'package.json'),{name:'isolated-selected-test',version:'4.1.0'});
+  for(const entry of TARGET_SKILL_COLLECTIONS) for(const [relative,file] of [[entry.codexPackageRoot,'.codex-plugin/plugin.json'],[entry.piPackageRoot,'package.json']]) { const location=path.join(args.repositoryRoot,relative,file);const manifest=await readJSON(location);manifest.version='4.1.0';await writeJSON(location,manifest); }
+  await refreshFixtureAudit(args);
+  const before=await captureMigrationPath(args.homeDirectory);
+  const input=await buildManagedSkillInput(args.options);
+  assert.equal(input.observations[0].revision,priorRevision);
+  assert.ok(!input.observations[0].publicSkills.includes(skill));
+  assert.equal((await captureMigrationPath(args.homeDirectory)).contentSha256,before.contentSha256);
+  const oldSkill=path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-specialists/4.0.0/skills/qs-deploy-prompt/SKILL.md');
+  const original=await readFile(oldSkill);await appendFile(oldSkill,'untrusted local edit');
+  await assert.rejects(buildManagedSkillInput(args.options),/trusted prior release tree/);
+  await writeFile(oldSkill,original);
+  const result=await executeManagedSkills({...args.options,action:'update'});assert.equal(result.status,'complete',result.error);
+  const inventory=JSON.parse((await runNativePackageCommand('codex',['plugin','list','--json'],args.nativeOptions)).stdout);
+  assert.deepEqual(inventory.installed.map(entry=>[entry.name,entry.version]),[['qs-specialists','4.1.0']]);
+  assert.ok((await readFile(path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-specialists/4.1.0/skills',skill,'SKILL.md'),'utf8')).includes(`name: ${skill}`));
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
+});
+
 nativeTest('original contributor lock and exact per-host alias derive ownership; changed link and lock fail without mutation',async t=>{
   const args=await fixture(t); const resource=path.join(args.homeDirectory,'.agents/skills/unlazy'); await mkdir(resource,{recursive:true}); await writeFile(path.join(resource,'SKILL.md'),'---\nname: unlazy\ndescription: Synthetic contributor fixture.\n---\nFixture only.\n');
   const digest=(await captureManagedSkillPayload(resource)).payloadDigest;

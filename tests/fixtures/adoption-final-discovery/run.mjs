@@ -59,7 +59,7 @@ try {
   record.nativeVersions={codex:command(['codex','--version']).stdout.trim(),pi:command(['pi','--version']).stdout.trim()};
   command(['python3',join(repo,'tests/fixtures/target-activation-probe/native-discovery.py'),'--repository',repo,'--output',join(out,'native')],{timeout:180000});
   const native=JSON.parse(readFileSync(join(out,'native/result.json')));
-  assert.equal(native.status,'passed');assert.deepEqual(native.counts,{codex:38,pi:38});assert.equal(native.modelRequests,0);
+  assert.equal(native.status,'passed');assert.deepEqual(native.counts,{codex:39,pi:39});assert.equal(native.modelRequests,0);
   assert.deepEqual(native.rpc.codex.requests.map(x=>x.method),['initialize','initialized','skills/list']);
   assert.deepEqual(native.rpc.pi.requests.map(x=>x.type),['get_commands']);
   record.native={counts:native.counts,modelRequests:native.modelRequests,home:native.home};

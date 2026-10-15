@@ -5104,6 +5104,39 @@
       "plannedOwners": [
         "qs-unlazy"
       ]
+    },
+    {
+      "id": "qs:qs-repo-cleanup",
+      "collection": "qs",
+      "currentName": "qs-repo-cleanup",
+      "canonical": {
+        "owner": "qs-repo-cleanup",
+        "path": "skills/engineering/qs-repo-cleanup/SKILL.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-repo-cleanup"
+      ],
+      "role": "public",
+      "legacyIdentities": [
+        "qs-repo-cleanup"
+      ],
+      "disposition": "repository-authored",
+      "sources": [],
+      "derivedDigest": {
+        "algorithm": "sha256",
+        "kind": "file",
+        "value": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4"
+      },
+      "adaptationNotes": "Original QuickStark hygiene-only instructions authored from the confirmed specification. Cortex coverage, repo-hygiene phases and behavior-preserving validation informed requirements; no upstream skill body or helper is copied. Immutable reviewed source/license hashes and rejected behavior are recorded in the linked influence and validation evidence. Existing historical records and notices are preserved.",
+      "validationEvidence": [
+        "docs/specs/quickstark-repo-cleanup.md",
+        "tests/repo-cleanup.test.mjs",
+        "docs/validation/repo-cleanup.md",
+        "tests/fixtures/repo-cleanup/influences.json",
+        "tests/fixtures/repo-cleanup/evidence/current/review.json"
+      ],
+      "plannedOwners": []
     }
   ],
   "target": {
@@ -8169,6 +8202,38 @@
           "algorithm": "sha256",
           "kind": "file",
           "value": "cb7c311fba787902cf0c87bfdc34c82dbb6223cac14b330d0e840533e5a8523c"
+        }
+      },
+      {
+        "id": "target:public:qs-repo-cleanup",
+        "package": "qs-specialists",
+        "name": "qs-repo-cleanup",
+        "role": "public",
+        "path": "skills/engineering/qs-repo-cleanup/SKILL.md",
+        "owners": [
+          "qs-repo-cleanup"
+        ],
+        "baselineIds": [
+          "qs:qs-repo-cleanup"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [
+            "docs/specs/quickstark-repo-cleanup.md",
+            "tests/repo-cleanup.test.mjs",
+            "docs/validation/repo-cleanup.md",
+            "tests/fixtures/repo-cleanup/influences.json",
+            "tests/fixtures/repo-cleanup/evidence/current/review.json",
+            "tests/fixtures/repo-cleanup/evidence/claude-root-diagnosis.json"
+          ],
+          "note": "Uncommitted local implementation: source-bound behavioral evidence and integration results are recorded separately. The original root Claude warning and its guidance-preserving repair are retained in validation evidence. No committed implementation revision, installation, publication, or upstream source adoption is claimed."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4"
         }
       }
     ],
