@@ -1,0 +1,24 @@
+✖ repository guidance remains shared in Claude's project-instruction location (2.906968ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74.534888
+
+✖ failing tests:
+
+test at tests/qs-v3.test.mjs:48:1
+✖ repository guidance remains shared in Claude's project-instruction location (2.906968ms)
+  Error: ENOENT: no such file or directory, lstat '/github/skills/.claude/CLAUDE.md'
+      at async lstat (node:internal/fs/promises:1734:18)
+      at async TestContext.<anonymous> (file:///github/skills/tests/qs-v3.test.mjs:50:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'lstat',
+    path: '/github/skills/.claude/CLAUDE.md'
+  }

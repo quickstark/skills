@@ -27,10 +27,10 @@ test("repository inventory accounts for every canonical skill and internal refer
   const inventory = await validateProgressInventory();
   assert.equal(inventory.standaloneSkills.length, 19);
   assert.equal(inventory.internalReferences.length, 20);
-  assert.equal(inventory.publicSkills.length, REGISTRY_STATE === "target" ? 38 : 33, "explicit target or legacy public inventory");
-  assert.equal(inventory.publicSkills.length + inventory.standaloneSkills.length, REGISTRY_STATE === "target" ? 57 : 52);
+  assert.equal(inventory.publicSkills.length, REGISTRY_STATE === "target" ? 39 : 34, "explicit target or legacy public inventory");
+  assert.equal(inventory.publicSkills.length + inventory.standaloneSkills.length, REGISTRY_STATE === "target" ? 58 : 53);
   assert.equal(inventory.inactiveSkills.length, REGISTRY_STATE === "target" ? 13 : 18, "explicit candidates are inventoried without active exposure");
-  assert.equal(new Set(Object.values(inventory).flat()).size, 90);
+  assert.equal(new Set(Object.values(inventory).flat()).size, 91);
 });
 
 test("every actual canonical skill and helper receives the correct progress contract", async () => {

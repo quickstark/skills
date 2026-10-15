@@ -1,0 +1,132 @@
+{
+  "checkedAt": "2026-10-15T00:27:34.514985+00:00",
+  "version": "2.1.300 (Claude Code)",
+  "results": [
+    {
+      "root": ".",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/.claude-plugin/marketplace.json",
+        "manifest": {
+          "file": "/github/skills/.claude-plugin/marketplace.json",
+          "type": "marketplace",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": [
+          {
+            "file": "/github/skills/README.md",
+            "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later.",
+            "installLine": "/plugin install qs-skills --marketplace quickstark/skills"
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-specialists",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-specialists/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-specialists/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-advanced",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-advanced/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-advanced/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-frontend",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-frontend/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-frontend/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-video",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-video/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-video/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-execution",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-execution/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-execution/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    }
+  ]
+}

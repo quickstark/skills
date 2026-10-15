@@ -2,7 +2,7 @@
 
 `run.mjs` starts the real Codex and Pi clients in a fresh temporary home. It adds
 the six generated local packages, uses Codex `skills/list` and Pi `get_commands`,
-and requires exactly the 38 intended public identities. The only RPC methods are
+and requires exactly the 39 intended public identities. The only RPC methods are
 initialization and enumeration; no model turn is sent. The temporary native home
 is retained and identified in the result. Existing machine settings are untouched.
 

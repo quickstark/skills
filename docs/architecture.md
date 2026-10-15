@@ -2,7 +2,7 @@
 
 ## System at a glance
 
-QuickStark exposes twelve core commands and optional specialist (8), advanced (12), frontend (4), video (1) and execution (1) commands. All public names use QS. Private capabilities preserve the required source workflows without adding dropdown commands. Claude, Codex and Pi projections share catalog membership; selected native transactions currently support Codex and Pi.
+QuickStark exposes twelve core commands and optional specialist (9), advanced (12), frontend (4), video (1) and execution (1) commands. All public names use QS. Private capabilities preserve the required source workflows without adding dropdown commands. Claude, Codex and Pi projections share catalog membership; selected native transactions currently support Codex and Pi.
 
 ```mermaid
 flowchart LR
@@ -40,7 +40,7 @@ Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress
 Each public command belongs to exactly one package:
 
 - `qs-skills`: twelve lifecycle-ordered core commands and four private QS capabilities.
-- `qs-specialists`: eight optional specialist commands.
+- `qs-specialists`: nine optional specialist commands.
 - `qs-advanced`: twelve distinct PS-derived outcomes, sixteen private capabilities and the Lauren Tan notice.
 - `qs-frontend`: four output-specific roots and private design/image references.
 - `qs-video`: one root and 21 private modules/workflows.

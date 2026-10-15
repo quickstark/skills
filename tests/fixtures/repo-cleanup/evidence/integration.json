@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-15T00:13:09.029354+00:00",
+  "baselineRevision": "6bed58bee404ce51c82652621bce5a6465adff09",
+  "sourceSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "checks": [
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 477,
+      "passed": 477,
+      "failed": 0,
+      "skipped": 0,
+      "log": "npm-test.log",
+      "logSHA256": "5c0c5bc60241ffe9024e3cd593a6d7e53641489423191c1d78df8abea68fdc43"
+    },
+    {
+      "command": "npm run check:codex",
+      "exitCode": 0,
+      "output": "\n> qs-skills@4.0.2 check:codex\n> node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check\n\nVerified concise v3 documentation for 39 commands and 5 target indexes.\nVerified bounded v3 output contracts for all 39 public commands.\nVerified deterministic active projections for 6 packages across Codex, Claude, and Pi.\nVerified provenance documentation for 72 capabilities.\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": "node --test tests/repo-cleanup.test.mjs",
+      "exitCode": 0,
+      "tests": 8,
+      "passed": 8,
+      "log": "cleanup-tests.log",
+      "logSHA256": "9110fc9d58505f929b1918b9d262438c6bb1fd81b45f794b9ea0701764ee009b"
+    }
+  ],
+  "behavioralTrials": 9,
+  "acceptance": {
+    "AC01-AC19": "verified within the documented controlled-trial limitations",
+    "AC20": "blocked: existing root Claude strict-validation warning; other required checks pass"
+  },
+  "claudeValidationRecord": "claude-validation.json",
+  "synchronizationRecord": "sync-idempotence.json",
+  "authorizationBoundary": "No host installation, commit, push, or publication. Existing automated installation tests operate only on disposable fixtures."
+}

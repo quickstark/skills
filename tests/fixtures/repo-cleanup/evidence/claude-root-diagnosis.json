@@ -1,0 +1,675 @@
+{
+  "checkedAt": "2026-10-15T00:27:15.883401+00:00",
+  "minimalReproducer": {
+    "version": "2.1.300 (Claude Code)",
+    "results": [
+      {
+        "case": "plugin-without-guidance",
+        "files": {
+          ".claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          }
+        },
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/plugin-without-guidance/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-without-guidance/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "plugin-with-root-guidance",
+        "files": {
+          ".claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          "CLAUDE.md": "# Repository contributor guidance\n"
+        },
+        "target": ".",
+        "exitCode": 1,
+        "report": {
+          "success": false,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-root-guidance/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-root-guidance/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [
+            {
+              "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-root-guidance/CLAUDE.md",
+              "type": "plugin",
+              "errors": [],
+              "warnings": [
+                {
+                  "path": "root",
+                  "message": "CLAUDE.md at the plugin root is not loaded as project context. To ship context with your plugin, use a skill (skills/<name>/SKILL.md) instead.",
+                  "code": null
+                }
+              ],
+              "notes": [],
+              "gatingHooks": []
+            }
+          ],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "plugin-with-empty-root-guidance",
+        "files": {
+          ".claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          "CLAUDE.md": ""
+        },
+        "target": ".",
+        "exitCode": 1,
+        "report": {
+          "success": false,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-empty-root-guidance/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-empty-root-guidance/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [
+            {
+              "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-empty-root-guidance/CLAUDE.md",
+              "type": "plugin",
+              "errors": [],
+              "warnings": [
+                {
+                  "path": "root",
+                  "message": "CLAUDE.md at the plugin root is not loaded as project context. To ship context with your plugin, use a skill (skills/<name>/SKILL.md) instead.",
+                  "code": null
+                }
+              ],
+              "notes": [],
+              "gatingHooks": []
+            }
+          ],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "plugin-with-symlink-guidance",
+        "files": {
+          ".claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          "AGENTS.md": "# Repository contributor guidance\n",
+          "CLAUDE.md": {
+            "symlink": "AGENTS.md"
+          }
+        },
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-symlink-guidance/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-symlink-guidance/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "plugin-with-dot-claude-guidance",
+        "files": {
+          ".claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          ".claude/CLAUDE.md": "# Repository contributor guidance\n",
+          "AGENTS.md": {
+            "symlink": ".claude/CLAUDE.md"
+          }
+        },
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-dot-claude-guidance/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/plugin-with-dot-claude-guidance/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "manifest-only-with-root-guidance",
+        "files": {
+          ".claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          "CLAUDE.md": "# Repository contributor guidance\n"
+        },
+        "target": ".claude-plugin/plugin.json",
+        "exitCode": 1,
+        "report": {
+          "success": false,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/manifest-only-with-root-guidance/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/manifest-only-with-root-guidance/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [
+            {
+              "file": "/tmp/qs-claude-validation-p4aqy4j_/manifest-only-with-root-guidance/CLAUDE.md",
+              "type": "plugin",
+              "errors": [],
+              "warnings": [
+                {
+                  "path": "root",
+                  "message": "CLAUDE.md at the plugin root is not loaded as project context. To ship context with your plugin, use a skill (skills/<name>/SKILL.md) instead.",
+                  "code": null
+                }
+              ],
+              "notes": [],
+              "gatingHooks": []
+            }
+          ],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "marketplace-with-root-guidance",
+        "files": {
+          ".claude-plugin/marketplace.json": {
+            "name": "diagnostic-marketplace",
+            "description": "Synthetic marketplace validation fixture",
+            "owner": {
+              "name": "Fixture"
+            },
+            "plugins": [
+              {
+                "name": "diagnostic-fixture",
+                "source": "./plugins/fixture"
+              }
+            ]
+          },
+          "plugins/fixture/.claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          "CLAUDE.md": "# Repository contributor guidance\n"
+        },
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/marketplace-with-root-guidance/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/marketplace-with-root-guidance/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "marketplace-with-dot-claude-guidance",
+        "files": {
+          ".claude-plugin/marketplace.json": {
+            "name": "diagnostic-marketplace",
+            "description": "Synthetic marketplace validation fixture",
+            "owner": {
+              "name": "Fixture"
+            },
+            "plugins": [
+              {
+                "name": "diagnostic-fixture",
+                "source": "./plugins/fixture"
+              }
+            ]
+          },
+          "plugins/fixture/.claude-plugin/plugin.json": {
+            "name": "diagnostic-fixture",
+            "version": "1.0.0",
+            "description": "Synthetic validation fixture",
+            "author": {
+              "name": "Fixture"
+            }
+          },
+          ".claude/CLAUDE.md": "# Repository contributor guidance\n"
+        },
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-validation-p4aqy4j_/marketplace-with-dot-claude-guidance/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-validation-p4aqy4j_/marketplace-with-dot-claude-guidance/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      }
+    ]
+  },
+  "repositoryCopy": {
+    "version": "2.1.300 (Claude Code)",
+    "root": "/tmp/qs-claude-root-copy-2r6lbgqh",
+    "guidanceSourceSHA256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456",
+    "guidanceProposalSHA256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456",
+    "agentsLink": ".claude/CLAUDE.md",
+    "results": [
+      {
+        "case": "original-layout",
+        "target": ".",
+        "exitCode": 1,
+        "report": {
+          "success": false,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/CLAUDE.md",
+              "type": "plugin",
+              "errors": [],
+              "warnings": [
+                {
+                  "path": "root",
+                  "message": "CLAUDE.md at the plugin root is not loaded as project context. To ship context with your plugin, use a skill (skills/<name>/SKILL.md) instead.",
+                  "code": null
+                }
+              ],
+              "notes": [],
+              "gatingHooks": []
+            }
+          ],
+          "advice": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/README.md",
+              "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. In it, replace <owner>/<repo> with the repository that holds the marketplace.",
+              "installLine": "/plugin install qs-skills --marketplace <owner>/<repo>"
+            }
+          ]
+        },
+        "stderr": ""
+      },
+      {
+        "case": "supported-project-guidance-location",
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/README.md",
+              "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. In it, replace <owner>/<repo> with the repository that holds the marketplace.",
+              "installLine": "/plugin install qs-skills --marketplace <owner>/<repo>"
+            }
+          ]
+        },
+        "stderr": ""
+      },
+      {
+        "case": "optional-package",
+        "target": "packages/qs-specialists",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-specialists/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-specialists/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "optional-package",
+        "target": "packages/qs-advanced",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-advanced/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-advanced/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "optional-package",
+        "target": "packages/qs-frontend",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-frontend/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-frontend/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "optional-package",
+        "target": "packages/qs-video",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-video/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-video/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "optional-package",
+        "target": "packages/qs-execution",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-execution/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-execution/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": []
+        },
+        "stderr": ""
+      },
+      {
+        "case": "strict-unknown-manifest-field-control",
+        "target": ".",
+        "exitCode": 1,
+        "report": {
+          "success": false,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [
+              {
+                "path": "plugins[0] plugin.json \u2192 qsDiagnosticUnknown",
+                "message": "Unknown field 'qsDiagnosticUnknown'. Claude Code ignores it at load time.",
+                "code": null
+              }
+            ],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/plugin.json",
+              "type": "plugin",
+              "errors": [],
+              "warnings": [
+                {
+                  "path": "qsDiagnosticUnknown",
+                  "message": "Unknown field 'qsDiagnosticUnknown'. Claude Code ignores it at load time.",
+                  "code": null
+                }
+              ],
+              "notes": [],
+              "gatingHooks": []
+            }
+          ],
+          "advice": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/README.md",
+              "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. In it, replace <owner>/<repo> with the repository that holds the marketplace.",
+              "installLine": "/plugin install qs-skills --marketplace <owner>/<repo>"
+            }
+          ]
+        },
+        "stderr": ""
+      },
+      {
+        "case": "invalid-registered-skill-control",
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/README.md",
+              "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. In it, replace <owner>/<repo> with the repository that holds the marketplace.",
+              "installLine": "/plugin install qs-skills --marketplace <owner>/<repo>"
+            }
+          ]
+        },
+        "stderr": ""
+      },
+      {
+        "case": "restored-proposal",
+        "target": ".",
+        "exitCode": 0,
+        "report": {
+          "success": true,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/.claude-plugin/marketplace.json",
+            "type": "marketplace",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [],
+          "advice": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/README.md",
+              "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. In it, replace <owner>/<repo> with the repository that holds the marketplace.",
+              "installLine": "/plugin install qs-skills --marketplace <owner>/<repo>"
+            }
+          ]
+        },
+        "stderr": ""
+      },
+      {
+        "case": "invalid-flat-specialist-skill-control",
+        "target": "packages/qs-specialists",
+        "exitCode": 1,
+        "report": {
+          "success": false,
+          "strict": true,
+          "target": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-specialists/.claude-plugin/plugin.json",
+          "manifest": {
+            "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-specialists/.claude-plugin/plugin.json",
+            "type": "plugin",
+            "errors": [],
+            "warnings": [],
+            "notes": [],
+            "gatingHooks": []
+          },
+          "contents": [
+            {
+              "file": "/tmp/qs-claude-root-copy-2r6lbgqh/packages/qs-specialists/skills/qs-repo-cleanup/SKILL.md",
+              "type": "skill",
+              "errors": [
+                {
+                  "path": "name",
+                  "message": "name must be a string, got object.",
+                  "code": null
+                }
+              ],
+              "warnings": [],
+              "notes": [],
+              "gatingHooks": []
+            }
+          ],
+          "advice": []
+        },
+        "stderr": ""
+      }
+    ]
+  },
+  "conclusion": "Claude 2.1.300 warns on a regular CLAUDE.md at a plugin root, including an empty file. Moving identical project guidance to the documented .claude/CLAUDE.md location and retargeting AGENTS.md resolves the root warning without changing manifests, strict mode, or guidance content. A root CLAUDE.md symlink also evades the warning but is not the selected repair.",
+  "coverageLimitation": "Invalid nested core skill frontmatter was not caught by root plugin validate, while invalid flat specialist frontmatter was caught. Unknown root plugin manifest fields still fail strict validation. Existing repository source/projection tests remain required; validator success is not exhaustive body or installed-host acceptance.",
+  "sources": [
+    "https://code.claude.com/docs/en/plugins/cli-reference#validate-a-directory",
+    "https://code.claude.com/docs/en/memory"
+  ],
+  "scope": "Only local validation and disposable copies; no installation, commit, push, or publication.",
+  "actualRepair": {
+    "guidancePath": ".claude/CLAUDE.md",
+    "guidanceSHA256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456",
+    "agentsSymlink": ".claude/CLAUDE.md",
+    "strictResults": "claude-validation-after-guidance-repair.json",
+    "regressionTest": "tests/qs-v3.test.mjs: repository guidance remains shared in Claude's project-instruction location"
+  }
+}

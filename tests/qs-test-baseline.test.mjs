@@ -19,6 +19,7 @@ import {
 } from "../scripts/qs-test-runner.mjs";
 
 const expectedTestFiles = [
+  "tests/repo-cleanup.test.mjs",
   "tests/qs-v3.test.mjs",
   "tests/progress-reporting.test.mjs",
   "tests/goal-workflow.test.mjs",

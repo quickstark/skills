@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-15T00:07:08.476350+00:00",
+  "results": [
+    {
+      "root": ".",
+      "exitCode": 1,
+      "output": "Validating marketplace manifest: /github/skills/.claude-plugin/marketplace.json\n\nValidating plugin: /github/skills/CLAUDE.md\n\n\u26a0 Found 1 warning:\n\n  \u276f root: CLAUDE.md at the plugin root is not loaded as project context. To ship context with your plugin, use a skill (skills/<name>/SKILL.md) instead.\n\n\u2139 Advice (does not change the verdict):\n\n  \u276f /github/skills/README.md: This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later.\n      /plugin install qs-skills --marketplace quickstark/skills\n\n\u2718 Validation failed (--strict treats warnings as errors)\n"
+    },
+    {
+      "root": "packages/qs-specialists",
+      "exitCode": 0,
+      "output": "Validating plugin manifest: /github/skills/packages/qs-specialists/.claude-plugin/plugin.json\n\n\u2714 Validation passed\n"
+    },
+    {
+      "root": "packages/qs-advanced",
+      "exitCode": 0,
+      "output": "Validating plugin manifest: /github/skills/packages/qs-advanced/.claude-plugin/plugin.json\n\n\u2714 Validation passed\n"
+    },
+    {
+      "root": "packages/qs-frontend",
+      "exitCode": 0,
+      "output": "Validating plugin manifest: /github/skills/packages/qs-frontend/.claude-plugin/plugin.json\n\n\u2714 Validation passed\n"
+    },
+    {
+      "root": "packages/qs-video",
+      "exitCode": 0,
+      "output": "Validating plugin manifest: /github/skills/packages/qs-video/.claude-plugin/plugin.json\n\n\u2714 Validation passed\n"
+    },
+    {
+      "root": "packages/qs-execution",
+      "exitCode": 0,
+      "output": "Validating plugin manifest: /github/skills/packages/qs-execution/.claude-plugin/plugin.json\n\n\u2714 Validation passed\n"
+    }
+  ]
+}

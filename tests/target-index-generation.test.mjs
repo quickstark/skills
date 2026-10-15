@@ -13,7 +13,7 @@ const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const run = promisify(execFile);
 const engineering = [
   'qs-help','qs-setup','qs-plan-clarify','qs-plan-roadmap','qs-plan-spec','qs-code-build','qs-code-debug','qs-review-code','qs-git-merge','qs-deploy-release','qs-flow-triage',
-  'qs-plan-research','qs-design-prototype','qs-code-document','qs-test-author','qs-test-verify','qs-deploy-prompt',
+  'qs-plan-research','qs-design-prototype','qs-code-document','qs-test-author','qs-test-verify','qs-deploy-prompt','qs-repo-cleanup',
   'qs-how','qs-why','qs-blast-radius','qs-runtime-forensics','qs-trace-forensics','qs-create-verification-skill','qs-maintain-verification-skill','qs-skill-eval','qs-hillclimb','qs-visual-parity','qs-pr-babysit','qs-worktree-cleanup',
   'qs-design-frontend','qs-design-image-web','qs-design-image-mobile','qs-design-image-to-code','qs-unlazy',
 ];
@@ -35,10 +35,10 @@ async function snapshot(root) {
   await visit(root); return result;
 }
 
-test('target indexes expose exactly the independently expected 38 names in their lifecycle buckets',()=>{
+test('target indexes expose exactly the independently expected 39 names in their lifecycle buckets',()=>{
   const documents=renderTargetIndexDocuments(); assert.deepEqual([...documents.keys()],indexPaths);
   const actual=[...namesIn(documents.get(indexPaths[0])),...namesIn(documents.get(indexPaths[1])),...namesIn(documents.get(indexPaths[2]))];
-  assert.equal(actual.length,38); assert.equal(new Set(actual).size,38);
+  assert.equal(actual.length,39); assert.equal(new Set(actual).size,39);
   assert.deepEqual(namesIn(documents.get(indexPaths[0])),engineering); assert.deepEqual(namesIn(documents.get(indexPaths[1])),productivity); assert.deepEqual(namesIn(documents.get(indexPaths[2])),video);
   for(const path of indexPaths.slice(0,3)) {
     const text=documents.get(path); assert.doesNotMatch(text,/\]\([^)]*(?:internal|modules|pstack\/commands|personal|deprecated|in-progress)[^)]*SKILL\.md\)/);
@@ -60,7 +60,7 @@ test('historical PS pages map every original identity to exact QS successor with
   assert.match(using,/live symptom.*existing artifact/);assert.match(using,/creates a missing.*reconciles an existing/);assert.match(using,/immutable visual baseline/);assert.match(using,/sixteen advanced private capabilities/);assert.match(using,/qs-deploy-prompt/);assert.match(using,/qs-skill-write/);assert.match(using,/deployment goal prompt without executing it/);assert.match(using,/reusable skill\/prompt writing/);assert.match(index,/qs-skill-write/);
 });
 test('target generation checks real local identity and every index link, preserves completion tails, and detects missing or wrong links without writes',async t=>{
-  const root=await fixture(t);const result=await syncV3Documentation({root,registryState:'target'});assert.equal(result.commands,38);assert.equal(result.indexes,5);assert.equal(result.updated,43);
+  const root=await fixture(t);const result=await syncV3Documentation({root,registryState:'target'});assert.equal(result.commands,39);assert.equal(result.indexes,5);assert.equal(result.updated,44);
   for(const path of indexPaths.slice(0,3)) for(const name of namesIn(await readFile(join(root,path),'utf8'))) assert.match(await readFile(join(dirname(join(root,path)),name,'SKILL.md'),'utf8'),new RegExp(`^name: ${name}$`,'m'));
   const commandDoc=join(root,'docs/engineering/qs-code-build.md');await writeFile(commandDoc,(await readFile(commandDoc,'utf8'))+'retained generated completion contract\n');
   const stable=await snapshot(root);assert.equal((await syncV3Documentation({root,registryState:'target',check:true})).updated,0);assert.deepEqual(await snapshot(root),stable);
@@ -86,7 +86,7 @@ test('legacy generation leaves its existing indexes and PS guides unchanged; imp
   const root=await fixture(t);
   for(const path of indexPaths) {await mkdir(dirname(join(root,path)),{recursive:true});await writeFile(join(root,path),`Existing legacy content for ${path}\n`);}
   const before=Object.fromEntries(await Promise.all(indexPaths.map(async path=>[path,await readFile(join(root,path),'utf8')])));
-  const result=await syncV3Documentation({root,registryState:'legacy'});assert.equal(result.commands,33);assert.equal(result.indexes,0);assert.equal(result.updated,33);
+  const result=await syncV3Documentation({root,registryState:'legacy'});assert.equal(result.commands,34);assert.equal(result.indexes,0);assert.equal(result.updated,34);
   for(const path of indexPaths) assert.equal(await readFile(join(root,path),'utf8'),before[path]);
   assert.equal((await syncV3Documentation({root,registryState:'legacy',check:true})).updated,0);
   const imported=await run(process.execPath,['--input-type=module','-e',`await import(${JSON.stringify(new URL('../scripts/sync-v3-docs.mjs',import.meta.url).href)})`],{cwd:root});assert.equal(imported.stdout,'');

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed4.0.2pre-publication acceptance, exact Git-content/executable source bindings and projection snapshots. Reported image-font exception only; original failed grades unchanged; B baseline retained. No actual-machine success preclaimed.",
+  "scope": "Reviewed 4.2.0 local release acceptance on published 4.1.0, preserving original decisions and limits. New cleanup behavior uses unchanged source-bound trials; fresh projection/native/helper and updater regression evidence is recorded. No committed-release or actual-machine rollout success is claimed.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -38,7 +38,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-02": {
@@ -70,7 +76,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-03": {
@@ -102,7 +114,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-04": {
@@ -134,7 +152,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-05": {
@@ -168,7 +192,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-06": {
@@ -202,7 +232,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-07": {
@@ -235,7 +271,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-08": {
@@ -268,7 +310,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-09": {
@@ -301,7 +349,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-10": {
@@ -344,7 +398,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-11": {
@@ -376,7 +436,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-12": {
@@ -410,7 +476,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-13": {
@@ -445,7 +517,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-14": {
@@ -480,7 +558,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-15": {
@@ -513,7 +597,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-16": {
@@ -549,7 +639,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-17": {
@@ -584,7 +680,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-18": {
@@ -616,7 +718,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-19": {
@@ -650,7 +758,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-20": {
@@ -687,7 +801,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-21": {
@@ -720,7 +840,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-22": {
@@ -753,7 +879,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-23": {
@@ -771,7 +903,7 @@
         "config/skill-provenance.json",
         "README.md",
         "docs/validation/readme-transition-portability-review.md",
-        "CLAUDE.md",
+        ".claude/CLAUDE.md",
         "CONTEXT.md",
         "docs/architecture.md",
         "docs/contributing.md",
@@ -797,7 +929,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     },
     "AC-24": {
@@ -830,7 +968,13 @@
         "tests/fixtures/adoption-release-4.0.2/check.log",
         "tests/fixtures/adoption-release-4.0.2/tests.log",
         "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-        "tests/fixtures/adoption-capacity-review/review.json"
+        "tests/fixtures/adoption-capacity-review/review.json",
+        "tests/fixtures/adoption-release-4.2.0/review.md",
+        "tests/fixtures/adoption-release-4.2.0/check.log",
+        "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+        "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+        "tests/fixtures/adoption-release-4.2.0/tests.log"
       ]
     }
   },
@@ -868,6 +1012,7 @@
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
+        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
         "scripts/migration-filesystem.mjs",
         "scripts/migration-native-packages.mjs",
@@ -892,8 +1037,7 @@
         "skills/engineering/qs-review-code",
         "skills/engineering/qs-setup",
         "skills/internal",
-        "skills/productivity/qs-flow-handoff",
-        "scripts/managed-skill-paths.mjs"
+        "skills/productivity/qs-flow-handoff"
       ],
       "criteria": [
         "AC-01",
@@ -939,7 +1083,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -967,7 +1117,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -995,7 +1151,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1023,7 +1185,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         },
@@ -1053,7 +1221,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1081,7 +1255,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -1109,7 +1289,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1137,7 +1323,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         }
@@ -1150,6 +1342,7 @@
         "qs:qs-design-prototype",
         "qs:qs-learn-teach",
         "qs:qs-plan-research",
+        "qs:qs-repo-cleanup",
         "qs:qs-skill-write",
         "qs:qs-test-author",
         "qs:qs-test-verify"
@@ -1168,6 +1361,7 @@
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
+        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
         "scripts/migration-filesystem.mjs",
         "scripts/migration-native-packages.mjs",
@@ -1184,11 +1378,11 @@
         "skills/engineering/qs-deploy-prompt",
         "skills/engineering/qs-design-prototype",
         "skills/engineering/qs-plan-research",
+        "skills/engineering/qs-repo-cleanup",
         "skills/engineering/qs-test-author",
         "skills/engineering/qs-test-verify",
         "skills/productivity/qs-learn-teach",
-        "skills/productivity/qs-skill-write",
-        "scripts/managed-skill-paths.mjs"
+        "skills/productivity/qs-skill-write"
       ],
       "criteria": [
         "AC-01",
@@ -1232,7 +1426,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1260,7 +1460,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -1288,7 +1494,16 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/repo-cleanup.test.mjs",
+              "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
+              "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1316,7 +1531,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         },
@@ -1346,7 +1567,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1374,7 +1601,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -1402,7 +1635,16 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/repo-cleanup.test.mjs",
+              "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
+              "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1430,7 +1672,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         }
@@ -1481,6 +1729,7 @@
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
+        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
         "scripts/migration-filesystem.mjs",
         "scripts/migration-native-packages.mjs",
@@ -1505,8 +1754,7 @@
         "skills/engineering/qs-trace-forensics",
         "skills/engineering/qs-visual-parity",
         "skills/engineering/qs-why",
-        "skills/engineering/qs-worktree-cleanup",
-        "scripts/managed-skill-paths.mjs"
+        "skills/engineering/qs-worktree-cleanup"
       ],
       "criteria": [
         "AC-01",
@@ -1551,7 +1799,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1579,7 +1833,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -1607,7 +1867,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1635,7 +1901,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         },
@@ -1665,7 +1937,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1693,7 +1971,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -1721,7 +2005,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1749,7 +2039,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         }
@@ -1792,6 +2088,7 @@
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
+        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
         "scripts/migration-filesystem.mjs",
         "scripts/migration-native-packages.mjs",
@@ -1808,8 +2105,7 @@
         "skills/engineering/qs-design-image-mobile",
         "skills/engineering/qs-design-image-to-code",
         "skills/engineering/qs-design-image-web",
-        "skills/frontend",
-        "scripts/managed-skill-paths.mjs"
+        "skills/frontend"
       ],
       "criteria": [
         "AC-01",
@@ -1854,7 +2150,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1882,7 +2184,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -1910,7 +2218,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1938,7 +2252,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         },
@@ -1968,7 +2288,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -1996,7 +2322,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -2024,7 +2356,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2052,7 +2390,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         }
@@ -2106,6 +2450,7 @@
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
+        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
         "scripts/migration-filesystem.mjs",
         "scripts/migration-native-packages.mjs",
@@ -2118,8 +2463,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/video-skill-catalog.mjs",
-        "skills/video/qs-video",
-        "scripts/managed-skill-paths.mjs"
+        "skills/video/qs-video"
       ],
       "criteria": [
         "AC-01",
@@ -2165,7 +2509,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -2193,7 +2543,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -2221,7 +2577,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2249,7 +2611,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "video-runtime": {
@@ -2280,7 +2648,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         },
@@ -2310,7 +2684,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -2338,7 +2718,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -2366,7 +2752,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2394,7 +2786,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "video-runtime": {
@@ -2425,7 +2823,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         }
@@ -2451,6 +2855,7 @@
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
+        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
         "scripts/migration-filesystem.mjs",
         "scripts/migration-native-packages.mjs",
@@ -2463,8 +2868,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/video-skill-catalog.mjs",
-        "skills/engineering/qs-unlazy",
-        "scripts/managed-skill-paths.mjs"
+        "skills/engineering/qs-unlazy"
       ],
       "criteria": [
         "AC-01",
@@ -2507,7 +2911,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -2535,7 +2945,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -2563,7 +2979,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2591,7 +3013,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "unlazy-runtime": {
@@ -2620,7 +3048,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         },
@@ -2650,7 +3084,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "notices": {
@@ -2678,7 +3118,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "behavior": {
@@ -2706,7 +3152,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2734,7 +3186,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           },
           "unlazy-runtime": {
@@ -2763,7 +3221,13 @@
               "tests/fixtures/adoption-release-4.0.2/check.log",
               "tests/fixtures/adoption-release-4.0.2/tests.log",
               "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
-              "tests/fixtures/adoption-capacity-review/review.json"
+              "tests/fixtures/adoption-capacity-review/review.json",
+              "tests/fixtures/adoption-release-4.2.0/review.md",
+              "tests/fixtures/adoption-release-4.2.0/check.log",
+              "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
         }
@@ -2773,11 +3237,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "81fa957f891883dd1265375cd3fafff823b61b9b3c096d1ac1cfd6eaa89b40ba"
+      "contentSha256": "c4235f77c055567bd447d758502a0b4615a614f8c0dd6fb4bf6e99b7bc841481"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "e65678ba4dddce20cb333d3d0815df7b63b8d4d712f14e5eec808aa49315e683"
+      "contentSha256": "fdd14bb3327b05648c82463b60179d59da41c265e68f0c0809d261dbabcb6d08"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -2789,7 +3253,7 @@
     },
     "config/skill-provenance.json": {
       "kind": "file",
-      "contentSha256": "d6da3a396d70a11929f8edae817750197ea53f62f9f0e21ae8d134727e1282f6"
+      "contentSha256": "40aae24e4259860a6356ef59e405b856b259d064ef3275816d61a8ed07f3f85a"
     },
     "docs/skill-run-contract.md": {
       "kind": "file",
@@ -2797,7 +3261,7 @@
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "ba0f7913f62c1a208f2ee80d5f0a1465a72976088afd7c9713df7e9ef6f94ef4"
+      "contentSha256": "392af82c9a88a5e19691b48edd01396dad71cf8a0c131116d8bd7a883eade29e"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -2817,15 +3281,19 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "e691c77c1c9546c97cefd17452d74a73fb1acf5cdeb53f6c004622eca0306c08"
+      "contentSha256": "be0f5c97a06ee2396c6cf5626cd2d77443b2fbc518b7159071d696ac731f5e6e"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
-      "contentSha256": "42100a274ef195a0d0e14a4d832bbdebf4dc27f2329f1ee530ba53f9af58fd4d"
+      "contentSha256": "cdbc0e4ce8e104aab1627ede2c0ec483e0c586991210ffe85584487ee9eff6bf"
+    },
+    "scripts/managed-skill-paths.mjs": {
+      "kind": "file",
+      "contentSha256": "4f43e0ac5a837ff4f423a8f3a64e6c164b32494b03674bb3fb6b27a81aebec5e"
     },
     "scripts/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "7c1c9a807c41c605a13c67792899e1f2ae7f164a2a9262134554ba42bdb59ed3"
+      "contentSha256": "148ef833e86b5b6c75ba3c00e901d32cf77c19c60f8c28b019b137f67b9aa901"
     },
     "scripts/migration-filesystem.mjs": {
       "kind": "file",
@@ -2853,11 +3321,11 @@
     },
     "scripts/qs-skill-catalog.mjs": {
       "kind": "file",
-      "contentSha256": "fc1ea55de0d181ff7f2f8af978f4e873b3eccf577472fc5dba798766b025bf70"
+      "contentSha256": "e4be4fb90fccaf2776377be846882f4be133e4d6ba6bab19614574d97b872eb1"
     },
     "scripts/skill-collection-registry.mjs": {
       "kind": "file",
-      "contentSha256": "a3589b1cfdc51af9af66aad36e1385d0dae1c1db1b4d7ef238b50abf79bcdf6d"
+      "contentSha256": "cbdbd033e239a503f6b527c31d3feb5ca331e3da2f5d7ae4fba651a90dbe38ca"
     },
     "scripts/skill-migrations.mjs": {
       "kind": "file",
@@ -2893,7 +3361,7 @@
     },
     "skills/engineering/qs-help": {
       "kind": "directory",
-      "contentSha256": "c0c41f12f0c233a28f20ea2c665ee1b8c9798e0169b28ac154d30a1d2e292bc0"
+      "contentSha256": "c2f7b87697d060d213ff43378277abf4e2192aa03a52a26cea2a7c4bce553331"
     },
     "skills/engineering/qs-plan-clarify": {
       "kind": "directory",
@@ -2925,15 +3393,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "62d54601eb82419f7905c1d80e1ce254c66335bd41d89efb262aef32fa4b2084"
+      "contentSha256": "44c20740a5cb3797e6cf960a18e2f8359eb349c88fb1ce0b64d8e76916d24b49"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "c693429a066ab7a20545a61d5a2c6d89b08e4d53620bc96eec7515dab8295e83"
+      "contentSha256": "e64c7aa1c07080ce9b8caf51954fb7162b0e9ea1d3bf47f3866d03a162f7e433"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "4065fba023b4cd6e5ed74c99a75c46e8d8dfc21a49670a1ba2b7455cb2bd79c7"
+      "contentSha256": "1ce366bb06eddb47b4a27d7cee364739a93bbc98746ef4a412736af823adc15e"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -2950,6 +3418,10 @@
     "skills/engineering/qs-plan-research": {
       "kind": "directory",
       "contentSha256": "54a41173ed9b15e1169b4b475a2efd192fc007f95f674ac9cb7bdb5fe603ed1b"
+    },
+    "skills/engineering/qs-repo-cleanup": {
+      "kind": "directory",
+      "contentSha256": "d2f201d66cfbd202d36cb492ce7ce88777b365c7c1146ba360d8670bfaab179d"
     },
     "skills/engineering/qs-test-author": {
       "kind": "directory",
@@ -2969,15 +3441,15 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "10e589580ccb7abbb1f931afea835ce18c6588229fe6a15267e640209093aa7f"
+      "contentSha256": "cc12c6fde6b44db46e574274620aeef1d6a8082eb3e4e0c9157434b873b8dce3"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "3337deac279d7de417b66e336f31723cfd4d639924cd0d32ed8115bd421be6a4"
+      "contentSha256": "340e4e979e7ff67dee3518e0a51b37351a9568bfbd3a24c48d79d2ea193a373d"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "01c9db036a4ded0ccac3d5a8eb24a6c2cfb1cdba2afb3c4d393f41795027f7f4"
+      "contentSha256": "4d13b1e231dcda5b21e43bb565e8cc3053f41bab6250081860d36b76de1d0e10"
     },
     "skills/advanced": {
       "kind": "directory",
@@ -3033,15 +3505,15 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "5e25d122b963d22697f6964613e30ca0adad2bb6b6e49eaea732c4a5596327f0"
+      "contentSha256": "bd0d63996ca6d89b8e8df9d2001e8fa3a215321bfd6d8a0707b313ccab99ee34"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "870fb3325759d09f032db75079837d9eb80615702156d9f870ae8c2451ed8f82"
+      "contentSha256": "0dc7f0a8ff523b2bd696b583708bc6e2e7a5a87e9401402a71aae4aeb120ab3a"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "ceeb0cb2ef84e3abf407e16b92ef90625ac50ba0d07c80722d56017ba07ab248"
+      "contentSha256": "b49dcfe2661e96ab874099c097c724e131ad6dc16340392e531c9e4e4bd4cbe1"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
@@ -3065,15 +3537,15 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "94b93f693831e2504ece3999604ae67a04f4b552539c66d3eb76d9e77568ef69"
+      "contentSha256": "dc8cba0e5b9e213e12b4e9bbd16ef62fca9ae8779f1f0bae1e06dfc597c12029"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "d2e6fd5d8b2a45e0a890692d819a73d7e7644289299e974e6c7267be4c028651"
+      "contentSha256": "06d51fed7dd295c2ce7f50b2ad1ded35f1d54c6f0d6f96c1cbc485cf2f15d551"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "538a1f66273dd520b87480ec9768091e1fe13fad03811353e5cc9fa0d6776d52"
+      "contentSha256": "9d8b8be7ab31cec0041ff457cb179b639f8397fe6dc0af8dabb48fad0fd4b732"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -3081,29 +3553,25 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "850ea839c7568590f0296eaee79eaee60df424cccd41d195f7373abeaac83c4a"
+      "contentSha256": "872c0a92008d502f7272b3c9b7d43a8dc0b64704ccb135ce6f49f5e8a809b105"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "76ebb35c3c858cc16c63fe1942c90d9cb215e254776399c148b20e03b5cc12d4"
+      "contentSha256": "b3b02ad79239cd9a83f8c88057c9a75be1bca9134f61cadf452c3e6a8c737596"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "8ef0116f11b2ba760687def885774b1306b3594eb05fb1805521c73038bb23c1"
+      "contentSha256": "1b3c4ce035c244dc2e4cf0d3802274eeb5508509fe114fa56575510768c9b3eb"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
       "contentSha256": "6008c2ff39db96c5997f47d749105682930483223dc1a610281cc6a135008308"
-    },
-    "scripts/managed-skill-paths.mjs": {
-      "kind": "file",
-      "contentSha256": "b52241e5d3d59361c737f52ff103e3c901eb98d7db5f71e66b770a1ae6326fbe"
     }
   },
   "evidence": {
     "tests/skill-provenance.test.mjs": {
       "path": "tests/skill-provenance.test.mjs",
-      "sha256": "1f9e8855f30fac2a09030e629be60a775a201231de9221ea415d22f4d95eb6f8"
+      "sha256": "8af05d59cd0000d72ccc6b55df7ef66c3ff815b059f40ef5f66bcff87e2b8590"
     },
     "config/skill-migrations.json": {
       "path": "config/skill-migrations.json",
@@ -3111,67 +3579,67 @@
     },
     "tests/adoption-projection.test.mjs": {
       "path": "tests/adoption-projection.test.mjs",
-      "sha256": "b6b5fe2536a3ac1e4a86d463693f4dff1a69092c7e8f91d09f80a298c033c0fc"
-    },
-    "tests/fixtures/adoption-final-target/final-check.log": {
-      "path": "tests/fixtures/adoption-final-target/final-check.log",
-      "sha256": "e3e6975b10108e0882a5a9ada89fee9f922f0ef4f14a9e3fee77764c51fd99b1"
+      "sha256": "f919013f642695b8b2a1ef3d307ecaaadf6706cf7a94b5b72e1919633be32c44"
     },
     "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json": {
       "path": "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
       "sha256": "4a0a069c564ff24fdf4c1766b31dd8e14a1afd2972f5e0a19f39265af7255967"
     },
+    "tests/fixtures/adoption-final-target/final-check.log": {
+      "path": "tests/fixtures/adoption-final-target/final-check.log",
+      "sha256": "e3e6975b10108e0882a5a9ada89fee9f922f0ef4f14a9e3fee77764c51fd99b1"
+    },
     "tests/fixtures/adoption-final-target/criterion-review.json": {
       "path": "tests/fixtures/adoption-final-target/criterion-review.json",
       "sha256": "c089412290f27e3d260141f66f6d8e9848281128b788c17ccc171b80659df77d"
-    },
-    "tests/fixtures/adoption-provenance-final/review.json": {
-      "path": "tests/fixtures/adoption-provenance-final/review.json",
-      "sha256": "72cc0f35253e7ffc1e8e8fb697209ea08dcbc918fb4814e2b77fe9f286b2fc62"
     },
     "tests/fixtures/adoption-final-target/final-tests.log": {
       "path": "tests/fixtures/adoption-final-target/final-tests.log",
       "sha256": "e51ca228fd827617c6afa61cd12f61c05bee4dba8baea442bab5371d8a41bb84"
     },
-    "tests/fixtures/adoption-provenance-final/decisions.json": {
-      "path": "tests/fixtures/adoption-provenance-final/decisions.json",
-      "sha256": "b0332e63750805ade86435c71ff37983f7770e311e1b62f9716ec7d3ab23839d"
-    },
-    "tests/fixtures/adoption-release-4.0.0/tests.log": {
-      "path": "tests/fixtures/adoption-release-4.0.0/tests.log",
-      "sha256": "a5bc62a992de0a079268b3da820439b47e3bdd5e11c31787b513c2cd8ebd7af8"
+    "tests/fixtures/adoption-provenance-final/review.json": {
+      "path": "tests/fixtures/adoption-provenance-final/review.json",
+      "sha256": "72cc0f35253e7ffc1e8e8fb697209ea08dcbc918fb4814e2b77fe9f286b2fc62"
     },
     "tests/fixtures/adoption-release-4.0.0/check.log": {
       "path": "tests/fixtures/adoption-release-4.0.0/check.log",
       "sha256": "ff737c75a7a86342b3e2184bf1cb4e2d8efdb6b62d1d0aa51693adbd5b691e7a"
     },
+    "tests/fixtures/adoption-provenance-final/decisions.json": {
+      "path": "tests/fixtures/adoption-provenance-final/decisions.json",
+      "sha256": "b0332e63750805ade86435c71ff37983f7770e311e1b62f9716ec7d3ab23839d"
+    },
     "tests/fixtures/adoption-native-overlap-repair/README.md": {
       "path": "tests/fixtures/adoption-native-overlap-repair/README.md",
       "sha256": "8760048cc8fa653674dbf1217687c5ce6946c1b1d247749c8e49286119957c3d"
     },
-    "tests/fixtures/adoption-native-overlap-repair/after.log": {
-      "path": "tests/fixtures/adoption-native-overlap-repair/after.log",
-      "sha256": "71ad6b023c73eb77f183c9d98cc9ac6db9da17e587a1fa2ed5d45db20bb1ed0d"
-    },
-    "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log": {
-      "path": "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
-      "sha256": "60ff84c5366892ff277e8680c8b59d3db3e403bd2f95eede9d957cb3b9c54c43"
+    "tests/fixtures/adoption-release-4.0.0/tests.log": {
+      "path": "tests/fixtures/adoption-release-4.0.0/tests.log",
+      "sha256": "a5bc62a992de0a079268b3da820439b47e3bdd5e11c31787b513c2cd8ebd7af8"
     },
     "tests/fixtures/adoption-native-overlap-repair/full-tests.log": {
       "path": "tests/fixtures/adoption-native-overlap-repair/full-tests.log",
       "sha256": "c2b06f02fbae7b4ab4fdee8a2a0811eddb6eabead4241f25a20ffffa90732ddc"
     },
+    "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log": {
+      "path": "tests/fixtures/adoption-native-overlap-repair/portable-audit-after.log",
+      "sha256": "60ff84c5366892ff277e8680c8b59d3db3e403bd2f95eede9d957cb3b9c54c43"
+    },
+    "tests/fixtures/adoption-native-overlap-repair/after.log": {
+      "path": "tests/fixtures/adoption-native-overlap-repair/after.log",
+      "sha256": "71ad6b023c73eb77f183c9d98cc9ac6db9da17e587a1fa2ed5d45db20bb1ed0d"
+    },
     "tests/fixtures/adoption-native-overlap-repair/final-check.log": {
       "path": "tests/fixtures/adoption-native-overlap-repair/final-check.log",
       "sha256": "ff737c75a7a86342b3e2184bf1cb4e2d8efdb6b62d1d0aa51693adbd5b691e7a"
     },
-    "tests/fixtures/adoption-native-overlap-repair/final-tests.log": {
-      "path": "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
-      "sha256": "bbabb9805592c309fc11adfa0a7512ade2a817dab64e9a5108aecff2769ac46b"
-    },
     "tests/fixtures/adoption-native-overlap-review/resolution.json": {
       "path": "tests/fixtures/adoption-native-overlap-review/resolution.json",
       "sha256": "ce4ebe82d10ff7c7c8a9e42580526bb1ac3bee4144559415303a1667e6e87d0d"
+    },
+    "tests/fixtures/adoption-native-overlap-repair/final-tests.log": {
+      "path": "tests/fixtures/adoption-native-overlap-repair/final-tests.log",
+      "sha256": "bbabb9805592c309fc11adfa0a7512ade2a817dab64e9a5108aecff2769ac46b"
     },
     "tests/fixtures/adoption-release-4.0.1/check.log": {
       "path": "tests/fixtures/adoption-release-4.0.1/check.log",
@@ -3181,37 +3649,57 @@
       "path": "tests/fixtures/adoption-release-4.0.1/tests.log",
       "sha256": "7aea2f28eb1909be331b9144af3301ccc1e8a2372a3059eb977e563defeff424"
     },
-    "tests/fixtures/adoption-capacity-repair/README.md": {
-      "path": "tests/fixtures/adoption-capacity-repair/README.md",
-      "sha256": "d3504f73476684d94cdf601799115f44d2f3cabad99e2721badc7f7471a5f5c7"
-    },
     "tests/fixtures/adoption-capacity-repair/measured-plan.json": {
       "path": "tests/fixtures/adoption-capacity-repair/measured-plan.json",
       "sha256": "18920f370ef14cd4c9586424670048594655c50d6361c6c7747705c931eacda8"
     },
-    "tests/fixtures/adoption-release-4.0.2/check.log": {
-      "path": "tests/fixtures/adoption-release-4.0.2/check.log",
-      "sha256": "f872f35d258ce0befc2bbd013ef623800b846b7b7ea9d6264cdceb71db76c71d"
+    "tests/fixtures/adoption-capacity-repair/README.md": {
+      "path": "tests/fixtures/adoption-capacity-repair/README.md",
+      "sha256": "d3504f73476684d94cdf601799115f44d2f3cabad99e2721badc7f7471a5f5c7"
     },
     "tests/fixtures/adoption-capacity-repair/full-tests.log": {
       "path": "tests/fixtures/adoption-capacity-repair/full-tests.log",
       "sha256": "18a6e31ee86630c4b356cc86d09625c1be5eb4f6117fa3ed7776a5b2d877f837"
     },
-    "tests/fixtures/adoption-capacity-review/review.json": {
-      "path": "tests/fixtures/adoption-capacity-review/review.json",
-      "sha256": "46aa88b64295280aa9290322f1780491d443771d6e40b06f4571c728706904aa"
+    "tests/fixtures/adoption-release-4.0.2/check.log": {
+      "path": "tests/fixtures/adoption-release-4.0.2/check.log",
+      "sha256": "f872f35d258ce0befc2bbd013ef623800b846b7b7ea9d6264cdceb71db76c71d"
     },
     "tests/fixtures/adoption-release-4.0.2/tests.log": {
       "path": "tests/fixtures/adoption-release-4.0.2/tests.log",
       "sha256": "4e3fbf7b75bde6ff3b67e324cd6a9b539b6fc86a458f30ec25874560269573a0"
     },
-    "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
-      "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
-      "sha256": "3ffdc8065d684ac3542adee13232d658a2451bcb65fbdca1c26b189cd154c774"
+    "tests/fixtures/adoption-capacity-review/review.json": {
+      "path": "tests/fixtures/adoption-capacity-review/review.json",
+      "sha256": "46aa88b64295280aa9290322f1780491d443771d6e40b06f4571c728706904aa"
+    },
+    "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json": {
+      "path": "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+      "sha256": "ad16a17c7c41db83812d658db3d53b041467bbef088168fe957832a1f26ec4f0"
+    },
+    "tests/fixtures/adoption-release-4.2.0/review.md": {
+      "path": "tests/fixtures/adoption-release-4.2.0/review.md",
+      "sha256": "d278ce8d99114a4f840b014ca691cb0ca2a203d83ad16557554a72377cbaa8d2"
+    },
+    "tests/fixtures/adoption-release-4.2.0/claude-strict.json": {
+      "path": "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+      "sha256": "49ae0076d4cd27e9289a19737fe00b80939d287be4822e3a36a47718afe4ea0d"
+    },
+    "tests/fixtures/adoption-release-4.2.0/check.log": {
+      "path": "tests/fixtures/adoption-release-4.2.0/check.log",
+      "sha256": "cd03f21d0302f64a41a4a01a64f3d2f3a8fc9d99003eda6621b5b6277e6c94b4"
+    },
+    "tests/fixtures/adoption-release-4.2.0/tests.log": {
+      "path": "tests/fixtures/adoption-release-4.2.0/tests.log",
+      "sha256": "89dc1a5f2b523b24dc25811d01561fbd0ec3d4f486bd8416183dd9383d384aa2"
     },
     "config/skill-provenance.json": {
       "path": "config/skill-provenance.json",
-      "sha256": "78071146a590ac6a6fb225ef942a4e0a89c63ef53d412cdc0fee8a19508e966d"
+      "sha256": "cae127e9a5ffca80aae22fa2aa46ffd7230d218c2e76008a2fd7bff4a99a9bb1"
+    },
+    "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
+      "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
+      "sha256": "3ffdc8065d684ac3542adee13232d658a2451bcb65fbdca1c26b189cd154c774"
     },
     "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/release-4.0.0/result.json",
@@ -3224,6 +3712,10 @@
     "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/release-4.0.2/result.json",
       "sha256": "294409165c15146eb106c28d827f616e4ba9c0c9f61847adbf09a2698ae6e86e"
+    },
+    "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json": {
+      "path": "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+      "sha256": "960fe5293169eb49040183932dffeca3011f2048823abbff74f010848e56419d"
     },
     "tests/fixtures/adoption-behavior-review/current-01-review.json": {
       "path": "tests/fixtures/adoption-behavior-review/current-01-review.json",
@@ -3281,10 +3773,6 @@
       "path": "docs/specs/quickstark-upstream-adoption-font-amendment.md",
       "sha256": "456821cee367a135236a47379a8df002e9d8a6b51e7e3974bbf8ba38b8fc720b"
     },
-    "tests/fixtures/frontend-adoption-v3-image-resolution/README.md": {
-      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/README.md",
-      "sha256": "7e882be771e3702ba96a7aa28c9888ad3d67a8df6bf8ae64efff2d53a1b54ca1"
-    },
     "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json": {
       "path": "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
       "sha256": "003c7c52ee3b889a03f52a5e84a7f3979a27a0ce6fae0b042f59a43ff2e4e8d2"
@@ -3293,13 +3781,17 @@
       "path": "tests/fixtures/frontend-mobile-repair/README.md",
       "sha256": "41ccc1e72181e33c32e30baa7f59eefa76baf4b9744551f02b5452e818369889"
     },
-    "tests/fixtures/frontend-mobile-repair/plan.json": {
-      "path": "tests/fixtures/frontend-mobile-repair/plan.json",
-      "sha256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c"
+    "tests/fixtures/frontend-adoption-v3-image-resolution/README.md": {
+      "path": "tests/fixtures/frontend-adoption-v3-image-resolution/README.md",
+      "sha256": "7e882be771e3702ba96a7aa28c9888ad3d67a8df6bf8ae64efff2d53a1b54ca1"
     },
     "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json": {
       "path": "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
       "sha256": "4b87f9d5643a4a74701f4bfa33949155167252a0148c03bfaa7ce03b37171453"
+    },
+    "tests/fixtures/frontend-mobile-repair/plan.json": {
+      "path": "tests/fixtures/frontend-mobile-repair/plan.json",
+      "sha256": "93e2e0542c7be75701fd6e587dba96b6b2286d7e2a052fe0e067121009026e9c"
     },
     "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json": {
       "path": "tests/fixtures/frontend-mobile-repair-review/review-82f1387ba536341b.json",
@@ -3313,13 +3805,13 @@
       "path": "tests/fixtures/frontend-mobile-repair-results/archive.json",
       "sha256": "04a50581e447c4c326bea2c35e150bf0f1bfac1dbb9ae0e3f0ffa8ae402c7321"
     },
-    "tests/fixtures/frontend-mobile-repair-review/parent-review.json": {
-      "path": "tests/fixtures/frontend-mobile-repair-review/parent-review.json",
-      "sha256": "b8ed659343589d5e9b128eec6e9544e0115eb4a1a2995e28db43a25264b15757"
-    },
     "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json": {
       "path": "tests/fixtures/frontend-mobile-repair-review/review-951aedc03bf706f9.json",
       "sha256": "dab4bb55ce889b95b056ec963bc8232d31b038a7b412d9529390683f368affa4"
+    },
+    "tests/fixtures/frontend-mobile-repair-review/parent-review.json": {
+      "path": "tests/fixtures/frontend-mobile-repair-review/parent-review.json",
+      "sha256": "b8ed659343589d5e9b128eec6e9544e0115eb4a1a2995e28db43a25264b15757"
     },
     "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json": {
       "path": "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
@@ -3327,19 +3819,27 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "1b1940472c365cd3818e5965cabb8554805c57c38602afab5d509373de2d0613"
+      "sha256": "a5521f445c23dceae7a69cb12ae47efc16bbcff17274e62c350399f297c4bc19"
+    },
+    "tests/helpers/fixture-home-state.mjs": {
+      "path": "tests/helpers/fixture-home-state.mjs",
+      "sha256": "c8a8ab661b14fca646b8fb39dd2a6e83111c929882ad9cf4d40e8efb6a0264ee"
+    },
+    "docs/validation/validation-host-portability-review.md": {
+      "path": "docs/validation/validation-host-portability-review.md",
+      "sha256": "5df4668567f58c88ea13aaebcd96b70614aeed2b6909023c5406c6b1ea0638f1"
     },
     "tests/fixtures/target-activation-probe/README.md": {
       "path": "tests/fixtures/target-activation-probe/README.md",
       "sha256": "3d866c3d6494d10c6b02a76837ebf1abedc00ea59cf9329f46bf9c9ba35e7554"
     },
-    "tests/migration-filesystem.test.mjs": {
-      "path": "tests/migration-filesystem.test.mjs",
-      "sha256": "76d1cadaf2e61805ca77bd4bdc2f398984747cb0206b7e8486c56a052fe5e6b7"
-    },
     "tests/migration-owned-paths.test.mjs": {
       "path": "tests/migration-owned-paths.test.mjs",
       "sha256": "de97f396de85d631b34b4de5eecb650f4f3147fe218231ad377cb05bf49d8622"
+    },
+    "tests/migration-filesystem.test.mjs": {
+      "path": "tests/migration-filesystem.test.mjs",
+      "sha256": "76d1cadaf2e61805ca77bd4bdc2f398984747cb0206b7e8486c56a052fe5e6b7"
     },
     "tests/migration-transaction.test.mjs": {
       "path": "tests/migration-transaction.test.mjs",
@@ -3361,13 +3861,13 @@
       "path": "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
       "sha256": "e227d3ea7626cbe59eddb0d6de1cb8580d7e6b28534e1eb6588948671b964990"
     },
-    "tests/fixtures/adoption-video-native-results/parent-review.json": {
-      "path": "tests/fixtures/adoption-video-native-results/parent-review.json",
-      "sha256": "ea88a1d23439eb2ad3c84ef2daf29a633ae684f9d458123e6cf889b72d914bbe"
-    },
     "tests/fixtures/adoption-video-native-results/REVIEW.md": {
       "path": "tests/fixtures/adoption-video-native-results/REVIEW.md",
       "sha256": "a122989b0179677be6da686f6a8a08df19faa802b9d27295293a7663f4988f31"
+    },
+    "tests/fixtures/adoption-video-native-results/parent-review.json": {
+      "path": "tests/fixtures/adoption-video-native-results/parent-review.json",
+      "sha256": "ea88a1d23439eb2ad3c84ef2daf29a633ae684f9d458123e6cf889b72d914bbe"
     },
     "tests/execution-candidate.test.mjs": {
       "path": "tests/execution-candidate.test.mjs",
@@ -3381,37 +3881,25 @@
       "path": "tests/fixtures/target-index-generation/evidence/parent-review.json",
       "sha256": "ce6e4501554638545ae27fcde9104025bbe10266914dfd6ec3f7b8fe84d86fcb"
     },
-    "CLAUDE.md": {
-      "path": "CLAUDE.md",
-      "sha256": "07c442155c5f4c960e81b3e008a8494e0969b1ab277e308cb6c947da64d63271"
-    },
-    "tests/helpers/fixture-home-state.mjs": {
-      "path": "tests/helpers/fixture-home-state.mjs",
-      "sha256": "c8a8ab661b14fca646b8fb39dd2a6e83111c929882ad9cf4d40e8efb6a0264ee"
-    },
-    "docs/validation/validation-host-portability-review.md": {
-      "path": "docs/validation/validation-host-portability-review.md",
-      "sha256": "5df4668567f58c88ea13aaebcd96b70614aeed2b6909023c5406c6b1ea0638f1"
-    },
     "README.md": {
       "path": "README.md",
-      "sha256": "5182aa3b05a3acc275c7038815c0ae8d6727ff9a67b7f56560db8d3b9f4f27d3"
-    },
-    "docs/validation/readme-transition-portability-review.md": {
-      "path": "docs/validation/readme-transition-portability-review.md",
-      "sha256": "b3e474c9c3061905401b08f35f17e8f8e7354840bd9bd231adb6846c7f7b7940"
+      "sha256": "6d7c92ac6cf0ce283016dfed374690edde2b696bae03b7c4e753d777fe6c4dc5"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
-      "sha256": "48450c3460b6a595bc7eb6bea2ad936a229633e3285bf1cd13bedbe31f1c9de2"
+      "sha256": "9d726faacc42121abb9abbcbfacee5c8e2b11a8f7bf6e8dbcc7caa336d7ecf57"
+    },
+    ".claude/CLAUDE.md": {
+      "path": ".claude/CLAUDE.md",
+      "sha256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
-      "sha256": "4d36c349369e86bcfd5472807f204a9272dfc0786cb086bf7145e18d20277ae1"
+      "sha256": "91d66feca54b53a85ff70d4d14182cd086d00ee37256c7b567404116836a12f4"
     },
     "docs/contributing.md": {
       "path": "docs/contributing.md",
-      "sha256": "b4c67f9212561a19b2a421058ab730179c058f99e63c6266b1e778739a3a4cef"
+      "sha256": "a9787346d15686488e028041a81a23dbcd5800c3f48bc2c5c8359e7111e8ba11"
     },
     "docs/personal-skills.md": {
       "path": "docs/personal-skills.md",
@@ -3419,7 +3907,11 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "30674a0d8cbdc0250164efe872514330cd0357d3527f01c7ac54c3704119dd03"
+      "sha256": "4885a82ddadcc64fbecdc4edc11056436b2a80fcb7215c667973721b10a76f75"
+    },
+    "docs/validation/readme-transition-portability-review.md": {
+      "path": "docs/validation/readme-transition-portability-review.md",
+      "sha256": "b3e474c9c3061905401b08f35f17e8f8e7354840bd9bd231adb6846c7f7b7940"
     },
     "docs/upstream/README.md": {
       "path": "docs/upstream/README.md",
@@ -3433,13 +3925,25 @@
       "path": "scripts/adoption-acceptance.mjs",
       "sha256": "374a969dfae5d4107ec7dc2d12c8d412bb3bdcbff016acf00819909aca3ca059"
     },
+    "scripts/managed-skill-input.mjs": {
+      "path": "scripts/managed-skill-input.mjs",
+      "sha256": "c758f984c9df524644d29d93c1f546e3d9482e74df07c8e8f1cf4c369d4b9c2f"
+    },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
       "sha256": "7680be871677cdb2a89c394ab3c8cb6f1b3ebb5f1ead40afed84b572903132a7"
     },
-    "scripts/managed-skill-input.mjs": {
-      "path": "scripts/managed-skill-input.mjs",
-      "sha256": "e691c77c1c9546c97cefd17452d74a73fb1acf5cdeb53f6c004622eca0306c08"
+    "tests/repo-cleanup.test.mjs": {
+      "path": "tests/repo-cleanup.test.mjs",
+      "sha256": "fa7497a640d0eadeb3a9fa40f934104b136ebdbbeb80883f54f7ea2b63921fde"
+    },
+    "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json": {
+      "path": "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
+      "sha256": "5b080afdeceb0a83ebdf18ca3d9d57e9110efc637a1615611e500da358f781f9"
+    },
+    "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json": {
+      "path": "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json",
+      "sha256": "9b3266bd0e53500be4361a173985179ea0aafdf94d10555ea0d23e30eebc420c"
     },
     "skills/video/qs-video/references/runtime-compatibility.md": {
       "path": "skills/video/qs-video/references/runtime-compatibility.md",

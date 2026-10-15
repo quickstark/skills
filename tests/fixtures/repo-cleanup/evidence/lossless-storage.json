@@ -1,0 +1,65 @@
+{
+  "reason": "Preserve original raw capture bytes while storing whitespace-safe JSON; decode text as UTF-8 to reproduce the original capture and hash.",
+  "records": [
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T01-audit-modes/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T01-audit-modes/response.json",
+      "originalSHA256": "e9c0a3bac0d31a7f986d15e43ce301fbb1d074445d465f13eb7a4c060269b120"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T02-clean/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T02-clean/response.json",
+      "originalSHA256": "84d553eb88294bcab249a0e0341c50028e9f03d74e8d56a34e7584fbc8786757"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T03-dependency/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T03-dependency/response.json",
+      "originalSHA256": "b8625a86159ca0291442f58e4978248d830bcc5cac377a4f186719781b18eb17"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T04-lock-churn/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T04-lock-churn/response.json",
+      "originalSHA256": "fbffe7032fa2f046f3e87c161e6c01d648595e0d302dba051a2e7497bdbca5fc"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T05-recovery/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T05-recovery/response.json",
+      "originalSHA256": "583f9a9713acb18c6a00d2e9d2ac23c1abbe7d5980da66a415351e221325dd7b"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T06-boundaries/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T06-boundaries/response.json",
+      "originalSHA256": "656c1ea4e031a93912d27eecde69f011483e281afce80442aeb7d009ac9d429c"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T07-noop/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T07-noop/response.json",
+      "originalSHA256": "923e5e91ba51e11933f18352d7cc185a3cfe2234921608096afaae0c9a0e118e"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T08-concurrent-guard/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T08-concurrent-guard/response.json",
+      "originalSHA256": "c802d9621ad32cf42a3f881e3fcc88979ef8ffb3d444e57a2efcfeb5cdbcbcf6"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/current/T09-retention-decisions/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/current/T09-retention-decisions/response.json",
+      "originalSHA256": "5a042dce7c6bb36c6257a09fd6a707af1b70d82ae9675decaa7ac1a037244112"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/rejected-initial/T02-clean/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/rejected-initial/T02-clean/response.json",
+      "originalSHA256": "a25e2fbfb688d4128d87c7a7fc2b7709ec4b025313d88184b793193cfe850433"
+    },
+    {
+      "originalPath": "tests/fixtures/repo-cleanup/evidence/rejected-initial/T04-lock-churn/response.md",
+      "storedPath": "tests/fixtures/repo-cleanup/evidence/rejected-initial/T04-lock-churn/response.json",
+      "originalSHA256": "513c914fd60bf9112e6c84dc62d9c2918dfa7178c162faf30f51200106ce3e39"
+    },
+    {
+      "originalPath": "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.log",
+      "storedPath": "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
+      "originalSHA256": "d4c399187f8eecf3e9f04d24c82369d7f1d8a346843b9223b90caa73f9354889"
+    }
+  ]
+}

@@ -142,11 +142,11 @@ test('rendering is deterministic, read-only and exposes revision distinctions', 
 });
 
 test('baseline identities and all original113 sources survive target mapping unchanged', () => {
-  assert.equal(baseline.capabilities.length, 71);
+  assert.equal(baseline.capabilities.length, 72);
   assert.equal(baseline.capabilities.filter(entry => entry.role === 'private').length, 20);
   assert.equal(baseline.capabilities.reduce((sum, entry) => sum + entry.sources.length, 0), 113);
-  assert.equal(createHash('sha256').update(JSON.stringify(baseline.capabilities)).digest('hex'), '8cabb127d00e5f0c3c4233bad9586335dd2d982d2eb8980f134e2ff3c4316da0');
-  assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'public').length, 38);
+  assert.equal(createHash('sha256').update(JSON.stringify(baseline.capabilities.filter(entry => entry.id !== 'qs:qs-repo-cleanup'))).digest('hex'), '8cabb127d00e5f0c3c4233bad9586335dd2d982d2eb8980f134e2ff3c4316da0');
+  assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'public').length, 39);
   assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'private').length, 51);
   const help = baseline.target.capabilities.find(entry => entry.name === 'qs-help');
   assert.deepEqual(help.baselineIds, ['contributor:find-skills', 'ps:ps-help', 'qs:qs-help']);
@@ -212,7 +212,7 @@ test('complete private closure rejects missing, duplicate, changed and unindexed
     const liveManifestPath = path.join(temporary, 'config/personal-skills.manifest.json');
     const liveManifest = JSON.parse(readFileSync(liveManifestPath));
     liveManifest.resources = []; writeFileSync(liveManifestPath, JSON.stringify(liveManifest));
-    assert.equal(getProvenanceInventory(temporary).length, 71, 'retired live manifest must not erase baseline identities');
+    assert.equal(getProvenanceInventory(temporary).length, 72, 'retired live manifest must not erase baseline identities');
     assert.equal(validateSkillProvenance(baseline, { root: temporary, checkFiles: false }).valid, true, 'historical source digest authority survives live manifest retirement');
     const initialErrors = validateSkillProvenance(baseline, { root: temporary }).errors;
     assert.equal(initialErrors.filter(error => error.startsWith('qs-unlazy:') || error.startsWith('qs-video:')).length, 0, 'copied closure starts valid before controls');

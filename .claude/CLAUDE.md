@@ -1,7 +1,7 @@
 # QuickStark skill collection
 
-The target consists of six QS packages and 38 public commands: core 12,
-specialists 8, advanced 12, frontend 4, video 1 and execution 1. Core and
+The target consists of six QS packages and 39 public commands: core 12,
+specialists 9, advanced 12, frontend 4, video 1 and execution 1. Core and
 specialist names and membership are retained. Catalog membership is authoritative;
 the total is a checked consequence, not a policy cap.
 

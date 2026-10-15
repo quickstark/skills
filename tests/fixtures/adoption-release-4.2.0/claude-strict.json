@@ -1,0 +1,128 @@
+[
+  {
+    "root": ".",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/.worktrees/qs-release-4.2.0/.claude-plugin/marketplace.json",
+      "manifest": {
+        "file": "/github/.worktrees/qs-release-4.2.0/.claude-plugin/marketplace.json",
+        "type": "marketplace",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [
+        {
+          "file": "/github/.worktrees/qs-release-4.2.0/README.md",
+          "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. In it, replace <owner>/<repo> with the repository that holds the marketplace.",
+          "installLine": "/plugin install qs-skills --marketplace <owner>/<repo>"
+        }
+      ]
+    },
+    "stderr": ""
+  },
+  {
+    "root": "packages/qs-specialists",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/.worktrees/qs-release-4.2.0/packages/qs-specialists/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/.worktrees/qs-release-4.2.0/packages/qs-specialists/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": []
+    },
+    "stderr": ""
+  },
+  {
+    "root": "packages/qs-advanced",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/.worktrees/qs-release-4.2.0/packages/qs-advanced/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/.worktrees/qs-release-4.2.0/packages/qs-advanced/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": []
+    },
+    "stderr": ""
+  },
+  {
+    "root": "packages/qs-frontend",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/.worktrees/qs-release-4.2.0/packages/qs-frontend/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/.worktrees/qs-release-4.2.0/packages/qs-frontend/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": []
+    },
+    "stderr": ""
+  },
+  {
+    "root": "packages/qs-video",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/.worktrees/qs-release-4.2.0/packages/qs-video/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/.worktrees/qs-release-4.2.0/packages/qs-video/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": []
+    },
+    "stderr": ""
+  },
+  {
+    "root": "packages/qs-execution",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/.worktrees/qs-release-4.2.0/packages/qs-execution/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/.worktrees/qs-release-4.2.0/packages/qs-execution/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": []
+    },
+    "stderr": ""
+  }
+]

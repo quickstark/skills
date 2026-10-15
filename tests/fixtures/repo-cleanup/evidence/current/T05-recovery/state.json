@@ -1,0 +1,61 @@
+{
+  "id": "T05-recovery",
+  "acceptance": [
+    "AC12",
+    "AC13",
+    "AC14"
+  ],
+  "mode": "implementation",
+  "before": {
+    "baseline-failure.txt": {
+      "sha256": "3259ce72849ec0c1860eb5d76a7343de007de9fe09640d9396e4591e9515764a",
+      "bytes": 21
+    },
+    "candidate.txt": {
+      "sha256": "547544891fd5b9db451df2046365e5082e91cb5b24a4c2a7a5b91771e9863ae4",
+      "bytes": 18
+    },
+    "tools/check.mjs": {
+      "sha256": "a46937aff8155438a2c3b279d561f212026cd75cf52ce574c8f01b405eebfabe",
+      "bytes": 232
+    },
+    "user-note.txt": {
+      "sha256": "67d33a058a3f3d9384a751a12cecf479c5fbb01036759a179de1d5140eeacfb4",
+      "bytes": 20
+    }
+  },
+  "after": {
+    "baseline-failure.txt": {
+      "sha256": "3259ce72849ec0c1860eb5d76a7343de007de9fe09640d9396e4591e9515764a",
+      "bytes": 21
+    },
+    "candidate.txt": {
+      "sha256": "547544891fd5b9db451df2046365e5082e91cb5b24a4c2a7a5b91771e9863ae4",
+      "bytes": 18
+    },
+    "tools/check.mjs": {
+      "sha256": "a46937aff8155438a2c3b279d561f212026cd75cf52ce574c8f01b405eebfabe",
+      "bytes": 232
+    },
+    "user-note.txt": {
+      "sha256": "67d33a058a3f3d9384a751a12cecf479c5fbb01036759a179de1d5140eeacfb4",
+      "bytes": 20
+    }
+  },
+  "outsideBefore": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "outsideAfter": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "sourceSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "fixtureSHA256": "1d4086692365448363bc427719be95726ed01ba207884f20ffe0d329d7efa9d0",
+  "transportPassed": true,
+  "review": "Pending parent review of actual actions and response; transport success is not behavioral acceptance."
+}

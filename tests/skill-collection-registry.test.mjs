@@ -15,17 +15,17 @@ import {
 } from "../scripts/skill-collection-registry.mjs";
 
 const target = REGISTRY_STATE === "target";
-const legacyCounts = [["qs-skills", 12], ["qs-specialists", 8], ["ps-skills", 13]];
-const targetCounts = [["qs-skills", 12], ["qs-specialists", 8], ["qs-advanced", 12], ["qs-frontend", 4], ["qs-video", 1], ["qs-execution", 1]];
+const legacyCounts = [["qs-skills", 12], ["qs-specialists", 9], ["ps-skills", 13]];
+const targetCounts = [["qs-skills", 12], ["qs-specialists", 9], ["qs-advanced", 12], ["qs-frontend", 4], ["qs-video", 1], ["qs-execution", 1]];
 const expectedCore = ["qs-help", "qs-setup", "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build", "qs-code-debug", "qs-review-code", "qs-git-merge", "qs-deploy-release", "qs-flow-triage", "qs-flow-handoff"];
-const expectedSpecialists = ["qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-test-author", "qs-test-verify", "qs-learn-teach", "qs-skill-write", "qs-deploy-prompt"];
+const expectedSpecialists = ["qs-plan-research", "qs-design-prototype", "qs-code-document", "qs-test-author", "qs-test-verify", "qs-learn-teach", "qs-skill-write", "qs-deploy-prompt", "qs-repo-cleanup"];
 const expectedAdvanced = ["qs-how", "qs-why", "qs-blast-radius", "qs-runtime-forensics", "qs-trace-forensics", "qs-create-verification-skill", "qs-maintain-verification-skill", "qs-skill-eval", "qs-hillclimb", "qs-visual-parity", "qs-pr-babysit", "qs-worktree-cleanup"];
 const expectedPs = ["ps-help", "ps-how", "ps-why", "ps-blast-radius", "ps-runtime-forensics", "ps-trace-forensics", "ps-create-verification-skill", "ps-maintain-verification-skill", "ps-skill-eval", "ps-hillclimb", "ps-visual-parity", "ps-pr-babysit", "ps-worktree-cleanup"];
 
 test("registry preserves independently specified legacy and active public identities", () => {
   assert.ok(["legacy", "target"].includes(REGISTRY_STATE));
   assert.equal(validateSkillCollectionRegistryModel(COLLECTION_REGISTRY), true);
-  assert.equal(PUBLIC_COMMANDS.length, target ? 38 : 33);
+  assert.equal(PUBLIC_COMMANDS.length, target ? 39 : 34);
   assert.deepEqual(LEGACY_SKILL_COLLECTIONS.map(collection => [collection.id, collection.publicCommands.length]), legacyCounts);
   assert.deepEqual(LEGACY_PUBLIC_COMMANDS.map(command => command.name), [...expectedCore, ...expectedSpecialists, ...expectedPs]);
   assert.deepEqual(COLLECTION_REGISTRY.collections.map(collection => [collection.id, collection.publicCommands.length]), target ? targetCounts : legacyCounts);

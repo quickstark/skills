@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-10-15T01:34:44.654971+00:00",
+  "status": "local-release-prepared; publication and live rollout await explicit authorization",
+  "version": "4.2.0",
+  "baseRevision": "73d5a3cc5bf4913d0b21aca771179ca5ea4e2f21",
+  "worktree": "/github/.worktrees/qs-release-4.2.0",
+  "canonicalSkillSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "guidanceSHA256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456",
+  "fullSuite": {
+    "command": "npm test",
+    "exitCode": 0,
+    "total": 496,
+    "passed": 495,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Non-Linux platform-control case is intentionally skipped on Linux.",
+    "log": "tests.log",
+    "logSHA256": "89dc1a5f2b523b24dc25811d01561fbd0ec3d4f486bd8416183dd9383d384aa2"
+  },
+  "acceptanceAudit": {
+    "status": "passed",
+    "criteria": 24,
+    "packages": 6,
+    "hostVerifications": 12,
+    "sources": 83,
+    "evidence": 96,
+    "version": "4.2.0",
+    "scope": "Current-byte acceptance verification only; no tracked-clean production-input, publication or actual host rollout claim."
+  },
+  "checks": [
+    {
+      "command": "npm run check:codex",
+      "exitCode": 0,
+      "output": "\n> qs-skills@4.2.0 check:codex\n> node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check\n\nVerified concise v3 documentation for 39 commands and 5 target indexes.\nVerified bounded v3 output contracts for all 39 public commands.\nVerified deterministic active projections for 6 packages across Codex, Claude, and Pi.\nVerified provenance documentation for 72 capabilities.\n"
+    },
+    {
+      "command": "node --test tests/adoption-acceptance.test.mjs",
+      "exitCode": 0,
+      "output": "\u2714 repository acceptance evidence stays synchronized, including the reviewed README (47.256196ms)\n\u2714 README evidence changes fail until reviewed and still bind strict local snapshots (48.141846ms)\n\u2714 recorded acceptance derives release receipt read-only, preserving original evidence snapshots (32.548949ms)\n\u2714 changed instruction, added hidden source and changed raw evidence invalidate acceptance (28.061597ms)\n\u2714 missing host, capability, criterion or evidence cannot certify a package (31.702915ms)\n\u2714 retained baseline is limited to the explicit compression experiment exception (20.423149ms)\n\u2714 failed host checks, missing source bindings and escaping/symlink evidence fail (25.821489ms)\n\u2714 portable acceptance permits checkout umask differences but retains strict transaction snapshots (52.631342ms)\n\u2714 portable acceptance rejects executable changes, extra paths, changed bytes and unknown digest formats (25.556005ms)\n\u2714 portable acceptance rejects loss of owner execution even when other execute bits remain (17.479134ms)\n\u2139 tests 10\n\u2139 suites 0\n\u2139 pass 10\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 405.456365\n"
+    },
+    {
+      "command": "node tests/fixtures/adoption-final-discovery/run.mjs verify tests/fixtures/adoption-final-discovery/release-4.2.0",
+      "exitCode": 0,
+      "output": "{\"status\":\"passed\",\"bindings\":27,\"hostClosures\":3,\"modelRequests\":0}\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": "git diff --cached --check",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "secondSynchronization": {
+    "command": "npm run sync:codex",
+    "exitCode": 0,
+    "output": "\n> qs-skills@4.2.0 sync:codex\n> node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs && node scripts/sync-upstream-docs.mjs\n\nSynchronized 0 concise v3 documentation pages and indexes.\nSynchronized 0 bounded v3 skill and documentation output contracts.\nGenerated active projections for 6 packages across Codex, Claude, and Pi.\nSynchronized provenance documentation for 72 capabilities.\n",
+    "filesCompared": 12246,
+    "changedPaths": [],
+    "beforeSHA256": "70f9cad20fe623309a68ad588120aefe538499d20de1cabb0fc2311142d9dba3",
+    "afterSHA256": "70f9cad20fe623309a68ad588120aefe538499d20de1cabb0fc2311142d9dba3"
+  },
+  "originalCheckoutPreserved": {
+    "filesCompared": 12230,
+    "changedPaths": []
+  },
+  "limits": [
+    "No repository commit, push, tag or publication.",
+    "No live host configuration/cache mutation. Native discovery and fixture updates are isolated.",
+    "Production selected-state verification must run after the release is committed and the stable checkout matches origin/main."
+  ]
+}

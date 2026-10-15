@@ -2,7 +2,7 @@
 
 Generated from [the provenance records](../../config/skill-provenance.json). Baseline installation history and target ownership are separate. Catalog mappings do not activate packages or adopt reviewed sources.
 
-71 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.
+72 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.
 
 ## Target ownership
 
@@ -86,6 +86,7 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `qs-plan-roadmap` / public | `qs-skills` / `qs-plan-roadmap` | `qs:qs-plan-roadmap` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-plan-spec` / public | `qs-skills` / `qs-plan-spec` | `qs:qs-plan-spec` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-pr-babysit` / public | `qs-advanced` / `qs-pr-babysit` | `ps:ps-pr-babysit` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-repo-cleanup` / public | `qs-specialists` / `qs-repo-cleanup` | `qs:qs-repo-cleanup` | pending (no revision claimed) |
 | `qs-review-code` / public | `qs-skills` / `qs-review-code` | `qs:qs-review-code` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-runtime-forensics` / public | `qs-advanced` / `qs-runtime-forensics` | `ps:ps-runtime-forensics` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-setup` / public | `qs-skills` / `qs-setup` | `contributor:find-skills`, `qs:qs-setup` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -181,6 +182,7 @@ Target notices: [qs-advanced](../../skills/advanced/THIRD_PARTY_NOTICES.md), [qs
 | `qs:qs-plan-research` | `qs-plan-research` / public | `qs-plan-research`, `research` |
 | `qs:qs-plan-roadmap` | `qs-plan-roadmap` / public | `qs-plan-roadmap`, `wayfinder` |
 | `qs:qs-plan-spec` | `qs-plan-spec` / public | `qs-plan-spec`, `to-spec` |
+| `qs:qs-repo-cleanup` | `qs-repo-cleanup` / public | `qs-repo-cleanup` |
 | `qs:qs-review-code` | `qs-review-code` / public | `qs-review-code`, `code-review`, `qs-design-architecture`, `improve-codebase-architecture` |
 | `qs:qs-setup` | `qs-setup` / public | `qs-setup`, `setup-matt-pocock-skills` |
 | `qs:qs-skill-write` | `qs-skill-write` / public | `qs-skill-write`, `writing-great-skills` |
@@ -292,6 +294,7 @@ Full source hashes, notices and validation evidence are authoritative in the JSO
 | `qs:qs-plan-spec` | [principle-foundational-thinking](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/principle-foundational-thinking/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |
 | `qs:qs-plan-spec` | [principle-redesign-from-first-principles](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/principle-redesign-from-first-principles/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |
 | `qs:qs-plan-spec` | [to-spec](https://github.com/mattpocock/skills/blob/ed37663cc5fbef691ddfecd080dff42f7e7e350d/skills/engineering/to-spec/SKILL.md) | `ed37663cc5fbef691ddfecd080dff42f7e7e350d` | `c55ee46073ed923f86ce59a5eb3b6d895095d1b7` | unknown (no revision claimed) | MIT |
+| `qs:qs-repo-cleanup` | Repository-authored | — | — | No upstream origin claimed | — |
 | `qs:qs-review-code` | [interrogate](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/interrogate/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |
 | `qs:qs-review-code` | [refactoring](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/poteto-mode/playbooks/refactoring.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |
 | `qs:qs-review-code` | [principle-migrate-callers-then-delete-legacy-apis](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |

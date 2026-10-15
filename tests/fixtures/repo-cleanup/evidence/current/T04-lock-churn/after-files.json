@@ -1,0 +1,10 @@
+{
+  "ci.yml": "command: ci-tool\n",
+  "config.json": "{\"plugin\":\"plugin\",\"peer\":\"peer-host\",\"workspace\":\"workspace-tool\"}\n",
+  "docs/retirement.md": "unused belonged solely to a retired private feature; no runtime/script/config/CI/workspace/peer usage remains.\n",
+  "fixture-lock.json": "{\"dependencies\": {\"unused\": \"1.0.0\", \"runtime\": \"1.0.0\", \"ci-tool\": \"1.0.0\", \"plugin\": \"1.0.0\", \"peer-host\": \"1.0.0\", \"workspace-tool\": \"1.0.0\"}}\n",
+  "package.json": "{\"private\": true, \"dependencies\": {\"unused\": \"1.0.0\", \"runtime\": \"1.0.0\", \"ci-tool\": \"1.0.0\", \"plugin\": \"1.0.0\", \"peer-host\": \"1.0.0\", \"workspace-tool\": \"1.0.0\"}, \"scripts\": {\"test\": \"node tools/check.mjs\"}}\n",
+  "src/main.mjs": "// runtime required; loaded by fixture deployment\n",
+  "tools/check.mjs": "import fs from 'node:fs';import assert from 'node:assert/strict';const p=JSON.parse(fs.readFileSync('package.json'));const l=JSON.parse(fs.readFileSync('fixture-lock.json'));assert.deepEqual(p.dependencies,l.dependencies);assert.equal(p.dependencies.runtime,'1.0.0');console.log('PASS');\n",
+  "tools/fixture-pm.mjs": "import fs from 'node:fs';if(process.argv.slice(2).join(' ')!=='remove unused')throw Error('unsupported');for(const file of ['package.json','fixture-lock.json']){const p=JSON.parse(fs.readFileSync(file));delete p.dependencies.unused;p.dependencies.runtime='2.0.0';fs.writeFileSync(file,JSON.stringify(p)+'\\n');}\n"
+}

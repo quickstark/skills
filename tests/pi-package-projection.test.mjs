@@ -22,8 +22,8 @@ async function directoryNames(path) {
 test("Pi package projection preserves exactly the active maintained collection boundaries", async () => {
   const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
   assert.deepEqual(SKILL_COLLECTIONS.map(collection => [collection.id, collection.publicCommands.length]), REGISTRY_STATE === "target"
-    ? [["qs-skills",12],["qs-specialists",8],["qs-advanced",12],["qs-frontend",4],["qs-video",1],["qs-execution",1]]
-    : [["qs-skills",12],["qs-specialists",8],["ps-skills",13]]);
+    ? [["qs-skills",12],["qs-specialists",9],["qs-advanced",12],["qs-frontend",4],["qs-video",1],["qs-execution",1]]
+    : [["qs-skills",12],["qs-specialists",9],["ps-skills",13]]);
   for (const collection of SKILL_COLLECTIONS) {
     const root = join(repositoryRoot, collection.piPackageRoot);
     const manifest = JSON.parse(await readFile(join(root, "package.json"), "utf8"));

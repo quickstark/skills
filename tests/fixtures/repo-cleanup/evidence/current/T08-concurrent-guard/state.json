@@ -1,0 +1,73 @@
+{
+  "id": "T08-concurrent-guard",
+  "acceptance": [
+    "AC12",
+    "AC14",
+    "AC17"
+  ],
+  "mode": "implementation",
+  "before": {
+    ".cache/disposable": {
+      "sha256": "c645f732928e001918e8117ffd6f825a3fb29a1970152a0d5b16edf402030c9b",
+      "bytes": 10
+    },
+    "candidate.txt": {
+      "sha256": "4685759eafc3732fe0caf25ede0f5053a10fe7e01520f76217c6412cf7f71c63",
+      "bytes": 19
+    },
+    "docs/retirement.md": {
+      "sha256": "84c564723f8cecebf95b15f5717762b80abc47335a8a50418f20223cfb8f7f6f",
+      "bytes": 111
+    },
+    "tools/build.mjs": {
+      "sha256": "1583608d310bbb5db46e927d1522087f5b61a6905021a33637554a7a077f0ad1",
+      "bytes": 118
+    },
+    "tools/guard.mjs": {
+      "sha256": "03528e71a6f0b74de4de787e9780603ef8f51642d280d17a61ea0d77fce62e4b",
+      "bytes": 207
+    },
+    "tools/verify.mjs": {
+      "sha256": "dd6ee81f3c595bfc326f2afbb732ac0edf86f41005fe157e11954053c5fe8839",
+      "bytes": 276
+    }
+  },
+  "after": {
+    "candidate.txt": {
+      "sha256": "8d1a74584b0db1f89d4ec8f24e8ae17e78cb7dc6c0cb7eef9a1e445316044fa9",
+      "bytes": 21
+    },
+    "docs/retirement.md": {
+      "sha256": "84c564723f8cecebf95b15f5717762b80abc47335a8a50418f20223cfb8f7f6f",
+      "bytes": 111
+    },
+    "tools/build.mjs": {
+      "sha256": "1583608d310bbb5db46e927d1522087f5b61a6905021a33637554a7a077f0ad1",
+      "bytes": 118
+    },
+    "tools/guard.mjs": {
+      "sha256": "03528e71a6f0b74de4de787e9780603ef8f51642d280d17a61ea0d77fce62e4b",
+      "bytes": 207
+    },
+    "tools/verify.mjs": {
+      "sha256": "dd6ee81f3c595bfc326f2afbb732ac0edf86f41005fe157e11954053c5fe8839",
+      "bytes": 276
+    }
+  },
+  "outsideBefore": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "outsideAfter": {
+    "sentinel.txt": {
+      "sha256": "8b177258393373f20f16fb6eb6a6fe42c41c72a6a90fc4a3eef798d47962462d",
+      "bytes": 21
+    }
+  },
+  "sourceSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "fixtureSHA256": "9136cb4f68e6f154e69d085c94bca377d4ff0a03a69d39df6c635eadb1b34729",
+  "transportPassed": true,
+  "review": "Pending parent review of actual actions and response; transport success is not behavioral acceptance."
+}

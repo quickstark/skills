@@ -1,0 +1,85 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 48715.152552,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [
+    {
+      "input_tokens": 156929,
+      "cached_input_tokens": 135168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1892,
+      "reasoning_output_tokens": 234
+    }
+  ],
+  "completedTurn": true,
+  "responsePresent": true,
+  "toolItems": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/sh -c \"pwd; rg --files --hidden -g '\"'!.git'\"' -g '\"'!node_modules'\"'\"",
+      "aggregated_output": "/tmp/qs-cleanup-fixture-9jNXEr\nci.yml\npackage.json\nconfig.json\nsrc/main.mjs\nfixture-lock.json\ntools/check.mjs\ntools/fixture-pm.mjs\ndocs/retirement.md\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/sh -c \"python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, stat\nroot=Path('/tmp/qs-cleanup-fixture-9jNXEr').resolve()\nfor p in sorted(root.rglob('*')):\n    if p.is_symlink():\n        print('SYMLINK', p.relative_to(root)); continue\n    if not p.is_file(): continue\n    s=p.stat()\n    print('\\\\nFILE',p.relative_to(root),'sha256',hashlib.sha256(p.read_bytes()).hexdigest(),'mtime_ns',str(s.st_mtime_ns))\n    print(p.read_text())\nPY\"",
+      "aggregated_output": "\nFILE ci.yml sha256 38eb8b80a7f974ee49e9f5b8c0e0609132025426639dba0aff9cb5c0b5ea55bf mtime_ns 1792022708447701797\ncommand: ci-tool\n\n\nFILE config.json sha256 bfb27b01f0b2823c8fa66199d5b7fee9cb9f8f04e038c0d5ae0c4eb556b1e1f4 mtime_ns 1792022708447701797\n{\"plugin\":\"plugin\",\"peer\":\"peer-host\",\"workspace\":\"workspace-tool\"}\n\n\nFILE docs/retirement.md sha256 fa17d25ef129911232cac1d0ea35dd079a69d5f8a7c3d838b53785f2598d9fc3 mtime_ns 1792022708447701797\nunused belonged solely to a retired private feature; no runtime/script/config/CI/workspace/peer usage remains.\n\n\nFILE fixture-lock.json sha256 a28a48359dd099e0d5ae707bc32caeb4696c731d10df4376f3eb1695ff0c9010 mtime_ns 1792022708446701777\n{\"dependencies\": {\"unused\": \"1.0.0\", \"runtime\": \"1.0.0\", \"ci-tool\": \"1.0.0\", \"plugin\": \"1.0.0\", \"peer-host\": \"1.0.0\", \"workspace-tool\": \"1.0.0\"}}\n\n\nFILE package.json sha256 f1b9eded842282c50546fe0c2f2397b6aff64e40e135850f60c320f277c67752 mtime_ns 1792022708446701777\n{\"private\": true, \"dependencies\": {\"unused\": \"1.0.0\", \"runtime\": \"1.0.0\", \"ci-tool\": \"1.0.0\", \"plugin\": \"1.0.0\", \"peer-host\": \"1.0.0\", \"workspace-tool\": \"1.0.0\"}, \"scripts\": {\"test\": \"node tools/check.mjs\"}}\n\n\nFILE src/main.mjs sha256 557b1691927a122d04846c6c064a22f46b9f681c71f138ed7c6b07f66c7fbbb5 mtime_ns 1792022708447701797\n// runtime required; loaded by fixture deployment\n\n\nFILE tools/check.mjs sha256 e4a5cb0154186f0819ad07d5a549231257547050dbcd90c175c9948e3b13044e mtime_ns 1792022708447701797\nimport fs from 'node:fs';import assert from 'node:assert/strict';const p=JSON.parse(fs.readFileSync('package.json'));const l=JSON.parse(fs.readFileSync('fixture-lock.json'));assert.deepEqual(p.dependencies,l.dependencies);assert.equal(p.dependencies.runtime,'1.0.0');console.log('PASS');\n\n\nFILE tools/fixture-pm.mjs sha256 8994c7fbb6f5f96544a66ac3241c1dce8d13a35ef698e4b9a83c2b86c4575207 mtime_ns 1792022708447701797\nimport fs from 'node:fs';if(process.argv.slice(2).join(' ')!=='remove unused')throw Error('unsupported');for(const file of ['package.json','fixture-lock.json']){const p=JSON.parse(fs.readFileSync(file));delete p.dependencies.unused;fs.writeFileSync(file,JSON.stringify(p)+'\\n');}\n\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/sh -c 'node tools/check.mjs'",
+      "aggregated_output": "PASS\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/sh -c \"python3 - <<'PY'\nfrom pathlib import Path\nimport hashlib, json, subprocess, difflib\nroot=Path('/tmp/qs-cleanup-fixture-9jNXEr')\nassert root.resolve()==root\nexpected={\n'ci.yml':'38eb8b80a7f974ee49e9f5b8c0e0609132025426639dba0aff9cb5c0b5ea55bf',\n'config.json':'bfb27b01f0b2823c8fa66199d5b7fee9cb9f8f04e038c0d5ae0c4eb556b1e1f4',\n'docs/retirement.md':'fa17d25ef129911232cac1d0ea35dd079a69d5f8a7c3d838b53785f2598d9fc3',\n'fixture-lock.json':'a28a48359dd099e0d5ae707bc32caeb4696c731d10df4376f3eb1695ff0c9010',\n'package.json':'f1b9eded842282c50546fe0c2f2397b6aff64e40e135850f60c320f277c67752',\n'src/main.mjs':'557b1691927a122d04846c6c064a22f46b9f681c71f138ed7c6b07f66c7fbbb5',\n'tools/check.mjs':'e4a5cb0154186f0819ad07d5a549231257547050dbcd90c175c9948e3b13044e',\n'tools/fixture-pm.mjs':'8994c7fbb6f5f96544a66ac3241c1dce8d13a35ef698e4b9a83c2b86c4575207'}\npaths=list(root.rglob('*'))\nassert not any(p.is_symlink() for p in paths)\nassert {str(p.relative_to(root)) for p in paths if p.is_file()}==set(expected)\noriginal={}\nfor name,digest in expected.items():\n    p=root/name\n    assert p.resolve().is_relative_to(root)\n    data=p.read_bytes()\n    assert hashlib.sha256(data).hexdigest()==digest, 'Content guard failed: '+name\n    stamp='1792022708446701777' if name in ('package.json','fixture-lock.json') else '1792022708447701797'\n    assert str(p.stat().st_mtime_ns)==stamp, 'Timestamp guard failed: '+name\n    original[name]=data\nprint('PASS: canonical paths, file inventory, baseline hashes and exact nanosecond guards', flush=True)\nsubprocess.run(['node','tools/fixture-pm.mjs','remove','unused'],cwd=root,check=True)\nafter={name:(root/name).read_bytes() for name in expected}\nchanged=[name for name in expected if original[name]\"'!=after[name]]\nassert set(changed)=={'\"'package.json','fixture-lock.json'}, changed\nfor name in changed:\n    wanted=json.loads(original[name])\n    del wanted['dependencies']['unused']\n    assert json.loads(after[name])==wanted, 'Unexpected semantic delta: '+name\n    assert after[name]==(json.dumps(wanted,separators=(',',':'))+'\\\\n').encode(), 'Unexpected serialization: '+name\n    print(''.join(difflib.unified_diff(original[name].decode().splitlines(True),after[name].decode().splitlines(True),fromfile='baseline/'+name,tofile='current/'+name)))\nprint('PASS: only unused removed; all five retained versions unchanged; unrelated files byte-identical', flush=True)\nsubprocess.run(['node','tools/check.mjs'],cwd=root,check=True)\nassert {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file()}==set(expected)\nassert all((root/name).read_bytes()==data for name,data in after.items())\nprint('PASS: final verification produced no file changes or extra artifacts')\nPY\"",
+      "aggregated_output": "PASS: canonical paths, file inventory, baseline hashes and exact nanosecond guards\n--- baseline/fixture-lock.json\n+++ current/fixture-lock.json\n@@ -1 +1 @@\n-{\"dependencies\": {\"unused\": \"1.0.0\", \"runtime\": \"1.0.0\", \"ci-tool\": \"1.0.0\", \"plugin\": \"1.0.0\", \"peer-host\": \"1.0.0\", \"workspace-tool\": \"1.0.0\"}}\n+{\"dependencies\":{\"runtime\":\"1.0.0\",\"ci-tool\":\"1.0.0\",\"plugin\":\"1.0.0\",\"peer-host\":\"1.0.0\",\"workspace-tool\":\"1.0.0\"}}\n\n--- baseline/package.json\n+++ current/package.json\n@@ -1 +1 @@\n-{\"private\": true, \"dependencies\": {\"unused\": \"1.0.0\", \"runtime\": \"1.0.0\", \"ci-tool\": \"1.0.0\", \"plugin\": \"1.0.0\", \"peer-host\": \"1.0.0\", \"workspace-tool\": \"1.0.0\"}, \"scripts\": {\"test\": \"node tools/check.mjs\"}}\n+{\"private\":true,\"dependencies\":{\"runtime\":\"1.0.0\",\"ci-tool\":\"1.0.0\",\"plugin\":\"1.0.0\",\"peer-host\":\"1.0.0\",\"workspace-tool\":\"1.0.0\"},\"scripts\":{\"test\":\"node tools/check.mjs\"}}\n\nPASS: only unused removed; all five retained versions unchanged; unrelated files byte-identical\nPASS\nPASS: final verification produced no file changes or extra artifacts\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 487,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+  },
+  "toolCount": 4,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "Named matches are a lower bound; inspect raw events/commands for indirect or unidentified image calls.",
+  "runnerSHA256": "f8b89ac45e17f3711f01c9de5df6818b14a812b7e54dbe924e33517a680e1ce1",
+  "promptSHA256": "6b97091988889de3e2ced7a39c43c7e45be1839ca5d34280b92709c91b4a691b",
+  "promptUtf8Bytes": 20412,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-cleanup-fixture-9jNXEr",
+    "--json",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "c9b8d7ff58921b5152bef5c1f7df427b295f9b6c41ce7b4ef934e01a33f057c7",
+    "stderr": "f6dabdad00718694f34e3fd6d7feccc4d0222b4844669b4f6f301546c2dbb529"
+  }
+}

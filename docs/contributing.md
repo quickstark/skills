@@ -2,7 +2,7 @@
 
 ## Start from the source of truth
 
-Read `CLAUDE.md`, `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `scripts/ps-skill-catalog.mjs` retains historical PS dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
+Read [repository guidance](../AGENTS.md) (`.claude/CLAUDE.md`), `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `scripts/ps-skill-catalog.mjs` retains historical PS dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
 
 Canonical public QS files live in `skills/engineering/`, `skills/productivity/` and `skills/video/`; historical PS sources remain in `skills/pstack/commands/`. Internal capabilities live in `skills/internal/` and `skills/pstack/internal/`. All generated package trees are projections, not independent sources.
 

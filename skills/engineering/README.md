@@ -24,6 +24,7 @@ The default selection is the core package. Optional packages are explicit choice
 - [qs-test-author](./qs-test-author/SKILL.md) — Add focused tests for existing behavior.
 - [qs-test-verify](./qs-test-verify/SKILL.md) — Run and report selected software verification.
 - [qs-deploy-prompt](./qs-deploy-prompt/SKILL.md) — Generate a scoped autonomous deployment prompt.
+- [qs-repo-cleanup](./qs-repo-cleanup/SKILL.md) — Audit and clean repository hygiene without refactoring.
 
 ## Optional advanced workflows (`qs-advanced`)
 

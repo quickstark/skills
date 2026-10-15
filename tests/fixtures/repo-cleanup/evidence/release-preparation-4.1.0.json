@@ -1,0 +1,388 @@
+{
+  "checkedAt": "2026-10-15T00:51:20.734321+00:00",
+  "scope": "Local 4.1.0 release preparation only; no installation, commit, push, tag, or publication",
+  "baseRevision": "6bed58bee404ce51c82652621bce5a6465adff09",
+  "version": "4.1.0",
+  "changeset": {
+    "state": "consumed by npm run version into package.json and CHANGELOG.md",
+    "plan": {
+      "changesets": [
+        {
+          "releases": [
+            {
+              "name": "qs-skills",
+              "type": "minor"
+            }
+          ],
+          "summary": "Add the explicit `qs-repo-cleanup` specialist for repository hygiene without refactoring. Audit or remove verified-unused code, files, assets and dependencies; clean disposable generated artifacts; maintain ignore rules; correct stale documentation; and retire only demonstrably obsolete tests and fixtures. Preserve user changes, credentials, local data, lockfiles, intentional deliverables and historical evidence.\n\nKeep Claude repository guidance in the supported `.claude/CLAUDE.md` location, shared through `AGENTS.md`, so strict plugin validation passes without changing guidance content or weakening checks. Include catalog, metadata, provenance, documentation, host projections and recorded behavioral acceptance evidence. Preserve the PS 3.8.0 transition payload.",
+          "id": "repo-cleanup-hygiene"
+        }
+      ],
+      "releases": [
+        {
+          "name": "qs-skills",
+          "type": "minor",
+          "oldVersion": "4.0.2",
+          "changesets": [
+            "repo-cleanup-hygiene"
+          ],
+          "newVersion": "4.1.0"
+        }
+      ]
+    }
+  },
+  "canonicalSkillSHA256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+  "guidanceSHA256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456",
+  "guidanceLinkTarget": ".claude/CLAUDE.md",
+  "behavioralEvidence": "Existing nine source-bound trials and AC01-AC20 retained; canonical skill unchanged; no fresh model trials claimed",
+  "tests": {
+    "command": "npm test",
+    "exitCode": 0,
+    "passed": 478,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "log": "npm-test-release-4.1.0.log",
+    "logSHA256": "210ee00627ec6c62afd487f7707884e766749f8f4c0518a82aba7363a079d09e"
+  },
+  "activeManifests": [
+    {
+      "package": "qs-skills",
+      "host": "Claude",
+      "path": "./.claude-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-skills",
+      "host": "Codex",
+      "path": "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-skills",
+      "host": "Pi",
+      "path": "pi/packages/qs-skills/package.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-specialists",
+      "host": "Claude",
+      "path": "packages/qs-specialists/.claude-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-specialists",
+      "host": "Codex",
+      "path": "codex/plugins/qs-specialists/.codex-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-specialists",
+      "host": "Pi",
+      "path": "pi/packages/qs-specialists/package.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-advanced",
+      "host": "Claude",
+      "path": "packages/qs-advanced/.claude-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-advanced",
+      "host": "Codex",
+      "path": "codex/plugins/qs-advanced/.codex-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-advanced",
+      "host": "Pi",
+      "path": "pi/packages/qs-advanced/package.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-frontend",
+      "host": "Claude",
+      "path": "packages/qs-frontend/.claude-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-frontend",
+      "host": "Codex",
+      "path": "codex/plugins/qs-frontend/.codex-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-frontend",
+      "host": "Pi",
+      "path": "pi/packages/qs-frontend/package.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-video",
+      "host": "Claude",
+      "path": "packages/qs-video/.claude-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-video",
+      "host": "Codex",
+      "path": "codex/plugins/qs-video/.codex-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-video",
+      "host": "Pi",
+      "path": "pi/packages/qs-video/package.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-execution",
+      "host": "Claude",
+      "path": "packages/qs-execution/.claude-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-execution",
+      "host": "Codex",
+      "path": "codex/plugins/qs-execution/.codex-plugin/plugin.json",
+      "version": "4.1.0"
+    },
+    {
+      "package": "qs-execution",
+      "host": "Pi",
+      "path": "pi/packages/qs-execution/package.json",
+      "version": "4.1.0"
+    }
+  ],
+  "transitionVerification": {
+    "result": "passed retained content and portable-directory hashes",
+    "packages": [
+      {
+        "id": "ps-skills",
+        "state": "retained-for-migration",
+        "version": "3.8.0",
+        "sourceRevision": "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac",
+        "publicNames": [
+          "ps-help",
+          "ps-how",
+          "ps-why",
+          "ps-blast-radius",
+          "ps-runtime-forensics",
+          "ps-trace-forensics",
+          "ps-create-verification-skill",
+          "ps-maintain-verification-skill",
+          "ps-skill-eval",
+          "ps-hillclimb",
+          "ps-visual-parity",
+          "ps-pr-babysit",
+          "ps-worktree-cleanup"
+        ],
+        "payloads": {
+          "codex": {
+            "path": "codex/plugins/ps-skills",
+            "contentSha256": "c40814a231bd18d4b8c5a1f876a6c0ff66fbfb9520da24d3bf25a4142e208e19",
+            "payloadDigest": {
+              "kind": "portable-directory-sha256",
+              "value": "7f97ba6168870b52019399bc8fa1adb8616ca9a50ba0c364110a1ad901d0319b"
+            }
+          },
+          "claude-code": {
+            "path": "packages/ps-skills",
+            "contentSha256": "7340c4eaab7a9394122fc1a417073da83820cad27c8f366d02d60ed076b103bd",
+            "payloadDigest": {
+              "kind": "portable-directory-sha256",
+              "value": "16b48b264b16c4b48febb1dd3c2c5d9b268808ed46e4eef9c59513240f4e8c49"
+            }
+          },
+          "pi": {
+            "path": "pi/packages/ps-skills",
+            "contentSha256": "5dd892e526a4b28ca5c8e049a2bfc4fb63fa8d261ee2a0ac274748b2b5b98129",
+            "payloadDigest": {
+              "kind": "portable-directory-sha256",
+              "value": "f9ed5504dc71b8db1131725554c4782baa439cc68f4c988acd760d100ae3c025"
+            }
+          }
+        },
+        "selectionPolicy": "Excluded from target catalog and fresh/default selections. Keep the legacy native identity until each selected consumer migrates; never regenerate or silently delete its retained payload."
+      }
+    ]
+  },
+  "strictClaudeValidation": [
+    {
+      "root": ".",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/.claude-plugin/marketplace.json",
+        "manifest": {
+          "file": "/github/skills/.claude-plugin/marketplace.json",
+          "type": "marketplace",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": [
+          {
+            "file": "/github/skills/README.md",
+            "message": "This README has no line that installs \"qs-skills\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later.",
+            "installLine": "/plugin install qs-skills --marketplace quickstark/skills"
+          }
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-specialists",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-specialists/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-specialists/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-advanced",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-advanced/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-advanced/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-frontend",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-frontend/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-frontend/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-video",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-video/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-video/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    },
+    {
+      "root": "packages/qs-execution",
+      "exitCode": 0,
+      "report": {
+        "success": true,
+        "strict": true,
+        "target": "/github/skills/packages/qs-execution/.claude-plugin/plugin.json",
+        "manifest": {
+          "file": "/github/skills/packages/qs-execution/.claude-plugin/plugin.json",
+          "type": "plugin",
+          "errors": [],
+          "warnings": [],
+          "notes": [],
+          "gatingHooks": []
+        },
+        "contents": [],
+        "advice": []
+      },
+      "stderr": ""
+    }
+  ],
+  "checks": [
+    {
+      "command": "npm run check:codex",
+      "exitCode": 0,
+      "output": "\n> qs-skills@4.1.0 check:codex\n> node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check\n\nVerified concise v3 documentation for 39 commands and 5 target indexes.\nVerified bounded v3 output contracts for all 39 public commands.\nVerified deterministic active projections for 6 packages across Codex, Claude, and Pi.\nVerified provenance documentation for 72 capabilities.\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "secondSynchronization": {
+    "command": "npm run sync:codex",
+    "exitCode": 0,
+    "output": "\n> qs-skills@4.1.0 sync:codex\n> node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs && node scripts/sync-upstream-docs.mjs\n\nSynchronized 0 concise v3 documentation pages and indexes.\nSynchronized 0 bounded v3 skill and documentation output contracts.\nGenerated active projections for 6 packages across Codex, Claude, and Pi.\nSynchronized provenance documentation for 72 capabilities.\n",
+    "filesCompared": 12221,
+    "changedPaths": [],
+    "beforeSHA256": "41e2bee5facd52905afe1429324878403d0f88f742dd4bd0d4d262783c95786a",
+    "afterSHA256": "41e2bee5facd52905afe1429324878403d0f88f742dd4bd0d4d262783c95786a"
+  },
+  "releaseScopeBeforeEvidence": {
+    "changedPaths": [
+      ".claude-plugin/plugin.json",
+      "CHANGELOG.md",
+      "codex/plugins/qs-advanced/.codex-plugin/plugin.json",
+      "codex/plugins/qs-execution/.codex-plugin/plugin.json",
+      "codex/plugins/qs-frontend/.codex-plugin/plugin.json",
+      "codex/plugins/qs-skills/.codex-plugin/plugin.json",
+      "codex/plugins/qs-specialists/.codex-plugin/plugin.json",
+      "codex/plugins/qs-video/.codex-plugin/plugin.json",
+      "package-lock.json",
+      "package.json",
+      "packages/qs-advanced/.claude-plugin/plugin.json",
+      "packages/qs-execution/.claude-plugin/plugin.json",
+      "packages/qs-frontend/.claude-plugin/plugin.json",
+      "packages/qs-specialists/.claude-plugin/plugin.json",
+      "packages/qs-video/.claude-plugin/plugin.json",
+      "pi/packages/qs-advanced/package.json",
+      "pi/packages/qs-execution/package.json",
+      "pi/packages/qs-frontend/package.json",
+      "pi/packages/qs-skills/package.json",
+      "pi/packages/qs-specialists/package.json",
+      "pi/packages/qs-video/package.json"
+    ],
+    "preexistingWorkPreserved": true,
+    "dependencyGraphUnchanged": true
+  },
+  "limits": "No published or installed-host acceptance. Known root Claude nested-skill discovery limitation remains recorded in the diagnosis; repository source/projection checks remain required."
+}

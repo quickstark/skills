@@ -8,7 +8,7 @@ QuickStark is a personal collection of namespaced skills for Codex, Claude Code,
 
 **Core command**: One of twelve lifecycle-ordered commands in `qs-skills`.
 
-**Specialist command**: One of eight optional commands in `qs-specialists`. Core commands never require this package to complete.
+**Specialist command**: One of nine optional commands in `qs-specialists`. Core commands never require this package to complete.
 
 **Advanced command**: One of twelve distinct PS-derived outcomes in optional `qs-advanced`. Historical PS names remain provenance and transition records, not aliases.
 
@@ -57,13 +57,13 @@ The core catalog order is:
 11. `qs-flow-triage`
 12. `qs-flow-handoff`
 
-Optional specialists are `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-test-author`, `qs-test-verify`, `qs-learn-teach`, `qs-skill-write`, and `qs-deploy-prompt`.
+Optional specialists are `qs-plan-research`, `qs-design-prototype`, `qs-code-document`, `qs-test-author`, `qs-test-verify`, `qs-learn-teach`, `qs-skill-write`, `qs-deploy-prompt`, and `qs-repo-cleanup`.
 
 Optional advanced, frontend, video and execution membership is defined by the respective collection catalogs. Frontend has four output-specific roots; video and execution have one root each with private modules.
 
 ## Invariants
 
-- The registry contains 12 core, 8 specialist, 12 advanced, 4 frontend, 1 video and 1 execution commands. Optional selection determines installed exposure; no arbitrary global cap applies.
+- The registry contains 12 core, 9 specialist, 12 advanced, 4 frontend, 1 video and 1 execution commands. Optional selection determines installed exposure; no arbitrary global cap applies.
 - Every public command belongs to exactly one package and has matching canonical source, metadata, documentation, and generated projections.
 - Invocation policy remains catalog-owned; preserve the generated Codex compatibility exception.
 - Public commands never automatically invoke another public command.
