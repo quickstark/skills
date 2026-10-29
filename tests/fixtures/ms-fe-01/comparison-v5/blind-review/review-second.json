@@ -1,0 +1,62 @@
+{
+  "independentAuthor": true,
+  "variantLabelsConcealed": true,
+  "outputs": [
+    {
+      "id": "20cdcbb4954aee35",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "observations": [
+        "Observed screenshots: the large two-line desktop heading, compact navigation, rust CTA and wide media panel establish a deliberate editorial hierarchy. The two-column project list and large About statement continue the aligned, restrained layout.",
+        "Observed screenshots: at 375px the headline remains a compact two-line block, navigation fits on one row, CTA and film are clearly separated, and the work entries stack without apparent clipping. Video and poster crops both contain the complete yellow subject. All required copy stays readable.",
+        "Observed views.json: normal video is playing at approximately 1.7 seconds in both captures; reduced-motion video is paused at zero and hidden. Actual reduced-motion screenshots show the poster and all page content. All four captures report no errors.",
+        "Observed/source motion: a visible dark square pause control has a clear light icon in normal screenshots. Source inference: explicit pause, viewport/tab checks, reduced-motion preference and asynchronous-attempt guards govern playback; rejection and errors retain the poster with status messaging. Manual pause changes to the poster rather than freezing the moving frame, a minor visual continuity gap. Footage is the primary motion treatment; no delayed reveal obscures content.",
+        "Source inference: pagehide runs teardown and persisted pageshow mounts the media enhancement again. This provides a restoration path, but restoration was not independently exercised. Mounting resets added-media pause intent; preservation of explicit media-pause intent across history navigation is not specified by this brief.",
+        "Authority assessment: all specified navigation, hero/project/About copy, local assets, system sans, palette and square controls are present. No fabricated claims, new destinations, extra sections or material authority failure was found.",
+        "Asset evidence: rights.json identifies locally authored repository-owned synthetic fixture media. Independently computed SHA-256 hashes for poster.svg and scene.webm match the manifest, and source references those local files."
+      ],
+      "authorityFindings": [],
+      "polishLimitations": [
+        "Source-inferred manual-pause transition replaces the current moving frame with the poster, which can create a visual jump. This is separate from authority compliance."
+      ],
+      "limitations": [
+        "Reviewed rubric, exact brief, index.html, views.json, rights.json and all four actual screenshots. File hashes were checked; pause/retry, keyboard traversal, media failure, preference changes and history restoration were assessed from source rather than independently run.",
+        "No 768px or short-landscape capture or temporal recording was supplied. Successful sampled playback does not verify every interaction or failure path."
+      ]
+    },
+    {
+      "id": "dd7ecfcb12a30167",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: the large two-line desktop headline, restrained eyebrow, separate support/CTA row and wide film create a clear editorial hierarchy. Work heading and project summary form an aligned two-column section with a restrained rust rule.",
+        "Observed screenshots: mobile composes the headline into three readable lines, retains the complete navigation, and separates the support copy, CTA, media and work content. The video/poster crop keeps the full yellow subject visible; no apparent horizontal clipping or missing copy is present.",
+        "Observed views.json: normal playback is active at approximately 1.7 seconds; reduced-motion playback is paused at zero and video is hidden. Actual reduced-motion screenshots preserve the poster and complete ordinary content. All four captures report no errors.",
+        "Source inference: short 14px entrances and viewport reveals enhance hierarchy while ordinary content remains visible by default. Reduced-motion changes cancel active animation. The media control updates through aria-pressed CSS selectors, and the normal screenshots show the expected pause icon during active playback.",
+        "Source inference: viewport/tab checks, explicit pause, asynchronous-attempt guards and failure-to-poster handling are implemented. Rejected autoplay hides the media button and leaves a usable still, with no manual retry route. Manual pause also swaps to the poster rather than holding the current video frame. Persisted pagehide keeps listeners and pageshow synchronizes playback; this path was not exercised.",
+        "Observed/source polish limitation: the added media button is a small native-looking target, approximately 35 by 25 pixels in the mobile screenshot. Its source has a 20px icon but no explicit 44px minimum target or added button focus styling. This is a finish/accessibility gap in a new control, not an original-control preservation failure.",
+        "Authority/preservation assessment: all original copy, IDs, destinations, two sections, theme tokens, CTA/control rules, analytics listener and detail-toggle code remain intact. The original blue underlined links and small default details button are preserved in the captures. No material authority or control-preservation failure, fabricated claim or extra section was found.",
+        "Asset evidence: rights.json identifies repository-owned synthetic fixture media. Independently computed SHA-256 hashes of poster.svg and scene.webm match the manifest, and the page uses their local paths."
+      ],
+      "authorityFindings": [],
+      "polishLimitations": [
+        "The new media button is visually small and lacks an explicit 44px minimum target; this does not affect the preserved original controls.",
+        "Source inference: manual pause swaps to the poster, and rejected playback leaves no retry control. A usable static fallback remains."
+      ],
+      "limitations": [
+        "Reviewed rubric, exact brief, original input.html, index.html, views.json, rights.json and all four actual screenshots. Asset hashes were independently checked. Controls, analytics/details behavior, keyboard traversal, failures and history restoration were assessed from source rather than exercised.",
+        "The estimated new-control dimensions come from the supplied screenshot, not a live computed-style measurement. No 768px, short-landscape or intermediate-animation capture was supplied."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>FIELD NOTES</title>
+  <style>
+    :root { color-scheme: light; --paper: #f6f3eb; --ink: #163b43; --accent: #bf4e2e; --rule: #c5ccc5; }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 24px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border-radius: 0; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+    [hidden] { display: none !important; }
+    ::selection { background: var(--ink); color: var(--paper); }
+    .shell { width: min(100% - 96px, 1504px); margin-inline: auto; }
+    .header { min-height: 116px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--rule); }
+    .brand { font-size: 21px; font-weight: 800; letter-spacing: -.7px; white-space: nowrap; display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 20px; height: 22px; border-left: 5px solid var(--accent); border-top: 5px solid var(--accent); position: relative; }
+    .brand-mark::after { content: ""; position: absolute; top: 5px; left: 0; width: 10px; border-top: 4px solid var(--accent); }
+    nav { display: flex; gap: 36px; }
+    nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 550; text-underline-offset: 6px; }
+    nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+    .hero { padding-top: clamp(54px, 6.6vw, 100px); }
+    h1 { margin: 0; max-width: 1260px; font-size: clamp(64px, 8.2vw, 128px); line-height: .98; letter-spacing: -.065em; font-weight: 500; }
+    h1 span { display: block; }
+    .hero-detail { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin: 38px 0 54px; }
+    .intro { margin: 0; max-width: 410px; font-size: clamp(18px, 1.65vw, 24px); line-height: 1.45; letter-spacing: -.025em; }
+    .cta { background: var(--accent); color: var(--paper); display: inline-flex; align-items: center; justify-content: space-between; gap: 40px; min-height: 58px; padding: 15px 23px; font-size: 15px; font-weight: 550; flex-shrink: 0; }
+    .arrow { width: 22px; height: 22px; flex-shrink: 0; transition: transform 180ms ease; }
+    .cta:hover .arrow { transform: translateX(4px); }
+    .cta:hover { background: #a94025; }
+    .film { position: relative; aspect-ratio: 2.3; background: var(--ink); overflow: hidden; }
+    .film img, .film video { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65% center; }
+    .film-control { position: absolute; z-index: 1; bottom: 22px; right: 22px; border: 1px solid var(--paper); background: var(--paper); color: var(--ink); padding: 11px 15px; min-height: 44px; display: inline-flex; align-items: center; gap: 12px; cursor: pointer; font-size: 12px; font-weight: 600; }
+    .film-control:focus-visible { outline-color: var(--paper); outline-offset: 5px; }
+    .film-control:hover { background: var(--ink); color: var(--paper); }
+    .pause-icon { width: 8px; height: 11px; border-inline: 2px solid currentColor; }
+    .film-control[data-state="paused"] .pause-icon { width: 0; height: 0; border: 0; border-block: 5px solid transparent; border-left: 8px solid currentColor; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+    .work { padding-top: clamp(64px, 7.5vw, 112px); }
+    h2 { font-size: 16px; font-weight: 550; letter-spacing: -.01em; margin: 0 0 32px; }
+    .work-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+    .work-list li { border-bottom: 1px solid var(--rule); padding: 29px 0 33px; font-size: clamp(26px, 3.5vw, 52px); font-weight: 400; letter-spacing: -.045em; line-height: 1.15; }
+    .work-list span { color: var(--accent); }
+    .about { margin-top: clamp(72px, 9vw, 136px); padding: 0 0 64px; display: flex; justify-content: flex-end; }
+    .about p { margin: 0; max-width: 650px; font-size: clamp(30px, 3.5vw, 52px); line-height: 1.16; letter-spacing: -.045em; }
+    @media (min-width: 1600px) { .hero-detail { margin-top: 48px; } }
+    @media (max-width: 900px) {
+      .shell { width: calc(100% - 64px); }
+      .header { min-height: 100px; }
+      nav { gap: 25px; }
+      .hero { padding-top: 64px; }
+      h1 { font-size: clamp(58px, 8.5vw, 78px); }
+      .hero-detail { margin: 32px 0 40px; }
+      .intro { max-width: 300px; }
+      .cta { gap: 22px; padding-inline: 18px; }
+      .film { aspect-ratio: 16 / 9; }
+      .about p { max-width: 70%; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: calc(100% - 40px); }
+      .header { min-height: 84px; gap: 14px; }
+      .brand { font-size: 15px; gap: 7px; letter-spacing: -.5px; }
+      .brand-mark { width: 13px; height: 16px; border-width: 3px; }
+      .brand-mark::after { top: 4px; width: 7px; border-width: 3px; }
+      nav { gap: 15px; }
+      nav a { font-size: 12px; }
+      .hero { padding-top: 49px; }
+      h1 { font-size: clamp(42px, 13.6vw, 74px); line-height: 1.02; letter-spacing: -.065em; }
+      h1 span { display: inline; }
+      .hero-detail { display: block; margin: 26px 0 32px; }
+      .intro { font-size: 18px; max-width: 275px; line-height: 1.45; }
+      .cta { margin-top: 26px; min-height: 54px; gap: 36px; }
+      .film { aspect-ratio: 4 / 3; }
+      .film-control { bottom: 12px; right: 12px; padding-inline: 12px; }
+      .work { padding-top: 60px; }
+      h2 { margin-bottom: 24px; font-size: 14px; }
+      .work-list li { padding: 25px 0 28px; font-size: 27px; }
+      .about { margin-top: 68px; padding-bottom: 40px; }
+      .about p { max-width: 100%; font-size: 34px; }
+    }
+    @media (max-height: 500px) and (min-width: 561px) {
+      .header { min-height: 76px; }
+      .hero { padding-top: 32px; }
+      h1 { font-size: clamp(54px, 7.3vw, 86px); }
+      .hero-detail { margin-block: 24px 32px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="header shell">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span>FIELD NOTES</div>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:studio@example.test">Contact</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title"><span>Make room for</span> <span>the moving world.</span></h1>
+      <div class="hero-detail">
+        <p class="intro">Thoughtful films, clear stories, lasting places.</p>
+        <a class="cta" href="#work">Explore the work<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h17M14 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="film" data-media>
+        <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+        <video src="assets/scene.webm" poster="assets/poster.svg" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1" hidden></video>
+        <button class="film-control" type="button" data-state="paused" hidden><span class="pause-icon" aria-hidden="true"></span><span data-label>Play film</span></button>
+        <span class="sr-only" aria-live="polite" data-status></span>
+      </div>
+    </section>
+    <section class="work" id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <ul class="work-list">
+        <li>Tidal study <span>/</span> 2026</li>
+        <li>Mountain light <span>/</span> 2025</li>
+      </ul>
+    </section>
+    <section class="about" id="about" aria-label="About">
+      <p>An independent film practice.</p>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const root = document.querySelector('[data-media]');
+      const video = root.querySelector('video');
+      const button = root.querySelector('button');
+      const label = root.querySelector('[data-label]');
+      const status = root.querySelector('[data-status]');
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let visible = false, userPaused = false, blocked = false, epoch = 0;
+      const showStill = () => {
+        epoch++;
+        video.pause();
+        video.hidden = true;
+        label.textContent = 'Play film';
+        button.dataset.state = 'paused';
+      };
+      const sync = async () => {
+        button.hidden = reduced.matches;
+        if (!visible || document.hidden || userPaused || blocked || reduced.matches) {
+          showStill();
+          return;
+        }
+        const attempt = ++epoch;
+        try {
+          await video.play();
+          if (attempt !== epoch) return;
+          video.hidden = false;
+          label.textContent = 'Pause film';
+          button.dataset.state = 'playing';
+          status.textContent = '';
+        } catch {
+          if (attempt !== epoch) return;
+          blocked = true;
+          showStill();
+          status.textContent = 'Static preview. Film playback is unavailable.';
+        }
+      };
+      try {
+        if (!('IntersectionObserver' in window)) return;
+        video.muted = true;
+        button.addEventListener('click', () => {
+          userPaused = button.dataset.state === 'playing';
+          blocked = false;
+          sync();
+        });
+        video.addEventListener('error', () => {
+          blocked = true;
+          showStill();
+          status.textContent = 'Static preview. Film playback is unavailable.';
+        });
+        reduced.addEventListener('change', sync);
+        document.addEventListener('visibilitychange', sync);
+        const observer = new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          sync();
+        }, { threshold: 0 });
+        observer.observe(root);
+        window.addEventListener('pagehide', () => { visible = false; showStill(); });
+        window.addEventListener('pageshow', () => {
+          const bounds = root.getBoundingClientRect();
+          visible = bounds.bottom > 0 && bounds.top < window.innerHeight;
+          sync();
+        });
+      } catch {
+        showStill();
+        button.hidden = true;
+      }
+    })();
+  </script>
+</body>
+</html>

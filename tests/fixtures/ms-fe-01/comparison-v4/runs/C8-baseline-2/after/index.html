@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f49">
+  <meta name="description" content="A quiet study. An independent film practice.">
+  <title>A quiet study.</title>
+  <style>
+    :root { color-scheme: dark; --paper: #f5f0df; --ink: #173f49; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--ink); color: var(--paper); font-family: Arial, Helvetica, sans-serif; }
+    a { color: inherit; }
+    .skip-link { position: absolute; z-index: 5; top: 16px; left: 16px; padding: 12px 18px; background: var(--paper); color: var(--ink); transform: translateY(-160%); }
+    .skip-link:focus { transform: none; }
+    a:focus-visible { outline: 3px solid #f1b85b; outline-offset: 7px; }
+    .hero { position: relative; isolation: isolate; min-height: 760px; min-height: max(760px, 100svh); overflow: hidden; display: flex; flex-direction: column; padding: 40px clamp(24px, 5vw, 88px); }
+    .hero-poster { position: absolute; z-index: -3; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 65% center; }
+    .hero::before { content: ""; position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(8, 29, 34, .64), rgba(8, 29, 34, .06) 80%), linear-gradient(0deg, rgba(8, 29, 34, .66), transparent 60%); }
+    .hero::after { content: ""; position: absolute; z-index: -1; inset: 16px; border: 1px solid rgba(245, 240, 223, .2); pointer-events: none; }
+    .masthead { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+    .mark { width: 17px; height: 17px; border: 1px solid currentColor; display: inline-block; transform: rotate(45deg); }
+    .hero-content { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 100px 0 70px; }
+    h1 { margin: 0 0 32px; max-width: 9ch; font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: clamp(78px, 10.7vw, 172px); line-height: .92; letter-spacing: -.065em; text-wrap: balance; }
+    h1 span { display: block; }
+    .intro { margin: 0; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.6; letter-spacing: .01em; }
+    .hero-footer { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+    .still-label { margin: 0 0 2px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
+    .still-label::before { content: ""; width: 32px; height: 1px; background: currentColor; }
+    .explore { width: 116px; aspect-ratio: 1; flex-shrink: 0; display: flex; flex-direction: column; align-items: start; justify-content: space-between; padding: 19px; border: 1px solid rgba(245, 240, 223, .7); text-decoration: none; font-size: 14px; background: rgba(13, 43, 48, .24); transition: background .2s, color .2s; }
+    .explore .arrow { align-self: flex-end; font-size: 25px; line-height: 1; }
+    .explore:hover { background: var(--paper); color: var(--ink); }
+    .work { background: var(--paper); color: var(--ink); padding: 90px clamp(24px, 5vw, 88px) 72px; scroll-margin-top: 24px; }
+    .work-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; border-top: 1px solid #173f4945; padding-top: 24px; margin-bottom: 44px; }
+    h2 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(38px, 5vw, 68px); font-weight: 400; letter-spacing: -.045em; line-height: 1.1; }
+    .index { font-size: 11px; letter-spacing: .12em; }
+    figure { margin: 0; }
+    .work-image { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+    figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-top: 20px; }
+    .caption-title { margin: 0; font-size: 15px; }
+    .media-note { margin: 0; max-width: 47ch; font-size: 12px; line-height: 1.7; color: #35545a; }
+    @media (min-width: 1000px) { .hero-content { padding-bottom: 24px; } }
+    @media (max-width: 600px) {
+      .hero { min-height: max(680px, 100svh); padding: 30px 28px; }
+      .hero::after { inset: 12px; }
+      .hero-poster { object-position: 62% center; }
+      .masthead { font-size: 9px; letter-spacing: .16em; }
+      .hero-content { padding: 100px 0 72px; }
+      h1 { font-size: clamp(72px, 18vw, 108px); margin-bottom: 26px; }
+      .explore { width: 100px; padding: 16px; }
+      .still-label { max-width: 14ch; font-size: 9px; line-height: 1.6; }
+      .still-label::before { width: 18px; flex-shrink: 0; }
+      .work { padding-top: 58px; padding-bottom: 42px; }
+      .work-heading { margin-bottom: 28px; }
+      figcaption { flex-direction: column; gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#work">Skip to selected work</a>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-poster" src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+      <div class="masthead"><span class="mark" aria-hidden="true"></span><span>Independent film practice</span></div>
+      <div class="hero-content">
+        <h1 id="hero-title">A quiet <span>study.</span></h1>
+        <p class="intro">An independent film practice.</p>
+      </div>
+      <div class="hero-footer">
+        <p class="still-label">A still presentation</p>
+        <a class="explore" href="#work"><span>Explore</span><span class="arrow" aria-hidden="true">↘</span></a>
+      </div>
+    </section>
+    <section class="work" id="work" aria-labelledby="work-title">
+      <div class="work-heading"><h2 id="work-title">Selected work</h2><span class="index" aria-hidden="true">01</span></div>
+      <figure>
+        <img class="work-image" src="assets/poster.svg" width="960" height="540" loading="lazy" alt="A golden circle above a soft green geometric landscape against a deep teal sky.">
+        <figcaption>
+          <p class="caption-title">Poster study</p>
+          <p class="media-note">Presented as a still. Requested film footage has not been supplied; video playback is unverified.</p>
+        </figcaption>
+      </figure>
+    </section>
+  </main>
+</body>
+</html>

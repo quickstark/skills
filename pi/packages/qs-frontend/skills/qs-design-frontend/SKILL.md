@@ -19,6 +19,11 @@ Load [dimensional](../../capabilities/frontend/internal/dimensional-style.md) or
 [restrained](../../capabilities/frontend/internal/restrained-style.md) style advice only when
 that treatment fits the selected brief; they are alternatives.
 
+Only when the brief or selected reference calls for cinematic media or motion in a
+marketing page or portfolio, read [cinematic landing](../../capabilities/frontend/internal/cinematic-landing.md).
+A generic improvement request or still reference is insufficient. Explicitly static
+work stays static. Select a technique there before loading its recipe file.
+
 Preserve factual content, including legitimate round metrics and repeated dates.
 Brand and accessibility override preset fonts, icons, spacing and motion. Do not
 interpret an explicit brand token as a loose visual cue: carry its font, color,

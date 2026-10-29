@@ -1,0 +1,15 @@
+{
+  "beforeAmendedOutputObservations": true,
+  "helper": "tests/fixtures/ms-fe-01/observe-amendment.mjs",
+  "sha256": "b833e1c8d70b88a94752d8e26d2db0b0e83710a4fc0c7ce8e904f77171a30be9",
+  "sameFrozenObserver": "tests/fixtures/ms-fe-01/observe-final.mjs",
+  "freshCases": [
+    "C1",
+    "C2",
+    "C5",
+    "C8"
+  ],
+  "freshCount": 8,
+  "retainedCount": 24,
+  "retainedProof": "Same output HTML/assets and frozen observer; prior actual observations and screenshots retained byte-for-byte. No change to assertions, thresholds, viewport, motion preference, browser or codec."
+}

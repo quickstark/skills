@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>FIELD NOTES</title>
+  <style>
+    :root { color-scheme: light; --paper: #f6f3eb; --ink: #163b43; --accent: #bf4e2e; --rule: rgba(22,59,67,.24); --gutter: clamp(22px, 4.45vw, 80px); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 28px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+    ::selection { background: var(--ink); color: var(--paper); }
+    .shell { padding-inline: var(--gutter); }
+    .masthead { min-height: 105px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .wordmark { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 750; letter-spacing: -.055em; white-space: nowrap; }
+    .mark { width: 13px; height: 19px; border-block: 3px solid var(--accent); transform: skewY(-24deg); }
+    nav { display: flex; gap: clamp(22px, 3vw, 46px); font-size: 14px; font-weight: 500; }
+    nav a { padding-block: 10px; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+    nav a:hover { color: var(--accent); text-decoration-line: underline; }
+    .hero { border-top: 1px solid var(--rule); padding-top: clamp(36px, 4.7vw, 68px); padding-bottom: clamp(36px, 4.2vw, 60px); display: grid; grid-template-columns: minmax(0, 1fr) 252px; column-gap: 5vw; align-items: end; }
+    h1 { margin: 0; max-width: 1000px; font-size: clamp(60px, 7.6vw, 122px); line-height: .99; font-weight: 450; letter-spacing: -.072em; text-wrap: balance; }
+    .hero-copy { padding-bottom: 3px; }
+    .hero-copy p { margin: 0 0 28px; max-width: 252px; font-size: 18px; line-height: 1.5; letter-spacing: -.02em; }
+    .primary { display: inline-flex; min-height: 50px; align-items: center; justify-content: space-between; gap: 22px; padding: 13px 17px; background: var(--accent); color: var(--paper); font-size: 14px; font-weight: 550; border: 1px solid var(--accent); transition: background .18s ease, border-color .18s ease; }
+    .primary:hover { background: var(--ink); border-color: var(--ink); }
+    .primary svg { flex: none; width: 18px; height: 18px; }
+    .film { position: relative; margin: 0; height: clamp(300px, 39vw, 590px); overflow: hidden; background: #173f49; }
+    .film img, .film video { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: cover; }
+    .film video { opacity: 0; }
+    .film.is-playing video { opacity: 1; }
+    .film.has-frame video { opacity: 1; }
+    .film.failed video { opacity: 0; }
+    .media-toggle { position: absolute; z-index: 1; bottom: 22px; right: 22px; display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--paper); border-radius: 0; background: var(--paper); color: var(--ink); cursor: pointer; }
+    .media-toggle[hidden] { display: none; }
+    .media-toggle:hover { background: var(--ink); color: var(--paper); }
+    .media-toggle:focus-visible { outline-color: var(--paper); outline-offset: 4px; }
+    .media-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+    .pause-icon { display: none; }
+    .is-playing .pause-icon { display: block; }
+    .is-playing .play-icon { display: none; }
+    .work { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; padding-block: clamp(64px, 7.2vw, 104px); }
+    h2 { margin: 0; font-size: 15px; line-height: 1.5; font-weight: 550; letter-spacing: -.015em; }
+    .work-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
+    .work-list li { padding-block: 27px 30px; border-bottom: 1px solid var(--rule); font-size: clamp(23px, 2.6vw, 39px); line-height: 1.25; font-weight: 400; letter-spacing: -.045em; }
+    .about { border-top: 1px solid var(--rule); padding-block: 45px 72px; }
+    .about p { max-width: 730px; margin: 0; font-size: clamp(32px, 4.5vw, 64px); line-height: 1.12; letter-spacing: -.055em; font-weight: 400; }
+    @media (min-width: 1600px) { main, .masthead { max-width: 1920px; margin-inline: auto; } }
+    @media (max-width: 1050px) {
+      .hero { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+      h1 { max-width: 850px; font-size: clamp(60px, 9.3vw, 98px); }
+      .hero-copy { display: flex; justify-content: space-between; align-items: end; gap: 28px; }
+      .hero-copy p { margin: 0; max-width: 300px; }
+      .work { grid-template-columns: 1fr 2fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      .masthead { min-height: 82px; gap: 20px; }
+      .wordmark { font-size: 15px; gap: 8px; }
+      .mark { width: 10px; height: 16px; }
+      nav { gap: 17px; font-size: 12px; }
+      .hero { padding-top: 34px; padding-bottom: 32px; gap: 26px; }
+      h1 { font-size: clamp(48px, 14.9vw, 80px); line-height: 1.02; max-width: 540px; letter-spacing: -.065em; }
+      .hero-copy { display: block; }
+      .hero-copy p { max-width: 280px; font-size: 16px; margin-bottom: 24px; }
+      .primary { min-height: 48px; }
+      .film { height: 300px; }
+      .film img, .film video { object-position: 63% center; }
+      .media-toggle { bottom: 14px; right: 14px; }
+      .work { grid-template-columns: 1fr; gap: 25px; padding-block: 52px; }
+      .work-list li { padding-block: 24px; font-size: 27px; }
+      .about { padding-block: 31px 49px; }
+    }
+    @media (max-width: 359px) { .masthead { flex-wrap: wrap; gap: 4px; padding-block: 18px; } nav { width: 100%; justify-content: space-between; } }
+    @media (max-height: 500px) and (min-width: 601px) {
+      .masthead { min-height: 70px; }
+      .hero { grid-template-columns: minmax(0, 1fr) 210px; padding-block: 28px; gap: 30px; }
+      h1 { font-size: clamp(45px, 7.5vw, 80px); }
+      .hero-copy { display: block; }
+      .hero-copy p { font-size: 15px; margin-bottom: 18px; }
+      .film { height: 66vh; min-height: 220px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead shell">
+    <div class="wordmark"><span class="mark" aria-hidden="true"></span>FIELD NOTES</div>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:studio@example.test">Contact</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Make room for the moving world.</h1>
+      <div class="hero-copy">
+        <p>Thoughtful films, clear stories, lasting places.</p>
+        <a class="primary" href="#work">Explore the work<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a>
+      </div>
+    </section>
+    <div class="film">
+      <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+      <video muted loop playsinline preload="none" poster="assets/poster.svg" aria-hidden="true" tabindex="-1">
+        <source src="assets/scene.webm" type="video/webm">
+      </video>
+      <button class="media-toggle" type="button" aria-label="Play background film" hidden>
+        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>
+        <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
+      </button>
+    </div>
+    <section class="work" id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <ul class="work-list">
+        <li>Tidal study / 2026</li>
+        <li>Mountain light / 2025</li>
+      </ul>
+    </section>
+    <section class="about" id="about" aria-label="About">
+      <p>An independent film practice.</p>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const film = document.querySelector('.film');
+      const video = film.querySelector('video');
+      const button = film.querySelector('button');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let wantsPlayback = !reducedMotion.matches;
+      let failed = false;
+      let playRequest = 0;
+
+      const syncControl = () => {
+        film.classList.toggle('is-playing', !video.paused);
+        button.setAttribute('aria-label', video.paused ? 'Play background film' : 'Pause background film');
+      };
+      const showPoster = () => {
+        video.pause();
+        film.classList.remove('has-frame');
+      };
+      const fail = () => {
+        failed = true;
+        wantsPlayback = false;
+        showPoster();
+        film.classList.add('failed');
+        button.hidden = true;
+      };
+      const updatePlayback = async () => {
+        const request = ++playRequest;
+        if (failed || !wantsPlayback || document.hidden) {
+          video.pause();
+          return;
+        }
+        try {
+          await video.play();
+          if (request !== playRequest && (!wantsPlayback || document.hidden)) video.pause();
+        } catch {
+          // An autoplay policy may reject playback; the poster and play control remain usable.
+          syncControl();
+        }
+      };
+      video.addEventListener('playing', () => {
+        film.classList.add('has-frame');
+        syncControl();
+      });
+      video.addEventListener('pause', syncControl);
+      video.addEventListener('error', fail);
+      video.querySelector('source').addEventListener('error', fail);
+      button.addEventListener('click', () => {
+        wantsPlayback = video.paused;
+        updatePlayback();
+      });
+      reducedMotion.addEventListener('change', () => {
+        wantsPlayback = !reducedMotion.matches;
+        if (reducedMotion.matches) showPoster();
+        updatePlayback();
+      });
+      document.addEventListener('visibilitychange', updatePlayback);
+      button.hidden = false;
+      updatePlayback();
+    })();
+  </script>
+</body>
+</html>

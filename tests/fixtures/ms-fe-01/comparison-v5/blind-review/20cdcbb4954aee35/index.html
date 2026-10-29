@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>FIELD NOTES</title>
+  <style>
+    :root { color-scheme: light; --paper: #f6f3eb; --ink: #163b43; --accent: #bf4e2e; --rule: #163b4338; }
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-underline-offset: .25em; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    .shell { width: min(100% - 112px, 1440px); margin-inline: auto; }
+    .masthead { min-height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--rule); }
+    .wordmark { font-size: 19px; font-weight: 780; letter-spacing: -.055em; white-space: nowrap; }
+    nav { display: flex; gap: 34px; align-items: center; }
+    nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; text-decoration: none; }
+    nav a:hover { color: var(--accent); text-decoration: underline; }
+    .hero { padding-top: clamp(44px, 5.5vw, 82px); }
+    h1 { margin: 0; font-size: clamp(40px, 8.3vw, 128px); font-weight: 500; line-height: .99; letter-spacing: -.065em; }
+    h1 span { display: block; }
+    .hero-detail { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin: 38px 0 32px; }
+    .hero-detail p { margin: 0; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.5; letter-spacing: -.025em; }
+    .primary { display: inline-flex; min-height: 52px; justify-content: space-between; align-items: center; gap: 36px; padding: 14px 20px; background: var(--accent); color: var(--paper); text-decoration: none; font-size: 14px; font-weight: 600; white-space: nowrap; border: 1px solid var(--accent); border-radius: 0; }
+    .primary:hover { background: var(--ink); border-color: var(--ink); }
+    .arrow { width: 20px; height: 20px; flex: none; }
+    .media { position: relative; aspect-ratio: 2.38; background: var(--ink); overflow: hidden; }
+    .media img, .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+    .media-control { position: absolute; bottom: 20px; right: 20px; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 1px solid var(--paper); border-radius: 0; color: var(--paper); background: var(--ink); cursor: pointer; }
+    .media-control:hover { background: var(--accent); }
+    .media-control:focus-visible { outline-color: var(--paper); outline-offset: 4px; }
+    .media-control svg { width: 18px; height: 18px; }
+    .media-control .pause-icon { display: none; }
+    .media-control[data-playing="true"] .pause-icon { display: block; }
+    .media-control[data-playing="true"] .play-icon { display: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+    #work { padding-block: 68px 76px; scroll-margin-top: 28px; }
+    h2 { margin: 0 0 32px; font-size: 13px; line-height: 1.4; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .work-list { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; list-style: none; padding: 0; margin: 0; }
+    .work-list li { border-top: 1px solid var(--rule); padding-top: 22px; font-size: clamp(21px, 2.4vw, 34px); line-height: 1.3; letter-spacing: -.04em; }
+    .work-list .year { font-size: .56em; letter-spacing: 0; white-space: nowrap; }
+    #about { padding-block: 46px 64px; border-top: 1px solid var(--rule); scroll-margin-top: 28px; }
+    #about p { margin: 0; max-width: 840px; font-size: clamp(28px, 4vw, 56px); line-height: 1.14; letter-spacing: -.05em; }
+    @media (min-width: 1600px) { .shell { width: min(100% - 144px, 1440px); } }
+    @media (max-width: 900px) {
+      .shell { width: calc(100% - 64px); }
+      .masthead { min-height: 92px; }
+      .hero-detail { margin-top: 28px; }
+      .hero-detail p { max-width: 300px; }
+      .media { aspect-ratio: 1.9; }
+      .work-list { gap: 28px; }
+      #work { padding-block: 48px 54px; }
+    }
+    @media (max-width: 540px) {
+      .shell { width: calc(100% - 40px); }
+      .masthead { min-height: 82px; gap: 16px; }
+      .wordmark { font-size: 16px; }
+      nav { gap: 16px; }
+      nav a { font-size: 12px; }
+      .hero { padding-top: 39px; }
+      h1 { font-size: clamp(36px, 10.67vw, 57px); line-height: 1.06; letter-spacing: -.065em; }
+      .hero-detail { align-items: flex-start; flex-direction: column; gap: 23px; margin-block: 22px 28px; }
+      .hero-detail p { max-width: 280px; font-size: 16px; }
+      .primary { min-height: 48px; gap: 36px; padding: 12px 16px; }
+      .media { aspect-ratio: 1.45; }
+      .media-control { bottom: 12px; right: 12px; }
+      h2 { margin-bottom: 24px; font-size: 12px; }
+      .work-list { grid-template-columns: 1fr; gap: 24px; }
+      .work-list li { font-size: 27px; padding-top: 18px; }
+      #work { padding-block: 38px 44px; }
+      #about { padding-block: 32px 44px; }
+    }
+    @media (max-height: 500px) and (min-width: 541px) {
+      .masthead { min-height: 72px; }
+      .hero { padding-top: 30px; }
+      h1 { font-size: clamp(48px, 7.5vw, 80px); }
+      .hero-detail { margin-block: 22px; }
+      .media { aspect-ratio: 2.5; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .media video, .media-control { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead shell">
+    <div class="wordmark">FIELD NOTES</div>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:studio@example.test">Contact</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title"><span>Make room for</span> <span>the moving world.</span></h1>
+      <div class="hero-detail">
+        <p>Thoughtful films, clear stories, lasting places.</p>
+        <a class="primary" href="#work">Explore the work<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="media" data-media>
+        <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+        <video src="assets/scene.webm" poster="assets/poster.svg" muted playsinline loop preload="none" aria-hidden="true" hidden></video>
+        <button class="media-control" type="button" aria-label="Play background video" data-playing="false" hidden>
+          <svg class="pause-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3h3v14H5zM12 3h3v14h-3z"/></svg>
+          <svg class="play-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+        </button>
+        <span class="sr-only" data-media-status role="status"></span>
+      </div>
+    </section>
+    <section id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <ul class="work-list">
+        <li>Tidal study <span class="year">/ 2026</span></li>
+        <li>Mountain light <span class="year">/ 2025</span></li>
+      </ul>
+    </section>
+    <section id="about" aria-label="About">
+      <p>An independent film practice.</p>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const root = document.querySelector('[data-media]');
+      const video = root.querySelector('video');
+      const button = root.querySelector('button');
+      const status = root.querySelector('[data-media-status]');
+      let teardown = () => {};
+      function mount() {
+        let observer;
+        let epoch = 0;
+        let dead = false;
+        let visible = false;
+        let userPaused = false;
+        let blocked = false;
+        const listeners = [];
+        const listen = (target, event, handler) => {
+          target.addEventListener(event, handler);
+          listeners.push(() => target.removeEventListener(event, handler));
+        };
+        const still = () => {
+          epoch++;
+          video.pause();
+          video.hidden = true;
+          button.dataset.playing = 'false';
+          button.setAttribute('aria-label', 'Play background video');
+        };
+        let reduce;
+        const sync = async () => {
+          if (dead || !visible || userPaused || blocked || reduce.matches || document.hidden) {
+            still();
+            return;
+          }
+          const attempt = ++epoch;
+          try {
+            await video.play();
+            if (attempt !== epoch || dead) return;
+            video.hidden = false;
+            button.dataset.playing = 'true';
+            button.setAttribute('aria-label', 'Pause background video');
+            status.textContent = '';
+          } catch {
+            if (attempt !== epoch || dead) return;
+            blocked = true;
+            still();
+            status.textContent = 'Static preview: playback unavailable.';
+          }
+        };
+        try {
+          reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+          if (!('IntersectionObserver' in window)) return;
+          video.muted = true;
+          listen(button, 'click', () => {
+            userPaused = !video.paused;
+            blocked = false;
+            sync();
+          });
+          listen(reduce, 'change', sync);
+          listen(document, 'visibilitychange', sync);
+          listen(video, 'error', () => {
+            blocked = true;
+            still();
+            status.textContent = 'Static preview: media unavailable.';
+          });
+          observer = new IntersectionObserver(([entry]) => {
+            visible = entry.isIntersecting && entry.intersectionRatio > 0;
+            sync();
+          }, { threshold: [0, .001] });
+          observer.observe(root);
+          button.hidden = false;
+        } catch {
+          blocked = true;
+          still();
+          button.hidden = true;
+        }
+        teardown = () => {
+          dead = true;
+          still();
+          observer?.disconnect();
+          listeners.forEach(remove => remove());
+          button.hidden = true;
+        };
+      }
+      mount();
+      window.addEventListener('pagehide', () => teardown());
+      window.addEventListener('pageshow', event => { if (event.persisted) mount(); });
+    })();
+  </script>
+</body>
+</html>

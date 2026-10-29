@@ -8253,10 +8253,15 @@
         ],
         "originScope": "owner-context",
         "decision": {
-          "status": "pending",
-          "revision": null,
-          "evidence": [],
-          "note": "MS-FE-01 candidate requires fresh runtime and comparison evidence; historical frontend receipts do not qualify this addition."
+          "status": "adopted",
+          "revision": "ddfe859ffa6eb5bf307ac28581f3497b5172173a",
+          "evidence": [
+            "docs/validation/ms-fe-01.md",
+            "tests/fixtures/ms-fe-01/qualification.json",
+            "tests/fixtures/ms-fe-01/comparison-v5/plan.json",
+            "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json"
+          ],
+          "note": "MS-FE-01 source adaptation qualified against exact guidance hashes, real browser fault/playback checks and independently blinded amended comparison (+0.30). Baseline links remain owner-context only; original MotionSites source identity is separate. Synthetic/emulated coverage and failed cohorts are retained. This does not certify arbitrary model responses or machine installation."
         },
         "derivedDigest": {
           "algorithm": "sha256",
@@ -8281,10 +8286,15 @@
         ],
         "originScope": "owner-context",
         "decision": {
-          "status": "pending",
-          "revision": null,
-          "evidence": [],
-          "note": "MS-FE-01 candidate requires fresh runtime and comparison evidence; historical frontend receipts do not qualify this addition."
+          "status": "adopted",
+          "revision": "ddfe859ffa6eb5bf307ac28581f3497b5172173a",
+          "evidence": [
+            "docs/validation/ms-fe-01.md",
+            "tests/fixtures/ms-fe-01/qualification.json",
+            "tests/fixtures/ms-fe-01/comparison-v5/plan.json",
+            "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json"
+          ],
+          "note": "MS-FE-01 source adaptation qualified against exact guidance hashes, real browser fault/playback checks and independently blinded amended comparison (+0.30). Baseline links remain owner-context only; original MotionSites source identity is separate. Synthetic/emulated coverage and failed cohorts are retained. This does not certify arbitrary model responses or machine installation."
         },
         "derivedDigest": {
           "algorithm": "sha256",
@@ -8309,10 +8319,15 @@
         ],
         "originScope": "owner-context",
         "decision": {
-          "status": "pending",
-          "revision": null,
-          "evidence": [],
-          "note": "MS-FE-01 candidate requires fresh runtime and comparison evidence; historical frontend receipts do not qualify this addition."
+          "status": "adopted",
+          "revision": "ddfe859ffa6eb5bf307ac28581f3497b5172173a",
+          "evidence": [
+            "docs/validation/ms-fe-01.md",
+            "tests/fixtures/ms-fe-01/qualification.json",
+            "tests/fixtures/ms-fe-01/comparison-v5/plan.json",
+            "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json"
+          ],
+          "note": "MS-FE-01 source adaptation qualified against exact guidance hashes, real browser fault/playback checks and independently blinded amended comparison (+0.30). Baseline links remain owner-context only; original MotionSites source identity is separate. Synthetic/emulated coverage and failed cohorts are retained. This does not certify arbitrary model responses or machine installation."
         },
         "derivedDigest": {
           "algorithm": "sha256",
@@ -8382,7 +8397,7 @@
     ],
     "frontend": {
       "path": "skills/frontend/dependency-index.json",
-      "sha256": "632004cec57937a23e96c5dbe49142c1ff0de484a9f9b514106fa46aa0c7c5fd",
+      "sha256": "897719e333bbec428aaf1d5a9df5fbbbc97b0b5890a65b6bc903b1331005d961",
       "sources": [
         {
           "identity": "design-taste-frontend",
@@ -8486,10 +8501,11 @@
           "identity": "motionsites-web-builder",
           "repository": "https://github.com/Motionsites-AI/claude-skill",
           "reviewedRevision": "faa30d512e3973e58675c72101a7ef42ed37ae83",
-          "state": "candidate",
-          "adoptedRevision": null,
+          "state": "adopted",
+          "adoptedRevision": "faa30d512e3973e58675c72101a7ef42ed37ae83",
           "evidence": [
-            "docs/validation/ms-fe-01.md"
+            "docs/validation/ms-fe-01.md",
+            "tests/fixtures/ms-fe-01/qualification.json"
           ],
           "files": [
             {

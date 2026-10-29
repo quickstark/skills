@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIELD NOTES</title>
+<style>
+:root{--paper:#f6f3eb;--ink:#163b43;--accent:#bf4e2e;--radius:0px;--font:system-ui}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px var(--font)}
+header,section{padding:32px}
+a,button{border-radius:var(--radius);font-family:var(--font)}
+.cta{display:inline-block;background:var(--ink);color:var(--paper);padding:16px}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+[hidden]{display:none!important}
+header,main{max-width:1600px;margin-inline:auto}
+header{display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--ink)}
+header>span{font-weight:750;letter-spacing:.12em;font-size:14px}
+nav{display:flex;gap:28px;align-items:center}
+#intro{padding-top:64px;padding-bottom:0}
+.intro-copy{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end;margin-bottom:48px}
+.intro-heading{grid-column:1/-1;min-width:0}
+.eyebrow{margin:0 0 28px;font-size:12px;font-weight:650;letter-spacing:.16em;color:var(--accent)}
+h1{max-width:17ch;margin:0;font-size:clamp(2.8rem,7.3vw,7rem);line-height:1.02;font-weight:600;letter-spacing:-.055em;text-wrap:balance}
+.summary{margin:0;max-width:36ch;line-height:1.5}
+.film{position:relative;isolation:isolate;aspect-ratio:2.12;background:var(--ink);overflow:hidden}
+.film img,.film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% 50%}
+.film img{z-index:-1}
+.film video{background:transparent}
+video:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+#work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;padding-top:72px;padding-bottom:88px}
+h2{margin:0;font-size:clamp(2rem,4vw,3.5rem);font-weight:500;letter-spacing:-.04em;line-height:1.1}
+.work-copy{border-top:2px solid var(--accent);padding-top:20px}
+.work-copy>p:first-child{margin:0 0 24px;font-size:clamp(1.25rem,2.4vw,2rem);letter-spacing:-.025em}
+#detail{line-height:1.5;margin-bottom:0}
+@media(min-width:1100px){header,section{padding-inline:64px}}
+@media(max-width:600px){
+ header,section{padding:24px}
+ header{gap:16px}nav{gap:18px;font-size:16px}
+ header>span{font-size:12px;letter-spacing:.08em}
+ #intro{padding-top:40px}
+ .intro-copy{grid-template-columns:minmax(0,1fr);gap:24px;margin-bottom:32px}
+ .eyebrow{font-size:10px;letter-spacing:.12em;margin-bottom:22px}
+ h1{max-width:15ch;font-size:clamp(2.4rem,10.6vw,4rem)}
+ .summary{font-size:16px;max-width:30ch}
+ .cta{justify-self:start}
+ .film{aspect-ratio:16/10}
+ #work{grid-template-columns:minmax(0,1fr);gap:32px;padding-top:44px;padding-bottom:56px}
+}
+@media(prefers-reduced-motion:reduce){.film video{display:none}}
+</style>
+</head>
+<body>
+<header><span>FIELD NOTES</span><nav><a href="#work">Work</a><a href="mailto:studio@example.test">Contact</a></nav></header>
+<main>
+<section id="intro">
+  <div class="intro-copy">
+    <div class="intro-heading">
+      <p class="eyebrow" data-enter>INDEPENDENT FILM / 2026</p>
+      <h1 data-enter data-delay="80">Make room for the moving world.</h1>
+    </div>
+    <p class="summary" data-enter data-delay="160">Thoughtful films, clear stories, lasting places.</p>
+    <a class="cta" id="explore" href="#work" data-track="explore">Explore the work</a>
+  </div>
+  <div class="film">
+    <img src="assets/poster.svg" alt="" width="960" height="540">
+    <video controls muted playsinline loop preload="none" poster="assets/poster.svg">
+      <source src="assets/scene.webm" type="video/webm">
+    </video>
+  </div>
+</section>
+<section id="work">
+  <h2 data-reveal>Selected work</h2>
+  <div class="work-copy">
+    <p data-reveal data-delay="100">Tidal study / 2026</p>
+    <button id="details" type="button">Show details</button>
+    <p id="detail" hidden>Filmed on the northern coast.</p>
+  </div>
+</section>
+</main>
+<script>window.analytics=[];document.querySelector('[data-track]').addEventListener('click',()=>window.analytics.push('explore'));document.querySelector('#details').addEventListener('click',()=>{document.querySelector('#detail').hidden=!document.querySelector('#detail').hidden});</script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const controller = new AbortController();
+  const options = { signal: controller.signal };
+  const animations = new Set();
+  const pending = new Set(document.querySelectorAll('[data-reveal]'));
+  let reveals;
+  const finishMotion = () => {
+    reveals?.disconnect();
+    animations.forEach(animation => animation.cancel());
+    animations.clear();
+  };
+  const animate = element => {
+    if (reduce.matches || !element.animate) return;
+    const animation = element.animate([
+      { opacity: .75, transform: 'translateY(14px)' },
+      { opacity: 1, transform: 'none' }
+    ], { duration: 600, delay: Number(element.dataset.delay) || 0,
+      easing: 'cubic-bezier(.22,1,.36,1)' });
+    animations.add(animation);
+    animation.finished.then(() => animations.delete(animation), () => animations.delete(animation));
+  };
+  try {
+    if (!reduce.matches) {
+      document.querySelectorAll('[data-enter]').forEach(animate);
+      if ('IntersectionObserver' in window) {
+        reveals = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            reveals.unobserve(entry.target);
+            pending.delete(entry.target);
+            animate(entry.target);
+          });
+          if (!pending.size) reveals.disconnect();
+        }, { threshold: 0 });
+        pending.forEach(element => reveals.observe(element));
+      }
+    }
+    reduce.addEventListener('change', finishMotion, options);
+  } catch { finishMotion(); }
+
+  const video = document.querySelector('video');
+  let mediaObserver, visible = false, userPaused = false, blocked = false;
+  let internalPauses = 0, epoch = 0, dead = false;
+  const pause = () => {
+    epoch++;
+    if (!video.paused) { internalPauses++; video.pause(); }
+  };
+  const syncMedia = async () => {
+    if (dead || !visible || document.hidden || reduce.matches || userPaused || blocked) {
+      pause();
+      return;
+    }
+    const attempt = ++epoch;
+    try { await video.play(); }
+    catch { if (attempt === epoch) blocked = true; }
+  };
+  try {
+    video.muted = true;
+    video.addEventListener('pause', () => {
+      if (internalPauses) internalPauses--;
+      else userPaused = true;
+    }, options);
+    video.addEventListener('play', () => {
+      if (dead || reduce.matches || document.hidden || !visible) { pause(); return; }
+      userPaused = false;
+      blocked = false;
+    }, options);
+    video.addEventListener('error', () => { blocked = true; pause(); video.hidden = true; }, options);
+    video.querySelector('source').addEventListener('error', () => {
+      blocked = true; pause(); video.hidden = true;
+    }, options);
+    reduce.addEventListener('change', () => {
+      if (reduce.matches) { pause(); video.load(); }
+      else syncMedia();
+    }, options);
+    document.addEventListener('visibilitychange', syncMedia, options);
+    if ('IntersectionObserver' in window) {
+      mediaObserver = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        syncMedia();
+      }, { threshold: 0 });
+      mediaObserver.observe(video);
+    }
+  } catch { pause(); }
+  const cleanup = () => {
+    dead = true;
+    pause();
+    finishMotion();
+    mediaObserver?.disconnect();
+    controller.abort();
+  };
+  window.addEventListener('pagehide', event => { pause(); if (!event.persisted) cleanup(); }, options);
+  window.addEventListener('pageshow', syncMedia, options);
+})();
+</script>
+</body>
+</html>

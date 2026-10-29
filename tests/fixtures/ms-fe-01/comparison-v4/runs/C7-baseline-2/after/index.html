@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FIELD NOTES</title>
+  <style>
+    :root {
+      color-scheme: light;
+      background: #f6f3eb;
+      color: #163b43;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: auto; }
+    body { margin: 0; }
+
+    .page {
+      width: min(100%, 1600px);
+      margin-inline: auto;
+      padding-inline: clamp(24px, 6vw, 96px);
+    }
+
+    header {
+      padding-block: 32px;
+      border-bottom: 1px solid currentColor;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .intro {
+      min-height: 70vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-content: center;
+      align-items: end;
+      gap: 48px;
+      padding-block: 96px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 10ch;
+      font-size: clamp(64px, 9vw, 144px);
+      font-weight: 450;
+      line-height: 1;
+      letter-spacing: -0.065em;
+    }
+
+    p {
+      margin: 32px 0 0;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.5;
+    }
+
+    .explore {
+      display: inline-flex;
+      width: 112px;
+      height: 112px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #163b43;
+      border-radius: 0;
+      background: #163b43;
+      color: #f6f3eb;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .explore:hover {
+      background: #f6f3eb;
+      color: #163b43;
+    }
+
+    .explore:focus-visible {
+      outline: 3px solid #163b43;
+      outline-offset: 5px;
+    }
+
+    #work {
+      min-height: 40vh;
+      padding-block: 40px 96px;
+      border-top: 1px solid currentColor;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 450;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    @media (max-width: 600px) {
+      header { padding-block: 24px; }
+      .intro {
+        grid-template-columns: minmax(0, 1fr);
+        padding-block: 64px;
+        gap: 40px;
+      }
+      .explore { width: 96px; height: 96px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>FIELD NOTES</header>
+    <main>
+      <section class="intro" aria-labelledby="intro-title">
+        <div>
+          <h1 id="intro-title">A quiet study.</h1>
+          <p>An independent film practice.</p>
+        </div>
+        <a class="explore" href="#work">Explore</a>
+      </section>
+      <section id="work" aria-labelledby="work-title">
+        <h2 id="work-title">Selected work</h2>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

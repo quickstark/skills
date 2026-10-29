@@ -150,10 +150,11 @@
         "motion-recipes",
         "media-recipes"
       ],
-      "state": "candidate",
-      "adoptedRevision": null,
+      "state": "adopted",
+      "adoptedRevision": "faa30d512e3973e58675c72101a7ef42ed37ae83",
       "evidence": [
-        "docs/validation/ms-fe-01.md"
+        "docs/validation/ms-fe-01.md",
+        "tests/fixtures/ms-fe-01/qualification.json"
       ],
       "dispositions": {
         "examples": "excluded",

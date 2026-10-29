@@ -1,0 +1,19 @@
+{
+  "status": "failed",
+  "reviewFrozenBeforeVariantDecode": true,
+  "baselineMean": 3.35,
+  "candidateMean": 3.5,
+  "improvement": 0.15,
+  "requiredImprovement": 0.25,
+  "scenarioMeans": {
+    "C1": {
+      "baseline": 3.5,
+      "candidate": 3.8
+    },
+    "C2": {
+      "baseline": 3.2,
+      "candidate": 3.2
+    }
+  },
+  "decision": "Unadopted. Preserve all original rows and frozen ratings. Repair composition guidance and freeze affected-case amendment; do not lower thresholds."
+}

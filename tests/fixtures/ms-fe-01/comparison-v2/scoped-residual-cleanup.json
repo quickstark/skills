@@ -1,0 +1,209 @@
+{
+  "scope": "Only processes whose actual cwd is an exact original/v2 task workspace or descendant. Does not prove absence of processes that changed cwd and detached before observation.",
+  "events": [
+    {
+      "pid": 2419850,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123375607",
+      "cwd": "/tmp/ms-fe-01-C4-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2419915,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123375636",
+      "cwd": "/tmp/ms-fe-01-C4-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2424067,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123376776",
+      "cwd": "/tmp/ms-fe-01-C3-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2424268,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123376812",
+      "cwd": "/tmp/ms-fe-01-C3-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2479321,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123401864",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2479327,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123401884",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495268,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123411953",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495314,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123411978",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495326,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123411983",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495413,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412018",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495460,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412040",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495514,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412072",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495523,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412072",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495906,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412178",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2495923,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412180",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2496025,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412201",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2496028,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412201",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2496036,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123412202",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2501356,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123415473",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505506,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418270",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505537,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418290",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505550,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418296",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505651,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418331",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505692,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418356",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505707,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418382",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505715,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418383",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505938,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418476",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2505944,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418478",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2506020,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418497",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2506026,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418497",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2506033,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123418497",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2509782,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123420620",
+      "cwd": "/tmp/ms-fe-01-v2-C2-baseline-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2516015,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123424814",
+      "cwd": "/tmp/ms-fe-01-v2-C2-candidate-1",
+      "action": "SIGTERM task-workspace process"
+    },
+    {
+      "pid": 2516042,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123424833",
+      "cwd": "/tmp/ms-fe-01-v2-C2-candidate-1",
+      "action": "SIGTERM task-workspace process"
+    }
+  ]
+}

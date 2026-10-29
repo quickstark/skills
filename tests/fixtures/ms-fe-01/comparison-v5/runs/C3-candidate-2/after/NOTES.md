@@ -1,0 +1,3 @@
+- Scope: spacing and responsive usability in index.html; table content, filter options, IDs, and filtering/count script preserved.
+- Parameters: existing #f6f3eb / #163b43 colors and system font; 12px spacing base, 960px content maximum, 600px / 360px responsive breakpoints, 44px minimum select height. No media or motion added.
+- Validation: shell content checks only. Browser/runtime behavior, visual layout, and keyboard interaction remain unverified; central observer owns qualification and independent review.

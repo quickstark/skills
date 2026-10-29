@@ -1,0 +1,2 @@
+2026-10-29T19:34:07.156033Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: "Bearer realm=\"Service\", error=\"invalid_request\", error_description=\"The access token was not found.\", resource_metadata=\"https://mcp.box.com/.well-known/oauth-protected-resource\"" })
+2026-10-29T19:34:10.909103Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out

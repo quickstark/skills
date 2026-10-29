@@ -1,0 +1,53 @@
+{
+  "browser": "151.0.7922.34",
+  "codec": "video/webm; codecs=\"vp8\"",
+  "snippets": {
+    "motion": "2a9a50eb0a60f26d172c23f76d6cb5a9d5357241dbf057f32546fa426e75a0f9",
+    "media": "7b031a4294089d9008299584d86718fe302a17e117b5fdfc8c9f0c305200d9b5"
+  },
+  "cases": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": true,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": true,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    }
+  ],
+  "failures": [
+    "AssertionError [ERR_ASSERTION]: offscreen paused\n\nfalse !== true\n\n    at runtime (file:///github/skills/tests/fixtures/ms-fe-01/runtime.mjs:71:100)\n    at async file:///github/skills/tests/fixtures/ms-fe-01/runtime.mjs:107:7"
+  ]
+}

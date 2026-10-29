@@ -1,0 +1,35 @@
+{
+  "browser": "151.0.7922.34",
+  "snippets": {
+    "motion": "cdfcb3a4e26e64f727a9de1b025e31c9256dcde974a1823f87d725284bb2210c",
+    "media": "885acff3d6b96d2f5bcf7411155a2f0c73d89171295b564d687ca1b9316e7339"
+  },
+  "checks": {
+    "keyboardPauseResume": true,
+    "nativeLoopCycles": 3,
+    "keyboardPrimaryAndOffscreenPause": true,
+    "tallRevealSettles": true,
+    "observersAndAnimationsReleased": true,
+    "interruptedObserverSetupLeavesContentVisible": true
+  },
+  "screenshots": [
+    {
+      "phase": "start",
+      "time": 0.155605,
+      "duration": 1.96523,
+      "file": "start.png"
+    },
+    {
+      "phase": "midpoint",
+      "time": 0.8974,
+      "duration": 1.96523,
+      "file": "midpoint.png"
+    },
+    {
+      "phase": "end",
+      "time": 1.769556,
+      "duration": 1.96523,
+      "file": "end.png"
+    }
+  ]
+}

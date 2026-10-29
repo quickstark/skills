@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.3.0
+
+### Minor Changes
+
+- Add selectively loaded cinematic motion and media guidance to qs-design-frontend, with preserved brand/control authority, static fallbacks, reduced-motion support, separate MotionSites provenance and fresh browser/comparison qualification.
+
 ## 4.2.0
 
 ### Minor Changes

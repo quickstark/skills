@@ -1,0 +1,338 @@
+{
+  "id": "C2-candidate-2",
+  "scenario": "C2",
+  "errors": [
+    "AssertionError [ERR_ASSERTION]: actual media advances\n    at observe (file:///github/skills/tests/fixtures/ms-fe-01/observe-final.mjs:41:22)\n    at async file:///github/skills/tests/fixtures/ms-fe-01/observe-amendment.mjs:15:2"
+  ],
+  "views": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": true,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [
+          {
+            "paused": false,
+            "time": 1.364202,
+            "hidden": false,
+            "src": null,
+            "loop": true
+          }
+        ],
+        "text": "FIELD NOTES\nWork\nContact\n\nINDEPENDENT FILM / 2026\n\nMake room for the moving world.\n\nThoughtful films, clear stories, lasting places.\n\nExplore the work\nSelected work\n\nTidal study / 2026\n\nShow details",
+        "headings": [
+          "Make room for the moving world.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Work",
+            "href": "#work"
+          },
+          {
+            "text": "Contact",
+            "href": "mailto:studio@example.test"
+          },
+          {
+            "text": "Explore the work",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": [
+        "ea40e0006d658603-375-no-preference-early.png",
+        "ea40e0006d658603-375-no-preference-settled.png"
+      ]
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": true,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [
+          {
+            "paused": true,
+            "time": 0,
+            "hidden": false,
+            "src": null,
+            "loop": true
+          }
+        ],
+        "text": "FIELD NOTES\nWork\nContact\n\nINDEPENDENT FILM / 2026\n\nMake room for the moving world.\n\nThoughtful films, clear stories, lasting places.\n\nExplore the work\nSelected work\n\nTidal study / 2026\n\nShow details",
+        "headings": [
+          "Make room for the moving world.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Work",
+            "href": "#work"
+          },
+          {
+            "text": "Contact",
+            "href": "mailto:studio@example.test"
+          },
+          {
+            "text": "Explore the work",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": [
+        "ea40e0006d658603-375-reduce-early.png",
+        "ea40e0006d658603-375-reduce-settled.png"
+      ]
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [
+          {
+            "paused": false,
+            "time": 1.343203,
+            "hidden": false,
+            "src": null,
+            "loop": true
+          }
+        ],
+        "text": "FIELD NOTES\nWork\nContact\n\nINDEPENDENT FILM / 2026\n\nMake room for the moving world.\n\nThoughtful films, clear stories, lasting places.\n\nExplore the work\nSelected work\n\nTidal study / 2026\n\nShow details",
+        "headings": [
+          "Make room for the moving world.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Work",
+            "href": "#work"
+          },
+          {
+            "text": "Contact",
+            "href": "mailto:studio@example.test"
+          },
+          {
+            "text": "Explore the work",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": [
+        "ea40e0006d658603-768-no-preference-early.png",
+        "ea40e0006d658603-768-no-preference-settled.png"
+      ]
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [
+          {
+            "paused": true,
+            "time": 0,
+            "hidden": false,
+            "src": null,
+            "loop": true
+          }
+        ],
+        "text": "FIELD NOTES\nWork\nContact\n\nINDEPENDENT FILM / 2026\n\nMake room for the moving world.\n\nThoughtful films, clear stories, lasting places.\n\nExplore the work\nSelected work\n\nTidal study / 2026\n\nShow details",
+        "headings": [
+          "Make room for the moving world.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Work",
+            "href": "#work"
+          },
+          {
+            "text": "Contact",
+            "href": "mailto:studio@example.test"
+          },
+          {
+            "text": "Explore the work",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": [
+        "ea40e0006d658603-768-reduce-early.png",
+        "ea40e0006d658603-768-reduce-settled.png"
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [
+          {
+            "paused": false,
+            "time": 1.40462,
+            "hidden": false,
+            "src": null,
+            "loop": true
+          }
+        ],
+        "text": "FIELD NOTES\nWork\nContact\n\nINDEPENDENT FILM / 2026\n\nMake room for the moving world.\n\nThoughtful films, clear stories, lasting places.\n\nExplore the work\nSelected work\n\nTidal study / 2026\n\nShow details",
+        "headings": [
+          "Make room for the moving world.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Work",
+            "href": "#work"
+          },
+          {
+            "text": "Contact",
+            "href": "mailto:studio@example.test"
+          },
+          {
+            "text": "Explore the work",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": [
+        "ea40e0006d658603-1440-no-preference-early.png",
+        "ea40e0006d658603-1440-no-preference-settled.png"
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [
+          {
+            "paused": true,
+            "time": 0,
+            "hidden": false,
+            "src": null,
+            "loop": true
+          }
+        ],
+        "text": "FIELD NOTES\nWork\nContact\n\nINDEPENDENT FILM / 2026\n\nMake room for the moving world.\n\nThoughtful films, clear stories, lasting places.\n\nExplore the work\nSelected work\n\nTidal study / 2026\n\nShow details",
+        "headings": [
+          "Make room for the moving world.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Work",
+            "href": "#work"
+          },
+          {
+            "text": "Contact",
+            "href": "mailto:studio@example.test"
+          },
+          {
+            "text": "Explore the work",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": [
+        "ea40e0006d658603-1440-reduce-early.png",
+        "ea40e0006d658603-1440-reduce-settled.png"
+      ]
+    }
+  ],
+  "checks": {},
+  "transport": {
+    "completedTurn": true,
+    "nativeStreamComplete": true,
+    "stopReason": null,
+    "toolCount": 7,
+    "durationMs": 121169.04443200002,
+    "usage": [
+      {
+        "input_tokens": 172587,
+        "cached_input_tokens": 157824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7169,
+        "reasoning_output_tokens": 2985,
+        "total_tokens": 179756
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g 'AGENTS.md' -g 'index.html' -g 'NOTES.md' -g 'guidance/**' -g 'assets/**'\"",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc 'cat index.html && cat assets/rights.json && cat assets/poster.svg'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc 'cat guidance/skills/engineering/qs-design-frontend/SKILL.md'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc 'cat guidance/skills/frontend/internal/brief.md guidance/skills/frontend/internal/redesign.md guidance/skills/frontend/internal/implementation.md guidance/skills/frontend/internal/cinematic-landing.md'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc 'cat guidance/skills/frontend/internal/motion-recipes.md guidance/skills/frontend/internal/media-recipes.md'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc \"cp index.html /tmp/field-notes-before.html\ncat > index.html <<'EOF'\n<\"'!doctype html>\n<html lang=\"en\">\n<head>\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>FIELD NOTES</title>\n<style>\n:root{--paper:#f6f3eb;--ink:#163b43;--accent:#bf4e2e;--radius:0px;--font:system-ui}\n*{box-sizing:border-box}\nbody{margin:0;background:var(--paper);color:var(--ink);font:18px var(--font)}\nheader,section{padding:32px}\na,button{border-radius:var(--radius);font-family:var(--font)}\n.cta{display:inline-block;background:var(--ink);color:var(--paper);padding:16px}\na:focus-visible{outline:3px solid var(--accent);outline-offset:4px}\n[hidden]{display:none!important}\nheader,main{max-width:1600px;margin-inline:auto}\nheader{display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid var(--ink)}\nheader>span{font-weight:750;letter-spacing:.12em;font-size:14px}\nnav{display:flex;gap:28px;align-items:center}\n#intro{padding-top:64px;padding-bottom:0}\n.intro-copy{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end;margin-bottom:48px}\n.intro-heading{grid-column:1/-1;min-width:0}\n.eyebrow{margin:0 0 28px;font-size:12px;font-weight:650;letter-spacing:.16em;color:var(--accent)}\nh1{max-width:17ch;margin:0;font-size:clamp(2.8rem,7.3vw,7rem);line-height:1.02;font-weight:600;letter-spacing:-.055em;text-wrap:balance}\n.summary{margin:0;max-width:36ch;line-height:1.5}\n.film{position:relative;isolation:isolate;aspect-ratio:2.12;background:var(--ink);overflow:hidden}\n.film img,.film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% 50%}\n.film img{z-index:-1}\n.film video{background:transparent}\nvideo:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}\n#work{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;padding-top:72px;padding-bottom:88px}\nh2{margin:0;font-size:clamp(2rem,4vw,3.5rem);font-weight:500;letter-spacing:-.04em;line-height:1.1}\n.work-copy{border-top:2px solid var(--accent);padding-top:20px}\n.work-copy>p:first-child{margin:0 0 24px;font-size:clamp(1.25rem,2.4vw,2rem);letter-spacing:-.025em}\n#detail{line-height:1.5;margin-bottom:0}\n@media(min-width:1100px){header,section{padding-inline:64px}}\n@media(max-width:600px){\n header,section{padding:24px}\n header{gap:16px}nav{gap:18px;font-size:16px}\n header>span{font-size:12px;letter-spacing:.08em}\n #intro{padding-top:40px}\n .intro-copy{grid-template-columns:minmax(0,1fr);gap:24px;margin-bottom:32px}\n .eyebrow{font-size:10px;letter-spacing:.12em;margin-bottom:22px}\n h1{max-width:15ch;font-size:clamp(2.8rem,10.6vw,4rem)}\n .summary{font-size:16px;max-width:30ch}\n .cta{justify-self:start}\n .film{aspect-ratio:16/10}\n #work{grid-template-columns:minmax(0,1fr);gap:32px;padding-top:44px;padding-bottom:56px}\n}\n</style>\n</head>\n<body>\n<header><span>FIELD NOTES</span><nav><a href=\"#work\">Work</a><a href=\"mailto:studio@example.test\">Contact</a></nav></header>\n<main>\n<section id=\"intro\">\n  <div class=\"intro-copy\">\n    <div class=\"intro-heading\">\n      <p class=\"eyebrow\" data-enter>INDEPENDENT FILM / 2026</p>\n      <h1 data-enter data-delay=\"80\">Make room for the moving world.</h1>\n    </div>\n    <p class=\"summary\" data-enter data-delay=\"160\">Thoughtful films, clear stories, lasting places.</p>\n    <a class=\"cta\" id=\"explore\" href=\"#work\" data-track=\"explore\">Explore the work</a>\n  </div>\n  <div class=\"film\">\n    <img src=\"assets/poster.svg\" alt=\"\" width=\"960\" height=\"540\">\n    <video controls muted playsinline loop preload=\"none\" poster=\"assets/poster.svg\">\n      <source src=\"assets/scene.webm\" type=\"video/webm\">\n    </video>\n  </div>\n</section>\n<section id=\"work\">\n  <h2 data-reveal>Selected work</h2>\n  <div class=\"work-copy\">\n    <p data-reveal data-delay=\"100\">Tidal study / 2026</p>\n    <button id=\"details\" type=\"button\">Show details</button>\n    <p id=\"detail\" hidden>Filmed on the northern coast.</p>\n  </div>\n</section>\n</main>\n<script>window.analytics=[];document.querySelector('\"'[data-track]').addEventListener('click',()=>window.analytics.push('explore'));document.querySelector('#details').addEventListener('click',()=>{document.querySelector('#detail').hidden=\"'!document.querySelector('\"'#detail').hidden});</script>\n<script>\n(() => {\n  const reduce = matchMedia('(prefers-reduced-motion: reduce)');\n  const controller = new AbortController();\n  const options = { signal: controller.signal };\n  const animations = new Set();\n  const pending = new Set(document.querySelectorAll('[data-reveal]'));\n  let reveals;\n  const finishMotion = () => {\n    reveals?.disconnect();\n    animations.forEach(animation => animation.cancel());\n    animations.clear();\n  };\n  const animate = element => {\n    if (reduce.matches || \"'!element.animate) return;\n    const animation = element.animate([\n      { opacity: .75, transform: '\"'translateY(14px)' },\n      { opacity: 1, transform: 'none' }\n    ], { duration: 600, delay: Number(element.dataset.delay) || 0,\n      easing: 'cubic-bezier(.22,1,.36,1)' });\n    animations.add(animation);\n    animation.finished.then(() => animations.delete(animation), () => animations.delete(animation));\n  };\n  try {\n    if (\"'!reduce.matches) {\n      document.querySelectorAll('\"'[data-enter]').forEach(animate);\n      if ('IntersectionObserver' in window) {\n        reveals = new IntersectionObserver(entries => {\n          entries.forEach(entry => {\n            if (\"'!entry.isIntersecting) return;\n            reveals.unobserve(entry.target);\n            pending.delete(entry.target);\n            animate(entry.target);\n          });\n          if (!pending.size) reveals.disconnect();\n        }, { threshold: 0 });\n        pending.forEach(element => reveals.observe(element));\n      }\n    }\n    reduce.addEventListener('\"'change', finishMotion, options);\n  } catch { finishMotion(); }\n\n  const video = document.querySelector('video');\n  let mediaObserver, visible = false, userPaused = false, blocked = false;\n  let internalPauses = 0, epoch = 0, dead = false;\n  const pause = () => {\n    epoch++;\n    if (\"'!video.paused) { internalPauses++; video.pause(); }\n  };\n  const syncMedia = async () => {\n    if (dead || !visible || document.hidden || reduce.matches || userPaused || blocked) {\n      pause();\n      return;\n    }\n    const attempt = ++epoch;\n    try { await video.play(); }\n    catch { if (attempt === epoch) blocked = true; }\n  };\n  try {\n    video.muted = true;\n    video.addEventListener('\"'pause', () => {\n      if (internalPauses) internalPauses--;\n      else userPaused = true;\n    }, options);\n    video.addEventListener('play', () => {\n      if (dead || reduce.matches || document.hidden || \"'!visible) { pause(); return; }\n      userPaused = false;\n      blocked = false;\n    }, options);\n    video.addEventListener('\"'error', () => { blocked = true; pause(); video.hidden = true; }, options);\n    video.querySelector('source').addEventListener('error', () => {\n      blocked = true; pause(); video.hidden = true;\n    }, options);\n    reduce.addEventListener('change', () => {\n      if (reduce.matches) { pause(); video.load(); }\n      else syncMedia();\n    }, options);\n    document.addEventListener('visibilitychange', syncMedia, options);\n    if ('IntersectionObserver' in window) {\n      mediaObserver = new IntersectionObserver(([entry]) => {\n        visible = entry.isIntersecting;\n        syncMedia();\n      }, { threshold: 0 });\n      mediaObserver.observe(video);\n    }\n  } catch { pause(); }\n  const cleanup = () => {\n    dead = true;\n    pause();\n    finishMotion();\n    mediaObserver?.disconnect();\n    controller.abort();\n  };\n  window.addEventListener('pagehide', event => { if (\"'!event.persisted) cleanup(); }, options);\n})();\n</script>\n</body>\n</html>\nEOF'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc \"python3 - <<'PY'\nfrom pathlib import Path\np = Path('index.html')\ns = p.read_text()\ns = s.replace('font-size:clamp(2.8rem,10.6vw,4rem)', 'font-size:clamp(2.4rem,10.6vw,4rem)')\ns = s.replace('</style>', '@media(prefers-reduced-motion:reduce){.film video{display:none}}\\\\n</style>')\ns = s.replace(\\\"window.addEventListener('pagehide', event => { if (\"'!event.persisted) cleanup(); }, options);\", \"window.addEventListener('\"'pagehide', event => { pause(); if (\"'!event.persisted) cleanup(); }, options);'\"\\\\n  window.addEventListener('pageshow', syncMedia, options);\\\")\np.write_text(s)\nPY\ncat > NOTES.md <<'EOF'\nPreserve-mode authoring; two original sections, copy, destinations, IDs, analytics, details behavior, tokens and original control rules retained.\n\nSelected R1/R2: text-only load entrances (0/80/160ms delay) and once-only work reveals (0/100ms); 600ms cubic-bezier(.22,1,.36,1), opacity .75→1, translateY 14px→0. Controls and their ancestors remain static; normal HTML stays visible without initialization.\n\nSelected R3/R4: supplied scene.webm and poster.svg; verified local fixture rights in assets/rights.json. In-flow 2.12:1 desktop / 16:10 mobile frame; cover at 65% 50%, copy on paper. Native video controls; muted inline native loop, viewport playback, pause offscreen/hidden, user pause persistence, teardown. Reduced motion uses poster; missing media uses underlying poster. No optional loop fade selected without runtime evidence.\n\nAuthored breakpoint: 600px; wide gutters at 1100px. Browser/runtime behavior, layout at 375/768/1440 and short landscape, keyboard/touch behavior, codec playback, loop seams, failure paths and live preference changes are unverified; central observer owns qualification. No browser, server, external service, installation, build or independent review run.\nEOF\npython3 - <<'PY'\nfrom html.parser import HTMLParser\nfrom pathlib import Path\nimport re, shutil, subprocess\nclass Page(HTMLParser):\n    def __init__(self, text):\n        super().__init__(); self.text=[]; self.ids=[]; self.links=[]; self.sections=[]; self.skip=None; self.feed(text)\n    def handle_starttag(self, tag, attrs):\n        attrs=dict(attrs)\n        if tag in ('style','script'): self.skip=tag\n        if 'id' in attrs: self.ids.append(attrs['id'])\n        if tag=='a': self.links.append(attrs.get('href'))\n        if tag=='section': self.sections.append(attrs.get('id'))\n    def handle_endtag(self, tag):\n        if tag==self.skip: self.skip=None\n    def handle_data(self, text):\n        if not self.skip and text.strip(): self.text.append(text.strip())\nbefore=Path('/tmp/field-notes-before.html').read_text(); after=Path('index.html').read_text()\na,b=Page(before),Page(after)\nassert a.text==b.text, 'Copy changed'\nassert a.ids==b.ids, 'IDs changed'\nassert a.links==b.links, 'Destinations changed'\nassert a.sections==b.sections==['intro','work'], 'Sections changed'\noriginal_script=re.findall(r'<script>(.*?)</script>',before,re.S)[0]\nassert original_script==re.findall(r'<script>(.*?)</script>',after,re.S)[0], 'Original behavior script changed'\noriginal_rules=re.findall(r'[\"'^{}]+'\"\\\\{[\"'^{}]*'\"\\\\}',re.search(r'<style>(.*?)</style>',before,re.S)[1])\nassert all(rule in after for rule in original_rules), 'Original brand/control rule changed'\nfor asset in ('scene.webm','poster.svg','rights.json'): assert Path('assets',asset).is_file()\nnode=shutil.which('node')\nif node:\n    for script in re.findall(r'<script>(.*?)</script>',after,re.S):\n        subprocess.run([node,'--check'],input=script,text=True,check=True,capture_output=True)\n    syntax='Inline JavaScript syntax passed (existing node --check).'\nelse: syntax='JavaScript syntax not checked: node unavailable.'\nprint('PASS: exact copy, IDs, destinations, two sections, original script, original CSS rules, local asset presence.')\nprint(syntax)\nwith Path('NOTES.md').open('a') as notes:\n    notes.write('\\\\nSource check passed: exact original copy, IDs, destinations, sections, behavior script and CSS rules; asset presence. '+syntax+'\\\\n')\nPY\"",
+      "exit": 0
+    }
+  ],
+  "reads": {
+    "cinematic-landing": true,
+    "motion-recipes": true,
+    "media-recipes": true
+  },
+  "changed": [
+    "index.html",
+    "NOTES.md"
+  ],
+  "htmlSHA256": "e6aae4cddefe6eeab31b0e924395f76c7977c28c0be17dac127e70845e9fa2af",
+  "response": "I’ll read the local guidance and page, then add the supplied media and motion while preserving the existing copy, controls, and behavior. Browser and runtime checks are reserved for the central observer.\n\nI’m applying the local `qs-design-frontend` guidance, with entrance motion, a once-only work reveal, and a framed film panel.\n\n- [x] Verified — page structure, brand tokens, existing behavior, and local media rights.\n- [ ] Active — media composition, responsive layout, and motion.\n- [ ] Pending — bounded source checks and concise notes.\n\nStage: Authoring | Stage estimate: ~10% | Overall estimate: ~25% | Continuing — the page has two sections and two interactions to preserve. Input needed: none.\n\nThe page now has a full-width film panel, a larger headline, and a single-column mobile layout. Native video controls provide pause/play without adding authored copy. Entrance motion affects only text; the links and details button remain static.\n\nStage: Source checks | Stage estimate: ~10% | Overall estimate: ~85% | Continuing — I’ll check content preservation and script syntax, then record the unverified runtime states. Input needed: none.\n\nStatus: Complete — bounded authoring.\n\nSkills used: /qs-design-frontend  \nSpecs: Supplied task brief; no separate specification located.\n\nWork summary:\n\n- [x] Finished — revised [index.html](/tmp/ms-fe-01-v4-C2-candidate-2/index.html) with cinematic footage, responsive composition, text entrances, and viewport reveals.\n- [x] Verified — exact copy, destinations, IDs, original control rules, analytics and behavior script preserved. JavaScript syntax passed.\n- [x] Recorded — parameters and limitations in [NOTES.md](/tmp/ms-fe-01-v4-C2-candidate-2/NOTES.md).\n- Next — central observer owns browser qualification and independent review. Browser/runtime behavior remains unverified.\n\nNext work prompt: None — qualification is externally owned."
+}

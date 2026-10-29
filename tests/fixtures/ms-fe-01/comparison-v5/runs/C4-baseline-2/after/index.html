@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FIELD NOTES — A quiet study.</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f6f3eb;
+        --ink: #163b43;
+        --ochre: #f1b85b;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .page {
+        max-width: 1200px;
+        min-height: 100vh;
+        margin-inline: auto;
+        padding: 50px clamp(24px, 5.333333vw, 64px) 44px;
+      }
+
+      .site-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        min-height: 24px;
+        line-height: 24px;
+      }
+
+      .wordmark { font-size: 20px; }
+
+      a { color: inherit; }
+
+      .work-link {
+        margin-right: 36px;
+        font-size: 18px;
+        text-decoration: none;
+      }
+
+      a:focus-visible {
+        outline: 3px solid var(--ink);
+        outline-offset: 6px;
+      }
+
+      .work-link:hover { text-decoration: underline; }
+
+      .intro { margin-top: 106px; }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(44px, 6vw, 72px);
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .intro p {
+        margin: 24px 0 0;
+        font-size: clamp(18px, 2vw, 24px);
+        line-height: 32px;
+      }
+
+      .explore {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 60px;
+        margin-top: 32px;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 22px;
+        line-height: 26px;
+        text-decoration: none;
+      }
+
+      .explore:hover { text-decoration: underline; }
+
+      .artwork {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: 60px;
+        background: var(--ink);
+      }
+
+      .artwork circle { fill: var(--ochre); }
+
+      #work { margin-top: 60px; }
+
+      h2 {
+        margin: 0;
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      @media (max-width: 600px) {
+        .page { padding-top: 32px; }
+        .work-link { margin-right: 0; }
+        .intro { margin-top: 80px; }
+        .artwork { margin-top: 48px; }
+        #work { margin-top: 48px; }
+        h2 { font-size: 30px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <span class="wordmark">FIELD NOTES</span>
+        <nav aria-label="Main navigation">
+          <a class="work-link" href="#work">Work</a>
+        </nav>
+      </header>
+      <main>
+        <section class="intro" aria-labelledby="intro-title">
+          <h1 id="intro-title">A quiet study.</h1>
+          <p>An independent film practice.</p>
+          <a class="explore" href="#work">Explore</a>
+        </section>
+        <svg class="artwork" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1072 300" width="1072" height="300" aria-hidden="true" focusable="false">
+          <circle cx="866" cy="150" r="90" />
+        </svg>
+        <section id="work" aria-labelledby="work-title">
+          <h2 id="work-title">Selected work</h2>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

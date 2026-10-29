@@ -1,0 +1,10 @@
+{
+  "path": "/tmp/ms-fe-01-v2-browser-profiles.tar.gz",
+  "sha256": "604b8fbb096319e5d0f2b25d83f4babefb3c12cf7272b39c05e842a77bda6842",
+  "entries": 234,
+  "reason": "Ephemeral Firefox runtime profiles from an interrupted failed attempt, including browser caches and runtime binaries, are retained locally rather than shipped in this skills package. Product HTML, screenshots, native events and full file-hash manifest remain in the repository. Original workspace also remains local.",
+  "sourceDirectories": [
+    "tests/fixtures/ms-fe-01/comparison-v2/runs/C2-baseline-1/after/.browser-check/profile",
+    "tests/fixtures/ms-fe-01/comparison-v2/runs/C2-baseline-1/after/.browser-check/reduced-profile"
+  ]
+}

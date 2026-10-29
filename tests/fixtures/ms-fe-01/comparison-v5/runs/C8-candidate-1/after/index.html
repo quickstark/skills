@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f49">
+  <meta name="description" content="A quiet study. An independent film practice.">
+  <title>A quiet study. — An independent film practice.</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #173f49;
+      --paper: #f4f0e7;
+      --gold: #f1b85b;
+      --gutter: clamp(24px, 5vw, 88px);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--gold); outline-offset: 7px; }
+    .skip-link { position: absolute; top: 16px; left: var(--gutter); z-index: 5; padding: 12px 18px; background: var(--paper); color: var(--ink); transform: translateY(-180%); }
+    .skip-link:focus { transform: none; }
+    .hero {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 740px;
+      min-height: max(700px, 94svh);
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 34px var(--gutter) 27px;
+    }
+    .hero-poster, .hero-scrim { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+    .hero-poster { object-fit: cover; object-position: 72% center; }
+    .hero-scrim {
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(9, 29, 33, .65), rgba(9, 29, 33, .08) 76%), linear-gradient(0deg, rgba(9, 29, 33, .88), transparent 75%);
+    }
+    .frame-top { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(244,240,231,.38); }
+    .mark { display: block; width: 30px; height: 30px; border: 1px solid currentColor; position: relative; }
+    .mark::after { content: ""; position: absolute; inset: 8px; border-radius: 50%; background: var(--gold); }
+    .edition { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; }
+    .hero-content { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 40px; margin-top: 140px; padding-bottom: 70px; }
+    h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(80px, 10.8vw, 174px); font-weight: 400; line-height: .94; letter-spacing: -.065em; margin: 0 0 30px -.055em; }
+    h1 span { display: block; }
+    .intro { font-size: clamp(16px, 1.4vw, 21px); line-height: 1.6; margin: 0; letter-spacing: -.015em; }
+    .explore {
+      width: 144px;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 21px;
+      border: 1px solid var(--paper);
+      background: rgba(10, 31, 35, .55);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .explore svg { width: 27px; height: 27px; align-self: flex-end; }
+    .explore:hover, .explore:active { background: var(--paper); color: var(--ink); }
+    .hero-footer { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; border-top: 1px solid rgba(244,240,231,.38); padding-top: 20px; font-size: 11px; line-height: 1.6; letter-spacing: .025em; }
+    .hero-footer p { margin: 0; }
+    .frame-number { font-variant-numeric: tabular-nums; letter-spacing: .12em; }
+    .work { color-scheme: light; padding: 70px var(--gutter) 90px; scroll-margin-top: 24px; }
+    .work-heading { display: flex; align-items: baseline; gap: 24px; padding-bottom: 30px; border-bottom: 1px solid rgba(23,63,73,.3); }
+    .section-number { font-size: 11px; letter-spacing: .1em; }
+    h2 { font: 400 clamp(38px, 5vw, 72px)/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.045em; margin: 0; }
+    .work-poster { display: block; width: 100%; height: auto; margin-top: 32px; background: var(--ink); }
+    @media (min-width: 1600px) { .hero-content { padding-bottom: 90px; } }
+    @media (max-width: 600px) {
+      .hero { min-height: max(680px, 94svh); padding-top: 24px; }
+      .hero-poster { object-position: 69% center; }
+      .hero-scrim { background: linear-gradient(0deg, rgba(9,29,33,.94), rgba(9,29,33,.05) 95%); }
+      .frame-top { padding-bottom: 20px; }
+      .hero-content { grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 30px; margin-top: 150px; padding-bottom: 42px; }
+      .copy { grid-column: 1 / -1; }
+      h1 { font-size: clamp(76px, 17.5vw, 105px); margin-bottom: 24px; }
+      .explore { width: 104px; padding: 15px; grid-column: 2; }
+      .hero-footer { align-items: flex-start; font-size: 10px; }
+      .hero-footer p { max-width: 240px; }
+      .work { padding-top: 46px; padding-bottom: 48px; }
+      .work-heading { gap: 18px; padding-bottom: 24px; }
+      .work-poster { margin-top: 24px; }
+    }
+    @media (max-height: 550px) and (min-width: 601px) {
+      .hero { min-height: 600px; }
+      .hero-content { margin-top: 70px; padding-bottom: 45px; }
+      h1 { font-size: 96px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#work">Skip to selected work</a>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-poster" src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="frame-top" aria-hidden="true">
+        <span class="mark"></span>
+        <span class="edition">A quiet study.</span>
+      </div>
+      <div class="hero-content">
+        <div class="copy">
+          <h1 id="hero-title">A quiet <span>study.</span></h1>
+          <p class="intro">An independent film practice.</p>
+        </div>
+        <a class="explore" href="#work">
+          <span>Explore</span>
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M7 7h18v18M25 7 7 25" stroke="currentColor" stroke-width="1.25"/></svg>
+        </a>
+      </div>
+      <div class="hero-footer">
+        <p>Static preview · Requested footage was not supplied.</p>
+        <span class="frame-number" aria-hidden="true">01 — 01</span>
+      </div>
+    </section>
+    <section class="work" id="work" aria-labelledby="work-title">
+      <div class="work-heading">
+        <span class="section-number" aria-hidden="true">01</span>
+        <h2 id="work-title">Selected work</h2>
+      </div>
+      <img class="work-poster" src="assets/poster.svg" alt="Geometric poster: a gold circle above a sage-green curve on a teal background." width="960" height="540" loading="lazy">
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1 @@
+2026-10-29T19:34:58.578932Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: "Bearer realm=\"Service\", error=\"invalid_request\", error_description=\"The access token was not found.\", resource_metadata=\"https://mcp.box.com/.well-known/oauth-protected-resource\"" })

@@ -1,0 +1,7 @@
+{
+  "beforeCentralOutputObservation": true,
+  "originalObserver": "observe-v3.mjs",
+  "observer": "tests/fixtures/ms-fe-01/observe-final.mjs",
+  "sha256": "b4927a65a2051f7fbd8a28c688c520d9c7198f319e57835766f089c09647ca07",
+  "reason": "Normalize text whitespace introduced by layout wrapping; check initial media advancement before action tests intentionally scroll media offscreen; require visible keyboard focus. All32 outputs receive the same observer. Original code retained. No source outputs, quality scores, rubric or thresholds changed."
+}

@@ -1,0 +1,210 @@
+{
+  "independentAuthor": true,
+  "variantLabelsConcealed": true,
+  "outputs": [
+    {
+      "id": "08d4b234c5f1fd7c",
+      "scores": [
+        4,
+        3,
+        3,
+        3,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: the large two-line desktop headline, restrained navigation, rust primary action, aligned rules and work rows establish a clear editorial hierarchy. At 375px all required copy and destinations remain legible with a usable single-column order.",
+        "Observed screenshots: the wide desktop footage is cleanly integrated below the copy, with a visible square pause control. At 375px the almost-square cover crop cuts the yellow subject at the right edge in both motion and poster states; the composition is usable but less considered than the desktop framing.",
+        "Observed views.json: video is playing at approximately 1.7 seconds in both normal captures and paused at time zero in both reduced-motion captures; all four captures report no errors. Reduced-motion screenshots preserve all page content and offer a play control.",
+        "Source inference: reduced-motion changes, tab visibility, viewport visibility and explicit pause feed one playback policy, and video/source errors hide the video and control while retaining the CSS poster. Keyboard focus styles and 48px media control support usability. These interaction paths were not exercised by this review.",
+        "Source/brief assessment: requested navigation, two work entries, About copy, palette and local assets are present without added marketing claims or sections. The motion treatment relies on footage and small hover transitions rather than entrance or reveal choreography; it remains clear, with modest expressive range.",
+        "Source inference: the media control can explicitly start playback under reduced motion, but a subsequent visibility/intersection update pauses it again because the preference always takes priority. This is a small manual-play consistency gap, not an observed autoplay violation."
+      ],
+      "limitations": [
+        "Reviewed the supplied four actual screenshots, index.html, views.json, exact brief and local asset rights manifest. No live interaction, scrolling, media failure injection, keyboard run, 768px or short-landscape browser capture was supplied or executed by this reviewer.",
+        "Static captures establish final composition and supplied playback telemetry, not temporal smoothness of the footage or hover effects."
+      ]
+    },
+    {
+      "id": "5bccdd4e15c9aecd",
+      "scores": [
+        3,
+        4,
+        3,
+        3,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: a substantial split hero pairs oversized text with a tall, framed media panel; the yellow subject remains inside the frame on desktop and mobile. The work section aligns to the same columns and gutters. Heading, subheading and action are readily distinguishable.",
+        "Observed screenshots: the desktop headline breaks into four short lines, including isolated moving and world, making the text column feel tall and narrow. The 375px page also uses four headline lines and does not reach the media until around 585px; this is readable but delays the cinematic content.",
+        "Observed screenshots: at 375px the media, work heading, work title and details control fit within the page gutters without apparent horizontal clipping. Blue underlined header links and the small default details button are inherited control styles required by the brief, so their retention is not treated as a preservation failure.",
+        "Observed views.json: normal video playback is active at approximately 1.7 seconds; reduced-motion video is paused at zero and hidden while the poster remains visible. All four captures report no errors.",
+        "Source inference: short, limited-distance entrance and viewport animations enhance hierarchy without hiding base content; reduced-motion changes cancel active animations. Poster-first media, rejected-play handling, user pause, visibility checks and offscreen pausing are implemented. User pause shows the poster rather than holding the current video frame, which can cause a visual jump.",
+        "Source/brief assessment: the original copy, IDs, two sections, destinations, tokens, CTA/control rules, analytics listener and detail-toggle behavior are retained. No invented marketing claim or new destination is present.",
+        "Source inference: pagehide aborts listeners and disconnects the media observer, and persisted pageshow only hides the media control. Returning through the back-forward cache therefore leaves media permanently static for that page instance; the source does not reinitialize playback or controls."
+      ],
+      "limitations": [
+        "Reviewed the supplied four actual screenshots, index.html, views.json, brief, original input.html and local asset rights manifest. Back-forward-cache, controls, failures and details/analytics preservation were assessed from source rather than exercised in a browser.",
+        "Supplied captures do not show intermediate entrance timing, live preference changes, 768px or short landscape. Author browser-verification ownership or limitations were not scored as product defects."
+      ]
+    },
+    {
+      "id": "825420f07be0bfa7",
+      "scores": [
+        3,
+        3,
+        2,
+        3,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: the desktop split hero has a strong heading/media balance, consistent thin rules and an inset media frame. Mobile stacks readable copy, CTA and edge-to-edge footage without apparent horizontal clipping; the three-line heading is compact enough to bring footage into the initial viewport.",
+        "Observed reduced-motion screenshots: work content is laid out coherently as an image with title/details beside it on desktop and a stacked composition on mobile. The repeated geometric poster gives visual continuity, though it adds little new project information.",
+        "Observed screenshots: reduced motion retains native video controls and a dark control gradient over the poster. This provides an explicit manual-play route, but the player chrome is visually heavier than the editorial framing. Normal screenshots do not show a persistent obvious pause button, although native controls exist in source and may appear on interaction.",
+        "Observed views.json: video plays at approximately 1.7 seconds in normal mode and is paused at zero in reduced motion. All four captures report no errors.",
+        "Observed normal full-page captures: below-fold work imagery and summary are invisible, and the mobile work heading is also invisible. Source inference: these elements are intentionally opacity-zero until IntersectionObserver reveals them or focus enters them. The captures were made from the initial viewport; absence in a full-page image alone does not prove failure when a user scrolls, so this was not scored as confirmed content loss.",
+        "Source inference: entrances and reveals have clear direction and modest duration, but playback is only attempted once. After offscreen/tab pausing, or when a page initially loaded with reduced motion later changes preference, there is no automatic restart path; manual native playback remains available. Playback rejection is silently swallowed and there is no explicit error-state management beyond the video poster.",
+        "Source/brief assessment: existing copy, two sections, IDs, destinations, theme/control tokens, analytics and detail-toggle listener are retained. No added marketing claim or destination was found."
+      ],
+      "limitations": [
+        "Reviewed supplied four actual screenshots, index.html, views.json, exact brief, original input.html and local asset rights manifest. Scroll reveals, native-control interaction, tab restoration, playback rejection and preference changes were not independently exercised.",
+        "The normal-mode work section requires a scrolled browser capture before its visible composition can be confirmed. Scores use the available reduced-motion composition plus source analysis, not an assumption that normal scroll reveal is broken.",
+        "No 768px or short-landscape captures were supplied. Static screenshots cannot establish temporal smoothness."
+      ]
+    },
+    {
+      "id": "ec00344db4c2ea47",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "observations": [
+        "Observed screenshots: the desktop composition balances a large two-line headline with a small aligned support/action column; rust emphasis on moving world and fine rules create a deliberate hierarchy. Work years, project titles and the About statement share a clear secondary grid.",
+        "Observed screenshots: the wide desktop footage and mobile 4:3 frame both retain the full yellow subject. At 375px the headline breaks cleanly across three lines, CTA spans the content width, work years sit opposite titles and all required copy remains legible with consistent 20px gutters.",
+        "Observed screenshots: the normal state has an explicit Pause motion label rather than only an icon; reduced motion replaces the moving video with a clean poster and removes the control. There are no abrupt layout differences between these states.",
+        "Observed views.json: normal video playback is active at approximately 1.6\u20131.8 seconds; reduced-motion video is paused at zero and hidden. All captures report no errors.",
+        "Source inference: the media layer is poster-first, local, muted and inline, with user pause, offscreen/tab pausing, asynchronous-attempt guards and a Retry motion state plus status text for rejected playback. Reduced motion also disables smooth scrolling and small transitions. The treatment is purposeful but largely limited to footage and hover feedback.",
+        "Source/brief assessment: all requested navigation, two project entries, About copy, palette and square controls are retained, without invented claims or additional sections.",
+        "Source inference: pagehide disconnects observers and removes listeners; a persisted pageshow hides the control without reinitializing them. Back-forward-cache restoration therefore leaves a usable static page but loses motion control for that page instance. A user pause also swaps directly to the poster rather than freezing the current frame."
+      ],
+      "limitations": [
+        "Reviewed supplied four actual screenshots, index.html, views.json, exact brief and local asset rights manifest. Failure/retry behavior, pause interaction, keyboard traversal and back-forward-cache restoration are source assessments, not independently observed runtime tests.",
+        "No 768px or short-landscape screenshots were supplied. Temporal smoothness and dynamic preference changes cannot be established from static captures alone."
+      ]
+    },
+    {
+      "id": "14cda8ef15ed7c82",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "observations": [
+        "Observed screenshots: the two-line desktop heading, restrained header, rust CTA and full-width media establish a strong editorial hierarchy. Project rows use thin rules and small rust separators; the right-aligned About statement gives the page a deliberate ending.",
+        "Observed screenshots: at 375px the heading wraps into three readable lines, CTA and film have comfortable separation, all navigation remains visible, and both work entries and About copy fit the 20px gutters without apparent clipping. The 4:3 crop keeps the yellow subject fully inside the frame in both motion and poster states.",
+        "Observed views.json: both normal captures show active playback at approximately 1.7 seconds, while both reduced-motion captures show a paused, hidden video at time zero. The actual reduced-motion screenshots preserve a clean static poster and all content. All four captures report no errors.",
+        "Observed screenshots: the normal-mode media control is clearly labeled Pause film. Source inference: it updates between Play film and Pause film, and visible square controls and focus outlines support keyboard use. Reduced motion hides that control and prevents automatic media playback.",
+        "Source inference: playback is guarded by viewport, document visibility, explicit pause and reduced-motion state; rejected playback and video errors expose the still and a status message. Pageshow recomputes viewport visibility, so the code includes a restoration path. Manual pause swaps to the poster rather than freezing the current frame, a minor visual continuity gap. Motion is primarily footage with subtle CTA feedback, rather than a broader entrance treatment.",
+        "Source/brief assessment: required navigation, hero text, both project entries, About text, colors, local media and square controls are present. No invented marketing claims, destinations or sections were found."
+      ],
+      "limitations": [
+        "Reviewed all four supplied actual screenshots, index.html, views.json and exact brief. The 1440px images were displayed scaled down by the image viewer; layout judgments use the full image, not an assertion of pixel-perfect typography.",
+        "Keyboard traversal, pause/retry interaction, failure injection, scrolling, dynamic preferences, back-forward-cache restoration, 768px and short landscape were not independently run. Source descriptions are not browser verification of those paths."
+      ]
+    },
+    {
+      "id": "6fa5355afa4b3f58",
+      "scores": [
+        3,
+        4,
+        3,
+        3,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: a large three-line desktop headline and portrait media panel form a balanced split hero. Header links, CTA and the work section align to consistent gutters; the rust work-summary rule adds a restrained secondary accent.",
+        "Observed screenshots: the 375px heading occupies four lines, with moving and world isolated; footage begins around 578px. The result remains readable and usable, though the tall text block delays the media and makes the mobile hero less compact. Media and all work content fit the viewport width without apparent clipping.",
+        "Observed screenshots: the media crop keeps the complete yellow subject visible in both desktop portrait and mobile landscape frames. Normal captures include a visible square pause icon; reduced-motion captures show a clean poster with the media control removed.",
+        "Observed views.json: normal media is playing at approximately 1.7 seconds; reduced-motion video is paused at zero and hidden. All four captures report no errors.",
+        "Source inference: short 14px entrance/reveal animations leave the base content visible and are canceled when reduced motion changes. Media has explicit pause, visibility/offscreen checks, autoplay-rejection recovery through a play control, and a static fallback on error. The persisted pagehide/pageshow path keeps listeners available and calls syncMedia on return. Manual pause replaces the current frame with the poster, creating a minor continuity gap.",
+        "Source/brief assessment: original copy, IDs, two sections, destinations, theme tokens, CTA/control rules, analytics listener and detail-toggle code are retained. The original small default details control remains visible in captures; preserving its established styling is required by the brief and is not an authority defect. No invented marketing copy or destination was found."
+      ],
+      "limitations": [
+        "Reviewed four supplied actual screenshots, index.html, views.json, exact brief and original input.html. Analytics/details operation, media controls, rejection, error fallback, dynamic preferences and lifecycle restoration were assessed from source rather than exercised.",
+        "No 768px or short-landscape capture, intermediate animation capture or independent keyboard run was provided. Supplied playback telemetry establishes the sampled media state, not every transition."
+      ]
+    },
+    {
+      "id": "a947dc268906e2b1",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: a large two-line desktop headline is balanced by a smaller support/CTA column, above a wide cinematic panel. The restrained rust eyebrow, consistent rules and ample gutters create a clear, deliberate hierarchy.",
+        "Observed screenshots: mobile uses a compact three-line headline, readable subheading and a separated CTA before a 4:3 film. The yellow subject stays inside the crop, and the reduced-motion work section stacks its heading, title, original details control and image without clipping or cramped text.",
+        "Observed views.json: normal playback is active at approximately 1.7 seconds. Reduced-motion playback is paused at zero, with the CSS-hidden video leaving the poster visible in the screenshots. All captures report no errors.",
+        "Source inference: this is a finite, one-shot moving vignette: there is no loop or manual media control, and playback is stopped 4.5 seconds after play resolves. The brief does not require looping or replay, so lack of automatic resumption is not treated as a required-behavior failure. This short, bounded motion and reduced-motion bypass provide a coherent intent, though the exact stop/settled composition was not captured.",
+        "Observed normal full-page screenshots: the below-fold work content is invisible. Source inference: work-copy and work-visual wait for a 12-percent intersection reveal. A full-page capture from the initial viewport does not prove content loss on scroll, and the reduced-motion captures confirm a usable underlying layout. The normal scrolled reveal remains unverified.",
+        "Source inference: work-copy contains the details button while opacity-zero before reveal, but has no focusin override. Keyboard focus can therefore enter content while its reveal has not yet completed; this is a potential focus-visibility gap requiring a keyboard run. Entrances and work reveals otherwise have modest distances and clear sequencing.",
+        "Source/brief assessment: all original copy, IDs, destinations, two sections, theme tokens, CTA/control rules, analytics and details-toggle code are retained. An extra decorative still is within the existing work section; no new marketing claim, destination or section was found."
+      ],
+      "limitations": [
+        "Reviewed supplied four actual screenshots, index.html, views.json, exact brief and original input.html. No live scrolling, keyboard traversal, settled-after-4.5-second capture, visibility change or media-failure injection was executed.",
+        "Failure handling relies on the underlying poster and a caught playback rejection; the supplied successful-load captures do not establish the browser presentation after a network/decode error.",
+        "No 768px or short-landscape capture was supplied. Normal below-fold composition should be confirmed with a scrolled capture, rather than inferred broken from the initial full-page screenshots."
+      ]
+    },
+    {
+      "id": "dc909c1467254e11",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "observations": [
+        "Observed screenshots: the desktop two-line heading, small support column and rust CTA establish a strong hierarchy. Wide media aligns with the header/page gutters; work rows and the large About statement continue a coherent editorial system.",
+        "Observed screenshots: at 375px the heading wraps into three lines, CTA has a comfortable square target, and the 300px media frame keeps the yellow subject fully visible. Navigation, both work rows and About copy fit within the 22px gutters without apparent horizontal clipping.",
+        "Observed views.json: normal video plays at approximately 1.7 seconds; reduced-motion video is paused at zero. Actual reduced-motion screenshots show the static poster and a play control, while all required content remains visible. All four captures report no errors.",
+        "Source inference: play and pause state is synchronized with video events, a paused successful playback retains its current frame, and error handlers for both video and source return to the poster and hide the unusable control. Rejected autoplay leaves a manual-play route. Reduced motion disables smooth scrolling and transitions while allowing an explicit user play action.",
+        "Source inference: media playback respects tab visibility but has no viewport observer, so the decorative loop continues when the film is scrolled offscreen. This is an efficiency/attention-management gap rather than a confirmed breach of the brief. A preference change also resets playback intent and can override a prior explicit user pause; this lifecycle interaction was not exercised.",
+        "Source/brief assessment: required navigation, hero copy, two work entries, About copy, palette, square controls and local assets are present without extra marketing claims or sections. Motion relies on integrated footage and restrained control feedback; there is no large entrance choreography competing with the content."
+      ],
+      "limitations": [
+        "Reviewed four actual supplied screenshots, index.html, views.json and exact brief. Manual playback, frame-preserving pause, media failure, keyboard focus, dynamic preferences and offscreen/tab transitions were not independently exercised.",
+        "No 768px or short-landscape screenshots were supplied. Static captures and sampled telemetry do not establish temporal smoothness or every failure-state behavior."
+      ]
+    }
+  ],
+  "lifecycleClarifications": [
+    {
+      "id": "08d4b234c5f1fd7c",
+      "classification": "source-inferred lifecycle limitation; not an established required-brief failure",
+      "clarification": "The brief requires reduced-motion support and usable failure states, and the supplied initial reduced-motion captures show paused video with usable content. Interruption of explicitly requested play by a later visibility/intersection update is a consistency limitation inferred from source; manual reduced-motion override persistence is not explicitly required. No new evidence changes the frozen record or scores."
+    },
+    {
+      "id": "5bccdd4e15c9aecd",
+      "classification": "source-inferred lifecycle limitation beyond supplied runtime coverage",
+      "clarification": "Back-forward-cache restoration loses the added media interaction after pagehide teardown. The exact brief does not explicitly require added-media restoration through that cache, and the original page had no media control to preserve. Original analytics and details listeners remain intact in source. Treat this as a robustness gap, not a demonstrated violation of the preserve-existing-behavior requirement. No new evidence changes the frozen record or scores."
+    },
+    {
+      "id": "825420f07be0bfa7",
+      "classification": "source-inferred playback limitation and unverified scroll coverage; not established required-brief failures",
+      "clarification": "A single automatic playback attempt and native manual controls do not establish that looping/resuming is required; the brief asks for cinematic media and purposeful motion without specifying replay policy. Lack of automatic resumption remains a quality limitation, not proven loss of original behavior. Normal full-page screenshots omit unrevealed offscreen work; successful reveal after actual scrolling remains untested rather than a confirmed content-preservation failure. No new evidence changes the frozen record or scores."
+    },
+    {
+      "id": "ec00344db4c2ea47",
+      "classification": "source-inferred lifecycle limitation beyond supplied runtime coverage",
+      "clarification": "The page remains usable and static after back-forward-cache restoration, while added media controls are lost. The brief explicitly requires usable failure states and initial reduced-motion support, both represented by static fallback paths/captures, but does not explicitly specify motion restoration after cache navigation. This remains a robustness gap inferred from source, not an observed required-brief failure. No new evidence changes the frozen record or scores."
+    }
+  ]
+}

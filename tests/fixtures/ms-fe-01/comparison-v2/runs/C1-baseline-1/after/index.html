@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>FIELD NOTES</title>
+  <style>
+    :root { color-scheme: light; --paper: #f6f3eb; --ink: #163b43; --accent: #bf4e2e; --rule: #163b4333; --gutter: clamp(24px, 4vw, 64px); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border-radius: 0; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    .shell { width: min(100%, 1728px); margin-inline: auto; padding-inline: var(--gutter); }
+    .masthead { min-height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--rule); }
+    .wordmark { display: flex; align-items: center; gap: 13px; font-size: 18px; font-weight: 750; letter-spacing: -.055em; white-space: nowrap; }
+    .mark { width: 20px; height: 25px; border: 2px solid var(--accent); border-right-width: 7px; display: inline-block; }
+    nav { display: flex; gap: clamp(18px, 3vw, 44px); }
+    nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+    nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; }
+    .hero { padding-top: clamp(44px, 5.5vw, 80px); }
+    h1 { max-width: 1230px; margin: 0; font-size: clamp(56px, 8.1vw, 132px); font-weight: 450; line-height: 1.015; letter-spacing: -.065em; }
+    h1 span { display: block; }
+    .hero-detail { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-block: 36px 42px; }
+    .hero-detail p { max-width: 440px; margin: 0; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.5; letter-spacing: -.025em; }
+    .primary { min-height: 52px; padding: 14px 20px; display: inline-flex; align-items: center; justify-content: space-between; gap: 40px; background: var(--accent); color: var(--paper); font-size: 20px; font-weight: 700; white-space: nowrap; border: 1px solid var(--accent); }
+    .primary svg { width: 20px; height: 20px; transition: transform 180ms ease; }
+    .primary:hover { background: var(--paper); color: var(--accent); }
+    .primary:hover svg { transform: translateX(3px); }
+    .film { position: relative; height: clamp(300px, 32vw, 500px); background: var(--ink); overflow: hidden; }
+    .film img, .film video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .film video { opacity: 0; }
+    .film.has-frame video { opacity: 1; }
+    .film::after { content: ""; position: absolute; inset: 16px; border: 1px solid #f6f3eb45; pointer-events: none; }
+    .motion-control { position: absolute; z-index: 1; bottom: 28px; right: 28px; display: grid; place-items: center; width: 44px; height: 44px; padding: 12px; background: var(--paper); color: var(--ink); border: 0; cursor: pointer; }
+    .motion-control[hidden] { display: none; }
+    .motion-control:hover { background: var(--ink); color: var(--paper); }
+    .motion-control:focus-visible { outline-color: var(--paper); }
+    .motion-control svg { width: 20px; height: 20px; }
+    .play-icon, .motion-control.is-paused .pause-icon { display: none; }
+    .motion-control.is-paused .play-icon { display: block; }
+    #work { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding-block: clamp(64px, 7vw, 108px); }
+    h2 { margin: 3px 0 0; font-size: 15px; line-height: 1.5; font-weight: 500; letter-spacing: -.015em; }
+    .work-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
+    .work-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-block: 27px; border-bottom: 1px solid var(--rule); font-size: clamp(24px, 2.6vw, 40px); font-weight: 400; letter-spacing: -.045em; }
+    .work-list .year { font-size: 14px; letter-spacing: 0; white-space: nowrap; }
+    #about { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; border-top: 1px solid var(--rule); padding-block: 42px 64px; }
+    #about::before { content: ""; width: 24px; height: 3px; margin-top: 18px; background: var(--accent); }
+    #about p { margin: 0; font-size: clamp(24px, 3vw, 44px); line-height: 1.25; letter-spacing: -.045em; max-width: 600px; }
+    @media (max-width: 800px) {
+      .masthead { min-height: 88px; }
+      h1 { font-size: clamp(56px, 8.3vw, 72px); }
+      .hero-detail { margin-block: 28px 32px; }
+      .hero-detail p { max-width: 310px; }
+      .primary { gap: 24px; }
+      .film { height: 340px; }
+      #work, #about { grid-template-columns: 1fr 2.2fr; gap: 28px; }
+    }
+    @media (max-width: 540px) {
+      .masthead { min-height: 84px; gap: 12px; }
+      .wordmark { gap: 8px; font-size: 14px; }
+      .mark { width: 14px; height: 19px; border-right-width: 5px; }
+      nav { gap: 13px; }
+      nav a { font-size: 12px; }
+      .hero { padding-top: 42px; }
+      h1 { font-size: clamp(43px, 12.8vw, 67px); line-height: 1.04; }
+      h1 span:last-child { max-width: 8em; }
+      .hero-detail { flex-direction: column; align-items: flex-start; gap: 25px; margin-block: 24px 32px; }
+      .hero-detail p { max-width: 270px; }
+      .primary { min-height: 50px; gap: 32px; }
+      .film { height: 310px; }
+      .film img, .film video { object-position: 65% center; }
+      .film::after { inset: 12px; }
+      .motion-control { bottom: 24px; right: 24px; }
+      #work { display: block; padding-block: 52px; }
+      h2 { margin: 0 0 24px; }
+      .work-list li { padding-block: 23px; }
+      #about { grid-template-columns: 24px 1fr; gap: 24px; padding-block: 32px 48px; }
+      #about::before { margin-top: 13px; }
+    }
+    @media (max-height: 500px) and (orientation: landscape) {
+      .masthead { min-height: 72px; }
+      .hero { padding-top: 28px; }
+      h1 { font-size: clamp(48px, 7vw, 80px); }
+      .hero-detail { margin-block: 22px 28px; }
+      .film { height: 260px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+      .film video, .motion-control { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <div class="wordmark"><span class="mark" aria-hidden="true"></span>FIELD NOTES</div>
+      <nav aria-label="Main navigation">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="mailto:studio@example.test">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <div class="hero">
+        <h1><span>Make room for</span> <span>the moving world.</span></h1>
+        <div class="hero-detail">
+          <p>Thoughtful films, clear stories, lasting places.</p>
+          <a class="primary" href="#work">Explore the work<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="film">
+          <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+          <video muted loop playsinline preload="none" poster="assets/poster.svg" aria-hidden="true" tabindex="-1" data-src="assets/scene.webm"></video>
+          <button class="motion-control" type="button" aria-label="Pause background film" hidden>
+            <svg class="pause-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3h3v14H5zm7 0h3v14h-3z"/></svg>
+            <svg class="play-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m5 3 12 7-12 7z"/></svg>
+          </button>
+        </div>
+      </div>
+      <section id="work" aria-labelledby="work-heading">
+        <h2 id="work-heading">Selected work</h2>
+        <ul class="work-list">
+          <li><span>Tidal study</span> <span class="year">/ 2026</span></li>
+          <li><span>Mountain light</span> <span class="year">/ 2025</span></li>
+        </ul>
+      </section>
+      <section id="about" aria-label="About">
+        <p>An independent film practice.</p>
+      </section>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const film = document.querySelector('.film');
+      const video = film.querySelector('video');
+      const control = film.querySelector('button');
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+      let userPaused = false;
+      let inView = true;
+      let failed = false;
+      let attempt = 0;
+      const shouldPlay = () => !reduced.matches && !userPaused && !document.hidden && inView && !failed;
+      const showControl = paused => {
+        control.hidden = false;
+        control.classList.toggle('is-paused', paused);
+        control.setAttribute('aria-label', paused ? 'Play background film' : 'Pause background film');
+      };
+      const sync = async () => {
+        const current = ++attempt;
+        if (!shouldPlay()) {
+          video.pause();
+          if (reduced.matches || failed) {
+            film.classList.remove('has-frame');
+            control.hidden = true;
+          }
+          return;
+        }
+        if (!video.hasAttribute('src')) video.src = video.dataset.src;
+        try {
+          await video.play();
+          if (current !== attempt) return;
+          if (!shouldPlay()) { video.pause(); return; }
+          film.classList.add('has-frame');
+          showControl(false);
+        } catch {
+          if (current !== attempt) return;
+          film.classList.remove('has-frame');
+          if (!failed && !reduced.matches) showControl(true);
+        }
+      };
+      control.addEventListener('click', () => {
+        userPaused = !video.paused;
+        showControl(userPaused);
+        sync();
+      });
+      video.addEventListener('error', () => {
+        failed = true;
+        sync();
+      });
+      reduced.addEventListener('change', sync);
+      document.addEventListener('visibilitychange', sync);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          inView = entries[0].isIntersecting;
+          sync();
+        }).observe(film);
+      }
+      sync();
+    })();
+  </script>
+</body>
+</html>

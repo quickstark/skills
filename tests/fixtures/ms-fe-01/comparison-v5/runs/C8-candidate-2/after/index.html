@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f49">
+  <meta name="description" content="A quiet study. An independent film practice.">
+  <title>A quiet study. — An independent film practice.</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #173f49;
+      --paper: #f4f1e8;
+      --gutter: clamp(24px, 5.5vw, 88px);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+    a { color: inherit; }
+    .skip-link { position: absolute; z-index: 3; top: 16px; left: 16px; padding: 12px 18px; background: var(--paper); transform: translateY(-180%); }
+    .skip-link:focus { transform: translateY(0); }
+    a:focus-visible { outline: 3px solid #f1b85b; outline-offset: 7px; }
+    .hero {
+      position: relative;
+      isolation: isolate;
+      min-height: 760px;
+      min-height: min(900px, 100svh);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 96px var(--gutter) 132px;
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .hero-poster { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(90deg, rgba(6, 28, 34, .76), rgba(6, 28, 34, .22) 62%, rgba(6, 28, 34, .04)), linear-gradient(0deg, rgba(6, 28, 34, .48), transparent 35%);
+    }
+    .frame-mark { position: absolute; top: 34px; left: var(--gutter); width: 26px; height: 26px; border-top: 1px solid currentColor; border-left: 1px solid currentColor; opacity: .65; }
+    .hero-content { width: min(100%, 900px); }
+    h1 { max-width: 760px; margin: 0 0 28px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(76px, 10.8vw, 166px); font-weight: 400; line-height: .95; letter-spacing: -.055em; text-wrap: balance; }
+    .intro { margin: 0; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.6; letter-spacing: .015em; }
+    .explore {
+      display: flex;
+      width: 112px;
+      height: 112px;
+      margin-top: 42px;
+      padding: 17px;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--paper);
+      border-radius: 0;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+    .explore:hover { background: #f1b85b; border-color: #f1b85b; }
+    .explore svg { align-self: flex-end; width: 23px; height: 23px; }
+    .hero-caption {
+      position: absolute;
+      bottom: 28px;
+      left: var(--gutter);
+      right: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(244, 241, 232, .35);
+      font-size: 11px;
+      line-height: 1.6;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .caption-rule { width: 36px; height: 1px; background: currentColor; opacity: .7; }
+    .work { padding: 72px var(--gutter) 88px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; scroll-margin-top: 24px; }
+    h2 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(40px, 4.5vw, 68px); font-weight: 400; line-height: 1.1; letter-spacing: -.04em; }
+    .work-note { max-width: 320px; margin: 6px 0 0 auto; color: #466168; font-size: 14px; line-height: 1.75; }
+    @media (max-width: 600px) {
+      .hero { min-height: 680px; min-height: max(680px, 100svh); padding-top: 100px; padding-bottom: 120px; }
+      .hero-poster { object-position: 62% center; }
+      .hero::before { background: linear-gradient(90deg, rgba(6, 28, 34, .82), rgba(6, 28, 34, .35)), linear-gradient(0deg, rgba(6, 28, 34, .45), transparent 45%); }
+      h1 { max-width: 420px; font-size: clamp(76px, 16vw, 96px); }
+      .explore { margin-top: 32px; width: 100px; height: 100px; }
+      .hero-caption { font-size: 9px; letter-spacing: .08em; }
+      .work { padding-top: 48px; padding-bottom: 56px; grid-template-columns: 1fr; gap: 24px; }
+      .work-note { margin: 0; }
+    }
+    @media (max-height: 600px) and (min-width: 601px) {
+      .hero { min-height: 640px; }
+      h1 { font-size: 100px; }
+    }
+    @media (forced-colors: active) {
+      .explore { border: 1px solid ButtonText; }
+      .hero::before { background: Canvas; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#work">Skip to selected work</a>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-poster" src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+      <span class="frame-mark" aria-hidden="true"></span>
+      <div class="hero-content">
+        <h1 id="hero-title">A quiet study.</h1>
+        <p class="intro">An independent film practice.</p>
+        <a class="explore" href="#work">
+          <span>Explore</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5h14v14M19 5 5 19" stroke="currentColor" stroke-width="1.25"/></svg>
+        </a>
+      </div>
+      <div class="hero-caption">
+        <span>Static poster · Footage not supplied</span>
+        <span class="caption-rule" aria-hidden="true"></span>
+      </div>
+    </section>
+    <section class="work" id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <p class="work-note">Film footage is not available in this presentation. The supplied poster is shown as a still.</p>
+    </section>
+  </main>
+</body>
+</html>

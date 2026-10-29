@@ -1,0 +1,152 @@
+{
+  "browser": "151.0.7922.34",
+  "codec": "video/webm; codecs=\"vp8\"",
+  "snippets": {
+    "motion": "cdfcb3a4e26e64f727a9de1b025e31c9256dcde974a1823f87d725284bb2210c",
+    "media": "885acff3d6b96d2f5bcf7411155a2f0c73d89171295b564d687ca1b9316e7339"
+  },
+  "cases": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": true,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": true,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 812,
+        "height": 375
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 812,
+        "height": 375
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "codec": "probably",
+      "pass": true
+    },
+    {
+      "fault": "no-js",
+      "injected": true,
+      "pass": true
+    },
+    {
+      "fault": "interrupt",
+      "injected": true,
+      "pass": true
+    },
+    {
+      "fault": "autoplay-rejected",
+      "injected": true,
+      "pass": true
+    },
+    {
+      "fault": "missing-media",
+      "injected": true,
+      "pass": true
+    },
+    {
+      "fault": "no-observer",
+      "injected": true,
+      "pass": true
+    },
+    {
+      "fault": "delayed-fonts",
+      "injected": true,
+      "pass": true
+    },
+    {
+      "loop": "optional fade",
+      "wraps": 3,
+      "samples": [
+        {
+          "time": 0.129592,
+          "file": "loop-0.png"
+        },
+        {
+          "time": 1.240383,
+          "file": "loop-10.png"
+        },
+        {
+          "time": 0.362926,
+          "file": "loop-20.png"
+        },
+        {
+          "time": 1.474778,
+          "file": "loop-30.png"
+        },
+        {
+          "time": 0.599665,
+          "file": "loop-40.png"
+        },
+        {
+          "time": 1.701556,
+          "file": "loop-50.png"
+        }
+      ],
+      "teardownStopsTime": true
+    }
+  ],
+  "failures": []
+}

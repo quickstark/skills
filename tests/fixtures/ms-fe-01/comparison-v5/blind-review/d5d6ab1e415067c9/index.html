@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>FIELD NOTES</title>
+  <style>
+    :root { --paper: #f6f3eb; --ink: #163b43; --accent: #bf4e2e; --rule: #c8cec5; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; scroll-padding-top: 32px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; border-radius: 0; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+    ::selection { background: var(--ink); color: var(--paper); }
+    .page-width { width: calc(100% - 112px); max-width: 1600px; margin-inline: auto; }
+    .masthead { min-height: 100px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--rule); }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 750; letter-spacing: -.065em; white-space: nowrap; }
+    .brand-mark { width: 22px; height: 22px; border: 5px solid var(--accent); display: inline-block; }
+    nav { display: flex; gap: 36px; }
+    nav a { font-size: 14px; font-weight: 550; text-decoration: none; padding-block: 12px; }
+    nav a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+    .hero { padding-top: 52px; }
+    h1 { margin: 0; font-size: clamp(64px, 8.85vw, 142px); line-height: .99; font-weight: 450; letter-spacing: -.065em; }
+    h1 span { display: block; }
+    .hero-details { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin-top: 33px; margin-bottom: 38px; }
+    .hero-details p { margin: 0; max-width: 380px; font-size: 19px; line-height: 1.45; letter-spacing: -.025em; }
+    .primary { min-height: 54px; display: inline-flex; align-items: center; justify-content: space-between; gap: 48px; padding: 15px 21px; background: var(--accent); color: var(--paper); font-size: 14px; font-weight: 600; text-decoration: none; transition: background-color 160ms ease; }
+    .primary:hover { background: var(--ink); }
+    .arrow { width: 21px; height: 21px; flex: none; }
+    .film { position: relative; width: 100%; aspect-ratio: 2.45; min-height: 270px; background: var(--ink); overflow: hidden; }
+    .film img, .film video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+    .film img { color: var(--paper); }
+    .film::after { content: ""; position: absolute; inset: 14px; border: 1px solid rgb(246 243 235 / .28); pointer-events: none; }
+    .media-toggle { position: absolute; z-index: 1; bottom: 28px; right: 28px; min-width: 48px; min-height: 48px; display: flex; align-items: center; justify-content: center; background: var(--paper); color: var(--ink); border: 1px solid var(--paper); cursor: pointer; }
+    .media-toggle:hover { background: var(--ink); color: var(--paper); }
+    .media-toggle:focus-visible { outline-color: var(--paper); box-shadow: 0 0 0 9px var(--ink); }
+    .media-toggle svg { width: 18px; height: 18px; }
+    .media-toggle[data-playing="true"] .play-icon, .media-toggle:not([data-playing="true"]) .pause-icon { display: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+    .work { padding-block: 100px 110px; display: grid; grid-template-columns: 1fr 2fr; gap: 48px; }
+    h2 { margin: 5px 0 0; font-size: 17px; font-weight: 550; letter-spacing: -.025em; }
+    .work-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+    .work-list li { display: flex; justify-content: space-between; gap: 24px; padding: 27px 0 30px; border-bottom: 1px solid var(--rule); font-size: clamp(25px, 2.6vw, 42px); font-weight: 400; letter-spacing: -.045em; line-height: 1.2; }
+    .work-year { align-self: center; font-size: 14px; font-weight: 450; letter-spacing: 0; white-space: nowrap; }
+    .about { position: relative; border-top: 1px solid var(--ink); padding: 49px 0 80px; }
+    .about::before { content: ""; display: block; width: 20px; height: 20px; background: var(--accent); margin-bottom: 38px; }
+    .about p { max-width: 950px; margin: 0 0 0 auto; font-size: clamp(38px, 5.4vw, 82px); line-height: 1.08; letter-spacing: -.055em; }
+    @media (min-width: 1700px) { .film { aspect-ratio: 2.7; } }
+    @media (max-width: 900px) {
+      .page-width { width: calc(100% - 64px); }
+      .masthead { min-height: 88px; }
+      nav { gap: 26px; }
+      .hero { padding-top: 46px; }
+      h1 { font-size: 9.5vw; }
+      .hero-details p { max-width: 310px; font-size: 17px; }
+      .primary { gap: 26px; }
+      .film { aspect-ratio: 1.85; }
+      .work { gap: 32px; padding-block: 72px 80px; grid-template-columns: 1fr 2.4fr; }
+      .about p { max-width: 78%; }
+    }
+    @media (max-width: 560px) {
+      .page-width { width: calc(100% - 40px); }
+      .masthead { min-height: 80px; gap: 12px; }
+      .brand { font-size: 15px; gap: 7px; }
+      .brand-mark { width: 16px; height: 16px; border-width: 4px; }
+      nav { gap: 15px; }
+      nav a { font-size: 12px; }
+      .hero { padding-top: 40px; }
+      h1 { font-size: clamp(38px, 11.7vw, 65px); line-height: 1.04; }
+      .hero-details { align-items: flex-start; flex-direction: column; gap: 23px; margin-top: 25px; margin-bottom: 28px; }
+      .hero-details p { font-size: 16px; max-width: 270px; }
+      .primary { min-height: 50px; gap: 43px; padding: 13px 17px; }
+      .film { aspect-ratio: 1.22; min-height: 0; }
+      .film::after { inset: 9px; }
+      .media-toggle { bottom: 19px; right: 19px; }
+      .work { padding-block: 56px 60px; display: block; }
+      h2 { margin: 0 0 27px; font-size: 16px; }
+      .work-list li { padding-block: 23px; font-size: 27px; gap: 12px; }
+      .work-year { font-size: 12px; }
+      .about { padding: 31px 0 52px; }
+      .about::before { width: 16px; height: 16px; margin-bottom: 32px; }
+      .about p { max-width: 100%; font-size: 42px; }
+    }
+    @media (max-height: 500px) and (orientation: landscape) {
+      .masthead { min-height: 68px; }
+      .hero { padding-top: 28px; }
+      h1 { font-size: clamp(48px, 7.5vw, 76px); }
+      .hero-details { margin-block: 22px 26px; }
+      .film { min-height: 0; aspect-ratio: 2.45; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .film video { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead page-width">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span>FIELD NOTES</div>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:studio@example.test">Contact</a>
+    </nav>
+  </header>
+  <main class="page-width">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title"><span>Make room for</span> <span>the moving world.</span></h1>
+      <div class="hero-details">
+        <p>Thoughtful films, clear stories, lasting places.</p>
+        <a class="primary" href="#work">Explore the work<svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></a>
+      </div>
+      <div class="film" data-media>
+        <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+        <video src="assets/scene.webm" poster="assets/poster.svg" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1" hidden></video>
+        <button class="media-toggle" type="button" aria-label="Play background video" hidden>
+          <svg class="pause-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3h3v14H5zm7 0h3v14h-3z"/></svg>
+          <svg class="play-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+        </button>
+        <span class="sr-only" role="status" data-media-status></span>
+      </div>
+    </section>
+    <section class="work" id="work" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <ul class="work-list">
+        <li><span>Tidal study</span><span class="work-year">/ 2026</span></li>
+        <li><span>Mountain light</span><span class="work-year">/ 2025</span></li>
+      </ul>
+    </section>
+    <section class="about" id="about" aria-label="About">
+      <p>An independent film practice.</p>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const root = document.querySelector('[data-media]');
+      const video = root.querySelector('video');
+      const button = root.querySelector('button');
+      const status = root.querySelector('[data-media-status]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let visible = false;
+      let userPaused = false;
+      let blocked = false;
+      let disposed = false;
+      let epoch = 0;
+      const controller = new AbortController();
+      const options = { signal: controller.signal };
+      const setControl = (playing) => {
+        button.dataset.playing = String(playing);
+        button.setAttribute('aria-label', playing ? 'Pause background video' : 'Play background video');
+      };
+      const still = () => {
+        epoch++;
+        video.pause();
+        video.hidden = true;
+        setControl(false);
+      };
+      const sync = async () => {
+        button.hidden = reduce.matches;
+        if (disposed || !visible || userPaused || blocked || reduce.matches || document.hidden) {
+          still();
+          return;
+        }
+        const attempt = ++epoch;
+        try {
+          await video.play();
+          if (attempt !== epoch) return;
+          video.hidden = false;
+          setControl(true);
+          status.textContent = '';
+        } catch {
+          if (attempt !== epoch) return;
+          blocked = true;
+          still();
+          status.textContent = 'Static preview: playback unavailable.';
+        }
+      };
+      let observer;
+      try {
+        if (!('IntersectionObserver' in window)) return;
+        video.muted = true;
+        video.playsInline = true;
+        button.addEventListener('click', () => {
+          userPaused = !video.paused;
+          blocked = false;
+          sync();
+        }, options);
+        video.addEventListener('error', () => {
+          blocked = true;
+          still();
+          status.textContent = 'Static preview: media unavailable.';
+        }, options);
+        reduce.addEventListener('change', sync, options);
+        document.addEventListener('visibilitychange', sync, options);
+        observer = new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          sync();
+        }, { threshold: 0 });
+        observer.observe(root);
+        const dispose = () => {
+          disposed = true;
+          still();
+          observer.disconnect();
+          controller.abort();
+        };
+        window.addEventListener('pagehide', (event) => {
+          if (event.persisted) { visible = false; still(); }
+          else dispose();
+        }, options);
+        window.addEventListener('pageshow', (event) => {
+          if (event.persisted) {
+            const rect = root.getBoundingClientRect();
+            visible = rect.bottom > 0 && rect.top < window.innerHeight;
+            sync();
+          }
+        }, options);
+      } catch {
+        still();
+        button.hidden = true;
+        observer?.disconnect();
+        controller.abort();
+      }
+    })();
+  </script>
+</body>
+</html>

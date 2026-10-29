@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 2,
+  "licensePath": "THIRD_PARTY_NOTICES.md",
+  "sources": [
+    {
+      "legacyName": "design-taste-frontend",
+      "sourcePath": "skills/taste-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "aa194351b246b8b4799099d4ed7b033d29eab6e6e3d58d8d2172978be7b3ec89",
+      "privateReferences": [
+        "design-direction",
+        "implementation"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "high-end-visual-design",
+      "sourcePath": "skills/soft-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "e1e32f5e2d420872c6c7332b53d5ff7721946766b78c4822b424c2d512c8fdbc",
+      "privateReferences": [
+        "dimensional-style"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "image-to-code",
+      "sourcePath": "skills/image-to-code-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "4c060a8064a8b13380bc2ef3d6e6a1d0b1e316aa093cd9807d0ce9e4eeb037fa",
+      "privateReferences": [
+        "implementation",
+        "prompt-construction"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "imagegen-frontend-mobile",
+      "sourcePath": "skills/imagegen-frontend-mobile/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "8a33389979f3074fa0926678e266ad2eb9234624472254469fc1ad916b9caa24",
+      "privateReferences": [
+        "mobile-images",
+        "prompt-construction",
+        "brief"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "imagegen-frontend-web",
+      "sourcePath": "skills/imagegen-frontend-web/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "6b5c2256522fdba1e3313eafa3d743b960a7b13ec029d3e6586e04b23327c1f8",
+      "privateReferences": [
+        "web-images",
+        "prompt-construction",
+        "design-direction"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "minimalist-ui",
+      "sourcePath": "skills/minimalist-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "36bc7328f085405f43b476938e62460fa573bf7e984e949e072bcf014831a44c",
+      "privateReferences": [
+        "restrained-style"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "redesign-existing-projects",
+      "sourcePath": "skills/redesign-skill/SKILL.md",
+      "baselineRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "reviewedRevision": "c184364c58658b2f131b4ae8bd3d206cabb3deee",
+      "sourceFileSha256": "98ad3e5b051bfb71b2795f7e8a6aa0d32b51ee095606c098a4b2822ac07926c9",
+      "privateReferences": [
+        "redesign"
+      ],
+      "state": "candidate",
+      "repository": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "legacyName": "motionsites-web-builder",
+      "repository": "https://github.com/Motionsites-AI/claude-skill",
+      "reviewedRevision": "faa30d512e3973e58675c72101a7ef42ed37ae83",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "6cd724256c3089086ad084e840fc9de970e59a9f1a72acf776ef937cec53a806",
+          "sections": [
+            "MIT skill/reference/script notice"
+          ],
+          "derivedPaths": [
+            "THIRD_PARTY_NOTICES.md"
+          ]
+        },
+        {
+          "path": "plugins/motionsites-web-builder/skills/motionsites-web-builder/references/techniques/type-and-text-motion.md",
+          "sha256": "c1c8fedfe88ba0a85a1612ef3ae6f18909aac040e78dbd77451d548fd687bff7",
+          "sections": [
+            "1. Staggered blur-rise load choreography",
+            "2. Fail-safe entrance system"
+          ],
+          "derivedPaths": [
+            "internal/cinematic-landing.md",
+            "internal/motion-recipes.md"
+          ]
+        },
+        {
+          "path": "plugins/motionsites-web-builder/skills/motionsites-web-builder/references/techniques/scroll.md",
+          "sha256": "5e0c8ee2da9decd8f0014259ce86384b64642d0e0b7a56a54d13675a2fac5423",
+          "sections": [
+            "1. Viewport-triggered staggered reveal"
+          ],
+          "derivedPaths": [
+            "internal/cinematic-landing.md",
+            "internal/motion-recipes.md"
+          ]
+        },
+        {
+          "path": "plugins/motionsites-web-builder/skills/motionsites-web-builder/references/techniques/video-and-media.md",
+          "sha256": "7f1ab104b64539de041018f7d915ecb8e3a4d9c8a18b3181592814bff3af05cf",
+          "sections": [
+            "1. Cinematic background video layer",
+            "2. Seamless video loop",
+            "3. Background-video framing & art direction",
+            "4. Edge-blend scrims & text protection"
+          ],
+          "derivedPaths": [
+            "internal/cinematic-landing.md",
+            "internal/media-recipes.md"
+          ]
+        }
+      ],
+      "privateReferences": [
+        "cinematic-landing",
+        "motion-recipes",
+        "media-recipes"
+      ],
+      "state": "candidate",
+      "adoptedRevision": null,
+      "evidence": [
+        "docs/validation/ms-fe-01.md"
+      ],
+      "dispositions": {
+        "examples": "excluded",
+        "media-collections": "excluded",
+        "promotional-instructions": "excluded"
+      }
+    }
+  ],
+  "derivedFiles": [
+    {
+      "path": "internal/brief.md",
+      "sha256": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a"
+    },
+    {
+      "path": "internal/design-direction.md",
+      "sha256": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386"
+    },
+    {
+      "path": "internal/dimensional-style.md",
+      "sha256": "f47bdc0ad77bed396f0fabd77f285f31eae2d6f8f5519b8afa65a6c2925b42ee"
+    },
+    {
+      "path": "internal/implementation.md",
+      "sha256": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5"
+    },
+    {
+      "path": "internal/mobile-images.md",
+      "sha256": "c25f1805343b461d13e394d77fe73f2debf8c36a1dda1ac50d2c180557eb45b4"
+    },
+    {
+      "path": "internal/prompt-construction.md",
+      "sha256": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918"
+    },
+    {
+      "path": "internal/redesign.md",
+      "sha256": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76"
+    },
+    {
+      "path": "internal/restrained-style.md",
+      "sha256": "f045ec15981c732f9210704060a4520f7841277828eace9a181a225c294bba90"
+    },
+    {
+      "path": "internal/web-images.md",
+      "sha256": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b"
+    },
+    {
+      "path": "internal/cinematic-landing.md",
+      "sha256": "4538c60d20792b5bd33f84f293ee8ecf8be06ac5cc7aa59d690668e613b1fa87"
+    },
+    {
+      "path": "internal/motion-recipes.md",
+      "sha256": "0cdc04300228830af15fa078dac7004fe122f8fa1e96624643d8594c20ac539e"
+    },
+    {
+      "path": "internal/media-recipes.md",
+      "sha256": "c71a9bd4dfb2edcfabe20ef11a07d6284fdecafad47530121aaffeb2492f5e28"
+    }
+  ]
+}

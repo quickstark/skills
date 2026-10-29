@@ -1,0 +1,341 @@
+{
+  "all32StreamsReviewed": true,
+  "noGenerationOrUnauthorizedMutations": true,
+  "scope": "Native tool semantics and authorized product/guidance/assets mutations. Task-owned synthetic /tmp scratch is separately disclosed below, not represented as absence of all filesystem writes.",
+  "reviewedAt": "2026-10-29T19:59:43.538Z",
+  "method": "Inspected all32 native tool-kind/command lists, inline Node/Python/shell checks, cp/mv targets, complete file_change events and product snapshots. Commands author only local index.html/NOTES.md, read supplied guidance/assets/reference and run bounded syntax/content checks. C5/C6 mutations are forbidden and checked from complete before/after snapshots. No native image/MCP/web/delegation calls occurred.",
+  "streams": [
+    {
+      "id": "C1-baseline-1",
+      "eventsSHA256": "2d45bb6bef3336901b7235dc2ff3eaf9317248291fdf9637576013d5cc299d70",
+      "toolTypes": [
+        "command_execution",
+        "file_change"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C1-candidate-1",
+      "eventsSHA256": "67d69c4a444aabf2a1f57913cfb42d4243e1112bd7fa828ef36cd2e4981209df",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 8,
+      "externalCalls": 0
+    },
+    {
+      "id": "C2-baseline-1",
+      "eventsSHA256": "f51abebb05559448b03b7e53acd4fdda351219dd33c6c1230c8d699833fda213",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 9,
+      "externalCalls": 0
+    },
+    {
+      "id": "C2-candidate-1",
+      "eventsSHA256": "ffe7e145bc77b232597e3e7b720c66d29f0d7753e6c55cecc9c30f877fc054a8",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 12,
+      "externalCalls": 0
+    },
+    {
+      "id": "C3-baseline-1",
+      "eventsSHA256": "b6f7b80613eb9492cb001396ce397dad1d813686453a2688648d133cb716f8c5",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C3-candidate-1",
+      "eventsSHA256": "87b4828c9581dbec24c9fd65b7d057475ba0d65d1fbdebe6f62c884ca8b8127d",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 9,
+      "externalCalls": 0
+    },
+    {
+      "id": "C4-baseline-1",
+      "eventsSHA256": "2a099b102ecd3382c3d9de1ce95468c0aeff488054777f720e082ad2bf9df9c5",
+      "toolTypes": [
+        "command_execution",
+        "file_change"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C4-candidate-1",
+      "eventsSHA256": "46b7ccc92053ec5663744d1dd02e7e25fab72902472bf4b8b6da19406313a753",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C5-baseline-1",
+      "eventsSHA256": "c27402b4de8bdab015b392f624ea04351d0c66ae796220510954b472fd9567fb",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C5-candidate-1",
+      "eventsSHA256": "8deca1c0c78badb14e90a0fa973d9fa293686953cc62b70f6550d0f18833797d",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C6-baseline-1",
+      "eventsSHA256": "cd3b1893a9b8365fcf648c07c1b23c7b276fe61e42cf00c3b8f38eb141813aea",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C6-candidate-1",
+      "eventsSHA256": "c4440f8671fcdf806fb0d0a895827c408dd5a438ae51e24299a1963adb6a4f65",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 4,
+      "externalCalls": 0
+    },
+    {
+      "id": "C7-baseline-1",
+      "eventsSHA256": "f1f5ddf422235a1ae8917a00324da6465911495aa9587f7bfd51067c8f816710",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C7-candidate-1",
+      "eventsSHA256": "4458d65560e1d61a13ff8a4e208e1f5fa6274b0e9b00b10b0087165d14512d10",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C8-baseline-1",
+      "eventsSHA256": "e6e54ce6fd6d6375c23a2ba0e7159e48d26d81a06427125d84bbb1a2be3b335f",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 4,
+      "externalCalls": 0
+    },
+    {
+      "id": "C8-candidate-1",
+      "eventsSHA256": "4830131403564d8f558d2acf2431868a05a9020f0807cff982bc7cb2561b6376",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 13,
+      "externalCalls": 0
+    },
+    {
+      "id": "C1-candidate-2",
+      "eventsSHA256": "d13655d7440ead5265c5f3df7017931fcb92ca3c438e907fa6ab64558d56bbe3",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 7,
+      "externalCalls": 0
+    },
+    {
+      "id": "C1-baseline-2",
+      "eventsSHA256": "6a79958e70cdd21447e5cf526bef1f861733521af1ae6a3c152590ca92456dee",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 7,
+      "externalCalls": 0
+    },
+    {
+      "id": "C2-candidate-2",
+      "eventsSHA256": "309c1ad909a3e9ffba8fc147517e6c5b7e0108e4f600f7023483d8dd1d3a70ff",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 7,
+      "externalCalls": 0
+    },
+    {
+      "id": "C2-baseline-2",
+      "eventsSHA256": "e82100398d34b7465ab2dc360a094e394967155854bd62254c5c0f97ec576df0",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C3-candidate-2",
+      "eventsSHA256": "e9b05bc384ff73a5f630e386982649f3d983181b88c67afe4dba1dc4139019fc",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C3-baseline-2",
+      "eventsSHA256": "74c94284327f926a1f932b215efd22b9dd129eed953ce630993afe1e2804e05d",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 7,
+      "externalCalls": 0
+    },
+    {
+      "id": "C4-candidate-2",
+      "eventsSHA256": "6103bfd23a782e61292801071e754c9ae2143731050631fb991e0a3005889f2d",
+      "toolTypes": [
+        "command_execution",
+        "file_change"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C4-baseline-2",
+      "eventsSHA256": "dc701be725eb6ce187c641b1c2998355abe6c90d4682e36ee418206850f1a532",
+      "toolTypes": [
+        "command_execution",
+        "file_change"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C5-candidate-2",
+      "eventsSHA256": "1c8f76b553c1caf564379da763410fe21b31633e71f1e33be20712465e6e8bfe",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C5-baseline-2",
+      "eventsSHA256": "ccd898282bdfa85e8ddd4428326d444422d22ddf558df605fa1217ec464e4a92",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 6,
+      "externalCalls": 0
+    },
+    {
+      "id": "C6-candidate-2",
+      "eventsSHA256": "a1845a9817678c551c31cecdb164f7d535a588909699870d2f914d49e423069f",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 4,
+      "externalCalls": 0
+    },
+    {
+      "id": "C6-baseline-2",
+      "eventsSHA256": "2c6ba67968a76a6b69d759b30322296a5206b788b7b3d2288e25349352560d03",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C7-candidate-2",
+      "eventsSHA256": "8d018f43964deb32234fc8a8a894c8721b928b88f6d0d2f901775084b50e9d09",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    },
+    {
+      "id": "C7-baseline-2",
+      "eventsSHA256": "681153048cf6f69aa457dc0edabfd1d32f769a8eb2163fefb832bc13d9c89031",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 4,
+      "externalCalls": 0
+    },
+    {
+      "id": "C8-candidate-2",
+      "eventsSHA256": "8503d0f42e6554783a2fcc0654a220b64ca93f8a9bde0fd5fb0b0d839a19c92a",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 11,
+      "externalCalls": 0
+    },
+    {
+      "id": "C8-baseline-2",
+      "eventsSHA256": "75afd29cb8abeed808d036539f91a7e61d76157247d1a05f2704f878a18dfa51",
+      "toolTypes": [
+        "command_execution"
+      ],
+      "commands": 5,
+      "externalCalls": 0
+    }
+  ],
+  "scratchDeviations": [
+    {
+      "id": "C2-baseline-1",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-baseline-1",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-baseline-1",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-candidate-2",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-candidate-2",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-candidate-2",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-baseline-2",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    },
+    {
+      "id": "C2-baseline-2",
+      "note": "Synthetic original HTML backup or inline syntax scratch under /tmp. This deviates from workspace-only preference; no unrelated content/product mutation, installation or external service occurred. Candidate-2 explicitly deletes its own scratch."
+    }
+  ],
+  "recordedFailures": "Nongit fixture git status exits128; absent-file rg exits1; C8 candidate1 HTML parser self-closing tag check initially failed then was corrected within the same bounded attempt. All original events remain. These are not hidden retries or browser passes.",
+  "unresolved": [],
+  "limitations": [
+    "Native event logging plus process samples cannot prove absence of an unobserved process between samples. No whole-machine filesystem audit is claimed.",
+    "Baseline control-style defects are measured separately; new candidate preservation is mandatory."
+  ]
+}

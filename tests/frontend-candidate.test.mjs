@@ -78,7 +78,7 @@ test("MotionSites schema rejects missing/ambiguous origins, altered bytes, mappi
     x => { x.sources.push(structuredClone(x.sources.at(-1))); },
     x => { x.sources.at(-1).files[0].sha256 = "blob-id"; },
     x => { x.sources.at(-1).files[1].derivedPaths = []; },
-    x => { x.sources.at(-1).adoptedRevision = x.sources.at(-1).reviewedRevision; },
+    x => { x.sources.at(-1).state = "candidate"; x.sources.at(-1).adoptedRevision = x.sources.at(-1).reviewedRevision; },
     x => { delete x.sources.at(-1).dispositions.examples; },
     x => { x.derivedFiles.at(-1).sha256 = "0".repeat(64); },
     x => { x.derivedFiles.pop(); },

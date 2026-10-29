@@ -1,0 +1,269 @@
+{
+  "id": "C7-candidate-2",
+  "scenario": "C7",
+  "errors": [],
+  "views": [
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": true,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": true,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 812,
+        "height": 375
+      },
+      "reducedMotion": "no-preference",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    },
+    {
+      "viewport": {
+        "width": 812,
+        "height": 375
+      },
+      "reducedMotion": "reduce",
+      "touchEmulated": false,
+      "metrics": {
+        "overflow": false,
+        "animations": 0,
+        "videos": [],
+        "text": "FIELD NOTES\nA quiet study.\n\nAn independent film practice.\n\nExplore\nSelected work",
+        "headings": [
+          "A quiet study.",
+          "Selected work"
+        ],
+        "links": [
+          {
+            "text": "Explore",
+            "href": "#work"
+          }
+        ],
+        "sections": 2
+      },
+      "screenshots": []
+    }
+  ],
+  "checks": {
+    "authority": true,
+    "browser": true
+  },
+  "transport": {
+    "completedTurn": true,
+    "nativeStreamComplete": true,
+    "stopReason": null,
+    "toolCount": 5,
+    "durationMs": 34589.351390999975,
+    "usage": [
+      {
+        "input_tokens": 87712,
+        "cached_input_tokens": 76544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2018,
+        "reasoning_output_tokens": 270,
+        "total_tokens": 89730
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": "/usr/bin/zsh -lc \"pwd && rg --files -g 'AGENTS.md' -g 'NOTES.md' -g 'index.html' -g 'guidance/**' -g 'assets/rights.json' -g 'package.json'\"",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc 'cat guidance/skills/engineering/qs-design-frontend/SKILL.md'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc 'cat guidance/skills/frontend/internal/brief.md guidance/skills/frontend/internal/design-direction.md guidance/skills/frontend/internal/implementation.md guidance/skills/frontend/internal/restrained-style.md'",
+      "exit": 0
+    },
+    {
+      "command": "/usr/bin/zsh -lc \"ls -la && rg --files -g '\"'!guidance/**'\"' -g '\"'!assets/**'\"' -g '\"'!node_modules/**'\"' -g '\"'!.git/**'\"' && cat assets/rights.json\"",
+      "exit": 1
+    },
+    {
+      "command": "/usr/bin/zsh -lc \"cat > index.html <<'EOF'\n<\"'!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>FIELD NOTES</title>\n  <style>\n    :root {\n      color-scheme: light;\n      background: #f6f3eb;\n      color: #163b43;\n      font-family: system-ui, sans-serif;\n    }\n\n    * { box-sizing: border-box; }\n\n    body { margin: 0; }\n\n    header,\n    main { padding-inline: clamp(24px, 6vw, 96px); }\n\n    header {\n      padding-top: 36px;\n      font-size: 14px;\n      font-weight: 650;\n      letter-spacing: .15em;\n    }\n\n    .intro {\n      min-height: 78svh;\n      padding-block: clamp(96px, 16vh, 180px) 72px;\n      display: flex;\n      flex-direction: column;\n      align-items: flex-start;\n      justify-content: center;\n    }\n\n    h1 {\n      margin: 0;\n      max-width: 12ch;\n      font-size: clamp(56px, 9vw, 144px);\n      font-weight: 450;\n      line-height: 1.04;\n      letter-spacing: -.065em;\n    }\n\n    p {\n      margin: 28px 0 40px;\n      font-size: clamp(18px, 2vw, 24px);\n      line-height: 1.5;\n    }\n\n    .explore {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      width: 100px;\n      height: 100px;\n      border: 1px solid #163b43;\n      border-radius: 0;\n      background: #163b43;\n      color: #f6f3eb;\n      font-size: 15px;\n      font-weight: 550;\n      text-decoration: none;\n    }\n\n    .explore:hover {\n      background: #f6f3eb;\n      color: #163b43;\n    }\n\n    .explore:focus-visible {\n      outline: 2px solid #163b43;\n      outline-offset: 5px;\n    }\n\n    #work {\n      border-top: 1px solid #163b43;\n      padding-block: 32px 96px;\n      scroll-margin-top: 32px;\n    }\n\n    h2 {\n      margin: 0;\n      font-size: clamp(24px, 3vw, 40px);\n      font-weight: 450;\n      line-height: 1.2;\n      letter-spacing: -.03em;\n    }\n\n    @media (max-width: 480px) {\n      header { padding-top: 24px; }\n      .intro { min-height: 75svh; }\n    }\n  </style>\n</head>\n<body>\n  <header>FIELD NOTES</header>\n  <main>\n    <section class=\"intro\" aria-labelledby=\"intro-heading\">\n      <h1 id=\"intro-heading\">A quiet study.</h1>\n      <p>An independent film practice.</p>\n      <a class=\"explore\" href=\"#work\">Explore</a>\n    </section>\n    <section id=\"work\" aria-labelledby=\"work-heading\">\n      <h2 id=\"work-heading\">Selected work</h2>\n    </section>\n  </main>\n</body>\n</html>\nEOF\ncat > NOTES.md <<'\"'EOF'\nBuilt index.html as a static FIELD NOTES page using the exact supplied copy, #f6f3eb background, #163b43 text, system sans, and a 100px square Explore anchor to #work. Responsive type and spacing use CSS clamp; focus is visible. No scripts, motion, transitions, video, external resources, additional copy, or routes. Local media fixtures are unused.\n\nGuidance read: selected qs-design-frontend root and its brief, design-direction, implementation, and restrained-style references. Parameters: effort=standard, report=brief.\n\nValidation: shell content checks only. Browser/runtime behavior, rendered responsiveness, and independent quality review remain unverified; central observer owns them. No browser, server, downloads, installations, delegation, or external services used.\nEOF\n# Bounded static content check only.\ntest -f index.html && test -f NOTES.md && test \\\"\"'$(rg -c '\"'<section' index.html)\\\" = 2 && test \\\"\"'$(rg -c '\"'href=\\\"#work\\\"' index.html)\\\" = 1 && \"'! rg -n '\"'<script|<video|<iframe|animation\\\\s*:|transition\\\\s*:|https?://' index.html && rg -n 'FIELD NOTES|A quiet study\\\\.|An independent film practice\\\\.|Selected work|#f6f3eb|#163b43|system-ui|border-radius: 0' index.html\"",
+      "exit": 0
+    }
+  ],
+  "reads": {
+    "cinematic-landing": false,
+    "motion-recipes": false,
+    "media-recipes": false
+  },
+  "changed": [
+    "NOTES.md",
+    "index.html"
+  ],
+  "htmlSHA256": "3aeeee574c991f94565a3d4bed1224cf50183ff89ea9f526ae1930cfbc61377c",
+  "response": "I’ll read the selected local guidance, build the static page, and run a small content check. Browser and runtime behavior will remain unverified for the central observer.\n\nI’m applying the local `qs-design-frontend` guidance.\n\n- [ ] Active: Build the page and check its static content.\n- Skipped: Browser qualification and independent review, assigned to the central observer.\n\nStage: Static page | Stage estimate: ~10% | Overall estimate: ~10% | Continuing — guidance located. Input needed: none.\n\nThe brief supports a typography-led page with the exact supplied copy and colors. I’ll use a spacious hero, a square Explore link, and a single Selected work section, with no scripts or media.\n\nStatus: Complete  \nSkills used: /qs-design-frontend\n\nCreated [index.html](/tmp/ms-fe-01-v3-C7-candidate-2/index.html) with the exact copy, colors, system sans, and square Explore link to `#work`. No motion, video, scripts, extra copy, or routes.\n\nSpecs: User brief; no specification file located.\n\nWork summary:\n\n- Finished — Static content checks passed. Parameters and limitations recorded in [NOTES.md](/tmp/ms-fe-01-v3-C7-candidate-2/NOTES.md).\n- Next — Central observer owns browser qualification and independent review. Browser/runtime behavior remains unverified.\n\nNext work prompt: None — observer work is already assigned."
+}

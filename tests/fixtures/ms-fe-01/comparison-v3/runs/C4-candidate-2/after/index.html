@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>FIELD NOTES — A quiet study.</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f3eb;
+      --ink: #163b43;
+      --ochre: #f1b85b;
+      --gutter: clamp(24px, 5.333333vw, 64px);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--paper); }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 400;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding: 48px var(--gutter) 41px;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-right: 35px;
+      line-height: 28px;
+    }
+
+    .brand { font-size: 20px; }
+
+    nav a {
+      color: inherit;
+      font-size: 18px;
+      text-decoration: none;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 6px;
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    .intro { margin-top: 103px; }
+
+    h1 {
+      margin: 0;
+      font-size: 72px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .intro p {
+      margin: 27px 0 0;
+      font-size: 24px;
+      line-height: 29px;
+    }
+
+    .explore {
+      display: flex;
+      width: 160px;
+      height: 60px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 33px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 22px;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .explore:hover { text-decoration: underline; }
+
+    .image {
+      position: relative;
+      height: auto;
+      aspect-ratio: 1072 / 300;
+      margin-top: 60px;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .image::after {
+      content: "";
+      position: absolute;
+      top: 20%;
+      left: 72.38806%;
+      width: 16.791045%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--ochre);
+    }
+
+    #work { margin-top: 56px; }
+
+    h2 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 43px;
+    }
+
+    @media (max-width: 600px) {
+      .page { padding-top: 28px; padding-bottom: 32px; }
+      header { padding-right: 0; }
+      .intro { margin-top: 76px; }
+      h1 { font-size: clamp(40px, 10vw, 60px); }
+      .intro p { margin-top: 24px; font-size: 20px; line-height: 28px; }
+      .explore { margin-top: 30px; }
+      .image { margin-top: 48px; }
+      #work { margin-top: 42px; }
+      h2 { font-size: 30px; line-height: 38px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <span class="brand">FIELD NOTES</span>
+      <nav aria-label="Main"><a href="#work">Work</a></nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="intro-title">
+        <h1 id="intro-title">A quiet study.</h1>
+        <p>An independent film practice.</p>
+        <a class="explore" href="#work">Explore</a>
+      </section>
+      <div class="image" aria-hidden="true"></div>
+      <section id="work" aria-labelledby="work-title">
+        <h2 id="work-title">Selected work</h2>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

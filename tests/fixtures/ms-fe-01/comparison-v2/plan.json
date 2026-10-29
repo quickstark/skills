@@ -1,0 +1,348 @@
+{
+  "frozenAt": "2026-10-29T19:20:13.740Z",
+  "baselineRevision": "7fec15b92f57a5d09854b07d4103987793b5005b",
+  "amendment": {
+    "priorBatch": "comparison",
+    "reason": "Preserve original startup observation failures; increase bounded process-scan allowance from 1s to 10s, sample every 500ms and limit concurrency to two; add frozen output observer before fresh trials. No change to model, host controls, tasks, rubric or per-attempt budgets."
+  },
+  "baselineDifferences": "origin/main and HEAD matched supplied baseline before changes",
+  "controls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "executable": "/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/bin/codex",
+  "browserPath": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+  "browserVersion": "151.0.7922.34",
+  "budgets": {
+    "timeoutMs": 360000,
+    "maximumImageCalls": 0,
+    "retries": 0
+  },
+  "capabilities": {
+    "nativeTools": "Existing app-server tools; full events retained; shell semantics require review",
+    "imageGeneration": "prohibited",
+    "browser": "existing playwright-core and Chromium; emulated coverage only"
+  },
+  "common": "This is a bounded synthetic qualification task. Work only in this workspace. Read the selected local guidance root at guidance/skills/engineering/ROOT/SKILL.md and relevant local private references; load only guidance warranted by the brief. Do not read other checkouts, installed skills, personal configuration or secrets. Do not install dependencies, invoke image generation, delegate, publish or call external services. Existing local browser primitives are sufficient. Preserve supplied content and authority. Finish within the bounded task; record concise actual limitations and selected parameters in NOTES.md only when product edits are authorized. Assets assets/scene.webm and assets/poster.svg are locally authored synthetic geometric media; rights are recorded in assets/rights.json. Treat them as verified local fixtures. The script can use basic shell file reads and writes. ",
+  "scenarios": [
+    {
+      "id": "C1",
+      "root": "qs-design-frontend",
+      "mode": "implementation",
+      "brief": "Build a cinematic portfolio landing page for FIELD NOTES. Create index.html with inline CSS/JS, using the verified local footage. Include only: navigation Work -> #work, About -> #about, Contact -> mailto:studio@example.test; hero heading \"Make room for the moving world.\", subheading \"Thoughtful films, clear stories, lasting places.\", primary \"Explore the work\" -> #work; #work heading \"Selected work\" with two text entries \"Tidal study / 2026\" and \"Mountain light / 2025\"; #about text \"An independent film practice.\". Use a light editorial brand: background #f6f3eb, ink #163b43, accent #bf4e2e, system sans, square controls. Purposeful motion and integrated footage should serve hierarchy. No claims, new destinations or sections. Produce a polished responsive page at 375/768/1440 and short landscape, keyboard and reduced motion; retain usable failure states. Keep all assets local. No build step."
+    },
+    {
+      "id": "C2",
+      "root": "qs-design-frontend",
+      "mode": "implementation",
+      "brief": "Revise the existing branded index.html marketing page to add cinematic media and purposeful entrance/viewport motion using the verified local footage. Preserve all existing copy, destinations, IDs, tokens (including control styles), analytics and behavior exactly. Keep the two existing sections; do not add sections or fabricate copy. Improve media composition, hierarchy and responsive polish within those constraints. Test with local primitives where available; no build step."
+    },
+    {
+      "id": "C3",
+      "root": "qs-design-frontend",
+      "mode": "implementation",
+      "brief": "Improve spacing and responsive usability of this restrained operations dashboard index.html. Preserve table contents, status filter and counts. Use its existing tokens. Keep it restrained and directly usable; do not introduce marketing treatment. Do not add decorative motion or media."
+    },
+    {
+      "id": "C4",
+      "root": "qs-design-image-to-code",
+      "mode": "implementation",
+      "brief": "Implement the supplied authoritative still reference reference.svg faithfully as responsive index.html. Preserve its exact copy, tokens and routes. Keep the supplied reference unchanged. It is a still design; no motion or target regeneration is requested. Do not generate images. The reference depicts a #f6f3eb page with #163b43 text, FIELD NOTES top left, Work link to #work top right, heading \"A quiet study.\", body \"An independent film practice.\", square \"Explore\" link to #work, and a rectangular #163b43 image area with an ochre circle on its right. #work reads \"Selected work\"."
+    },
+    {
+      "id": "C5",
+      "root": "qs-design-frontend",
+      "mode": "audit-only",
+      "brief": "Audit-only: inspect this cinematic marketing index.html. Return useful concrete motion/media accessibility and framing findings in your response. Do not edit any product, guidance, assets or notes. No implementation. The media is intentionally missing and the controls are animated; distinguish observable findings from unverified playback."
+    },
+    {
+      "id": "C6",
+      "root": "qs-design-image-web",
+      "mode": "response-only",
+      "brief": "Prompt-only: return one reusable prompt for an editorial cinematic portfolio design image. Scope is a hero with FIELD NOTES navigation, \"Make room for the moving world.\", supporting copy \"Thoughtful films, clear stories, lasting places.\", and \"Explore the work\". Use #f6f3eb and #163b43, system sans and square controls. Do not generate images, execute the product or write any files. Reading relevant guidance is allowed."
+    },
+    {
+      "id": "C7",
+      "root": "qs-design-frontend",
+      "mode": "implementation",
+      "brief": "Build an explicitly static marketing page index.html for FIELD NOTES. No motion, animation, transition or video. Use #f6f3eb background, #163b43 text, system sans, square \"Explore\" link to #work, heading \"A quiet study.\", body \"An independent film practice.\", #work heading \"Selected work\". No other sections, copy or routes."
+    },
+    {
+      "id": "C8",
+      "root": "qs-design-frontend",
+      "mode": "implementation",
+      "brief": "Build a cinematic marketing hero index.html with the supplied poster assets/poster.svg. Requested footage has not been supplied and this task has no video playback verification capability. Heading \"A quiet study.\", body \"An independent film practice.\", square \"Explore\" link to #work, #work \"Selected work\". Keep a usable static fallback and state the media/playback limitation honestly. Do not invent a video URL or claim playback passed. Do not install anything or generate media."
+    }
+  ],
+  "schedule": [
+    {
+      "id": "C1-baseline-1",
+      "scenario": "C1",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C1-candidate-1",
+      "scenario": "C1",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C2-baseline-1",
+      "scenario": "C2",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C2-candidate-1",
+      "scenario": "C2",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C3-baseline-1",
+      "scenario": "C3",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C3-candidate-1",
+      "scenario": "C3",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C4-baseline-1",
+      "scenario": "C4",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C4-candidate-1",
+      "scenario": "C4",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C5-baseline-1",
+      "scenario": "C5",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C5-candidate-1",
+      "scenario": "C5",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C6-baseline-1",
+      "scenario": "C6",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C6-candidate-1",
+      "scenario": "C6",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C7-baseline-1",
+      "scenario": "C7",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C7-candidate-1",
+      "scenario": "C7",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C8-baseline-1",
+      "scenario": "C8",
+      "variant": "baseline",
+      "repetition": 1
+    },
+    {
+      "id": "C8-candidate-1",
+      "scenario": "C8",
+      "variant": "candidate",
+      "repetition": 1
+    },
+    {
+      "id": "C1-candidate-2",
+      "scenario": "C1",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C1-baseline-2",
+      "scenario": "C1",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C2-candidate-2",
+      "scenario": "C2",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C2-baseline-2",
+      "scenario": "C2",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C3-candidate-2",
+      "scenario": "C3",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C3-baseline-2",
+      "scenario": "C3",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C4-candidate-2",
+      "scenario": "C4",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C4-baseline-2",
+      "scenario": "C4",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C5-candidate-2",
+      "scenario": "C5",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C5-baseline-2",
+      "scenario": "C5",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C6-candidate-2",
+      "scenario": "C6",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C6-baseline-2",
+      "scenario": "C6",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C7-candidate-2",
+      "scenario": "C7",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C7-baseline-2",
+      "scenario": "C7",
+      "variant": "baseline",
+      "repetition": 2
+    },
+    {
+      "id": "C8-candidate-2",
+      "scenario": "C8",
+      "variant": "candidate",
+      "repetition": 2
+    },
+    {
+      "id": "C8-baseline-2",
+      "scenario": "C8",
+      "variant": "baseline",
+      "repetition": 2
+    }
+  ],
+  "rubric": {
+    "scale": {
+      "0": "broken or absent",
+      "1": "substantial usability/composition defects",
+      "2": "usable basic result with evident gaps",
+      "3": "coherent polished result with minor gaps",
+      "4": "excellent deliberate composition and complete behavior"
+    },
+    "dimensions": [
+      "hierarchy",
+      "media integration",
+      "motion clarity",
+      "mobile composition",
+      "polish"
+    ],
+    "adoption": {
+      "minimumMeanImprovement": 0.25,
+      "noDecliningScenario": true,
+      "allAuthorityPreservationRuntime": true,
+      "controls": "C3–C8 preserve required behavior; observed reference reads conditionally correct"
+    },
+    "review": "Independent author-blind reviewer scores C1/C2 from actual screenshots, source and browser observations. Keep scores frozen before variant decoding."
+  },
+  "inputs": {
+    "guidance/baseline/skills/engineering/qs-design-frontend/SKILL.md": "0e509af5790b68e1bec779390d6966de760badd28f0ccc90c73aeb570179f41c",
+    "guidance/baseline/skills/engineering/qs-design-image-mobile/SKILL.md": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+    "guidance/baseline/skills/engineering/qs-design-image-to-code/SKILL.md": "4fe7c3e3468d80e2149ceb9640ae6b756974202e5d5b55c4523e7bc5daf4b6e4",
+    "guidance/baseline/skills/engineering/qs-design-image-web/SKILL.md": "cc2b5c8b6f7979930e4c38b18b4212ae6fd6ae9a36703f01056845317ed11c83",
+    "guidance/baseline/skills/frontend/THIRD_PARTY_NOTICES.md": "75cdc713ad103e7befd44288e4aacf9f8a8bd7718f28459e610df06231c67c62",
+    "guidance/baseline/skills/frontend/dependency-index.json": "cd887d662162fad42a986b3eb17d0da749f588047da90f28299579e4c5f01adf",
+    "guidance/baseline/skills/frontend/internal/brief.md": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a",
+    "guidance/baseline/skills/frontend/internal/design-direction.md": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386",
+    "guidance/baseline/skills/frontend/internal/dimensional-style.md": "f47bdc0ad77bed396f0fabd77f285f31eae2d6f8f5519b8afa65a6c2925b42ee",
+    "guidance/baseline/skills/frontend/internal/implementation.md": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5",
+    "guidance/baseline/skills/frontend/internal/mobile-images.md": "c25f1805343b461d13e394d77fe73f2debf8c36a1dda1ac50d2c180557eb45b4",
+    "guidance/baseline/skills/frontend/internal/prompt-construction.md": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+    "guidance/baseline/skills/frontend/internal/redesign.md": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76",
+    "guidance/baseline/skills/frontend/internal/restrained-style.md": "f045ec15981c732f9210704060a4520f7841277828eace9a181a225c294bba90",
+    "guidance/baseline/skills/frontend/internal/web-images.md": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b",
+    "guidance/candidate/skills/engineering/qs-design-frontend/SKILL.md": "c80d53cf79c621a068d97c486942c41f93a86420ae6c93ac5af997924335fb1f",
+    "guidance/candidate/skills/engineering/qs-design-image-mobile/SKILL.md": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+    "guidance/candidate/skills/engineering/qs-design-image-to-code/SKILL.md": "4fe7c3e3468d80e2149ceb9640ae6b756974202e5d5b55c4523e7bc5daf4b6e4",
+    "guidance/candidate/skills/engineering/qs-design-image-web/SKILL.md": "cc2b5c8b6f7979930e4c38b18b4212ae6fd6ae9a36703f01056845317ed11c83",
+    "guidance/candidate/skills/frontend/THIRD_PARTY_NOTICES.md": "40b4f9b36249f2bba78aa380c6dffb13eddc05753a382eeec7c5143ad3361e40",
+    "guidance/candidate/skills/frontend/dependency-index.json": "9769e4a9fcc86f7fb56cd728abb259bb9170550ce769631da95a28fe6e8fb0be",
+    "guidance/candidate/skills/frontend/internal/brief.md": "760d175638477e79a298ffb01790ef97c4f5ad9a7525eaac56b275eab7eb6f2a",
+    "guidance/candidate/skills/frontend/internal/cinematic-landing.md": "4538c60d20792b5bd33f84f293ee8ecf8be06ac5cc7aa59d690668e613b1fa87",
+    "guidance/candidate/skills/frontend/internal/design-direction.md": "7dffa2c4e9789c6de9e1db05fc0a6b992bf415f667bb34d6d0aac60493e42386",
+    "guidance/candidate/skills/frontend/internal/dimensional-style.md": "f47bdc0ad77bed396f0fabd77f285f31eae2d6f8f5519b8afa65a6c2925b42ee",
+    "guidance/candidate/skills/frontend/internal/implementation.md": "17f374d0a6d342382983f5f688057d632af6895f86d481cc29eeeb0a35f990b5",
+    "guidance/candidate/skills/frontend/internal/media-recipes.md": "c71a9bd4dfb2edcfabe20ef11a07d6284fdecafad47530121aaffeb2492f5e28",
+    "guidance/candidate/skills/frontend/internal/mobile-images.md": "c25f1805343b461d13e394d77fe73f2debf8c36a1dda1ac50d2c180557eb45b4",
+    "guidance/candidate/skills/frontend/internal/motion-recipes.md": "0cdc04300228830af15fa078dac7004fe122f8fa1e96624643d8594c20ac539e",
+    "guidance/candidate/skills/frontend/internal/prompt-construction.md": "f0a5e6c9863b536b3b1c121553b7e6a6a1c39d02d1968f29eb377b2877cb1918",
+    "guidance/candidate/skills/frontend/internal/redesign.md": "ecdb53bbfda32a2c54c4f68187c2e2a1914284d61ca855b8e2d6def23893ba76",
+    "guidance/candidate/skills/frontend/internal/restrained-style.md": "f045ec15981c732f9210704060a4520f7841277828eace9a181a225c294bba90",
+    "guidance/candidate/skills/frontend/internal/web-images.md": "a514ea0106a3c9bb46d01a91519d08ebc9cbb399939b3c050ecf31e4a6fb257b",
+    "project/branded.html": "a5cf9c68d2e27ea13ef0b81ba61220ed0920948d03605cbe41185a658026b265",
+    "project/dashboard.html": "79b193af316757e53d0b17e40bd4527fcb84ea0b23160730cdbde04c82b8cc76",
+    "project/reference.svg": "4b26953676aff813a60a2b87a6f17ccf0f5f35239ddb1889919f4086c2f5b6b2"
+  },
+  "assets": {
+    "poster.svg": "5e47b6f296a7da27582477beca4633708fb0ae2d39203cd4945fc25b68228408",
+    "rights.json": "790923b8453387255815f6ff1c0dd753acca5a9023506e2d796a20bb60743527",
+    "scene.webm": "9dfcac8ae5879f2e2ac6ff2883774876d7ee790487ccc72d50ce9c2db9335e66"
+  },
+  "bindings": {
+    "tests/fixtures/ms-fe-01/comparison-v2.mjs": "e4ecddfb35bee4269a712429a58db2dce38a7b549f45e4a284a021ff1d5555ce",
+    "tests/fixtures/ms-fe-01/native-capture.mjs": "befa436de15d460e1760685854dbafd68debd9a1bd7cbc91d5bf6eb36ed1cd7a",
+    "tests/fixtures/ms-fe-01/observe.mjs": "c5d76c5a892aa51207aafef2f78be9cf9d2357ff33f779cfb9cea485a4aaa256",
+    "tests/fixtures/ms-fe-01/runtime.mjs": "c8de585318db683b3614af1e58923e22f1e75f0b4897961a152879c481278cb2",
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+    "scripts/frontend-adoption-trials.mjs": "8de4eb6b35079130666b3f964931798c964d6c8fcc3dfbd1dcc7f0b515aede4f"
+  }
+}

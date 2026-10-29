@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Operations</title>
+  <style>
+    :root {
+      --background: #f6f3eb;
+      --foreground: #163b43;
+      --font: 16px system-ui;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+      font: var(--font);
+      line-height: 1.5;
+    }
+
+    main {
+      width: 100%;
+      max-width: 64rem;
+      margin-inline: auto;
+      padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 48px);
+    }
+
+    h1 {
+      margin: 0 0 32px;
+      font-size: clamp(26px, 4vw, 32px);
+      line-height: 1.2;
+      font-weight: 650;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    select {
+      min-width: 10rem;
+      min-height: 44px;
+      padding: 8px 12px;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      background: var(--background);
+      color: var(--foreground);
+      font: var(--font);
+      line-height: 1.5;
+    }
+
+    select:focus-visible {
+      outline: 2px solid var(--foreground);
+      outline-offset: 3px;
+    }
+
+    #count {
+      margin: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 16px;
+      border-bottom: 1px solid color-mix(in srgb, var(--foreground) 18%, var(--background));
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      border-top: 1px solid color-mix(in srgb, var(--foreground) 18%, var(--background));
+      font-weight: 600;
+    }
+
+    th:first-child { width: 65%; }
+
+    @media (max-width: 480px) {
+      h1 { margin-bottom: 24px; }
+      .toolbar { align-items: stretch; gap: 12px; }
+      label { width: 100%; }
+      select { flex: 1; min-width: 0; }
+      th, td { padding-inline: 12px; }
+      th:first-child { width: 60%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="page-title">Operations</h1>
+    <div class="toolbar">
+      <label for="filter">Status
+        <select id="filter">
+          <option>All</option>
+          <option>Ready</option>
+        </select>
+      </label>
+      <p id="count" role="status" aria-live="polite">2 projects</p>
+    </div>
+    <table aria-labelledby="page-title">
+      <thead>
+        <tr><th scope="col">Project</th><th scope="col">Status</th></tr>
+      </thead>
+      <tbody>
+        <tr data-row><td>Tidal</td><td>Ready</td></tr>
+        <tr data-row><td>Mountain</td><td>Pending</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <script>
+    const filter = document.querySelector('#filter');
+    filter.onchange = () => {
+      let count = 0;
+      document.querySelectorAll('[data-row]').forEach(r => {
+        r.hidden = filter.value !== 'All' && !r.textContent.includes(filter.value);
+        if (!r.hidden) count++;
+      });
+      document.querySelector('#count').textContent = count + ' projects';
+    };
+  </script>
+</body>
+</html>
