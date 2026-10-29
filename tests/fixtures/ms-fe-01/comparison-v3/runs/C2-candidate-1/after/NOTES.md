@@ -1,0 +1,7 @@
+Preserve-mode authoring: index.html retains both sections, original copy, links, IDs, brand/control rules and original analytics/details script. No dependencies or external requests added.
+
+Selected: R1 text entrance (650ms, 0/80/150ms delays) and R2 once-only viewport text reveal (550ms, 0/80ms); opacity .75→1, translateY 14px→0, cubic-bezier(.22,1,.36,1). Controls and their ancestors stay static; content is visible without initialization. Reduced motion cancels animations.
+
+R3/R4: repository-owned assets/scene.webm and poster.svg; hashes match assets/rights.json. Cover focal point 72% center desktop, 65% center mobile; paper-backed copy, mobile in-flow 16:11 frame. Muted inline native loop; no loop fade chosen without runtime evidence. Accessible media toggle, persistent user pause, offscreen/hidden-page pause, reduced-motion poster, rejected/failed playback poster. No JS/observer leaves static poster. Pagehide tears down; back-forward cache restore intentionally stays static.
+
+Validation: small source check passed JavaScript syntax and preservation assertions, two-section count and fixture hashes. Initial comparison could not read a temporary baseline; retried against the original source captured in task context. Browser/runtime behavior, computed styles, responsive rendering, codec playback, loop boundaries and failure-state interactions remain unverified for the central observer. No browser, server, installation, external service or independent review run.

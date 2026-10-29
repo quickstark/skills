@@ -1,0 +1,31 @@
+{
+  "status": "build-verified",
+  "version": "4.3.0",
+  "at": "2026-10-29T20:06:33.544Z",
+  "gateTranscriptSHA256": "1d2ab50b4d1a13320e5a0e3fa349143bf1788f22a2a8b20101d8b391a4965033",
+  "sourceBindings": {
+    "package.json": "83910396922084c1638e3e4d5b2e15f11fd9a48cd361c8b5c3224bf3de95cb43",
+    "package-lock.json": "db1067340ce2ff49fdea82115ad8ae12c07bebc24829d28deeae5d373f6eafbb",
+    "config/skill-provenance.json": "3320fc8e8997c06890ab9378d86a552a7b3078e9d50e9246496fd3ac89d3bffc",
+    "docs/validation/upstream-adoption-acceptance.json": "33b2560c3d44bf29d6a365c2019c5af554b26d6af75542dcd28fa4e9f316f7f4",
+    "skills/frontend/dependency-index.json": "897719e333bbec428aaf1d5a9df5fbbbc97b0b5890a65b6bc903b1331005d961",
+    "scripts/frontend-dependencies.mjs": "d9d0b8e5ba13d9db88defcde6c08c8dd22565ebfaad9144f56775f1b0af7f559",
+    "scripts/skill-provenance.mjs": "3e0b900bd4b41fb72b853ce6d8e6f00267197e1300ee77bb7cae4e1d8ac5f904",
+    "scripts/frontend-skill-catalog.mjs": "a70e31f3978d570a7442dee71a95c62ba479dc23b3ae015fd4825b21c2b586b5",
+    "skills/frontend/internal/cinematic-landing.md": "1fc738808c02471e94636dbaddafbfac9e63a5b7fbc3c504b43dbc92bfd6502e",
+    "skills/frontend/internal/motion-recipes.md": "0cdc04300228830af15fa078dac7004fe122f8fa1e96624643d8594c20ac539e",
+    "skills/frontend/internal/media-recipes.md": "c71a9bd4dfb2edcfabe20ef11a07d6284fdecafad47530121aaffeb2492f5e28"
+  },
+  "claudeValidationSHA256": "2f93064ba23ab320e45af28454b94d8a4247ddff948679ad8a5ee95b8414d7d4",
+  "retainedPS38": {
+    "paths": [
+      "codex/plugins/ps-skills",
+      "packages/ps-skills",
+      "pi/packages/ps-skills"
+    ],
+    "baselineRevision": "7fec15b92f57a5d09854b07d4103987793b5005b",
+    "unchanged": true,
+    "gitTreeListingSHA256": "545b66f9eddff5a52871d266cf35c2b49c16aff4dc1cd156912616ef4675c7bb"
+  },
+  "remaining": "G6 actual PR merge, origin/main target and automatic Release workflow verification."
+}

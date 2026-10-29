@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIELD NOTES</title>
+<style>
+:root{--paper:#f6f3eb;--ink:#163b43;--accent:#bf4e2e;--radius:0px;--font:system-ui}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px var(--font)}
+header,section{padding:32px}
+a,button{border-radius:var(--radius);font-family:var(--font)}
+.cta{display:inline-block;background:var(--ink);color:var(--paper);padding:16px}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+header{display:flex;align-items:center;gap:32px;padding:32px clamp(24px,5vw,88px);border-bottom:1px solid var(--ink)}
+header span{margin-right:auto;font-size:20px;font-weight:800;letter-spacing:-.06em}
+header a{color:var(--ink);font-size:14px;text-underline-offset:5px}
+section{padding-inline:clamp(24px,5vw,88px)}
+#intro{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,5vw,80px);align-items:center;padding-block:56px 80px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.15em;margin:0 0 40px}
+h1{font-size:clamp(56px,6.7vw,108px);line-height:1;letter-spacing:-.065em;font-weight:500;max-width:11ch;margin:0 0 32px}
+.intro-summary{max-width:27ch;font-size:clamp(18px,1.5vw,23px);line-height:1.5;margin:0 0 32px}
+.hero-media{position:relative;min-width:0}
+.media-surface{position:relative;aspect-ratio:6/7;overflow:hidden;background:var(--ink)}
+.media-surface img,.media-surface video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:75% center}
+.media-toggle{position:absolute;right:16px;bottom:16px;display:grid;place-items:center;width:48px;height:48px;padding:12px;border:1px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer}
+.media-toggle svg{width:20px;height:20px;fill:currentColor}
+.media-toggle .pause-icon,.media-toggle[data-playing="true"] .play-icon{display:none}
+.media-toggle[data-playing="true"] .pause-icon{display:block}
+.media-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+#work{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,5vw,80px);border-top:1px solid var(--ink);padding-block:64px 96px;align-items:start}
+h2{font-size:clamp(36px,4vw,64px);font-weight:500;line-height:1.05;letter-spacing:-.05em;margin:0}
+.work-info{border-top:2px solid var(--accent);padding-top:24px}
+.work-title{font-size:clamp(23px,2.3vw,34px);letter-spacing:-.035em;margin:0 0 28px}
+#detail{max-width:34ch;line-height:1.6;margin-bottom:0}
+[hidden]{display:none!important}
+@media(min-width:1600px){header,main{max-width:1800px;margin-inline:auto}}
+@media(max-width:767px){
+  header{gap:24px;padding-block:24px}
+  header span{font-size:18px}
+  #intro{grid-template-columns:1fr;padding-block:40px 48px;gap:40px}
+  .eyebrow{margin-bottom:28px;font-size:11px}
+  h1{font-size:clamp(56px,10.8vw,82px);max-width:12ch;margin-bottom:24px}
+  .intro-summary{margin-bottom:24px}
+  .media-surface{aspect-ratio:16/10}
+  #work{grid-template-columns:1fr;padding-block:40px 64px;gap:32px}
+}
+@media(max-width:359px){header{gap:16px}header span{font-size:16px}h1{font-size:48px}}
+</style>
+</head>
+<body>
+<header><span>FIELD NOTES</span> <a href="#work">Work</a> <a href="mailto:studio@example.test">Contact</a></header>
+<main>
+<section id="intro">
+  <div class="intro-copy">
+    <p class="eyebrow" data-enter>INDEPENDENT FILM / 2026</p>
+    <h1 data-enter data-delay="80">Make room for the moving world.</h1>
+    <p class="intro-summary" data-enter data-delay="160">Thoughtful films, clear stories, lasting places.</p>
+    <a class="cta" id="explore" href="#work" data-track="explore">Explore the work</a>
+  </div>
+  <div class="hero-media" data-media>
+    <div class="media-surface" aria-hidden="true">
+      <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+      <video src="assets/scene.webm" poster="assets/poster.svg" muted playsinline loop preload="none" tabindex="-1" hidden></video>
+    </div>
+    <button class="media-toggle" type="button" aria-label="Pause background video" data-pause hidden>
+      <svg class="pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3h3v14H5zm7 0h3v14h-3z"/></svg>
+      <svg class="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+    </button>
+  </div>
+</section>
+<section id="work">
+  <h2 data-reveal>Selected work</h2>
+  <div class="work-info">
+    <p class="work-title" data-reveal data-delay="80">Tidal study / 2026</p>
+    <button id="details" type="button">Show details</button>
+    <p id="detail" hidden>Filmed on the northern coast.</p>
+  </div>
+</section>
+</main>
+<script>window.analytics=[];document.querySelector('[data-track]').addEventListener('click',()=>window.analytics.push('explore'));document.querySelector('#details').addEventListener('click',()=>{document.querySelector('#detail').hidden=!document.querySelector('#detail').hidden});</script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const video = document.querySelector('video');
+  const media = document.querySelector('[data-media]');
+  const button = document.querySelector('[data-pause]');
+  const animations = new Set();
+  const listeners = new AbortController();
+  const options = { signal: listeners.signal };
+  let mediaObserver, revealObserver;
+  let visible = false, userPaused = false, unavailable = false, dead = false, epoch = 0;
+
+  const still = () => {
+    epoch++;
+    video.pause();
+    video.hidden = true;
+    button.dataset.playing = 'false';
+    button.setAttribute('aria-label', 'Play background video');
+  };
+  const syncMedia = async () => {
+    button.hidden = dead || reduce.matches || unavailable || !mediaObserver;
+    if (dead || reduce.matches || document.hidden || !visible || userPaused || unavailable) {
+      still();
+      return;
+    }
+    const attempt = ++epoch;
+    try {
+      await video.play();
+      if (attempt !== epoch) return;
+      video.hidden = false;
+      button.dataset.playing = 'true';
+      button.setAttribute('aria-label', 'Pause background video');
+    } catch {
+      if (attempt !== epoch) return;
+      userPaused = true;
+      still();
+    }
+  };
+  const animate = element => {
+    if (dead || reduce.matches || !element.animate) return;
+    const animation = element.animate([
+      { opacity: .75, transform: 'translateY(14px)' },
+      { opacity: 1, transform: 'none' }
+    ], {
+      duration: 600,
+      delay: Math.min(160, Number(element.dataset.delay) || 0),
+      easing: 'cubic-bezier(.22,1,.36,1)'
+    });
+    animations.add(animation);
+    animation.finished.then(() => animations.delete(animation), () => animations.delete(animation));
+  };
+  const finishMotion = () => {
+    revealObserver?.disconnect();
+    animations.forEach(animation => animation.cancel());
+    animations.clear();
+  };
+  try {
+    video.muted = true;
+    button.addEventListener('click', () => {
+      userPaused = !userPaused;
+      syncMedia();
+    }, options);
+    video.addEventListener('error', () => {
+      unavailable = true;
+      syncMedia();
+    }, options);
+    document.addEventListener('visibilitychange', syncMedia, options);
+    reduce.addEventListener('change', () => {
+      finishMotion();
+      syncMedia();
+    }, options);
+    if ('IntersectionObserver' in window) {
+      mediaObserver = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio > 0;
+        syncMedia();
+      }, { threshold: [0, .001] });
+      mediaObserver.observe(media);
+      if (!reduce.matches) {
+        const pending = new Set(document.querySelectorAll('[data-reveal]'));
+        revealObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            revealObserver.unobserve(entry.target);
+            pending.delete(entry.target);
+            animate(entry.target);
+          });
+          if (!pending.size) revealObserver.disconnect();
+        }, { threshold: 0 });
+        pending.forEach(element => revealObserver.observe(element));
+      }
+    }
+    document.querySelectorAll('[data-enter]').forEach(animate);
+  } catch {
+    unavailable = true;
+    still();
+    button.hidden = true;
+    finishMotion();
+    mediaObserver?.disconnect();
+  }
+  const teardown = () => {
+    dead = true;
+    still();
+    button.hidden = true;
+    mediaObserver?.disconnect();
+    finishMotion();
+    listeners.abort();
+  };
+  window.addEventListener('pagehide', event => {
+    if (event.persisted) { still(); finishMotion(); }
+    else teardown();
+  }, options);
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) syncMedia();
+  }, options);
+})();
+</script>
+</body>
+</html>

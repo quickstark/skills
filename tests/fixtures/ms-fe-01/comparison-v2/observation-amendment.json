@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-29T19:23:36.226Z",
+  "beforeAnyOutputObservation": true,
+  "originalObserver": "tests/fixtures/ms-fe-01/observe.mjs",
+  "originalSHA256": "c5d76c5a892aa51207aafef2f78be9cf9d2357ff33f779cfb9cea485a4aaa256",
+  "observer": "tests/fixtures/ms-fe-01/observe-v2.mjs",
+  "sha256": "17a48d9bf6c8e431f33c235f11095735628ab88b5b161622d4cd29c8c911d23b",
+  "reason": "Correct observer-only defects discovered by code review: recipe reads are conditional on actual technique selection, C6 must also check loading, and C2 action tests must not assess video advancement while the hero has been intentionally scrolled offscreen. Author inputs, outputs, frozen rubric, schedule, controls and budgets remain unchanged. Original observer retained. No trial is repeated or replaced."
+}

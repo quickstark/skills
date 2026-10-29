@@ -1,0 +1,16 @@
+node:internal/fs/promises:1345
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/github/skills/tests/fixtures/ms-fe-01/comparison-v4/runs/C8-candidate-2/telemetry.json'
+    at async open (node:internal/fs/promises:1345:25)
+    at async readFile (node:internal/fs/promises:1996:14)
+    at async read (file:///github/skills/tests/fixtures/ms-fe-01/observe-amendment.mjs:8:32)
+    at async file:///github/skills/tests/fixtures/ms-fe-01/observe-amendment.mjs:13:72 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/github/skills/tests/fixtures/ms-fe-01/comparison-v4/runs/C8-candidate-2/telemetry.json'
+}
+
+Node.js v24.21.0

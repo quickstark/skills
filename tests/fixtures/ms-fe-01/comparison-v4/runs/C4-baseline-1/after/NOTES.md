@@ -1,0 +1,4 @@
+- Implemented `index.html` from unchanged `reference.svg` (1200 × 900).
+- Preserved copy, both `#work` links, square button corners, and colors #f6f3eb / #163b43 / #f1b85b. Used system Arial/sans-serif and CSS geometry for the still artwork; supplied media fixtures remain unchanged.
+- Desktop: 1072px content width, 64px side margins at 1200px, 300px artwork, 180px circle. Responsive adjustments at 800px and 480px; visible keyboard focus; no motion.
+- Validation limited to shell content checks and reference checksum. Browser/runtime behavior, visual parity, narrow/wide rendering, and keyboard interaction remain unverified for the central observer. No dependencies, servers, browsers, generation, external services, or second verification workflow used.

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIELD NOTES</title>
+<style>
+:root{--paper:#f6f3eb;--ink:#163b43;--accent:#bf4e2e;--radius:0px;--font:system-ui}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px var(--font)}
+header,section{padding:32px}
+a,button{border-radius:var(--radius);font-family:var(--font)}
+.cta{display:inline-block;background:var(--ink);color:var(--paper);padding:16px}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+[hidden]{display:none!important}
+header{max-width:1600px;margin:auto;padding:32px 64px;display:flex;align-items:center;gap:32px;border-bottom:1px solid color-mix(in srgb,var(--ink) 22%,transparent)}
+header span{margin-right:auto;font-size:20px;font-weight:800;letter-spacing:-.04em}
+main{max-width:1600px;margin:auto}
+#intro{padding:40px 64px 64px;display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:stretch}
+.intro-copy{padding:32px 0 28px;align-self:center;min-width:0}
+.eyebrow{margin:0 0 36px;font-size:12px;font-weight:650;letter-spacing:.16em;color:var(--accent)}
+h1{margin:0;max-width:9ch;font-size:clamp(60px,6.65vw,104px);font-weight:500;line-height:.99;letter-spacing:-.065em;text-wrap:balance}
+.intro-description{max-width:27ch;margin:30px 0 32px;line-height:1.6}
+.hero-media{position:relative;min-height:660px;background:var(--ink);isolation:isolate}
+.media-visual{position:absolute;inset:0;overflow:hidden}
+.media-visual img,.media-visual video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% center}
+.media-visual:after{content:"";position:absolute;inset:16px;border:1px solid color-mix(in srgb,var(--paper) 28%,transparent);pointer-events:none}
+.media-toggle{position:absolute;right:32px;bottom:32px;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--paper);background:var(--paper);color:var(--ink);cursor:pointer}
+.media-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.media-toggle svg{width:18px;height:18px;fill:currentColor}
+.media-toggle .pause-icon{display:none}
+.media-toggle[aria-pressed="true"] .pause-icon{display:block}
+.media-toggle[aria-pressed="true"] .play-icon{display:none}
+#work{margin:0 64px;padding:48px 0 88px;border-top:1px solid var(--ink);display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
+h2{margin:0;font-size:clamp(36px,4vw,60px);font-weight:500;line-height:1.1;letter-spacing:-.055em}
+.work-copy{padding-top:5px;min-width:0}
+.work-title{margin:0 0 26px;font-size:clamp(24px,2.4vw,36px);line-height:1.2;letter-spacing:-.035em}
+#detail{margin:24px 0 0;line-height:1.6}
+@media(min-width:1600px){h1{font-size:104px}}
+@media(max-width:1100px){header{padding:28px 40px}#intro{padding:32px 40px 48px;gap:36px}.hero-media{min-height:580px}#work{margin:0 40px;gap:36px}}
+@media(max-width:760px){header{padding:24px;gap:22px}header span{font-size:18px}#intro{padding:32px 24px 40px;grid-template-columns:1fr;gap:36px}.intro-copy{padding:12px 0 0}.eyebrow{margin-bottom:28px}h1{font-size:clamp(56px,10.5vw,80px);max-width:10ch}.intro-description{margin:24px 0 28px}.hero-media{min-height:0;aspect-ratio:16/11}.media-visual img,.media-visual video{object-position:65% center}.media-toggle{right:28px;bottom:28px}#work{margin:0 24px;padding:32px 0 56px;grid-template-columns:1fr;gap:32px}.work-copy{padding:0}.work-title{margin-bottom:22px}}
+@media(max-width:360px){header{gap:16px;padding:24px 20px}#intro{padding-left:20px;padding-right:20px}h1{font-size:52px}#work{margin:0 20px}}
+</style>
+</head>
+<body>
+<header><span>FIELD NOTES</span> <a href="#work">Work</a> <a href="mailto:studio@example.test">Contact</a></header>
+<main>
+<section id="intro">
+  <div class="intro-copy">
+    <p class="eyebrow" data-enter>INDEPENDENT FILM / 2026</p>
+    <h1 data-enter data-delay="80">Make room for the moving world.</h1>
+    <p class="intro-description" data-enter data-delay="150">Thoughtful films, clear stories, lasting places.</p>
+    <a class="cta" id="explore" href="#work" data-track="explore">Explore the work</a>
+  </div>
+  <div class="hero-media" data-media>
+    <div class="media-visual">
+      <img src="assets/poster.svg" alt="" width="960" height="540" fetchpriority="high">
+      <video src="assets/scene.webm" poster="assets/poster.svg" muted playsinline loop preload="none" aria-hidden="true" hidden></video>
+    </div>
+    <button class="media-toggle" type="button" aria-label="Play background video" aria-pressed="false" hidden>
+      <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+    </button>
+  </div>
+</section>
+<section id="work">
+  <h2 data-reveal>Selected work</h2>
+  <div class="work-copy">
+    <p class="work-title" data-reveal data-delay="80">Tidal study / 2026</p>
+    <button id="details" type="button">Show details</button>
+    <p id="detail" hidden>Filmed on the northern coast.</p>
+  </div>
+</section>
+</main>
+<script>window.analytics=[];document.querySelector('[data-track]').addEventListener('click',()=>window.analytics.push('explore'));document.querySelector('#details').addEventListener('click',()=>{document.querySelector('#detail').hidden=!document.querySelector('#detail').hidden});</script>
+<script>
+(() => {
+  const preference = matchMedia('(prefers-reduced-motion: reduce)');
+  const animations = new Set();
+  const listeners = new AbortController();
+  const options = { signal: listeners.signal };
+  let revealObserver;
+  const finishMotion = () => {
+    revealObserver?.disconnect();
+    for (const animation of animations) animation.cancel();
+    animations.clear();
+  };
+  const enter = (element, duration) => {
+    if (preference.matches || !element.animate) return;
+    const animation = element.animate([
+      { opacity: .75, transform: 'translateY(14px)' },
+      { opacity: 1, transform: 'none' }
+    ], {
+      duration,
+      delay: Math.min(160, Math.max(0, Number(element.dataset.delay) || 0)),
+      easing: 'cubic-bezier(.22,1,.36,1)'
+    });
+    animations.add(animation);
+    animation.finished.then(() => animations.delete(animation), () => animations.delete(animation));
+  };
+  try {
+    if (!preference.matches) {
+      document.querySelectorAll('[data-enter]').forEach(element => enter(element, 650));
+      if ('IntersectionObserver' in window) {
+        const pending = new Set(document.querySelectorAll('[data-reveal]'));
+        revealObserver = new IntersectionObserver(entries => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            revealObserver.unobserve(entry.target);
+            pending.delete(entry.target);
+            enter(entry.target, 550);
+          }
+          if (!pending.size) revealObserver.disconnect();
+        }, { threshold: 0 });
+        pending.forEach(element => revealObserver.observe(element));
+      }
+    }
+    preference.addEventListener('change', finishMotion, options);
+  } catch { finishMotion(); }
+
+  const frame = document.querySelector('[data-media]');
+  const video = frame.querySelector('video');
+  const button = frame.querySelector('button');
+  let mediaObserver, visible = false, userPaused = false, blocked = false, dead = false, epoch = 0;
+  const still = () => {
+    epoch++;
+    video.pause();
+    video.hidden = true;
+    button.setAttribute('aria-label', 'Play background video');
+    button.setAttribute('aria-pressed', 'false');
+  };
+  const sync = async () => {
+    if (dead || !visible || userPaused || blocked || preference.matches || document.hidden) {
+      still();
+      return;
+    }
+    const attempt = ++epoch;
+    try {
+      await video.play();
+      if (attempt !== epoch) return;
+      video.hidden = false;
+      button.setAttribute('aria-label', 'Pause background video');
+      button.setAttribute('aria-pressed', 'true');
+    } catch {
+      if (attempt !== epoch) return;
+      blocked = true;
+      still();
+    }
+  };
+  try {
+    video.muted = true;
+    button.addEventListener('click', () => {
+      userPaused = !video.paused;
+      blocked = false;
+      sync();
+    }, options);
+    preference.addEventListener('change', () => {
+      button.hidden = preference.matches || !mediaObserver;
+      sync();
+    }, options);
+    document.addEventListener('visibilitychange', sync, options);
+    video.addEventListener('error', () => { blocked = true; still(); }, options);
+    if ('IntersectionObserver' in window) {
+      mediaObserver = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio > 0;
+        sync();
+      }, { threshold: [0, .001] });
+      mediaObserver.observe(frame);
+      button.hidden = preference.matches;
+    }
+  } catch { still(); button.hidden = true; }
+  window.addEventListener('pagehide', () => {
+    dead = true;
+    still();
+    finishMotion();
+    mediaObserver?.disconnect();
+    listeners.abort();
+  }, { once: true });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) {
+      dead = false;
+      // A cached page keeps its visible poster after listeners are torn down.
+      button.hidden = true;
+    }
+  });
+})();
+</script>
+</body>
+</html>

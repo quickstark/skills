@@ -1,0 +1,3 @@
+- Scope: spacing and responsive usability in index.html; preserved table data, All/Ready filter options, and count logic.
+- Parameters: existing #f6f3eb / #163b43 palette and 16px system font; 64rem content cap; 16–48px horizontal gutters; 480px stacking breakpoint; 44px minimum select height. No motion, media, dependencies, or external calls added.
+- Validation: bounded shell content checks only. Browser rendering, runtime filtering/counts, keyboard interaction, and responsive behavior remain unverified; central observer owns qualification and independent review.

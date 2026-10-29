@@ -1,0 +1,3 @@
+- Implemented `index.html` from unchanged `reference.svg`; no external dependencies or media generation.
+- Parameters: 1200px maximum page width, 64px reference gutters, 600px narrow breakpoint, Arial/system sans-serif, colors #f6f3eb / #163b43 / #f1b85b. Artwork preserves the 1072:300 ratio and circle geometry. Copy and both #work routes preserved; no motion added.
+- Validation: shell content checks only. Browser/runtime behavior, rendered typography, responsive layout, keyboard interaction, and visual parity remain unverified for the central observer. No parity tolerance was supplied.

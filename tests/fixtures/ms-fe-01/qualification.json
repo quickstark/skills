@@ -1,0 +1,765 @@
+{
+  "status": "qualified",
+  "at": "2026-10-29T20:03:14.952Z",
+  "baselineRevision": "7fec15b92f57a5d09854b07d4103987793b5005b",
+  "planSHA256": "825fd9194f647de438f46afb69860b6228fb8f47994672adb6468b3688e1c2be",
+  "runtimeSHA256": "eeac4b215ea7a8afdf7677eedccd7943cf1cd946c2dd1ab324888f3860704b80",
+  "runtimeSupplementSHA256": "45cc5af1423a5dbaafcc8bbd65c6b673349908c0a87359d5c049c5186c9971c0",
+  "runtimeTouchSHA256": "9c7eb9ae9208e616a0d39ad3935da7110143517d83e8706178c95675154b92ff",
+  "observationSHA256": "02681ef22e927f5e639474f4ae0c2f5d879d743541f769b8e194728ec007a59e",
+  "reviewSHA256": "f63319f28827013fac1e5eccd12d336b019fa9a307ad17de1f903384abd4988a",
+  "controlPreservationSHA256": "fc8d16f6ddf80790adab13455ce1dd653ecf71877f95343514f1d0fe574062a3",
+  "outputActionsSHA256": "1de50d803e19897bb839c04c35b4e137476319c5cb2191bbe3112047aa70688c",
+  "means": {
+    "C1": {
+      "baseline": 3.5,
+      "candidate": 3.8
+    },
+    "C2": {
+      "baseline": 3.2,
+      "candidate": 3.5
+    }
+  },
+  "quality": {
+    "baseline": 3.35,
+    "candidate": 3.65,
+    "improvement": 0.3
+  },
+  "metrics": [
+    {
+      "id": "C1-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16534,
+      "toolCalls": 7,
+      "durationMs": 73033.39136,
+      "tokens": [
+        {
+          "input_tokens": 166486,
+          "cached_input_tokens": 139008,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 5705,
+          "reasoning_output_tokens": 1062,
+          "total_tokens": 172191
+        }
+      ]
+    },
+    {
+      "id": "C1-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/restrained-style.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/media-recipes.md"
+      ],
+      "instructionBytes": 27567,
+      "toolCalls": 8,
+      "durationMs": 98234.146745,
+      "tokens": [
+        {
+          "input_tokens": 207634,
+          "cached_input_tokens": 192512,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6978,
+          "reasoning_output_tokens": 1615,
+          "total_tokens": 214612
+        }
+      ]
+    },
+    {
+      "id": "C2-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/implementation.md"
+      ],
+      "instructionBytes": 15048,
+      "toolCalls": 9,
+      "durationMs": 110231.660031,
+      "tokens": [
+        {
+          "input_tokens": 171102,
+          "cached_input_tokens": 143488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6514,
+          "reasoning_output_tokens": 2289,
+          "total_tokens": 177616
+        }
+      ]
+    },
+    {
+      "id": "C2-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/motion-recipes.md",
+        "guidance/skills/frontend/internal/media-recipes.md"
+      ],
+      "instructionBytes": 30899,
+      "toolCalls": 12,
+      "durationMs": 95414.659813,
+      "tokens": [
+        {
+          "input_tokens": 208637,
+          "cached_input_tokens": 192640,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6656,
+          "reasoning_output_tokens": 1323,
+          "total_tokens": 215293
+        }
+      ]
+    },
+    {
+      "id": "C3-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16008,
+      "toolCalls": 5,
+      "durationMs": 41850.59787,
+      "tokens": [
+        {
+          "input_tokens": 87220,
+          "cached_input_tokens": 76416,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2502,
+          "reasoning_output_tokens": 524,
+          "total_tokens": 89722
+        }
+      ]
+    },
+    {
+      "id": "C3-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16353,
+      "toolCalls": 9,
+      "durationMs": 43099.59143599999,
+      "tokens": [
+        {
+          "input_tokens": 132130,
+          "cached_input_tokens": 120576,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2648,
+          "reasoning_output_tokens": 414,
+          "total_tokens": 134778
+        }
+      ]
+    },
+    {
+      "id": "C4-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-to-code/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/implementation.md"
+      ],
+      "instructionBytes": 13546,
+      "toolCalls": 7,
+      "durationMs": 68491.58107800002,
+      "tokens": [
+        {
+          "input_tokens": 114510,
+          "cached_input_tokens": 103296,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3726,
+          "reasoning_output_tokens": 1290,
+          "total_tokens": 118236
+        }
+      ]
+    },
+    {
+      "id": "C4-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-to-code/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/implementation.md"
+      ],
+      "instructionBytes": 13546,
+      "toolCalls": 5,
+      "durationMs": 46869.388270999974,
+      "tokens": [
+        {
+          "input_tokens": 132173,
+          "cached_input_tokens": 114304,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3023,
+          "reasoning_output_tokens": 707,
+          "total_tokens": 135196
+        }
+      ]
+    },
+    {
+      "id": "C5-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md"
+      ],
+      "instructionBytes": 13298,
+      "toolCalls": 6,
+      "durationMs": 31748.23743899999,
+      "tokens": [
+        {
+          "input_tokens": 82407,
+          "cached_input_tokens": 71680,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1325,
+          "reasoning_output_tokens": 253,
+          "total_tokens": 83732
+        }
+      ]
+    },
+    {
+      "id": "C5-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/media-recipes.md",
+        "guidance/skills/frontend/internal/motion-recipes.md"
+      ],
+      "instructionBytes": 29149,
+      "toolCalls": 6,
+      "durationMs": 36655.72312000001,
+      "tokens": [
+        {
+          "input_tokens": 89405,
+          "cached_input_tokens": 68864,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1593,
+          "reasoning_output_tokens": 539,
+          "total_tokens": 90998
+        }
+      ]
+    },
+    {
+      "id": "C6-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-web/SKILL.md",
+        "guidance/skills/frontend/internal/prompt-construction.md",
+        "guidance/skills/frontend/internal/web-images.md",
+        "guidance/skills/frontend/internal/brief.md"
+      ],
+      "instructionBytes": 14648,
+      "toolCalls": 5,
+      "durationMs": 25255.793449999997,
+      "tokens": [
+        {
+          "input_tokens": 83868,
+          "cached_input_tokens": 73472,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 849,
+          "reasoning_output_tokens": 208,
+          "total_tokens": 84717
+        }
+      ]
+    },
+    {
+      "id": "C6-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-web/SKILL.md",
+        "guidance/skills/frontend/internal/web-images.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/prompt-construction.md"
+      ],
+      "instructionBytes": 14648,
+      "toolCalls": 4,
+      "durationMs": 22063.818507999997,
+      "tokens": [
+        {
+          "input_tokens": 61365,
+          "cached_input_tokens": 43136,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 782,
+          "reasoning_output_tokens": 250,
+          "total_tokens": 62147
+        }
+      ]
+    },
+    {
+      "id": "C7-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16534,
+      "toolCalls": 6,
+      "durationMs": 34376.56706999999,
+      "tokens": [
+        {
+          "input_tokens": 111009,
+          "cached_input_tokens": 99584,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2302,
+          "reasoning_output_tokens": 183,
+          "total_tokens": 113311
+        }
+      ]
+    },
+    {
+      "id": "C7-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16879,
+      "toolCalls": 5,
+      "durationMs": 34608.807332,
+      "tokens": [
+        {
+          "input_tokens": 110540,
+          "cached_input_tokens": 99328,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2229,
+          "reasoning_output_tokens": 348,
+          "total_tokens": 112769
+        }
+      ]
+    },
+    {
+      "id": "C8-baseline-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16534,
+      "toolCalls": 4,
+      "durationMs": 51332.594385000004,
+      "tokens": [
+        {
+          "input_tokens": 109175,
+          "cached_input_tokens": 97536,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3445,
+          "reasoning_output_tokens": 517,
+          "total_tokens": 112620
+        }
+      ]
+    },
+    {
+      "id": "C8-candidate-1",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/media-recipes.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 27567,
+      "toolCalls": 13,
+      "durationMs": 70695.28426200002,
+      "tokens": [
+        {
+          "input_tokens": 151541,
+          "cached_input_tokens": 136832,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 5098,
+          "reasoning_output_tokens": 871,
+          "total_tokens": 156639
+        }
+      ]
+    },
+    {
+      "id": "C1-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/media-recipes.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 27567,
+      "toolCalls": 7,
+      "durationMs": 83434.30524300001,
+      "tokens": [
+        {
+          "input_tokens": 182364,
+          "cached_input_tokens": 148480,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6334,
+          "reasoning_output_tokens": 1637,
+          "total_tokens": 188698
+        }
+      ]
+    },
+    {
+      "id": "C1-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16534,
+      "toolCalls": 7,
+      "durationMs": 79600.379595,
+      "tokens": [
+        {
+          "input_tokens": 147256,
+          "cached_input_tokens": 135808,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 5670,
+          "reasoning_output_tokens": 910,
+          "total_tokens": 152926
+        }
+      ]
+    },
+    {
+      "id": "C2-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/motion-recipes.md",
+        "guidance/skills/frontend/internal/media-recipes.md"
+      ],
+      "instructionBytes": 30899,
+      "toolCalls": 7,
+      "durationMs": 83675.789521,
+      "tokens": [
+        {
+          "input_tokens": 204457,
+          "cached_input_tokens": 188928,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 5620,
+          "reasoning_output_tokens": 1268,
+          "total_tokens": 210077
+        }
+      ]
+    },
+    {
+      "id": "C2-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/implementation.md"
+      ],
+      "instructionBytes": 15048,
+      "toolCalls": 6,
+      "durationMs": 99286.079884,
+      "tokens": [
+        {
+          "input_tokens": 139182,
+          "cached_input_tokens": 127616,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 6458,
+          "reasoning_output_tokens": 2059,
+          "total_tokens": 145640
+        }
+      ]
+    },
+    {
+      "id": "C3-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16353,
+      "toolCalls": 5,
+      "durationMs": 61161.93964200001,
+      "tokens": [
+        {
+          "input_tokens": 88746,
+          "cached_input_tokens": 77696,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2918,
+          "reasoning_output_tokens": 698,
+          "total_tokens": 91664
+        }
+      ]
+    },
+    {
+      "id": "C3-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16008,
+      "toolCalls": 7,
+      "durationMs": 46078.73464099993,
+      "tokens": [
+        {
+          "input_tokens": 135252,
+          "cached_input_tokens": 122112,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2512,
+          "reasoning_output_tokens": 591,
+          "total_tokens": 137764
+        }
+      ]
+    },
+    {
+      "id": "C4-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-to-code/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/implementation.md"
+      ],
+      "instructionBytes": 13546,
+      "toolCalls": 6,
+      "durationMs": 65749.86334000004,
+      "tokens": [
+        {
+          "input_tokens": 113118,
+          "cached_input_tokens": 89728,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3473,
+          "reasoning_output_tokens": 1188,
+          "total_tokens": 116591
+        }
+      ]
+    },
+    {
+      "id": "C4-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-to-code/SKILL.md"
+      ],
+      "instructionBytes": 9691,
+      "toolCalls": 7,
+      "durationMs": 84605.167656,
+      "tokens": [
+        {
+          "input_tokens": 130241,
+          "cached_input_tokens": 102656,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 4085,
+          "reasoning_output_tokens": 1707,
+          "total_tokens": 134326
+        }
+      ]
+    },
+    {
+      "id": "C5-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md",
+        "guidance/skills/frontend/internal/motion-recipes.md",
+        "guidance/skills/frontend/internal/media-recipes.md"
+      ],
+      "instructionBytes": 29149,
+      "toolCalls": 6,
+      "durationMs": 38608.16284500001,
+      "tokens": [
+        {
+          "input_tokens": 89501,
+          "cached_input_tokens": 75136,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1661,
+          "reasoning_output_tokens": 569,
+          "total_tokens": 91162
+        }
+      ]
+    },
+    {
+      "id": "C5-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/redesign.md"
+      ],
+      "instructionBytes": 13298,
+      "toolCalls": 6,
+      "durationMs": 38148.41474200005,
+      "tokens": [
+        {
+          "input_tokens": 108340,
+          "cached_input_tokens": 91264,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1541,
+          "reasoning_output_tokens": 421,
+          "total_tokens": 109881
+        }
+      ]
+    },
+    {
+      "id": "C6-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-web/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/web-images.md",
+        "guidance/skills/frontend/internal/prompt-construction.md"
+      ],
+      "instructionBytes": 14648,
+      "toolCalls": 4,
+      "durationMs": 21225.740670999978,
+      "tokens": [
+        {
+          "input_tokens": 61369,
+          "cached_input_tokens": 51456,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 708,
+          "reasoning_output_tokens": 203,
+          "total_tokens": 62077
+        }
+      ]
+    },
+    {
+      "id": "C6-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-image-web/SKILL.md",
+        "guidance/skills/frontend/internal/web-images.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/prompt-construction.md"
+      ],
+      "instructionBytes": 14648,
+      "toolCalls": 5,
+      "durationMs": 19261.11890100001,
+      "tokens": [
+        {
+          "input_tokens": 83751,
+          "cached_input_tokens": 55424,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 631,
+          "reasoning_output_tokens": 36,
+          "total_tokens": 84382
+        }
+      ]
+    },
+    {
+      "id": "C7-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16879,
+      "toolCalls": 5,
+      "durationMs": 34589.351390999975,
+      "tokens": [
+        {
+          "input_tokens": 87712,
+          "cached_input_tokens": 76544,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2018,
+          "reasoning_output_tokens": 270,
+          "total_tokens": 89730
+        }
+      ]
+    },
+    {
+      "id": "C7-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16534,
+      "toolCalls": 4,
+      "durationMs": 34496.36720999994,
+      "tokens": [
+        {
+          "input_tokens": 107007,
+          "cached_input_tokens": 95872,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 2212,
+          "reasoning_output_tokens": 400,
+          "total_tokens": 109219
+        }
+      ]
+    },
+    {
+      "id": "C8-candidate-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/cinematic-landing.md"
+      ],
+      "instructionBytes": 19584,
+      "toolCalls": 11,
+      "durationMs": 57366.91295400003,
+      "tokens": [
+        {
+          "input_tokens": 117219,
+          "cached_input_tokens": 105344,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3869,
+          "reasoning_output_tokens": 724,
+          "total_tokens": 121088
+        }
+      ]
+    },
+    {
+      "id": "C8-baseline-2",
+      "instructionFiles": [
+        "guidance/skills/engineering/qs-design-frontend/SKILL.md",
+        "guidance/skills/frontend/internal/brief.md",
+        "guidance/skills/frontend/internal/design-direction.md",
+        "guidance/skills/frontend/internal/implementation.md",
+        "guidance/skills/frontend/internal/restrained-style.md"
+      ],
+      "instructionBytes": 16534,
+      "toolCalls": 5,
+      "durationMs": 52964.64937800006,
+      "tokens": [
+        {
+          "input_tokens": 131701,
+          "cached_input_tokens": 120192,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 3585,
+          "reasoning_output_tokens": 538,
+          "total_tokens": 135286
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic matched tasks",
+    "Emulated viewport/touch coverage",
+    "Browser observations do not establish author in-turn inspection",
+    "Earlier interrupted batches, failed 0.15-gain cohort and 0.30-gain preservation failure remain preserved; final amendment retains 24 unchanged attempts and reruns 8 affected attempts; no pooling with historical adoption experiments",
+    "Sampled process observation cannot prove absence of unseen processes detaching between samples; task-owned /tmp synthetic scratch deviations are explicitly recorded in tool semantics review"
+  ]
+}

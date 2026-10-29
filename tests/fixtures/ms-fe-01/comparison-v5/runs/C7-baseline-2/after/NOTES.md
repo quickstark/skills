@@ -1,0 +1,3 @@
+Static FIELD NOTES page in index.html. Parameters: #f6f3eb background, #163b43 text, system sans, square Explore anchor to #work; only supplied copy and two requested content sections. No scripts, motion, animation, transitions, video, or external resources. Local media fixtures remain unused.
+
+Read the selected frontend skill and its brief, design direction, implementation, and restrained style references. One shell content check covers required copy, anchor, colors, and prohibited elements. Browser/runtime behavior, visual rendering, and keyboard behavior remain unverified; central observer owns qualification and independent review.

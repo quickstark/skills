@@ -1,0 +1,50 @@
+{
+  "planSHA256": "825fd9194f647de438f46afb69860b6228fb8f47994672adb6468b3688e1c2be",
+  "sourceSHA256": "af9357eacacfe27edd164693b7d57372f18244f5c5f0db739cd77e0b67ec82bd",
+  "properties": [
+    "fontFamily",
+    "fontSize",
+    "fontWeight",
+    "fontStyle",
+    "lineHeight",
+    "color",
+    "backgroundColor",
+    "paddingTop",
+    "paddingRight",
+    "paddingBottom",
+    "paddingLeft",
+    "borderTopWidth",
+    "borderRightWidth",
+    "borderBottomWidth",
+    "borderLeftWidth",
+    "borderTopStyle",
+    "borderTopColor",
+    "borderRadius",
+    "textDecorationLine"
+  ],
+  "selectors": [
+    "header a[href=\"#work\"]",
+    "header a[href=\"mailto:studio@example.test\"]",
+    "#explore",
+    "#details"
+  ],
+  "viewports": [
+    {
+      "width": 375,
+      "height": 812
+    },
+    {
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 812,
+      "height": 375
+    }
+  ],
+  "note": "Same browser computes supplied original and final C2 controls; no authoring retries. Checks supplied control style preservation beyond existing token/radius assertions. Baseline defects are recorded; candidate preservation is mandatory."
+}

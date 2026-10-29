@@ -1,0 +1,42 @@
+{
+  "version": "4.3.0",
+  "at": "2026-10-29T20:04:14.392314+00:00",
+  "checks": [
+    {
+      "root": ".",
+      "exit": 0,
+      "log": "tests/fixtures/ms-fe-01/final-claude-qs-skills.log",
+      "sha256": "52ab076df039c0316ca8b4687e0babadee20f6dbf011dc464e62229e2677b9f7"
+    },
+    {
+      "root": "packages/qs-specialists",
+      "exit": 0,
+      "log": "tests/fixtures/ms-fe-01/final-claude-qs-specialists.log",
+      "sha256": "5753825930028888f78c0f6ec3af7e06d20dfa1845c300f72316a0e06fefa744"
+    },
+    {
+      "root": "packages/qs-advanced",
+      "exit": 0,
+      "log": "tests/fixtures/ms-fe-01/final-claude-qs-advanced.log",
+      "sha256": "1eddbdc6ca7079c0470ad662a936778ef36690858aa02add45f0723d04712b83"
+    },
+    {
+      "root": "packages/qs-frontend",
+      "exit": 0,
+      "log": "tests/fixtures/ms-fe-01/final-claude-qs-frontend.log",
+      "sha256": "a9e8230a684fb327dbffbe9674904b4ad8435e9e6b2c569f831e1ae1a5cf9d2e"
+    },
+    {
+      "root": "packages/qs-video",
+      "exit": 0,
+      "log": "tests/fixtures/ms-fe-01/final-claude-qs-video.log",
+      "sha256": "3118c3055b061fc263204b86c075dc7de9dd65ee3aaac330705154042b86717f"
+    },
+    {
+      "root": "packages/qs-execution",
+      "exit": 0,
+      "log": "tests/fixtures/ms-fe-01/final-claude-qs-execution.log",
+      "sha256": "55e10fed8dd09c596127797d86bc2f1d0f04968f78caa258bc3d2b0b5cdcf842"
+    }
+  ]
+}

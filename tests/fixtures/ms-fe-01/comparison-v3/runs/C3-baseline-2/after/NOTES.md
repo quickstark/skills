@@ -1,0 +1,4 @@
+Preserve-mode spacing and responsive usability update to index.html. Kept all table data, filter options/IDs, initial count and filtering script unchanged. Used existing #f6f3eb / #163b43 palette, system font and 12px spacing unit; 1008px outer width, 24px side gutters, 480px breakpoint, 44px minimum select height. Added semantic table headers, visible select focus and live count announcements. No motion or media added.
+
+Validation: source/content checks only. Browser, runtime, keyboard interaction and rendered responsive behavior remain unverified; central observer owns qualification. No dependencies, servers, browsers or external services used.
+Content inspection confirmed both project rows, filter options, initial count and unchanged handler. Git whitespace check was unavailable because this workspace is not a Git repository.

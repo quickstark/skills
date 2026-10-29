@@ -1,0 +1,7 @@
+Implemented in index.html; existing copy, links, IDs, tokens, analytics and details handler retained. Two sections remain. Local fixture rights: assets/rights.json; no external assets or dependencies.
+
+Selected R1/R2: headline/eyebrow/description entrance and once-only work text reveal; 600ms, 0/80/100/160ms delays, cubic-bezier(.22,1,.36,1), opacity .75→1 and translateY(14px)→0. Controls and their ancestors stay static. Visible HTML fallback; reduced motion cancels/skips motion. Page lifecycle cleanup included.
+
+Selected R3/R4: native video controls, muted inline playback on intersection; offscreen/hidden-page pause, persistent user pause, reduced-motion poster, error poster, rejected-autoplay manual retry. Verified local scene.webm and poster.svg; desktop 2.2:1, <=900px 16:9, focal point 70% center for both layers. Paper-backed copy remains outside footage. Native loop; boundary quality unverified, no speculative fade.
+
+Validation passed: exact original text, destinations, IDs, two-section structure, brand/control tokens, original handlers, local asset references, and JavaScript syntax (node --check). Source inspection only. Browser/runtime behavior, actual codec playback, moving-frame crop/contrast, loop boundaries, focus/interaction and responsive rendering are unverified; central observer owns qualification. No browser, server, installation, external service or second verification workflow used.

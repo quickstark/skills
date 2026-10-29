@@ -1,0 +1,20 @@
+{
+  "reason": "Candidate C1 exceeded frozen authoring time budget while duplicating browser qualification. Preserve this batch; freeze a separate authoring/central-observer amendment before new attempts. No attempt replaced.",
+  "events": [
+    {
+      "pid": 2445718,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123383078",
+      "action": "SIGTERM supervisor"
+    },
+    {
+      "pid": 2507164,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123419194",
+      "action": "SIGTERM owned app-server group"
+    },
+    {
+      "pid": 2475301,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:123399324",
+      "action": "SIGTERM owned app-server group"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed 4.2.0 local release acceptance on published 4.1.0, preserving original decisions and limits. New cleanup behavior uses unchanged source-bound trials; fresh projection/native/helper and updater regression evidence is recorded. No committed-release or actual-machine rollout success is claimed.",
+  "scope": "Reviewed 4.3.0 source acceptance: preserve original decisions/history and separately qualify MS-FE-01 cinematic private additions with exact artifact bindings and fresh runtime/blind-comparison evidence. Active manifests are synchronized; unchanged public/native-discovery history remains historical. No new actual-machine installation or rollout success is claimed. Original 4.2.0 audit bytes are retained at tests/fixtures/ms-fe-01/baseline/upstream-adoption-acceptance.json.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -87,7 +87,7 @@
     },
     "AC-03": {
       "status": "passed",
-      "note": "H1–H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "H1\u2013H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/upstream-adoption-routing.test.mjs",
@@ -125,7 +125,7 @@
     },
     "AC-04": {
       "status": "passed",
-      "note": "A1–A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "A1\u2013A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/fixtures/adoption-review-eval/parent/review.json",
@@ -360,7 +360,7 @@
     },
     "AC-10": {
       "status": "passed",
-      "note": "Original native66 supports nonmobile mapped contracts, with uniform F11 dialog observations supplementing original observer failures. Separate native-portrait six support mobile adoption under the explicit 2026-09-28 font amendment: QS r1 discloses sole font mismatch with every dimension >=3; QS r2/r3 strict-pass. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "Original native66 supports nonmobile mapped contracts, with uniform F11 dialog observations supplementing original observer failures. Separate native-portrait six support mobile adoption under the explicit 2026-09-28 font amendment: QS r1 discloses sole font mismatch with every dimension >=3; QS r2/r3 strict-pass. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. MS-FE-01 separately qualifies the three MotionSites private additions with fresh exact-hash runtime and independently blinded amended comparison evidence (+0.30); prior cohorts remain preserved. Synthetic/emulated coverage does not imply arbitrary future reliability or machine rollout.",
       "evidence": [
         "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
         "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
@@ -404,7 +404,13 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "docs/validation/ms-fe-01.md",
+        "tests/fixtures/ms-fe-01/qualification.json",
+        "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+        "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+        "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+        "tests/frontend-candidate.test.mjs"
       ]
     },
     "AC-11": {
@@ -447,7 +453,7 @@
     },
     "AC-12": {
       "status": "passed",
-      "note": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2–E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2\u2013E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
@@ -769,7 +775,7 @@
     },
     "AC-20": {
       "status": "passed",
-      "note": "Prompt/resume/creation/render evidence preserves pin/scope and shows no route-driven feedback, skill install/upgrade, publication or extra image calls outside selected authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "Prompt/resume/creation/render evidence preserves pin/scope and shows no route-driven feedback, skill install/upgrade, publication or extra image calls outside selected authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. MS-FE-01 separately qualifies the three MotionSites private additions with fresh exact-hash runtime and independently blinded amended comparison evidence (+0.30); prior cohorts remain preserved. Synthetic/emulated coverage does not imply arbitrary future reliability or machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/fixtures/adoption-video-native-results/parent-review.json",
@@ -807,7 +813,12 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "docs/validation/ms-fe-01.md",
+        "tests/fixtures/ms-fe-01/qualification.json",
+        "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+        "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+        "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
       ]
     },
     "AC-21": {
@@ -2061,10 +2072,13 @@
         "contributor:minimalist-ui",
         "contributor:redesign-existing-projects",
         "frontend-internal:brief",
+        "frontend-internal:cinematic-landing",
         "frontend-internal:design-direction",
         "frontend-internal:dimensional-style",
         "frontend-internal:implementation",
+        "frontend-internal:media-recipes",
         "frontend-internal:mobile-images",
+        "frontend-internal:motion-recipes",
         "frontend-internal:prompt-construction",
         "frontend-internal:redesign",
         "frontend-internal:restrained-style",
@@ -2156,7 +2170,12 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "docs/validation/ms-fe-01.md",
+              "tests/fixtures/ms-fe-01/qualification.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
             ]
           },
           "notices": {
@@ -2190,7 +2209,12 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "docs/validation/ms-fe-01.md",
+              "tests/fixtures/ms-fe-01/qualification.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
             ]
           },
           "behavior": {
@@ -2224,7 +2248,12 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "docs/validation/ms-fe-01.md",
+              "tests/fixtures/ms-fe-01/qualification.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
             ]
           },
           "native-discovery": {
@@ -2294,7 +2323,12 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "docs/validation/ms-fe-01.md",
+              "tests/fixtures/ms-fe-01/qualification.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
             ]
           },
           "notices": {
@@ -2328,7 +2362,12 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "docs/validation/ms-fe-01.md",
+              "tests/fixtures/ms-fe-01/qualification.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
             ]
           },
           "behavior": {
@@ -2362,7 +2401,12 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "docs/validation/ms-fe-01.md",
+              "tests/fixtures/ms-fe-01/qualification.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
             ]
           },
           "native-discovery": {
@@ -3237,11 +3281,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "c4235f77c055567bd447d758502a0b4615a614f8c0dd6fb4bf6e99b7bc841481"
+      "contentSha256": "6633327727dbb02a5400053ea3afca05c8663609604ffac0aa0b63ef105b08ef"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "fdd14bb3327b05648c82463b60179d59da41c265e68f0c0809d261dbabcb6d08"
+      "contentSha256": "c6e01b498dc9ebc631b7b614d18c7fd25dcbc9b897820703a6d259a7f7756946"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -3253,7 +3297,7 @@
     },
     "config/skill-provenance.json": {
       "kind": "file",
-      "contentSha256": "40aae24e4259860a6356ef59e405b856b259d064ef3275816d61a8ed07f3f85a"
+      "contentSha256": "fa7e14251fff837ef2fa54255914cb53e5f608e9d5f4099f39d09a9626453b3b"
     },
     "docs/skill-run-contract.md": {
       "kind": "file",
@@ -3261,7 +3305,7 @@
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "392af82c9a88a5e19691b48edd01396dad71cf8a0c131116d8bd7a883eade29e"
+      "contentSha256": "8d2fc92b023aceb83bcf25b87e7cdd561cb665d9e2fff307dfd7f9764ed5354b"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -3277,7 +3321,7 @@
     },
     "scripts/frontend-skill-catalog.mjs": {
       "kind": "file",
-      "contentSha256": "5ab3287a83c41059deef7b61f8a2bc54311dfeffb2b74372ca5741506beb0357"
+      "contentSha256": "c94439c694f491b3929a68ae4432c65c57a12c27ab19f441bb5e318021d34084"
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
@@ -3393,15 +3437,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "44c20740a5cb3797e6cf960a18e2f8359eb349c88fb1ce0b64d8e76916d24b49"
+      "contentSha256": "1fda6be2eba4d0fd36e038e1150fd5e2314d6b33131507af05da2ade4fcd83fc"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "e64c7aa1c07080ce9b8caf51954fb7162b0e9ea1d3bf47f3866d03a162f7e433"
+      "contentSha256": "581f3f1ccc48febc2505b831c10fb6271e78a99c5d1e077f2f2b202b0d7d5a23"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "1ce366bb06eddb47b4a27d7cee364739a93bbc98746ef4a412736af823adc15e"
+      "contentSha256": "03ddd0513aeaa6fe21b1ff4645f5c44a4d0a49f228ec46724cd6eb0aabddc176"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -3441,15 +3485,15 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "cc12c6fde6b44db46e574274620aeef1d6a8082eb3e4e0c9157434b873b8dce3"
+      "contentSha256": "5208088c6eeb39c123d550a4ba37a4e7a49424ecdae6c659f99bbe36c81723bc"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "340e4e979e7ff67dee3518e0a51b37351a9568bfbd3a24c48d79d2ea193a373d"
+      "contentSha256": "7ea2f7b844a50aee979dd50e99be7ac74812f6d2f0aa18498b61e7d778a4a10c"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "4d13b1e231dcda5b21e43bb565e8cc3053f41bab6250081860d36b76de1d0e10"
+      "contentSha256": "57d356b8efdd498c8d829ee47714f5765e81d9e43d0250c41f4dad7cc17ad76a"
     },
     "skills/advanced": {
       "kind": "directory",
@@ -3505,19 +3549,19 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "bd0d63996ca6d89b8e8df9d2001e8fa3a215321bfd6d8a0707b313ccab99ee34"
+      "contentSha256": "b0dcda4ac75445c6942a0a8cccbc0111575b9794805cabd97b5d04757ea8f04a"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "0dc7f0a8ff523b2bd696b583708bc6e2e7a5a87e9401402a71aae4aeb120ab3a"
+      "contentSha256": "7ee2228cf3b8716a5c149d12a5de981d1d46effed6991899db70d8bb64770f48"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "b49dcfe2661e96ab874099c097c724e131ad6dc16340392e531c9e4e4bd4cbe1"
+      "contentSha256": "709c8e6a002f7d345c0b5216764d0177272495f33481ca0fba51dbbea383e5ce"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
-      "contentSha256": "e84b92ccb947775bf898da77d5850a0b222794af93b4f26ac18a5b76ea725fbb"
+      "contentSha256": "72fe215320e6604377422258814d0c639dacfcf6b9bd62c7507951e32a2d2586"
     },
     "skills/engineering/qs-design-image-mobile": {
       "kind": "directory",
@@ -3533,19 +3577,19 @@
     },
     "skills/frontend": {
       "kind": "directory",
-      "contentSha256": "afbcc2a3809269f474288f512ca000b54b828c530585660d60319324af77d1f1"
+      "contentSha256": "d81ce68b756ed323c39c3ccfdbd9c539f6db79e67e70167f3c3c2d9090bd19e2"
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "dc8cba0e5b9e213e12b4e9bbd16ef62fca9ae8779f1f0bae1e06dfc597c12029"
+      "contentSha256": "840607e99eeeafe6c8fd239a78cb6fdb14663627f8a9ba3d24c85daa2159cba0"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "06d51fed7dd295c2ce7f50b2ad1ded35f1d54c6f0d6f96c1cbc485cf2f15d551"
+      "contentSha256": "2c4a225f8ec4c3a062b0757f2bc751e623b2bd41994667752c9b2a4080b3818f"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "9d8b8be7ab31cec0041ff457cb179b639f8397fe6dc0af8dabb48fad0fd4b732"
+      "contentSha256": "16a6e54c0fb8f02c57b273e05b150c140d675196ece75b44842666bbb452fdbc"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -3553,15 +3597,15 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "872c0a92008d502f7272b3c9b7d43a8dc0b64704ccb135ce6f49f5e8a809b105"
+      "contentSha256": "6ecb90f4ea8346a09023baeac832442c59f21292ae9583195340a07d4739efec"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "b3b02ad79239cd9a83f8c88057c9a75be1bca9134f61cadf452c3e6a8c737596"
+      "contentSha256": "28272c216de4c405333adf0e2d62480cd1ac40cd25d190d7277b9cdeb15c23a4"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "1b3c4ce035c244dc2e4cf0d3802274eeb5508509fe114fa56575510768c9b3eb"
+      "contentSha256": "744bdfef3e9910b27043df4428f76afda41863aad4f69c40f957e360a459ad69"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
@@ -3571,7 +3615,7 @@
   "evidence": {
     "tests/skill-provenance.test.mjs": {
       "path": "tests/skill-provenance.test.mjs",
-      "sha256": "8af05d59cd0000d72ccc6b55df7ef66c3ff815b059f40ef5f66bcff87e2b8590"
+      "sha256": "1b0a85c04602c0ed1cc212538bd606cdf0c7e729e0b51ebe250491b9a7b72564"
     },
     "config/skill-migrations.json": {
       "path": "config/skill-migrations.json",
@@ -3695,7 +3739,7 @@
     },
     "config/skill-provenance.json": {
       "path": "config/skill-provenance.json",
-      "sha256": "cae127e9a5ffca80aae22fa2aa46ffd7230d218c2e76008a2fd7bff4a99a9bb1"
+      "sha256": "3320fc8e8997c06890ab9378d86a552a7b3078e9d50e9246496fd3ac89d3bffc"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
@@ -3952,6 +3996,30 @@
     "skills/engineering/qs-unlazy/references/runtime-compatibility.md": {
       "path": "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
       "sha256": "943f4d82e53472ccb74ce3e9191145a9d25d26ce8362a2fb8bfc3ba367df91b1"
+    },
+    "docs/validation/ms-fe-01.md": {
+      "path": "docs/validation/ms-fe-01.md",
+      "sha256": "f8298616eec01cb2f8d434daeaddf6e6eb7d553940937cdbc9ab274f4b114d52"
+    },
+    "tests/fixtures/ms-fe-01/qualification.json": {
+      "path": "tests/fixtures/ms-fe-01/qualification.json",
+      "sha256": "89aade60fbc5e2a2bb7c6b750e6a4873f916b62237cea77911844159cbd1a6ad"
+    },
+    "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json": {
+      "path": "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+      "sha256": "f63319f28827013fac1e5eccd12d336b019fa9a307ad17de1f903384abd4988a"
+    },
+    "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json": {
+      "path": "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+      "sha256": "fc8d16f6ddf80790adab13455ce1dd653ecf71877f95343514f1d0fe574062a3"
+    },
+    "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json": {
+      "path": "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+      "sha256": "1de50d803e19897bb839c04c35b4e137476319c5cb2191bbe3112047aa70688c"
+    },
+    "tests/frontend-candidate.test.mjs": {
+      "path": "tests/frontend-candidate.test.mjs",
+      "sha256": "1b28f2055f7d63b126858488d58a8bf98b94a6a9a7c58110c13719418983d6cb"
     }
   }
 }

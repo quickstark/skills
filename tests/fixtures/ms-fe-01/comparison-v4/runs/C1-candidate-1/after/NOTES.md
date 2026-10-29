@@ -1,0 +1,7 @@
+Built index.html with inline CSS/JS; no build or external assets.
+Guidance: selected qs-design-frontend root, brief, design direction, implementation, restrained style, cinematic landing, and media recipes R3/R4.
+Parameters: #f6f3eb / #163b43 / #bf4e2e; system sans; square controls. Fluid type; 600/1000px breakpoints; short-landscape rule at 500px height. Media: native loop, muted inline, 65% center cover crop, 2.35 desktop / 1.85 tablet / 1.45 mobile aspect ratio. Copy stays on paper; no entrance animation or loop fade.
+Assets: supplied scene.webm and poster.svg; verified local fixture rights recorded in assets/rights.json. No generated/downloaded assets.
+Fallbacks authored: poster without JS, on reduced motion, blocked/failed playback, hidden/offscreen video, and restored page after teardown. User pause persists. Play/pause has keyboard focus and an accessible label.
+Limitations: browser/runtime behavior, actual playback/loop continuity, moving-frame crops, rendered contrast, keyboard operation, and responsive appearance at 375/768/1440 and short landscape are unverified. Central observer owns browser qualification and independent review. No browser/server/install/external service or second verification workflow was run.
+Static check passed: inline JavaScript parsed with node --check; requested copy/link targets and nonempty local media files confirmed using shell checks. No runtime assertions made.

@@ -1,0 +1,113 @@
+<!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Motion recipe qualification</title><style>*{box-sizing:border-box}body{margin:0;font:18px system-ui;color:#fff;background:#173f49}[hidden]{display:none!important}a,button{color:#173f49;background:#fff;padding:14px;display:inline-block;border:2px solid #173f49;border-radius:0}a:focus-visible,button:focus-visible{outline:4px solid #ffdc00;outline-offset:4px}[data-media]{position:relative;min-height:100svh;overflow:clip}.plate{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center;pointer-events:none}.copy{position:relative;z-index:1;padding:clamp(24px,5vw,72px);max-width:650px}.copy h1,.copy p{background:#173f49;padding:8px}h1{font-size:clamp(36px,5vw,64px);line-height:1.05}section.below{min-height:180vh;padding:32px;background:#fff;color:#173f49}#tall{min-height:800vh} @media(max-width:600px){.copy{max-width:100%;padding:24px}.plate{object-position:85% center}}</style><body><main><section data-media><img class="plate" src="../assets/poster.svg" alt=""><video class="plate" src="../assets/scene.webm" muted playsinline preload="metadata" aria-hidden="true" hidden></video><div class="copy"><p data-enter>FIELD NOTES / 2026</p><h1 data-enter>Make room for the moving world.</h1><p data-enter>Thoughtful films, clear stories, lasting places.</p><a href="#work" id="primary">Explore the work</a><button type="button" data-pause hidden>Play background video</button><span data-media-status></span></div></section><section class="below" id="work"><h2 data-reveal>Selected work</h2><a href="#primary">Back to introduction</a><div id="tall" data-reveal>A tall visible story.</div></section></main><script>function mountMotion(root) {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const controller = new AbortController(), active = new Set();
+  let observer, dead = false;
+  const finish = () => {
+    observer?.disconnect();
+    for (const animation of active) animation.cancel();
+    active.clear();
+  };
+  const animate = el => {
+    if (dead || reduce.matches || !el.animate ||
+        el.matches('a,button,input,select,textarea,[tabindex]') ||
+        el.querySelector('a,button,input,select,textarea,[tabindex]')) return;
+    const animation = el.animate([
+      { opacity: .75, transform: 'translateY(14px)' },
+      { opacity: 1, transform: 'none' }
+    ], { duration: 550, delay: Math.min(160, Math.max(0,
+      Number(el.dataset.delay) || 0)), easing: 'cubic-bezier(.22,1,.36,1)' });
+    active.add(animation);
+    animation.finished.then(() => active.delete(animation),
+      () => active.delete(animation));
+  };
+  try {
+    if (!reduce.matches) {
+      root.querySelectorAll('[data-enter]').forEach(animate);
+      const pending = new Set(root.querySelectorAll('[data-reveal]'));
+      if (pending.size && 'IntersectionObserver' in window) {
+        observer = new IntersectionObserver(entries => {
+          for (const entry of entries) if (entry.isIntersecting) {
+            observer.unobserve(entry.target); pending.delete(entry.target);
+            animate(entry.target);
+          }
+          if (!pending.size) observer.disconnect();
+        }, { threshold: 0 });
+        pending.forEach(el => observer.observe(el));
+      }
+    }
+    reduce.addEventListener('change', finish, { signal: controller.signal });
+  } catch { finish(); }
+  return () => { dead = true; finish(); controller.abort(); };
+}
+
+function mountMedia(root) {
+  const video = root.querySelector('video');
+  const button = root.querySelector('[data-pause]');
+  const status = root.querySelector('[data-media-status]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const controller = new AbortController(), options = { signal: controller.signal };
+  let observer, dead = false, visible = false, userPaused = false, blocked = false;
+  let epoch = 0;
+  const still = () => {
+    epoch++; video.pause(); video.hidden = true;
+    video.style.transition = 'none'; video.style.opacity = '1';
+    button.textContent = 'Play background video';
+  };
+  const sync = async () => {
+    if (dead || !visible || userPaused || blocked || reduce.matches ||
+        document.hidden) { still(); return; }
+    const attempt = ++epoch;
+    try {
+      await video.play();
+      if (attempt !== epoch) return;
+      video.hidden = false; button.textContent = 'Pause background video';
+      if (status) status.textContent = '';
+    } catch {
+      if (attempt !== epoch) return;
+      blocked = true; still();
+      if (status) status.textContent = 'Static preview: playback unavailable.';
+    }
+  };
+  try {
+    video.muted = true; video.playsInline = true;
+    const fade = video.hasAttribute('data-fade-loop');
+    video.loop = !fade;
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      userPaused = !video.paused;
+      blocked = false; sync();
+    }, options);
+    reduce.addEventListener('change', sync, options);
+    document.addEventListener('visibilitychange', sync, options);
+    video.addEventListener('error', () => {
+      blocked = true; still();
+      if (status) status.textContent = 'Static preview: media unavailable.';
+    }, options);
+    if (fade) {
+      video.addEventListener('timeupdate', () => {
+        if (!video.paused && video.duration - video.currentTime <= .3) {
+          video.style.transition = 'opacity 180ms linear';
+          video.style.opacity = '0';
+        }
+      }, options);
+      video.addEventListener('playing', () => {
+        video.style.transition = 'opacity 180ms linear';
+        video.style.opacity = '1';
+      }, options);
+      video.addEventListener('ended', () => {
+        video.currentTime = 0; sync();
+      }, options);
+    }
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio > 0; sync();
+      }, { threshold: [0, .001] });
+      observer.observe(root);
+    } else {
+      if (status) status.textContent = 'Static preview: observation unavailable.';
+    }
+  } catch { still(); }
+  return () => { dead = true; still(); observer?.disconnect(); controller.abort(); };
+}
+
+if(new URLSearchParams(location.search).has('fade'))document.querySelector('video').setAttribute('data-fade-loop','');window.cleanupMotion=mountMotion(document);if(!new URLSearchParams(location.search).has('interrupt'))window.cleanupMedia=mountMedia(document.querySelector('[data-media]'));</script></body></html>

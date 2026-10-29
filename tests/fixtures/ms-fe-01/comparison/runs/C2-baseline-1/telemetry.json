@@ -1,0 +1,73 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 2040.543194,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": "Owned process observation failed",
+  "malformedLines": 0,
+  "observedModel": "gpt-6.1-sol",
+  "effectiveControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "initialized": true,
+  "readinessOnly": false,
+  "usage": [],
+  "nativeUsage": null,
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [
+    "Owned process observation failed"
+  ],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": false,
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 8,
+    "skippedTicks": 5,
+    "errors": [
+      {
+        "message": "Owned process thread observation time budget exceeded.",
+        "code": null
+      }
+    ],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": false,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+  "promptSHA256": "f34ad58ec5aa9290ab2396064c34a99133ad800a97f4d86b68121589b473066f",
+  "promptUtf8Bytes": 1380,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "3d9422bbb7229928a63fb26a609a79b533820b1e0430ea6fdb716bd48c7d6a3b",
+    "raw-protocol.jsonl": "3e4d3392cce9327c1691c115ed6b38fc97d1a362026c9b54aaed49ff7a19ceb5",
+    "raw-stdout.jsonl": "6d2072543f9815b80b12737e22a9743ace0c5d74b9932077ad90d17dca747e53",
+    "stderr.txt": "88fdfc7c86b2adccc70a0cd02ede13a8a094f97572a6d74e0380636f0cbe48a0"
+  }
+}

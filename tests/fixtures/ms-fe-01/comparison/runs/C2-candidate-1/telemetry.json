@@ -1,0 +1,74 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 3075.342942,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": "Owned process observation failed",
+  "malformedLines": 0,
+  "observedModel": "gpt-6.1-sol",
+  "effectiveControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "initialized": true,
+  "readinessOnly": false,
+  "usage": [],
+  "nativeUsage": null,
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [
+    "Owned process observation failed",
+    "Native transport closed before turn/start response"
+  ],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": false,
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 7,
+    "skippedTicks": 4,
+    "errors": [
+      {
+        "message": "Owned process thread observation time budget exceeded.",
+        "code": null
+      }
+    ],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": false,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+  "promptSHA256": "f34ad58ec5aa9290ab2396064c34a99133ad800a97f4d86b68121589b473066f",
+  "promptUtf8Bytes": 1380,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "fbd74a78a7e8f5ae7b3f0334f286193af9addd951dcc52267b345efa250b6795",
+    "raw-protocol.jsonl": "78e93a1d540cd8f8f6975e693a00942427fe43772a6ba547b9f26a124b297d56",
+    "raw-stdout.jsonl": "f91e892f15c6647c2e607167646f5abad720401e9bf85a355264ef5e8a1bce9a",
+    "stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

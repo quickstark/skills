@@ -1,0 +1,8 @@
+# FIELD NOTES
+
+- Authored `index.html` with inline CSS/JS; no build or dependencies. Preserved supplied copy, destinations, system sans, square controls, and #f6f3eb / #163b43 / #bf4e2e tokens.
+- Read selected frontend guidance, brief, design direction, implementation, restrained style, cinematic landing, and media recipes. Selected R3: immediate muted inline decorative footage when intersecting; native loop, no added animation or loop fade. Controls and text stay static.
+- Media: verified repository fixtures `assets/scene.webm`, `assets/poster.svg`; authority `assets/rights.json`. Poster/video share cover framing at 70% center. Frame ratios: desktop 2.38, tablet 1.9, mobile 1.45, short landscape 2.5. Focal/crop choices are authored, not runtime measured.
+- Static poster for no JS, reduced motion, missing observation capability, initialization or playback failure; solid ink backing if both assets fail. User pause persists across visibility changes; offscreen/hidden-page pause, live motion preference, pagehide cleanup and cached-page remount are implemented.
+- Responsive rules target 375/768/1440 and short landscape. Browser/runtime behavior, codec playback, crop across moving frames, loop boundaries, keyboard interaction, computed contrast and responsive rendering remain unverified; central observer owns qualification. No browser, server, installation, external service or separate verification workflow used.
+- Small static check passed: inline JavaScript parsed with existing `node --check`; shell content inspection confirmed supplied headings, entries and four link destinations. No runtime validation performed.

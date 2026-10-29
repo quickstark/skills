@@ -1,0 +1,54 @@
+{
+  "independentAuthor": true,
+  "variantLabelsConcealed": true,
+  "outputs": [
+    {
+      "id": "d5d6ab1e415067c9",
+      "scores": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "observations": [
+        "Observed screenshots: the large two-line desktop headline, compact navigation and rust CTA produce a deliberate editorial hierarchy. The framed wide film, ruled project list with separated years and large offset About statement form a coherent page rather than isolated components.",
+        "Observed screenshots: mobile retains a readable two-line headline and complete single-row navigation. The CTA, nearly square footage, work titles/years and About statement use consistent gutters without apparent horizontal clipping. The complete yellow subject remains inside the video and poster crops.",
+        "Observed views.json: both normal captures report active playback at approximately 1.7 seconds. Both reduced-motion captures report paused video at time zero and hidden video; actual screenshots preserve a static poster and all page content. All four captures report no errors.",
+        "Observed screenshots/source: the square pause control is visible during normal playback. Source inference: playback is governed by explicit user pause, viewport and tab visibility, reduced motion and asynchronous-attempt guards; playback rejection/error retains the poster and supplies status text. Manual pause replaces the current moving frame with the poster, creating a minor continuity jump. Footage supplies the primary motion, with restrained hover feedback.",
+        "Source inference: persisted pagehide pauses without discarding listeners, and persisted pageshow recomputes viewport visibility and synchronizes playback. This is a restoration path in code, not browser verification of restoration.",
+        "Source/brief assessment: required navigation, hero text, both project entries, About copy, local media, colors, system sans and square controls are present without fabricated claims, new destinations or added sections. No material authority/preservation failure was found.",
+        "Asset evidence: rights.json identifies locally authored repository-owned synthetic fixture media. The actual SHA-256 hashes of poster.svg and scene.webm match the manifest; source uses the corresponding local paths."
+      ],
+      "limitations": [
+        "Reviewed rubric, exact brief, index.html, rights.json, views.json and all four actual screenshots. File hashes were independently checked; keyboard traversal, pause/retry, failure injection, live preference changes and lifecycle restoration were not independently exercised.",
+        "The desktop full-page images were scaled by the image viewer. No 768px or short-landscape capture was supplied. Static screenshots and sampled telemetry establish composition/playback state, not temporal smoothness or every failure path."
+      ]
+    },
+    {
+      "id": "a20a2881de1447a3",
+      "scores": [
+        4,
+        4,
+        2,
+        4,
+        3
+      ],
+      "observations": [
+        "Observed screenshots: a strong two-line desktop headline is balanced by a small support/CTA column above a wide film. The work section aligns its title and ruled summary into a coherent secondary grid. At 375px the three-line headline, support copy, CTA, 4:3 footage and work content remain readable and fit the gutters without apparent clipping.",
+        "Observed screenshots: the complete yellow subject remains inside the moving and poster crops on desktop and mobile. Reduced-motion captures preserve the same media footprint and all original copy.",
+        "Observed views.json: both normal captures report active playback at approximately 1.7 seconds; both reduced-motion captures report paused, hidden video at time zero. All four captures report no errors.",
+        "Observed control defect: both normal screenshots show a play triangle while their accompanying telemetry reports active playback. The visible control therefore communicates the wrong action/state to sighted users. Source inference: setPlaying assigns .hidden on SVG elements, which does not reliably reflect the HTML hidden attribute used by the CSS selector; the initially hidden pause SVG remains hidden. The button aria-label is separately updated correctly in source. The mismatch is observed; the specific browser-property cause was not independently reproduced.",
+        "Observed/source finish gap: the new media control appears substantially smaller than the primary action and is approximately 40 by 32 pixels in the 375px capture; source gives the media button no 44px minimum target. Existing CTA and details controls retain their supplied styling, so the small original details control is not treated as a preservation failure.",
+        "Source inference: modest 14px entrance/reveal animations leave ordinary content visible and avoid animating focusable controls or their containers. Reduced-motion changes cancel active animations. Playback includes explicit pause, visibility checks, asynchronous-attempt guards and a static poster after rejection/error. Manual pause swaps to the poster rather than freezing the current frame.",
+        "Source inference: pagehide permanently cleans up added motion and playback listeners/observers, leaving a static poster on back-forward-cache restoration. That is a robustness limitation outside supplied runtime coverage; the brief does not explicitly require added-media restoration. Original analytics and details listeners remain present.",
+        "Source/brief assessment: all original copy, IDs, destinations, two sections, theme tokens, CTA/control styles, analytics and details-toggle code are preserved. No fabricated marketing claims, extra destinations or sections were found.",
+        "Asset evidence: rights.json identifies repository-owned synthetic fixture media, and independently computed SHA-256 hashes for poster.svg and scene.webm match the manifest. The page references the corresponding local paths."
+      ],
+      "limitations": [
+        "Reviewed rubric, exact brief, input.html, index.html, rights.json, views.json and all four actual screenshots. File hashes were checked. Pause/play clicks, SVG property reflection, accessible label announcements, analytics/details operation, failures and lifecycle restoration were not independently exercised.",
+        "The control mismatch is directly supported by supplied screenshots plus playback telemetry; runtime cause and repair remain source inference. No 768px, short-landscape, intermediate-animation or keyboard capture was supplied."
+      ]
+    }
+  ]
+}
