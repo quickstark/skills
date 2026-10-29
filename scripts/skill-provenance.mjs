@@ -7,6 +7,7 @@ import { PS_PUBLIC_COMMANDS, PS_INTERNAL_CAPABILITIES } from './ps-skill-catalog
 
 import { ADVANCED_PUBLIC_COMMANDS, ADVANCED_INTERNAL_CAPABILITIES } from './advanced-skill-catalog.mjs';
 import { FRONTEND_PUBLIC_COMMANDS, FRONTEND_INTERNAL_CAPABILITIES } from './frontend-skill-catalog.mjs';
+import { validateFrontendDependencies } from './frontend-dependencies.mjs';
 import { VIDEO_PUBLIC_COMMANDS, VIDEO_INTERNAL_CAPABILITIES } from './video-skill-catalog.mjs';
 import { EXECUTION_PUBLIC_COMMANDS, EXECUTION_INTERNAL_CAPABILITIES } from './execution-skill-catalog.mjs';
 
@@ -93,6 +94,23 @@ const targetNoticePaths = [
 ];
 
 function validateTargetProvenance(document, { root, checkFiles, safeFile, require, stringArray }) {
+  const frontendMetadata = document.target?.frontend;
+  require(isObject(frontendMetadata) && frontendMetadata.path === 'skills/frontend/dependency-index.json' && digest.test(frontendMetadata.sha256) && Array.isArray(frontendMetadata.sources) && frontendMetadata.sources.length === 8, 'frontend: explicit target source metadata required');
+
+  if (checkFiles && safeFile('skills/frontend/dependency-index.json', 'frontend index')) {
+    const frontendIndex = readJson(root, 'skills/frontend/dependency-index.json');
+    const frontendResult = validateFrontendDependencies(frontendIndex, { root: path.join(root, 'skills/frontend'), checkFiles });
+    for (const error of frontendResult.errors) require(false, error);
+    const summary = frontendIndex.sources.map(source => ({ identity: source.legacyName, repository: source.repository, reviewedRevision: source.reviewedRevision, state: source.state, adoptedRevision: source.adoptedRevision ?? null, evidence: source.evidence ?? [], files: (source.files ?? [{ path: source.sourcePath, sha256: source.sourceFileSha256 }]).map(file => ({ path: file.path, sha256: file.sha256 })) }));
+    require(document.target?.frontend?.path === 'skills/frontend/dependency-index.json' && document.target.frontend.sha256 === sha256(readFileSync(path.join(root, document.target.frontend.path))) && JSON.stringify(document.target.frontend.sources) === JSON.stringify(summary), 'frontend: target source summary/index digest mismatch');
+    for (const source of frontendIndex.sources ?? []) if (source.repository === 'https://github.com/Motionsites-AI/claude-skill') {
+      for (const original of source.files ?? []) {
+        const archive = `tests/fixtures/ms-fe-01/sources/${original.path}`;
+        if (safeFile(archive, 'frontend original')) require(sha256(readFileSync(path.join(root, archive))) === original.sha256, 'frontend: original source digest mismatch');
+      }
+      for (const evidence of source.evidence ?? []) safeFile(evidence, 'frontend addition evidence');
+    }
+  }
   const target = document.target;
   if (!isObject(target)) { require(false, 'target: mappings required'); return; }
   require(target.schemaVersion === 1, 'target: unsupported schemaVersion');
@@ -354,6 +372,8 @@ export function renderSkillProvenanceMarkdown(document) {
   lines.push('', '### Complete private dependency indexes', '', 'Indexes retain individual original and derived hashes, source paths, destination paths and runtime resources. Their digest binds the complete index; validation also hashes every retained resource and rejects unindexed private files. Reviewed source pins below are not adoption claims.', '', '| Owner | Index | Reviewed source revision | Index SHA-256 / source adoption |', '| --- | --- | --- | --- |');
   for (const closure of [...document.target.closures].sort((a, b) => a.owner.localeCompare(b.owner, 'en'))) lines.push(`| ${code(closure.owner)} | [Dependency index](../../${closure.path}) | ${code(closure.reviewedRevision)} | ${code(closure.sha256)} / ${closure.adoptionStatus}${closure.adoptedRevision ? ` ${code(closure.adoptedRevision)}` : ' (no revision claimed)'} |`);
   lines.push('', 'Target notices: ' + [...document.target.notices].sort((a, b) => a.path.localeCompare(b.path, 'en')).map(entry => `[${entry.package}](${'../../' + entry.path})`).join(', ') + '.');
+  lines.push('', '### Frontend source additions', '', 'The [schema v2 dependency index](../../skills/frontend/dependency-index.json) separates repository identities, original byte hashes, selected section mappings, derived hashes, exclusions and fresh evidence. Owner-context links do not make MotionSites a Taste origin. Historical target receipts do not adopt new source additions.', '', '| Source / repository | Reviewed revision | Source state / adopted revision | Original files (SHA-256) |', '| --- | --- | --- | --- |');
+  for (const source of [...(document.target.frontend?.sources ?? [])].sort((a,b) => a.identity.localeCompare(b.identity, 'en'))) lines.push(`| [${escapeCell(source.identity)}](${source.repository}) | ${code(source.reviewedRevision)} | ${escapeCell(source.state)} / ${source.adoptedRevision ? code(source.adoptedRevision) : 'none claimed'} | ${source.files.map(file => `${code(file.path)} ${code(file.sha256)}`).join('; ')} |`);
   lines.push('', '## Baseline identities', '', '| Stable capability | Baseline owners / role | Legacy identities |', '| --- | --- | --- |');
   for (const entry of sorted(document.capabilities)) lines.push(`| ${code(entry.id)} | ${entry.owners.map(code).join(', ')} / ${entry.role} | ${entry.legacyIdentities.map(code).join(', ')} |`);
   lines.push('', '## Baseline source history', '', 'Full source hashes, notices and validation evidence are authoritative in the JSON record. Unknown adoption stays unknown even when an upstream revision has been reviewed.', '', '| Capability | Source | Baseline | Reviewed | Adopted | License |', '| --- | --- | --- | --- | --- | --- |');

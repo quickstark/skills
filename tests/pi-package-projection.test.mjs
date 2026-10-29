@@ -101,7 +101,7 @@ test("target private references remain packaged and byte-identical without becom
     }
     return result.sort();
   };
-  for(const [source,projected,required] of [["skills/advanced","pi/packages/qs-advanced/capabilities/advanced",16],["skills/frontend","pi/packages/qs-frontend/capabilities/frontend",9]]) {
+  for(const [source,projected,required] of [["skills/advanced","pi/packages/qs-advanced/capabilities/advanced",16],["skills/frontend","pi/packages/qs-frontend/capabilities/frontend",12]]) {
     const sources=await walk(join(repositoryRoot,source)), copies=await walk(join(repositoryRoot,projected)); assert.deepEqual(copies,sources);
     assert.equal(sources.filter(file=>file.startsWith("internal/") && file.endsWith(".md")).length,required);
     for(const file of sources) assert.deepEqual(await readFile(join(repositoryRoot,projected,file)),await readFile(join(repositoryRoot,source,file)),file);

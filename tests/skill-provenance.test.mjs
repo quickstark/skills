@@ -147,7 +147,7 @@ test('baseline identities and all original113 sources survive target mapping unc
   assert.equal(baseline.capabilities.reduce((sum, entry) => sum + entry.sources.length, 0), 113);
   assert.equal(createHash('sha256').update(JSON.stringify(baseline.capabilities.filter(entry => entry.id !== 'qs:qs-repo-cleanup'))).digest('hex'), '8cabb127d00e5f0c3c4233bad9586335dd2d982d2eb8980f134e2ff3c4316da0');
   assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'public').length, 39);
-  assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'private').length, 51);
+  assert.equal(baseline.target.capabilities.filter(entry => entry.role === 'private').length, 54);
   const help = baseline.target.capabilities.find(entry => entry.name === 'qs-help');
   assert.deepEqual(help.baselineIds, ['contributor:find-skills', 'ps:ps-help', 'qs:qs-help']);
   const frontend = baseline.target.capabilities.find(entry => entry.name === 'qs-design-frontend');
@@ -262,4 +262,12 @@ test('target notices and explicit closure adoption cannot disappear or be inferr
   doc.target.capabilities.find(entry => entry.role === 'public' && entry.name === closure.owner).decision = { status: 'adopted', revision: 'a'.repeat(40), evidence, note: 'Synthetic schema test only; never persisted as adoption.' };
   assert.equal(validateSkillProvenance(doc, { checkFiles: false }).valid, true);
   assert.deepEqual(doc.capabilities, baseline.capabilities);
+});
+
+
+test('frontend multi-source metadata cannot disappear, change repository or lose original byte identity', () => {
+  rejects(doc => { delete doc.target.frontend; }, /frontend: explicit target source metadata|required|summary/);
+  rejects(doc => { doc.target.frontend.sources.at(-1).repository = 'https://github.com/Leonxlnx/taste-skill'; }, /frontend: target source summary/);
+  rejects(doc => { doc.target.frontend.sources.at(-1).files[0].sha256 = 'b'.repeat(64); }, /frontend: target source summary/);
+  rejects(doc => { doc.target.frontend.sha256 = 'b'.repeat(64); }, /frontend: target source summary/);
 });

@@ -39,10 +39,10 @@ test("four explicit frontend roots have exact package metadata and locally resol
   }
 });
 
-test("seven upstream identities retain separate source/derived records and all private owners", () => {
-  assert.equal(index.sources.length, 7);
-  assert.equal(new Set(index.sources.map((entry) => entry.legacyName)).size, 7);
-  for (const source of index.sources) {
+test("seven Taste identities retain separate source/derived records and all private owners", () => {
+  assert.equal(index.sources.length, 8);
+  assert.equal(new Set(index.sources.map((entry) => entry.legacyName)).size, 8);
+  for (const source of index.sources.filter(entry => entry.repository === "https://github.com/Leonxlnx/taste-skill")) {
     assert.match(source.sourceFileSha256, /^[a-f0-9]{64}$/);
     assert.match(source.baselineRevision, /^[a-f0-9]{40}$/);
     assert.equal(source.state, "candidate");
@@ -67,4 +67,32 @@ test("isolated private package resources remain complete and changes or omission
     rmSync(join(destination, "internal/prompt-construction.md"));
     assert.throws(() => verifyPrivateClosure(destination));
   } finally { rmSync(fixture, { recursive: true, force: true }); }
+});
+
+import { validateFrontendDependencies } from "../scripts/frontend-dependencies.mjs";
+test("MotionSites schema rejects missing/ambiguous origins, altered bytes, mappings and adoption claims", () => {
+  assert.equal(validateFrontendDependencies(index, { root: privateRoot }).valid, true);
+  for (const change of [
+    x => { delete x.sources[0].repository; },
+    x => { x.repository = "ambiguous"; },
+    x => { x.sources.push(structuredClone(x.sources.at(-1))); },
+    x => { x.sources.at(-1).files[0].sha256 = "blob-id"; },
+    x => { x.sources.at(-1).files[1].derivedPaths = []; },
+    x => { x.sources.at(-1).adoptedRevision = x.sources.at(-1).reviewedRevision; },
+    x => { delete x.sources.at(-1).dispositions.examples; },
+    x => { x.derivedFiles.at(-1).sha256 = "0".repeat(64); },
+    x => { x.derivedFiles.pop(); },
+  ]) {
+    const modified = structuredClone(index); change(modified);
+    assert.equal(validateFrontendDependencies(modified, { root: privateRoot }).valid, false);
+  }
+});
+test("Taste history survives schema upgrade, new references have a sole owner and bounded size", () => {
+  const before = JSON.parse(readFileSync(join(root, "tests/fixtures/ms-fe-01/baseline/frontend/dependency-index.json")));
+  assert.deepEqual(index.sources.slice(0, 7).map(({ repository, ...entry }) => entry), before.sources);
+  assert.deepEqual(index.derivedFiles.slice(0, before.derivedFiles.length), before.derivedFiles);
+  for (const [id, limit] of [["cinematic-landing", 500], ["motion-recipes", 1200], ["media-recipes", 1200]]) {
+    assert.deepEqual(FRONTEND_INTERNAL_CAPABILITIES.find(entry => entry.id === id).owners, ["qs-design-frontend"]);
+    assert.ok(readFileSync(join(privateRoot, "internal", id + ".md"), "utf8").trim().split(/\s+/).length <= limit);
+  }
 });
