@@ -71,6 +71,37 @@ test('native commands preserve the user home and pass the selected Codex home', 
   assert.deepEqual(JSON.parse(result.stdout), { HOME: homeDirectory, USERPROFILE: homeDirectory, CODEX_HOME: codexHomeDirectory });
 });
 
+test('native commands omit inherited workload identity, preserve ordinary authentication and leave the parent unchanged', async (t) => {
+  const base = await mkdtemp(path.join(tmpdir(), 'qs-native-identity-'));
+  t.after(() => rm(base, { recursive: true, force: true }));
+  const identityKeys = ['OPENAI_IDENTITY_TOKEN_FILE', 'OPENAI_FEDERATION_RULE_ID', 'OPENAI_WORKLOAD_IDENTITY_CONTEXT'];
+  const synthetic = Object.fromEntries([...identityKeys, 'OPENAI_API_KEY'].map((key) => [key, `synthetic-${key}`]));
+  const previous = new Map(Object.keys(synthetic).map((key) => [key, process.env[key]]));
+  try {
+    Object.assign(process.env, synthetic);
+    const program = `
+      const keys = ${JSON.stringify(identityKeys)};
+      console.log(JSON.stringify({
+        identityPresent: Object.fromEntries(keys.map(key => [key, Object.hasOwn(process.env, key)])),
+        ordinaryAuthenticationPreserved: process.env.OPENAI_API_KEY === 'synthetic-OPENAI_API_KEY'
+      }));
+    `;
+    const result = await runNativePackageCommand(process.execPath, ['-e', program], { homeDirectory: base, cwd: base });
+    assert.deepEqual(JSON.parse(result.stdout), {
+      identityPresent: Object.fromEntries(identityKeys.map((key) => [key, false])),
+      ordinaryAuthenticationPreserved: true,
+    });
+    for (const [key, value] of Object.entries(synthetic)) {
+      assert.equal(process.env[key] === value, true, `Parent ${key} changed during the native command.`);
+    }
+  } finally {
+    for (const [key, value] of previous) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
+});
+
 for (const real of [false, true]) for (const host of ['codex', 'pi']) test(`${real ? 'real isolated' : 'executable fixture'} ${host} withdrawal/exposure matches predicted exact selected discovery and recovers`, { skip: real && !available(host) ? 'Native host executable is unavailable; executable fixture remains covered.' : false }, async (t) => {
   const fixture_ = await fixture(t, host, { real }); const { options, adapter, context, step, configPath } = fixture_;
   const original = (await observeNativePackages(options)).state;

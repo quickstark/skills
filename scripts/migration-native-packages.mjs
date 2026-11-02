@@ -38,9 +38,15 @@ async function boundedRead(file, maximum = 1024 * 1024) {
 /** No shell, bounded output, isolated path overrides, and no command output in errors. */
 export async function runNativePackageCommand(command, args, { homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), claudeHomeDirectory = path.join(homeDirectory, '.claude'), piHomeDirectory = path.join(homeDirectory, '.pi/agent'), cwd, timeout = 30000 } = {}) {
   check(absolute(homeDirectory) && absolute(codexHomeDirectory) && absolute(cwd) && absolute(claudeHomeDirectory) && absolute(piHomeDirectory), 'Explicit native user/Codex homes and working directory required.');
+  const environment = { ...process.env, HOME: homeDirectory, USERPROFILE: homeDirectory, CODEX_HOME: codexHomeDirectory, CLAUDE_CONFIG_DIR: claudeHomeDirectory, PI_CODING_AGENT_DIR: piHomeDirectory, PI_OFFLINE: '1', PI_TELEMETRY: '0' };
+  // Native package management must not inherit the parent workload identity.
+  // Remove the complete triple; partial identity configuration can fail auth.
+  delete environment.OPENAI_IDENTITY_TOKEN_FILE;
+  delete environment.OPENAI_FEDERATION_RULE_ID;
+  delete environment.OPENAI_WORKLOAD_IDENTITY_CONTEXT;
   try {
     return await execute(command, args, { cwd, encoding: 'utf8', timeout, killSignal: 'SIGKILL', maxBuffer: 4 * 1024 * 1024,
-      env: { ...process.env, HOME: homeDirectory, USERPROFILE: homeDirectory, CODEX_HOME: codexHomeDirectory, CLAUDE_CONFIG_DIR: claudeHomeDirectory, PI_CODING_AGENT_DIR: piHomeDirectory, PI_OFFLINE: '1', PI_TELEMETRY: '0' } });
+      env: environment });
   } catch (error) {
     if (error.code === 'ENOENT') throw new Error(`Required ${path.basename(command)} CLI is unavailable on PATH; install or expose the selected host CLI before retrying.`);
     throw new Error(`Native ${path.basename(command)} ${args[0]} command failed (${error.code ?? error.signal ?? 'unknown'}); output withheld.`); }
