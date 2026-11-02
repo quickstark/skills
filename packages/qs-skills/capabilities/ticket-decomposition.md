@@ -1,0 +1,20 @@
+# Ticket decomposition capability
+
+Use only inside a root `qs-plan-spec` run when the user requests tickets, the configured tracker requires them, or the work cannot otherwise be assigned safely.
+
+- Produce dependency-ordered slices with one independently verifiable outcome each.
+- Include scope, acceptance evidence, dependencies, and explicit exclusions.
+- For a wide interface refactor, expand first: add the new form alongside the old. Every caller-migration batch depends on that expansion. Contract last: remove the legacy form only after every migration batch and a no-remaining-callers check pass. Include serialized, external and delayed consumers where applicable.
+- If intermediate batches cannot be independently green, keep them on an isolated integration branch. Every batch blocks one final integrate-and-verify outcome; promise green only at that gate and do not release partial activation or weaken required checks.
+- Do not create tracker work for a specification-only request.
+- Return ticket artifacts to the owning root run. Do not emit a separate status, result, or continuation.
+
+<!-- qs-progress:start -->
+## Progress reporting
+
+Contribute stage status and verification evidence to the parent skill's conversation checklist. Report the current stage, observed progress or waiting state, and any required user input to the parent during long operations, aiming for updates within sixty seconds when the host allows control to return. Distinguish running from confirmed progress; elapsed time alone is not evidence.
+
+Supply relevant artifacts, command results, sources, or observable behavior before the parent checks off a stage. Identify failed checks, skipped work and reasons, blockers, and later evidence that requires reopening a verified stage. Supply findings or changes, passed and failed checks, and remaining work for the parent's final explanation. Never imply configuration in a read-only run. Do not create a separate checklist, completion report, skills-used entry, or continuation. Remain inside the public root regardless of effort or report mode.
+
+Contribute observed partial work, remaining effort, uncertainty, and revision-bound evidence for the parent's stage and overall estimates. Waiting, elapsed time, token consumption, or a running process alone earns no progress. Flag invalidated evidence so the parent can lower estimates and reopen checks. Preserve valid evidence for resumption; do not count the same work twice or report an independent public percentage. Only the parent computes weighted progress and verifies 100% completion.
+<!-- qs-progress:end -->

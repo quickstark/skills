@@ -5,10 +5,10 @@ the target registry; an older checkout using the legacy updater rejects
 `--profile`, `--with` and `--resume`. Do not use documentation alone as
 proof that a target package is accepted or installed.
 
-The target native transaction supports Codex and Pi. Choose only installed hosts;
-Pi means the coding-agent harness. Claude package projections are generated, but
-the target updater rejects `--agent claude-code` until a separately verified native
-transaction adapter exists. It must not silently fall back to the legacy updater.
+The target native transaction supports Codex, Claude Code and Pi (the coding-agent
+harness). Use `--agent codex`, `--agent claude` (or `claude-code`), or `--agent pi`.
+The selected CLI must be available on PATH. Host selection is independent of the
+agent running this command; repeat the flag to update multiple installed hosts.
 
 ## Selection and the repository template
 
@@ -30,8 +30,8 @@ The implemented addition flag is `--with`, not `--with-package`. Unknown IDs and
 duplicate additions fail. New optional packages do not join an ordinary update.
 The selection file is `~/.config/quickstark/skills-selection.json`; it is saved
 only after the transaction succeeds. Do not edit it to bypass a migration conflict.
-For a non-default Codex home, selection, updater locks, journals and backups use a
-Codex-home-specific state directory instead, so profiles cannot inherit or replace
+For a non-default host home, selection, updater locks, journals and backups use a
+home-specific state directory instead, so profiles cannot inherit or replace
 one another's saved selection or interrupted transaction.
 
 ## First setup
@@ -58,6 +58,51 @@ The plan is read-only. Inspect its desired selection, ownership, retirement,
 acceptance and conflict evidence. Update is the mutation command and revalidates
 live state. A missing accepted package receipt, modified managed content,
 unexpected exposure or unsupported native state blocks mutation.
+
+## Claude setup
+
+Register the local checkout before planning, then use the same host for update and
+verification. Claude packages use user scope; existing project/local or disabled
+QuickStark registrations require explicit reconciliation. The core marketplace
+entry points to the generated `packages/qs-skills` package, so the plugin cache
+contains the public roots and private closure without copying the whole repository.
+
+```bash
+claude plugin marketplace add .
+npm run skills:plan -- --json --agent claude
+npm run skills:update -- --agent claude
+node scripts/managed-skills.mjs verify --json --agent claude
+```
+
+A marketplace pointing at another checkout or a remote source requires a reviewed
+transition. Existing root-based Claude core packages migrate after their manifest,
+declared core skills and private resources match an immutable Git ancestor. The
+updater checks at most 32 manifest revisions in local history; unverifiable or
+edited resources remain a conflict. The old cache is retained, including unrelated
+files, and only native registration metadata and its orphan marker are changed.
+The compact replacement requires a new release version; same-version caches are
+never overwritten to force a layout change.
+
+Claude recovery validates the original raw settings and metadata snapshots after
+native inspection and immediately before restoring each target. A concurrent edit
+blocks recovery and is preserved. Complete file replacements are prepared and
+synced before an atomic rename. Before the first replacement, a bounded recovery
+receipt records the raw target snapshots and immutable payload/source evidence;
+its digest is synced into the journal's recovery intent. Replacements reuse the
+snapshots that passed receipt validation and revalidate them before writing; a
+later capture cannot adopt a concurrent edit as its baseline. An authorized recovery
+retry validates each target against its original or restored bytes, so interruption
+between settings and plugin metadata restoration can resume in a fresh process.
+Edited targets, source changes or altered receipts block retry without replacing
+those files. Recovery receipts also bind the installed payloads of active unrelated
+plugins. Changes to those payloads block retry before any registration is restored,
+including edits that introduce a duplicate skill identity. If an active unrelated
+payload cannot be inspected, recovery preparation stops before restoration; preserve
+that plugin and reconcile it explicitly. Unchanged unrelated plugins stay registered.
+Retained caches restore only their orphan marker; interrupted removal of a newly
+created cache resumes only over unchanged, previously recorded paths.
+Failed recovery retains its journal, backups, receipt and residuals. Recovery does
+not silently switch back to forward update.
 
 ## Target a separate Codex home
 
@@ -89,6 +134,29 @@ The selected profile's `config.toml`, plugin cache and discovery paths remain
 under that Codex home. Native commands still receive the actual user home through
 `HOME` and `USERPROFILE`, and receive the selected profile through `CODEX_HOME`.
 Resume refuses a journal created for another normalized Codex home.
+
+## Claude and Pi configuration profiles
+
+| Host | Explicit path | Environment fallback | Default |
+| --- | --- | --- | --- |
+| Codex | `--codex-home` | `CODEX_HOME` | `<user home>/.codex` |
+| Claude Code | `--claude-home` | `CLAUDE_CONFIG_DIR` | `<user home>/.claude` |
+| Pi | `--pi-home` | `PI_CODING_AGENT_DIR` | `<user home>/.pi/agent` |
+
+Explicit paths take precedence over environment variables. `--home` sets the user
+home; it does not change package selection. A custom configuration home requires
+a single-host transaction and has separate selection, lock, journal and backup
+paths. Pass the same host home to plan, update, verify and resume. Native commands
+receive the resolved paths, preventing inherited overrides from redirecting a
+transaction to another profile. Paths are resolved by Node without assuming a
+particular checkout directory or shell. Native integration is tested on Linux;
+Windows and macOS manager behavior has not been verified.
+
+```bash
+CLAUDE_CONFIG_DIR="$HOME/.claude-demo" claude plugin marketplace add .
+npm run skills:update -- --agent claude --claude-home "$HOME/.claude-demo"
+npm run skills:update -- --agent pi --pi-home "$HOME/.pi-demo"
+```
 
 ## Normal update and explicit additions
 

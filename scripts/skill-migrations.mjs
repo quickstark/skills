@@ -102,7 +102,7 @@ function safeAbsolute(value) {
   return text(value) && path.isAbsolute(value) && path.normalize(value) === value && value !== path.parse(value).root;
 }
 
-function observationConflicts(entry, observed, agent, homeDirectory, codexHomeDirectory) {
+function observationConflicts(entry, observed, agent, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory) {
   if (!object(observed)) return ['missing-observation'];
   const failures = [];
   const owned = observed.ownership;
@@ -118,7 +118,7 @@ function observationConflicts(entry, observed, agent, homeDirectory, codexHomeDi
   if (entry.kind === 'resource') {
     const canonical = path.join(homeDirectory, '.agents', 'skills', entry.identity);
     const alias = agent === 'codex' ? path.join(codexHomeDirectory, 'skills', entry.identity)
-      : path.join(homeDirectory, resourceAliases[agent].directory, entry.identity);
+      : path.join(agent === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'skills', entry.identity);
     if (observed.canonicalPath !== canonical || !(observed.path === canonical && observed.linkTarget === null || observed.path === alias && observed.linkTarget === canonical)) failures.push('outside-managed-location');
     if (!entry.acceptedPrior.some((prior) => prior.revision === observed.revision && prior.digest.value === observed.digest?.value)) failures.push('unaccepted-prior-pin-or-digest');
     if (!names(observed.consumers) || observed.consumers.some((consumer) => !['codex', 'claude-code', 'pi'].includes(consumer)) || !observed.consumers.includes(agent)) failures.push('unproven-shared-consumers');
@@ -135,7 +135,7 @@ function observationConflicts(entry, observed, agent, homeDirectory, codexHomeDi
  * Observations/evidence must come from independent current manager/filesystem checks.
  * ready-to-stage never authorizes exposure, retirement, deletion, or rollback execution.
  */
-export function planSkillMigrations({ document = readSkillMigrations(), agent, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), selection, packages, observations, explicitPackages = [], explicitProfile = null, manifest } = {}) {
+export function planSkillMigrations({ document = readSkillMigrations(), agent, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), claudeHomeDirectory = path.join(homeDirectory, '.claude'), piHomeDirectory = path.join(homeDirectory, '.pi/agent'), selection, packages, observations, explicitPackages = [], explicitProfile = null, manifest } = {}) {
   const validated = validateSkillMigrations(document, { manifest });
   if (!validated.valid) throw new Error(`Invalid migration records: ${validated.errors.join('; ')}`);
   if (!['codex', 'claude-code', 'pi'].includes(agent) || !safeAbsolute(homeDirectory) || !safeAbsolute(codexHomeDirectory)) throw new Error('Migration preview requires the selected agent and exact user/Codex home directories.');
@@ -173,7 +173,7 @@ export function planSkillMigrations({ document = readSkillMigrations(), agent, h
     const bindings = [];
     for (const entry of selected) {
       const observed = observedById.get(key(entry));
-      const issues = observationConflicts(entry, observed, agent, homeDirectory, codexHomeDirectory);
+      const issues = observationConflicts(entry, observed, agent, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory);
       conflicts.push(...issues.map((reason) => ({ identity: entry.identity, reason })));
       if (observed) bindings.push(structuredClone({ kind: observed.kind, identity: observed.identity, agent: observed.agent, path: observed.path, canonicalPath: observed.canonicalPath, linkTarget: observed.linkTarget, version: observed.version, revision: observed.revision, digest: observed.digest, publicSkills: observed.publicSkills, consumers: observed.consumers ?? [], ownershipRecord: observed.ownership?.recordId }));
     }

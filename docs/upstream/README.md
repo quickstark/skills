@@ -82,8 +82,8 @@ opt-in never becomes an automatic fallback for ordinary users.
 [PS transition metadata](../../config/skill-transition-packages.json) preserves
 the observed legacy 3.8.0 package while registrations are safely withdrawn.
 Its retained presence is not a seventh target package or an alias. Supported target
-native transactions are Codex and Pi; generated Claude packaging alone does not
-prove a supported Claude migration.
+native transactions are Codex, Claude Code and Pi. Native state, owned payloads
+and selected capability equivalence are verified separately from generated packaging.
 
 Release preparation must synchronize all active manifests/projections after the
 root version changes. The current Changesets action versions and tags only;

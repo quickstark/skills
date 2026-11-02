@@ -165,7 +165,7 @@ export const LEGACY_SKILL_COLLECTIONS = Object.freeze([
     displayName: "QuickStark Skills",
     packageName: "qs-skills",
     codexPlugin: "qs-skills",
-    claudePackageRoot: ".",
+    claudePackageRoot: "packages/qs-skills",
     codexPackageRoot: "codex/plugins/qs-skills",
     piPackageRoot: "pi/packages/qs-skills",
     canonicalRoot: "skills",

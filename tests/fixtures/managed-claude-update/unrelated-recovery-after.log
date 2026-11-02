@@ -1,0 +1,19 @@
+✔ Claude recovery preserves a concurrent settings edit made during native inspection (12546.127762ms)
+✔ Claude interrupted rollback resumes between settings and metadata (16513.947951ms)
+✔ Claude interrupted rollback resumes between settings and metadata and preserves edited settings (13702.789351ms)
+✔ Claude interrupted rollback resumes between settings and metadata and preserves edited metadata (14318.4116ms)
+✔ Claude interrupted rollback resumes between settings and metadata and preserves edited receipt (13349.910089ms)
+✔ Claude interrupted rollback resumes partial removal of a newly exposed cache (17097.553295ms)
+✔ Claude paused rollback resumes with an unchanged unrelated plugin (16703.639783ms)
+✔ Claude paused rollback rejects unrelated plugin body drift before restoring registrations (13459.746927ms)
+✔ Claude paused rollback rejects unrelated plugin identity drift before restoring registrations (13516.54668ms)
+✔ Claude recovery refuses an unverifiable active unrelated payload before any restoration (11911.446046ms)
+✔ interrupted recovery resumes observed restored state without repeating the restore effect (284.809264ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143210.319034

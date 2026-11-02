@@ -34,8 +34,9 @@ compatibility exception. Never weaken canonical policy to repair host discovery.
 Fresh selection is core only. Ordinary update uses saved selection; optional
 packages require explicit selection and accepted replacement evidence. A known
 package, helper reference or source directory does not authorize installation.
-Target native transactions support Codex and Pi only. Generated Claude packaging
-does not establish a supported Claude transaction adapter.
+Target native transactions support Codex, Claude Code and Pi. Claude targets use
+`claude` or `claude-code`, enabled user-scoped packages and verified local marketplace
+bindings. Keep custom host homes, saved selections and recovery journals isolated.
 
 Retain the PS 3.8.0 transition artifact, its marked marketplace visibility and exact
 recorded payload while old registrations need observation and safe withdrawal.

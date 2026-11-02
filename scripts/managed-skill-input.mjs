@@ -9,9 +9,10 @@ import { ADVANCED_INTERNAL_CAPABILITIES } from './advanced-skill-catalog.mjs';
 import { FRONTEND_INTERNAL_CAPABILITIES } from './frontend-skill-catalog.mjs';
 import { VIDEO_INTERNAL_CAPABILITIES } from './video-skill-catalog.mjs';
 import { EXECUTION_INTERNAL_CAPABILITIES } from './execution-skill-catalog.mjs';
+import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { captureManagedSkillPayload } from './managed-skill-migration.mjs';
 import { captureMigrationPath, revalidateMigrationPath } from './migration-filesystem.mjs';
-import { observeNativePackages, runNativePackageCommand } from './migration-native-packages.mjs';
+import { observeNativePackages, runNativePackageCommand, nativePayloadSha256 } from './migration-native-packages.mjs';
 import { verifyAdoptionAcceptance } from './adoption-acceptance.mjs';
 import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from './skill-selection.mjs';
 import { validateSkillMigrations } from './skill-migrations.mjs';
@@ -44,7 +45,7 @@ export function derivePackageAcceptanceObligations(packageId, document) {
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, collection.codexPackageRoot, collection.piPackageRoot, collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
       'config/skill-migrations.json', 'config/skill-provenance.json', 'config/skill-profiles.json', 'docs/skill-run-contract.md',
-      ...['adoption-acceptance', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
+      ...['adoption-acceptance', 'claude-core-migration', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
       ...['qs-skill-catalog', 'ps-skill-catalog', 'skill-collection-registry', 'advanced-skill-catalog', 'frontend-skill-catalog', 'video-skill-catalog', 'execution-skill-catalog', 'optional-command-definition'].map((name) => `scripts/${name}.mjs`)]),
     requiredCriteria: unique([...commonCriteria, ...packageCriteria[packageId]]), requiredChecks: ['package-closure', 'notices', 'behavior', 'native-discovery', ...(packageId === 'qs-video' ? ['video-runtime'] : packageId === 'qs-execution' ? ['unlazy-runtime'] : [])] };
 }
@@ -65,14 +66,19 @@ function nativeJson(result) {
   try { return JSON.parse(result.stdout); } catch { throw new Error('Native inventory JSON is invalid; contents withheld.'); }
 }
 async function gitIdentity(payload, relative, revisions, repositoryRoot, git) {
+  const prefix = relative === '.' ? '' : `${relative}/`;
   const files = payload.snapshot.entries.filter((entry) => entry.kind === 'file');
   const actual = new Map();
-  for (const entry of files) { const bytes = await readFile(path.join(payload.snapshot.path, entry.path)); actual.set(`${relative}/${entry.path}`, { mode: entry.mode & 0o100 ? '100755' : '100644', oid: createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex') }); }
-  await revalidateMigrationPath(payload.snapshot);
+  for (const entry of files) { const bytes = await readFile(path.join(payload.snapshot.path, entry.path)); actual.set(`${prefix}${entry.path}`, { mode: entry.mode & 0o100 ? '100755' : '100644', oid: createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex') }); }
+  for (const snapshot of payload.snapshots ?? [payload.snapshot]) await revalidateMigrationPath(snapshot);
   for (const revision of revisions) {
     let tree; try { tree = await git(['ls-tree', '-rz', '--full-tree', revision, '--', relative], repositoryRoot); } catch { continue; }
-    const entries = tree.stdout.split('\0').filter(Boolean).map((line) => line.match(/^(\d+) (\w+) ([a-f0-9]{40})\t(.+)$/s));
-    const directoryPaths = payload.snapshot.entries.filter((entry) => entry.kind === 'directory' && entry.path).map((entry) => `${relative}/${entry.path}/`);
+    let entries = tree.stdout.split('\0').filter(Boolean).map((line) => line.match(/^(\d+) (\w+) ([a-f0-9]{40})\t(.+)$/s));
+    if (payload.snapshots) {
+      const closure = payload.snapshots.map((snapshot) => path.relative(payload.snapshot.path,snapshot.path).split(path.sep).join('/'));
+      entries = entries.filter((entry) => entry && closure.some((root) => entry[4] === `${prefix}${root}` || entry[4].startsWith(`${prefix}${root}/`)));
+    }
+    const directoryPaths = payload.snapshot.entries.filter((entry) => entry.kind === 'directory' && entry.path).map((entry) => `${prefix}${entry.path}/`);
     if (entries.length === actual.size && entries.length > 0 && entries.every((entry) => entry && entry[2] === 'blob' && actual.get(entry[4])?.oid === entry[3] && actual.get(entry[4])?.mode === entry[1]) && directoryPaths.every((directory) => entries.some((entry) => entry?.[4].startsWith(directory)))) return revision;
   }
   throw new Error('Installed package differs from every trusted prior release tree; preserve modified or unknown bytes.');
@@ -86,15 +92,16 @@ async function publicNames(root, payload) {
   }
   await revalidateMigrationPath(payload.snapshot); return names.sort();
 }
-const proofBinding = (observed) => Object.fromEntries(['kind', 'identity', 'agent', 'path', 'canonicalPath', 'linkTarget', 'version', 'revision', 'digest', 'publicSkills', 'consumers'].map((field) => [field, observed[field] ?? (field === 'consumers' ? [] : null)]));
+const proofBinding = (observed) => ({...(observed.layout ? {layout:observed.layout} : {}), ...Object.fromEntries(['kind', 'identity', 'agent', 'path', 'canonicalPath', 'linkTarget', 'version', 'revision', 'digest', 'publicSkills', 'consumers'].map((field) => [field, observed[field] ?? (field === 'consumers' ? [] : null)]))});
 function ownedObservation(value, nativeOwner = null) { return { ...value, dirty: false, ownership: { manager: 'quickstark', ...(nativeOwner ?? {}), recordId: `${value.agent}:${value.kind}:${value.identity}`, expected: Object.fromEntries(['path', 'canonicalPath', 'linkTarget', 'version', 'revision', 'digest'].map((field) => [field, value[field]])) } }; }
 
 /** Observe production inputs without creating receipts, staging, or changing managers.
  * Inject command execution only for isolated caller fixtures; it is not evidence. */
-export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), selectionPath = selectionRecordPath(homeDirectory), agents = ['codex'], profile = null, withPackages = [], auditPath = 'docs/validation/upstream-adoption-acceptance.json', runtime = {} }) {
+export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), claudeHomeDirectory = path.join(homeDirectory, '.claude'), piHomeDirectory = path.join(homeDirectory, '.pi/agent'), selectionPath = selectionRecordPath(homeDirectory), agents = ['codex'], profile = null, withPackages = [], auditPath = 'docs/validation/upstream-adoption-acceptance.json', runtime = {} }) {
   check(path.isAbsolute(repositoryRoot) && path.isAbsolute(homeDirectory) && path.isAbsolute(codexHomeDirectory) && path.isAbsolute(selectionPath), 'Absolute repository/user home/Codex home/state paths required.');
-  check(agents.length > 0 && new Set(agents).size === agents.length && agents.every((agent) => ['codex', 'pi'].includes(agent)), 'Target-registry transactions support Codex and Pi only; Claude projections require a separately verified native transaction adapter.');
+  check(agents.length > 0 && new Set(agents).size === agents.length && agents.every((agent) => ['codex', 'claude-code', 'pi'].includes(agent)), 'Select Codex, Claude Code, or Pi for native transactions.');
   const git = runtime.runGit ?? runGit; const command = runtime.runCommand ?? runNativePackageCommand;
+  const customOtherHome = claudeHomeDirectory !== path.join(homeDirectory, '.claude') || piHomeDirectory !== path.join(homeDirectory, '.pi/agent');
   const customCodexHome = codexHomeDirectory !== path.join(homeDirectory, '.codex');
   const revision = (await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim(); check(/^[a-f0-9]{40}$/.test(revision), 'Release HEAD is invalid.');
   const [migrationFile, profileFile, repositoryPackage, saved] = await Promise.all([jsonFile(path.join(repositoryRoot, 'config/skill-migrations.json')), jsonFile(path.join(repositoryRoot, 'config/skill-profiles.json')), jsonFile(path.join(repositoryRoot, 'package.json')), readSelectionRecord(selectionPath)]);
@@ -105,19 +112,19 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
   for (const collection of TARGET_SKILL_COLLECTIONS) {
     const obligations = derivePackageAcceptanceObligations(collection.id, document); const artifacts = {};
     for (const agent of agents) {
-      const source = path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : collection.piPackageRoot);
-      const payload = await captureManagedSkillPayload(source); const manifest = await jsonFile(path.join(source, agent === 'codex' ? '.codex-plugin/plugin.json' : 'package.json'));
+      const source = path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot);
+      const payload = await captureManagedSkillPayload(source); const manifest = await jsonFile(path.join(source, agent === 'codex' ? '.codex-plugin/plugin.json' : agent === 'claude-code' ? '.claude-plugin/plugin.json' : 'package.json'));
       check(manifest.value.name === collection.id && manifest.value.version === version, 'Target projection manifest differs from release version/identity.');
-      artifacts[agent] = { source, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 };
+      artifacts[agent] = { source, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256, nativePayloadSha256: nativePayloadSha256(agent,payload.snapshot) };
     }
     packages.push({ id: collection.id, registered: true, version, revision, ...obligations, artifacts });
   }
   const allCollections = [...TARGET_SKILL_COLLECTIONS, LEGACY_SKILL_COLLECTIONS.find((entry) => entry.id === 'ps-skills')];
   const evidenceSnapshots = [];
   for (const agent of agents) {
-    const configPath = agent === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(homeDirectory, '.pi/agent/settings.json');
+    const configPath = agent === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(agent === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'settings.json');
     const configSnapshot = await captureMigrationPath(configPath); check(['file', 'absent'].includes(configSnapshot.kind), 'Native config must be a regular file.'); configs[agent] = configSnapshot;
-    const nativeOptions = { host: agent, homeDirectory, codexHomeDirectory, cwd: repositoryRoot, runCommand: command, command: runtime.commands?.[agent] ?? agent };
+    const nativeOptions = { host: agent, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, cwd: repositoryRoot, runCommand: command, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
     let installed;
     if (agent === 'codex') {
       const inventory = nativeJson(await command(nativeOptions.command, ['plugin', 'list', '--json'], nativeOptions));
@@ -127,6 +134,17 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       check(Array.isArray(inventory.installed), 'Codex inventory lacks installed entries.');
       installed = inventory.installed.filter((entry) => entry.pluginId?.endsWith('@quickstark'));
       check(installed.every((entry) => allCollections.some((collection) => entry.pluginId === `${collection.id}@quickstark`)), 'Unknown QuickStark native package must be reconciled before migration.');
+    } else if (agent === 'claude-code') {
+      const inventory = nativeJson(await command(nativeOptions.command, ['plugin', 'list', '--json'], nativeOptions));
+      const markets = nativeJson(await command(nativeOptions.command, ['plugin', 'marketplace', 'list', '--json'], nativeOptions));
+      check(Array.isArray(inventory) && Array.isArray(markets), 'Claude native inventory shape is unsupported.');
+      const market = markets.filter((entry) => entry.name === 'quickstark');
+      check(market.length === 1 && market[0].source === 'directory' && market[0].path === repositoryRoot && market[0].installLocation === repositoryRoot, `Claude prerequisite: register this verified local marketplace with claude plugin marketplace add ${JSON.stringify(repositoryRoot)}; then rerun the selected plan. Existing different registrations require a separate reviewed marketplace transition.`);
+      installed = inventory.filter((entry) => entry.id?.endsWith('@quickstark')).map((entry) => {
+        check(entry.scope === 'user' && entry.enabled === true, 'Claude managed plugins require enabled user-scoped registrations.');
+        check(allCollections.some((collection) => entry.id === `${collection.id}@quickstark`), 'Unknown QuickStark Claude package must be reconciled before migration.');
+        return { ...entry, name: entry.id.split('@')[0], installed: true, source: { source: 'local', path: entry.readFromFolder } };
+      });
     } else {
       const settings = await jsonFile(configPath, {}); check(settings.value && !Array.isArray(settings.value) && (!settings.value.packages || Array.isArray(settings.value.packages)), 'Pi settings shape is unsupported.');
       installed = [];
@@ -143,10 +161,16 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     for (const item of installed) {
       const name = agent === 'codex' ? item.pluginId.split('@')[0] : item.name; const collection = allCollections.find((entry) => entry.id === name);
       check(/^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(item.version ?? ''), 'Native installed version must be an exact semantic version.');
-      check(item.installed === true && item.enabled === true && item.source?.source === 'local' && item.source.path === path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : collection.piPackageRoot), 'Native ownership requires enabled exact local package registration.');
+      check(item.installed === true && item.enabled === true && item.source?.source === 'local', 'Native ownership requires enabled exact local package registration.');
       if (agent === 'codex') check(item.pluginId === `${name}@quickstark` && item.marketplaceName === 'quickstark', 'Native package owner conflicts with the observed QuickStark marketplace.');
-      const canonicalPath = agent === 'codex' ? path.join(codexHomeDirectory, 'plugins/cache/quickstark', name, item.version) : item.source.path;
-      const payload = await captureManagedSkillPayload(canonicalPath); const observedNames = await publicNames(canonicalPath, payload);
+      const canonicalPath = agent !== 'pi' ? path.join(agent === 'codex' ? codexHomeDirectory : claudeHomeDirectory, 'plugins/cache/quickstark', name, item.version) : item.source.path;
+      const cachedManifest = agent === 'claude-code' && name === 'qs-skills' ? await jsonFile(path.join(canonicalPath,'.claude-plugin/plugin.json')) : null;
+      const legacyRootCore = cachedManifest && Array.isArray(cachedManifest.value.skills) && cachedManifest.value.skills.some((skill) => typeof skill === 'string' && /^\.\/skills\/(engineering|productivity)\//.test(skill));
+      const expectedSource = path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot);
+      check(item.source.path === expectedSource || legacyRootCore && item.source.path === repositoryRoot, 'Native ownership requires enabled exact local package registration.');
+      const payload = legacyRootCore ? await captureLegacyClaudeCore(canonicalPath) : await captureManagedSkillPayload(canonicalPath);
+      check(!legacyRootCore || payload.version === item.version, 'Legacy Claude core cache version differs from registration.');
+      const observedNames = legacyRootCore ? payload.publicNames : await publicNames(canonicalPath, payload);
       // An older active package may lack newly added commands. It must still
       // match an entire trusted Git tree below; a subset alone proves no ownership.
       // Removed/renamed commands and the retained PS payload need explicit migration.
@@ -154,28 +178,34 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
         && observedNames.every((name) => collection.publicCommands.includes(name));
       check(same(observedNames, [...collection.publicCommands].sort()) || additivePrior, 'Installed public names differ from the known package catalog.');
       const legacy = document.migrations.flatMap((migration) => migration.legacy).find((entry) => entry.kind === 'package' && entry.identity === name);
-      const revisions = legacy ? legacy.acceptedPrior.filter((prior) => prior.version === item.version && prior.digests[agent]?.value === payload.payloadDigest.value).map((prior) => prior.revision) : knownRevisions;
+      const revisions = legacy ? legacy.acceptedPrior.filter((prior) => prior.version === item.version && prior.digests[agent]?.value === payload.payloadDigest.value).map((prior) => prior.revision) : [...knownRevisions];
       check(revisions.length > 0, 'Retained package version and bytes have no accepted immutable baseline.');
-      const priorRevision = await gitIdentity(payload, agent === 'codex' ? collection.codexPackageRoot : collection.piPackageRoot, revisions, repositoryRoot, git);
+      if (legacyRootCore) {
+        // Bounded ancestor history discovers installations made before selection records
+        // existed. Exact manifest, declared skills and private bytes still have to match.
+        const history = await git(['log','-n','32','--format=%H','HEAD','--','.claude-plugin/plugin.json'],repositoryRoot);
+        revisions.push(...history.stdout.trim().split(/\s+/).filter((value) => /^[a-f0-9]{40}$/.test(value)));
+      }
+      const priorRevision = await gitIdentity(payload, legacyRootCore ? '.' : agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot, unique(revisions), repositoryRoot, git);
       // Pi ownership follows its exact maintained local source registration; Codex
       // additionally supplies and verifies the actual marketplace owner above.
-      const observed = ownedObservation({ kind: 'package', identity: name, agent, path: canonicalPath, canonicalPath, linkTarget: null, version: item.version, revision: priorRevision, digest: payload.payloadDigest, publicSkills: observedNames, consumers: [] }, { packageId: name, marketplace: 'quickstark' });
+      const observed = ownedObservation({ kind: 'package', identity: name, agent, path: canonicalPath, canonicalPath, linkTarget: null, version: item.version, revision: priorRevision, digest: payload.payloadDigest, publicSkills: observedNames, consumers: [], ...(legacyRootCore ? {layout:'claude-root-core'} : {}) }, { packageId: name, marketplace: 'quickstark' });
       observations.push(observed); verifiedOwnership.set(observed.ownership.recordId, { binding: proofBinding(observed), evidenceSnapshots: [configSnapshot, migrationFile.snapshot] });
-      bindings.push({ id: `observed-${name}`, name, version: item.version, source: item.source.path, payloadSha256: payload.snapshot.contentSha256, publicNames: observedNames, ownershipRecord: observed.ownership.recordId, ...(agent === 'codex' ? { marketplace: 'quickstark', marketplaceRoot: path.join(repositoryRoot, 'codex'), installedOnly: item.version !== version || name === 'ps-skills' } : {}) });
+      bindings.push({ id: `observed-${name}`, name, version: item.version, source: legacyRootCore ? expectedSource : item.source.path, ...(legacyRootCore ? {legacyRootCore:true} : {}), payloadSha256: nativePayloadSha256(agent,payload.snapshot), publicNames: observedNames, ownershipRecord: observed.ownership.recordId, ...(agent !== 'pi' ? { marketplace: 'quickstark', marketplaceRoot: agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot, installedOnly: Boolean(legacyRootCore) || item.version !== version || name === 'ps-skills' } : {}) });
     }
     for (const pkg of packages) {
       const artifact = pkg.artifacts[agent]; const existing = bindings.find((binding) => binding.name === pkg.id && binding.version === pkg.version);
-      if (existing) { check(existing.payloadSha256 === artifact.contentSha256, 'Same-version installed package differs from current release; a new version is required.'); existing.installedOnly = false; continue; }
-      bindings.push({ id: `release-${pkg.id}`, name: pkg.id, version: pkg.version, source: artifact.source, payloadSha256: artifact.contentSha256, publicNames: pkg.publicSkills, ownershipRecord: `release:${revision}:${pkg.id}`, ...(agent === 'codex' ? { marketplace: 'quickstark', marketplaceRoot: path.join(repositoryRoot, 'codex') } : {}) });
+      if (existing) { check(!existing.legacyRootCore, 'Replacing a root-based Claude core requires a new release version; preserve its existing cache.'); check(existing.payloadSha256 === artifact.nativePayloadSha256, 'Same-version installed package differs from current release; a new version is required.'); existing.installedOnly = false; continue; }
+      bindings.push({ id: `release-${pkg.id}`, name: pkg.id, version: pkg.version, source: artifact.source, payloadSha256: artifact.nativePayloadSha256, publicNames: pkg.publicSkills, ownershipRecord: `release:${revision}:${pkg.id}`, ...(agent !== 'pi' ? { marketplace: 'quickstark', marketplaceRoot: agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot } : {}) });
     }
     const observedNative = await observeNativePackages({ ...nativeOptions, packages: bindings });
     unrelatedNames[agent] = observedNative.evidence.unrelatedPublicNames ?? [];
     await revalidateMigrationPath(configSnapshot);
     native[agent] = { packages: bindings, command: nativeOptions.command }; configs[agent] = observedNative.evidence.configSnapshot;
   }
-  if (customCodexHome) {
+  if (customCodexHome || customOtherHome) {
     for (const legacy of document.migrations.flatMap((migration) => migration.legacy).filter((entry) => entry.kind === 'resource')) {
-      const local = await captureMigrationPath(path.join(codexHomeDirectory, 'skills', legacy.identity));
+      const local = await captureMigrationPath(path.join(agents[0] === 'codex' ? codexHomeDirectory : agents[0] === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'skills', legacy.identity));
       check(local.kind === 'absent', `Custom Codex profile contains legacy standalone resource ${legacy.identity}; preserve it and reconcile explicitly.`);
     }
   } else {
@@ -185,7 +215,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     const canonicalPath = path.join(homeDirectory, '.agents/skills', legacy.identity); const canonical = await captureMigrationPath(canonicalPath);
     const aliases = {};
     for (const [agent, root] of Object.entries(roots)) {
-      const aliasPath = agent === 'codex' ? path.join(codexHomeDirectory, 'skills', legacy.identity) : path.join(homeDirectory, root, legacy.identity);
+      const aliasPath = agent === 'codex' ? path.join(codexHomeDirectory, 'skills', legacy.identity) : path.join(agent === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'skills', legacy.identity);
       const alias = await captureMigrationPath(aliasPath);
       if (alias.kind !== 'absent') { check(alias.kind === 'symlink' && path.resolve(path.dirname(alias.path), alias.target) === canonicalPath, `Changed or duplicate ${agent} standalone resource ${legacy.identity}; preserve and reconcile.`); aliases[agent] = alias; }
     }
@@ -195,7 +225,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     const payload = await captureManagedSkillPayload(canonicalPath);
     check(legacy.acceptedPrior.some((prior) => prior.revision === authority.source.revision && prior.digest.value === payload.payloadDigest.value), `Contributor ${legacy.identity} has modified or unknown content; retain it.`);
     const consumers = unique([...agents, ...Object.keys(aliases), ...Object.keys(configs)]);
-    for (const [other, config] of [['codex', path.join(codexHomeDirectory, 'config.toml')], ['pi', path.join(homeDirectory, '.pi/agent/settings.json')]]) if (!consumers.includes(other) && (await captureMigrationPath(config)).kind !== 'absent') consumers.push(other);
+    for (const [other, config] of [['codex', path.join(codexHomeDirectory, 'config.toml')], ['pi', path.join(piHomeDirectory, 'settings.json')], ['claude-code', path.join(claudeHomeDirectory, 'settings.json')]]) if (!consumers.includes(other) && (await captureMigrationPath(config)).kind !== 'absent') consumers.push(other);
     for (const agent of agents) {
       const alias = aliases[agent]; const observed = ownedObservation({ kind: 'resource', identity: legacy.identity, agent, path: alias?.path ?? canonicalPath, canonicalPath, linkTarget: alias ? canonicalPath : null, version: null, revision: authority.source.revision, digest: payload.payloadDigest, publicSkills: legacy.publicSkills, consumers });
       observations.push(observed); verifiedOwnership.set(observed.ownership.recordId, { binding: proofBinding(observed), evidenceSnapshots: [lock.snapshot, migrationFile.snapshot] });
@@ -211,7 +241,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     check(!selectedNames.some((name) => unrelatedNames[agent].includes(name)), 'Selected future public identities conflict with an observed unrelated native package; preserve and reconcile before update.');
     for (const root of ['shared', agent]) for (const name of selectedNames) {
       const exactPath = root === 'shared' ? path.join(homeDirectory, '.agents/skills', name)
-        : agent === 'codex' ? path.join(codexHomeDirectory, 'skills', name) : path.join(homeDirectory, roots[agent], name);
+        : agent === 'codex' ? path.join(codexHomeDirectory, 'skills', name) : path.join(agent === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'skills', name);
       const existing = await captureMigrationPath(exactPath);
       check(existing.kind === 'absent', `Selected public identity ${name} already has an independently managed standalone path; preserve and reconcile before update.`);
       evidenceSnapshots.push(existing);
@@ -227,7 +257,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     check((await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim() === revision, 'Release HEAD changed during evidence verification.');
     return verified;
   };
-  return { revision, cwd: repositoryRoot, homeDirectory, codexHomeDirectory, selectionPath, agents, profile, withPackages, profiles: profileFile.value, document, packages, observations, native, evidenceSnapshots,
+  return { revision, cwd: repositoryRoot, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, selectionPath, agents, profile, withPackages, profiles: profileFile.value, document, packages, observations, native, evidenceSnapshots,
     runtime: { observeNativePackages: (options) => observeNativePackages({ ...options, runCommand: command }), verifyAcceptance: acceptance,
       verifyOwnership: async (observed) => { const proof = verifiedOwnership.get(observed.ownership.recordId); check(proof && same(proof.binding, proofBinding(observed)), 'Ownership observation changed after native/lock verification.'); for (const snapshot of proof.evidenceSnapshots) await revalidateMigrationPath(snapshot); return proof; },
       nativeOptions: Object.fromEntries(agents.map((agent) => [agent, { runCommand: command }])) } };

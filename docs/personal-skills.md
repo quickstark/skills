@@ -19,11 +19,12 @@ and map accepted replacements. Machine selection lives at
 selection. Unknown packages, ambiguous ownership and capability expansion block.
 Dropping a selected name does not authorize deletion.
 
-Target transactions support Codex and Pi only. Claude projections and historical
-inventory/link support do not constitute a verified Claude native transaction.
-Do not pass Claude to the selected updater or fall back to its legacy all-package
-path. Portable selected resources remain under `~/.agents/skills`; native package
-state remains owned by Codex or Pi. Never copy system skills or plugin caches into
+Target transactions support Codex, Claude Code and Pi. Claude accepts both
+`--agent claude` and `--agent claude-code`, using user-scoped native plugin
+registrations, verified payloads and journaled backups. Custom Claude and Pi homes
+have isolated updater state, like custom Codex homes. Portable selected resources
+remain under `~/.agents/skills`; native package state remains owned by the host.
+Never copy system skills or plugin caches into
 the canonical tree.
 
 ## Plan, save and recover
