@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.3.3
+
+### Patch Changes
+
+- Isolate native package-manager commands from inherited OpenAI workload identity so Codex plugin inventory does not stall during authentication. Preserve ordinary authentication, the parent environment, selected homes and existing timeout and ownership checks. Add subprocess regression coverage and refresh the affected acceptance evidence.
+
 ## 4.3.2
 
 ### Patch Changes
