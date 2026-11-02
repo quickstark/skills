@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.3.2
+
+### Patch Changes
+
+- Keep package projection verification independent of terminal color settings. Write registry probe results as plain text and exercise the probe with forced color enabled so Codex update verification does not fail on ANSI-formatted command counts.
+
 ## 4.3.1
 
 ### Patch Changes

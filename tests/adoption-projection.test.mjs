@@ -76,7 +76,10 @@ test('isolated projections expose only public roots, preserve private dependenci
         }
       }
       if (format !== 'pi') {
-        const imported = await run(process.execPath, ['--input-type=module', '-e', 'const m=await import(process.argv[1]); console.log(m.PUBLIC_COMMANDS.length); console.log(m.codexPublicSkillLiteral("qs-visual-parity"));', join(root, 'scripts/skill-collection-registry.mjs')]);
+        // Keep this machine-readable probe exact even in color-enabled terminals.
+        const imported = await run(process.execPath, ['--input-type=module', '-e', 'const m=await import(process.argv[1]); process.stdout.write(m.PUBLIC_COMMANDS.length + "\\n" + m.codexPublicSkillLiteral("qs-visual-parity") + "\\n");', join(root, 'scripts/skill-collection-registry.mjs')], {
+          env: { ...process.env, FORCE_COLOR: '1' },
+        });
         assert.equal(imported.stdout.trim(), '39\n$qs-advanced:qs-visual-parity');
       }
       if (collection.id === 'qs-frontend') {
