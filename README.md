@@ -26,9 +26,8 @@ installs or starts another root automatically.
 
 Use an existing Node/npm installation and the CLI for your selected host. Keep
 the repository checkout at a stable path: native package registrations refer to
-it. The transactional updater supports Codex and Pi. Claude packages are generated,
-but this updater does not support Claude installation or migration. The
-[installation guide](./docs/install-and-update-skills.md) covers both supported hosts.
+it. The transactional updater supports Codex, Claude Code and Pi. The
+[installation guide](./docs/install-and-update-skills.md) covers all three hosts.
 
 For a fresh Codex setup:
 
@@ -41,9 +40,10 @@ npm run skills:plan -- --json --agent codex
 npm run skills:update -- --agent codex
 ```
 
-Use `--agent pi` for Pi, or repeat `--agent` to select both installed hosts. Omit
-the Codex marketplace command on a Pi-only machine. Register the existing local
-`./codex` directory only for first-time Codex setup.
+Use `--agent claude` (alias `claude-code`) for Claude Code or `--agent pi` for Pi.
+Repeat `--agent` to select several installed hosts, independently of the agent
+running the command. For first-time Claude setup, run `claude plugin marketplace
+add .` from this checkout. Pi needs no marketplace registration.
 An existing marketplace identity/path mismatch needs a separate reviewed action;
 these instructions do not authorize automatically repointing it.
 The plan is read-only; inspect its selection and conflicts before running update.
@@ -89,7 +89,9 @@ npm run skills:verify -- --agent codex --codex-home "$HOME/.codex-demo"
 `--codex-home` overrides inherited `CODEX_HOME`; otherwise the updater uses
 `<user home>/.codex`. It isolates saved selection and transaction state by Codex
 home. `--home` remains the operating-system user home, while `--profile` chooses
-a QuickStark package selection. Custom Codex homes are Codex-only transactions.
+a QuickStark package selection. Custom homes require a single-host transaction. Claude and Pi likewise accept
+`--claude-home` / `CLAUDE_CONFIG_DIR` and `--pi-home` / `PI_CODING_AGENT_DIR`; explicit
+flags override environment variables and each custom home has separate updater state.
 
 The [control-plane guide](./docs/personal-skills.md) explains pinned resources,
 ownership checks, migration journals and recovery. Do not copy installed caches

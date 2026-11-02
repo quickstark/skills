@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
+import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { runMigrationTransaction } from '../scripts/migration-transaction.mjs';
+import { runMigrationTransaction, readMigrationJournal } from '../scripts/migration-transaction.mjs';
 import { mkdtemp, mkdir, writeFile, readFile, rm, appendFile, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
+import { createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 const nativeFixtureProgram = `
@@ -32,24 +33,29 @@ async function fixture(t, host, { real = false } = {}) {
     const source = path.join(market, 'plugins', name); await mkdir(path.join(source, 'skills', name), { recursive: true });
     await writeFile(path.join(source, 'skills', name, 'SKILL.md'), `---\nname: ${name}\ndescription: Fixture command.\n---\nPerform the isolated fixture.\n`);
     if (host === 'codex') { await mkdir(path.join(source, '.codex-plugin')); await writeFile(path.join(source, '.codex-plugin/plugin.json'), JSON.stringify({ name, version, skills: './skills/' })); }
+    else if (host === 'claude-code') { await mkdir(path.join(source,'.claude-plugin')); await writeFile(path.join(source,'.claude-plugin/plugin.json'),JSON.stringify({name,version,skills:[`./skills/${name}`]})); }
     else await writeFile(path.join(source, 'package.json'), JSON.stringify({ name, version, pi: { skills: ['./skills'] } }));
     const payload = await captureMigrationPath(source);
-    packages.push({ id, name, version, source, payloadSha256: payload.contentSha256, publicNames: [name], ownershipRecord: 'fixture-owned', marketplace: 'qs-native-fixture', marketplaceRoot: market });
+    packages.push({ id, name, version, source, payloadSha256: nativePayloadSha256(host,payload), publicNames: [name], ownershipRecord: 'fixture-owned', marketplace: 'qs-native-fixture', marketplaceRoot: market });
   }
   await writeFile(path.join(market, '.agents/plugins/marketplace.json'), JSON.stringify({ name: 'qs-native-fixture', plugins: packages.map((pkg) => ({ name: pkg.name, source: { source: 'local', path: `./plugins/${pkg.name}` } })) }));
-  const options = { host, homeDirectory, cwd: base, packages, backupRoot };
+  const options = { host, homeDirectory, codexHomeDirectory:path.join(homeDirectory,'.codex'), cwd: base, packages, backupRoot };
   if (!real) { const program = path.join(base, 'native-fixture.mjs'); await writeFile(program, nativeFixtureProgram); options.runCommand = (command, args, context) => runNativePackageCommand(process.execPath, [program, host, ...args], context); }
-  const command = (args) => (options.runCommand ?? runNativePackageCommand)(host, args, options);
+  const command = (args) => (options.runCommand ?? runNativePackageCommand)(host === 'claude-code' ? 'claude' : host, args, options);
   if (host === 'codex') {
     await writeFile(path.join(homeDirectory, '.codex/config.toml'), '# unrelated user preference\nmodel = "fixture-preserved"\n');
     await command(['plugin', 'marketplace', 'add', market]); await command(['plugin', 'add', 'ps-probe@qs-native-fixture', '--json']);
+  } else if (host === 'claude-code') {
+    await mkdir(path.join(market, '.claude-plugin'), {recursive:true});
+    await writeFile(path.join(market, '.claude-plugin/marketplace.json'), JSON.stringify({name:'qs-native-fixture',owner:{name:'Fixture'},plugins:packages.map(pkg=>({name:pkg.name,source:`./plugins/${pkg.name}`}))}));
+    await command(['plugin','marketplace','add',market]);
+    await command(['plugin','install','ps-probe@qs-native-fixture','--scope','user']);
   } else {
     await writeFile(path.join(homeDirectory, '.pi/agent/settings.json'), JSON.stringify({ theme: 'community-kept', packages: ['npm:community-theme-fixture'], quietStartup: true }, null, 2));
     await command(['install', packages[0].source]);
   }
-  const configPath = path.join(homeDirectory, host === 'codex' ? '.codex/config.toml' : '.pi/agent/settings.json');
-  const targets = [{ path: configPath, ownershipRecord: 'fixture-owned' }];
-  if (host === 'codex') targets.push(...packages.map((pkg) => ({ path: path.join(homeDirectory, '.codex/plugins/cache', pkg.marketplace, pkg.name, pkg.version), ownershipRecord: 'fixture-owned' })));
+  const configPath = path.join(homeDirectory, host === 'codex' ? '.codex/config.toml' : host === 'claude-code' ? '.claude/settings.json' : '.pi/agent/settings.json');
+  const targets = nativePackageOwnedTargets(options);
   const context = { transactionId: 'isolated-native-fixture' };
   const step = (before, packageId, phase) => ({ id: `${phase}-${packageId}`, phase, operation: `native-${phase}`, native: { host, packageId }, ownedTargets: targets, before, after: predictNativePackageTransition(before, { packageId, phase, packages }) });
   return { base, options, configPath, context, step, command, adapter: createNativePackageAdapter(options) };
@@ -272,4 +278,230 @@ for (const host of ['codex', 'pi']) test(`real isolated ${host} preserves overla
   await writeFile(path.join(vendorSkill, 'SKILL.md'), '---\nname: qs-probe\ndescription: Conflicting independent vendor.\n---\nVendor content.\n');
   await (await import('node:fs/promises')).rename(vendorSkill, path.join(vendorRoots[0], 'skills/qs-probe'));
   await assert.rejects(observeNativePackages(args.options), /Duplicate native public identities/);
+});
+
+
+test('real isolated Claude withdrawal/exposure retains caches, preserves settings, and restores exact backups', {skip:!available('claude')}, async t => {
+  const args = await fixture(t, 'claude-code', {real:true});
+  const originalSettings = await readFile(args.configPath);
+  const original = (await observeNativePackages(args.options)).state;
+  const withdraw = args.step(original, 'old', 'withdraw');
+  const oldBackup = await args.adapter.prepare(withdraw, args.context);
+  await args.adapter.apply(withdraw, args.context);
+  assert.deepEqual(await args.adapter.inspect(withdraw, args.context), withdraw.after);
+  assert.equal(withdraw.after.caches.find(entry=>entry.id==='old').kind, 'directory');
+  const expose = args.step(withdraw.after, 'new', 'expose');
+  const newBackup = await args.adapter.prepare(expose, args.context);
+  await args.adapter.apply(expose, args.context);
+  assert.deepEqual(await args.adapter.inspect(expose, args.context), expose.after);
+  await args.adapter.recover(expose, newBackup.reference, args.context);
+  await args.adapter.recover(withdraw, oldBackup.reference, args.context);
+  assert.deepEqual(await args.adapter.inspect(withdraw, args.context), original);
+  assert.deepEqual(await readFile(args.configPath), originalSettings);
+  await appendFile(path.join(args.options.homeDirectory,'.claude/plugins/cache/qs-native-fixture/ps-probe/1.0.0/skills/ps-probe/SKILL.md'), 'user edit');
+  await assert.rejects(observeNativePackages(args.options), /cached payload differs/);
+});
+
+test('native commands isolate inherited Claude and Pi config overrides in explicit homes', async t => {
+  const base=await mkdtemp(path.join(tmpdir(),'qs-native-profile-'));t.after(()=>rm(base,{recursive:true,force:true}));
+  const result=await runNativePackageCommand(process.execPath,['-e','console.log(JSON.stringify({claude:process.env.CLAUDE_CONFIG_DIR,pi:process.env.PI_CODING_AGENT_DIR}))'],{homeDirectory:base,cwd:base});
+  assert.deepEqual(JSON.parse(result.stdout),{claude:path.join(base,'.claude'),pi:path.join(base,'.pi/agent')});
+});
+
+test('real isolated Claude updates the same selector and recovers the old version without changing its marketplace', {skip:!available('claude')}, async t => {
+  const args=await fixture(t,'claude-code',{real:true});
+  const old={...args.options.packages[0],installedOnly:true};
+  const manifestPath=path.join(old.source,'.claude-plugin/plugin.json');
+  const manifest=JSON.parse(await readFile(manifestPath));manifest.version='2.0.0';await writeFile(manifestPath,JSON.stringify(manifest));
+  const newer={...old,id:'release',version:'2.0.0',installedOnly:false,payloadSha256:nativePayloadSha256('claude-code',await captureMigrationPath(old.source))};
+  const options={...args.options,packages:[old,newer]};const adapter=createNativePackageAdapter(options);
+  const original=(await observeNativePackages(options)).state;
+  const step=(before,pkg,phase)=>({id:`${phase}-${pkg.id}`,phase,operation:`native-${phase}`,native:{host:'claude-code',packageId:pkg.id},ownedTargets:nativePackageOwnedTargets(options),before,after:predictNativePackageTransition(before,{packageId:pkg.id,phase,packages:options.packages})});
+  const withdraw=step(original,old,'withdraw');const oldBackup=await adapter.prepare(withdraw,args.context);await adapter.apply(withdraw,args.context);
+  const expose=step(withdraw.after,newer,'expose');const newBackup=await adapter.prepare(expose,args.context);await adapter.apply(expose,args.context);
+  assert.deepEqual(await adapter.inspect(expose,args.context),expose.after);
+  await adapter.recover(expose,newBackup.reference,args.context);await adapter.recover(withdraw,oldBackup.reference,args.context);
+  assert.deepEqual(await adapter.inspect(withdraw,args.context),original);
+});
+
+async function claudeDiscoveredCommands({homeDirectory,cwd}) {
+  // Initialization enumerates commands without submitting a model turn.
+  return new Promise((resolve,reject)=>{
+    const child=spawn('claude',['--print','--input-format','stream-json','--output-format','stream-json','--verbose'],{cwd,
+      env:{...process.env,HOME:homeDirectory,USERPROFILE:homeDirectory,CLAUDE_CONFIG_DIR:path.join(homeDirectory,'.claude')}});
+    let buffer='';let settled=false;
+    const finish=(error,names)=>{if(settled)return;settled=true;clearTimeout(timer);
+      const complete=()=>error?reject(error):resolve(names);
+      // Fixture cleanup must wait until the CLI stops writing to its isolated home.
+      if(child.exitCode!==null||child.signalCode!==null)complete();else child.once('close',complete);
+      child.stdin.end();child.kill('SIGTERM');};
+    const timer=setTimeout(()=>finish(new Error('Claude native command discovery timed out.')),30000);
+    child.stderr.resume();
+    child.on('error',error=>finish(error));child.on('close',()=>{if(!settled)finish(new Error('Claude exited before command discovery.'));});
+    child.stdout.on('data',bytes=>{
+      buffer+=bytes;assert.ok(buffer.length<4*1024*1024,'Bounded Claude discovery response required.');
+      let end;while((end=buffer.indexOf('\n'))>=0){const line=buffer.slice(0,end);buffer=buffer.slice(end+1);if(!line.trim())continue;
+        const value=JSON.parse(line);if(value.type==='control_response'&&value.response?.request_id==='fixture-init'){
+          const commands=value.response.response?.commands;
+          if(!Array.isArray(commands))finish(new Error('Claude initialization omitted commands.'));
+          else finish(null,commands.map(entry=>entry.name));
+        }
+      }
+    });
+    child.stdin.write(JSON.stringify({type:'control_request',request_id:'fixture-init',request:{subtype:'initialize'}})+'\n');
+  });
+}
+
+test('real isolated Claude installs every maintained projection with exactly the registered public names', {skip:!available('claude')}, async t=>{
+  const {TARGET_SKILL_COLLECTIONS}=await import('../scripts/skill-collection-registry.mjs');
+  const repositoryRoot=path.resolve(import.meta.dirname,'..');
+  const homeDirectory=await mkdtemp(path.join(tmpdir(),'qs-maintained-claude-'));t.after(()=>rm(homeDirectory,{recursive:true,force:true}));
+  const options={host:'claude-code',homeDirectory,cwd:repositoryRoot};
+  await runNativePackageCommand('claude',['plugin','marketplace','add',repositoryRoot],options);
+  const packages=[];
+  for(const collection of TARGET_SKILL_COLLECTIONS) {
+    const source=path.join(repositoryRoot,collection.claudePackageRoot);
+    const manifest=JSON.parse(await readFile(path.join(source,'.claude-plugin/plugin.json')));
+    packages.push({id:collection.id,name:collection.id,version:manifest.version,source,payloadSha256:nativePayloadSha256('claude-code',await captureMigrationPath(source)),
+      publicNames:collection.publicCommands,ownershipRecord:'isolated-maintained-projection',marketplace:'quickstark',marketplaceRoot:repositoryRoot});
+    await runNativePackageCommand('claude',['plugin','validate',source,'--strict'],options);
+    await runNativePackageCommand('claude',['plugin','install',`${collection.id}@quickstark`,'--scope','user'],options);
+  }
+  const state=(await observeNativePackages({...options,packages})).state;
+  assert.deepEqual(state.native.packages.map(entry=>entry.id).sort(),TARGET_SKILL_COLLECTIONS.map(entry=>entry.id).sort());
+  assert.deepEqual(state.native.packages.flatMap(entry=>entry.publicNames).sort(),TARGET_SKILL_COLLECTIONS.flatMap(entry=>entry.publicCommands).sort());
+  assert.equal(state.native.packages.flatMap(entry=>entry.publicNames).length,39);
+  const workspace=path.join(homeDirectory,'workspace');await mkdir(workspace);
+  const discovered=(await claudeDiscoveredCommands({homeDirectory,cwd:workspace})).filter(name=>name.startsWith('qs-')).sort();
+  const expected=TARGET_SKILL_COLLECTIONS.flatMap(collection=>collection.publicCommands.map(name=>`${collection.id}:${name}`)).sort();
+  assert.deepEqual(discovered,expected);
+
+});
+
+test('Claude recovery preserves a concurrent settings edit made during native inspection', {skip:!available('claude')}, async t => {
+  const args=await fixture(t,'claude-code',{real:true});
+  const original=(await observeNativePackages(args.options)).state;
+  const step={...args.step(original,'old','withdraw'),adapter:'native'};
+  let recovering=false;let injected=false;
+  const adapter=createNativePackageAdapter({...args.options,runCommand:async(command,argv,options)=>{
+    const result=await runNativePackageCommand(command,argv,options);
+    if(recovering&&!injected&&argv[1]==='marketplace'&&argv[2]==='list'){
+      injected=true;const settings=JSON.parse(await readFile(args.configPath));settings.theme='concurrent-user-edit';await writeFile(args.configPath,JSON.stringify(settings));
+    }
+    return result;
+  }});
+  const input={journalPath:path.join(args.base,'journal/transaction.jsonl'),ownerId:'isolated-regression',
+    adapters:{native:{...adapter,recover:async(...values)=>{recovering=true;return adapter.recover(...values);}}},
+    plan:{schemaVersion:1,id:args.context.transactionId,revision:'a'.repeat(40),evidenceHash:'b'.repeat(64),discoveryRoots:[path.join(args.options.homeDirectory,'.claude/plugins/cache')],stagingRoots:[path.join(args.base,'staging')],ownedRoots:[args.base],steps:[step]}};
+  assert.equal((await runMigrationTransaction(input)).status,'complete');
+  const result=await runMigrationTransaction({...input,mode:'recover',recoveryAuthority:{transactionId:input.plan.id,operation:'restore-journaled-owned-effects',source:'isolated-fixture'}});
+  assert.equal(injected,true);
+  assert.equal(JSON.parse(await readFile(args.configPath)).theme,'concurrent-user-edit');
+  assert.equal(result.status,'recovery-failed');
+});
+
+async function interruptClaudeRecovery(args, recovery, cache = null) {
+  // A separate process loses all adapter memory after the selected filesystem effect.
+  const program=`import fs from 'node:fs';import path from 'node:path';import {syncBuiltinESMExports} from 'node:module';
+    import {runMigrationTransaction} from ${JSON.stringify(new URL('../scripts/migration-transaction.mjs',import.meta.url).href)};
+    import {createNativePackageAdapter} from ${JSON.stringify(new URL('../scripts/migration-native-packages.mjs',import.meta.url).href)};
+    const {input,options,settings,cache}=JSON.parse(process.argv[1]);const rename=fs.promises.rename;const unlink=fs.promises.unlink;
+    fs.promises.rename=async(from,to)=>{const result=await rename(from,to);if(!cache&&to===settings)throw new Error('Interrupted after atomic settings restore.');return result;};
+    fs.promises.unlink=async(file)=>{const result=await unlink(file);if(cache&&file.startsWith(cache+path.sep))throw new Error('Interrupted during owned cache removal.');return result;};syncBuiltinESMExports();
+    console.log(JSON.stringify(await runMigrationTransaction({...input,adapters:{native:createNativePackageAdapter(options)}})));`;
+  return JSON.parse((await runNativePackageCommand(process.execPath,['--input-type=module','-e',program,JSON.stringify({input:recovery,options:args.options,settings:args.configPath,cache})],args.options)).stdout);
+}
+
+for (const edit of [null, 'settings', 'metadata', 'receipt']) test(`Claude interrupted rollback resumes between settings and metadata${edit ? ` and preserves edited ${edit}` : ''}`, {skip:!available('claude')}, async t => {
+  const args=await fixture(t,'claude-code',{real:true});
+  const original=(await observeNativePackages(args.options)).state;
+  const step={...args.step(original,'old','withdraw'),adapter:'native'};
+  const input={journalPath:path.join(args.base,'journal/transaction.jsonl'),ownerId:'isolated-rollback-regression',
+    plan:{schemaVersion:1,id:args.context.transactionId,revision:'a'.repeat(40),evidenceHash:'b'.repeat(64),discoveryRoots:[path.join(args.options.homeDirectory,'.claude/plugins/cache')],stagingRoots:[path.join(args.base,'staging')],ownedRoots:[args.base],steps:[step]}};
+  assert.equal((await runMigrationTransaction({...input,adapters:{native:args.adapter}})).status,'complete');
+  const recovery={...input,mode:'recover',recoveryAuthority:{transactionId:input.plan.id,operation:'restore-journaled-owned-effects',source:'isolated-fixture'}};
+  const failed=await interruptClaudeRecovery(args,recovery);
+  assert.equal(failed.status,'recovery-failed');assert.match(failed.error,/Interrupted after atomic settings restore/);
+  const metadata=path.join(args.options.homeDirectory,'.claude/plugins/installed_plugins.json');
+  assert.equal(JSON.parse(await readFile(args.configPath)).enabledPlugins['ps-probe@qs-native-fixture'],true);
+  assert.deepEqual(JSON.parse(await readFile(metadata)).plugins,{});
+  const file=edit==='settings'?args.configPath:metadata;
+  if(edit==='receipt'){
+    const journal=await readMigrationJournal(input.journalPath);
+    const evidence=journal.events.findLast(event=>event.kind==='recover-intent').data.recovery;
+    await appendFile(evidence.path,'tampered receipt');
+  } else if(edit){const value=JSON.parse(await readFile(file));value.concurrentEdit='preserve this edit';await writeFile(file,JSON.stringify(value));}
+  const before=await Promise.all([args.configPath,metadata].map(file=>readFile(file,'utf8')));
+  if(!edit){const forward=await runMigrationTransaction({...input,adapters:{native:createNativePackageAdapter(args.options)}});assert.equal(forward.status,'failed');assert.match(forward.error,/Resume authorized recovery/);}
+  const result=await runMigrationTransaction({...recovery,adapters:{native:createNativePackageAdapter(args.options)}});
+  if(edit){assert.equal(result.status,'recovery-failed');assert.deepEqual(await Promise.all([args.configPath,metadata].map(file=>readFile(file,'utf8'))),before);}
+  else {assert.equal(result.status,'rolled-back',result.error);assert.deepEqual((await observeNativePackages(args.options)).state,original);}
+});
+
+
+test('Claude interrupted rollback resumes partial removal of a newly exposed cache', {skip:!available('claude')}, async t => {
+  const args=await fixture(t,'claude-code',{real:true});
+  const original=(await observeNativePackages(args.options)).state;
+  const step={...args.step(original,'new','expose'),adapter:'native'};
+  const input={journalPath:path.join(args.base,'journal/transaction.jsonl'),ownerId:'isolated-cache-rollback-regression',
+    plan:{schemaVersion:1,id:args.context.transactionId,revision:'a'.repeat(40),evidenceHash:'b'.repeat(64),discoveryRoots:[path.join(args.options.homeDirectory,'.claude/plugins/cache')],stagingRoots:[path.join(args.base,'staging')],ownedRoots:[args.base],steps:[step]}};
+  assert.equal((await runMigrationTransaction({...input,adapters:{native:args.adapter}})).status,'complete');
+  const recovery={...input,mode:'recover',recoveryAuthority:{transactionId:input.plan.id,operation:'restore-journaled-owned-effects',source:'isolated-fixture'}};
+  const cache=path.join(args.options.homeDirectory,'.claude/plugins/cache/qs-native-fixture/qs-probe/2.0.0');
+  const failed=await interruptClaudeRecovery(args,recovery,cache);
+  assert.equal(failed.status,'recovery-failed');assert.match(failed.error,/Interrupted during owned cache removal/);
+  assert.equal((await captureMigrationPath(cache)).kind,'directory');
+  const result=await runMigrationTransaction({...recovery,adapters:{native:createNativePackageAdapter(args.options)}});
+  assert.equal(result.status,'rolled-back',result.error);
+  assert.equal((await captureMigrationPath(cache)).kind,'absent');
+  assert.deepEqual((await observeNativePackages(args.options)).state,original);
+});
+
+async function claudeRecoveryWithUnrelatedPlugin(t, { inspectable = true } = {}) {
+  const args=await fixture(t,'claude-code',{real:true});
+  await args.command(['plugin','install','qs-probe@qs-native-fixture','--scope','user']);
+  const unrelatedCache=path.join(args.options.homeDirectory,'.claude/plugins/cache/qs-native-fixture/qs-probe/2.0.0');
+  if(!inspectable) await symlink('/unavailable-plugin-resource',path.join(unrelatedCache,'unverifiable-link'));
+  // Bind only the old package. The second installed plugin remains unrelated.
+  const options={...args.options,packages:[args.options.packages[0]]};
+  const original=(await observeNativePackages(options)).state;
+  const step={id:'withdraw-old',phase:'withdraw',operation:'native-withdraw',adapter:'native',native:{host:'claude-code',packageId:'old'},
+    ownedTargets:nativePackageOwnedTargets(options),before:original,
+    after:predictNativePackageTransition(original,{packageId:'old',phase:'withdraw',packages:options.packages})};
+  const input={journalPath:path.join(args.base,'journal/transaction.jsonl'),ownerId:'isolated-unrelated-rollback-regression',
+    plan:{schemaVersion:1,id:args.context.transactionId,revision:'a'.repeat(40),evidenceHash:'b'.repeat(64),discoveryRoots:[path.join(options.homeDirectory,'.claude/plugins/cache')],stagingRoots:[path.join(args.base,'staging')],ownedRoots:[args.base],steps:[step]}};
+  assert.equal((await runMigrationTransaction({...input,adapters:{native:createNativePackageAdapter(options)}})).status,'complete');
+  const recovery={...input,mode:'recover',recoveryAuthority:{transactionId:input.plan.id,operation:'restore-journaled-owned-effects',source:'isolated-fixture'}};
+  return {...args,options,original,step,recovery,unrelatedCache};
+}
+
+for(const edit of [null,'body','identity']) test(`Claude paused rollback ${edit ? `rejects unrelated plugin ${edit} drift before restoring registrations` : 'resumes with an unchanged unrelated plugin'}`, {skip:!available('claude')}, async t => {
+  const args=await claudeRecoveryWithUnrelatedPlugin(t);
+  const interrupted=await interruptClaudeRecovery(args,args.recovery);
+  assert.equal(interrupted.status,'recovery-failed');assert.match(interrupted.error,/Interrupted after atomic settings restore/);
+  const file=path.join(args.unrelatedCache,'skills/qs-probe/SKILL.md');
+  if(edit==='identity')await writeFile(file,(await readFile(file,'utf8')).replace('name: qs-probe','name: ps-probe'));
+  else if(edit==='body')await appendFile(file,'Concurrent unrelated plugin edit.\n');
+  const ownedBefore=await Promise.all(args.step.ownedTargets.map(target=>captureMigrationPath(target.path)));
+  const unrelatedBefore=await captureMigrationPath(args.unrelatedCache);
+  const result=await runMigrationTransaction({...args.recovery,adapters:{native:createNativePackageAdapter(args.options)}});
+  if(edit){
+    assert.equal(result.status,'recovery-failed');
+    assert.deepEqual(await Promise.all(args.step.ownedTargets.map(target=>captureMigrationPath(target.path))),ownedBefore,'Drift must block before changing any owned file or registration.');
+    assert.match(result.error,/changed after planning/);
+  }else{
+    assert.equal(result.status,'rolled-back',result.error);
+    assert.deepEqual((await observeNativePackages(args.options)).state,args.original);
+  }
+  assert.deepEqual(await captureMigrationPath(args.unrelatedCache),unrelatedBefore,'Recovery must preserve unrelated payload bytes.');
+});
+
+test('Claude recovery refuses an unverifiable active unrelated payload before any restoration', {skip:!available('claude')}, async t => {
+  const args=await claudeRecoveryWithUnrelatedPlugin(t,{inspectable:false});
+  const before=await Promise.all(args.step.ownedTargets.map(target=>captureMigrationPath(target.path)));
+  const result=await runMigrationTransaction({...args.recovery,adapters:{native:createNativePackageAdapter(args.options)}});
+  assert.equal(result.status,'recovery-failed');assert.match(result.error,/unrelated plugin payloads must be inspectable/);
+  assert.deepEqual(await Promise.all(args.step.ownedTargets.map(target=>captureMigrationPath(target.path))),before);
+  const journal=await readMigrationJournal(args.recovery.journalPath);
+  assert.equal(journal.events.some(event=>event.kind==='recover-intent'),false,'Unverifiable payloads must fail before preparing restoration effects.');
 });

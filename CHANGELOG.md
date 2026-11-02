@@ -1,5 +1,17 @@
 # QuickStark Skills changelog
 
+## 4.3.1
+
+### Patch Changes
+
+- Support `--agent claude` and `claude-code` in the selected native updater alongside Codex and Pi. Preserve selections, verify Claude plugin payloads, journal updates and resume interrupted operations. Add isolated Claude/Pi profile paths and generate a bounded standalone Claude core package.
+
+  Preserve concurrent Claude settings edits during recovery, restore metadata files atomically, and migrate verified root-based core installations while retaining their original caches.
+
+  Resume interrupted Claude rollback from journal-bound raw file evidence, preserving edits to restored or pending files and retaining the original package caches.
+
+  Bind active unrelated Claude plugin payloads to recovery evidence and reject changed or unverifiable payloads before restoring registrations.
+
 ## 4.3.0
 
 ### Minor Changes

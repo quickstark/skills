@@ -9,7 +9,7 @@ import { tmpdir } from 'node:os';
 import test from 'node:test';
 import { derivePackageAcceptanceObligations, buildManagedSkillInput } from '../scripts/managed-skill-input.mjs';
 import { executeManagedSkills, parseManagedSkillsArguments } from '../scripts/managed-skills.mjs';
-import { previewManagedSkillMigration, captureManagedSkillPayload } from '../scripts/managed-skill-migration.mjs';
+import { previewManagedSkillMigration, captureManagedSkillPayload, restoreManagedSkillMigration, executeManagedSkillMigration } from '../scripts/managed-skill-migration.mjs';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
 import { TARGET_SKILL_COLLECTIONS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
 import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
@@ -25,7 +25,7 @@ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const writeJSON = async (file, data) => { await mkdir(path.dirname(file), {recursive:true}); await writeFile(file, JSON.stringify(data,null,2)+'\n'); };
 const readJSON = async (file) => JSON.parse(await readFile(file));
 async function git(root, args) { return run('git', ['-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false','-c','user.name=Isolated Fixture','-c','user.email=fixture@example.invalid',...args],{cwd:root,encoding:'utf8'}); }
-async function fixture(t, {bootstrap = true} = {}) {
+async function fixture(t, {bootstrap = true, host = 'codex'} = {}) {
   const base = await mkdtemp(path.join(tmpdir(),'qs-selected-caller-')); t.after(()=>rm(base,{recursive:true,force:true}));
   const repositoryRoot = path.join(base,'repo'); const homeDirectory = path.join(base,'home'); await mkdir(repositoryRoot); await mkdir(path.join(homeDirectory,'.codex'),{recursive:true}); await mkdir(path.join(homeDirectory,'.pi/agent'),{recursive:true});
   const document = await readJSON(path.join(actualRoot,'config/skill-migrations.json'));
@@ -33,11 +33,12 @@ async function fixture(t, {bootstrap = true} = {}) {
   await writeJSON(path.join(repositoryRoot,'config/skill-profiles.json'),{schemaVersion:1,defaultProfile:'core',profiles:{core:{packages:['qs-skills'],resources:[]},advanced:{packages:['qs-skills','qs-advanced'],resources:[]}}});
   await writeJSON(path.join(repositoryRoot,'config/skill-provenance.json'),{fixture:'Synthetic test evidence only; never production acceptance.'});
   await writeJSON(path.join(repositoryRoot,'package.json'),{name:'isolated-selected-test',version:'4.0.0'});
-  for(const collection of TARGET_SKILL_COLLECTIONS) for(const [agent,relative] of [['codex',collection.codexPackageRoot],['pi',collection.piPackageRoot]]) {
+  for(const collection of TARGET_SKILL_COLLECTIONS) for(const [agent,relative] of [['codex',collection.codexPackageRoot],['pi',collection.piPackageRoot],['claude-code',collection.claudePackageRoot]]) {
     const root=path.join(repositoryRoot,relative);
     for(const name of collection.publicCommands) { await mkdir(path.join(root,'skills',name),{recursive:true}); await writeFile(path.join(root,'skills',name,'SKILL.md'),`---\nname: ${name}\ndescription: Isolated synthetic fixture.\n---\nFixture only.\n`); }
-    await writeJSON(path.join(root,agent==='codex'?'.codex-plugin/plugin.json':'package.json'),agent==='codex'?{name:collection.id,version:'4.0.0',skills:'./skills/'}:{name:collection.id,version:'4.0.0',private:true,pi:{skills:['./skills']}});
+    await writeJSON(path.join(root,agent==='codex'?'.codex-plugin/plugin.json':agent==='claude-code'?'.claude-plugin/plugin.json':'package.json'),agent==='codex'?{name:collection.id,version:'4.0.0',skills:'./skills/'}:agent==='claude-code'?{name:collection.id,version:'4.0.0',skills:collection.publicCommands.map(name=>`./skills/${name}`)}:{name:collection.id,version:'4.0.0',private:true,pi:{skills:['./skills']}});
   }
+  await writeJSON(path.join(repositoryRoot,'.claude-plugin/marketplace.json'),{name:'quickstark',owner:{name:'Fixture'},plugins:TARGET_SKILL_COLLECTIONS.map(entry=>({name:entry.id,source:`./${entry.claudePackageRoot}`}))});
   const definitions=TARGET_SKILL_COLLECTIONS.map(entry=>({name:entry.id,source:{source:'local',path:`./plugins/${entry.id}`},policy:{installation:'AVAILABLE',authentication:'ON_INSTALL'}}));
   await writeJSON(path.join(repositoryRoot,'codex/.agents/plugins/marketplace.json'),{name:'quickstark',plugins:definitions});
   const obligations=TARGET_SKILL_COLLECTIONS.map(collection=>derivePackageAcceptanceObligations(collection.id,document));
@@ -49,7 +50,7 @@ async function fixture(t, {bootstrap = true} = {}) {
   const support='docs/validation/fixture-support.txt'; await mkdir(path.dirname(path.join(repositoryRoot,support)),{recursive:true}); await writeFile(path.join(repositoryRoot,support),'Synthetic isolated acceptance decisions; not release proof.\n');
   const audit={schemaVersion:1,kind:'reviewed-adoption-acceptance',packages:{},criteria:{},sources:{},evidence:{fixture:{path:support,sha256:sha(await readFile(path.join(repositoryRoot,support)))}}};
   for(const item of obligations) {
-    audit.packages[item.packageId]={capabilityIds:item.capabilityIds,sourcePaths:item.sourcePaths,criteria:item.requiredCriteria,checks:Object.fromEntries(['codex','pi'].map(agent=>[agent,Object.fromEntries(item.requiredChecks.map(name=>[name,{status:'passed',evidence:['fixture']}]))]))};
+    audit.packages[item.packageId]={capabilityIds:item.capabilityIds,sourcePaths:item.sourcePaths,criteria:item.requiredCriteria,checks:Object.fromEntries(['codex','pi','claude-code'].map(agent=>[agent,Object.fromEntries(item.requiredChecks.map(name=>[name,{status:'passed',evidence:['fixture']}]))]))};
     for(const id of item.requiredCriteria) audit.criteria[id]={status:'passed',note:'Explicit synthetic fixture decision only.',evidence:['fixture']};
     for(const source of item.sourcePaths) { const snapshot=await captureMigrationPath(path.join(repositoryRoot,source)); audit.sources[source]={kind:snapshot.kind,contentSha256:snapshot.contentSha256}; }
   }
@@ -60,9 +61,10 @@ async function fixture(t, {bootstrap = true} = {}) {
   // Initialize launcher state before the nonmutation baseline; version managers
   // may create HOME-local state (including symlinks) even for read-only commands.
   await runNativePackageCommand('codex',['--version'],nativeOptions);
-  if(bootstrap) await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(repositoryRoot,'codex')],nativeOptions);
+  if(bootstrap && host==='codex') await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(repositoryRoot,'codex')],nativeOptions);
+  if(bootstrap && host==='claude-code') await runNativePackageCommand('claude',['plugin','marketplace','add',repositoryRoot],nativeOptions);
   await writeJSON(path.join(homeDirectory,'.pi/agent/settings.json'),{theme:'community-preserved',packages:['npm:fixture-community-theme'],quietStartup:true});
-  const options={repositoryRoot,homeDirectory,environment:{},agents:['codex'],registryState:'target',verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
+  const options={repositoryRoot,homeDirectory,environment:{},agents:[host],registryState:'target',verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
   return {base,repositoryRoot,homeDirectory,revision,document,options,nativeOptions,audit};
 }
 
@@ -172,7 +174,7 @@ nativeTest('target CLI flags remain explicit and unsupported target hosts never 
   assert.deepEqual(parseManagedSkillsArguments(['plan','--profile','advanced','--with','qs-video']).withPackages,['qs-video']);
   assert.throws(()=>parseManagedSkillsArguments(['plan','--profile','core','--profile','advanced']),/one explicit profile/);
   const args=await fixture(t); let mutations=0;
-  await assert.rejects(executeManagedSkills({...args.options,action:'update',agents:['claude-code'],runManagerCommand:async()=>mutations++}),/Codex and Pi only/); assert.equal(mutations,0);
+  await assert.rejects(executeManagedSkills({...args.options,action:'update',agents:['unknown'],runManagerCommand:async()=>mutations++}),/Unsupported managed skill target/); assert.equal(mutations,0);
   await assert.rejects(executeManagedSkills({...args.options,registryState:'legacy',action:'plan',withPackages:['qs-video']}),REGISTRY_STATE === 'target' ? /activated target registry cannot use the legacy all-package updater/ : /inactive legacy updater/);
 });
 
@@ -294,6 +296,10 @@ async function retainActualPsSnapshot(args, agent) {
   await git(args.repositoryRoot,['checkout',prior.revision,'--',sourcePath]);
   const marketplaceFile=path.join(args.repositoryRoot,'codex/.agents/plugins/marketplace.json');const marketplace=await readJSON(marketplaceFile);
   marketplace.plugins.push({name:'ps-skills',source:{source:'local',path:'./plugins/ps-skills'},policy:{installation:'AVAILABLE',authentication:'ON_INSTALL'}});await writeJSON(marketplaceFile,marketplace);
+  if(agent==='claude-code') {
+    const file=path.join(args.repositoryRoot,'.claude-plugin/marketplace.json');const catalog=await readJSON(file);
+    catalog.plugins.push({name:'ps-skills',source:'./packages/ps-skills'});await writeJSON(file,catalog);
+  }
   await refreshFixtureAudit(args);
   const payload=await captureManagedSkillPayload(path.join(args.repositoryRoot,sourcePath));assert.deepEqual(payload.payloadDigest,{kind:prior.digests[agent].kind,value:prior.digests[agent].value});
   return prior;
@@ -329,4 +335,159 @@ nativeTest('actual Codex retained PS ownership stays strict and maps to advanced
   await assert.rejects(buildManagedSkillInput({...args.options,runtime}),/owner conflicts/);
   const result=await executeManagedSkills({...args.options,action:'update',withPackages:['qs-skills']});assert.equal(result.status,'complete',result.error);
   const inventory=JSON.parse((await runNativePackageCommand('codex',['plugin','list','--json'],args.nativeOptions)).stdout);assert.deepEqual(inventory.installed.map(entry=>entry.name).sort(),['qs-advanced','qs-skills']);
+});
+
+
+test('actual isolated Claude alias installs only core, persists selection, verifies, and retries interrupted exposure', {skip:!available('claude') || !available('codex')}, async t => {
+  const args=await fixture(t,{host:'claude-code'});
+  const options={...args.options,agents:['claude']};
+  const before=await fixtureHomeState(args.homeDirectory);
+  const plan=await executeManagedSkills({...options,action:'plan'});
+  assert.equal(plan.status,'ready',JSON.stringify(plan.conflicts));
+  assert.deepEqual(plan.targets['claude-code'].desired.packages,['qs-skills']);
+  assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
+  let interrupted=false;
+  const runtime={runCommand:async(command,argv,context)=>{
+    const result=await runNativePackageCommand(command,argv,context);
+    if(!interrupted && argv[1]==='install') {interrupted=true;throw new Error('fixture interruption after effect');}
+    return result;
+  }};
+  const failed=await executeManagedSkills({...options,action:'update',runtime});
+  assert.equal(failed.status,'failed',failed.error);
+  await assert.rejects(executeManagedSkills({...options,agents:['codex'],action:'update',resume:failed.journalPath}),/different managed skill targets/);
+  const resumed=await executeManagedSkills({...options,action:'update',resume:failed.journalPath});
+  assert.equal(resumed.status,'complete',resumed.error);
+  assert.equal((await executeManagedSkills({...options,action:'verify'})).status,'verified');
+  const result=await executeManagedSkills({...options,action:'update',withPackages:['qs-specialists']});
+  assert.equal(result.status,'complete',result.error);
+  const inventory=JSON.parse((await runNativePackageCommand('claude',['plugin','list','--json'],args.nativeOptions)).stdout);
+  assert.deepEqual(inventory.map(entry=>entry.id).sort(),['qs-skills@quickstark','qs-specialists@quickstark']);
+  const saved=await readJSON(path.join(args.homeDirectory,'.config/quickstark/skills-selection.json'));
+  assert.deepEqual(saved.targets['claude-code'].packages,['qs-skills','qs-specialists']);
+  const ordinary=await executeManagedSkills({...options,action:'plan'});
+  assert.equal(ordinary.targets['claude-code'].basis,'saved');
+  assert.deepEqual(ordinary.targets['claude-code'].desired.packages,['qs-skills','qs-specialists']);
+});
+
+for (const host of ['claude-code','pi']) test(`actual isolated ${host} custom environment profile updates and verifies without touching the default profile`,{skip:!available(host==='claude-code'?'claude':host)||!available('codex')},async t=>{
+  const args=await fixture(t,{bootstrap:false,host});
+  const key=host==='claude-code'?'claudeHomeDirectory':'piHomeDirectory';
+  const variable=host==='claude-code'?'CLAUDE_CONFIG_DIR':'PI_CODING_AGENT_DIR';
+  const custom=path.join(args.base,`${host} custom profile`);
+  await mkdir(custom,{recursive:true});
+  const nativeOptions={...args.nativeOptions,[key]:custom};
+  if(host==='claude-code') await runNativePackageCommand('claude',['plugin','marketplace','add',args.repositoryRoot],nativeOptions);
+  const defaultConfig=path.join(args.homeDirectory,host==='claude-code'?'.claude':'.pi/agent');await mkdir(defaultConfig,{recursive:true});
+  await writeFile(path.join(defaultConfig,'sentinel'),'preserve default');
+  const before=await fixtureHomeState(defaultConfig);
+  const options={...args.options,environment:{[variable]:custom}};
+  const plan=await executeManagedSkills({...options,action:'plan'});assert.equal(plan.status,'ready',JSON.stringify(plan.conflicts));
+  assert.equal(plan[key],custom);
+  const result=await executeManagedSkills({...options,action:'update'});assert.equal(result.status,'complete',result.error);
+  assert.equal((await executeManagedSkills({...options,action:'verify'})).status,'verified');
+  assert.deepEqual(await fixtureHomeState(defaultConfig),before);
+});
+
+test('actual isolated combined update supports Codex, Claude, and Pi in one selection transaction',{skip:!['codex','claude','pi'].every(available)},async t=>{
+  const args=await fixture(t,{host:'claude-code'});
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(args.repositoryRoot,'codex')],args.nativeOptions);
+  const options={...args.options,agents:['codex','claude','pi']};
+  const result=await executeManagedSkills({...options,action:'update'});assert.equal(result.status,'complete',result.error);
+  assert.equal((await executeManagedSkills({...options,action:'verify'})).status,'verified');
+  const saved=await readJSON(path.join(args.homeDirectory,'.config/quickstark/skills-selection.json'));
+  assert.deepEqual(Object.keys(saved.targets).sort(),['claude-code','codex','pi']);
+  for(const target of Object.values(saved.targets)) assert.deepEqual(target.packages,['qs-skills']);
+});
+
+
+test('actual Claude retained PS package migrates to accepted QS replacements using original immutable ownership', {skip:!available('claude')||!available('codex')}, async t=>{
+  const args=await fixture(t,{host:'claude-code'});
+  const prior=await retainActualPsSnapshot(args,'claude-code');
+  await runNativePackageCommand('claude',['plugin','install','ps-skills@quickstark','--scope','user'],args.nativeOptions);
+  const options={...args.options,withPackages:['qs-skills']};
+  const input=await buildManagedSkillInput(options);
+  assert.equal(input.observations.find(entry=>entry.identity==='ps-skills').revision,prior.revision);
+  const plan=await previewManagedSkillMigration(input);assert.equal(plan.status,'ready',JSON.stringify(plan.conflicts));
+  const result=await executeManagedSkills({...options,action:'update'});assert.equal(result.status,'complete',result.error);
+  const inventory=JSON.parse((await runNativePackageCommand('claude',['plugin','list','--json'],args.nativeOptions)).stdout);
+  assert.deepEqual(inventory.map(entry=>entry.id).sort(),['qs-advanced@quickstark','qs-skills@quickstark']);
+});
+
+async function priorRootClaudeCore(t) {
+  const args=await fixture(t,{host:'claude-code'});
+  const core=TARGET_SKILL_COLLECTIONS.find(item=>item.id==='qs-skills');
+  const catalogFile=path.join(args.repositoryRoot,'.claude-plugin/marketplace.json');
+  const catalog=await readJSON(catalogFile);catalog.plugins.find(item=>item.name==='qs-skills').source='./';await writeJSON(catalogFile,catalog);
+  const skills=core.publicCommands.map(name=>`./skills/${name==='qs-flow-handoff'?'productivity':'engineering'}/${name}`);
+  await writeJSON(path.join(args.repositoryRoot,'.claude-plugin/plugin.json'),{name:'qs-skills',version:'4.0.0',skills});
+  for(const relative of skills){const root=path.join(args.repositoryRoot,relative);await mkdir(root,{recursive:true});await writeFile(path.join(root,'SKILL.md'),`---\nname: ${path.basename(root)}\ndescription: Known prior root-based core fixture.\n---\nFixture only.\n`);}
+  await refreshFixtureAudit(args);const priorRevision=args.revision;
+  await runNativePackageCommand('claude',['plugin','install','qs-skills@quickstark','--scope','user'],args.nativeOptions);
+  const cached=path.join(args.homeDirectory,'.claude/plugins/cache/quickstark/qs-skills/4.0.0');
+  // Unrelated cache content is retained; migration must neither traverse nor back it up.
+  await mkdir(path.join(cached,'unrelated-large-tree'),{recursive:true});
+  await symlink('/unavailable-user-resource',path.join(cached,'unrelated-large-tree/link'));
+  catalog.plugins.find(item=>item.name==='qs-skills').source='./packages/qs-skills';await writeJSON(catalogFile,catalog);
+  await writeJSON(path.join(args.repositoryRoot,'package.json'),{name:'isolated-selected-test',version:'4.1.0'});
+  for(const collection of TARGET_SKILL_COLLECTIONS){const file=path.join(args.repositoryRoot,collection.claudePackageRoot,'.claude-plugin/plugin.json');const manifest=await readJSON(file);manifest.version='4.1.0';await writeJSON(file,manifest);}
+  const rootManifest=await readJSON(path.join(args.repositoryRoot,'.claude-plugin/plugin.json'));rootManifest.version='4.1.0';await writeJSON(path.join(args.repositoryRoot,'.claude-plugin/plugin.json'),rootManifest);
+  // Include a later release commit so ownership must resolve the prior immutable tree.
+  await refreshFixtureAudit(args);
+  return {...args,priorRevision,cached};
+}
+
+test('Claude root-based core upgrades through a verified manifest closure and preserves the retained cache', {skip:!available('claude')||!available('codex')}, async t => {
+  const args=await priorRootClaudeCore(t);
+  const input=await buildManagedSkillInput(args.options);
+  const prior=input.observations.find(item=>item.identity==='qs-skills');
+  assert.equal(prior.revision,args.priorRevision);
+  assert.equal(prior.layout,'claude-root-core');
+  const before=await fixtureHomeState(args.cached);
+  const result=await executeManagedSkills({...args.options,action:'update'});assert.equal(result.status,'complete',result.error);
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
+  const after=await fixtureHomeState(args.cached);
+  assert.deepEqual(after.filter(entry=>entry.path!=='.orphaned_at'),before.filter(entry=>entry.path!=='.orphaned_at'));
+  const inventory=JSON.parse((await runNativePackageCommand('claude',['plugin','list','--json'],args.nativeOptions)).stdout);
+  assert.deepEqual(inventory.map(item=>[item.id,item.version]),[['qs-skills@quickstark','4.1.0']]);
+});
+
+for(const relative of ['skills/engineering/qs-help/SKILL.md','skills/internal/fixture.txt']) test(`Claude root-based core refuses edited declared resource ${relative} without changing native registration`, {skip:!available('claude')||!available('codex')}, async t => {
+  const args=await priorRootClaudeCore(t);
+  const file=path.join(args.cached,relative);await appendFile(file,'User edit.');
+  const before=await fixtureHomeState(args.homeDirectory);
+  await assert.rejects(buildManagedSkillInput(args.options),/trusted prior release tree/);
+  assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
+});
+
+
+test('Claude root-based core resumes interrupted withdrawal and rollback restores its registration without copying unrelated cache files', {skip:!available('claude')||!available('codex')}, async t => {
+  const args=await priorRootClaudeCore(t);
+  const before=await fixtureHomeState(args.cached);
+  let interrupted=false;
+  const runtime={runCommand:async(command,argv,options)=>{
+    const result=await runNativePackageCommand(command,argv,options);
+    if(!interrupted && argv[1]==='uninstall'){interrupted=true;throw new Error('Interrupted after legacy withdrawal.');}
+    return result;
+  }};
+  const failed=await executeManagedSkills({...args.options,action:'update',runtime});assert.equal(failed.status,'failed',failed.error);
+  assert.match(failed.failedStep,/withdraw/);
+  const file=path.join(args.cached,'skills/engineering/qs-help/SKILL.md');const contents=await readFile(file);await appendFile(file,'Concurrent user edit.');
+  await assert.rejects(executeManagedSkills({...args.options,action:'update',resume:failed.journalPath}),/changed after planning/);
+  await writeFile(file,contents);
+  const resumed=await executeManagedSkills({...args.options,action:'update',resume:failed.journalPath});assert.equal(resumed.status,'complete',resumed.error);
+  const assembly=await restoreManagedSkillMigration({journalPath:failed.journalPath});
+  const result=await executeManagedSkillMigration(assembly,{ownerId:'isolated-root-core-recovery',mode:'recover',recoveryAuthority:{transactionId:assembly.plan.id,operation:'restore-journaled-owned-effects',source:'isolated-fixture'}});
+  assert.equal(result.status,'rolled-back',result.error);
+  assert.deepEqual(await fixtureHomeState(args.cached),before);
+  const inventory=JSON.parse((await runNativePackageCommand('claude',['plugin','list','--json'],args.nativeOptions)).stdout);
+  assert.deepEqual(inventory.map(item=>[item.id,item.version]),[['qs-skills@quickstark','4.0.0']]);
+});
+
+test('Claude root-based core rejects a same-version cache replacement before native effects', {skip:!available('claude')||!available('codex')}, async t => {
+  const args=await priorRootClaudeCore(t);
+  await writeJSON(path.join(args.repositoryRoot,'package.json'),{version:'4.0.0'});
+  for(const collection of TARGET_SKILL_COLLECTIONS){const file=path.join(args.repositoryRoot,collection.claudePackageRoot,'.claude-plugin/plugin.json');const manifest=await readJSON(file);manifest.version='4.0.0';await writeJSON(file,manifest);}
+  const before=await fixtureHomeState(args.homeDirectory);
+  await assert.rejects(buildManagedSkillInput(args.options),/requires a new release version/);
+  assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
 });

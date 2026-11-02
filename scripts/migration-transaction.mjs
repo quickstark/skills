@@ -181,6 +181,8 @@ export async function unlockAbandonedMigrationTransaction({ journalPath, expecte
  * inspect returns actual meaningful bounded state, including native source/version
  * and discovered public identities. prepare is idempotent and returns a backup
  * {reference, expectedState}; inspectBackup independently verifies its contents.
+ * Optional prepareRecovery/inspectRecovery methods bind raw per-target recovery
+ * evidence before the recover-intent is synced, then validate partial restoration.
  * The coordinator supplies no new ownership or mutation/recovery authority.
  */
 export async function runMigrationTransaction({ journalPath, plan, adapters, ownerId, mode = 'forward', recoveryAuthority = null }) {
@@ -191,6 +193,7 @@ export async function runMigrationTransaction({ journalPath, plan, adapters, own
   require(typeof ownerId === 'string' && ownerId.length > 0 && ownerId.length <= 256 && !/[\u0000-\u001f]/.test(ownerId) && ['forward', 'recover'].includes(mode), 'Explicit transaction owner/mode required.');
   if (mode === 'recover') require(object(recoveryAuthority) && recoveryAuthority.transactionId === plan.id && recoveryAuthority.operation === 'restore-journaled-owned-effects' && ['user', 'isolated-fixture'].includes(recoveryAuthority.source), 'Transaction-specific recovery authority required.');
   for (const step of plan.steps) require(['inspect', 'prepare', 'inspectBackup', 'apply', 'recover'].every((method) => typeof adapters?.[step.adapter]?.[method] === 'function'), `Incomplete adapter: ${step.adapter}.`);
+  for (const adapter of Object.values(adapters)) require(!adapter.prepareRecovery || typeof adapter.inspectRecovery === 'function', 'Prepared recovery requires an independent partial-state inspector.');
   const lock = await acquireLock(journalPath, ownerId);
   let journal; let handle; let bytes; let expectedIdentity;
   try {
@@ -227,6 +230,14 @@ export async function runMigrationTransaction({ journalPath, plan, adapters, own
     }
     const groups = [...new Set(plan.steps.map(footprint))].map((key) => plan.steps.filter((step) => footprint(step) === key));
     const effectState = (id) => stepEvents(id).findLast((event) => ['apply-intent', 'verified', 'recover-intent', 'recovered'].includes(event.kind))?.kind;
+    const recoveryContext = (step) => ({ ...context, recovery: stepEvents(step.id).findLast((event) => event.kind === 'recover-intent')?.data.recovery });
+    const pendingRecovery = (step) => mode === 'recover' && effectState(step.id) === 'recover-intent' && recoveryContext(step).recovery;
+    async function inspectRecovery(step) {
+      const adapter = adapters[step.adapter]; const backup = latestBackup(step.id);
+      require(backup && typeof adapter.inspectRecovery === 'function', 'Prepared recovery inspector/backup unavailable.');
+      require(hash(state(await adapter.inspectBackup(step, backup.reference, context))) === hash(backup.expectedState), 'Backup changed; recovery blocked.');
+      return state(await adapter.inspectRecovery(step, backup.reference, recoveryContext(step)));
+    }
     // A native manager configuration can be changed by several phases. Earlier
     // intermediate states are superseded only by later journaled steps with the
     // same complete footprint; latest actual state remains independently checked.
@@ -234,6 +245,7 @@ export async function runMigrationTransaction({ journalPath, plan, adapters, own
       require(mode === 'recover' || plan.steps.every((step) => effectState(step.id) !== 'recover-intent'), 'Resume authorized recovery before forward execution.');
       for (const group of groups) {
         const active = group.findLast((step) => ['apply-intent', 'verified', 'recover-intent'].includes(effectState(step.id)));
+        if (active && pendingRecovery(active)) { await inspectRecovery(active); continue; }
         const inspected = active ?? group[0]; const actual = await inspect(inspected);
         const accepted = active ? hash(actual) === hash(active.after) || ['apply-intent', 'recover-intent'].includes(effectState(active.id)) && hash(actual) === hash(active.before) : hash(actual) === hash(group[0].before);
         require(accepted, 'Current owned state changed or has uncertain residual effects.');
@@ -247,15 +259,24 @@ export async function runMigrationTransaction({ journalPath, plan, adapters, own
       if (mode === 'recover' && (!history.some((event) => event.kind === 'apply-intent') || effectState(step.id) === 'recovered')) continue;
       if (mode === 'forward' && effectState(step.id) === 'verified' && plan.steps.slice(plan.steps.indexOf(step) + 1).some((later) => footprint(later) === footprint(step) && ['apply-intent', 'verified'].includes(effectState(later.id)))) continue;
       try {
+        if (pendingRecovery(step)) {
+          await inspectRecovery(step);
+          await adapter.recover(step, latestBackup(step.id).reference, recoveryContext(step));
+          observed = await inspect(step); require(hash(observed) === hash(step.before), 'Recovery did not restore the observed prior state.');
+          await append('recovered', { stepId: step.id, observedHash: hash(observed), resumed: true });
+          continue;
+        }
         observed = await inspect(step);
         if (mode === 'recover') {
           if (hash(observed) === hash(step.before)) { await append('recovered', { stepId: step.id, observedHash: hash(observed), resumed: true }); continue; }
           require(hash(observed) === hash(step.after), 'Changed or uncertain state blocks recovery; preserve local edits.');
           const backup = latestBackup(step.id); require(backup, 'Verified backup unavailable; recovery blocked.');
           require(hash(state(await adapter.inspectBackup(step, backup.reference, context))) === hash(backup.expectedState), 'Backup changed; recovery blocked.');
-          await append('recover-intent', { stepId: step.id, observedHash: hash(observed), backup });
-          require(hash(await inspect(step)) === hash(step.after), 'State changed immediately before recovery.');
-          await adapter.recover(step, backup.reference, context);
+          const recovery = adapter.prepareRecovery ? state(await adapter.prepareRecovery(step, backup.reference, context)) : undefined;
+          await append('recover-intent', { stepId: step.id, observedHash: hash(observed), backup, ...(recovery ? { recovery } : {}) });
+          if (recovery) await inspectRecovery(step);
+          else require(hash(await inspect(step)) === hash(step.after), 'State changed immediately before recovery.');
+          await adapter.recover(step, backup.reference, recovery ? recoveryContext(step) : context);
           observed = await inspect(step); require(hash(observed) === hash(step.before), 'Recovery did not restore the observed prior state.');
           await append('recovered', { stepId: step.id, observedHash: hash(observed), resumed: false });
           continue;

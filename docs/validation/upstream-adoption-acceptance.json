@@ -87,7 +87,7 @@
     },
     "AC-03": {
       "status": "passed",
-      "note": "H1\u2013H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "H1–H5 select exactly one available build/prompt/parity route, withhold unavailable executable literal, preserve cancellation/resumption and perform zero automatic invocation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/upstream-adoption-routing.test.mjs",
@@ -125,7 +125,7 @@
     },
     "AC-04": {
       "status": "passed",
-      "note": "A1\u2013A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "A1–A4 and actual A7 preserve prototype/setup/triage/teaching/review authority, with no helper-driven production/tracker/comment operation. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/fixtures/adoption-review-eval/parent/review.json",
@@ -453,7 +453,7 @@
     },
     "AC-12": {
       "status": "passed",
-      "note": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2\u2013E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "Twelve non-router outcomes and sixteen private capabilities remain separately represented. E2–E6 and X1/X2 preserve optimization/monitoring/live-versus-artifact/create-versus-maintain authority. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
       "evidence": [
         "tests/fixtures/adoption-behavior-review/current-01-review.json",
         "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
@@ -575,7 +575,7 @@
     },
     "AC-15": {
       "status": "passed",
-      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. The managed Claude update adds isolated native transaction and SDK command-discovery evidence for all 39 maintained roots. Canonical behavior acceptance is retained; no new model turns or actual-machine rollout are claimed. Reviewed-defect regressions additionally verify preservation of concurrent recovery edits and migration/resume/rollback of immutable root-based Claude core closures without copying unrelated cache files; edited closures and same-version replacement fail before native effects.",
       "evidence": [
         "tests/adoption-projection.test.mjs",
         "tests/fixtures/target-activation-probe/README.md",
@@ -609,7 +609,15 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/managed-claude-update/README.md",
+        "tests/fixtures/managed-claude-update/regression.log",
+        "tests/fixtures/managed-claude-update/discovery.log",
+        "tests/migration-native-packages.test.mjs",
+        "tests/managed-skill-input.test.mjs",
+        "tests/fixtures/managed-claude-update/resume-host.log",
+        "tests/fixtures/managed-claude-update/legacy.log",
+        "tests/fixtures/managed-claude-update/reviewed-defects-after.log"
       ]
     },
     "AC-16": {
@@ -656,7 +664,7 @@
     },
     "AC-17": {
       "status": "passed",
-      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout.",
+      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. Interrupted-Claude-rollback regressions verify fresh-process resume between settings/metadata replacements, preservation of edits to restored or pending files, receipt tamper rejection and restart of partially removed newly exposed caches. Recovery evidence is digest-bound to the synced journal intent before restoration. Retained cache payloads remain intact; canonical workflow/model behavior acceptance is unchanged. Unrelated-Claude-payload regressions verify that paused recovery preserves unchanged unrelated plugins, blocks body/identity drift before modifying any owned target, and refuses preparation when an active unrelated payload cannot be inspected. Recovery receipts bind the original unrelated payload snapshots used for discovery; canonical workflow/model behavior acceptance is unchanged.",
       "evidence": [
         "tests/migration-transaction.test.mjs",
         "docs/validation/validation-host-portability-review.md",
@@ -692,7 +700,10 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+        "tests/fixtures/managed-claude-update/README.md",
+        "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
       ]
     },
     "AC-18": {
@@ -1010,15 +1021,16 @@
         "qs:qs-setup"
       ],
       "sourcePaths": [
-        ".claude-plugin/plugin.json",
         "codex/plugins/qs-skills",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "packages/qs-skills",
         "pi/packages/qs-skills",
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
+        "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
@@ -1343,6 +1355,71 @@
               "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
+        },
+        "claude-code": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          }
         }
       }
     },
@@ -1368,6 +1445,7 @@
         "pi/packages/qs-specialists",
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
+        "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
@@ -1692,6 +1770,71 @@
               "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
+        },
+        "claude-code": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
+              "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          }
         }
       }
     },
@@ -1736,6 +1879,7 @@
         "pi/packages/qs-advanced",
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
+        "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
@@ -2059,6 +2203,71 @@
               "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
+        },
+        "claude-code": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          }
         }
       }
     },
@@ -2098,6 +2307,7 @@
         "pi/packages/qs-frontend",
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
+        "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
@@ -2443,6 +2653,71 @@
               "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
+        },
+        "claude-code": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          }
         }
       }
     },
@@ -2490,6 +2765,7 @@
         "pi/packages/qs-video",
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
+        "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
@@ -2876,6 +3152,86 @@
               "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
+        },
+        "claude-code": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "video-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          }
         }
       }
     },
@@ -2895,6 +3251,7 @@
         "pi/packages/qs-execution",
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
+        "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/managed-skill-input.mjs",
@@ -3274,6 +3631,86 @@
               "tests/fixtures/adoption-release-4.2.0/tests.log"
             ]
           }
+        },
+        "claude-code": {
+          "package-closure": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "notices": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "behavior": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          },
+          "native-discovery": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+              "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+            ]
+          },
+          "unlazy-runtime": {
+            "status": "passed",
+            "evidence": [
+              "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/managed-claude-update/README.md",
+              "tests/fixtures/managed-claude-update/regression.log",
+              "tests/fixtures/managed-claude-update/discovery.log",
+              "tests/fixtures/managed-claude-update/resume-host.log",
+              "tests/fixtures/managed-claude-update/legacy.log",
+              "tests/migration-native-packages.test.mjs",
+              "tests/managed-skill-input.test.mjs"
+            ]
+          }
         }
       }
     }
@@ -3281,11 +3718,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "6633327727dbb02a5400053ea3afca05c8663609604ffac0aa0b63ef105b08ef"
+      "contentSha256": "5f65d24f642928f323cd88cc37235ac66ba9f39d040837cafd1c640b9bed8dae"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "c6e01b498dc9ebc631b7b614d18c7fd25dcbc9b897820703a6d259a7f7756946"
+      "contentSha256": "7f782531bbc87f21ddf0a65f8c047fe785cadfd21129fc044dcb9bda3721cb47"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -3305,7 +3742,7 @@
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "8d2fc92b023aceb83bcf25b87e7cdd561cb665d9e2fff307dfd7f9764ed5354b"
+      "contentSha256": "37c3146b5bf23871cbdb490c2f3bc925dc6d9c5be1e2a2d09e60dfca4da5736f"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -3325,19 +3762,19 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "be0f5c97a06ee2396c6cf5626cd2d77443b2fbc518b7159071d696ac731f5e6e"
+      "contentSha256": "e255bd6eafa2a8350b9066553bfb06378fe96aa4e7660af743d5ef7b9134e6b7"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
-      "contentSha256": "cdbc0e4ce8e104aab1627ede2c0ec483e0c586991210ffe85584487ee9eff6bf"
+      "contentSha256": "b78647c39db284503923a176145c346ba3fa807ff956e3ef31f340b8a022d0d2"
     },
     "scripts/managed-skill-paths.mjs": {
       "kind": "file",
-      "contentSha256": "4f43e0ac5a837ff4f423a8f3a64e6c164b32494b03674bb3fb6b27a81aebec5e"
+      "contentSha256": "b3b48df90fe4559eb9adb563fe1bdb0c92482ebca346541d785a9696bd940594"
     },
     "scripts/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "148ef833e86b5b6c75ba3c00e901d32cf77c19c60f8c28b019b137f67b9aa901"
+      "contentSha256": "1613e5a09ad3df7a3c69324a0008cb0fc720e4ba0dd0c5b54186b52e87d3dbf9"
     },
     "scripts/migration-filesystem.mjs": {
       "kind": "file",
@@ -3345,7 +3782,7 @@
     },
     "scripts/migration-native-packages.mjs": {
       "kind": "file",
-      "contentSha256": "ade08a00033d962775063c31087534ccd62bdf4b156d73c2b7c04979d8d6613b"
+      "contentSha256": "3bd288f32717905d20cd0ebecffaac3f1bf4cf1e9613d0f227f87b1a6faa88e3"
     },
     "scripts/migration-owned-paths.mjs": {
       "kind": "file",
@@ -3353,7 +3790,7 @@
     },
     "scripts/migration-transaction.mjs": {
       "kind": "file",
-      "contentSha256": "50b6eb525504f430c45530750f3e3f57d1563d06725564b79171d44c9d97942a"
+      "contentSha256": "6f2cbe9c812d71cd50300ad4250ce50ae675ff8846bb1b93cefe06e408346f0d"
     },
     "scripts/optional-command-definition.mjs": {
       "kind": "file",
@@ -3369,11 +3806,11 @@
     },
     "scripts/skill-collection-registry.mjs": {
       "kind": "file",
-      "contentSha256": "cbdbd033e239a503f6b527c31d3feb5ca331e3da2f5d7ae4fba651a90dbe38ca"
+      "contentSha256": "be4c15c978b3218eb2b3453dfd323240f213b4d06223972d2cff1205143237d9"
     },
     "scripts/skill-migrations.mjs": {
       "kind": "file",
-      "contentSha256": "c7e8c5660794ac7610bd60bc619adcf8daad1c70308c11fca510631d9508e6aa"
+      "contentSha256": "5c1e2cff863a30303de8e965129f09c682e4fe5e17376b60a3b4f704c6f4df32"
     },
     "scripts/skill-selection.mjs": {
       "kind": "file",
@@ -3437,15 +3874,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "1fda6be2eba4d0fd36e038e1150fd5e2314d6b33131507af05da2ade4fcd83fc"
+      "contentSha256": "76fd37e95455808fc4cbb3aa352ee99a4ea7dbfce33fbb8d59ef5a1e5d9c11f8"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "581f3f1ccc48febc2505b831c10fb6271e78a99c5d1e077f2f2b202b0d7d5a23"
+      "contentSha256": "402715a2be1e902e5c20ce9dd782b732be69d95a34d2a5a70de8e1eb084569fe"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "03ddd0513aeaa6fe21b1ff4645f5c44a4d0a49f228ec46724cd6eb0aabddc176"
+      "contentSha256": "41415a2fd9ed3b840329da20e86519b350c566139868a431532787e4785c24c1"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -3485,15 +3922,15 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "5208088c6eeb39c123d550a4ba37a4e7a49424ecdae6c659f99bbe36c81723bc"
+      "contentSha256": "63af3acaf7d1f8f3a13327f1250cbab526bb86e393eaab9f5ccd19512253a6bd"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "7ea2f7b844a50aee979dd50e99be7ac74812f6d2f0aa18498b61e7d778a4a10c"
+      "contentSha256": "315c0a76564c45c9121a71d7251c33529ac6558bbb9f0d469fc3de5b378c5fa3"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "57d356b8efdd498c8d829ee47714f5765e81d9e43d0250c41f4dad7cc17ad76a"
+      "contentSha256": "67cfb6733815cbc757f6d6cd12230510df6406b515e1c808ee40073a4cc8a90e"
     },
     "skills/advanced": {
       "kind": "directory",
@@ -3549,15 +3986,15 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "b0dcda4ac75445c6942a0a8cccbc0111575b9794805cabd97b5d04757ea8f04a"
+      "contentSha256": "a7bc3f59cb26dc55907cd5a3b52a09c43df146d7bab2fcfe1fb31d13328c3cfa"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "7ee2228cf3b8716a5c149d12a5de981d1d46effed6991899db70d8bb64770f48"
+      "contentSha256": "d9ef12b77e104d800a06b486fcf7be944f193cc2a51170825d72b2485b8ba703"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "709c8e6a002f7d345c0b5216764d0177272495f33481ca0fba51dbbea383e5ce"
+      "contentSha256": "d59114006b94a861a1f41a5351bcfd890b74bac9608a5574af0ff213c9298d37"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
@@ -3581,15 +4018,15 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "840607e99eeeafe6c8fd239a78cb6fdb14663627f8a9ba3d24c85daa2159cba0"
+      "contentSha256": "8b1279221cfd6c3064bc975ac76c96abd0e67bebdbb8bfea9ec5134c19630888"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "2c4a225f8ec4c3a062b0757f2bc751e623b2bd41994667752c9b2a4080b3818f"
+      "contentSha256": "fc86666ac79e7d0a6f81684654a51818e2b831e46e8795e640da041a251f34de"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "16a6e54c0fb8f02c57b273e05b150c140d675196ece75b44842666bbb452fdbc"
+      "contentSha256": "f2bc0a0d3ed28307c8e31524854a4892a57176429801caa43068741f03f0f8eb"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -3597,19 +4034,27 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "6ecb90f4ea8346a09023baeac832442c59f21292ae9583195340a07d4739efec"
+      "contentSha256": "d89db9634cdc4c18886b685d50ae9c6d6c3c0e5cc5774961e7ef81d601161bd5"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "28272c216de4c405333adf0e2d62480cd1ac40cd25d190d7277b9cdeb15c23a4"
+      "contentSha256": "371e5db6568ea3d5a6562dd8c8530e2e1adf951a73dde50922d90501c2326c3a"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "744bdfef3e9910b27043df4428f76afda41863aad4f69c40f957e360a459ad69"
+      "contentSha256": "bf14b51b70f35a78c12e041282c988f5fa47f08a10fca24154877298b54e2053"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
       "contentSha256": "6008c2ff39db96c5997f47d749105682930483223dc1a610281cc6a135008308"
+    },
+    "packages/qs-skills": {
+      "kind": "directory",
+      "contentSha256": "e879f8927fe87ab735eb1b2a00fdf73a9c71fb46fba7fac70ac82137a52acc18"
+    },
+    "scripts/claude-core-migration.mjs": {
+      "kind": "file",
+      "contentSha256": "f77f561d0b9dce5069ed39d2c0ef02df8fdb63c7fd8b23f0e9e855ec33e151ad"
     }
   },
   "evidence": {
@@ -3863,7 +4308,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "a5521f445c23dceae7a69cb12ae47efc16bbcff17274e62c350399f297c4bc19"
+      "sha256": "c74a8058d7437962e52868e78115dfbf4884943db0c606b5094d4c4ea705bf88"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
@@ -3891,7 +4336,7 @@
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
-      "sha256": "a7fb74bc13f440ba9078f46991d296daea22dc6476c5892d419306871c333720"
+      "sha256": "983af2e206ea64977ed5a92e311c3078c54233c4b7ac35611245dabfdd926e49"
     },
     "tests/managed-skill-migration.test.mjs": {
       "path": "tests/managed-skill-migration.test.mjs",
@@ -3927,7 +4372,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "6d7c92ac6cf0ce283016dfed374690edde2b696bae03b7c4e753d777fe6c4dc5"
+      "sha256": "491f9fa066a03493d3d5df35f2ca2f1623c6a13e7a26587ff0916775c4c10471"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -3935,11 +4380,11 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "26a229c5dcfba56244073506e3777c127a87e2bc19eeb1e144881cc3aaf2a456"
+      "sha256": "ce041758ab7391e86fe59314885b752b247718499c61fab9a010080905b35849"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
-      "sha256": "91d66feca54b53a85ff70d4d14182cd086d00ee37256c7b567404116836a12f4"
+      "sha256": "512463d78763d047c5530578580b2b584553f68bf5e98981c6cba5174babf997"
     },
     "docs/contributing.md": {
       "path": "docs/contributing.md",
@@ -3947,11 +4392,11 @@
     },
     "docs/personal-skills.md": {
       "path": "docs/personal-skills.md",
-      "sha256": "f8450b0d1245d2fc3cd0229816f751ccaf8f91713f49c84dc10c8c61e0c04413"
+      "sha256": "6c9191b74e6d2b27e686361111f977a06f81c1c1b38d0738563d4e0f07ddafec"
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "4885a82ddadcc64fbecdc4edc11056436b2a80fcb7215c667973721b10a76f75"
+      "sha256": "a76e5687011b65dc95a19c2fe0669e5a9e7f103f23a49ad6789473057b055e81"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -3959,7 +4404,7 @@
     },
     "docs/upstream/README.md": {
       "path": "docs/upstream/README.md",
-      "sha256": "7eb4f61fec83d977a32a2cbfae1503c852093303b7b10b0ecf792d0aefa2e601"
+      "sha256": "996ccad513a10ca5bc55ec17f1d28e325f71fa0cad4120132f54c4af30a20a23"
     },
     "tests/fixtures/target-documentation-preparation/README.md": {
       "path": "tests/fixtures/target-documentation-preparation/README.md",
@@ -3971,7 +4416,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",
-      "sha256": "c758f984c9df524644d29d93c1f546e3d9482e74df07c8e8f1cf4c369d4b9c2f"
+      "sha256": "6d73e9ed7bdab2b6fbfee17b4bb11b32d53165b52c7890c91ded48677face507"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
@@ -4020,6 +4465,50 @@
     "tests/frontend-candidate.test.mjs": {
       "path": "tests/frontend-candidate.test.mjs",
       "sha256": "1b28f2055f7d63b126858488d58a8bf98b94a6a9a7c58110c13719418983d6cb"
+    },
+    "tests/fixtures/managed-claude-update/README.md": {
+      "path": "tests/fixtures/managed-claude-update/README.md",
+      "sha256": "c9d91fe5a5751e3573b6434820f474b42928b8746f2f95242d989d63794b8ed1"
+    },
+    "tests/fixtures/managed-claude-update/regression.log": {
+      "path": "tests/fixtures/managed-claude-update/regression.log",
+      "sha256": "bbcd9211591957bddc1bf28e1184f3c3ed8be2986494fd14377d74d158ad0681"
+    },
+    "tests/fixtures/managed-claude-update/discovery.log": {
+      "path": "tests/fixtures/managed-claude-update/discovery.log",
+      "sha256": "3c42ec438bfc774f7c7c0a23eec0c472fee7628c0f7705292e97d92868173754"
+    },
+    "tests/fixtures/managed-claude-update/resume-host.log": {
+      "path": "tests/fixtures/managed-claude-update/resume-host.log",
+      "sha256": "c44da43dc8ab566c7e56a2cf0c0e777125cd90f62a5a6be9fae3a33a55b5007c"
+    },
+    "tests/fixtures/managed-claude-update/legacy.log": {
+      "path": "tests/fixtures/managed-claude-update/legacy.log",
+      "sha256": "2121090f8c77fd65126c5a4bd5135cb174b93245657ee6b98db86432f0e6355b"
+    },
+    "tests/fixtures/managed-claude-update/reviewed-defects-before.log": {
+      "path": "tests/fixtures/managed-claude-update/reviewed-defects-before.log",
+      "sha256": "c04718c010cbd76b607601ea0b91a5838d654d4f5b6b2d0f0f048403b1f2b6e9"
+    },
+    "tests/fixtures/managed-claude-update/reviewed-defects-after.log": {
+      "path": "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+      "sha256": "d85b0d6774a22aea03bf5a067590217e2441e669518857118489c6a7467f74bf"
+    },
+    "tests/fixtures/managed-claude-update/rollback-resume-before.log": {
+      "path": "tests/fixtures/managed-claude-update/rollback-resume-before.log",
+      "sha256": "ec19b195513676296ae2011f04908cbeef2e276a672f1fef8f32b912e5bafc40"
+    },
+    "tests/fixtures/managed-claude-update/rollback-resume-after.log": {
+      "path": "tests/fixtures/managed-claude-update/rollback-resume-after.log",
+      "sha256": "b09e3699947c2796532c7280afdd4c03f5f97f32bf8f1c15e7ebd2c1320e07ea"
+    },
+    "tests/fixtures/managed-claude-update/unrelated-recovery-before.log": {
+      "path": "tests/fixtures/managed-claude-update/unrelated-recovery-before.log",
+      "sha256": "256573662be186413a01fa869a10a59f453ee5a3f797c0a450974f3f5f67ffa2"
+    },
+    "tests/fixtures/managed-claude-update/unrelated-recovery-after.log": {
+      "path": "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+      "sha256": "24682d40a09eee91b1060c903d7031d64aa1ac870f7c37c764c34060c2177788"
     }
   }
 }

@@ -1,0 +1,18 @@
+✔ actual isolated Claude alias installs only core, persists selection, verifies, and retries interrupted exposure (39468.242086ms)
+✔ actual isolated claude-code custom environment profile updates and verifies without touching the default profile (18963.629867ms)
+✔ actual isolated pi custom environment profile updates and verifies without touching the default profile (4008.070777ms)
+✔ actual isolated combined update supports Codex, Claude, and Pi in one selection transaction (21345.773466ms)
+✔ managed CLI accepts every host and canonicalizes Claude aliases before selecting paths (5.85194ms)
+✔ Claude and Pi profile paths use explicit, environment, and default precedence with separate updater state (4.27946ms)
+✔ real isolated Claude withdrawal/exposure retains caches, preserves settings, and restores exact backups (14777.466939ms)
+✔ native commands isolate inherited Claude and Pi config overrides in explicit homes (35.219718ms)
+✔ real isolated Claude updates the same selector and recovers the old version without changing its marketplace (13495.777072ms)
+✔ real isolated Claude installs every maintained projection with exactly the registered public names (10318.45208ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83923.620789

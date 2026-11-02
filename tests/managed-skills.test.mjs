@@ -242,3 +242,36 @@ test("package registry validation rejects a stale generated package", async () =
   }
   await assert.rejects(validateMaintainedPackages({ repositoryRoot: root }), /stale generated package|version/i);
 });
+
+test('managed CLI accepts every host and canonicalizes Claude aliases before selecting paths', async () => {
+  for (const action of ['plan', 'update', 'sync', 'verify']) {
+    assert.deepEqual(parseManagedSkillsArguments([action, '--agent', 'claude']).agents, ['claude-code']);
+    assert.deepEqual(parseManagedSkillsArguments([action, '--agent', 'codex', '--target', 'claude', '--agent', 'claude-code', '--agent', 'pi']).agents, ['codex', 'claude-code', 'pi']);
+    assert.throws(() => parseManagedSkillsArguments([action, '--agent', 'unknown']), /Choose codex, claude.*pi/);
+  }
+  const fixture = gitFreshnessFixture();
+  await verifyOriginMainFreshness({ repositoryRoot: '/fixture', agents: ['claude'], runGit: fixture.runGit });
+  await assert.rejects(executeManagedSkills({ action: 'update', agents: ['unknown'], homeDirectory: '/never-created' }), /Unsupported managed skill target/);
+});
+
+test('Claude and Pi profile paths use explicit, environment, and default precedence with separate updater state', () => {
+  for (const [agent, flag, key, variable, folder] of [
+    ['claude-code', '--claude-home', 'claudeHomeDirectory', 'CLAUDE_CONFIG_DIR', '.claude'],
+    ['pi', '--pi-home', 'piHomeDirectory', 'PI_CODING_AGENT_DIR', '.pi/agent'],
+  ]) {
+    const homeDirectory='/users/work';
+    const defaults=resolveManagedSkillPaths({homeDirectory,agents:[agent],environment:{}});
+    assert.equal(defaults[key],join(homeDirectory,folder));
+    const inherited=resolveManagedSkillPaths({homeDirectory,agents:[agent],environment:{[variable]:'/profiles/inherited'}});
+    const explicit=resolveManagedSkillPaths({homeDirectory,agents:[agent],[key]:'/profiles/explicit',environment:{[variable]:'/profiles/inherited'}});
+    assert.equal(inherited[key],'/profiles/inherited');assert.equal(explicit[key],'/profiles/explicit');
+    assert.notEqual(inherited.selectionPath,defaults.selectionPath);assert.notEqual(inherited.selectionPath,explicit.selectionPath);
+    assert.notEqual(inherited.lockPath,explicit.lockPath);
+    assert.equal(parseManagedSkillsArguments(['plan','--agent',agent,flag,'/profiles/explicit'])[key],'/profiles/explicit');
+    assert.throws(()=>parseManagedSkillsArguments(['plan',flag,'/one',flag,'/two']),/Choose one/);
+    for(const unsafe of ['/',homeDirectory,join(homeDirectory,folder,'nested'),'/users/work/.agents/skills','/users/work/.config/quickstark']) {
+      assert.throws(()=>resolveManagedSkillPaths({homeDirectory,agents:[agent],[key]:unsafe,environment:{}}),/root|separate/);
+    }
+    assert.throws(()=>resolveManagedSkillPaths({homeDirectory,agents:['codex',agent],[key]:'/profiles/demo',environment:{}}),/single-host/);
+  }
+});

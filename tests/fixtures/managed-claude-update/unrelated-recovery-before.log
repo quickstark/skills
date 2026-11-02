@@ -1,0 +1,197 @@
+✔ Claude paused rollback resumes with an unchanged unrelated plugin (16995.174756ms)
+✖ Claude paused rollback rejects unrelated plugin body drift before restoring registrations (14736.881848ms)
+✖ Claude paused rollback rejects unrelated plugin identity drift before restoring registrations (14985.539612ms)
+✖ Claude recovery refuses an unverifiable active unrelated payload before any restoration (15371.231889ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62165.521757
+
+✖ failing tests:
+
+test at tests/migration-native-packages.test.mjs:474:45
+✖ Claude paused rollback rejects unrelated plugin body drift before restoring registrations (14736.881848ms)
+  AssertionError [ERR_ASSERTION]: Drift must block before changing any owned file or registration.
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      {
+        bytes: 289,
+        contentSha256: '5c481d543a501f1f4f2424eb30dcef9051e263b124e1464f43f15216c2e8f49b',
+        entries: [
+  ...
+      {
+  +     bytes: 695,
+  +     contentSha256: 'd199a6ecd420533e9af6cb4fef2010ab8ed6ac88e3aa4cccf0bc79a0c2dc66f0',
+  -     bytes: 366,
+  -     contentSha256: '97f3a9ac09253d33e3aad642d683efbd51b75a3a3566bd3905bfe2de1b34aa76',
+        entries: [
+          {
+  +         bytes: 695,
+  -         bytes: 366,
+            kind: 'file',
+            mode: 436,
+            path: '',
+  +         sha256: 'f9efd7084e3d598474b7dd68370c8543171eb7b876b393ca05f9c10ce6f7f0bf'
+  -         sha256: '30811036f6fcfeb9795dafdaa1f3b6122c27f5a6618bb113673909f1dfbeeea1'
+          }
+        ],
+        files: 1,
+        identity: {
+          device: 64512,
+  +       inode: 6309310
+  -       inode: 6309287
+        },
+        kind: 'file',
+        path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/plugins/installed_plugins.json'
+      },
+      {
+  +     bytes: 151,
+  +     contentSha256: 'b4e541374044620ea8fd5ab3b0c463ed71fc273c59b5b0cc0dcee51b5ef2209d',
+  -     bytes: 164,
+  -     contentSha256: 'c1f33e493a9fad9e08c45fbc5cf1b167f58c1fa069c374265fc0a0785fd09bb7',
+        entries: [
+          {
+            kind: 'directory',
+            mode: 509,
+            path: ''
+  ...
+          {
+  -         bytes: 13,
+  -         kind: 'file',
+  -         mode: 436,
+  -         path: '.orphaned_at',
+  -         sha256: 'f0218656905983bf66a86c04ff24d8f67287968272292d9edaa885a4ef7843ef'
+  -       },
+  -       {
+            kind: 'directory',
+            mode: 509,
+            path: 'skills'
+          },
+          {
+  ...
+        ],
+  +     files: 2,
+  -     files: 3,
+        identity: {
+          device: 64512,
+          inode: 6309277
+        },
+        kind: 'directory',
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/migration-native-packages.test.mjs:486:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { kind: 'file', path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/settings.json', identity: [Object], contentSha256: '5c481d543a501f1f4f2424eb30dcef9051e263b124e1464f43f15216c2e8f49b', files: 1, bytes: 289, entries: [Array] }, { kind: 'file', path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/plugins/installed_plugins.json', identity: [Object], contentSha256: 'd199a6ecd420533e9af6cb4fef2010ab8ed6ac88e3aa4cccf0bc79a0c2dc66f0', files: 1, bytes: 695, entries: [Array] }, { kind: 'directory', path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/plugins/cache/qs-native-fixture/ps-probe/1.0.0', identity: [Object], contentSha256: 'b4e541374044620ea8fd5ab3b0c463ed71fc273c59b5b0cc0dcee51b5ef2209d', files: 2, bytes: 151, entries: [Array] } ],
+    expected: [ { kind: 'file', path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/settings.json', identity: [Object], contentSha256: '5c481d543a501f1f4f2424eb30dcef9051e263b124e1464f43f15216c2e8f49b', files: 1, bytes: 289, entries: [Array] }, { kind: 'file', path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/plugins/installed_plugins.json', identity: [Object], contentSha256: '97f3a9ac09253d33e3aad642d683efbd51b75a3a3566bd3905bfe2de1b34aa76', files: 1, bytes: 366, entries: [Array] }, { kind: 'directory', path: '/tmp/qs-native-adapter-2uQzEI/home/.claude/plugins/cache/qs-native-fixture/ps-probe/1.0.0', identity: [Object], contentSha256: 'c1f33e493a9fad9e08c45fbc5cf1b167f58c1fa069c374265fc0a0785fd09bb7', files: 3, bytes: 164, entries: [Array] } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/migration-native-packages.test.mjs:474:45
+✖ Claude paused rollback rejects unrelated plugin identity drift before restoring registrations (14985.539612ms)
+  AssertionError [ERR_ASSERTION]: Drift must block before changing any owned file or registration.
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      {
+        bytes: 289,
+        contentSha256: 'eaa7ed891348847fa8226539e9ce5b25fc967c33ba8ce608aaca236b8f49d538',
+        entries: [
+  ...
+      {
+  +     bytes: 695,
+  +     contentSha256: 'ab1ddd6f8f8735b45eeb6cd9120b2b908c08de733e1e1541c6ca5071afeea9b3',
+  -     bytes: 366,
+  -     contentSha256: '3e7d9a031a579103fd8ae27d9fab50896f6b31ce6acfaa4c802618eca17b1ef1',
+        entries: [
+          {
+  +         bytes: 695,
+  -         bytes: 366,
+            kind: 'file',
+            mode: 436,
+            path: '',
+  +         sha256: '08fe94b80cd4d73d77d9d7801f360dd374a8c3d0988957157c7fadb6d0652775'
+  -         sha256: '3611ad9766bb67e6d91ebf478880a6345132cd19421eaf27a5f27575d6ae5327'
+          }
+        ],
+        files: 1,
+        identity: {
+          device: 64512,
+  +       inode: 6309310
+  -       inode: 6309287
+        },
+        kind: 'file',
+        path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/plugins/installed_plugins.json'
+      },
+      {
+  +     bytes: 151,
+  +     contentSha256: 'b4e541374044620ea8fd5ab3b0c463ed71fc273c59b5b0cc0dcee51b5ef2209d',
+  -     bytes: 164,
+  -     contentSha256: '2dffb2f23d9747001eb3fccf72b7b3a27339bffa2cfee16c316de6c381e36e68',
+        entries: [
+          {
+            kind: 'directory',
+            mode: 509,
+            path: ''
+  ...
+          {
+  -         bytes: 13,
+  -         kind: 'file',
+  -         mode: 436,
+  -         path: '.orphaned_at',
+  -         sha256: '52743684cfb1a4b1a08adf08681359bbac9ac056472aa21479ac8ab98cd868a4'
+  -       },
+  -       {
+            kind: 'directory',
+            mode: 509,
+            path: 'skills'
+          },
+          {
+  ...
+        ],
+  +     files: 2,
+  -     files: 3,
+        identity: {
+          device: 64512,
+          inode: 6309277
+        },
+        kind: 'directory',
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/migration-native-packages.test.mjs:486:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { kind: 'file', path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/settings.json', identity: [Object], contentSha256: 'eaa7ed891348847fa8226539e9ce5b25fc967c33ba8ce608aaca236b8f49d538', files: 1, bytes: 289, entries: [Array] }, { kind: 'file', path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/plugins/installed_plugins.json', identity: [Object], contentSha256: 'ab1ddd6f8f8735b45eeb6cd9120b2b908c08de733e1e1541c6ca5071afeea9b3', files: 1, bytes: 695, entries: [Array] }, { kind: 'directory', path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/plugins/cache/qs-native-fixture/ps-probe/1.0.0', identity: [Object], contentSha256: 'b4e541374044620ea8fd5ab3b0c463ed71fc273c59b5b0cc0dcee51b5ef2209d', files: 2, bytes: 151, entries: [Array] } ],
+    expected: [ { kind: 'file', path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/settings.json', identity: [Object], contentSha256: 'eaa7ed891348847fa8226539e9ce5b25fc967c33ba8ce608aaca236b8f49d538', files: 1, bytes: 289, entries: [Array] }, { kind: 'file', path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/plugins/installed_plugins.json', identity: [Object], contentSha256: '3e7d9a031a579103fd8ae27d9fab50896f6b31ce6acfaa4c802618eca17b1ef1', files: 1, bytes: 366, entries: [Array] }, { kind: 'directory', path: '/tmp/qs-native-adapter-5UyAB4/home/.claude/plugins/cache/qs-native-fixture/ps-probe/1.0.0', identity: [Object], contentSha256: '2dffb2f23d9747001eb3fccf72b7b3a27339bffa2cfee16c316de6c381e36e68', files: 3, bytes: 164, entries: [Array] } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/migration-native-packages.test.mjs:495:1
+✖ Claude recovery refuses an unverifiable active unrelated payload before any restoration (15371.231889ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'rolled-back'
+  - 'recovery-failed'
+  
+      at TestContext.<anonymous> (file:///github/skills/tests/migration-native-packages.test.mjs:499:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'rolled-back',
+    expected: 'recovery-failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -2,7 +2,7 @@
 
 ## System at a glance
 
-QuickStark exposes twelve core commands and optional specialist (9), advanced (12), frontend (4), video (1) and execution (1) commands. All public names use QS. Private capabilities preserve the required source workflows without adding dropdown commands. Claude, Codex and Pi projections share catalog membership; selected native transactions currently support Codex and Pi.
+QuickStark exposes twelve core commands and optional specialist (9), advanced (12), frontend (4), video (1) and execution (1) commands. All public names use QS. Private capabilities preserve the required source workflows without adding dropdown commands. Claude, Codex and Pi projections share catalog membership; selected native transactions support Codex, Claude Code and Pi.
 
 ```mermaid
 flowchart LR

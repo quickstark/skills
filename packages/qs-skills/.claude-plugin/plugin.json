@@ -1,0 +1,31 @@
+{
+  "name": "qs-skills",
+  "version": "4.3.1",
+  "description": "QuickStark's twelve-command core engineering workflow.",
+  "author": {
+    "name": "QuickStark",
+    "url": "https://github.com/quickstark"
+  },
+  "homepage": "https://github.com/quickstark/skills",
+  "repository": "https://github.com/quickstark/skills",
+  "license": "MIT",
+  "keywords": [
+    "quickstark",
+    "engineering",
+    "workflow"
+  ],
+  "skills": [
+    "./skills/qs-help",
+    "./skills/qs-setup",
+    "./skills/qs-plan-clarify",
+    "./skills/qs-plan-roadmap",
+    "./skills/qs-plan-spec",
+    "./skills/qs-code-build",
+    "./skills/qs-code-debug",
+    "./skills/qs-review-code",
+    "./skills/qs-git-merge",
+    "./skills/qs-deploy-release",
+    "./skills/qs-flow-triage",
+    "./skills/qs-flow-handoff"
+  ]
+}

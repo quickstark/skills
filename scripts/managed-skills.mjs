@@ -23,6 +23,13 @@ const runFile = promisify(execFile);
 const defaultRepositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SUPPORTED_AGENTS = new Set(["codex", "claude-code", "pi"]);
 
+export function normalizeManagedAgents(agents) {
+  assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
+  const targets = [...new Set(agents.map((agent) => agent === "claude" ? "claude-code" : agent))];
+  for (const agent of targets) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}. Choose codex, claude (or claude-code), or pi.`);
+  return targets;
+}
+
 function assertCondition(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -53,7 +60,7 @@ export async function verifyOriginMainFreshness({
   runGit = defaultGitCommand,
 } = {}) {
   assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
-  for (const agent of agents) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}.`);
+  agents = normalizeManagedAgents(agents);
   let headResult;
   let branchResult;
   let statusResult;
@@ -216,7 +223,7 @@ export async function buildManagedSelectionPlan({
   inspectManagedPackages = defaultInspectManagedPackages,
 } = {}) {
   assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
-  const targets = [...new Set(agents)];
+  const targets = normalizeManagedAgents(agents);
   for (const agent of targets) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}.`);
   const maintained = await validateMaintainedPackages({ repositoryRoot });
   const manifest = await loadManifest(manifestPath);
@@ -257,7 +264,7 @@ export async function buildManagedSkillsPlan({
   manifestPath = join(repositoryRoot, "config", "personal-skills.manifest.json"),
 } = {}) {
   assertCondition(Array.isArray(agents) && agents.length > 0, "Select at least one managed skill target.");
-  const targets = [...new Set(agents)];
+  const targets = normalizeManagedAgents(agents);
   for (const agent of targets) assertCondition(SUPPORTED_AGENTS.has(agent), `Unsupported managed skill target: ${agent}.`);
   const maintained = await validateMaintainedPackages({ repositoryRoot });
   const manifest = await loadManifest(manifestPath);
@@ -456,11 +463,14 @@ async function defaultPersonalAction(options) {
 }
 
 export async function executeSelectedManagedSkills(options = {}) {
+  options = { ...options, agents: normalizeManagedAgents(options.agents ?? ["codex"]) };
   const { action, homeDirectory = homedir(), repositoryRoot = defaultRepositoryRoot, authorize = false, resume = null } = options;
   assertCondition(["plan", "sync", "update", "verify"].includes(action), "Unknown selected managed skill action.");
   const managedPaths = options.managedPaths ?? resolveManagedSkillPaths({
     homeDirectory,
     codexHomeDirectory: options.codexHomeDirectory,
+    claudeHomeDirectory: options.claudeHomeDirectory,
+    piHomeDirectory: options.piHomeDirectory,
     environment: options.environment,
     agents: options.agents,
   });
@@ -492,10 +502,10 @@ export async function executeSelectedManagedSkills(options = {}) {
 
 async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = defaultRepositoryRoot,
   homeDirectory = homedir(), agents = ["codex"], profile = null, withPackages = [],
-  codexHomeDirectory, environment, managedPaths: suppliedManagedPaths,
+  codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, managedPaths: suppliedManagedPaths,
   authorize = false, resume = null, auditPath, runtime = {}, transactionId, verifyRepositoryFreshness = verifyOriginMainFreshness } = {}) {
   assertCondition(["plan", "sync", "update", "verify"].includes(action), "Unknown selected managed skill action.");
-  const managedPaths = suppliedManagedPaths ?? resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, environment, agents });
+  const managedPaths = suppliedManagedPaths ?? resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, agents });
   homeDirectory = managedPaths.homeDirectory;
   assertCondition(action !== "sync" || authorize, "Selected synchronization requires explicit --authorize after reviewing the plan.");
   assertCondition(!resume || ["update", "sync"].includes(action), "Journal resume is only available for update/sync.");
@@ -504,13 +514,15 @@ async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = d
     assertCondition(!profile && withPackages.length === 0, "Resume uses the frozen journal selection; omit profile/addition flags.");
     assertCondition(action === "update" || authorize, "Resume synchronization requires explicit --authorize.");
     const assembly = await restoreManagedSkillMigration({ journalPath: resolve(resume), runtime });
-    assertCondition(assembly.plan.controlPlane.nativeOptions && Object.values(assembly.plan.controlPlane.nativeOptions).every((options) => options.homeDirectory === homeDirectory && options.codexHomeDirectory === managedPaths.codexHomeDirectory && options.cwd === repositoryRoot), "Resume journal belongs to another Codex home, user home, or repository.");
+    assertCondition(JSON.stringify(Object.keys(assembly.plan.controlPlane.nativeOptions).sort()) === JSON.stringify([...agents].sort()), "Resume journal belongs to different managed skill targets; use its original --agent flags.");
+    assertCondition(assembly.plan.controlPlane.nativeOptions && Object.values(assembly.plan.controlPlane.nativeOptions).every((options) => options.homeDirectory === homeDirectory && options.codexHomeDirectory === managedPaths.codexHomeDirectory && options.cwd === repositoryRoot && (options.claudeHomeDirectory ?? join(homeDirectory, ".claude")) === managedPaths.claudeHomeDirectory && (options.piHomeDirectory ?? join(homeDirectory, ".pi/agent")) === managedPaths.piHomeDirectory), "Resume journal belongs to another Codex home, user home, or repository.");
     const head = freshness?.head ?? (await defaultGitCommand(["rev-parse", "HEAD"], { repositoryRoot })).stdout.trim();
     assertCondition(assembly.plan.revision === head, "Resume journal belongs to a different release revision; retain the journal and restore its verified checkout before retry.");
     const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
     return { action, ...result, journalPath: assembly.journalPath };
   }
   const input = await buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
+    claudeHomeDirectory: managedPaths.claudeHomeDirectory, piHomeDirectory: managedPaths.piHomeDirectory,
     selectionPath: managedPaths.selectionPath, agents, profile, withPackages, auditPath, runtime });
   const preview = await previewManagedSkillMigration(input);
   if (action === "plan") return { action, ...preview };
@@ -545,6 +557,8 @@ export async function executeManagedSkills({
   repositoryRoot = defaultRepositoryRoot,
   homeDirectory = homedir(),
   codexHomeDirectory,
+  claudeHomeDirectory,
+  piHomeDirectory,
   environment,
   agents = ["codex"],
   manifestPath = join(repositoryRoot, "config", "personal-skills.manifest.json"),
@@ -561,7 +575,8 @@ export async function executeManagedSkills({
   auditPath,
   runtime = {},
 } = {}) {
-  const managedPaths = resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, environment, agents });
+  agents = normalizeManagedAgents(agents);
+  const managedPaths = resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, agents });
   assertCondition(REGISTRY_STATE !== "target" || registryState === "target", "The activated target registry cannot use the legacy all-package updater.");
   if (registryState === "target") return executeSelectedManagedSkills({ action, repositoryRoot, homeDirectory: managedPaths.homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
     environment, managedPaths, agents, profile, withPackages, resume, auditPath, runtime, authorize, verifyRepositoryFreshness });
@@ -774,19 +789,20 @@ export function parseManagedSkillsArguments(arguments_) {
     const flag = flags[index];
     if (flag === "--json") { options.json = true; continue; }
     if (flag === "--authorize") { options.authorize = true; continue; }
-    assertCondition(["--agent", "--target", "--home", "--codex-home", "--manifest", "--profile", "--with", "--resume"].includes(flag), `Unknown managed skill option: ${flag}.`);
+    assertCondition(["--agent", "--target", "--home", "--codex-home", "--claude-home", "--pi-home", "--manifest", "--profile", "--with", "--resume"].includes(flag), `Unknown managed skill option: ${flag}.`);
     const value = flags[index + 1];
     assertCondition(value && !value.startsWith("--"), `Missing value for ${flag}.`);
     if (flag === "--agent" || flag === "--target") options.agents.push(value);
     else if (flag === "--home") options.homeDirectory = resolve(value);
     else if (flag === "--codex-home") { assertCondition(!options.codexHomeDirectory, "Choose one Codex home per invocation."); options.codexHomeDirectory = resolve(value); }
+    else if (["--claude-home", "--pi-home"].includes(flag)) { const key = flag === "--claude-home" ? "claudeHomeDirectory" : "piHomeDirectory"; assertCondition(!options[key], `Choose one ${flag} per invocation.`); options[key] = resolve(value); }
     else if (flag === "--profile") { assertCondition(!options.profile, "Choose one explicit profile."); options.profile = value; }
     else if (flag === "--with") options.withPackages.push(value);
     else if (flag === "--resume") { assertCondition(!options.resume, "Choose one transaction journal."); options.resume = resolve(value); }
     else options.manifestPath = resolve(value);
     index += 1;
   }
-  if (!options.agents.length) options.agents = ["codex"];
+  options.agents = normalizeManagedAgents(options.agents.length ? options.agents : ["codex"]);
   return options;
 }
 
