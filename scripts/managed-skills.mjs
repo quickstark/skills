@@ -19,6 +19,7 @@ import { previewManagedSkillMigration, assembleManagedSkillMigration, executeMan
 import { assertMigrationParents } from "./migration-filesystem.mjs";
 import { resolveManagedSkillPaths } from "./managed-skill-paths.mjs";
 import { bootstrapManagedMarketplaces } from "./managed-marketplace-bootstrap.mjs";
+import { repairManagedPackages as repairPackages, pendingManagedRepair, completeManagedRepair } from "./managed-package-repair.mjs";
 
 const runFile = promisify(execFile);
 const defaultRepositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -501,10 +502,13 @@ export async function executeSelectedManagedSkills(options = {}) {
   }
 }
 
-async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = defaultRepositoryRoot,
+async function executeSelectedManagedSkillsUnlocked(options = {}) {
+  let { action, repositoryRoot = defaultRepositoryRoot,
   homeDirectory = homedir(), agents = ["codex"], profile = null, withPackages = [],
   codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, managedPaths: suppliedManagedPaths,
-  authorize = false, resume = null, auditPath, runtime = {}, transactionId, bootstrapMarketplaces = false, verifyRepositoryFreshness = verifyOriginMainFreshness } = {}) {
+  authorize = false, resume = null, auditPath, runtime = {}, transactionId, bootstrapMarketplaces = false,
+  repairManagedPackages = false, repairSelection: explicitRepairSelection = null, repairRecord = null,
+  verifyRepositoryFreshness = verifyOriginMainFreshness } = options;
   assertCondition(["plan", "sync", "update", "verify"].includes(action), "Unknown selected managed skill action.");
   const managedPaths = suppliedManagedPaths ?? resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, agents });
   homeDirectory = managedPaths.homeDirectory;
@@ -523,6 +527,7 @@ async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = d
     return { action, ...result, journalPath: assembly.journalPath };
   }
   const marketplaceActions = [];
+  const repair = repairRecord ?? (repairManagedPackages && action === 'update' ? await pendingManagedRepair({ paths: managedPaths, agents, repositoryRoot }) : null);
   try {
     if (action === 'update' && bootstrapMarketplaces) {
       await validateManagedSkillSelection({ repositoryRoot, selectionPath: managedPaths.selectionPath, agents, profile, withPackages });
@@ -530,7 +535,8 @@ async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = d
     }
     const input = await buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
       claudeHomeDirectory: managedPaths.claudeHomeDirectory, piHomeDirectory: managedPaths.piHomeDirectory,
-      selectionPath: managedPaths.selectionPath, agents, profile, withPackages, auditPath, runtime });
+      selectionPath: managedPaths.selectionPath, agents, profile, withPackages, auditPath,
+      repairSelection: explicitRepairSelection ?? repair?.selection ?? null, runtime });
     const preview = await previewManagedSkillMigration(input);
     if (action === "plan") return { action, ...preview };
     assertCondition(preview.status === "ready", `Selected migration is blocked: ${preview.conflicts.map((entry) => entry.reason).join("; ")}`);
@@ -556,9 +562,16 @@ async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = d
       backupRoot: join(managedPaths.backupRoot, transactionId),
       journalPath: join(stagingRoot, "transaction.json"), runtime: { ...input.runtime, ...runtime, nativeOptions: input.runtime.nativeOptions } });
     const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
-    return { action, ...result, journalPath: assembly.journalPath, targets: preview.targets, marketplaceActions };
+    if (result.status === 'complete' && repair) await completeManagedRepair({ paths: managedPaths, record: repair });
+    return { action, ...result, journalPath: assembly.journalPath, targets: preview.targets, marketplaceActions,
+      ...(repair ? { repairJournalPath: repair.recordPath } : {}) };
   } catch (error) {
+    if (action === 'update' && repairManagedPackages && ['QS_MARKETPLACE_MISMATCH', 'QS_MANAGED_PACKAGE_DRIFT'].includes(error.code)) {
+      const repaired = await repairPackages({ repositoryRoot, paths: managedPaths, agents, profile, withPackages, runtime });
+      return executeSelectedManagedSkillsUnlocked({ ...options, managedPaths, homeDirectory, repairManagedPackages: false, repairSelection: repaired.selection, repairRecord: repaired });
+    }
     if (marketplaceActions.length) error.marketplaceActions = marketplaceActions;
+    if (repair) error.repairJournalPath = repair.recordPath;
     throw error;
   }
 }
@@ -586,12 +599,13 @@ export async function executeManagedSkills({
   auditPath,
   runtime = {},
   bootstrapMarketplaces = false,
+  repairManagedPackages = false,
 } = {}) {
   agents = normalizeManagedAgents(agents);
   const managedPaths = resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, agents });
   assertCondition(REGISTRY_STATE !== "target" || registryState === "target", "The activated target registry cannot use the legacy all-package updater.");
   if (registryState === "target") return executeSelectedManagedSkills({ action, repositoryRoot, homeDirectory: managedPaths.homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
-    environment, managedPaths, agents, profile, withPackages, resume, auditPath, runtime, authorize, bootstrapMarketplaces, verifyRepositoryFreshness });
+    environment, managedPaths, agents, profile, withPackages, resume, auditPath, runtime, authorize, bootstrapMarketplaces, repairManagedPackages, verifyRepositoryFreshness });
   assertCondition(registryState === "legacy", "Unknown collection registry state.");
   assertCondition(!managedPaths.customCodexHome, "Custom Codex homes require the target registry updater.");
   assertCondition(!profile && withPackages.length === 0 && !resume, "Selected profile/addition/retry flags require the target registry; the inactive legacy updater cannot apply them.");

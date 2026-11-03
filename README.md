@@ -24,31 +24,28 @@ installs or starts another root automatically.
 
 ## Install and update
 
-Use an existing Node/npm installation and the CLI for your selected host. Keep
-the repository checkout at a stable path: native package registrations refer to
-it. The transactional updater supports Codex, Claude Code and Pi. The
-[installation guide](./docs/install-and-update-skills.md) covers all three hosts.
-
-For a fresh setup:
+From any directory on macOS or Linux, use the same command for installation and updates:
 
 ```bash
-git clone https://github.com/quickstark/skills.git
-cd skills
-npm run skills:update
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash
 ```
 
-For later updates:
+Have Git, Node and curl installed, along with the harness CLIs you use. The script
+waits for Linux/macOS GitHub validation of the exact published main commit,
+validates its generated packages and acceptance evidence, then detects `codex`,
+`claude` and `pi` on PATH and updates their skills.
 
-```bash
-git pull --ff-only origin main
-npm run skills:update
-```
+It maintains a clean checkout at `~/.local/share/quickstark/skills`. Your development
+clones and their local edits stay untouched. If the managed checkout is edited,
+the complete previous checkout is retained before replacement. Known QuickStark
+marketplace bindings and damaged installed packages are repaired after originals
+are backed up and replacements pass acceptance. Unrelated packages and settings
+remain preserved. The [installation guide](./docs/install-and-update-skills.md)
+describes the validation gate, profiles and recovery records.
 
-The script detects `codex`, `claude` and `pi` executables on PATH and updates each
-detected harness. It registers an absent, unused local marketplace automatically,
-then installs and verifies the selected skills. Existing marketplace conflicts or
-retained unregistered caches stop the update with diagnostics. No dependency
-installation is needed to run the updater; `npm ci` is for repository development.
+From an updated repository, `npm run skills:update` runs the same installer.
+No manual pull, stash, dependency installation or separate verification is needed
+for an ordinary update. `npm ci` is for repository development.
 
 A fresh host receives `qs-skills`; an existing host retains its saved selection.
 Optional packages remain opt-in. Use `--agent codex`, `--agent claude` (alias
@@ -56,18 +53,18 @@ Optional packages remain opt-in. Use `--agent codex`, `--agent claude` (alias
 hosts. For example, add frontend to Codex explicitly:
 
 ```bash
-npm run skills:update -- --agent codex --with qs-frontend
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --agent codex --with qs-frontend
 ```
 
 Repeat `--with` for other packages. Selection is saved after success in
 `~/.config/quickstark/skills-selection.json`, or profile-specific state for custom
-homes. The updater requires checkout HEAD to match `origin/main` and checks
-ownership and release acceptance. Preserve local changes if a conflict blocks it.
+homes. The installer verifies its managed checkout against the published commit
+and checks ownership and release acceptance before replacement.
 Use `npm run skills:update -- --help` for options. An optional read-only preview is
 `npm run skills:plan -- --json --agent codex`; verification alone is:
 
 ```bash
-node scripts/managed-skills.mjs verify --json --agent codex
+node "$HOME/.local/share/quickstark/skills/scripts/managed-skills.mjs" verify --json --agent codex
 ```
 
 Use the same host flags as the update. Restart the host or begin a new task to
@@ -76,8 +73,7 @@ refresh its skill catalog. A Git pull alone does not refresh cached plugins.
 To update a separate Codex profile:
 
 ```bash
-git pull --ff-only origin main
-npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo"
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --agent codex --codex-home "$HOME/.codex-demo"
 ```
 
 `--codex-home` overrides inherited `CODEX_HOME`; otherwise the updater uses

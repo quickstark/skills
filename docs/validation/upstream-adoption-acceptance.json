@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
+  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -673,7 +673,7 @@
     },
     "AC-15": {
       "status": "passed",
-      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. The managed Claude update adds isolated native transaction and SDK command-discovery evidence for all 39 maintained roots. Canonical behavior acceptance is retained; no new model turns or actual-machine rollout are claimed. Reviewed-defect regressions additionally verify preservation of concurrent recovery edits and migration/resume/rollback of immutable root-based Claude core closures without copying unrelated cache files; edited closures and same-version replacement fail before native effects. Codex portability regressions verify same-version installed-state checks across directory permissions without changing the cache; content and executable-bit edits remain rejected. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
+      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. The managed Claude update adds isolated native transaction and SDK command-discovery evidence for all 39 maintained roots. Canonical behavior acceptance is retained; no new model turns or actual-machine rollout are claimed. Reviewed-defect regressions additionally verify preservation of concurrent recovery edits and migration/resume/rollback of immutable root-based Claude core closures without copying unrelated cache files; edited closures and same-version replacement fail before native effects. Codex portability regressions verify same-version installed-state checks across directory permissions without changing the cache; content and executable-bit edits remain rejected. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
       "evidence": [
         "tests/adoption-projection.test.mjs",
         "tests/fixtures/target-activation-probe/README.md",
@@ -729,7 +729,13 @@
         "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skills.mjs",
         "scripts/qs-test-environment.mjs",
-        "tests/qs-test-baseline.test.mjs"
+        "tests/qs-test-baseline.test.mjs",
+        "install.sh",
+        ".github/workflows/validate.yml",
+        "scripts/install-skills.mjs",
+        "scripts/managed-package-repair.mjs",
+        "scripts/validate-skill-release.mjs",
+        "tests/install-skills.test.mjs"
       ]
     },
     "AC-16": {
@@ -783,7 +789,7 @@
     },
     "AC-17": {
       "status": "passed",
-      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. Interrupted-Claude-rollback regressions verify fresh-process resume between settings/metadata replacements, preservation of edits to restored or pending files, receipt tamper rejection and restart of partially removed newly exposed caches. Recovery evidence is digest-bound to the synced journal intent before restoration. Retained cache payloads remain intact; canonical workflow/model behavior acceptance is unchanged. Unrelated-Claude-payload regressions verify that paused recovery preserves unchanged unrelated plugins, blocks body/identity drift before modifying any owned target, and refuses preparation when an active unrelated payload cannot be inspected. Recovery receipts bind the original unrelated payload snapshots used for discovery; canonical workflow/model behavior acceptance is unchanged. Codex replacement and same-selector recovery regressions exercise differing source/cache directory modes; source permission changes after planning and backup permission tampering remain rejected. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
+      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. Interrupted-Claude-rollback regressions verify fresh-process resume between settings/metadata replacements, preservation of edits to restored or pending files, receipt tamper rejection and restart of partially removed newly exposed caches. Recovery evidence is digest-bound to the synced journal intent before restoration. Retained cache payloads remain intact; canonical workflow/model behavior acceptance is unchanged. Unrelated-Claude-payload regressions verify that paused recovery preserves unchanged unrelated plugins, blocks body/identity drift before modifying any owned target, and refuses preparation when an active unrelated payload cannot be inspected. Recovery receipts bind the original unrelated payload snapshots used for discovery; canonical workflow/model behavior acceptance is unchanged. Codex replacement and same-selector recovery regressions exercise differing source/cache directory modes; source permission changes after planning and backup permission tampering remain rejected. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
       "evidence": [
         "tests/migration-transaction.test.mjs",
         "docs/validation/validation-host-portability-review.md",
@@ -836,7 +842,13 @@
         "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skills.mjs",
         "scripts/qs-test-environment.mjs",
-        "tests/qs-test-baseline.test.mjs"
+        "tests/qs-test-baseline.test.mjs",
+        "install.sh",
+        ".github/workflows/validate.yml",
+        "scripts/install-skills.mjs",
+        "scripts/managed-package-repair.mjs",
+        "scripts/validate-skill-release.mjs",
+        "tests/install-skills.test.mjs"
       ]
     },
     "AC-18": {
@@ -1080,7 +1092,7 @@
     },
     "AC-23": {
       "status": "passed",
-      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
+      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
       "evidence": [
         "tests/fixtures/target-index-generation/evidence/parent-review.json",
         "tests/fixtures/target-documentation-preparation/README.md",
@@ -1139,7 +1151,13 @@
         "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skills.mjs",
         "scripts/qs-test-environment.mjs",
-        "tests/qs-test-baseline.test.mjs"
+        "tests/qs-test-baseline.test.mjs",
+        "install.sh",
+        ".github/workflows/validate.yml",
+        "scripts/install-skills.mjs",
+        "scripts/managed-package-repair.mjs",
+        "scripts/validate-skill-release.mjs",
+        "tests/install-skills.test.mjs"
       ]
     },
     "AC-24": {
@@ -1211,11 +1229,13 @@
         "qs-internal:delegation"
       ],
       "sourcePaths": [
+        ".github/workflows/validate.yml",
         "codex/plugins/qs-skills",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "install.sh",
         "packages/qs-skills",
         "pi/packages/qs-skills",
         "scripts/adoption-acceptance.mjs",
@@ -1223,7 +1243,9 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/install-skills.mjs",
         "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-package-repair.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -1239,6 +1261,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/update-skills.mjs",
+        "scripts/validate-skill-release.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-code-build",
         "skills/engineering/qs-code-debug",
@@ -1705,11 +1728,13 @@
         "qs:qs-test-verify"
       ],
       "sourcePaths": [
+        ".github/workflows/validate.yml",
         "codex/plugins/qs-specialists",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "install.sh",
         "packages/qs-specialists",
         "pi/packages/qs-specialists",
         "scripts/adoption-acceptance.mjs",
@@ -1717,7 +1742,9 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/install-skills.mjs",
         "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-package-repair.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -1733,6 +1760,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/update-skills.mjs",
+        "scripts/validate-skill-release.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-code-document",
         "skills/engineering/qs-deploy-prompt",
@@ -2218,11 +2246,13 @@
         "ps:ps-worktree-cleanup"
       ],
       "sourcePaths": [
+        ".github/workflows/validate.yml",
         "codex/plugins/qs-advanced",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "install.sh",
         "packages/qs-advanced",
         "pi/packages/qs-advanced",
         "scripts/adoption-acceptance.mjs",
@@ -2230,7 +2260,9 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/install-skills.mjs",
         "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-package-repair.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -2246,6 +2278,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/update-skills.mjs",
+        "scripts/validate-skill-release.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/advanced",
         "skills/engineering/qs-blast-radius",
@@ -2725,11 +2758,13 @@
         "qs:qs-design-image-web"
       ],
       "sourcePaths": [
+        ".github/workflows/validate.yml",
         "codex/plugins/qs-frontend",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "install.sh",
         "packages/qs-frontend",
         "pi/packages/qs-frontend",
         "scripts/adoption-acceptance.mjs",
@@ -2737,7 +2772,9 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/install-skills.mjs",
         "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-package-repair.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -2753,6 +2790,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/update-skills.mjs",
+        "scripts/validate-skill-release.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-design-frontend",
         "skills/engineering/qs-design-image-mobile",
@@ -3241,11 +3279,13 @@
         "video-internal:talking-head-recut"
       ],
       "sourcePaths": [
+        ".github/workflows/validate.yml",
         "codex/plugins/qs-video",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "install.sh",
         "packages/qs-video",
         "pi/packages/qs-video",
         "scripts/adoption-acceptance.mjs",
@@ -3253,7 +3293,9 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/install-skills.mjs",
         "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-package-repair.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -3269,6 +3311,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/update-skills.mjs",
+        "scripts/validate-skill-release.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/video/qs-video"
       ],
@@ -3827,11 +3870,13 @@
         "qs:qs-unlazy"
       ],
       "sourcePaths": [
+        ".github/workflows/validate.yml",
         "codex/plugins/qs-execution",
         "config/skill-migrations.json",
         "config/skill-profiles.json",
         "config/skill-provenance.json",
         "docs/skill-run-contract.md",
+        "install.sh",
         "packages/qs-execution",
         "pi/packages/qs-execution",
         "scripts/adoption-acceptance.mjs",
@@ -3839,7 +3884,9 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/install-skills.mjs",
         "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-package-repair.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -3855,6 +3902,7 @@
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
         "scripts/update-skills.mjs",
+        "scripts/validate-skill-release.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-unlazy"
       ],
@@ -4447,11 +4495,11 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "b4cf51ece78dffae85fb8b887ead520895c0d7b4e670dd5bf38e6de2f722e3fa"
+      "contentSha256": "92c0a6b6dbfc23b5e99131a26dc9d62b8a118d992b2b90434ca6035e82f45fe8"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
-      "contentSha256": "b78647c39db284503923a176145c346ba3fa807ff956e3ef31f340b8a022d0d2"
+      "contentSha256": "7d67eb552687ccf09e373fadcfa02b887c05623172b13062441fc6e6e56df672"
     },
     "scripts/managed-skill-paths.mjs": {
       "kind": "file",
@@ -4459,7 +4507,7 @@
     },
     "scripts/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "7cf79a4dbe4510fc21f879d7005b6224dbfbbc3d174ede33d16268bfbb75d663"
+      "contentSha256": "f49e4b42da8443defad8932c165aae15d4b196f9e57dfc662658eaa1b32f99c5"
     },
     "scripts/migration-filesystem.mjs": {
       "kind": "file",
@@ -4743,11 +4791,31 @@
     },
     "scripts/managed-marketplace-bootstrap.mjs": {
       "kind": "file",
-      "contentSha256": "08ff11013fcb19c3ea7ea3db06118c5ccb76d9ac82c1267c12b4240f75cd22ea"
+      "contentSha256": "f2f77ff27401a61572b0cae2971fee27cee09ad26d3a6dc869706e3f765ca591"
     },
     "scripts/update-skills.mjs": {
       "kind": "file",
-      "contentSha256": "77f4d6e7e9083f9058f0c02526a29bc85f65fbd0c1a4185fb6396957a8be21d7"
+      "contentSha256": "73f792931ef0e6897b415bb4cf929fa4d43d9c76af1485a0b0902414dd5b40ca"
+    },
+    ".github/workflows/validate.yml": {
+      "kind": "file",
+      "contentSha256": "d893577fa2d721f01ff12755250c45dbd7858f02af43e0f01245a2c64ecf6cd9"
+    },
+    "install.sh": {
+      "kind": "file",
+      "contentSha256": "4b8b56701f20675d3d9464f53c645319e8f2ccaa3272afcf17d94ec51d49a2a5"
+    },
+    "scripts/install-skills.mjs": {
+      "kind": "file",
+      "contentSha256": "299d4194961c7c8486bc0ba9b72ab244d036a7f3badf9059295d269b0dfe14bd"
+    },
+    "scripts/managed-package-repair.mjs": {
+      "kind": "file",
+      "contentSha256": "39695c1f59b7a41083b0e8756a2f150283ed38c5e819fd1177547fbe20657cc6"
+    },
+    "scripts/validate-skill-release.mjs": {
+      "kind": "file",
+      "contentSha256": "a09777989144a598cbe820a97ec8b5e66e09c8538b05705ba308035a51991a29"
     }
   },
   "evidence": {
@@ -5001,7 +5069,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "0743acdedbdd4be5a311d133a5b7c7cf87390eeb6352f80730395f372d48dc80"
+      "sha256": "e77ef074b85cb77c0eac8323a07f5add0c24977daaa3cf634028145e3180bece"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
@@ -5065,7 +5133,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "5237a8d662188c8ae00c253c3d749db149bfcfba005e9384c3c7e8a3d29941cd"
+      "sha256": "45c8f2f600ab68cb19219c5ccdd9894fc334c2c5d01ba4b313899d1ba251c2d4"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -5073,7 +5141,7 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "5befcfe6e595ccb0d4389d13f2d0fbdc901870323234568419ea7b5d0995a403"
+      "sha256": "ce5395d8556c53095de06e8328d10dce517ad1ec2d941a965ef0b4064292de0a"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
@@ -5089,7 +5157,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "aa84d4055ddfa72fc2a4521239ebaa9a8abaf66af3c45e0fb4d8ef136a6f1874"
+      "sha256": "36319c8085077ca3ffc8b557fb1ac6c4579cb6aeae4e6dce080e348f95c2c2c0"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -5109,7 +5177,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",
-      "sha256": "dece5ba5aca65868497339aa863b2d9fa17390cb9c628f93194509edca0025e2"
+      "sha256": "e58976b2a8b2973f50ec4dbe71be2caa844c4d794c311eb077d3b6b37432d9f4"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
@@ -5241,23 +5309,59 @@
     },
     "scripts/update-skills.mjs": {
       "path": "scripts/update-skills.mjs",
-      "sha256": "916782fa613af5586db0b83c35ab5215dd337754da3534e5d2badd67a5fe63ed"
+      "sha256": "e841c99f8861e6e1a850ecb11edb0dc80015f8f8319cdd9f05d1dd4e74beda52"
     },
     "scripts/managed-marketplace-bootstrap.mjs": {
       "path": "scripts/managed-marketplace-bootstrap.mjs",
-      "sha256": "19d33c4df108b7d0b2c417a90971218622bb10c1ca118b44781363ff92742d1f"
+      "sha256": "51dc3749b04d96314f481936407657dd1f9592e21479fca3cc8a64cd3fe88b92"
     },
     "scripts/managed-skills.mjs": {
       "path": "scripts/managed-skills.mjs",
-      "sha256": "5ff3cbb7f423c74385133dae45cbaac2f037ad2c9403f1a1822cf30b528a4b8f"
+      "sha256": "9344c638a1757d51c0a5dcbd49e5567a8808b0c883cefddf45fdc0e8e1451c87"
     },
     "scripts/qs-test-environment.mjs": {
       "path": "scripts/qs-test-environment.mjs",
-      "sha256": "a990a56efae31d6c859083e1faea57a98887970e8ae85caa2aaffc060eb15cdc"
+      "sha256": "52fc5574dc8d0ccd0cafddaf35908d22414c2d75ae396467228f8763eae32bde"
     },
     "tests/qs-test-baseline.test.mjs": {
       "path": "tests/qs-test-baseline.test.mjs",
-      "sha256": "5f861a6ff9ee3932f3d6e68cd376577561acdc7ce900bf4b3565fd61c7c1e378"
+      "sha256": "5dd84d44586c7abd6c26fde6801175f78aa2f4bf45bc753d68188f7e2829961d"
+    },
+    "install.sh": {
+      "path": "install.sh",
+      "sha256": "21974a1a56d8dfbad6f516099222a2f57b99e8c130d2fb9ce3065a534bf0d52a"
+    },
+    ".github/workflows/validate.yml": {
+      "path": ".github/workflows/validate.yml",
+      "sha256": "482c1318447da4cb2cff1edd55db369d967c1c43d0b69bc55a2fe3f315160f8f"
+    },
+    "scripts/install-skills.mjs": {
+      "path": "scripts/install-skills.mjs",
+      "sha256": "b44e0159aa1fc1447bb396b5ba77ec81e3e4dfe8f1f13a0f0380c6bd4cf8ae0e"
+    },
+    "scripts/managed-package-repair.mjs": {
+      "path": "scripts/managed-package-repair.mjs",
+      "sha256": "28c2cea19bb463b17d632bf68ec60ac53aa5145903c4491a05bf22970628526d"
+    },
+    "scripts/validate-skill-release.mjs": {
+      "path": "scripts/validate-skill-release.mjs",
+      "sha256": "ecc7607b895ceae37d88bdb5cf7cb9524ee7be8b3e6b484fd71f0cd065bbbb5d"
+    },
+    "tests/install-skills.test.mjs": {
+      "path": "tests/install-skills.test.mjs",
+      "sha256": "cc2ea5cf5b2d45c96c2edaebe3af959351626b3925356a9cfef3380a23b11b93"
+    },
+    "scripts/managed-skill-migration.mjs": {
+      "path": "scripts/managed-skill-migration.mjs",
+      "sha256": "e29ebb18bca96ea732cf317276c842838aad89371f333170d6de717491234f23"
+    },
+    "tests/personal-skills-v2.test.mjs": {
+      "path": "tests/personal-skills-v2.test.mjs",
+      "sha256": "f2103129b78777d33986e7e899e5bb0d51b97289795247c50a7a0fb1cbbb8d3f"
+    },
+    "package.json": {
+      "path": "package.json",
+      "sha256": "11cdb4c59e01cf7203e16f92845d069c701c8cdcd151061d69a3d220e6dbc964"
     }
   }
 }

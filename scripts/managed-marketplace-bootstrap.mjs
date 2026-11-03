@@ -53,7 +53,10 @@ export async function bootstrapManagedMarketplaces({ repositoryRoot, agents, run
     const existing = await inspect();
     check(existing.length <= 1, `${agent} has duplicate QuickStark marketplace registrations.`);
     if (existing.length) {
-      check(matches(agent, existing[0], root), `${agent} QuickStark marketplace points to another source; preserve it and reconcile the binding before retrying.`);
+      if (!matches(agent, existing[0], root)) {
+        const error = new Error(`${agent} QuickStark marketplace points to another source; preserve it and reconcile the binding before retrying.`);
+        error.code = 'QS_MARKETPLACE_MISMATCH'; error.agent = agent; throw error;
+      }
       continue;
     }
     const config = await metadata(configPath);

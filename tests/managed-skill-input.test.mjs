@@ -106,6 +106,105 @@ nativeTest('actual Codex same-version verification tolerates cache directory per
   assert.deepEqual(await captureMigrationPath(cache),changed,'Verification must not chmod the installed cache');
 });
 
+nativeTest('installer repairs edited Codex bytes only after retaining verified originals and accepted replacements',async t=>{
+  const args=await fixture(t); await git(args.repositoryRoot,['remote','add','origin','https://github.com/quickstark/skills.git']);
+  assert.equal((await executeManagedSkills({...args.options,action:'update'})).status,'complete');
+  const cache=path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-skills/4.0.0');
+  const file=path.join(cache,'skills/qs-help/SKILL.md'); await appendFile(file,'Local installed edit preserved by repair.\n');
+  const before=await captureMigrationPath(cache);
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  const record=await readJSON(result.results[0].repairJournalPath); assert.equal(record.status,'complete');
+  const original=record.snapshots.find(entry=>entry.snapshot.path===path.dirname(path.dirname(cache)));
+  assert.ok(original); assert.match(await readFile(path.join(original.destination,'qs-skills/4.0.0/skills/qs-help/SKILL.md'),'utf8'),/Local installed edit preserved/);
+  assert.notEqual((await captureMigrationPath(cache)).contentSha256,before.contentSha256);
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
+});
+
+nativeTest('repair preserves a package edited after another package was withdrawn',async t=>{
+  const args=await fixture(t); await git(args.repositoryRoot,['remote','add','origin','https://github.com/quickstark/skills.git']);
+  assert.equal((await executeManagedSkills({...args.options,action:'update',withPackages:['qs-advanced']})).status,'complete');
+  const cache=path.join(args.homeDirectory,'.codex/plugins/cache/quickstark');
+  await appendFile(path.join(cache,'qs-skills/4.0.0/skills/qs-help/SKILL.md'),'Trigger repair.');
+  let changedFile; let withdrawals=0;
+  const runtime={runCommand:async(command,argv,context)=>{
+    const result=await runNativePackageCommand(command,argv,context);
+    if(argv[1]==='remove') {
+      withdrawals++;
+      const other=argv[2]==='qs-skills@quickstark'?'qs-advanced':'qs-skills';
+      const name=TARGET_SKILL_COLLECTIONS.find(c=>c.id===other).publicCommands[0];
+      changedFile=path.join(cache,other,'4.0.0/skills',name,'SKILL.md');
+      await appendFile(changedFile,'Concurrent installed edit must survive.');
+    }
+    return result;
+  }};
+  const result=await updateInstalledHarnesses({...args.options,runtime,repairManagedPackages:true,arguments_:['--agent','codex']});
+  assert.equal(result.status,'failed'); assert.equal(withdrawals,1);
+  assert.match(await readFile(changedFile,'utf8'),/Concurrent installed edit must survive/);
+  assert.ok(result.results[0].repairJournalPath);
+});
+
+nativeTest('repair replacement validation failure leaves installed bytes and registration unchanged',async t=>{
+  const args=await fixture(t); await git(args.repositoryRoot,['remote','add','origin','https://github.com/quickstark/skills.git']);
+  assert.equal((await executeManagedSkills({...args.options,action:'update'})).status,'complete');
+  await appendFile(path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-help/SKILL.md'),'Edited.');
+  const before=await fixtureHomeState(args.homeDirectory);
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex'],runtime:{validateRepairRelease:async()=>{throw Error('Replacement acceptance rejected.');}}});
+  assert.equal(result.status,'failed'); assert.match(result.results[0].error,/Replacement acceptance rejected/);
+  assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
+});
+
+nativeTest('installer changes an old QuickStark source binding while preserving its dirty checkout',async t=>{
+  const args=await fixture(t,{bootstrap:false}); const old=path.join(args.base,'old-source');
+  await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
+  await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],args.nativeOptions);
+  await runNativePackageCommand('codex',['plugin','add','qs-skills@quickstark','--json'],args.nativeOptions);
+  await appendFile(path.join(old,'codex/plugins/qs-skills/skills/qs-help/SKILL.md'),'Dirty source edit must survive.\n');
+  const before=await fixtureHomeState(old);
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.deepEqual(await fixtureHomeState(old),before);
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
+  const market=JSON.parse((await runNativePackageCommand('codex',['plugin','marketplace','list','--json'],args.nativeOptions)).stdout).marketplaces.find(m=>m.name==='quickstark');
+  assert.equal(market.root,path.join(args.repositoryRoot,'codex'));
+});
+
+nativeTest('installer retries a failed-after-effect withdrawal without losing the frozen optional selection',async t=>{
+  const args=await fixture(t); await git(args.repositoryRoot,['remote','add','origin','https://github.com/quickstark/skills.git']);
+  assert.equal((await executeManagedSkills({...args.options,action:'update',withPackages:['qs-advanced']})).status,'complete');
+  await appendFile(path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-skills/4.0.0/skills/qs-help/SKILL.md'),'Preserved edit.');
+  let interrupted=false;
+  const runtime={runCommand:async(command,argv,context)=>{const result=await runNativePackageCommand(command,argv,context);if(!interrupted&&argv[1]==='remove'){interrupted=true;throw Error('Interrupted after removal.');}return result;}};
+  const failed=await updateInstalledHarnesses({...args.options,runtime,repairManagedPackages:true,arguments_:['--agent','codex']});
+  assert.equal(failed.status,'failed');assert.ok(failed.results[0].repairJournalPath);
+  const next=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex']});
+  assert.equal(next.status,'complete',JSON.stringify(next.results));
+  assert.deepEqual([...next.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.equal((await readJSON(failed.results[0].repairJournalPath)).status,'complete');
+});
+
+test('installer reconciles all three old-source harnesses, retaining dirty source and unrelated settings', {skip:!['codex','claude','pi'].every(available)},async t=>{
+  const args=await fixture(t,{bootstrap:false});const old=path.join(args.base,'old-source');
+  await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],args.nativeOptions);
+  await runNativePackageCommand('claude',['plugin','marketplace','add',old],args.nativeOptions);
+  for(const name of ['qs-skills','qs-advanced']) {
+    await runNativePackageCommand('codex',['plugin','add',`${name}@quickstark`,'--json'],args.nativeOptions);
+    await runNativePackageCommand('claude',['plugin','install',`${name}@quickstark`,'--scope','user'],args.nativeOptions);
+  }
+  const piRoot=id=>path.join(old,TARGET_SKILL_COLLECTIONS.find(c=>c.id===id).piPackageRoot);
+  await writeJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'),{theme:'preserve',packages:['npm:fixture-community-theme',piRoot('qs-skills'),piRoot('qs-advanced')]});
+  const edited=path.join(piRoot('qs-skills'),'skills/qs-help/SKILL.md');await appendFile(edited,'Preserve this Pi source edit.');const original=await readFile(edited,'utf8');
+  const agents=['codex','claude-code','pi'];
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,detect:async()=>agents});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.equal(await readFile(edited,'utf8'),original);
+  const settings=await readJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'));assert.equal(settings.theme,'preserve');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
+  for(const agent of agents) assert.deepEqual([...result.results[0].targets[agent].desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
+});
+
 for (const host of ['codex','claude-code']) test(`automatic updater bootstraps an absent ${host} marketplace and preserves core-only selection`, {skip:!available(host==='claude-code'?'claude':host)}, async t=>{
   const args=await fixture(t,{bootstrap:false,host});
   const result=await updateInstalledHarnesses({...args.options,arguments_:['--agent',host]});

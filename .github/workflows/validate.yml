@@ -1,0 +1,38 @@
+name: Validate installer release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Prepare Git baseline for isolated tests
+        run: |
+          git switch -c installer-validation
+          if ! git show-ref --verify --quiet refs/heads/main; then
+            git branch main origin/main
+          fi
+      - run: npm ci
+      - name: Install the verified native CLI versions
+        run: |
+          npm install --prefix "$RUNNER_TEMP/qs-native" @openai/codex@0.162.1 @anthropic-ai/claude-code@2.1.317 @earendil-works/pi-coding-agent@1.3.0
+          echo "$RUNNER_TEMP/qs-native/node_modules/.bin" >> "$GITHUB_PATH"
+      - run: npm run check:codex
+      - run: npm test

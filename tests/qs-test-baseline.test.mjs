@@ -36,6 +36,7 @@ const expectedTestFiles = [
   "tests/personal-skills-v2.test.mjs",
   "tests/managed-skills.test.mjs",
   "tests/update-skills.test.mjs",
+  "tests/install-skills.test.mjs",
   "tests/managed-marketplace-bootstrap.test.mjs",
   "tests/pi-package-projection.test.mjs",
   "tests/skill-selection.test.mjs",

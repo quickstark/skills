@@ -1,5 +1,5 @@
 import { constants } from 'node:fs';
-import { access, stat } from 'node:fs/promises';
+import { access, stat, realpath } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -59,7 +59,7 @@ export async function updateInstalledHarnesses({ arguments_: flags = [], reposit
   }
   const results = [];
   for (const group of groups) {
-    const selected = { ...execution, ...options, repositoryRoot, homeDirectory, environment, agents: group, bootstrapMarketplaces: true };
+    const selected = { repairManagedPackages: environment.QS_REPAIR_MANAGED === '1', ...execution, ...options, repositoryRoot, homeDirectory, environment, agents: group, bootstrapMarketplaces: true };
     for (const [agent, field] of [['codex','codexHomeDirectory'],['claude-code','claudeHomeDirectory'],['pi','piHomeDirectory']]) if (!group.includes(agent)) delete selected[field];
     // Validate profiles before touching managers; resume remains one frozen call.
     const homes = resolveManagedSkillPaths(selected);
@@ -70,7 +70,8 @@ export async function updateInstalledHarnesses({ arguments_: flags = [], reposit
       if (result.status !== 'complete') break;
     } catch (error) {
       results.push({ agents: group, status: 'failed', error: error.message,
-        ...(error.marketplaceActions?.length ? { marketplaceActions: error.marketplaceActions } : {}) }); break;
+        ...(error.marketplaceActions?.length ? { marketplaceActions: error.marketplaceActions } : {}),
+        ...(error.repairJournalPath ? { repairJournalPath: error.repairJournalPath } : {}) }); break;
     }
   }
   const completed = results.flatMap(result => result.agents);
@@ -88,13 +89,14 @@ export function formatUpdateResult(result) {
     if (item.error) lines.push(item.error);
     for (const action of item.marketplaceActions ?? []) lines.push(`${labels[action.agent]} marketplace: ${action.status === 'registered' ? 'registered' : 'registration attempted; inspect current state'} at ${action.root}.`);
     if (item.status !== 'complete' && item.journalPath) lines.push(`Recovery journal: ${item.journalPath}`);
+    if (item.repairJournalPath) lines.push(`Retained original state: ${item.repairJournalPath}`);
   }
   if (result.pendingAgents.length) lines.push(`Not attempted: ${result.pendingAgents.map(agent => labels[agent]).join(', ')}.`);
   if (result.status === 'complete') lines.push('Restart the updated clients or start fresh sessions to load the skills.');
   return lines.join('\n');
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(await realpath(process.argv[1]).catch(() => path.resolve(process.argv[1]))).href) {
   const flags = process.argv.slice(2);
   if (flags.includes('--help') || flags.includes('-h')) {
     process.stdout.write('Usage: npm run skills:update -- [--agent codex|claude|pi] [--with PACKAGE] [--json]\n\nWith no --agent, detect harnesses on PATH and update their saved selection (core on a fresh host).\nAbsent, unused local marketplaces are registered automatically. Conflicting sources are preserved.\nProfiles: --home, --codex-home, --claude-home, --pi-home. Recovery: --resume JOURNAL.\n');

@@ -158,7 +158,7 @@ export async function previewManagedSkillMigration(input) {
   for (const agent of input.agents) {
     const owned = observations.filter((entry) => entry.agent === agent); const legacy = { packages: owned.filter((entry) => entry.kind === 'package').map((entry) => entry.identity), resources: owned.filter((entry) => entry.kind === 'resource').map((entry) => entry.identity), conflicts: [] };
     let resolved;
-    try { resolved = resolveTargetSelection({ agent, profiles: input.profiles, packageNames, resourceNames, savedRecord: saved.record, legacy, profile: input.profile ?? null, withPackages: input.withPackages ?? [] }); }
+    try { resolved = resolveTargetSelection({ agent, profiles: input.profiles, packageNames, resourceNames, savedRecord: input.repairSelection ?? saved.record, legacy, profile: input.profile ?? null, withPackages: input.withPackages ?? [] }); }
     catch (error) { conflicts.push({ agent, reason: error.message }); continue; }
     const selectedLegacy = legacyEntries.filter((entry) => resolved.selection[entry.kind === 'package' ? 'packages' : 'resources'].includes(entry.identity));
     const needed = sorted([...resolved.selection.packages.filter((id) => !legacyEntries.some((entry) => entry.kind === 'package' && entry.identity === id)), ...selectedLegacy.flatMap((entry) => entry.replacements.map((replacement) => replacement.packageId))]);

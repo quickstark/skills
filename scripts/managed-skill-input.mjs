@@ -45,7 +45,8 @@ export function derivePackageAcceptanceObligations(packageId, document) {
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, collection.codexPackageRoot, collection.piPackageRoot, collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
       'config/skill-migrations.json', 'config/skill-provenance.json', 'config/skill-profiles.json', 'docs/skill-run-contract.md',
-      ...['adoption-acceptance', 'claude-core-migration', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'managed-marketplace-bootstrap', 'update-skills', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
+      'install.sh', '.github/workflows/validate.yml',
+      ...['adoption-acceptance', 'claude-core-migration', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'managed-marketplace-bootstrap', 'managed-package-repair', 'install-skills', 'validate-skill-release', 'update-skills', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
       ...['qs-skill-catalog', 'ps-skill-catalog', 'skill-collection-registry', 'advanced-skill-catalog', 'frontend-skill-catalog', 'video-skill-catalog', 'execution-skill-catalog', 'optional-command-definition'].map((name) => `scripts/${name}.mjs`)]),
     requiredCriteria: unique([...commonCriteria, ...packageCriteria[packageId]]), requiredChecks: ['package-closure', 'notices', 'behavior', 'native-discovery', ...(packageId === 'qs-video' ? ['video-runtime'] : packageId === 'qs-execution' ? ['unlazy-runtime'] : [])] };
 }
@@ -83,6 +84,20 @@ async function gitIdentity(payload, relative, revisions, repositoryRoot, git) {
   }
   throw new Error('Installed package differs from every trusted prior release tree; preserve modified or unknown bytes.');
 }
+
+export async function verifyManagedReleasePackage({ repositoryRoot, auditPath = 'docs/validation/upstream-adoption-acceptance.json', pkg, agent, payload, revision, git = runGit }) {
+  const verified = await verifyAdoptionAcceptance({ repositoryRoot, auditPath, packageId: pkg.id, agent,
+    capabilityIds: pkg.capabilityIds, sourcePaths: pkg.sourcePaths, requiredCriteria: pkg.requiredCriteria,
+    requiredChecks: pkg.requiredChecks, revision, version: pkg.version, payloadDigest: payload.payloadDigest,
+    contentSha256: payload.snapshot.contentSha256 });
+  const paths = unique(verified.evidenceSnapshots.map(snapshot => path.relative(repositoryRoot, snapshot.path)));
+  check(paths.every(relative => relative && !relative.startsWith('../') && !path.isAbsolute(relative)), 'Acceptance evidence escaped the release checkout.');
+  const tracked = (await git(['ls-files', '-z', '--', ...paths], repositoryRoot)).stdout.split('\0').filter(Boolean);
+  const dirty = (await git(['status', '--porcelain', '--untracked-files=all', '--', ...paths], repositoryRoot)).stdout.trim();
+  check(!dirty && paths.every(relative => tracked.some(file => file === relative || file.startsWith(relative + '/'))), 'Acceptance source and evidence must be tracked, unchanged release files; uncommitted audit decisions cannot authorize rollout.');
+  check((await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim() === revision, 'Release HEAD changed during evidence verification.');
+  return verified;
+}
 async function publicNames(root, payload) {
   const names = [];
   for (const entry of payload.snapshot.entries.filter((entry) => entry.kind === 'file' && entry.path.startsWith('skills/') && entry.path.endsWith('/SKILL.md'))) {
@@ -111,7 +126,7 @@ export async function validateManagedSkillSelection({ repositoryRoot, selectionP
 
 /** Observe production inputs without creating receipts, staging, or changing managers.
  * Inject command execution only for isolated caller fixtures; it is not evidence. */
-export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), claudeHomeDirectory = path.join(homeDirectory, '.claude'), piHomeDirectory = path.join(homeDirectory, '.pi/agent'), selectionPath = selectionRecordPath(homeDirectory), agents = ['codex'], profile = null, withPackages = [], auditPath = 'docs/validation/upstream-adoption-acceptance.json', runtime = {} }) {
+export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory = path.join(homeDirectory, '.codex'), claudeHomeDirectory = path.join(homeDirectory, '.claude'), piHomeDirectory = path.join(homeDirectory, '.pi/agent'), selectionPath = selectionRecordPath(homeDirectory), agents = ['codex'], profile = null, withPackages = [], auditPath = 'docs/validation/upstream-adoption-acceptance.json', repairSelection = null, runtime = {} }) {
   check(path.isAbsolute(repositoryRoot) && path.isAbsolute(homeDirectory) && path.isAbsolute(codexHomeDirectory) && path.isAbsolute(selectionPath), 'Absolute repository/user home/Codex home/state paths required.');
   check(agents.length > 0 && new Set(agents).size === agents.length && agents.every((agent) => ['codex', 'claude-code', 'pi'].includes(agent)), 'Select Codex, Claude Code, or Pi for native transactions.');
   const git = runtime.runGit ?? runGit; const command = runtime.runCommand ?? runNativePackageCommand;
@@ -119,6 +134,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
   const customCodexHome = codexHomeDirectory !== path.join(homeDirectory, '.codex');
   const revision = (await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim(); check(/^[a-f0-9]{40}$/.test(revision), 'Release HEAD is invalid.');
   const [migrationFile, profileFile, repositoryPackage, saved] = await Promise.all([jsonFile(path.join(repositoryRoot, 'config/skill-migrations.json')), jsonFile(path.join(repositoryRoot, 'config/skill-profiles.json')), jsonFile(path.join(repositoryRoot, 'package.json')), readSelectionRecord(selectionPath)]);
+  if (repairSelection) saved.record = repairSelection;
   const document = migrationFile.value; const validation = validateSkillMigrations(document); check(validation.valid, 'Migration authority is invalid.');
   const version = repositoryPackage.value.version; check(/^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(version), 'Release version is invalid.');
   const knownRevisions = [...new Set([revision, ...(/^[a-f0-9]{40}$/.test(saved.record?.templateRevision) ? [saved.record.templateRevision] : []), ...document.migrations.flatMap((migration) => migration.legacy.filter((entry) => entry.kind === 'package').flatMap((entry) => entry.acceptedPrior.map((prior) => prior.revision)))])];
@@ -193,14 +209,24 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       check(same(observedNames, [...collection.publicCommands].sort()) || additivePrior, 'Installed public names differ from the known package catalog.');
       const legacy = document.migrations.flatMap((migration) => migration.legacy).find((entry) => entry.kind === 'package' && entry.identity === name);
       const revisions = legacy ? legacy.acceptedPrior.filter((prior) => prior.version === item.version && prior.digests[agent]?.value === payload.payloadDigest.value).map((prior) => prior.revision) : [...knownRevisions];
-      check(revisions.length > 0, 'Retained package version and bytes have no accepted immutable baseline.');
+      if (!revisions.length) {
+        const error = new Error('Retained package version and bytes have no accepted immutable baseline.');
+        error.code = 'QS_MANAGED_PACKAGE_DRIFT'; throw error;
+      }
       if (legacyRootCore) {
         // Bounded ancestor history discovers installations made before selection records
         // existed. Exact manifest, declared skills and private bytes still have to match.
         const history = await git(['log','-n','32','--format=%H','HEAD','--','.claude-plugin/plugin.json'],repositoryRoot);
         revisions.push(...history.stdout.trim().split(/\s+/).filter((value) => /^[a-f0-9]{40}$/.test(value)));
       }
-      const priorRevision = await gitIdentity(payload, legacyRootCore ? '.' : agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot, unique(revisions), repositoryRoot, git);
+      const relative = legacyRootCore ? '.' : agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
+      if (!legacy && !legacyRootCore) {
+        const history = await git(['log', '-n', '32', '--format=%H', 'HEAD', '--', path.posix.join(relative, agent === 'codex' ? '.codex-plugin/plugin.json' : agent === 'claude-code' ? '.claude-plugin/plugin.json' : 'package.json')], repositoryRoot);
+        revisions.push(...history.stdout.trim().split(/\s+/).filter(value => /^[a-f0-9]{40}$/.test(value)));
+      }
+      let priorRevision;
+      try { priorRevision = await gitIdentity(payload, relative, unique(revisions), repositoryRoot, git); }
+      catch (error) { error.code = 'QS_MANAGED_PACKAGE_DRIFT'; error.package = { agent, name, path: canonicalPath }; throw error; }
       // Pi ownership follows its exact maintained local source registration; Codex
       // additionally supplies and verifies the actual marketplace owner above.
       const observed = ownedObservation({ kind: 'package', identity: name, agent, path: canonicalPath, canonicalPath, linkTarget: null, version: item.version, revision: priorRevision, digest: payload.payloadDigest, publicSkills: observedNames, consumers: [], ...(legacyRootCore ? {layout:'claude-root-core'} : {}) }, { packageId: name, marketplace: 'quickstark' });
@@ -209,7 +235,13 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     }
     for (const pkg of packages) {
       const artifact = pkg.artifacts[agent]; const existing = bindings.find((binding) => binding.name === pkg.id && binding.version === pkg.version);
-      if (existing) { check(!existing.legacyRootCore, 'Replacing a root-based Claude core requires a new release version; preserve its existing cache.'); check(existing.payloadSha256 === artifact.nativePayloadSha256, 'Same-version installed package differs from current release; a new version is required.'); existing.installedOnly = false; continue; }
+      if (existing) {
+        if (existing.legacyRootCore || existing.payloadSha256 !== artifact.nativePayloadSha256) {
+          const error = new Error(existing.legacyRootCore ? 'Replacing a root-based Claude core requires a new release version; preserve its existing cache.' : 'Same-version installed package differs from current release; a new version is required.');
+          error.code = 'QS_MANAGED_PACKAGE_DRIFT'; throw error;
+        }
+        existing.installedOnly = false; continue;
+      }
       bindings.push({ id: `release-${pkg.id}`, name: pkg.id, version: pkg.version, source: artifact.source, payloadSha256: artifact.nativePayloadSha256, publicNames: pkg.publicSkills, ownershipRecord: `release:${revision}:${pkg.id}`, ...(agent !== 'pi' ? { marketplace: 'quickstark', marketplaceRoot: agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot } : {}) });
     }
     const observedNative = await observeNativePackages({ ...nativeOptions, packages: bindings });
@@ -262,16 +294,9 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     }
   }
   const acceptance = async ({ pkg, agent, payload }) => {
-    const verified = await verifyAdoptionAcceptance({ repositoryRoot, auditPath, packageId: pkg.id, agent, capabilityIds: pkg.capabilityIds, sourcePaths: pkg.sourcePaths, requiredCriteria: pkg.requiredCriteria, requiredChecks: pkg.requiredChecks, revision, version: pkg.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 });
-    const paths = unique(verified.evidenceSnapshots.map((snapshot) => path.relative(repositoryRoot, snapshot.path)));
-    check(paths.every((relative) => relative && !relative.startsWith('../') && !path.isAbsolute(relative)), 'Acceptance evidence escaped the release checkout.');
-    const tracked = (await git(['ls-files', '-z', '--', ...paths], repositoryRoot)).stdout.split('\0').filter(Boolean);
-    const dirty = (await git(['status', '--porcelain', '--untracked-files=all', '--', ...paths], repositoryRoot)).stdout.trim();
-    check(!dirty && paths.every((relative) => tracked.some((file) => file === relative || file.startsWith(relative + '/'))), 'Acceptance source and evidence must be tracked, unchanged release files; uncommitted audit decisions cannot authorize rollout.');
-    check((await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trim() === revision, 'Release HEAD changed during evidence verification.');
-    return verified;
+    return verifyManagedReleasePackage({ repositoryRoot, auditPath, pkg, agent, payload, revision, git });
   };
-  return { revision, cwd: repositoryRoot, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, selectionPath, agents, profile, withPackages, profiles: profileFile.value, document, packages, observations, native, evidenceSnapshots,
+  return { revision, cwd: repositoryRoot, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, selectionPath, agents, profile, withPackages, repairSelection, profiles: profileFile.value, document, packages, observations, native, evidenceSnapshots,
     runtime: { observeNativePackages: (options) => observeNativePackages({ ...options, runCommand: command }), verifyAcceptance: acceptance,
       verifyOwnership: async (observed) => { const proof = verifiedOwnership.get(observed.ownership.recordId); check(proof && same(proof.binding, proofBinding(observed)), 'Ownership observation changed after native/lock verification.'); for (const snapshot of proof.evidenceSnapshots) await revalidateMigrationPath(snapshot); return proof; },
       nativeOptions: Object.fromEntries(agents.map((agent) => [agent, { runCommand: command }])) } };

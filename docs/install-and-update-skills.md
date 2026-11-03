@@ -38,33 +38,58 @@ one another's saved selection or interrupted transaction.
 
 ## First setup
 
-Use an existing supported Node/npm and the selected host CLI. Keep the checkout
-at a stable path because native package bindings include that path.
+Use the same hosted command for first installation and later updates, from any
+directory on macOS or Linux. Have Git, Node, curl and the harness CLIs you use on PATH:
 
 ```bash
-git clone https://github.com/quickstark/skills.git
-cd skills
-npm run skills:update
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash
 ```
 
-The updater uses Node built-ins and local modules; `npm ci` is needed for
-development, not installation. It detects executable `codex`, `claude` and `pi`
-commands on PATH, updates saved selections, and verifies the result. No supported
-executable is an error. A detected but incompatible manager fails visibly.
+The bootstrap uses Node built-ins and local modules; `npm ci` is for development.
+It waits for a successful `validate.yml` push run for the exact official main SHA.
+That workflow checks generated projections and runs the isolated test suite with
+pinned Codex, Claude Code and Pi CLIs on Linux and macOS. Pending validation is polled; a failed or unavailable gate leaves
+installed skills unchanged. The candidate's generated packages and committed
+acceptance evidence are checked locally before replacing the managed checkout.
 
-An absent Codex or Claude marketplace is registered from this checkout only when
-its QuickStark settings, installed registrations and cache namespace are unused,
-and its tracked marketplace/package sources are clean. An existing matching
-binding is retained. A different binding or retained unregistered state blocks
-automatic registration; preserve it and reconcile the reported conflict. A
-registration can remain if a later step fails; retry safely from the current state.
-Pi needs no marketplace registration.
+The installer maintains `~/.local/share/quickstark/skills`; authoring clones and
+their local edits stay untouched. A modified or older managed checkout is retained
+as a complete `checkout-backup-*` beside the managed checkout before replacement.
+Installer ownership and pending source-swap records live under
+`~/.local/state/quickstark/installer`. A subsequent invocation restores an interrupted
+source swap before proceeding. A known installer lock is recovered only after its
+recorded process is proven absent; active or unknown locks remain protected.
 
-Update holds the updater lock and checks repository freshness before registration.
-It checks package acceptance and ownership before package effects. Missing accepted
-receipts, modified managed content, unexpected exposure or unsupported native state
-block installation. `--json` returns structured results instead of progress text.
-`npm run skills:update -- --help` lists the supported options.
+The updater detects executable `codex`, `claude` and `pi` commands on PATH, updates
+their selections, and verifies installed state. Fresh hosts get core only. Existing
+saved selections and already registered optional capabilities are retained. No
+supported executable is an error; an incompatible manager fails visibly.
+
+An unused marketplace is registered automatically. An old local QuickStark binding
+or edited installed package can be repaired only after the old source's Git origin
+proves it is the official repository and every replacement passes release acceptance.
+Original configuration, caches and Pi source payloads are copied and verified,
+including exact permissions, into private `repair-*` recovery directories before
+native withdrawal. Native managers remove only known QuickStark registrations.
+Remaining caches are retained, old source checkouts stay untouched, and unrelated
+packages/settings are checked for preservation. Disabled, filtered, foreign or
+unknown registrations are preserved rather than silently overwritten.
+
+Repair does not certify modified bytes as trusted history. A pending repair records
+the intended selection before withdrawal, so a retry can restore that selection
+after interruption. Failed operations retain original bytes and their repair record;
+successful updates retain backups and save selection only after verification.
+
+From an updated clone, `npm run skills:update` invokes the same hosted-validation
+flow. Older clones may still contain the old npm command: use the hosted command
+to bypass them. Extra flags can be passed with `| bash -s -- --agent codex`, for
+example. `--json` selects structured updater results; installer progress uses stderr.
+
+For the advanced local commands below, first use the managed checkout:
+
+```bash
+cd "$HOME/.local/share/quickstark/skills"
+```
 
 For an optional read-only preview, use `npm run skills:plan -- --json --agent codex`
 (or another explicit host). Direct plan/verify do not register marketplaces; on a
@@ -83,8 +108,9 @@ contains the public roots and private closure without copying the whole reposito
 npm run skills:update -- --agent claude
 ```
 
-A marketplace pointing at another checkout or a remote source requires a reviewed
-transition. Existing root-based Claude core packages migrate after their manifest,
+A foreign marketplace source remains a conflict. The hosted installer can preserve
+and replace known local QuickStark bindings as described above. Direct engine
+callers keep their strict migration checks. Existing root-based Claude core packages migrate after their manifest,
 declared core skills and private resources match an immutable Git ancestor. The
 updater checks at most 32 manifest revisions in local history; unverifiable or
 edited resources remain a conflict. The old cache is retained, including unrelated
@@ -126,7 +152,6 @@ Update the selected profile directly; pass the same home to standalone verificat
 or recovery:
 
 ```bash
-git pull --ff-only origin main
 npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo"
 node scripts/managed-skills.mjs verify --json --agent codex --codex-home "$HOME/.codex-demo"
 ```
@@ -151,7 +176,8 @@ paths. Pass the same host home to plan, update, verify and resume. Native comman
 receive the resolved paths, preventing inherited overrides from redirecting a
 transaction to another profile. Paths are resolved by Node without assuming a
 particular checkout directory or shell. Native integration is tested on Linux;
-Windows and macOS manager behavior has not been verified. Automatic detection
+The GitHub validation matrix covers Linux and macOS source checks; native manager
+integration is separately verified on Linux. Windows manager behavior is unverified. Automatic detection
 groups default homes together and updates custom homes separately. Explicit home
 flags without `--agent` select only those hosts. A journal resumes its original
 host group without rediscovering PATH; supply the original custom home again.
@@ -163,12 +189,10 @@ npm run skills:update -- --agent pi --pi-home "$HOME/.pi-demo"
 
 ## Normal update and explicit additions
 
-From the maintained checkout, refresh it without discarding local work, then use
-the detected harnesses:
+Use the hosted command again; it handles GitHub validation and the managed checkout:
 
 ```bash
-git pull --ff-only origin main
-npm run skills:update
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash
 ```
 
 This preserves saved optional selections. To add frontend explicitly:
@@ -181,11 +205,11 @@ Repeat `--with` for other selected packages. Omit `--profile core` during an ord
 update unless you deliberately intend to replace the desired selection with core.
 Restart the host or begin a new task after changing discovery.
 
-Before mutation, `skills:update` queries the current `origin/main` without fetching
+The lower-level transaction queries the current `origin/main` without fetching
 or changing refs and requires exact checkout HEAD equality. A stale clean main
 checkout gets a fast-forward recovery command; a dirty, detached or non-main
-checkout gets an isolated-worktree recovery. Preserve local changes and use the
-printed recovery. A denied freshness request is an attempted request, not proof of
+checkout gets an isolated-worktree diagnostic. The hosted installer avoids that
+manual authoring-checkout repair by maintaining its own clean source. A denied freshness request is an attempted request, not proof of
 zero network activity.
 
 ## Verification and recovery
