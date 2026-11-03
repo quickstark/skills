@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed.",
+  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -673,7 +673,7 @@
     },
     "AC-15": {
       "status": "passed",
-      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. The managed Claude update adds isolated native transaction and SDK command-discovery evidence for all 39 maintained roots. Canonical behavior acceptance is retained; no new model turns or actual-machine rollout are claimed. Reviewed-defect regressions additionally verify preservation of concurrent recovery edits and migration/resume/rollback of immutable root-based Claude core closures without copying unrelated cache files; edited closures and same-version replacement fail before native effects.",
+      "note": "Projection isolation controls and historical actual Codex/Pi rehearsal discover exactly38 public roots; private resources stay outside discovery. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. The managed Claude update adds isolated native transaction and SDK command-discovery evidence for all 39 maintained roots. Canonical behavior acceptance is retained; no new model turns or actual-machine rollout are claimed. Reviewed-defect regressions additionally verify preservation of concurrent recovery edits and migration/resume/rollback of immutable root-based Claude core closures without copying unrelated cache files; edited closures and same-version replacement fail before native effects. Codex portability regressions verify same-version installed-state checks across directory permissions without changing the cache; content and executable-bit edits remain rejected. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
       "evidence": [
         "tests/adoption-projection.test.mjs",
         "tests/fixtures/target-activation-probe/README.md",
@@ -722,7 +722,14 @@
         "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
         "docs/specs/quickstark-multi-agent-delegation.md",
         "tests/multi-agent-delegation.test.mjs",
-        "tests/fixtures/adoption-release-4.4.0/tests.log"
+        "tests/fixtures/adoption-release-4.4.0/tests.log",
+        "tests/update-skills.test.mjs",
+        "tests/managed-marketplace-bootstrap.test.mjs",
+        "scripts/update-skills.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-skills.mjs",
+        "scripts/qs-test-environment.mjs",
+        "tests/qs-test-baseline.test.mjs"
       ]
     },
     "AC-16": {
@@ -776,7 +783,7 @@
     },
     "AC-17": {
       "status": "passed",
-      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. Interrupted-Claude-rollback regressions verify fresh-process resume between settings/metadata replacements, preservation of edits to restored or pending files, receipt tamper rejection and restart of partially removed newly exposed caches. Recovery evidence is digest-bound to the synced journal intent before restoration. Retained cache payloads remain intact; canonical workflow/model behavior acceptance is unchanged. Unrelated-Claude-payload regressions verify that paused recovery preserves unchanged unrelated plugins, blocks body/identity drift before modifying any owned target, and refuses preparation when an active unrelated payload cannot be inspected. Recovery receipts bind the original unrelated payload snapshots used for discovery; canonical workflow/model behavior acceptance is unchanged.",
+      "note": "Stage/expose/retire/state-write faults, retry convergence, duplicate prevention, and failed recovery residuals are exercised in transaction/native/composed fixtures. Final target source/projection checks and isolated native discovery passed. The linked independent assessment preserves the bounded behavioral evidence and limitations; this decision does not certify every future model response or actual-machine rollout. Interrupted-Claude-rollback regressions verify fresh-process resume between settings/metadata replacements, preservation of edits to restored or pending files, receipt tamper rejection and restart of partially removed newly exposed caches. Recovery evidence is digest-bound to the synced journal intent before restoration. Retained cache payloads remain intact; canonical workflow/model behavior acceptance is unchanged. Unrelated-Claude-payload regressions verify that paused recovery preserves unchanged unrelated plugins, blocks body/identity drift before modifying any owned target, and refuses preparation when an active unrelated payload cannot be inspected. Recovery receipts bind the original unrelated payload snapshots used for discovery; canonical workflow/model behavior acceptance is unchanged. Codex replacement and same-selector recovery regressions exercise differing source/cache directory modes; source permission changes after planning and backup permission tampering remain rejected. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
       "evidence": [
         "tests/migration-transaction.test.mjs",
         "docs/validation/validation-host-portability-review.md",
@@ -822,7 +829,14 @@
         "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
         "docs/specs/quickstark-multi-agent-delegation.md",
         "tests/multi-agent-delegation.test.mjs",
-        "tests/fixtures/adoption-release-4.4.0/tests.log"
+        "tests/fixtures/adoption-release-4.4.0/tests.log",
+        "tests/update-skills.test.mjs",
+        "tests/managed-marketplace-bootstrap.test.mjs",
+        "scripts/update-skills.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-skills.mjs",
+        "scripts/qs-test-environment.mjs",
+        "tests/qs-test-baseline.test.mjs"
       ]
     },
     "AC-18": {
@@ -1066,7 +1080,7 @@
     },
     "AC-23": {
       "status": "passed",
-      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate.",
+      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed.",
       "evidence": [
         "tests/fixtures/target-index-generation/evidence/parent-review.json",
         "tests/fixtures/target-documentation-preparation/README.md",
@@ -1118,7 +1132,14 @@
         "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
         "docs/specs/quickstark-multi-agent-delegation.md",
         "tests/multi-agent-delegation.test.mjs",
-        "tests/fixtures/adoption-release-4.4.0/tests.log"
+        "tests/fixtures/adoption-release-4.4.0/tests.log",
+        "tests/update-skills.test.mjs",
+        "tests/managed-marketplace-bootstrap.test.mjs",
+        "scripts/update-skills.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
+        "scripts/managed-skills.mjs",
+        "scripts/qs-test-environment.mjs",
+        "tests/qs-test-baseline.test.mjs"
       ]
     },
     "AC-24": {
@@ -1202,6 +1223,7 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -1216,6 +1238,7 @@
         "scripts/skill-collection-registry.mjs",
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
+        "scripts/update-skills.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-code-build",
         "skills/engineering/qs-code-debug",
@@ -1694,6 +1717,7 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -1708,6 +1732,7 @@
         "scripts/skill-collection-registry.mjs",
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
+        "scripts/update-skills.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-code-document",
         "skills/engineering/qs-deploy-prompt",
@@ -2205,6 +2230,7 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -2219,6 +2245,7 @@
         "scripts/skill-collection-registry.mjs",
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
+        "scripts/update-skills.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/advanced",
         "skills/engineering/qs-blast-radius",
@@ -2710,6 +2737,7 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -2724,6 +2752,7 @@
         "scripts/skill-collection-registry.mjs",
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
+        "scripts/update-skills.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-design-frontend",
         "skills/engineering/qs-design-image-mobile",
@@ -3224,6 +3253,7 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -3238,6 +3268,7 @@
         "scripts/skill-collection-registry.mjs",
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
+        "scripts/update-skills.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/video/qs-video"
       ],
@@ -3808,6 +3839,7 @@
         "scripts/claude-core-migration.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
+        "scripts/managed-marketplace-bootstrap.mjs",
         "scripts/managed-skill-input.mjs",
         "scripts/managed-skill-migration.mjs",
         "scripts/managed-skill-paths.mjs",
@@ -3822,6 +3854,7 @@
         "scripts/skill-collection-registry.mjs",
         "scripts/skill-migrations.mjs",
         "scripts/skill-selection.mjs",
+        "scripts/update-skills.mjs",
         "scripts/video-skill-catalog.mjs",
         "skills/engineering/qs-unlazy"
       ],
@@ -4414,7 +4447,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "e255bd6eafa2a8350b9066553bfb06378fe96aa4e7660af743d5ef7b9134e6b7"
+      "contentSha256": "b4cf51ece78dffae85fb8b887ead520895c0d7b4e670dd5bf38e6de2f722e3fa"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
@@ -4426,7 +4459,7 @@
     },
     "scripts/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "1613e5a09ad3df7a3c69324a0008cb0fc720e4ba0dd0c5b54186b52e87d3dbf9"
+      "contentSha256": "7cf79a4dbe4510fc21f879d7005b6224dbfbbc3d174ede33d16268bfbb75d663"
     },
     "scripts/migration-filesystem.mjs": {
       "kind": "file",
@@ -4434,7 +4467,7 @@
     },
     "scripts/migration-native-packages.mjs": {
       "kind": "file",
-      "contentSha256": "a1f6510f329f8d03f29c40f775182ac8ffa79d3502df7ce35e9bcf69684cbf47"
+      "contentSha256": "d93c968d5c7c28b31d336717cfcd7f09b81c44ddb3360b92d173c1fc263c6cb8"
     },
     "scripts/migration-owned-paths.mjs": {
       "kind": "file",
@@ -4707,6 +4740,14 @@
     "scripts/claude-core-migration.mjs": {
       "kind": "file",
       "contentSha256": "f77f561d0b9dce5069ed39d2c0ef02df8fdb63c7fd8b23f0e9e855ec33e151ad"
+    },
+    "scripts/managed-marketplace-bootstrap.mjs": {
+      "kind": "file",
+      "contentSha256": "08ff11013fcb19c3ea7ea3db06118c5ccb76d9ac82c1267c12b4240f75cd22ea"
+    },
+    "scripts/update-skills.mjs": {
+      "kind": "file",
+      "contentSha256": "77f4d6e7e9083f9058f0c02526a29bc85f65fbd0c1a4185fb6396957a8be21d7"
     }
   },
   "evidence": {
@@ -4960,7 +5001,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "c74a8058d7437962e52868e78115dfbf4884943db0c606b5094d4c4ea705bf88"
+      "sha256": "0743acdedbdd4be5a311d133a5b7c7cf87390eeb6352f80730395f372d48dc80"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
@@ -4988,11 +5029,11 @@
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
-      "sha256": "57797d0e24709daf2ce84f7756f15e7efe02f54691957659319ab71189c2678b"
+      "sha256": "e8ca183200d3e61f2a41ae9c237791dac7909ba391e384de2eb698e84724ad38"
     },
     "tests/managed-skill-migration.test.mjs": {
       "path": "tests/managed-skill-migration.test.mjs",
-      "sha256": "0e16b28c3a11a9971b01a79ea71e88b2b2a17e5f602ff1048253b96ce943f23c"
+      "sha256": "7d292343385cf25143bddda9c84b9919aefefb3c60b7497eda594521040004eb"
     },
     "tests/fixtures/hyperframes-adoption/README.md": {
       "path": "tests/fixtures/hyperframes-adoption/README.md",
@@ -5024,7 +5065,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "491f9fa066a03493d3d5df35f2ca2f1623c6a13e7a26587ff0916775c4c10471"
+      "sha256": "5237a8d662188c8ae00c253c3d749db149bfcfba005e9384c3c7e8a3d29941cd"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -5032,7 +5073,7 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "ce041758ab7391e86fe59314885b752b247718499c61fab9a010080905b35849"
+      "sha256": "5befcfe6e595ccb0d4389d13f2d0fbdc901870323234568419ea7b5d0995a403"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
@@ -5048,7 +5089,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "a76e5687011b65dc95a19c2fe0669e5a9e7f103f23a49ad6789473057b055e81"
+      "sha256": "aa84d4055ddfa72fc2a4521239ebaa9a8abaf66af3c45e0fb4d8ef136a6f1874"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -5068,7 +5109,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",
-      "sha256": "6d73e9ed7bdab2b6fbfee17b4bb11b32d53165b52c7890c91ded48677face507"
+      "sha256": "dece5ba5aca65868497339aa863b2d9fa17390cb9c628f93194509edca0025e2"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
@@ -5189,6 +5230,34 @@
     "tests/fixtures/adoption-release-4.4.0/tests.log": {
       "path": "tests/fixtures/adoption-release-4.4.0/tests.log",
       "sha256": "4286e9b5bc7d4b9639ae791c47dbdfa8765da7f84ee40e7d90c234986f342266"
+    },
+    "tests/update-skills.test.mjs": {
+      "path": "tests/update-skills.test.mjs",
+      "sha256": "54ff0ba4474f276a045ee4d6234c0d37f82bec1a60c931decfb6fe81f0a129bb"
+    },
+    "tests/managed-marketplace-bootstrap.test.mjs": {
+      "path": "tests/managed-marketplace-bootstrap.test.mjs",
+      "sha256": "7a612b72418735d4e4fa7818a69ab3f026b43076db48d1547b25850cd3010c6a"
+    },
+    "scripts/update-skills.mjs": {
+      "path": "scripts/update-skills.mjs",
+      "sha256": "916782fa613af5586db0b83c35ab5215dd337754da3534e5d2badd67a5fe63ed"
+    },
+    "scripts/managed-marketplace-bootstrap.mjs": {
+      "path": "scripts/managed-marketplace-bootstrap.mjs",
+      "sha256": "19d33c4df108b7d0b2c417a90971218622bb10c1ca118b44781363ff92742d1f"
+    },
+    "scripts/managed-skills.mjs": {
+      "path": "scripts/managed-skills.mjs",
+      "sha256": "5ff3cbb7f423c74385133dae45cbaac2f037ad2c9403f1a1822cf30b528a4b8f"
+    },
+    "scripts/qs-test-environment.mjs": {
+      "path": "scripts/qs-test-environment.mjs",
+      "sha256": "a990a56efae31d6c859083e1faea57a98887970e8ae85caa2aaffc060eb15cdc"
+    },
+    "tests/qs-test-baseline.test.mjs": {
+      "path": "tests/qs-test-baseline.test.mjs",
+      "sha256": "5f861a6ff9ee3932f3d6e68cd376577561acdc7ce900bf4b3565fd61c7c1e378"
     }
   }
 }

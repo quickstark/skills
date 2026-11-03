@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdtemp, mkdir, readFile, writeFile, appendFile, rm, symlink } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, appendFile, rm, symlink, chmod } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import test from 'node:test';
@@ -17,6 +17,7 @@ import { readMigrationJournal } from '../scripts/migration-transaction.mjs';
 import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
 import { resolveManagedSkillPaths } from '../scripts/managed-skill-paths.mjs';
 import { fixtureHomeState } from './helpers/fixture-home-state.mjs';
+import { updateInstalledHarnesses } from '../scripts/update-skills.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 const nativeTest = (name, callback) => test(name, { skip: !available('codex') || name.startsWith('actual Pi') && !available('pi') ? 'Required native executable unavailable; no host support claimed.' : false }, callback);
@@ -89,9 +90,79 @@ test('catalog obligations retain prompt, parity, all video modules and measured 
   assert.ok(advanced.requiredCriteria.includes('AC-09')); assert.throws(()=>derivePackageAcceptanceObligations('ps-skills',document),/Unknown/);
 });
 
+nativeTest('actual Codex same-version verification tolerates cache directory permissions without changing files',async t=>{
+  const args=await fixture(t);
+  const result=await executeManagedSkills({...args.options,action:'update'});
+  assert.equal(result.status,'complete',result.error);
+  const cache=path.join(args.homeDirectory,'.codex/plugins/cache/quickstark/qs-skills/4.0.0');
+  const before=await captureMigrationPath(cache);
+  for(const entry of before.entries.filter(entry=>entry.kind==='directory')) await chmod(path.join(cache,entry.path),0o700);
+  const changed=await captureMigrationPath(cache);
+  assert.notEqual(changed.contentSha256,before.contentSha256);
+  const input=await buildManagedSkillInput(args.options);
+  const preview=await previewManagedSkillMigration(input);
+  assert.equal(preview.status,'ready',JSON.stringify(preview.conflicts));
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
+  assert.deepEqual(await captureMigrationPath(cache),changed,'Verification must not chmod the installed cache');
+});
+
+for (const host of ['codex','claude-code']) test(`automatic updater bootstraps an absent ${host} marketplace and preserves core-only selection`, {skip:!available(host==='claude-code'?'claude':host)}, async t=>{
+  const args=await fixture(t,{bootstrap:false,host});
+  const result=await updateInstalledHarnesses({...args.options,arguments_:['--agent',host]});
+  assert.equal(result.status,'complete',JSON.stringify(result.results.map(entry=>entry.error)));
+  assert.equal(result.results[0].marketplaceActions.length,1);
+  const paths=resolveManagedSkillPaths({...args.options,environment:{}});
+  assert.deepEqual((await readJSON(paths.selectionPath)).targets[host].packages,['qs-skills']);
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
+});
+
+test('automatic detection updates all three native harnesses in one default-home transaction', {skip:!['codex','claude','pi'].every(available)}, async t=>{
+  const args=await fixture(t,{bootstrap:false});
+  const agents=['codex','claude-code','pi'];
+  const result=await updateInstalledHarnesses({...args.options,detect:async()=>agents});
+  assert.equal(result.status,'complete',JSON.stringify(result.results.map(entry=>entry.error)));
+  assert.equal(result.results.length,1);
+  assert.equal(result.results[0].marketplaceActions.length,2);
+  for(const agent of agents) assert.deepEqual(result.results[0].targets[agent].desired.packages,['qs-skills']);
+  assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
+});
+
+nativeTest('automatic update preserves a saved optional selection on its next ordinary run',async t=>{
+  const args=await fixture(t,{bootstrap:false});
+  const added=await updateInstalledHarnesses({...args.options,arguments_:['--agent','codex','--with','qs-advanced']});
+  assert.equal(added.status,'complete',JSON.stringify(added.results));
+  const ordinary=await updateInstalledHarnesses({...args.options,detect:async()=>['codex']});
+  assert.equal(ordinary.status,'complete',JSON.stringify(ordinary.results));
+  assert.deepEqual([...ordinary.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.deepEqual(ordinary.results[0].marketplaceActions,[]);
+});
+
+nativeTest('automatic marketplace setup isolates an explicitly selected Codex home',async t=>{
+  const args=await fixture(t,{bootstrap:false});
+  const before=await captureMigrationPath(path.join(args.homeDirectory,'.codex'));
+  const custom=path.join(args.homeDirectory,'.codex-demo');
+  const result=await updateInstalledHarnesses({...args.options,arguments_:['--codex-home',custom]});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.deepEqual(await captureMigrationPath(path.join(args.homeDirectory,'.codex')),before);
+  assert.equal(result.results[0].marketplaceActions[0].root,path.join(args.repositoryRoot,'codex'));
+  assert.equal((await executeManagedSkills({...args.options,action:'verify',codexHomeDirectory:custom})).status,'verified');
+});
+
+nativeTest('invalid selection fails before automatic marketplace registration',async t=>{
+  const args=await fixture(t,{bootstrap:false}); let commands=0;
+  const runtime={runCommand:async()=>{commands++;throw new Error('No native command expected.');}};
+  for(const flags of [['--with','typo'],['--with','qs-video','--with','qs-video'],['--profile','typo']]) {
+    const result=await updateInstalledHarnesses({...args.options,runtime,arguments_:['--agent','codex',...flags]});
+    assert.equal(result.status,'failed');
+    assert.match(result.results[0].error,/unknown package|duplicate|Unknown skill profile/);
+  }
+  assert.equal(commands,0);
+});
+
 nativeTest('actual isolated Codex bootstrap remains explicit, then selected fresh update exposes only core',async t=>{
   const args=await fixture(t,{bootstrap:false}); const before=await fixtureHomeState(args.homeDirectory);
-  await assert.rejects(executeManagedSkills({...args.options,action:'plan'}),/Codex prerequisite.*marketplace add/);
+  await assert.rejects(executeManagedSkills({...args.options,action:'plan',bootstrapMarketplaces:true}),/Codex prerequisite.*marketplace add/);
+  await assert.rejects(executeManagedSkills({...args.options,action:'verify',bootstrapMarketplaces:true}),/Codex prerequisite.*marketplace add/);
   assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
   await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(args.repositoryRoot,'codex')],args.nativeOptions);
   const plan=await executeManagedSkills({...args.options,action:'plan'}); assert.equal(plan.status,'ready',JSON.stringify(plan.conflicts)); assert.deepEqual(plan.targets.codex.desired.packages,['qs-skills']);
@@ -246,7 +317,7 @@ nativeTest('original contributor lock and exact per-host alias derive ownership;
 
 nativeTest('freshness failure precedes target input reads and retry rejects another release revision',async t=>{
   const args=await fixture(t);let commands=0;
-  await assert.rejects(executeManagedSkills({...args.options,action:'update',verifyRepositoryFreshness:async()=>{throw new Error('fixture stale origin');},runtime:{runCommand:async()=>{commands++;}}}),/stale origin/);assert.equal(commands,0);
+  await assert.rejects(executeManagedSkills({...args.options,action:'update',bootstrapMarketplaces:true,verifyRepositoryFreshness:async()=>{throw new Error('fixture stale origin');},runtime:{runCommand:async()=>{commands++;}}}),/stale origin/);assert.equal(commands,0);
   let once=true;const runtime={runCommand:async(command,argv,context)=>{const result=await runNativePackageCommand(command,argv,context);if(once&&argv[1]==='add'){once=false;throw new Error('fixture interrupted');}return result;}};
   const failed=await executeManagedSkills({...args.options,action:'update',runtime});assert.equal(failed.status,'failed');
   await assert.rejects(executeManagedSkills({...args.options,action:'update',resume:failed.journalPath,verifyRepositoryFreshness:async()=>({head:'f'.repeat(40)})}),/different release revision/);
@@ -281,7 +352,7 @@ nativeTest('concurrent selected updaters cannot acquire different journals over 
 
 nativeTest('unknown updater locks and replaced owned locks are preserved without theft',async t=>{
   const args=await fixture(t);const lock=path.join(args.homeDirectory,'.quickstark-skills-update.lock');await writeFile(lock,'unknown external owner');
-  await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/never automatically stolen/);assert.equal(await readFile(lock,'utf8'),'unknown external owner');await rm(lock);
+  await assert.rejects(executeManagedSkills({...args.options,action:'update',bootstrapMarketplaces:true}),/never automatically stolen/);assert.equal(await readFile(lock,'utf8'),'unknown external owner');await rm(lock);
   const runtime={runCommand:async()=>{await rm(lock);await writeFile(lock,'replacement lock');throw new Error('synthetic interrupted observation');}};
   await assert.rejects(executeManagedSkills({...args.options,action:'update',runtime}),/Updater lock changed/);assert.equal(await readFile(lock,'utf8'),'replacement lock');
 });

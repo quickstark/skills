@@ -84,10 +84,10 @@ export function nativePackageOwnedTargets(options) {
     ...(options.host !== 'pi' ? options.packages.map((pkg) => ({ path: path.join(options.host === 'codex' ? options.codexHomeDirectory : (options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude')), 'plugins/cache', pkg.marketplace, pkg.name, pkg.version, ...(pkg.legacyRootCore ? ['.orphaned_at'] : [])), ownershipRecord: pkg.ownershipRecord })) : [])];
 }
 
-// Claude's copier recreates directories under the destination umask. Compare
-// payload identity with Git executable-bit semantics; local backups retain full modes.
+// Native copiers recreate directories under the destination umask. Compare
+// copied payloads with Git executable-bit semantics; local backups retain full modes.
 export function nativePayloadSha256(host, snapshot) {
-  return host === 'claude-code' ? adoptionSourceContentSha256(snapshot) : snapshot.contentSha256;
+  return host === 'codex' || host === 'claude-code' ? adoptionSourceContentSha256(snapshot) : snapshot.contentSha256;
 }
 
 // Deliberately narrow managed-package contract: generated skills-only packages,
@@ -187,12 +187,12 @@ export async function observeNativePackages(input) {
         check(tree.entries.every((entry) => !entry.path || knownVersions.has(entry.path.split('/')[0])), 'Unowned cache residue would be removed by the native manager; retain and replan.');
       }
       const cacheSnapshot = await captureMigrationPath(cache); check(['directory', 'absent'].includes(cacheSnapshot.kind), 'Owned native cache is not a regular payload directory.');
-      caches.push({ id: pkg.id, ...shortSnapshot(cacheSnapshot) });
+      caches.push({ id: pkg.id, ...shortSnapshot(cacheSnapshot), ...(cacheSnapshot.kind === 'directory' ? { contentSha256: nativePayloadSha256(host, cacheSnapshot) } : {}) });
       if (!installed.length) { check((matchingSelector.length || !Object.hasOwn(config.selected, selector(options, pkg))) && cacheSnapshot.kind === 'absent', 'Unregistered owned package/cache requires explicit reconciliation.'); continue; }
       const item = installed[0];
       check(item.installed === true && item.enabled === true && config.selected[selector(options, pkg)]?.enabled === true && item.version === pkg.version && item.source?.source === 'local' && item.source.path === pkg.source, 'Native Codex installed source/version/enablement conflicts with binding.');
       const payload = await inspectNativePayload(host, cache);
-      check(payload.snapshot.contentSha256 === pkg.payloadSha256 && same(payload.publicNames, [...pkg.publicNames].sort()), 'Native installed cache differs from verified source.');
+      check(payload.payloadSha256 === pkg.payloadSha256 && same(payload.publicNames, [...pkg.publicNames].sort()), 'Native installed cache differs from verified source.');
       active.push({ id: pkg.id, source: pkg.source, version: payload.version, publicNames: payload.publicNames });
     }
     unrelated = registrations.filter((item) => !packages.some((pkg) => item.pluginId === selector(options, pkg)));
@@ -388,7 +388,7 @@ export function createNativePackageAdapter(input) {
     if (options.host === 'codex' && step.phase === 'withdraw') {
       const pkg = options.packages.find((binding) => binding.id === step.native.packageId);
       const payload = await inspectNativePayload('codex', path.join(reference, 'market/payload'));
-      check(payload.version === pkg.version && payload.name === pkg.name && payload.snapshot.contentSha256 === pkg.payloadSha256, 'Recovery marketplace payload differs from the old cache.');
+      check(payload.version === pkg.version && payload.name === pkg.name && payload.payloadSha256 === pkg.payloadSha256, 'Recovery marketplace payload differs from the old cache.');
       const market = parseMetadata((await boundedRead(path.join(reference, 'market/.agents/plugins/marketplace.json'))).toString());
       check(same(market, { name: pkg.marketplace, plugins: [{ name: pkg.name, source: { source: 'local', path: './payload' } }] }), 'Recovery marketplace binding changed.');
     }

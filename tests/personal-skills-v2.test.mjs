@@ -1309,7 +1309,7 @@ test("inventory ignores an installed mutable Pi package that contributes no skil
 
 test("package commands expose inventory and adopt while aggregate verification stays read-only", async () => {
   const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
-  assert.equal(project.scripts["skills:update"], "node scripts/managed-skills.mjs update");
+  assert.equal(project.scripts["skills:update"], "node scripts/update-skills.mjs");
   assert.equal(project.scripts["personal-skills:inventory"], "node scripts/sync-personal-skills.mjs inventory");
   assert.equal(project.scripts["personal-skills:adopt"], "node scripts/sync-personal-skills.mjs adopt");
   assert.doesNotMatch(project.scripts["skills:verify"], /sync|adopt|install|add/);

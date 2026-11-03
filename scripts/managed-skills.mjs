@@ -14,10 +14,11 @@ import { piSkillFilterAllows } from "./personal-skills/pi-discovery.mjs";
 import { buildReconciliationPlan } from "./personal-skills/reconcile.mjs";
 import { execute as executePersonalSkills, loadManifest } from "./sync-personal-skills.mjs";
 import { SKILL_COLLECTIONS, REGISTRY_STATE } from "./skill-collection-registry.mjs";
-import { buildManagedSkillInput } from "./managed-skill-input.mjs";
+import { buildManagedSkillInput, validateManagedSkillSelection } from "./managed-skill-input.mjs";
 import { previewManagedSkillMigration, assembleManagedSkillMigration, executeManagedSkillMigration, restoreManagedSkillMigration } from "./managed-skill-migration.mjs";
 import { assertMigrationParents } from "./migration-filesystem.mjs";
 import { resolveManagedSkillPaths } from "./managed-skill-paths.mjs";
+import { bootstrapManagedMarketplaces } from "./managed-marketplace-bootstrap.mjs";
 
 const runFile = promisify(execFile);
 const defaultRepositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -503,7 +504,7 @@ export async function executeSelectedManagedSkills(options = {}) {
 async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = defaultRepositoryRoot,
   homeDirectory = homedir(), agents = ["codex"], profile = null, withPackages = [],
   codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, managedPaths: suppliedManagedPaths,
-  authorize = false, resume = null, auditPath, runtime = {}, transactionId, verifyRepositoryFreshness = verifyOriginMainFreshness } = {}) {
+  authorize = false, resume = null, auditPath, runtime = {}, transactionId, bootstrapMarketplaces = false, verifyRepositoryFreshness = verifyOriginMainFreshness } = {}) {
   assertCondition(["plan", "sync", "update", "verify"].includes(action), "Unknown selected managed skill action.");
   const managedPaths = suppliedManagedPaths ?? resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, agents });
   homeDirectory = managedPaths.homeDirectory;
@@ -521,35 +522,45 @@ async function executeSelectedManagedSkillsUnlocked({ action, repositoryRoot = d
     const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
     return { action, ...result, journalPath: assembly.journalPath };
   }
-  const input = await buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
-    claudeHomeDirectory: managedPaths.claudeHomeDirectory, piHomeDirectory: managedPaths.piHomeDirectory,
-    selectionPath: managedPaths.selectionPath, agents, profile, withPackages, auditPath, runtime });
-  const preview = await previewManagedSkillMigration(input);
-  if (action === "plan") return { action, ...preview };
-  assertCondition(preview.status === "ready", `Selected migration is blocked: ${preview.conflicts.map((entry) => entry.reason).join("; ")}`);
-  if (action === "verify") {
-    for (const agent of agents) {
-      const target = preview.targets[agent];
-      assertCondition(target.migrations.migrations.length === 0, `${agent} still has selected legacy identities requiring migration.`);
-      const bindings = preview.native[agent].options.packages;
-      for (const packageId of target.desired.packages) {
-        const pkg = preview.packages[agent].find((entry) => entry.id === packageId);
-        assertCondition(preview.native[agent].state.native.packages.some((actual) => {
-          const binding = bindings.find((entry) => entry.id === actual.id);
-          return binding.name === packageId && actual.version === pkg.version && !binding.installedOnly;
-        }), `${agent} is missing selected package ${packageId} at the verified release.`);
-      }
+  const marketplaceActions = [];
+  try {
+    if (action === 'update' && bootstrapMarketplaces) {
+      await validateManagedSkillSelection({ repositoryRoot, selectionPath: managedPaths.selectionPath, agents, profile, withPackages });
+      await bootstrapManagedMarketplaces({ repositoryRoot, ...managedPaths, agents, runtime, actions: marketplaceActions });
     }
-    return { action, status: "verified", targets: preview.targets, revision: preview.revision,
-      codexHomeDirectory: managedPaths.codexHomeDirectory, mutationAuthorized: false };
+    const input = await buildManagedSkillInput({ repositoryRoot, homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
+      claudeHomeDirectory: managedPaths.claudeHomeDirectory, piHomeDirectory: managedPaths.piHomeDirectory,
+      selectionPath: managedPaths.selectionPath, agents, profile, withPackages, auditPath, runtime });
+    const preview = await previewManagedSkillMigration(input);
+    if (action === "plan") return { action, ...preview };
+    assertCondition(preview.status === "ready", `Selected migration is blocked: ${preview.conflicts.map((entry) => entry.reason).join("; ")}`);
+    if (action === "verify") {
+      for (const agent of agents) {
+        const target = preview.targets[agent];
+        assertCondition(target.migrations.migrations.length === 0, `${agent} still has selected legacy identities requiring migration.`);
+        const bindings = preview.native[agent].options.packages;
+        for (const packageId of target.desired.packages) {
+          const pkg = preview.packages[agent].find((entry) => entry.id === packageId);
+          assertCondition(preview.native[agent].state.native.packages.some((actual) => {
+            const binding = bindings.find((entry) => entry.id === actual.id);
+            return binding.name === packageId && actual.version === pkg.version && !binding.installedOnly;
+          }), `${agent} is missing selected package ${packageId} at the verified release.`);
+        }
+      }
+      return { action, status: "verified", targets: preview.targets, revision: preview.revision,
+        codexHomeDirectory: managedPaths.codexHomeDirectory, mutationAuthorized: false };
+    }
+    assertCondition(action === "update" || authorize, "Selected synchronization requires explicit --authorize after reviewing the plan.");
+    const stagingRoot = join(managedPaths.transactionRoot, transactionId);
+    const assembly = await assembleManagedSkillMigration(preview, { transactionId, stagingRoot,
+      backupRoot: join(managedPaths.backupRoot, transactionId),
+      journalPath: join(stagingRoot, "transaction.json"), runtime: { ...input.runtime, ...runtime, nativeOptions: input.runtime.nativeOptions } });
+    const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
+    return { action, ...result, journalPath: assembly.journalPath, targets: preview.targets, marketplaceActions };
+  } catch (error) {
+    if (marketplaceActions.length) error.marketplaceActions = marketplaceActions;
+    throw error;
   }
-  assertCondition(action === "update" || authorize, "Selected synchronization requires explicit --authorize after reviewing the plan.");
-  const stagingRoot = join(managedPaths.transactionRoot, transactionId);
-  const assembly = await assembleManagedSkillMigration(preview, { transactionId, stagingRoot,
-    backupRoot: join(managedPaths.backupRoot, transactionId),
-    journalPath: join(stagingRoot, "transaction.json"), runtime: { ...input.runtime, ...runtime, nativeOptions: input.runtime.nativeOptions } });
-  const result = await executeManagedSkillMigration(assembly, { ownerId: `managed-skills-${process.pid}` });
-  return { action, ...result, journalPath: assembly.journalPath, targets: preview.targets };
 }
 
 export async function executeManagedSkills({
@@ -574,12 +585,13 @@ export async function executeManagedSkills({
   resume = null,
   auditPath,
   runtime = {},
+  bootstrapMarketplaces = false,
 } = {}) {
   agents = normalizeManagedAgents(agents);
   const managedPaths = resolveManagedSkillPaths({ homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, environment, agents });
   assertCondition(REGISTRY_STATE !== "target" || registryState === "target", "The activated target registry cannot use the legacy all-package updater.");
   if (registryState === "target") return executeSelectedManagedSkills({ action, repositoryRoot, homeDirectory: managedPaths.homeDirectory, codexHomeDirectory: managedPaths.codexHomeDirectory,
-    environment, managedPaths, agents, profile, withPackages, resume, auditPath, runtime, authorize, verifyRepositoryFreshness });
+    environment, managedPaths, agents, profile, withPackages, resume, auditPath, runtime, authorize, bootstrapMarketplaces, verifyRepositoryFreshness });
   assertCondition(registryState === "legacy", "Unknown collection registry state.");
   assertCondition(!managedPaths.customCodexHome, "Custom Codex homes require the target registry updater.");
   assertCondition(!profile && withPackages.length === 0 && !resume, "Selected profile/addition/retry flags require the target registry; the inactive legacy updater cannot apply them.");

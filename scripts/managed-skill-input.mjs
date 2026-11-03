@@ -45,7 +45,7 @@ export function derivePackageAcceptanceObligations(packageId, document) {
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, collection.codexPackageRoot, collection.piPackageRoot, collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
       'config/skill-migrations.json', 'config/skill-provenance.json', 'config/skill-profiles.json', 'docs/skill-run-contract.md',
-      ...['adoption-acceptance', 'claude-core-migration', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
+      ...['adoption-acceptance', 'claude-core-migration', 'managed-skills', 'managed-skill-input', 'managed-skill-migration', 'managed-skill-paths', 'managed-marketplace-bootstrap', 'update-skills', 'migration-filesystem', 'migration-native-packages', 'migration-owned-paths', 'migration-transaction', 'skill-selection', 'skill-migrations'].map((name) => `scripts/${name}.mjs`),
       ...['qs-skill-catalog', 'ps-skill-catalog', 'skill-collection-registry', 'advanced-skill-catalog', 'frontend-skill-catalog', 'video-skill-catalog', 'execution-skill-catalog', 'optional-command-definition'].map((name) => `scripts/${name}.mjs`)]),
     requiredCriteria: unique([...commonCriteria, ...packageCriteria[packageId]]), requiredChecks: ['package-closure', 'notices', 'behavior', 'native-discovery', ...(packageId === 'qs-video' ? ['video-runtime'] : packageId === 'qs-execution' ? ['unlazy-runtime'] : [])] };
 }
@@ -94,6 +94,20 @@ async function publicNames(root, payload) {
 }
 const proofBinding = (observed) => ({...(observed.layout ? {layout:observed.layout} : {}), ...Object.fromEntries(['kind', 'identity', 'agent', 'path', 'canonicalPath', 'linkTarget', 'version', 'revision', 'digest', 'publicSkills', 'consumers'].map((field) => [field, observed[field] ?? (field === 'consumers' ? [] : null)]))});
 function ownedObservation(value, nativeOwner = null) { return { ...value, dirty: false, ownership: { manager: 'quickstark', ...(nativeOwner ?? {}), recordId: `${value.agent}:${value.kind}:${value.identity}`, expected: Object.fromEntries(['path', 'canonicalPath', 'linkTarget', 'version', 'revision', 'digest'].map((field) => [field, value[field]])) } }; }
+
+/** Reject invalid requested/saved selection before an optional marketplace prerequisite. */
+export async function validateManagedSkillSelection({ repositoryRoot, selectionPath, agents, profile, withPackages }) {
+  const [migration, profiles, saved] = await Promise.all([
+    jsonFile(path.join(repositoryRoot, 'config/skill-migrations.json')),
+    jsonFile(path.join(repositoryRoot, 'config/skill-profiles.json')),
+    readSelectionRecord(selectionPath),
+  ]);
+  check(validateSkillMigrations(migration.value).valid, 'Migration authority is invalid.');
+  for (const agent of agents) resolveTargetSelection({ agent, profiles: profiles.value,
+    packageNames: unique([...TARGET_SKILL_COLLECTIONS, ...LEGACY_SKILL_COLLECTIONS].map(entry => entry.id)),
+    resourceNames: migration.value.sourceManifestSnapshot.resources.map(entry => entry.name),
+    savedRecord: saved.record, profile, withPackages });
+}
 
 /** Observe production inputs without creating receipts, staging, or changing managers.
  * Inject command execution only for isolated caller fixtures; it is not evidence. */

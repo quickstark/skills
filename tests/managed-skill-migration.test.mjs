@@ -7,6 +7,7 @@ import test from 'node:test';
 import { captureManagedSkillPayload, previewManagedSkillMigration, assembleManagedSkillMigration, executeManagedSkillMigration, restoreManagedSkillMigration } from '../scripts/managed-skill-migration.mjs';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
 import { createOwnedPathAdapter } from '../scripts/migration-owned-paths.mjs';
+import { nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
 import { readSkillMigrations } from '../scripts/skill-migrations.mjs';
 import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
 import { V3_CORE_SKILLS, V3_SPECIALIST_SKILLS } from '../scripts/qs-skill-catalog.mjs';
@@ -46,13 +47,13 @@ async function fixture(t, { installed = ['qs-skills', 'qs-specialists', 'ps-skil
     const source = path.join(cwd, 'codex/plugins', id); await packageFiles(source, id, '4.0.0', publicSkills); const payload = await captureManagedSkillPayload(source);
     const acceptance = await writeJSON(path.join(base, 'evidence', `${id}.json`), { schemaVersion: 1, agent: 'codex', packageId: id, version: '4.0.0', revision, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256, verifiedCapabilities: capabilityIds, checks: Object.fromEntries(['package-closure', 'notices', 'behavior', 'native-discovery'].map((name) => [name, 'passed'])), references: [support] });
     packages.push({ id, registered: true, version: '4.0.0', revision, publicSkills, capabilityIds, artifacts: { codex: { source, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256, acceptance } } });
-    bindings.push({ id: `new-${id}`, name: id, source, version: '4.0.0', payloadSha256: payload.snapshot.contentSha256, publicNames: publicSkills, ownershipRecord: `package:${id}`, marketplace: 'quickstark', marketplaceRoot: path.join(cwd, 'codex') });
+    bindings.push({ id: `new-${id}`, name: id, source, version: '4.0.0', payloadSha256: nativePayloadSha256('codex', payload.snapshot), publicNames: publicSkills, ownershipRecord: `package:${id}`, marketplace: 'quickstark', marketplaceRoot: path.join(cwd, 'codex') });
   }
   const installedBindings = [];
   for (const id of installed) {
     const skills = id === 'ps-skills' ? legacy.find((entry) => entry.identity === id).publicSkills : packages.find((entry) => entry.id === id).publicSkills;
     const cache = path.join(homeDirectory, '.codex/plugins/cache/quickstark', id, '3.8.0'); await packageFiles(cache, id, '3.8.0', skills); const payload = await captureManagedSkillPayload(cache);
-    const source = path.join(cwd, 'codex/plugins', id); const binding = { id: `old-${id}`, name: id, source, version: '3.8.0', payloadSha256: payload.snapshot.contentSha256, publicNames: skills, ownershipRecord: `package:${id}`, marketplace: 'quickstark', marketplaceRoot: path.join(cwd, 'codex'), installedOnly: true };
+    const source = path.join(cwd, 'codex/plugins', id); const binding = { id: `old-${id}`, name: id, source, version: '3.8.0', payloadSha256: nativePayloadSha256('codex', payload.snapshot), publicNames: skills, ownershipRecord: `package:${id}`, marketplace: 'quickstark', marketplaceRoot: path.join(cwd, 'codex'), installedOnly: true };
     bindings.push(binding); installedBindings.push(binding.id);
     const oldRevision = id === 'ps-skills' ? legacy.find((entry) => entry.identity === id).acceptedPrior[0].revision : 'b'.repeat(40);
     if (id === 'ps-skills') for (const claim of Object.values(legacy.find((entry) => entry.identity === id).acceptedPrior[0].digests)) claim.value = payload.payloadDigest.value;
@@ -76,10 +77,10 @@ async function fixture(t, { installed = ['qs-skills', 'qs-specialists', 'ps-skil
   const observeNative = async (options) => {
     const config = await fileJSON(nativeConfigPath); const selected = {}; const active = []; const caches = []; const sources = [];
     for (const binding of options.packages) {
-      const cache = path.join(homeDirectory, '.codex/plugins/cache/quickstark', binding.name, binding.version); const snapshot = await captureMigrationPath(cache); caches.push({ id: binding.id, path: cache, kind: snapshot.kind, ...(snapshot.contentSha256 ? { contentSha256: snapshot.contentSha256 } : {}) });
+      const cache = path.join(homeDirectory, '.codex/plugins/cache/quickstark', binding.name, binding.version); const snapshot = await captureMigrationPath(cache); caches.push({ id: binding.id, path: cache, kind: snapshot.kind, ...(snapshot.contentSha256 ? { contentSha256: nativePayloadSha256('codex', snapshot) } : {}) });
       if (binding.installedOnly) sources.push({ id: binding.id, name: binding.name, version: binding.version, publicNames: [...binding.publicNames].sort(), role: 'installed-cache', expectedPayloadSha256: binding.payloadSha256 });
-      else { const source = await captureMigrationPath(binding.source); assert.equal(source.contentSha256, binding.payloadSha256); sources.push({ id: binding.id, name: binding.name, version: binding.version, publicNames: [...binding.publicNames].sort(), snapshot: { path: source.path, kind: source.kind, contentSha256: source.contentSha256 } }); }
-      if (config.installed.includes(binding.id)) { assert.equal(snapshot.contentSha256, binding.payloadSha256); const manifest = await fileJSON(path.join(cache, '.codex-plugin/plugin.json')); assert.equal(manifest.version, binding.version); selected[`${binding.name}@quickstark`] = { enabled: true }; active.push({ id: binding.id, source: binding.source, version: manifest.version, publicNames: [...binding.publicNames].sort() }); }
+      else { const source = await captureMigrationPath(binding.source); assert.equal(nativePayloadSha256('codex', source), binding.payloadSha256); sources.push({ id: binding.id, name: binding.name, version: binding.version, publicNames: [...binding.publicNames].sort(), snapshot: { path: source.path, kind: source.kind, contentSha256: source.contentSha256 } }); }
+      if (config.installed.includes(binding.id)) { assert.equal(nativePayloadSha256('codex', snapshot), binding.payloadSha256); const manifest = await fileJSON(path.join(cache, '.codex-plugin/plugin.json')); assert.equal(manifest.version, binding.version); selected[`${binding.name}@quickstark`] = { enabled: true }; active.push({ id: binding.id, source: binding.source, version: manifest.version, publicNames: [...binding.publicNames].sort() }); }
     }
     const state = { host: 'codex', configPath: nativeConfigPath, config: { selected, unrelatedHash: hash(config.theme) }, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources, caches, unrelatedHash: hash(config.theme) };
     return { state: { snapshotHash: hash(state), ...state }, evidence: { configSnapshot: await captureMigrationPath(nativeConfigPath) } };

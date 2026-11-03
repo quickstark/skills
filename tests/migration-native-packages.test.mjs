@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { runMigrationTransaction, readMigrationJournal } from '../scripts/migration-transaction.mjs';
-import { mkdtemp, mkdir, writeFile, readFile, rm, appendFile, symlink } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm, appendFile, symlink, chmod } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -128,6 +128,64 @@ test('source edits and changed installed Codex caches block operations and prese
   await assert.rejects(observeNativePackages(args.options), /source changed/);
 });
 
+for (const real of [false, true]) test(`${real ? 'real isolated' : 'executable fixture'} Codex verifies, replaces and recovers packages across directory permissions`, { skip: real && !available('codex') }, async (t) => {
+  const args = await fixture(t, 'codex', { real });
+  for (const pkg of args.options.packages) {
+    const source = await captureMigrationPath(pkg.source);
+    for (const entry of source.entries.filter(entry => entry.kind === 'directory')) {
+      await chmod(path.join(pkg.source, entry.path), 0o700);
+    }
+  }
+  const cache = path.join(args.options.codexHomeDirectory, 'plugins/cache/qs-native-fixture/ps-probe/1.0.0');
+  const installed = await captureMigrationPath(cache);
+  for (const entry of installed.entries.filter(entry => entry.kind === 'directory')) {
+    await chmod(path.join(cache, entry.path), 0o755);
+  }
+  const source = await captureMigrationPath(args.options.packages[0].source);
+  assert.notEqual(source.contentSha256, (await captureMigrationPath(cache)).contentSha256);
+  const original = (await observeNativePackages(args.options)).state;
+  const withdraw = args.step(original, 'old', 'withdraw');
+  const oldBackup = await args.adapter.prepare(withdraw, args.context);
+  await args.adapter.apply(withdraw, args.context);
+  const expose = args.step(withdraw.after, 'new', 'expose');
+  const newBackup = await args.adapter.prepare(expose, args.context);
+  await args.adapter.apply(expose, args.context);
+  assert.deepEqual(await args.adapter.inspect(expose, args.context), expose.after);
+  await args.adapter.recover(expose, newBackup.reference, args.context);
+  await args.adapter.recover(withdraw, oldBackup.reference, args.context);
+  assert.deepEqual(await args.adapter.inspect(withdraw, args.context), original);
+});
+
+for (const target of ['source', 'cache']) test(`Codex rejects an executable-bit change in the ${target}`, async (t) => {
+  const args = await fixture(t, 'codex');
+  const before = (await observeNativePackages(args.options)).state;
+  const root = target === 'source' ? args.options.packages[0].source
+    : path.join(args.options.codexHomeDirectory, 'plugins/cache/qs-native-fixture/ps-probe/1.0.0');
+  await chmod(path.join(root, 'skills/ps-probe/SKILL.md'), 0o755);
+  await assert.rejects(args.adapter.apply(args.step(before, 'old', 'withdraw'), args.context), /source changed|cache differs/);
+});
+
+test('Codex backup validation retains exact directory permissions', async (t) => {
+  const args = await fixture(t, 'codex');
+  const before = (await observeNativePackages(args.options)).state;
+  const step = args.step(before, 'old', 'withdraw');
+  const backup = await args.adapter.prepare(step, args.context);
+  const cacheIndex = step.ownedTargets.findIndex(target => target.path.endsWith('/ps-probe/1.0.0'));
+  const directory = path.join(backup.reference, `target-${cacheIndex}`, 'skills');
+  const snapshot = await captureMigrationPath(directory);
+  await chmod(directory, snapshot.entries[0].mode === 0o700 ? 0o755 : 0o700);
+  await assert.rejects(args.adapter.inspectBackup(step, backup.reference, args.context), /backup target changed/);
+});
+
+test('Codex still rejects a source directory permission change after planning', async (t) => {
+  const args = await fixture(t, 'codex');
+  const before = (await observeNativePackages(args.options)).state;
+  const source = args.options.packages[0].source;
+  const snapshot = await captureMigrationPath(source);
+  await chmod(source, snapshot.entries[0].mode === 0o700 ? 0o755 : 0o700);
+  await assert.rejects(args.adapter.prepare(args.step(before, 'old', 'withdraw'), args.context), /state changed before backup/);
+});
+
 test('Pi filtered managed entries conflict without losing filters or community themes', async (t) => {
   const args = await fixture(t, 'pi'); const settings = JSON.parse(await readFile(args.configPath));
   settings.packages = settings.packages.map((entry) => entry.startsWith('npm:') ? entry : { source: entry, skills: [] });
@@ -166,7 +224,10 @@ for (const real of [false, true]) test(`${real ? 'real isolated' : 'executable f
   const args = await fixture(t, 'codex', { real }); const old = { ...args.options.packages[0], installedOnly: true };
   const manifestPath = path.join(old.source, '.codex-plugin/plugin.json'); const manifest = JSON.parse(await readFile(manifestPath)); manifest.version = '2.0.0'; await writeFile(manifestPath, JSON.stringify(manifest));
   await appendFile(path.join(old.source, 'skills/ps-probe/SKILL.md'), 'Published improvement.\n');
-  const newer = { ...old, id: 'new', version: '2.0.0', installedOnly: false, payloadSha256: (await captureMigrationPath(old.source)).contentSha256 };
+  for (const entry of (await captureMigrationPath(old.source)).entries.filter(entry => entry.kind === 'directory')) {
+    await chmod(path.join(old.source, entry.path), 0o700);
+  }
+  const newer = { ...old, id: 'new', version: '2.0.0', installedOnly: false, payloadSha256: nativePayloadSha256('codex', await captureMigrationPath(old.source)) };
   const options = { ...args.options, packages: [old, newer] }; const adapter = createNativePackageAdapter(options);
   const before = (await observeNativePackages(options)).state;
   assert.equal(before.native.packages[0].version, '1.0.0');
@@ -178,7 +239,7 @@ for (const real of [false, true]) test(`${real ? 'real isolated' : 'executable f
   assert.deepEqual(await adapter.inspect(expose, args.context), expose.after); assert.equal(expose.after.native.packages[0].version, '2.0.0');
   await adapter.recover(expose, newerBackup.reference, args.context); await adapter.recover(withdraw, backup.reference, args.context);
   assert.deepEqual(await adapter.inspect(withdraw, args.context), before);
-  const restored = await captureMigrationPath(targets[1].path); assert.equal(restored.contentSha256, old.payloadSha256);
+  const restored = await captureMigrationPath(targets[1].path); assert.equal(nativePayloadSha256('codex', restored), old.payloadSha256);
   const config = await readFile(args.configPath, 'utf8'); assert.ok(config.includes(old.marketplaceRoot)); assert.ok(!config.includes('backups'));
 });
 

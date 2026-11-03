@@ -17,6 +17,8 @@ export const TEST_FILES = Object.freeze([
   "tests/personal-skills.test.mjs",
   "tests/personal-skills-v2.test.mjs",
   "tests/managed-skills.test.mjs",
+  "tests/update-skills.test.mjs",
+  "tests/managed-marketplace-bootstrap.test.mjs",
   "tests/pi-package-projection.test.mjs",
   "tests/skill-selection.test.mjs",
   "tests/managed-skill-selection.test.mjs",

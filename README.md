@@ -29,44 +29,42 @@ the repository checkout at a stable path: native package registrations refer to
 it. The transactional updater supports Codex, Claude Code and Pi. The
 [installation guide](./docs/install-and-update-skills.md) covers all three hosts.
 
-For a fresh Codex setup:
+For a fresh setup:
 
 ```bash
 git clone https://github.com/quickstark/skills.git
 cd skills
-npm ci
-codex plugin marketplace add ./codex
-npm run skills:plan -- --json --agent codex
-npm run skills:update -- --agent codex
+npm run skills:update
 ```
 
-Use `--agent claude` (alias `claude-code`) for Claude Code or `--agent pi` for Pi.
-Repeat `--agent` to select several installed hosts, independently of the agent
-running the command. For first-time Claude setup, run `claude plugin marketplace
-add .` from this checkout. Pi needs no marketplace registration.
-An existing marketplace identity/path mismatch needs a separate reviewed action;
-these instructions do not authorize automatically repointing it.
-The plan is read-only; inspect its selection and conflicts before running update.
-With no selection flags, a fresh machine receives `qs-skills`; a managed machine
-retains its verified or saved capability selection. The selection is saved in
-`~/.config/quickstark/skills-selection.json` after a successful transaction.
-
-For an ordinary update, refresh the checkout with `git pull --ff-only origin main`,
-then run plan and update with the same hosts. The updater requires checkout HEAD
-to match `origin/main` and checks ownership and release acceptance before effects.
-If it reports a conflict, preserve local changes and follow the installation
-guide's recovery instructions.
-
-Add an optional package explicitly using matching plan/update flags:
+For later updates:
 
 ```bash
-npm run skills:plan -- --json --agent codex --with qs-frontend
+git pull --ff-only origin main
+npm run skills:update
+```
+
+The script detects `codex`, `claude` and `pi` executables on PATH and updates each
+detected harness. It registers an absent, unused local marketplace automatically,
+then installs and verifies the selected skills. Existing marketplace conflicts or
+retained unregistered caches stop the update with diagnostics. No dependency
+installation is needed to run the updater; `npm ci` is for repository development.
+
+A fresh host receives `qs-skills`; an existing host retains its saved selection.
+Optional packages remain opt-in. Use `--agent codex`, `--agent claude` (alias
+`claude-code`) or `--agent pi` to override detection; repeat the flag for multiple
+hosts. For example, add frontend to Codex explicitly:
+
+```bash
 npm run skills:update -- --agent codex --with qs-frontend
 ```
 
-Repeat `--with` for other packages. New optional catalog entries never become
-selected merely because an ordinary update sees them. Verify the installed
-selection without rerunning the repository test suite:
+Repeat `--with` for other packages. Selection is saved after success in
+`~/.config/quickstark/skills-selection.json`, or profile-specific state for custom
+homes. The updater requires checkout HEAD to match `origin/main` and checks
+ownership and release acceptance. Preserve local changes if a conflict blocks it.
+Use `npm run skills:update -- --help` for options. An optional read-only preview is
+`npm run skills:plan -- --json --agent codex`; verification alone is:
 
 ```bash
 node scripts/managed-skills.mjs verify --json --agent codex
@@ -75,21 +73,19 @@ node scripts/managed-skills.mjs verify --json --agent codex
 Use the same host flags as the update. Restart the host or begin a new task to
 refresh its skill catalog. A Git pull alone does not refresh cached plugins.
 
-To update a separate Codex profile, register the marketplace in that profile and
-pass the same Codex home to plan, update and verification:
+To update a separate Codex profile:
 
 ```bash
 git pull --ff-only origin main
-CODEX_HOME="$HOME/.codex-demo" codex plugin marketplace add ./codex
-npm run skills:plan -- --json --agent codex --codex-home "$HOME/.codex-demo"
 npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo"
-npm run skills:verify -- --agent codex --codex-home "$HOME/.codex-demo"
 ```
 
 `--codex-home` overrides inherited `CODEX_HOME`; otherwise the updater uses
 `<user home>/.codex`. It isolates saved selection and transaction state by Codex
 home. `--home` remains the operating-system user home, while `--profile` chooses
-a QuickStark package selection. Custom homes require a single-host transaction. Claude and Pi likewise accept
+a QuickStark package selection. Automatic detection groups default homes in one
+transaction and updates custom homes separately. Explicit multiple-host flags
+require default homes. Claude and Pi likewise accept
 `--claude-home` / `CLAUDE_CONFIG_DIR` and `--pi-home` / `PI_CODING_AGENT_DIR`; explicit
 flags override environment variables and each custom home has separate updater state.
 

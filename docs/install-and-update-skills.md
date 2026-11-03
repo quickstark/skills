@@ -7,8 +7,9 @@ proof that a target package is accepted or installed.
 
 The target native transaction supports Codex, Claude Code and Pi (the coding-agent
 harness). Use `--agent codex`, `--agent claude` (or `claude-code`), or `--agent pi`.
-The selected CLI must be available on PATH. Host selection is independent of the
-agent running this command; repeat the flag to update multiple installed hosts.
+The updater detects those executables on PATH when no host is selected. Explicit
+flags override detection; host selection is independent of the agent running it.
+Repeat the flag to update multiple hosts with default configuration homes.
 
 ## Selection and the repository template
 
@@ -25,7 +26,8 @@ The six packages are core `qs-skills` (12 roots), `qs-specialists` (9),
 | `--with <package-id>` | Explicit addition to the current selection; repeat for multiple additions |
 | `--profile core` | Explicit desired core selection; reduction is not deletion authority |
 
-`--agent` selects a host independently of package selection; its default is Codex.
+`--agent` selects a host independently of package selection. `skills:update`
+detects installed harnesses; direct plan/verify commands default to Codex.
 The implemented addition flag is `--with`, not `--with-package`. Unknown IDs and
 duplicate additions fail. New optional packages do not join an ordinary update.
 The selection file is `~/.config/quickstark/skills-selection.json`; it is saved
@@ -42,36 +44,43 @@ at a stable path because native package bindings include that path.
 ```bash
 git clone https://github.com/quickstark/skills.git
 cd skills
-npm ci
-codex plugin marketplace add ./codex
-npm run skills:plan -- --json --agent codex --agent pi
-npm run skills:update -- --agent codex --agent pi
+npm run skills:update
 ```
 
-For Codex, register the existing local marketplace directory before planning;
-the production input rejects an absent marketplace. Run the bootstrap from the
-checkout root, or use its absolute `/path/to/skills/codex` directory. Omit it on a
-Pi-only machine. An existing QuickStark registration with a different identity or
-path requires a separately reviewed correction; do not remove or repoint it blindly.
+The updater uses Node built-ins and local modules; `npm ci` is needed for
+development, not installation. It detects executable `codex`, `claude` and `pi`
+commands on PATH, updates saved selections, and verifies the result. No supported
+executable is an error. A detected but incompatible manager fails visibly.
 
-The plan is read-only. Inspect its desired selection, ownership, retirement,
-acceptance and conflict evidence. Update is the mutation command and revalidates
-live state. A missing accepted package receipt, modified managed content,
-unexpected exposure or unsupported native state blocks mutation.
+An absent Codex or Claude marketplace is registered from this checkout only when
+its QuickStark settings, installed registrations and cache namespace are unused,
+and its tracked marketplace/package sources are clean. An existing matching
+binding is retained. A different binding or retained unregistered state blocks
+automatic registration; preserve it and reconcile the reported conflict. A
+registration can remain if a later step fails; retry safely from the current state.
+Pi needs no marketplace registration.
+
+Update holds the updater lock and checks repository freshness before registration.
+It checks package acceptance and ownership before package effects. Missing accepted
+receipts, modified managed content, unexpected exposure or unsupported native state
+block installation. `--json` returns structured results instead of progress text.
+`npm run skills:update -- --help` lists the supported options.
+
+For an optional read-only preview, use `npm run skills:plan -- --json --agent codex`
+(or another explicit host). Direct plan/verify do not register marketplaces; on a
+fresh host they require `codex plugin marketplace add ./codex` or
+`claude plugin marketplace add .` first. Normal installation needs only update.
 
 ## Claude setup
 
-Register the local checkout before planning, then use the same host for update and
-verification. Claude packages use user scope; existing project/local or disabled
+Use the automatic updater, or select Claude explicitly. Claude packages use user
+scope; existing project/local or disabled
 QuickStark registrations require explicit reconciliation. The core marketplace
 entry points to the generated `packages/qs-skills` package, so the plugin cache
 contains the public roots and private closure without copying the whole repository.
 
 ```bash
-claude plugin marketplace add .
-npm run skills:plan -- --json --agent claude
 npm run skills:update -- --agent claude
-node scripts/managed-skills.mjs verify --json --agent claude
 ```
 
 A marketplace pointing at another checkout or a remote source requires a reviewed
@@ -113,21 +122,13 @@ user home; `--profile` selects a QuickStark package profile; neither substitutes
 for `--codex-home`. A custom Codex home currently supports a Codex-only transaction,
 so do not combine it with `--agent pi`.
 
-Register the QuickStark marketplace in the selected profile before planning:
-
-```bash
-CODEX_HOME="$HOME/.codex-demo" codex plugin marketplace add ./codex
-```
-
-Then use the same target for every operation:
+Update the selected profile directly; pass the same home to standalone verification
+or recovery:
 
 ```bash
 git pull --ff-only origin main
-CODEX_HOME="$HOME/.codex-demo" codex plugin marketplace add ./codex
-npm run skills:plan -- --json --agent codex --codex-home "$HOME/.codex-demo"
 npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo"
-npm run skills:verify -- --agent codex --codex-home "$HOME/.codex-demo"
-npm run skills:update -- --agent codex --codex-home "$HOME/.codex-demo" --resume /absolute/path/to/transaction.json
+node scripts/managed-skills.mjs verify --json --agent codex --codex-home "$HOME/.codex-demo"
 ```
 
 The selected profile's `config.toml`, plugin cache and discovery paths remain
@@ -150,10 +151,12 @@ paths. Pass the same host home to plan, update, verify and resume. Native comman
 receive the resolved paths, preventing inherited overrides from redirecting a
 transaction to another profile. Paths are resolved by Node without assuming a
 particular checkout directory or shell. Native integration is tested on Linux;
-Windows and macOS manager behavior has not been verified.
+Windows and macOS manager behavior has not been verified. Automatic detection
+groups default homes together and updates custom homes separately. Explicit home
+flags without `--agent` select only those hosts. A journal resumes its original
+host group without rediscovering PATH; supply the original custom home again.
 
 ```bash
-CLAUDE_CONFIG_DIR="$HOME/.claude-demo" claude plugin marketplace add .
 npm run skills:update -- --agent claude --claude-home "$HOME/.claude-demo"
 npm run skills:update -- --agent pi --pi-home "$HOME/.pi-demo"
 ```
@@ -161,18 +164,16 @@ npm run skills:update -- --agent pi --pi-home "$HOME/.pi-demo"
 ## Normal update and explicit additions
 
 From the maintained checkout, refresh it without discarding local work, then use
-the same selected hosts for plan and update:
+the detected harnesses:
 
 ```bash
 git pull --ff-only origin main
-npm run skills:plan -- --json --agent codex --agent pi
-npm run skills:update -- --agent codex --agent pi
+npm run skills:update
 ```
 
 This preserves saved optional selections. To add frontend explicitly:
 
 ```bash
-npm run skills:plan -- --json --agent codex --with qs-frontend
 npm run skills:update -- --agent codex --with qs-frontend
 ```
 
@@ -195,12 +196,19 @@ verify --json --agent codex --agent pi` performs only the selected-state check.
 Verification checks accepted package bindings and requires selected legacy
 identities to have completed migration; a package version string alone is insufficient.
 
+Codex and Claude package verification compares source and installed copies using
+Git executable-bit semantics. Different directory permissions created by a native
+manager do not require `chmod` or a new package version. File contents, paths and
+executable bits must still match. Source transaction snapshots retain exact
+permissions and reject source changes after planning. Recorded backup snapshots
+also retain exact permissions; installed-cache identity uses the portable comparison.
+
 `skills:sync -- --authorize` remains the explicit review-then-authorize interface.
 Update/sync use an exclusive updater lock and a transaction journal. Preserve a
 failure's journal and backups. For an interrupted transaction, use its exact path:
 
 ```bash
-npm run skills:update -- --agent codex --resume /absolute/path/to/transaction.json
+npm run skills:update -- --resume /absolute/path/to/transaction.json
 ```
 
 Ordinary resume continues the frozen forward plan using the journal's selection;
