@@ -72,7 +72,7 @@ async function acquireInstallerLock(file) {
   }
 }
 
-export async function waitForValidatedCommit({ revision, fetchImpl = fetch, wait = ms => new Promise(resolve => setTimeout(resolve, ms)), onProgress = () => {}, attempts = 30 } = {}) {
+export async function waitForValidatedCommit({ revision, fetchImpl = fetch, wait = ms => new Promise(resolve => setTimeout(resolve, ms)), onProgress = () => {}, attempts = 20 } = {}) {
   check(/^[a-f0-9]{40}$/.test(revision), 'Exact published revision required.');
   for (let attempt = 0; attempt < attempts; attempt++) {
     const response = await fetchImpl(`https://api.github.com/repos/quickstark/skills/actions/workflows/validate.yml/runs?branch=main&event=push&head_sha=${revision}&per_page=10`,
@@ -87,7 +87,7 @@ export async function waitForValidatedCommit({ revision, fetchImpl = fetch, wait
       return { revision, runUrl: run.html_url };
     }
     onProgress(`Waiting for GitHub validation of ${revision.slice(0, 12)}…`);
-    if (attempt + 1 < attempts) await wait(30000);
+    if (attempt + 1 < attempts) await wait(Math.min(180000, 30000 * (attempt + 1)));
   }
   throw new Error('GitHub validation is still pending; installed skills are unchanged.');
 }

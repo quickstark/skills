@@ -26,7 +26,10 @@ export async function assertMigrationParents(path) {
 // Unlike the legacy upstream portable hash, this snapshot includes .git,
 // node_modules, empty directories and file modes. It never follows descendant
 // links. It is evidence for revalidation, not proof of ownership or authority.
-export async function captureMigrationPath(path, { limits = {} } = {}) {
+// Descendant links are rejected by default; original-state backups may opt in
+// to recording literal link targets without admitting them as package payloads.
+export async function captureMigrationPath(path, { limits = {}, allowDescendantSymlinks = false } = {}) {
+  fail(typeof allowDescendantSymlinks === 'boolean', 'Literal-link snapshot option must be boolean.');
   const bounds = { ...LIMITS, ...limits };
   fail(Object.keys(bounds).every((key) => Object.hasOwn(LIMITS, key) && Number.isSafeInteger(bounds[key]) && bounds[key] > 0),
     "Invalid migration snapshot bounds.");
@@ -45,9 +48,14 @@ export async function captureMigrationPath(path, { limits = {} } = {}) {
   async function collect(current, name, depth) {
     fail(depth <= bounds.depth && entries.length < bounds.entries, "Migration snapshot exceeds its depth or entry bound.");
     const before = await lstat(current);
-    fail(!before.isSymbolicLink(), "Migration payload contains a descendant symbolic link.");
     const mode = before.mode & 0o777;
-    if (before.isDirectory()) {
+    if (before.isSymbolicLink()) {
+      fail(allowDescendantSymlinks, "Migration payload contains a descendant symbolic link.");
+      const target = await readlink(current);
+      bytes += Buffer.byteLength(target);
+      fail(bytes <= bounds.bytes, "Migration snapshot exceeds its byte bound.");
+      entries.push({ path: name, kind: 'symlink', mode, target });
+    } else if (before.isDirectory()) {
       entries.push({ path: name, kind: "directory", mode });
       const children = [];
       for await (const child of await opendir(current)) {

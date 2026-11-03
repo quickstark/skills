@@ -17,7 +17,7 @@ test('GitHub gate waits for the exact main push workflow before accepting succes
   const results = [[run({ head_sha: 'b'.repeat(40) })], [run({ status: 'in_progress', conclusion: null })], [run()]];
   const waits = []; const requests = [];
   const accepted = await waitForValidatedCommit({ revision, fetchImpl: async (url, options) => { requests.push({ url, options }); return response(results.shift()); }, wait: async delay => waits.push(delay) });
-  assert.equal(accepted.revision, revision); assert.equal(waits.length, 2);
+  assert.equal(accepted.revision, revision); assert.deepEqual(waits, [30000, 60000]);
   assert.ok(requests.every(r => r.url.includes('/actions/workflows/validate.yml/runs?') && r.url.includes(`head_sha=${revision}`)));
 });
 
@@ -28,6 +28,10 @@ for (const conclusion of ['failure', 'cancelled', 'skipped', 'neutral']) test(`G
 test('unavailable or indefinitely pending validation cannot install', async () => {
   await assert.rejects(waitForValidatedCommit({ revision, fetchImpl: async () => ({ ok: false, status: 403 }) }), /HTTP 403/);
   await assert.rejects(waitForValidatedCommit({ revision, attempts: 2, fetchImpl: async () => response([]), wait: async () => {} }), /still pending/);
+  let requests = 0; const delays = [];
+  await assert.rejects(waitForValidatedCommit({ revision, fetchImpl: async () => { requests++; return response([]); }, wait: async delay => delays.push(delay) }), /still pending/);
+  assert.equal(requests, 20); assert.equal(Math.max(...delays), 180000);
+  assert.equal(delays.reduce((sum, delay) => sum + delay, 0), 2970000);
 });
 
 async function fixture(t) {

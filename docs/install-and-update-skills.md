@@ -48,7 +48,9 @@ curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh |
 The bootstrap uses Node built-ins and local modules; `npm ci` is for development.
 It waits for a successful `validate.yml` push run for the exact official main SHA.
 That workflow checks generated projections and runs the isolated test suite with
-pinned Codex, Claude Code and Pi CLIs on Linux and macOS. Pending validation is polled; a failed or unavailable gate leaves
+pinned Codex, Claude Code and Pi CLIs on Linux and macOS. Pending validation is polled
+with backoff for about fifty minutes to accommodate the slower macOS suite without
+frequent API requests; a failed or unavailable gate leaves
 installed skills unchanged. The candidate's generated packages and committed
 acceptance evidence are checked locally before replacing the managed checkout.
 
@@ -74,6 +76,11 @@ native withdrawal. Native managers remove only known QuickStark registrations.
 Remaining caches are retained, old source checkouts stay untouched, and unrelated
 packages/settings are checked for preservation. Disabled, filtered, foreign or
 unknown registrations are preserved rather than silently overwritten.
+
+Historical caches can include whole repositories and dependency links. Original-state
+backups record and copy those links literally without following external targets;
+they retain file modes and use separate bounded capacity for large historical caches.
+Installed package and accepted source verification still reject descendant links.
 
 Repair does not certify modified bytes as trusted history. A pending repair records
 the intended selection before withdrawal, so a retry can restore that selection

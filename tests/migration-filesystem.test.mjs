@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, mkdir, writeFile, readFile, rename, cp, chmod, symlink, link, rm, readdir } from "node:fs/promises";
+import { mkdtemp, mkdir, writeFile, readFile, readlink, rename, cp, chmod, symlink, link, rm, readdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -103,6 +103,26 @@ test("descendant links, ancestor links and multiply linked files block evidence 
   await symlink(payload, parent);
   await assert.rejects(captureMigrationPath(join(parent, "SKILL.md")), /linked or non-directory ancestor/);
   assert.equal(await readFile(original, "utf8"), "Preserve external bytes.");
+});
+
+test("explicit backup snapshots preserve literal descendant links without reading their targets", async (t) => {
+  const { root, payload } = await fixture(t);
+  const outside = join(root, 'outside'); await writeFile(outside, 'External original.');
+  const linked = join(payload, 'linked'); await symlink('../outside', linked);
+  const options = { allowDescendantSymlinks: true };
+  const snapshot = await captureMigrationPath(payload, options);
+  const entry = snapshot.entries.find(entry => entry.kind === 'symlink');
+  assert.equal(entry.path, 'linked'); assert.equal(entry.target, '../outside');
+  await writeFile(outside, 'External edit.');
+  await revalidateMigrationPath(snapshot, options);
+  const copy = join(root, 'copy'); await cp(payload, copy, { recursive: true, verbatimSymlinks: true });
+  assert.equal(await readlink(join(copy, 'linked')), '../outside');
+  assert.equal((await captureMigrationPath(copy, options)).contentSha256, snapshot.contentSha256);
+  await assert.rejects(captureMigrationPath(payload), /descendant symbolic link/);
+  await assert.rejects(captureMigrationPath(copy), /descendant symbolic link/);
+  await rm(linked); await symlink('../missing', linked);
+  await assert.rejects(revalidateMigrationPath(snapshot, options), /changed after planning/);
+  assert.equal(await readFile(outside, 'utf8'), 'External edit.');
 });
 
 test("byte, entry and depth limits fail before providing a usable snapshot", async (t) => {

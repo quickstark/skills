@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
+  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment. Historical-cache backup delta: retained whole-repository caches use bounded literal-link snapshots and copies without following targets; default package/source snapshots remain strict. Focused controls cover literal-link preservation, three-harness reconciliation and large repair-record retries. Read-only GMK inspection reproduced a retained 4.2.0 cache with 21,984 entries and ten symbolic links; no new live deployment or Mac success is claimed by this evidence update.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -4511,7 +4511,7 @@
     },
     "scripts/migration-filesystem.mjs": {
       "kind": "file",
-      "contentSha256": "168224986a1a9e8726fa4aac6847a5362c63f47b654795ca8cc444abf85d9660"
+      "contentSha256": "c334e99c342bc7330502218baf97d85bc1ef4b2cc1d1e7027c18b397fc456d1e"
     },
     "scripts/migration-native-packages.mjs": {
       "kind": "file",
@@ -4799,7 +4799,7 @@
     },
     ".github/workflows/validate.yml": {
       "kind": "file",
-      "contentSha256": "247802f56eb86a60a64ea97b3e055af72bb65c5507c012798cffd323aa70fece"
+      "contentSha256": "c59cc60b4d9a9bb21c0f87a19fdd488ed60ccbc726312090e4f4f58f6f0b47ff"
     },
     "install.sh": {
       "kind": "file",
@@ -4807,11 +4807,11 @@
     },
     "scripts/install-skills.mjs": {
       "kind": "file",
-      "contentSha256": "299d4194961c7c8486bc0ba9b72ab244d036a7f3badf9059295d269b0dfe14bd"
+      "contentSha256": "a27fc82c0f9201f5b8fc029321bbb9bb9fefe315ec1c630a7b0192d54d7ec7c0"
     },
     "scripts/managed-package-repair.mjs": {
       "kind": "file",
-      "contentSha256": "39695c1f59b7a41083b0e8756a2f150283ed38c5e819fd1177547fbe20657cc6"
+      "contentSha256": "6d9326b2224cabd03585475dd6bd0e3989bc2fd76edfb35fb18cbbae109eccd8"
     },
     "scripts/validate-skill-release.mjs": {
       "kind": "file",
@@ -5069,7 +5069,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "e77ef074b85cb77c0eac8323a07f5add0c24977daaa3cf634028145e3180bece"
+      "sha256": "2c885abbf7f58d8bd1975c36901ec8e1927e70ab80a81683d94091a2b9f593d0"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
@@ -5089,7 +5089,7 @@
     },
     "tests/migration-filesystem.test.mjs": {
       "path": "tests/migration-filesystem.test.mjs",
-      "sha256": "76d1cadaf2e61805ca77bd4bdc2f398984747cb0206b7e8486c56a052fe5e6b7"
+      "sha256": "22eefe62a3b039dae8df2c978236d60a565d544ce93f58957337739229b46381"
     },
     "tests/migration-transaction.test.mjs": {
       "path": "tests/migration-transaction.test.mjs",
@@ -5157,7 +5157,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "36319c8085077ca3ffc8b557fb1ac6c4579cb6aeae4e6dce080e348f95c2c2c0"
+      "sha256": "beec395c4f44821fad6fbba00ea7be9149e1e688bef05bf0cd7ea73f1492f5d1"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -5333,15 +5333,15 @@
     },
     ".github/workflows/validate.yml": {
       "path": ".github/workflows/validate.yml",
-      "sha256": "cd384c0a0ca8bc5a82eb428f52711fd5f686e9168a4e9c9b3671fd07685a43b6"
+      "sha256": "03d93276583dcec08ef1b15be165d793bd9a3ad1a9a5c3a40a58de4468e3bbf6"
     },
     "scripts/install-skills.mjs": {
       "path": "scripts/install-skills.mjs",
-      "sha256": "b44e0159aa1fc1447bb396b5ba77ec81e3e4dfe8f1f13a0f0380c6bd4cf8ae0e"
+      "sha256": "60e0ed5cbad38f03a5802000383f8f09ae1e0cc24b22c0e6ebe51e3342f6e07a"
     },
     "scripts/managed-package-repair.mjs": {
       "path": "scripts/managed-package-repair.mjs",
-      "sha256": "28c2cea19bb463b17d632bf68ec60ac53aa5145903c4491a05bf22970628526d"
+      "sha256": "c3556ccad956ce395b2173eb25b18279a4c3d6765b2c6a1b596de76e179d5f30"
     },
     "scripts/validate-skill-release.mjs": {
       "path": "scripts/validate-skill-release.mjs",
@@ -5349,7 +5349,7 @@
     },
     "tests/install-skills.test.mjs": {
       "path": "tests/install-skills.test.mjs",
-      "sha256": "cc2ea5cf5b2d45c96c2edaebe3af959351626b3925356a9cfef3380a23b11b93"
+      "sha256": "244974e34241f51698d04dcc2da719ae15c8c3d017704ceacfcb557cf61d89b9"
     },
     "scripts/managed-skill-migration.mjs": {
       "path": "scripts/managed-skill-migration.mjs",

@@ -1,7 +1,7 @@
 import { execFile } from 'node:child_process';
 import { randomUUID, createHash } from 'node:crypto';
 import { constants } from 'node:fs';
-import { chmod, cp, mkdir, open, readFile, rename, unlink } from 'node:fs/promises';
+import { chmod, cp, lchmod, lstat, mkdir, open, readFile, rename, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { TARGET_SKILL_COLLECTIONS, LEGACY_SKILL_COLLECTIONS } from './skill-collection-registry.mjs';
@@ -19,20 +19,29 @@ const json = text => { try { return JSON.parse(text); } catch { throw new Error(
 const stable = value => JSON.stringify(value, (_, item) => object(item) ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a.localeCompare(b))) : item);
 const sha = value => createHash('sha256').update(stable(value)).digest('hex');
 const pointerPath = paths => path.join(paths.transactionRoot, 'managed-repair-pending.json');
+const maximumRepairRecordBytes = 128 * 1024 * 1024;
+// Old root-based Claude caches can contain complete repositories and dependency
+// links. Backups retain literal links without inspecting their external targets;
+// accepted source/package payload verification keeps its strict default policy.
+const backupOptions = { allowDescendantSymlinks: true, limits: { entries: 131072, bytes: 2 * 1024 * 1024 * 1024, depth: 64 } };
+const captureBackup = file => captureMigrationPath(file, backupOptions);
+const revalidateBackup = snapshot => revalidateMigrationPath(snapshot, backupOptions);
 
 async function save(file, value) {
+  const content = JSON.stringify(value, null, 2) + '\n';
+  check(Buffer.byteLength(content) <= maximumRepairRecordBytes, 'Repair recovery record exceeds its bound.');
   await assertMigrationParents(file); await mkdir(path.dirname(file), { recursive: true, mode: 0o700 });
   const temp = `${file}.${randomUUID()}.tmp`;
   const handle = await open(temp, 'wx', 0o600);
-  try { await handle.writeFile(JSON.stringify(value, null, 2) + '\n'); await handle.sync(); } finally { await handle.close(); }
+  try { await handle.writeFile(content); await handle.sync(); } finally { await handle.close(); }
   await rename(temp, file);
   const directory = await open(path.dirname(file), 'r'); try { await directory.sync(); } finally { await directory.close(); }
 }
 
-async function read(file, fallback) {
+async function read(file, fallback, maximumBytes = 2 * 1024 * 1024) {
   const snapshot = await captureMigrationPath(file);
   if (snapshot.kind === 'absent' && fallback !== undefined) return { value: fallback, snapshot };
-  check(snapshot.kind === 'file' && snapshot.bytes < 2 * 1024 * 1024, 'Repair metadata must be a bounded regular file.');
+  check(snapshot.kind === 'file' && snapshot.bytes <= maximumBytes, 'Repair metadata must be a bounded regular file.');
   const value = json(await readFile(file, 'utf8')); await revalidateMigrationPath(snapshot); return { value, snapshot };
 }
 
@@ -43,7 +52,7 @@ export async function pendingManagedRepair({ paths, agents, repositoryRoot }) {
   check(p.schemaVersion === 1 && p.repositoryRoot === repositoryRoot && stable(p.agents) === stable(agents)
     && path.resolve(p.recordPath) === p.recordPath && p.recordPath.startsWith(paths.backupRoot + path.sep)
     && path.basename(p.recordPath) === 'repair.json', 'Pending repair belongs to another checkout or harness group.');
-  const record = await read(p.recordPath);
+  const record = await read(p.recordPath, undefined, maximumRepairRecordBytes);
   check(sha(record.value.selection) === p.selectionSha256, 'Pending repair selection changed; originals remain retained.');
   return { ...record.value, recordPath: p.recordPath };
 }
@@ -143,7 +152,7 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
           check(typeof source === 'string' && source.endsWith('/' + relative), 'Installed source is outside the known QuickStark package path.');
           await trustedSource(source.slice(0, -('/' + relative).length));
         }
-        pkg.cacheSnapshot = await captureMigrationPath(path.join(agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory, 'plugins/cache/quickstark', pkg.name));
+        pkg.cacheSnapshot = await captureBackup(path.join(agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory, 'plugins/cache/quickstark', pkg.name));
       }
       const home = agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory;
       targets.push(path.join(home, agent === 'codex' ? 'config.toml' : 'settings.json'), path.join(home, 'plugins/cache/quickstark'));
@@ -168,18 +177,25 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   await assertMigrationParents(backupRoot); await mkdir(backupRoot, { recursive: true, mode: 0o700 });
   const snapshots = [];
   for (const host of hosts) for (const target of host.targets) {
-    const snapshot = await captureMigrationPath(target); check(['absent', 'file', 'directory'].includes(snapshot.kind), 'Repair targets must be regular files or directories.');
+    const snapshot = await captureBackup(target); check(['absent', 'file', 'directory'].includes(snapshot.kind), 'Repair targets must be regular files or directories.');
     const destination = path.join(backupRoot, `original-${snapshots.length}`);
     if (snapshot.kind !== 'absent') {
-      await cp(target, destination, { recursive: true, force: false, errorOnExist: true, preserveTimestamps: true });
-      for (const entry of [...snapshot.entries].reverse()) await chmod(path.join(destination, entry.path), entry.mode);
-      check((await captureMigrationPath(destination)).contentSha256 === snapshot.contentSha256, 'Repair backup differs from original bytes or permissions.');
-      for (const entry of [...snapshot.entries].reverse()) {
+      await cp(target, destination, { recursive: true, force: false, errorOnExist: true, preserveTimestamps: true, verbatimSymlinks: true });
+      for (const entry of snapshot.entries.filter(entry => entry.kind === 'symlink')) {
+        const copied = path.join(destination, entry.path);
+        if (((await lstat(copied)).mode & 0o777) !== entry.mode) {
+          check(process.platform === 'darwin', 'Cannot preserve original symbolic-link permissions.');
+          await lchmod(copied, entry.mode);
+        }
+      }
+      for (const entry of [...snapshot.entries].reverse().filter(entry => entry.kind !== 'symlink')) await chmod(path.join(destination, entry.path), entry.mode);
+      check((await captureBackup(destination)).contentSha256 === snapshot.contentSha256, 'Repair backup differs from original bytes or permissions.');
+      for (const entry of [...snapshot.entries].reverse().filter(entry => entry.kind !== 'symlink')) {
         const handle = await open(path.join(destination, entry.path), constants.O_RDONLY | constants.O_NOFOLLOW);
         try { await handle.sync(); } finally { await handle.close(); }
       }
     }
-    await revalidateMigrationPath(snapshot); snapshots.push({ snapshot, destination });
+    await revalidateBackup(snapshot); snapshots.push({ snapshot, destination });
   }
   for (const snapshot of release.evidenceSnapshots ?? []) await revalidateMigrationPath(snapshot);
   const recordPath = path.join(backupRoot, 'repair.json');
@@ -188,14 +204,14 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   await save(pointerPath(paths), { schemaVersion: 1, repositoryRoot, agents, recordPath, selectionSha256: sha(selection) });
   onProgress(`Original QuickStark state retained at ${backupRoot}`);
   try {
-    for (const entry of snapshots) await revalidateMigrationPath(entry.snapshot);
+    for (const entry of snapshots) await revalidateBackup(entry.snapshot);
     for (const host of hosts) {
       const { agent, options } = host;
       check(await unrelated(agent, options, run) === host.unrelated, 'Unrelated settings changed before repair; they remain preserved.');
       for (const pkg of host.packages) {
         const args = agent === 'pi' ? ['remove', pkg.source] : agent === 'codex' ? ['plugin', 'remove', `${pkg.name}@quickstark`, '--json'] : ['plugin', 'uninstall', `${pkg.name}@quickstark`, '--scope', 'user', '--keep-data'];
         record.actions.push({ agent, packageId: pkg.name, operation: 'withdraw', status: 'attempted' }); await save(recordPath, record);
-        if (pkg.cacheSnapshot) await revalidateMigrationPath(pkg.cacheSnapshot);
+        if (pkg.cacheSnapshot) await revalidateBackup(pkg.cacheSnapshot);
         await run(options.command, args, options);
         check(await unrelated(agent, options, run) === host.unrelated, 'Native manager changed unrelated state; originals and recovery records are retained.');
         record.actions.at(-1).status = 'complete'; await save(recordPath, record);
@@ -203,8 +219,8 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
       if (agent !== 'pi') {
         const home = agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory;
         const cache = path.join(home, 'plugins/cache/quickstark');
-        const remaining = await captureMigrationPath(cache);
-        if (remaining.kind !== 'absent') { await revalidateMigrationPath(remaining); await rename(cache, path.join(backupRoot, `${agent}-retained-cache`)); }
+        const remaining = await captureBackup(cache);
+        if (remaining.kind !== 'absent') { await revalidateBackup(remaining); await rename(cache, path.join(backupRoot, `${agent}-retained-cache`)); }
         const newRoot = agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot;
         const oldRoot = agent === 'codex' ? host.market?.root : host.market?.path;
         if (host.market && oldRoot !== newRoot) {
@@ -228,6 +244,6 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
 export async function completeManagedRepair({ paths, record }) {
   const pending = await read(pointerPath(paths), null);
   if (pending.value?.recordPath !== record.recordPath) return;
-  const actual = await read(record.recordPath); actual.value.status = 'complete'; await save(record.recordPath, actual.value);
+  const actual = await read(record.recordPath, undefined, maximumRepairRecordBytes); actual.value.status = 'complete'; await save(record.recordPath, actual.value);
   await revalidateMigrationPath(pending.snapshot); await unlink(pointerPath(paths));
 }

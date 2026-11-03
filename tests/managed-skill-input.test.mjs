@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdtemp, mkdir, readFile, writeFile, appendFile, rm, symlink, chmod } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readlink, writeFile, appendFile, rm, symlink, chmod, lchmod } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import test from 'node:test';
@@ -18,6 +18,7 @@ import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
 import { resolveManagedSkillPaths } from '../scripts/managed-skill-paths.mjs';
 import { fixtureHomeState } from './helpers/fixture-home-state.mjs';
 import { updateInstalledHarnesses } from '../scripts/update-skills.mjs';
+import { pendingManagedRepair } from '../scripts/managed-package-repair.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 const nativeTest = (name, callback) => test(name, { skip: !available('codex') || name.startsWith('actual Pi') && !available('pi') ? 'Required native executable unavailable; no host support claimed.' : false }, callback);
@@ -80,6 +81,17 @@ test('home nonmutation oracle observes links without following them and leaves p
   await rm(link);await symlink('../external',link);assert.deepEqual(await fixtureHomeState(home),before);
   await writeFile(path.join(home,'.hidden'),'new');assert.notDeepEqual(await fixtureHomeState(home),before);
   const withFile=await fixtureHomeState(home);await writeFile(path.join(home,'.hidden'),'changed');assert.notDeepEqual(await fixtureHomeState(home),withFile);
+});
+
+test('a large original-cache recovery record remains readable for ordinary repair retries',async t=>{
+  const base=await mkdtemp(path.join(tmpdir(),'qs-large-repair-record-'));t.after(()=>rm(base,{recursive:true,force:true}));
+  const paths={backupRoot:path.join(base,'backups'),transactionRoot:path.join(base,'transactions')};
+  const repositoryRoot=path.join(base,'repo');const recordPath=path.join(paths.backupRoot,'repair-fixture/repair.json');
+  const originalEvidence='x'.repeat(3*1024*1024);
+  await writeJSON(recordPath,{schemaVersion:1,status:'prepared',selection:{},snapshots:[{originalEvidence}]});
+  await writeJSON(path.join(paths.transactionRoot,'managed-repair-pending.json'),{schemaVersion:1,repositoryRoot,agents:['codex'],recordPath,selectionSha256:sha('{}')});
+  const record=await pendingManagedRepair({paths,repositoryRoot,agents:['codex']});
+  assert.equal(record.status,'prepared');assert.equal(record.snapshots[0].originalEvidence.length,originalEvidence.length);
 });
 
 test('catalog obligations retain prompt, parity, all video modules and measured efficiency decisions',async()=>{
@@ -196,10 +208,16 @@ test('installer reconciles all three old-source harnesses, retaining dirty sourc
   const piRoot=id=>path.join(old,TARGET_SKILL_COLLECTIONS.find(c=>c.id===id).piPackageRoot);
   await writeJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'),{theme:'preserve',packages:['npm:fixture-community-theme',piRoot('qs-skills'),piRoot('qs-advanced')]});
   const edited=path.join(piRoot('qs-skills'),'skills/qs-help/SKILL.md');await appendFile(edited,'Preserve this Pi source edit.');const original=await readFile(edited,'utf8');
+  const historical=path.join(args.homeDirectory,'.claude/plugins/cache/quickstark/qs-skills/3.0.0/node_modules/.bin');
+  await mkdir(historical,{recursive:true});await symlink('../../outside-cache-target',path.join(historical,'tool'));
+  if(process.platform==='darwin') await lchmod(path.join(historical,'tool'),0o700);
   const agents=['codex','claude-code','pi'];
   const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,detect:async()=>agents});
   assert.equal(result.status,'complete',JSON.stringify(result.results));
   assert.equal(await readFile(edited,'utf8'),original);
+  const repair=await readJSON(result.results[0].repairJournalPath);
+  const backup=repair.snapshots.find(entry=>entry.snapshot.path===path.join(args.homeDirectory,'.claude/plugins/cache/quickstark'));
+  assert.equal(await readlink(path.join(backup.destination,'qs-skills/3.0.0/node_modules/.bin/tool')),'../../outside-cache-target');
   const settings=await readJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'));assert.equal(settings.theme,'preserve');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
   for(const agent of agents) assert.deepEqual([...result.results[0].targets[agent].desired.packages].sort(),['qs-advanced','qs-skills']);
   assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
