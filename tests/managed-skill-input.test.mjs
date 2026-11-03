@@ -102,6 +102,25 @@ test('catalog obligations retain prompt, parity, all video modules and measured 
   assert.ok(advanced.requiredCriteria.includes('AC-09')); assert.throws(()=>derivePackageAcceptanceObligations('ps-skills',document),/Unknown/);
 });
 
+nativeTest('automatic Codex update uses scoped inventory when global remote inventory is unavailable',async t=>{
+  const args=await fixture(t);
+  const foreign=path.join(args.homeDirectory,'.codex/plugins/cache/remote-vendor/demo/1.0.0/skills/vendor-helper');
+  await mkdir(foreign,{recursive:true});await writeFile(path.join(foreign,'SKILL.md'),'---\nname: vendor-helper\ndescription: Preserve this foreign cache.\n---\nForeign instructions.\n');
+  const before=await captureMigrationPath(path.join(args.homeDirectory,'.codex/plugins/cache/remote-vendor'));
+  let scoped=0;
+  const runtime={runCommand:async(command,argv,context)=>{
+    if(command==='codex'&&argv[0]==='plugin'&&argv[1]==='list') {
+      if(!argv.includes('--marketplace'))throw Error('Unrelated remote inventory is unavailable.');
+      scoped++;
+    }
+    return runNativePackageCommand(command,argv,context);
+  }};
+  const result=await updateInstalledHarnesses({...args.options,runtime,arguments_:['--agent','codex']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));assert.ok(scoped>0);
+  assert.deepEqual(await captureMigrationPath(before.path),before);
+  assert.equal((await executeManagedSkills({...args.options,runtime,action:'verify'})).status,'verified');
+});
+
 nativeTest('actual Codex same-version verification tolerates cache directory permissions without changing files',async t=>{
   const args=await fixture(t);
   const result=await executeManagedSkills({...args.options,action:'update'});
@@ -180,6 +199,21 @@ nativeTest('installer changes an old QuickStark source binding while preserving 
   assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
   const market=JSON.parse((await runNativePackageCommand('codex',['plugin','marketplace','list','--json'],args.nativeOptions)).stdout).marketplaces.find(m=>m.name==='quickstark');
   assert.equal(market.root,path.join(args.repositoryRoot,'codex'));
+});
+
+nativeTest('installer reconciles an old catalog while retaining later-package selections and caches',async t=>{
+  const args=await fixture(t,{bootstrap:false});const old=path.join(args.base,'old-source');
+  await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],args.nativeOptions);
+  for(const c of TARGET_SKILL_COLLECTIONS)await runNativePackageCommand('codex',['plugin','add',`${c.id}@quickstark`,'--json'],args.nativeOptions);
+  const packages=TARGET_SKILL_COLLECTIONS.map(c=>c.id).sort();
+  await writeJSON(path.join(args.homeDirectory,'.config/quickstark/skills-selection.json'),{schemaVersion:1,targets:{codex:{packages,resources:[],profile:null,additions:packages.filter(id=>id!=='qs-skills')}},templateRevision:args.revision,lastSuccessfulTransaction:null});
+  const file=path.join(old,'codex/.agents/plugins/marketplace.json');const catalog=await readJSON(file);catalog.plugins=catalog.plugins.filter(p=>['qs-skills','qs-specialists'].includes(p.name));await writeJSON(file,catalog);const original=await readFile(file,'utf8');
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.deepEqual([...result.results[0].targets.codex.desired.packages].sort(),packages);
+  assert.equal(await readFile(file,'utf8'),original);
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
 });
 
 nativeTest('installer retries a failed-after-effect withdrawal without losing the frozen optional selection',async t=>{
@@ -456,7 +490,7 @@ nativeTest('a locally edited passing audit is not published acceptance authority
 
 nativeTest('invalid native inventory output is redacted and never becomes ownership evidence',async t=>{
   const args=await fixture(t);const secret='synthetic-fixture-secret-do-not-echo';
-  await assert.rejects(buildManagedSkillInput({...args.options,runtime:{runCommand:async()=>({stdout:secret})}}),error=>error.message.includes('contents withheld')&&!error.message.includes(secret));
+  await assert.rejects(buildManagedSkillInput({...args.options,runtime:{runCommand:async()=>({stdout:secret})}}),error=>/(?:contents|output) withheld/.test(error.message)&&!error.message.includes(secret));
 });
 
 nativeTest('concurrent selected updaters cannot acquire different journals over one home',async t=>{

@@ -82,6 +82,14 @@ backups record and copy those links literally without following external targets
 they retain file modes and use separate bounded capacity for large historical caches.
 Installed package and accepted source verification still reject descendant links.
 
+Codex inventory calls are scoped to the managed marketplaces, avoiding a refresh
+of unrelated remote catalogs. Other cached skills remain collision and preservation
+guards: their bytes and potential public names are inspected without claiming ownership
+or adopting them. Unrelated configuration and cache contents must remain unchanged.
+Enabled QuickStark selectors retained by an older catalog are reconciled through
+the native manager after backups, preserving their selected capabilities. Disabled
+or unknown registrations retain their existing protection.
+
 Repair does not certify modified bytes as trusted history. A pending repair records
 the intended selection before withdrawal, so a retry can restore that selection
 after interruption. Failed operations retain original bytes and their repair record;

@@ -7,7 +7,7 @@ import { promisify } from 'node:util';
 import { TARGET_SKILL_COLLECTIONS, LEGACY_SKILL_COLLECTIONS } from './skill-collection-registry.mjs';
 import { captureMigrationPath, revalidateMigrationPath, assertMigrationParents } from './migration-filesystem.mjs';
 import { readSelectionRecord, resolveTargetSelection } from './skill-selection.mjs';
-import { runNativePackageCommand } from './migration-native-packages.mjs';
+import { runNativePackageCommand, captureCodexForeignCaches, codexConfig } from './migration-native-packages.mjs';
 import { validateSkillRelease } from './validate-skill-release.mjs';
 
 const exec = promisify(execFile);
@@ -66,7 +66,7 @@ async function trustedSource(root) {
 
 async function inventory(agent, options, run) {
   const command = options.command;
-  const result = json((await run(command, ['plugin', 'list', '--json'], options)).stdout);
+  const result = json((await run(command, agent === 'codex' ? ['plugin', 'list', '--marketplace', 'quickstark', '--json'] : ['plugin', 'list', '--json'], options)).stdout);
   const packages = agent === 'codex' ? result.installed : result;
   check(Array.isArray(packages), 'Unsupported native package inventory.');
   return packages;
@@ -86,8 +86,8 @@ async function unrelated(agent, options, run) {
     const snapshot = await captureMigrationPath(path.join(options.codexHomeDirectory, 'config.toml'));
     const text = snapshot.kind === 'absent' ? '' : await readFile(snapshot.path, 'utf8');
     await revalidateMigrationPath(snapshot);
-    const packages = await inventory(agent, options, run);
-    return sha({ settings: codexUnrelated(text), packages: packages.filter(p => !p.pluginId?.endsWith('@quickstark')) });
+    const caches = await captureCodexForeignCaches(options.codexHomeDirectory);
+    return sha({ settings: codexUnrelated(text), caches: caches.hash });
   }
   const home = agent === 'pi' ? options.piHomeDirectory : options.claudeHomeDirectory;
   const settings = (await read(path.join(home, 'settings.json'), {})).value;
@@ -153,6 +153,22 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
           await trustedSource(source.slice(0, -('/' + relative).length));
         }
         pkg.cacheSnapshot = await captureBackup(path.join(agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory, 'plugins/cache/quickstark', pkg.name));
+      }
+      if (agent === 'codex') {
+        // An older catalog omits newer enabled packages even when their cache
+        // and user configuration remain. Native remove accepts these selectors
+        // without needing the old catalog to advertise them.
+        const config = await captureMigrationPath(path.join(paths.codexHomeDirectory, 'config.toml'));
+        check(config.kind === 'absent' || config.kind === 'file' && config.bytes <= 2 * 1024 * 1024, 'Codex repair configuration must be a bounded regular file.');
+        const text = config.kind === 'absent' ? '' : await readFile(config.path, 'utf8');
+        const selected = codexConfig(text, collections.map(c => ({ name: c.id, marketplace: 'quickstark' }))).selected;
+        await revalidateMigrationPath(config);
+        for (const [id, state] of Object.entries(selected)) {
+          check(market && state.enabled === true, 'Disabled or unbound QuickStark configuration remains untouched.');
+          const name = id.slice(0, -'@quickstark'.length);
+          if (!packages.some(pkg => pkg.name === name)) packages.push({ name, configurationOnly: true,
+            cacheSnapshot: await captureBackup(path.join(paths.codexHomeDirectory, 'plugins/cache/quickstark', name)) });
+        }
       }
       const home = agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory;
       targets.push(path.join(home, agent === 'codex' ? 'config.toml' : 'settings.json'), path.join(home, 'plugins/cache/quickstark'));

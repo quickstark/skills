@@ -385,7 +385,7 @@ async function defaultInspectManagedPackages(agent, { homeDirectory, codexHomeDi
   try {
     if (agent === "codex") {
       const [plugins, marketplaceInventory] = await Promise.all([
-        inspect(["plugin", "list", "--json"]),
+        inspect(["plugin", "list", "--marketplace", "quickstark", "--json"]),
         inspect(["plugin", "marketplace", "list", "--json"]),
       ]);
       return {

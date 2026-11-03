@@ -61,6 +61,21 @@ async function fixture(t, host, { real = false } = {}) {
   return { base, options, configPath, context, step, command, adapter: createNativePackageAdapter(options) };
 }
 
+test('unlisted foreign Codex caches remain collision and preservation guards', async (t) => {
+  const args=await fixture(t,'codex');
+  const foreign=path.join(args.options.codexHomeDirectory,'plugins/cache/remote-vendor/demo/1.0.0/skills/vendor-helper');
+  await mkdir(foreign,{recursive:true});const file=path.join(foreign,'SKILL.md');
+  const text='---\nname: vendor-helper\ndescription: Opaque foreign cache.\n---\nOriginal.\n';await writeFile(file,text);
+  const before=(await observeNativePackages(args.options)).state;
+  assert.ok(before.unrelatedPublicNames.includes('vendor-helper'));
+  await appendFile(file,'Concurrent foreign edit.\n');
+  assert.notEqual((await observeNativePackages(args.options)).state.unrelatedHash,before.unrelatedHash);
+  await writeFile(file,text.replace('name: vendor-helper','name: ps-probe'));
+  const config=await readFile(args.configPath);
+  await assert.rejects(observeNativePackages(args.options),/Duplicate native public identities/);
+  assert.deepEqual(await readFile(args.configPath),config);
+});
+
 test('native commands preserve the user home and pass the selected Codex home', async (t) => {
   const base = await mkdtemp(path.join(tmpdir(), 'qs-native-environment-')); t.after(() => rm(base, { recursive: true, force: true }));
   const homeDirectory = path.join(base, 'home'); const codexHomeDirectory = path.join(homeDirectory, '.codex-demo');

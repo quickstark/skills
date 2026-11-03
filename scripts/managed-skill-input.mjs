@@ -12,7 +12,7 @@ import { EXECUTION_INTERNAL_CAPABILITIES } from './execution-skill-catalog.mjs';
 import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { captureManagedSkillPayload } from './managed-skill-migration.mjs';
 import { captureMigrationPath, revalidateMigrationPath } from './migration-filesystem.mjs';
-import { observeNativePackages, runNativePackageCommand, nativePayloadSha256 } from './migration-native-packages.mjs';
+import { observeNativePackages, runNativePackageCommand, nativePayloadSha256, listCodexPlugins } from './migration-native-packages.mjs';
 import { verifyAdoptionAcceptance } from './adoption-acceptance.mjs';
 import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from './skill-selection.mjs';
 import { validateSkillMigrations } from './skill-migrations.mjs';
@@ -157,7 +157,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     const nativeOptions = { host: agent, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, cwd: repositoryRoot, runCommand: command, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
     let installed;
     if (agent === 'codex') {
-      const inventory = nativeJson(await command(nativeOptions.command, ['plugin', 'list', '--json'], nativeOptions));
+      const inventory = await listCodexPlugins(nativeOptions);
       const markets = nativeJson(await command(nativeOptions.command, ['plugin', 'marketplace', 'list', '--json'], nativeOptions));
       const market = markets.marketplaces?.filter((entry) => entry.name === 'quickstark');
       check(market?.length === 1 && market[0].root === path.join(repositoryRoot, 'codex') && market[0].marketplaceSource?.sourceType === 'local' && market[0].marketplaceSource.source === path.join(repositoryRoot, 'codex'), `Codex prerequisite: register this verified local marketplace with codex plugin marketplace add ${JSON.stringify(path.join(repositoryRoot, 'codex'))}; then rerun the selected plan. Existing different registrations require a separate reviewed marketplace transition.`);

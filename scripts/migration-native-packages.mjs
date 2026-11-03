@@ -117,7 +117,7 @@ export async function inspectNativePayload(host, root) {
   return { name: manifest.name, version: manifest.version, publicNames: commands.sort(), payloadSha256: nativePayloadSha256(host, snapshot), snapshot: shortSnapshot(snapshot) };
 }
 
-function codexConfig(text, packages) {
+export function codexConfig(text, packages) {
   check(!text.includes('"""') && !text.includes("'''"), 'Multiline TOML requires a separately verified native config adapter.');
   const owned = new Set(packages.map((pkg) => `${pkg.name}@${pkg.marketplace}`));
   const selected = {}; const opaque = []; let current = null;
@@ -143,6 +143,51 @@ async function commandJson(options, args) {
   try { return JSON.parse(result.stdout); } catch { throw new Error('Native inventory returned invalid JSON; output withheld.'); }
 }
 
+// A bare Codex list refreshes remote catalogs. Local package management scopes
+// its native queries to the managed marketplaces; other caches remain opaque
+// preservation/collision evidence, never ownership or adoption authority.
+export async function listCodexPlugins(options, marketplaces = ['quickstark']) {
+  const installed = new Map();
+  for (const marketplace of [...new Set(marketplaces)].sort()) {
+    check(/^[a-z0-9][a-z0-9-]*$/.test(marketplace), 'Literal native marketplace required.');
+    const data = await commandJson({ ...options, command: options.command ?? 'codex', runCommand: options.runCommand ?? runNativePackageCommand }, ['plugin', 'list', '--marketplace', marketplace, '--json']);
+    check(Array.isArray(data.installed), 'Native Codex installed inventory is unsupported.');
+    for (const entry of data.installed) {
+      check(typeof entry.pluginId === 'string', 'Native Codex installed identity is missing.');
+      check(!installed.has(entry.pluginId) || same(installed.get(entry.pluginId), entry), 'Native Codex inventories disagree.');
+      installed.set(entry.pluginId, entry);
+    }
+  }
+  return { installed: [...installed.values()], available: [] };
+}
+
+export async function captureCodexForeignCaches(codexHomeDirectory, managedMarketplaces = ['quickstark']) {
+  const root = path.join(codexHomeDirectory, 'plugins/cache');
+  await assertMigrationParents(path.join(root, '.guard'));
+  const options = { allowDescendantSymlinks: true, limits: { entries: 131072, bytes: 2 * 1024 * 1024 * 1024, depth: 64 } };
+  const foreignNames = async () => (await readdir(root).catch(error => error.code === 'ENOENT' ? [] : Promise.reject(error)))
+    .filter(name => /^[a-z0-9][a-z0-9-]*$/.test(name) && !managedMarketplaces.includes(name)).sort();
+  const namespaces = await foreignNames(); const snapshots = []; const records = []; const publicNames = new Set(); let complete = true;
+  for (const namespace of namespaces) {
+    const snapshot = await captureMigrationPath(path.join(root, namespace), options); snapshots.push(snapshot);
+    records.push({ namespace, kind: snapshot.kind, contentSha256: snapshot.contentSha256 ?? null });
+    if (snapshot.kind !== 'directory') { complete = false; continue; }
+    for (const entry of snapshot.entries) {
+      if (entry.kind === 'symlink') {
+        complete = false;
+        const candidate = entry.path.match(/(?:^|\/)skills\/([a-z0-9-]+)(?:\/SKILL\.md)?$/)?.[1];
+        if (candidate) publicNames.add(candidate);
+      } else if (entry.kind === 'file' && entry.path.endsWith('/SKILL.md')) {
+        const text = (await boundedRead(path.join(snapshot.path, entry.path), 256 * 1024)).toString();
+        const name = text.match(/^name:\s*([a-z0-9-]+)\s*$/m)?.[1]; if (name) publicNames.add(name);
+      }
+    }
+  }
+  for (const snapshot of snapshots) await revalidateMigrationPath(snapshot, options);
+  check(same(namespaces, await foreignNames()), 'Unrelated Codex cache namespaces changed during inspection.');
+  return { hash: digest(records), publicNames: [...publicNames].sort(), complete };
+}
+
 /** Actual state excludes inode and harmless selected-table placement/JSON spacing.
  * Full raw config/payload snapshots remain available separately as evidence.
  * Unrelated config/package ordering remains part of the comparison.
@@ -160,10 +205,10 @@ export async function observeNativePackages(input) {
     check(actual.name === pkg.name && actual.version === pkg.version && same(actual.publicNames, [...pkg.publicNames].sort()) && actual.payloadSha256 === pkg.payloadSha256, 'Owned package source changed or disagrees with approved binding.');
     sourcePayloads.push({ id: pkg.id, ...actual });
   }
-  let config; let registrations; let unrelated; let unrelatedDiscoveryComplete = true; const active = []; const caches = [];
+  let config; let registrations; let unrelated; let foreignCaches; let unrelatedDiscoveryComplete = true; const active = []; const caches = [];
   if (host === 'codex') {
     config = codexConfig(bytes.toString(), packages);
-    const inventory = await commandJson(options, ['plugin', 'list', '--json']);
+    const inventory = await listCodexPlugins(options, packages.map(pkg => pkg.marketplace));
     const markets = await commandJson(options, ['plugin', 'marketplace', 'list', '--json']);
     check(Array.isArray(inventory.installed) && Array.isArray(markets.marketplaces), 'Native Codex inventory shape is unsupported.');
     registrations = inventory.installed;
@@ -209,6 +254,8 @@ export async function observeNativePackages(input) {
       }
       item.observedPublicNames = names.sort(); item.payloadSha256 = snapshot.contentSha256;
     }
+    foreignCaches = await captureCodexForeignCaches(options.codexHomeDirectory, packages.map(pkg => pkg.marketplace));
+    unrelatedDiscoveryComplete &&= foreignCaches.complete;
   } else if (host === 'claude-code') {
     const settings = bytes.length ? parseMetadata(bytes.toString()) : {};
     check(settings && typeof settings === 'object' && !Array.isArray(settings) && (!settings.enabledPlugins || typeof settings.enabledPlugins === 'object' && !Array.isArray(settings.enabledPlugins)), 'Claude settings shape is unsupported.');
@@ -318,10 +365,10 @@ export async function observeNativePackages(input) {
   // plugin). Preserve every registration/payload in unrelatedHash; existing
   // vendor-to-vendor overlap must not block an unrelated managed transition.
   // Managed-to-managed and managed-to-vendor collisions still fail closed.
-  const unrelatedPublicNames = [...new Set(unrelated.flatMap((item) => item.observedPublicNames ?? []))].sort();
+  const unrelatedPublicNames = [...new Set([...unrelated.flatMap((item) => item.observedPublicNames ?? []), ...(foreignCaches?.publicNames ?? [])])].sort();
   const allNames = [...active.flatMap((item) => item.publicNames), ...unrelatedPublicNames];
   check(new Set(allNames).size === allNames.length, 'Duplicate native public identities are exposed.');
-  const data = { host, scope: 'native-packages-only', configPath, config, unrelatedDiscoveryComplete, unrelatedPublicNames, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources: sourcePayloads, caches, unrelatedHash: digest(unrelated) };
+  const data = { host, scope: 'native-packages-only', configPath, config, unrelatedDiscoveryComplete, unrelatedPublicNames, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources: sourcePayloads, caches, unrelatedHash: digest(foreignCaches ? { registrations: unrelated, caches: foreignCaches.hash } : unrelated) };
   if (host === 'claude-code') for (const snapshot of [...mutableSnapshots,...payloadSnapshots]) await revalidateMigrationPath(snapshot);
   return { state: { snapshotHash: digest(data), ...data }, evidence: { mutableSnapshots, payloadSnapshots, configSnapshot, rawConfigSha256: sha(bytes), unrelatedPublicNames, unrelatedDiscoveryComplete } };
 }

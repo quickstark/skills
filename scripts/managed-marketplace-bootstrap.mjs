@@ -74,7 +74,7 @@ export async function bootstrapManagedMarketplaces({ repositoryRoot, agents, run
     check(!/@quickstark/i.test(decoded), `${agent} has QuickStark settings without a marketplace; preserve and reconcile them before retrying.`);
     const cache = await captureMigrationPath(path.join(hostHome, 'plugins/cache/quickstark'));
     check(cache.kind === 'absent' || cache.kind === 'directory' && cache.entries.length === 1, `${agent} has retained QuickStark caches without a marketplace; preserve and reconcile them before retrying.`);
-    const inventory = json((await run(command, ['plugin', 'list', '--json'], options)).stdout);
+    const inventory = json((await run(command, agent === 'codex' ? ['plugin', 'list', '--marketplace', 'quickstark', '--json'] : ['plugin', 'list', '--json'], options)).stdout);
     const installed = agent === 'codex' ? inventory.installed : inventory;
     const identity = item => agent === 'codex' ? item?.pluginId : item?.id;
     check(Array.isArray(installed) && installed.every(item => object(item) && typeof identity(item) === 'string' && identity(item).length > 0), `${agent} installed inventory is unsupported.`);
