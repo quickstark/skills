@@ -2475,6 +2475,38 @@
       "plannedOwners": []
     },
     {
+      "id": "qs-internal:delegation",
+      "collection": "qs",
+      "currentName": "delegation",
+      "canonical": {
+        "owner": "qs-code-build",
+        "path": "skills/internal/delegation.md",
+        "location": "repository"
+      },
+      "owners": [
+        "qs-code-build",
+        "qs-review-code",
+        "qs-plan-spec"
+      ],
+      "role": "private",
+      "legacyIdentities": [
+        "delegation"
+      ],
+      "disposition": "repository-authored",
+      "sources": [],
+      "derivedDigest": {
+        "algorithm": "sha256",
+        "kind": "file",
+        "value": "bfcdf47061d7f91fd4f63e5420dc7caa87cc1b73badd454bbe2ad5483adbebfc"
+      },
+      "adaptationNotes": "Original QuickStark private capability. Requirements were informed by mattpocock/skills commits 7739eaed7f8f3915437a8def198a6d0d7206dbc7 (fresh context, not a fork), a496f5513d4a4cf889bc48e189e579f4b0bdf6aa (task-graph implementation) and 3da8c01116264675eeefbd6e9d59c734de9095cc (parallel review axes); no upstream skill body is copied. Owners retain their own mutation and completion boundaries.",
+      "validationEvidence": [
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs"
+      ],
+      "plannedOwners": []
+    },
+    {
       "id": "ps:ps-help",
       "collection": "ps",
       "currentName": "ps-help",
@@ -5159,21 +5191,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "adopted",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
-          ],
-          "note": "Adopt the reviewed local clarity, routing and authority adaptation. Evidence is scoped to the recorded cases and executable controls; it is not universal behavioral reliability. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "adopted",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "c0bd70c6e8192b00e8a0ae508b6a2b398938123598271c75414f2e8811ca1b05"
+          "value": "d5940a0cb580796f38a752044aa5a0f4e6be21b653d5bdb8550d849559744cb3"
         }
       },
       {
@@ -5284,21 +5314,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "retained-baseline",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
-          ],
-          "note": "Retain the established canonical instruction body; target package/literal metadata and generated completion routing are separately normalized. This record does not invent a new upstream byte adoption or newly measured behavioral improvement. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "retained-baseline",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "7b7eb93a4ccd7d69165c895c57a4edb39d105dfe9582ead936b1d98378c1a286"
+          "value": "5d59bc8802b8fb5c6896c798f5670ecdabbc1588ce4426ed01e49fe658d84970"
         }
       },
       {
@@ -5315,21 +5343,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "retained-baseline",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
-          ],
-          "note": "Retain the established canonical instruction body; target package/literal metadata and generated completion routing are separately normalized. This record does not invent a new upstream byte adoption or newly measured behavioral improvement. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "retained-baseline",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "842ef1ed20769a70ce4bc26a6bbe83e4edab8310b108079d21df4fd43aa042ed"
+          "value": "e303339fa7d083222995e66eca19b25636e5e92ce071773a41e8261cf74f7a2f"
         }
       },
       {
@@ -5377,21 +5403,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "adopted",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
-          ],
-          "note": "Adopt the reviewed local clarity, routing and authority adaptation. Evidence is scoped to the recorded cases and executable controls; it is not universal behavioral reliability. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "adopted",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "3d42997336e2dd4a7a20122062b8c3b339211c1c6451b997a48b7bb0fd219e46"
+          "value": "5220919c58a82f825a3e5b5d245899e4f128a7d71fb4078f276591caab37d027"
         }
       },
       {
@@ -5532,20 +5556,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "adopted",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
-          ],
-          "note": "Adopt the reviewed local specialist clarification while preserving this dedicated root. Behavioral evidence covers the named cases; other changes are source/contract reviewed, not newly demonstrated end-to-end workflows. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "adopted",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "8eb6610801d9a8c308bc99bcb8234e8a22ba32e6018f32be06a7283cacb8561a"
+          "value": "bd869be3a651307c93d016626aef7d18b0271661753bf057d084212da0ba783e"
         }
       },
       {
@@ -6411,21 +6434,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "adopted",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
-          ],
-          "note": "Adopt the reviewed local clarity, routing and authority adaptation. Evidence is scoped to the recorded cases and executable controls; it is not universal behavioral reliability. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "adopted",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "1a1da20d3a46773b0f73e80366c3463e567721f200e1ba64fc8df600c0bee56e"
+          "value": "53344eecffe71e8ed3d9f6c4f202f4ea7b60479250da0cb3bd02edb4d6931e61"
         }
       },
       {
@@ -6457,6 +6478,33 @@
           "algorithm": "sha256",
           "kind": "file",
           "value": "39a5db34c28914ce00eef828bb5ca2cfc4a668789c01d5b0db69b68ee7a43206"
+        }
+      },
+      {
+        "id": "target:private:qs-skills:delegation",
+        "package": "qs-skills",
+        "name": "delegation",
+        "role": "private",
+        "path": "skills/internal/delegation.md",
+        "owners": [
+          "qs-code-build",
+          "qs-review-code",
+          "qs-plan-spec"
+        ],
+        "baselineIds": [
+          "qs-internal:delegation"
+        ],
+        "originScope": "identity-and-migration",
+        "decision": {
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt."
+        },
+        "derivedDigest": {
+          "algorithm": "sha256",
+          "kind": "file",
+          "value": "bfcdf47061d7f91fd4f63e5420dc7caa87cc1b73badd454bbe2ad5483adbebfc"
         }
       },
       {
@@ -6546,21 +6594,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "adopted",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
-          ],
-          "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "adopted",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "dea4d8962290fe0457be131640adb471822cef66d6d7df2af9d5c1f519f7e5dc"
+          "value": "ef335e4d602e7531649ad245893c87efa4f198dd043c81399624c82e7eb30255"
         }
       },
       {
@@ -6941,21 +6987,19 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "adopted",
-          "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
-          "evidence": [
-            "tests/fixtures/adoption-provenance-final/README.md",
-            "docs/validation/upstream-adoption-efficiency.md",
-            "tests/fixtures/adoption-behavior-review/current-01-review.json",
-            "tests/fixtures/adoption-review-eval/parent/review.json",
-            "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
-          ],
-          "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+          "status": "pending",
+          "revision": null,
+          "evidence": [],
+          "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+          "previous": {
+            "status": "adopted",
+            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+          }
         },
         "derivedDigest": {
           "algorithm": "sha256",
           "kind": "file",
-          "value": "bd14c2354bf9a61581a503d5a65f5582e9229fdabae8883d43a7f565b7ee6a5a"
+          "value": "491dcb8a280136d75af1fc758a6747ba1c6205c45793d88a0eb010cfd1f338ac"
         }
       },
       {

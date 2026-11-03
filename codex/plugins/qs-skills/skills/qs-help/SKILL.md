@@ -35,6 +35,7 @@ Inspect the request and available project evidence, then recommend the single be
 - Adding or improving tests for already-established behavior belongs to `/qs-test-author`; executing and reporting a read-only verification matrix belongs to `/qs-test-verify`.
 - Test-driven development is internal to `/qs-code-build`, not a command.
 - Domain modeling, module decomposition, and ticket decomposition are internal planning or implementation capabilities.
+- A specification whose tickets carry `Blocked by` edges, to be implemented ticket by ticket with concurrent helpers, belongs to `/qs-code-build` with `mode=graph`. Substantial work that needs explicit per-leaf acceptance gates and ledgers belongs to `/qs-unlazy` in the optional `qs-execution` package. Delegation is an internal capability, not a command.
 - Choose one primary route from the registered public catalog; primary Help routing is not limited to another workflow's continuation list. Use the registry's exact literal for the active host.
 - Verify that the selected command is actually available before emitting its one copy-ready prompt. Catalog membership alone does not prove installation. For an unavailable optional capability, report the specific installation prerequisite; do not invent an executable prompt or install it automatically.
 - Keep discovery read-only. Describe optional capabilities from metadata without loading or invoking their public bodies. Preserve distinct prompt-authoring and visual-parity outcomes when they are available.

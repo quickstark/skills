@@ -14,6 +14,7 @@ Load the relevant non-command references from `skills/internal/` in the canonica
 - Domain modeling when precise vocabulary changes requirements or interfaces.
 - Module decomposition when ownership, interfaces, or test seams need design.
 - Ticket decomposition when explicitly requested, required by the configured tracker, or needed for safely assignable work.
+- Delegation when independent current-state evidence surfaces can be explored in parallel; exploration helpers stay read-only.
 
 Capability use remains part of this root run and produces no separate skill report.
 
@@ -29,7 +30,7 @@ Capability use remains part of this root run and produces no separate skill repo
 
 Where architecture is unsettled, compare at least two viable boundaries against domain responsibilities, caller migration, failure isolation, and test seams. Prefer a design whose safety properties can be enforced structurally and whose legacy interfaces can be removed only after callers migrate.
 
-Specification-only requests do not create tickets. When tickets are requested, create dependency-ordered, independently verifiable slices in the same run. Give every ticket one outcome, explicit scope and exclusions, acceptance evidence, and dependencies. Do not start implementation automatically.
+Specification-only requests do not create tickets. When tickets are requested, create dependency-ordered, independently verifiable slices in the same run. Give every ticket one outcome, explicit scope and exclusions, acceptance evidence, and explicit `Blocked by` edges. Size each ticket to fit one fresh context window so it can be implemented by a single helper. The resulting tickets form a task graph whose frontier is every open ticket with no unfinished blockers; `qs-code-build mode=graph` can walk it later. Do not start implementation automatically.
 
 ## Completion report and next steps
 

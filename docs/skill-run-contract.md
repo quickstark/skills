@@ -140,6 +140,19 @@ In Codex the prompt begins with the exact installed plugin literal—`$qs-skills
 
 The fenced prompt is copy-ready only. Plain skill Markdown cannot request or guarantee an Add action. Line-specific review findings keep the separate host inline-comment contract when the active client supplies it and the finding has a host-renderable file range. Never repurpose that contract for tickets, specifications, continuation prompts, or generic references, and never claim that an inline card rendered without host or user evidence.
 
+## Delegation
+
+When the host provides subagents, start each with a fresh context window, not a fork of the parent conversation. Delegate only independent units with a clear question or outcome; keep shared decisions, synthesis and integration in the root.
+
+- Communicate through context pointers: specification and ticket links, note files, revisions and commits. Do not copy material a pointer already reaches.
+- Give every helper a bounded return shape: at most 400 words or a declared schema, with evidence references.
+- The root alone owns synthesis, mutation serialization, verification and completion. It re-checks returned evidence before relying on it; a missing or stale return is a coverage gap, not a pass.
+- Without subagent support, perform the same units serially in the root with identical acceptance criteria.
+- `effort=quick` uses no fan-out. `effort=standard` fans out only when at least two independent units exist. `effort=deep` may fan out more broadly within the same bounded outcome.
+- Delegation never expands mutation, Git, publication or installation authority. Helpers inherit the root's authority, never more, and emit no public result, status, skills-used entry or continuation.
+
+Nesting depth, concurrency limits and tool access belong to the host's controls; skills follow them rather than restating guards.
+
 ## Safety
 
 Effort never expands mutation scope, authorizes destructive work, permits publication, or turns monitoring into an indefinite loop. Only explicitly authorized roots edit files. Review defaults to read-only. Release and Git publication retain their independent approval and verification gates.

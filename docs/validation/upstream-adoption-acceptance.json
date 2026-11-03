@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed 4.3.0 source acceptance: preserve original decisions/history and separately qualify MS-FE-01 cinematic private additions with exact artifact bindings and fresh runtime/blind-comparison evidence. Active manifests are synchronized; unchanged public/native-discovery history remains historical. No new actual-machine installation or rollout success is claimed. Original 4.2.0 audit bytes are retained at tests/fixtures/ms-fe-01/baseline/upstream-adoption-acceptance.json.",
+  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -44,7 +44,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-02": {
@@ -82,7 +89,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-03": {
@@ -120,7 +134,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-04": {
@@ -158,7 +179,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-05": {
@@ -198,7 +226,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-06": {
@@ -238,7 +273,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-07": {
@@ -277,7 +319,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-08": {
@@ -316,7 +365,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-09": {
@@ -355,7 +411,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-10": {
@@ -410,7 +473,14 @@
         "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
         "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
         "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
-        "tests/frontend-candidate.test.mjs"
+        "tests/frontend-candidate.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-11": {
@@ -448,7 +518,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-12": {
@@ -488,7 +565,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-13": {
@@ -529,7 +613,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-14": {
@@ -570,7 +661,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-15": {
@@ -617,7 +715,14 @@
         "tests/managed-skill-input.test.mjs",
         "tests/fixtures/managed-claude-update/resume-host.log",
         "tests/fixtures/managed-claude-update/legacy.log",
-        "tests/fixtures/managed-claude-update/reviewed-defects-after.log"
+        "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-16": {
@@ -659,7 +764,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-17": {
@@ -703,7 +815,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests.log",
         "tests/fixtures/managed-claude-update/rollback-resume-after.log",
         "tests/fixtures/managed-claude-update/README.md",
-        "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+        "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-18": {
@@ -741,7 +860,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-19": {
@@ -781,7 +907,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-20": {
@@ -829,7 +962,14 @@
         "tests/fixtures/ms-fe-01/qualification.json",
         "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
         "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-        "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+        "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-21": {
@@ -868,7 +1008,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-22": {
@@ -907,7 +1054,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-23": {
@@ -957,7 +1111,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     },
     "AC-24": {
@@ -996,7 +1157,14 @@
         "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
         "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
         "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-        "tests/fixtures/adoption-release-4.2.0/tests.log"
+        "tests/fixtures/adoption-release-4.2.0/tests.log",
+        "tests/fixtures/adoption-release-4.4.0/review.md",
+        "tests/fixtures/adoption-release-4.4.0/check.log",
+        "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+        "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+        "docs/specs/quickstark-multi-agent-delegation.md",
+        "tests/multi-agent-delegation.test.mjs",
+        "tests/fixtures/adoption-release-4.4.0/tests.log"
       ]
     }
   },
@@ -1018,7 +1186,8 @@
         "qs:qs-plan-roadmap",
         "qs:qs-plan-spec",
         "qs:qs-review-code",
-        "qs:qs-setup"
+        "qs:qs-setup",
+        "qs-internal:delegation"
       ],
       "sourcePaths": [
         "codex/plugins/qs-skills",
@@ -1112,7 +1281,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1146,7 +1322,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -1180,7 +1363,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1214,7 +1404,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -1250,7 +1447,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1284,7 +1488,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -1318,7 +1529,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1352,7 +1570,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -1372,7 +1597,14 @@
               "tests/managed-skill-input.test.mjs",
               "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
               "tests/fixtures/managed-claude-update/rollback-resume-after.log",
-              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1387,7 +1619,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -1402,7 +1641,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1521,7 +1767,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1555,7 +1808,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -1592,7 +1852,14 @@
               "tests/repo-cleanup.test.mjs",
               "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
               "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1626,7 +1893,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -1662,7 +1936,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1696,7 +1977,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -1733,7 +2021,14 @@
               "tests/repo-cleanup.test.mjs",
               "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
               "tests/fixtures/repo-cleanup/evidence/rollout-preflight.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1767,7 +2062,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -1787,7 +2089,14 @@
               "tests/managed-skill-input.test.mjs",
               "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
               "tests/fixtures/managed-claude-update/rollback-resume-after.log",
-              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1802,7 +2111,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -1817,7 +2133,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -1960,7 +2283,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -1994,7 +2324,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -2028,7 +2365,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2062,7 +2406,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -2098,7 +2449,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -2132,7 +2490,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -2166,7 +2531,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2200,7 +2572,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -2220,7 +2599,14 @@
               "tests/managed-skill-input.test.mjs",
               "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
               "tests/fixtures/managed-claude-update/rollback-resume-after.log",
-              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -2235,7 +2621,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -2250,7 +2643,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2385,7 +2785,14 @@
               "tests/fixtures/ms-fe-01/qualification.json",
               "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
               "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -2424,7 +2831,14 @@
               "tests/fixtures/ms-fe-01/qualification.json",
               "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
               "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -2463,7 +2877,14 @@
               "tests/fixtures/ms-fe-01/qualification.json",
               "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
               "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2497,7 +2918,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -2538,7 +2966,14 @@
               "tests/fixtures/ms-fe-01/qualification.json",
               "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
               "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -2577,7 +3012,14 @@
               "tests/fixtures/ms-fe-01/qualification.json",
               "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
               "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -2616,7 +3058,14 @@
               "tests/fixtures/ms-fe-01/qualification.json",
               "tests/fixtures/ms-fe-01/comparison-v5/blind-review/review.json",
               "tests/fixtures/ms-fe-01/comparison-v5/control-preservation.json",
-              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json"
+              "tests/fixtures/ms-fe-01/comparison-v5/output-actions.json",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2650,7 +3099,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -2835,7 +3291,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -2869,7 +3332,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -2903,7 +3373,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -2937,7 +3414,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "video-runtime": {
@@ -2974,7 +3458,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -3010,7 +3501,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -3044,7 +3542,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -3078,7 +3583,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -3112,7 +3624,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "video-runtime": {
@@ -3149,7 +3668,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -3169,7 +3695,14 @@
               "tests/managed-skill-input.test.mjs",
               "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
               "tests/fixtures/managed-claude-update/rollback-resume-after.log",
-              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -3184,7 +3717,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -3199,7 +3739,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -3229,7 +3776,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         }
@@ -3318,7 +3872,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -3352,7 +3913,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -3386,7 +3954,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -3420,7 +3995,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "unlazy-runtime": {
@@ -3455,7 +4037,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -3491,7 +4080,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -3525,7 +4121,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -3559,7 +4162,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -3593,7 +4203,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "unlazy-runtime": {
@@ -3628,7 +4245,14 @@
               "tests/fixtures/adoption-release-4.2.0/tests-before-audit-refresh.json",
               "tests/fixtures/adoption-release-4.2.0/claude-strict.json",
               "tests/fixtures/adoption-final-discovery/release-4.2.0/result.json",
-              "tests/fixtures/adoption-release-4.2.0/tests.log"
+              "tests/fixtures/adoption-release-4.2.0/tests.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         },
@@ -3648,7 +4272,14 @@
               "tests/managed-skill-input.test.mjs",
               "tests/fixtures/managed-claude-update/reviewed-defects-after.log",
               "tests/fixtures/managed-claude-update/rollback-resume-after.log",
-              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log"
+              "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "notices": {
@@ -3663,7 +4294,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "behavior": {
@@ -3678,7 +4316,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           },
           "native-discovery": {
@@ -3708,7 +4353,14 @@
               "tests/fixtures/managed-claude-update/resume-host.log",
               "tests/fixtures/managed-claude-update/legacy.log",
               "tests/migration-native-packages.test.mjs",
-              "tests/managed-skill-input.test.mjs"
+              "tests/managed-skill-input.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/review.md",
+              "tests/fixtures/adoption-release-4.4.0/check.log",
+              "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+              "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+              "docs/specs/quickstark-multi-agent-delegation.md",
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/fixtures/adoption-release-4.4.0/tests.log"
             ]
           }
         }
@@ -3718,11 +4370,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "65a39f74f7a14f8d6048912374a15e9c1549d714121e91f66efeafbfba2dc5d3"
+      "contentSha256": "958aa530cf76846604f34d8d165344b2154a4a1f4da6327cee300d64c13d9f91"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "42151334403d766c3393a82f31af905a2bebadd4fc7de5cd4095238ee112d7c2"
+      "contentSha256": "759054d0b8dc65feb81216345b95944179c995d65c7461102601cc36831f285e"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -3734,15 +4386,15 @@
     },
     "config/skill-provenance.json": {
       "kind": "file",
-      "contentSha256": "fa7e14251fff837ef2fa54255914cb53e5f608e9d5f4099f39d09a9626453b3b"
+      "contentSha256": "258958f6fd32beee7fc86effc8169ebbaa2d2d37c5af4076fff4f391742f41ef"
     },
     "docs/skill-run-contract.md": {
       "kind": "file",
-      "contentSha256": "1f176fcf21ca6681402112859e6189e6314ddf44e856cdde4e10311b5c431313"
+      "contentSha256": "dde45aa500b5178abba3a54da1764e8064681f03a8307adb42e86c16aeff298d"
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "2d16ff3e5aa07d37f6c699662d9d61ce715e3b78ac2ddd7fda73441facf4a7fa"
+      "contentSha256": "0585b3653eb8c187e0a32ec30914553d0d4f836d092355f25f9df9c91418a83e"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -3802,7 +4454,7 @@
     },
     "scripts/qs-skill-catalog.mjs": {
       "kind": "file",
-      "contentSha256": "e4be4fb90fccaf2776377be846882f4be133e4d6ba6bab19614574d97b872eb1"
+      "contentSha256": "f38363fcbc97be31989870f3705ecce724c2cc6259328060c1ea28c4f22e46e7"
     },
     "scripts/skill-collection-registry.mjs": {
       "kind": "file",
@@ -3822,7 +4474,7 @@
     },
     "skills/engineering/qs-code-build": {
       "kind": "directory",
-      "contentSha256": "47b96dcb1514ebfff219f10153394d61b42b1cd8a3a72dbc3eeb1d614f678f01"
+      "contentSha256": "1f6f69fdb1a7f7ea40da39d6ec5550f27b563375778543194195c66cf78cec4d"
     },
     "skills/engineering/qs-code-debug": {
       "kind": "directory",
@@ -3842,7 +4494,7 @@
     },
     "skills/engineering/qs-help": {
       "kind": "directory",
-      "contentSha256": "c2f7b87697d060d213ff43378277abf4e2192aa03a52a26cea2a7c4bce553331"
+      "contentSha256": "72b7f877f48a65bea831ca2b890039d514a63db75560cf9be96ca1f6398bd8cb"
     },
     "skills/engineering/qs-plan-clarify": {
       "kind": "directory",
@@ -3854,11 +4506,11 @@
     },
     "skills/engineering/qs-plan-spec": {
       "kind": "directory",
-      "contentSha256": "b41339c31dc26c134333add276f548e81095edd751edf6ac20265f16afb6eb48"
+      "contentSha256": "980dc4a3740701b8ce841915b2508154f0a48fa73aad9a754dee0da4d100328b"
     },
     "skills/engineering/qs-review-code": {
       "kind": "directory",
-      "contentSha256": "38f0e6658132795aa5df1e3e9e57d611bc56c635493b2e49087a02f29bb047c2"
+      "contentSha256": "dbb183ee8da74db5e5455e26408550289590faecebba9e49bb10c64388f99b46"
     },
     "skills/engineering/qs-setup": {
       "kind": "directory",
@@ -3866,7 +4518,7 @@
     },
     "skills/internal": {
       "kind": "directory",
-      "contentSha256": "417c3fe6508011f57860261aa47004d68c2f18879cac0582a8a9045d13271894"
+      "contentSha256": "0e14fcf66f1b02c5f36ae4889d6fc6c6ce75ed0489e6f8e1a9dace2b01441275"
     },
     "skills/productivity/qs-flow-handoff": {
       "kind": "directory",
@@ -3874,15 +4526,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "3b7b9be4358c9ff1e54d5c346087dd3fbcf565a5c2814156948a1cb8c0d13f4d"
+      "contentSha256": "7382e0decb46272336f598cb20b1e5d51baaf8702160d2e810a74eec104dcf95"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "bf8b89b8ff853d0af08e0b8137eab4a3731c54a53a1a04c046c9fa8291e41015"
+      "contentSha256": "e01c83bbf7af06763c894a563a4b8e6a2762160fa5e99a462b77724a0a444bb9"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "3c93493663251e5045cb787c904c7b867dfca84a9d4e33809ec529ae3f00e480"
+      "contentSha256": "6ffbdd011996a59f38b5b7668a18ed7e177408605caf9e3ee058475f36b12d8e"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -3898,7 +4550,7 @@
     },
     "skills/engineering/qs-plan-research": {
       "kind": "directory",
-      "contentSha256": "54a41173ed9b15e1169b4b475a2efd192fc007f95f674ac9cb7bdb5fe603ed1b"
+      "contentSha256": "a3a78d01c767e12aeb60442d604567c650b8c28d43e58529a14bd34f06981e0c"
     },
     "skills/engineering/qs-repo-cleanup": {
       "kind": "directory",
@@ -3922,19 +4574,19 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "8c18396a29d0689bcd6da529eb1be12dd9be268e1fe7a7415a1c86bd4424e4f0"
+      "contentSha256": "075d78dbf4975314fed2dee5740b337789250fd0c57b8e342a19468dfd6a4614"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "ac8adb9e35570142b29fed8496470622e03db3709d2e91344e3a4c1094b75b40"
+      "contentSha256": "6cab269447c93bfe28055f0a60418c8c668e2e9165b047bac9b89b3fdb68388f"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "3169f98fd19027522aa64c0695d11f2770c38001abc296aa1ed8ed689b1e0ded"
+      "contentSha256": "cf4a19b92a0727324b3615441115cb50233a7bdccb2fac2bdcd289dd24a07708"
     },
     "skills/advanced": {
       "kind": "directory",
-      "contentSha256": "27f67de2bd1969215f7548ecc68c2baa85ff526c6c98aef77e5b7f4fc1159a9a"
+      "contentSha256": "080d2fc4edae4d11fc1ebf38519205c9d9ae26badaafc8b5be7b779e895732df"
     },
     "skills/engineering/qs-blast-radius": {
       "kind": "directory",
@@ -3986,15 +4638,15 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "ece53a36713ac54a7529ca032eb65a4b9081d7c3df1b5ffb0f42c182c53af7d9"
+      "contentSha256": "220544947a0c557b7bb264d8b07630cb6d49af6b666e1111525fc90de1f86e66"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "08daf30ce0a4c3af900eeef66c53b46ec0c2da5d30cc6857bf702eb606ab0f61"
+      "contentSha256": "8f29b05f6a6354713b54a30ca39d668d260bfe0421b10b08c8d661094a8196ca"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "afed8bf1df66c292ae9390743b8ee0c5cf4d60a4ae0c1341049fc94714867a35"
+      "contentSha256": "3d1635c744ac3bafa1e78d91c0ff1747cb99c9147a98890332335b8b19fac42a"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
@@ -4018,15 +4670,15 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "d779e4255b773e6dd7f236f711ed1905688a074a60f7d42341535bd248a2f479"
+      "contentSha256": "2ead2234dfa5c5ea783c89e20241420fba8add19af7b817499d59377d12d7338"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "c553c8024058f7f62d2074900800dd8426bd8a6eac58f3508764cd5932c6b67b"
+      "contentSha256": "565b5ea4f56ed390e5f3598c33400abb13091d189404e6ed93f1eaaba2bad91a"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "37e2dced270ceed2e181a5563950f2abd3b98aaf10f8de0f8db9fc2aa3e62f51"
+      "contentSha256": "bbf39e345087307e7868a20a0f20ee0613190da0bfdbe0336ba62c6380f60ef1"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -4034,15 +4686,15 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "b78259084c77946045dfd068ad27523b4e14f65b6834db580ba8e9fe8f110f1d"
+      "contentSha256": "ef96995810c15aee4b33f1473963462172fb22a3eb203e88a6bf5b31f05ffb2e"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "438bfddee315fdd9660011ec3810302edd05f986c8b75d34298cd3f5254d2c52"
+      "contentSha256": "9cf706b93dfba00c264c48494bbc064ca3c30c82bbdc5a1f76fe9775fa90016f"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "cffbea8fa15c611e923eff81638754356f38fb28c28dbba059ffde2d2bab241a"
+      "contentSha256": "448da0feb500c6510fa4159833edd0b7ab1ae8aa5f2af1d83eeeec3af96eae95"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
@@ -4050,7 +4702,7 @@
     },
     "packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "69879db4a3c72e4f01870fc4793fc2a884ff422c3728891fefc3be8bef85cc28"
+      "contentSha256": "784c5a6168c3749b4a869f0cd17bbec4eb92a877f072675b41c03f72323092cc"
     },
     "scripts/claude-core-migration.mjs": {
       "kind": "file",
@@ -4060,7 +4712,7 @@
   "evidence": {
     "tests/skill-provenance.test.mjs": {
       "path": "tests/skill-provenance.test.mjs",
-      "sha256": "1b0a85c04602c0ed1cc212538bd606cdf0c7e729e0b51ebe250491b9a7b72564"
+      "sha256": "9c077c805ce21c490f7e8ff36808ce91222de3c0fc5659b2c18c7b4b5a006a5b"
     },
     "config/skill-migrations.json": {
       "path": "config/skill-migrations.json",
@@ -4184,7 +4836,7 @@
     },
     "config/skill-provenance.json": {
       "path": "config/skill-provenance.json",
-      "sha256": "3320fc8e8997c06890ab9378d86a552a7b3078e9d50e9246496fd3ac89d3bffc"
+      "sha256": "645c7fb921229a4fa9fb85abc21650925ce6cf5b16f9bd9d324cc2a1f6e3fa99"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
@@ -4509,6 +5161,34 @@
     "tests/fixtures/managed-claude-update/unrelated-recovery-after.log": {
       "path": "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
       "sha256": "24682d40a09eee91b1060c903d7031d64aa1ac870f7c37c764c34060c2177788"
+    },
+    "tests/fixtures/adoption-release-4.4.0/review.md": {
+      "path": "tests/fixtures/adoption-release-4.4.0/review.md",
+      "sha256": "cda666f233130d4e62ea01518bff940f3623448313da32c77335c53eb1437928"
+    },
+    "tests/fixtures/adoption-release-4.4.0/check.log": {
+      "path": "tests/fixtures/adoption-release-4.4.0/check.log",
+      "sha256": "2e0fee811182b1f91a4d82ca0023c96eada448f8de64caba9d7c7aeba98ab05f"
+    },
+    "tests/fixtures/adoption-release-4.4.0/claude-strict.json": {
+      "path": "tests/fixtures/adoption-release-4.4.0/claude-strict.json",
+      "sha256": "868bf4042182217ac1ce3a262ff2294ac3a0cd15fdf13d2278f4177ba463ad9a"
+    },
+    "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json": {
+      "path": "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
+      "sha256": "8c7dec172df290e9a8a7e42008de504d9a2fb8a0f2bd9e76643d02727955d35f"
+    },
+    "docs/specs/quickstark-multi-agent-delegation.md": {
+      "path": "docs/specs/quickstark-multi-agent-delegation.md",
+      "sha256": "455fd532ed823cecd2280c7e2aa08a3ef2a128767c99b2675d8b9bcce4bbd23e"
+    },
+    "tests/multi-agent-delegation.test.mjs": {
+      "path": "tests/multi-agent-delegation.test.mjs",
+      "sha256": "1bc180878f23cacd171a655fc622092e7e9b50ddf4b33daf25180195e3cfd3e9"
+    },
+    "tests/fixtures/adoption-release-4.4.0/tests.log": {
+      "path": "tests/fixtures/adoption-release-4.4.0/tests.log",
+      "sha256": "4286e9b5bc7d4b9639ae791c47dbdfa8765da7f84ee40e7d90c234986f342266"
     }
   }
 }

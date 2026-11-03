@@ -11,7 +11,7 @@ export function validatePublicSkillText(text, name) {
     throw new Error(`/${name} is missing the shared completion contract.`);
   }
 
-  const internalNames = V3_INTERNAL_CAPABILITIES.map((capability) => capability.legacySkillName);
+  const internalNames = V3_INTERNAL_CAPABILITIES.map((capability) => capability.legacySkillName).filter(Boolean);
   for (const legacyName of internalNames) {
     if (new RegExp(`(?:/|\\$)${legacyName}\\b`).test(text)) {
       throw new Error(`/${name} exposes internal capability ${legacyName} as a command.`);

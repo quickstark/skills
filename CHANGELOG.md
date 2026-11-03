@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.4.0
+
+### Minor Changes
+
+- Make QuickStark roots multi-agent aware. A shared Delegation contract and core `delegation` capability start every helper with a fresh context window, pass context pointers and keep synthesis, merges and authority in the root, with a serial fallback. `qs-review-code` runs Standards, Spec and (deep) Security axes as parallel read-only reviewers; ticket plans carry `Blocked by` edges and a frontier; `qs-code-build mode=graph` implements frontier tickets with per-ticket worktree implementers when branch and worktree authority is granted. Roots use each host's generic subagents; packages remain skills-only and ship no host-specific agent declarations.
+
 ## 4.3.3
 
 ### Patch Changes

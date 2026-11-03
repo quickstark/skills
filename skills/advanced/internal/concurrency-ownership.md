@@ -12,7 +12,7 @@ Use when multiple candidates, evidence partitions, or operational targets can pr
 
 1. Give each concurrent unit an exact scope and immutable starting point.
 2. Isolate output paths or make every unit read-only. When shared writes are unavoidable, use a structural lock or serialize them; a prose ownership map alone is not mutual exclusion.
-3. Optional helpers may own independent units when available and inherit the parent model.
+3. When the host provides subagents, give each independent unit to a helper started with a fresh context window, not a fork of the parent conversation; helpers inherit the parent model and own only their declared scope. Without subagent support, run the units serially in the root.
 4. Serialize accepted results through the root after checking current shared state.
 
 ## Stop conditions

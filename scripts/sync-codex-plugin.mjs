@@ -36,6 +36,7 @@ const qsCapabilityFiles = Object.freeze([
   "module-decomposition.md",
   "ticket-decomposition.md",
   "tdd-loop.md",
+  "delegation.md",
 ]);
 const psCapabilityFiles = Object.freeze(PS_INTERNAL_CAPABILITIES.map((capability) => `${capability.name}.md`));
 

@@ -1,0 +1,255 @@
+[
+  {
+    "root": ".",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/skills/.claude-plugin/marketplace.json",
+      "manifest": {
+        "file": "/github/skills/.claude-plugin/marketplace.json",
+        "type": "marketplace",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [
+        {
+          "file": "/github/skills/README.md",
+          "message": "This README has no line that installs \"qs-skills\" from a marketplace. /github/skills/.claude-plugin/marketplace.json has no entry for it. Add one. Then add the install line, which works in one step on Claude Code 2.1.275 or later.",
+          "installLine": "/plugin install qs-skills --marketplace quickstark/skills"
+        }
+      ],
+      "directory": {
+        "profile": null,
+        "findings": [
+          {
+            "code": "ICON_MISSING",
+            "title": "No icon",
+            "severity": "warning",
+            "blocking": false,
+            "hold": false,
+            "file": ".claude-plugin/plugin.json",
+            "field": "icon",
+            "message": "No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.",
+            "fix": "Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon."
+          }
+        ],
+        "undecided": [],
+        "incomplete": true,
+        "failure": null,
+        "notes": [
+          "This folder also holds a marketplace manifest. The plugin directory treats such a folder as a plugin, so these checks cover only the plugin in this folder. To check another plugin that the marketplace lists, run validate on that plugin's folder.",
+          "Looked for macOS and Windows system files in the first 20000 entries and 32 folder levels of the plugin only; the rest was not checked."
+        ]
+      }
+    }
+  },
+  {
+    "root": "packages/qs-specialists",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/skills/packages/qs-specialists/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/skills/packages/qs-specialists/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [],
+      "directory": {
+        "profile": null,
+        "findings": [
+          {
+            "code": "ICON_MISSING",
+            "title": "No icon",
+            "severity": "warning",
+            "blocking": false,
+            "hold": false,
+            "file": ".claude-plugin/plugin.json",
+            "field": "icon",
+            "message": "No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.",
+            "fix": "Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon."
+          }
+        ],
+        "undecided": [],
+        "incomplete": false,
+        "failure": null,
+        "notes": [
+          "The repository root was taken to be /github/skills, the nearest parent folder with a .git folder or file. README.md was taken from it, because this plugin folder has none of its own. For a plugin submitted from a git repository, the repository root is the top folder of that repository, with only what is committed there, so check that the folder named above is that top folder."
+        ]
+      }
+    }
+  },
+  {
+    "root": "packages/qs-advanced",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/skills/packages/qs-advanced/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/skills/packages/qs-advanced/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [],
+      "directory": {
+        "profile": null,
+        "findings": [
+          {
+            "code": "ICON_MISSING",
+            "title": "No icon",
+            "severity": "warning",
+            "blocking": false,
+            "hold": false,
+            "file": ".claude-plugin/plugin.json",
+            "field": "icon",
+            "message": "No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.",
+            "fix": "Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon."
+          }
+        ],
+        "undecided": [],
+        "incomplete": false,
+        "failure": null,
+        "notes": [
+          "The repository root was taken to be /github/skills, the nearest parent folder with a .git folder or file. README.md was taken from it, because this plugin folder has none of its own. For a plugin submitted from a git repository, the repository root is the top folder of that repository, with only what is committed there, so check that the folder named above is that top folder."
+        ]
+      }
+    }
+  },
+  {
+    "root": "packages/qs-frontend",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/skills/packages/qs-frontend/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/skills/packages/qs-frontend/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [],
+      "directory": {
+        "profile": null,
+        "findings": [
+          {
+            "code": "ICON_MISSING",
+            "title": "No icon",
+            "severity": "warning",
+            "blocking": false,
+            "hold": false,
+            "file": ".claude-plugin/plugin.json",
+            "field": "icon",
+            "message": "No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.",
+            "fix": "Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon."
+          }
+        ],
+        "undecided": [],
+        "incomplete": false,
+        "failure": null,
+        "notes": [
+          "The repository root was taken to be /github/skills, the nearest parent folder with a .git folder or file. README.md was taken from it, because this plugin folder has none of its own. For a plugin submitted from a git repository, the repository root is the top folder of that repository, with only what is committed there, so check that the folder named above is that top folder."
+        ]
+      }
+    }
+  },
+  {
+    "root": "packages/qs-video",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/skills/packages/qs-video/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/skills/packages/qs-video/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [],
+      "directory": {
+        "profile": null,
+        "findings": [
+          {
+            "code": "ICON_MISSING",
+            "title": "No icon",
+            "severity": "warning",
+            "blocking": false,
+            "hold": false,
+            "file": ".claude-plugin/plugin.json",
+            "field": "icon",
+            "message": "No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.",
+            "fix": "Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon."
+          }
+        ],
+        "undecided": [],
+        "incomplete": false,
+        "failure": null,
+        "notes": [
+          "The repository root was taken to be /github/skills, the nearest parent folder with a .git folder or file. README.md was taken from it, because this plugin folder has none of its own. For a plugin submitted from a git repository, the repository root is the top folder of that repository, with only what is committed there, so check that the folder named above is that top folder."
+        ]
+      }
+    }
+  },
+  {
+    "root": "packages/qs-execution",
+    "exitCode": 0,
+    "report": {
+      "success": true,
+      "strict": true,
+      "target": "/github/skills/packages/qs-execution/.claude-plugin/plugin.json",
+      "manifest": {
+        "file": "/github/skills/packages/qs-execution/.claude-plugin/plugin.json",
+        "type": "plugin",
+        "errors": [],
+        "warnings": [],
+        "notes": [],
+        "gatingHooks": []
+      },
+      "contents": [],
+      "advice": [],
+      "directory": {
+        "profile": null,
+        "findings": [
+          {
+            "code": "ICON_MISSING",
+            "title": "No icon",
+            "severity": "warning",
+            "blocking": false,
+            "hold": false,
+            "file": ".claude-plugin/plugin.json",
+            "field": "icon",
+            "message": "No icon found in the plugin. The validator looked for `icon` in plugin.json and for a file at .claude-plugin/icon.png or .svg, assets/icon.png or .svg, or a similar path.",
+            "fix": "Add a square PNG to the plugin folder at .claude-plugin/icon.png, or set `icon` in plugin.json to the path of a square PNG or JPEG in the plugin: 512 to 2048 px on each side, under 2 MB. SVG and WebP are not accepted. That file may become the listing icon only once: the first time the plugin is saved or submitted in the developer portal. Adding or changing it later does not change the icon."
+          }
+        ],
+        "undecided": [],
+        "incomplete": false,
+        "failure": null,
+        "notes": [
+          "The repository root was taken to be /github/skills, the nearest parent folder with a .git folder or file. README.md was taken from it, because this plugin folder has none of its own. For a plugin submitted from a git repository, the repository root is the top folder of that repository, with only what is committed there, so check that the folder named above is that top folder."
+        ]
+      }
+    }
+  }
+]

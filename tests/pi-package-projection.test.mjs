@@ -106,6 +106,6 @@ test("target private references remain packaged and byte-identical without becom
     assert.equal(sources.filter(file=>file.startsWith("internal/") && file.endsWith(".md")).length,required);
     for(const file of sources) assert.deepEqual(await readFile(join(repositoryRoot,projected,file)),await readFile(join(repositoryRoot,source,file)),file);
   }
-  assert.deepEqual((await readdir(join(repositoryRoot,"pi/packages/qs-skills/capabilities"))).sort(),["domain-modeling.md","module-decomposition.md","tdd-loop.md","ticket-decomposition.md"]);
+  assert.deepEqual((await readdir(join(repositoryRoot,"pi/packages/qs-skills/capabilities"))).sort(),["delegation.md","domain-modeling.md","module-decomposition.md","tdd-loop.md","ticket-decomposition.md"]);
   assert.deepEqual((await readdir(join(repositoryRoot,"pi/packages/qs-video/skills/qs-video/modules"))).sort(),["embedded-captions","faceless-explainer","figma","general-video","hyperframes","hyperframes-animation","hyperframes-audio","hyperframes-cli","hyperframes-core","hyperframes-creative","hyperframes-keyframes","hyperframes-registry","hyperframes-studio","media-use","motion-graphics","music-to-video","pr-to-video","product-launch-video","remotion-to-hyperframes","slideshow","talking-head-recut"].sort());
 });

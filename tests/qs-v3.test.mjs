@@ -78,7 +78,7 @@ test("v3 exposes the exact ordered core and specialist command surfaces", () => 
   assert.deepEqual(SKILLS.map((skill) => skill.name), [...coreNames, ...specialistNames]);
   assert.deepEqual(SKILLS.map((skill) => skill.lifecycle.position), Array.from({ length: 21 }, (_, index) => (index + 1) * 10));
   assert.deepEqual(V3_INTERNAL_CAPABILITIES.map((item) => item.name), [
-    "domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop",
+    "domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop", "delegation",
   ]);
 });
 

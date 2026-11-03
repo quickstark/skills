@@ -24,6 +24,20 @@ Accept two independent inputs:
 
 Assess correctness, maintainability, architecture, testability, security, and operational risk when relevant. Keep repository-standards and specification findings as separate axes. Prioritize findings by impact and confidence; actionable P0/P1 findings or failed required checks prohibit completion.
 
+## Parallel review axes
+
+Before any fan-out, validate the target: resolve the fixed point or selected path, confirm the diff or scope is non-empty, and locate the governing specification and repository standards. A bad reference or empty target fails here, not inside helpers.
+
+Apply the internal delegation capability to the axes:
+
+- **Standards**: the selected target against documented repository standards and the review dimensions above.
+- **Spec**: the selected target against the governing specification — missing or partial requirements, unrequested behavior, and requirements implemented incorrectly. Skip this axis and say so when no specification exists.
+- **Security**: added at `effort=deep`, or when the target touches authentication, secrets, input handling or permissions.
+
+When the host provides subagents, run each axis as a parallel read-only reviewer started with a fresh context window. Brief each with the diff command or target path, the source list for its axis, and a bounded return of at most 400 words citing file, hunk and rule or requirement. Without subagent support, review the same axes serially in this root.
+
+Present the axes side by side under their own headings. Do not merge or rerank findings across axes; a target can pass one axis and fail another. Summarize finding counts and the most severe finding within each axis. Reviewers never edit, even when this run's action is `improve` or `refactor`; authorized repair stays in this root.
+
 Prefer subtractive improvements before adding abstractions. Reduce reader load, require callers to migrate before legacy interfaces disappear, and ask whether the type system or module boundary can make the repaired invariant structural.
 
 ## Host inline comments
@@ -42,7 +56,7 @@ For `action=improve` or `action=refactor`, resolve every in-scope actionable fin
 
 Do not return `continuation-required` merely to ask another public skill to implement, review, repair, test, or validate work owned by the selected action. Use that status only when a genuinely distinct workflow or separately authorized scope remains.
 
-Domain modeling and module decomposition may inform the review as internal capabilities. They never become separate runs. Do not automatically invoke build, Git, or deployment.
+Domain modeling, module decomposition and delegation may inform the review as internal capabilities. They never become separate runs. Do not automatically invoke build, Git, or deployment.
 
 ## Completion report and next steps
 

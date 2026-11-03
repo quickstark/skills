@@ -2,7 +2,7 @@
 
 Generated from [the provenance records](../../config/skill-provenance.json). Baseline installation history and target ownership are separate. Catalog mappings do not activate packages or adopt reviewed sources.
 
-72 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.
+73 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.
 
 ## Target ownership
 
@@ -12,7 +12,7 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | --- | --- | --- | --- |
 | `boundary-discipline` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:boundary-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `bounded-autonomous-loop` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:bounded-autonomous-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `concurrency-ownership` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval`, `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:concurrency-ownership` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `concurrency-ownership` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval`, `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:concurrency-ownership` | pending (no revision claimed) |
 | `context-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit` | `ps-internal:context-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `decision-trail` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:decision-trail` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `experience-first` / private | `qs-advanced` / `qs-visual-parity`, `qs-hillclimb` | `ps-internal:experience-first` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -20,7 +20,7 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `minimal-change` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:minimal-change` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `multi-candidate-exploration` / private | `qs-advanced` / `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity` | `ps-internal:multi-candidate-exploration` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `outcome-oriented-execution` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:outcome-oriented-execution` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `parallel-coverage` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval` | `ps-internal:parallel-coverage` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `parallel-coverage` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval` | `ps-internal:parallel-coverage` | pending (no revision claimed) |
 | `plain-writing` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:plain-writing` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `rerunnable-tooling` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb` | `ps-internal:rerunnable-tooling` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `structural-enforcement` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval` | `ps-internal:structural-enforcement` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -39,10 +39,11 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `redesign` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `restrained-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `web-images` / private | `qs-frontend` / `qs-design-image-web` | `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `delegation` / private | `qs-skills` / `qs-code-build`, `qs-review-code`, `qs-plan-spec` | `qs-internal:delegation` | pending (no revision claimed) |
 | `domain-modeling` / private | `qs-skills` / `qs-plan-clarify`, `qs-plan-spec`, `qs-review-code` | `qs-internal:domain-modeling` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `module-decomposition` / private | `qs-skills` / `qs-plan-spec`, `qs-code-build`, `qs-review-code` | `qs-internal:module-decomposition` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `tdd-loop` / private | `qs-skills` / `qs-code-build` | `qs-internal:tdd-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `ticket-decomposition` / private | `qs-skills` / `qs-plan-spec` | `qs-internal:ticket-decomposition` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `ticket-decomposition` / private | `qs-skills` / `qs-plan-spec` | `qs-internal:ticket-decomposition` | pending (no revision claimed) |
 | `embedded-captions` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `faceless-explainer` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `figma` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -65,7 +66,7 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `slideshow` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `talking-head-recut` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-blast-radius` / public | `qs-advanced` / `qs-blast-radius` | `ps:ps-blast-radius` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-code-build` / public | `qs-skills` / `qs-code-build` | `qs:qs-code-build` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-code-build` / public | `qs-skills` / `qs-code-build` | `qs:qs-code-build` | pending (no revision claimed) |
 | `qs-code-debug` / public | `qs-skills` / `qs-code-debug` | `qs:qs-code-debug` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-code-document` / public | `qs-specialists` / `qs-code-document` | `qs:qs-code-document` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-create-verification-skill` / public | `qs-advanced` / `qs-create-verification-skill` | `ps:ps-create-verification-skill` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -79,18 +80,18 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `qs-flow-handoff` / public | `qs-skills` / `qs-flow-handoff` | `qs:qs-flow-handoff` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-flow-triage` / public | `qs-skills` / `qs-flow-triage` | `qs:qs-flow-triage` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-git-merge` / public | `qs-skills` / `qs-git-merge` | `qs:qs-git-merge` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-help` / public | `qs-skills` / `qs-help` | `contributor:find-skills`, `ps:ps-help`, `qs:qs-help` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-help` / public | `qs-skills` / `qs-help` | `contributor:find-skills`, `ps:ps-help`, `qs:qs-help` | pending (no revision claimed) |
 | `qs-hillclimb` / public | `qs-advanced` / `qs-hillclimb` | `ps:ps-hillclimb` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-how` / public | `qs-advanced` / `qs-how` | `ps:ps-how` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-learn-teach` / public | `qs-specialists` / `qs-learn-teach` | `qs:qs-learn-teach` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-maintain-verification-skill` / public | `qs-advanced` / `qs-maintain-verification-skill` | `ps:ps-maintain-verification-skill` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-plan-clarify` / public | `qs-skills` / `qs-plan-clarify` | `qs:qs-plan-clarify` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-plan-research` / public | `qs-specialists` / `qs-plan-research` | `qs:qs-plan-research` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-plan-research` / public | `qs-specialists` / `qs-plan-research` | `qs:qs-plan-research` | pending (no revision claimed) |
 | `qs-plan-roadmap` / public | `qs-skills` / `qs-plan-roadmap` | `qs:qs-plan-roadmap` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-plan-spec` / public | `qs-skills` / `qs-plan-spec` | `qs:qs-plan-spec` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-plan-spec` / public | `qs-skills` / `qs-plan-spec` | `qs:qs-plan-spec` | pending (no revision claimed) |
 | `qs-pr-babysit` / public | `qs-advanced` / `qs-pr-babysit` | `ps:ps-pr-babysit` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-repo-cleanup` / public | `qs-specialists` / `qs-repo-cleanup` | `qs:qs-repo-cleanup` | pending (no revision claimed) |
-| `qs-review-code` / public | `qs-skills` / `qs-review-code` | `qs:qs-review-code` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-review-code` / public | `qs-skills` / `qs-review-code` | `qs:qs-review-code` | pending (no revision claimed) |
 | `qs-runtime-forensics` / public | `qs-advanced` / `qs-runtime-forensics` | `ps:ps-runtime-forensics` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-setup` / public | `qs-skills` / `qs-setup` | `contributor:find-skills`, `qs:qs-setup` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-skill-eval` / public | `qs-advanced` / `qs-skill-eval` | `ps:ps-skill-eval` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -181,6 +182,7 @@ The [schema v2 dependency index](../../skills/frontend/dependency-index.json) se
 | `ps:ps-visual-parity` | `ps-visual-parity` / public | `ps-visual-parity`, `playbook:visual-parity` |
 | `ps:ps-why` | `ps-why` / public | `ps-why`, `skill:why` |
 | `ps:ps-worktree-cleanup` | `ps-worktree-cleanup` / public | `ps-worktree-cleanup`, `playbook:worktree-cleanup` |
+| `qs-internal:delegation` | `qs-code-build`, `qs-review-code`, `qs-plan-spec` / private | `delegation` |
 | `qs-internal:domain-modeling` | `qs-plan-clarify`, `qs-plan-spec`, `qs-review-code` / private | `qs-design-domain`, `domain-modeling` |
 | `qs-internal:module-decomposition` | `qs-plan-spec`, `qs-code-build`, `qs-review-code` / private | `qs-design-modules`, `codebase-design` |
 | `qs-internal:tdd-loop` | `qs-code-build` / private | `qs-test-tdd`, `tdd` |
@@ -262,6 +264,7 @@ Full source hashes, notices and validation evidence are authoritative in the JSO
 | `ps:ps-visual-parity` | [visual-parity](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/poteto-mode/playbooks/visual-parity.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `12d587dfb20741cafc376c42c696c5f6e2a64487` | MIT |
 | `ps:ps-why` | [why](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/why/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |
 | `ps:ps-worktree-cleanup` | [worktree-cleanup](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/poteto-mode/playbooks/worktree-cleanup.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `12d587dfb20741cafc376c42c696c5f6e2a64487` | MIT |
+| `qs-internal:delegation` | Repository-authored | — | — | No upstream origin claimed | — |
 | `qs-internal:domain-modeling` | [principle-model-the-domain](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/principle-model-the-domain/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |
 | `qs-internal:domain-modeling` | [domain-modeling](https://github.com/mattpocock/skills/blob/ed37663cc5fbef691ddfecd080dff42f7e7e350d/skills/engineering/domain-modeling/SKILL.md) | `ed37663cc5fbef691ddfecd080dff42f7e7e350d` | `c55ee46073ed923f86ce59a5eb3b6d895095d1b7` | unknown (no revision claimed) | MIT |
 | `qs-internal:module-decomposition` | [architect](https://github.com/cursor/plugins/blob/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e/pstack/skills/architect/SKILL.md) | `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | `12d587dfb20741cafc376c42c696c5f6e2a64487` | adapted `63d938c2e4a165a0fec1bd0f61a8e325f0cb751e` | MIT |

@@ -537,6 +537,12 @@ export const V3_INTERNAL_CAPABILITIES = Object.freeze([
     "qs-test-tdd",
     ["qs-code-build"],
   ),
+  // v3-native capability: no v2 skill to replace, so no legacy disposition.
+  defineV3InternalCapability(
+    "delegation",
+    null,
+    ["qs-code-build", "qs-review-code", "qs-plan-spec"],
+  ),
 ]);
 
 const V3_ABSORBED_SKILLS = Object.freeze({
@@ -557,6 +563,7 @@ function buildV3SkillDispositions() {
   }
 
   for (const capability of V3_INTERNAL_CAPABILITIES) {
+    if (capability.legacySkillName === null) continue;
     dispositions[capability.legacySkillName] = Object.freeze({
       kind: "internal",
       target: capability.name,
@@ -641,7 +648,7 @@ export function validateV3CatalogModel(model) {
   );
   requireExactNames(
     internalCapabilities.map((capability) => capability.name),
-    ["domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop"],
+    ["domain-modeling", "module-decomposition", "ticket-decomposition", "tdd-loop", "delegation"],
     "internal capability membership",
   );
 
@@ -755,7 +762,8 @@ export function validateV3CatalogModel(model) {
   }
 
   for (const capability of internalCapabilities) {
-    if (!LEGACY_V2_SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName)) {
+    const v3Native = capability.legacySkillName === null;
+    if (!v3Native && (!LEGACY_V2_SKILLS_BY_NAME.has(capability.legacySkillName) || publicNameSet.has(capability.legacySkillName))) {
       throw new Error(`The v3 internal capability ${capability.name} must replace one non-public v2 skill.`);
     }
 
@@ -765,6 +773,7 @@ export function validateV3CatalogModel(model) {
       throw new Error(`The v3 internal capability ${capability.name} must be owned by public root commands.`);
     }
 
+    if (v3Native) continue;
     const disposition = dispositionsByName[capability.legacySkillName];
     if (disposition?.kind !== "internal" || disposition.target !== capability.name) {
       throw new Error(`The v3 internal capability ${capability.name} has an invalid disposition.`);

@@ -3,7 +3,10 @@
 Use only inside a root `qs-plan-spec` run when the user requests tickets, the configured tracker requires them, or the work cannot otherwise be assigned safely.
 
 - Produce dependency-ordered slices with one independently verifiable outcome each.
-- Include scope, acceptance evidence, dependencies, and explicit exclusions.
+- Include scope, acceptance evidence, explicit `Blocked by` edges, and explicit exclusions. A ticket with no blockers says `Blocked by: none`.
+- Treat the tickets as a task graph. Its frontier is every open ticket whose blockers are all done; the frontier is what can be worked concurrently.
+- Size each ticket to fit one fresh context window, so a single helper can implement and verify it without the planning conversation.
+- Create tickets blockers first, then wire blocking edges in a second pass once real identifiers exist. Use the tracker's native blocking relationship where one exists; otherwise record `Blocked by` in each ticket body. Never write placeholder identifiers.
 - For a wide interface refactor, expand first: add the new form alongside the old. Every caller-migration batch depends on that expansion. Contract last: remove the legacy form only after every migration batch and a no-remaining-callers check pass. Include serialized, external and delayed consumers where applicable.
 - If intermediate batches cannot be independently green, keep them on an isolated integration branch. Every batch blocks one final integrate-and-verify outcome; promise green only at that gate and do not release partial activation or weaken required checks.
 - Do not create tracker work for a specification-only request.
