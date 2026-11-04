@@ -43,6 +43,42 @@ the reviewed hash is `7680be871677cdb2a89c394ab3c8cb6f1b3ebb5f1ead40afed84b57290
 This additive test change does not regrade any historical trial or promote a
 host acceptance result.
 
+## 4.4 documentation alignment
+
+This source/documentation review compares the README and Notion companion guide
+against checkout `33b2f0d7def72c5a187c7581105160382b6e4b17`, the active collection
+registry, `package.json`, `install.sh`, `scripts/install-skills.mjs`, the managed
+argument parser, `.github/workflows/validate.yml`, the shared run contract and
+canonical build/review instructions. Earlier sections above are historical
+observations; their command counts and Claude limitations do not describe 4.4.
+
+- README now includes the missing ninth specialist, `qs-repo-cleanup`, and all
+  39 matching per-agent examples from the companion guide. Package ownership and
+  invocation literals remain catalog-derived.
+- Both guides describe the hosted installer as the ordinary macOS/Linux update,
+  with the same explicit agent, optional-package, custom-home and resume examples.
+  Advanced local commands first change into the managed checkout. Developer
+  dependency installation and full source checks remain separate from normal
+  installation and installed-state verification.
+- Both explain 4.4 fresh-context delegation, serial fallback, read-only review
+  axes, graph prerequisites and the explicit Git/worktree authority boundary.
+  No extra public command, model-behavior result or runtime capability is implied.
+- The installation guide's platform statement now matches the workflow: isolated
+  native integration with pinned CLIs runs on Linux and macOS 15. A configured CI
+  matrix is separate from deployment to an individual machine or installed profile.
+- Notion's machine-specific deployment records remain historical evidence. This
+  documentation update does not run the installer or change installed profiles.
+
+The previous README evidence hash was
+`45c8f2f600ab68cb19219c5ccdd9894fc334c2c5d01ba4b313899d1ba251c2d4`;
+the previous installation-guide hash was
+`3ca58490e3e54605324a425ff0a4fe0cce218b12841826ff5f0a5e6a9e6c63db`;
+the previous hash of this review was
+`b3e474c9c3061905401b08f35f17e8f8e7354840bd9bd231adb6846c7f7b7940`.
+Refresh only these three current evidence bindings after command/catalog/link
+validation and review of the documentation diff. Preserve all criterion decisions,
+historical trials, source bindings and host acceptance results.
+
 ## Transition identity derivation
 
 Transition inventory schema 2 adds `checkoutDigest` with the explicit kind

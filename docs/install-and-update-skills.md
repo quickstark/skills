@@ -190,9 +190,10 @@ a single-host transaction and has separate selection, lock, journal and backup
 paths. Pass the same host home to plan, update, verify and resume. Native commands
 receive the resolved paths, preventing inherited overrides from redirecting a
 transaction to another profile. Paths are resolved by Node without assuming a
-particular checkout directory or shell. Native integration is tested on Linux;
-The GitHub validation matrix covers Linux and macOS source checks; native manager
-integration is separately verified on Linux. Windows manager behavior is unverified. Automatic detection
+particular checkout directory or shell. The GitHub validation matrix runs source
+checks and isolated native integration tests with pinned Codex, Claude Code and Pi
+CLIs on Linux and macOS 15. This is separate from deployment to a user's installed
+profiles. Windows manager behavior is unverified. Automatic detection
 groups default homes together and updates custom homes separately. Explicit home
 flags without `--agent` select only those hosts. A journal resumes its original
 host group without rediscovering PATH; supply the original custom home again.
