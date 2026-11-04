@@ -125,8 +125,9 @@ export function codexConfig(text, packages) {
     if (/^\s*#/.test(line)) { comments.push(line); continue; }
     if (!line.trim()) continue;
     if (/^\s*\[/.test(line)) {
-      const match = line.match(/^\s*\[plugins\."([a-z0-9-]+@[a-z0-9-]+)"\]\s*$/);
-      current = match && owned.has(match[1]) ? match[1] : null;
+      const match = line.match(/^\s*\[plugins\.(?:"([a-z0-9-]+@[a-z0-9-]+)"|'([a-z0-9-]+@[a-z0-9-]+)')\]\s*$/);
+      const key = match && (match[1] ?? match[2]);
+      current = owned.has(key) ? key : null;
       if (current) { check(!Object.hasOwn(selected, current), 'Duplicate owned Codex configuration table.'); selected[current] = {}; comments = []; continue; }
     }
     if (current) {

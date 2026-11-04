@@ -106,3 +106,51 @@ clears only its matching pending pointer. It does not rewrite or execute the old
 transaction journal. These are isolated Linux tests, not acceptance on the
 reported Mac. A new version is required to publish the engine repair; existing
 4.4.1 and 4.4.2 tags must remain unchanged.
+
+## Single-quoted Codex table keys on dirk-dev
+
+The reported 4.4.3 repair failed after its first attempted withdrawal of
+`qs-specialists@quickstark` with Codex 0.165.0 and Node 24.21.0 on Linux. A
+read-only comparison of the retained original and current TOML found unchanged
+unrelated semantic settings, no comments, and a changed repair text projection.
+The original owned table used a single-quoted key. Both the repair projection
+and native state parser recognized only double-quoted plugin keys.
+
+An isolated native regression reproduced the exact unrelated-state error with
+that single-quoted table. The correction recognizes both TOML quoting forms for
+the same literal package keys; it retains strict boolean enablement, duplicate
+detection, unknown-field rejection and unrelated configuration/cache bindings.
+Native tests require successful Codex/Pi repair, intact original configuration
+backups and vendor caches, and rejection of actual unrelated settings or payload
+changes after withdrawal. No general TOML parser or inline-table support is added.
+
+A parser fix alone would strand the already-failed receipt when a newer release
+is selected. Continuation therefore also admits the narrow historical signature:
+schema 1, the exact unrelated-state error, exactly one attempted Codex withdrawal
+of a known package, and a bound original configuration proving that package was
+enabled under a single-quoted header. All official retained-source, version,
+ancestry, home, frozen-selection and backup validation still applies. The successor
+re-inventories live state and retains fresh backups; the old receipt, backups and
+transaction journal remain unchanged. Other statuses/errors, later effects,
+missing original quoting evidence and changed backups are negative regressions.
+
+Separately, a temporary checkout of published 4.4.3 at
+`330a913014cf4c0296659d98572bc85b24060e0d`, using Codex 0.165.0, verified an
+operator workaround: remove only the known QuickStark Codex selectors through the
+native CLI, then perform an ordinary same-version update. Both agents completed,
+the original backup payloads and prior journal remained intact, and the same-source
+repair receipt was retained and marked complete. This isolated result does not
+prove acceptance on dirk-dev; no real installed profiles were modified here.
+
+## 4.4.4 preparation
+
+The single-quoted Codex-header repair and narrowly bound failed-repair
+continuation are prepared for 4.4.4. Root and lockfile versions, the root Claude
+manifest and all six active packages across Codex, Claude and Pi are synchronized.
+The retained PS 3.8.0 transition artifact remains unchanged. Publication and
+installed-profile updates are separate from this preparation.
+
+The operator subsequently reported that the published 4.4.3 cleanup and retry
+completed on dirk-dev: Codex updated and verified three packages, and Pi updated
+and verified one package. That confirms the workaround on the affected host;
+it does not establish installation acceptance for the unpublished 4.4.4 repair.

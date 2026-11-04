@@ -30,6 +30,14 @@ this repository distributes skills to local machines. Hosted tests are manual.
   journal unchanged; this is a new repair, not a reinterpretation of that journal.
   Reject missing evidence, drift, unsupported repair states and profile changes
   before native effects. Retry an interrupted successor from its own receipt.
+- Recognize both single-quoted and double-quoted owned Codex plugin table keys,
+  with the same strict enablement and duplicate checks. A receipt that failed
+  after its first attempted Codex withdrawal with the historical unrelated-state
+  error may also receive a newer-release successor, only when its bound original
+  configuration proves that package had single-quoted enabled settings. Retain
+  every existing source, ancestry, profile, selection and backup check. Re-inventory
+  current state and create fresh backups; never replay the failed action or
+  rewrite the predecessor. Other failed repair states remain unsupported.
 - Publish only by explicit dispatch of `release.yml` on main. Create the exact
   version tag and GitHub release directly, without depending on hosted test jobs.
   Keep Linux/macOS tests available through manual dispatch of `validate.yml`.

@@ -70,10 +70,10 @@ async function fixture(t, {bootstrap = true, host = 'codex', version = '4.0.0'} 
   return {base,repositoryRoot,homeDirectory,revision,document,options,nativeOptions,audit};
 }
 
-async function failedVersionedRepair(t) {
-  const args=await fixture(t,{bootstrap:false,version:'4.4.1'});
+async function failedVersionedRepair(t, {oldVersion='4.4.1',newVersion='4.4.2'}={}) {
+  const args=await fixture(t,{bootstrap:false,version:oldVersion});
   const releases=path.join(args.homeDirectory,'.local/share/quickstark/releases');await mkdir(releases,{recursive:true});
-  const old=path.join(releases,'v4.4.1-fixture');await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
+  const old=path.join(releases,`v${oldVersion}-fixture`);await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
   await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
   const agents=['codex','pi'];const paths=resolveManagedSkillPaths({...args.options,agents});
   const nativeOptions={...args.nativeOptions,cwd:old};
@@ -97,21 +97,88 @@ async function failedVersionedRepair(t) {
   const journalPath=failed.results[0].journalPath;assert.ok(journalPath);await readMigrationJournal(journalPath);
   const priorRecord=await readFile(repair.recordPath,'utf8');const priorJournal=await readFile(journalPath,'utf8');
   for(const file of ['package.json',...TARGET_SKILL_COLLECTIONS.flatMap(c=>[`${c.codexPackageRoot}/.codex-plugin/plugin.json`,`${c.claudePackageRoot}/.claude-plugin/plugin.json`,`${c.piPackageRoot}/package.json`])]) {
-    const data=await readJSON(path.join(args.repositoryRoot,file));data.version='4.4.2';await writeJSON(path.join(args.repositoryRoot,file),data);
+    const data=await readJSON(path.join(args.repositoryRoot,file));data.version=newVersion;await writeJSON(path.join(args.repositoryRoot,file),data);
   }
   const audit=await readJSON(path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'));
   for(const source of Object.keys(audit.sources)) {const snapshot=await captureMigrationPath(path.join(args.repositoryRoot,source));audit.sources[source]={kind:snapshot.kind,contentSha256:snapshot.contentSha256};}
   await writeJSON(path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'),audit);
-  await git(args.repositoryRoot,['add','.']);await git(args.repositoryRoot,['commit','--quiet','-m','Synthetic published 4.4.2']);
+  await git(args.repositoryRoot,['add','.']);await git(args.repositoryRoot,['commit','--quiet','-m',`Synthetic published ${newVersion}`]);
   const revision=(await git(args.repositoryRoot,['rev-parse','HEAD'])).stdout.trim();
-  const newer=path.join(releases,'v4.4.2-fixture');await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,newer]);
+  const newer=path.join(releases,`v${newVersion}-fixture`);await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,newer]);
   await git(newer,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
   const ownerPath=path.join(args.homeDirectory,'.local/state/quickstark/installer/checkout.json');
-  const owner={schemaVersion:2,remoteUrl:'https://github.com/quickstark/skills.git',repositoryRoot:newer,releases:[{repositoryRoot:old,version:'4.4.1',tag:'v4.4.1',revision:args.revision},{repositoryRoot:newer,version:'4.4.2',tag:'v4.4.2',revision}]};
+  const owner={schemaVersion:2,remoteUrl:'https://github.com/quickstark/skills.git',repositoryRoot:newer,releases:[{repositoryRoot:old,version:oldVersion,tag:`v${oldVersion}`,revision:args.revision},{repositoryRoot:newer,version:newVersion,tag:`v${newVersion}`,revision}]};
   await writeJSON(ownerPath,owner);
   const options={...args.options,repositoryRoot:newer,agents,verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
   return {...args,old,newer,repair,priorRecord,priorJournal,journalPath,paths,agents,options,owner,ownerPath};
 }
+
+async function failedQuotedWithdrawal(t) {
+  const f=await failedVersionedRepair(t,{oldVersion:'4.4.3',newVersion:'4.4.4'});
+  await runNativePackageCommand('codex',['plugin','add','qs-specialists@quickstark','--json'],{...f.nativeOptions,cwd:f.old});
+  const config=path.join(f.homeDirectory,'.codex/config.toml');
+  await writeFile(config,(await readFile(config,'utf8')).replace('[plugins."qs-specialists@quickstark"]',"[plugins.'qs-specialists@quickstark']"));
+  const message='Native manager changed unrelated state; originals and recovery records are retained.';
+  const runtime={runCommand:async(command,argv,context)=>{
+    const result=await runNativePackageCommand(command,argv,context);
+    if(command==='codex'&&argv[1]==='list') {
+      const inventory=JSON.parse(result.stdout);
+      inventory.installed.sort((a,b)=>Number(b.name==='qs-specialists')-Number(a.name==='qs-specialists'));
+      return {...result,stdout:JSON.stringify(inventory)};
+    }
+    // Recreate the historical guard failure after an actual successful remove.
+    if(command==='codex'&&argv[1]==='remove'&&argv[2]==='qs-specialists@quickstark') throw Error(message);
+    return result;
+  }};
+  let failure;
+  try {await repairManagedPackages({repositoryRoot:f.old,paths:f.paths,agents:f.agents,runtime});}catch(error){failure=error;}
+  assert.equal(failure?.message,message);
+  const repair={...await readJSON(failure.repairJournalPath),recordPath:failure.repairJournalPath};
+  assert.equal(repair.status,'failed');
+  assert.deepEqual(repair.actions,[{agent:'codex',packageId:'qs-specialists',operation:'withdraw',status:'attempted'}]);
+  return {...f,repair,priorRecord:await readFile(repair.recordPath,'utf8')};
+}
+
+test('a newer release continues the failed single-quoted Codex withdrawal with its original backups intact', {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedQuotedWithdrawal(t);
+  const originals=await captureMigrationPath(path.dirname(f.repair.recordPath));
+  const result=await updateInstalledHarnesses({...f.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  const successor=await readJSON(result.results[0].repairJournalPath);
+  assert.equal(successor.status,'complete');assert.equal(successor.previousRecord,f.repair.recordPath);
+  assert.equal(successor.previousRecordContentSha256,(await captureMigrationPath(f.repair.recordPath)).contentSha256);
+  assert.equal(await readFile(f.repair.recordPath,'utf8'),f.priorRecord);
+  assert.deepEqual(await captureMigrationPath(originals.path),originals);
+  assert.equal(await readFile(f.journalPath,'utf8'),f.priorJournal);
+  assert.ok(result.results[0].targets.codex.desired.packages.includes('qs-specialists'));
+  assert.equal(await pendingManagedRepair({repositoryRoot:f.newer,paths:f.paths,agents:f.agents}),null);
+  assert.equal((await executeManagedSkills({...f.options,action:'verify'})).status,'verified');
+});
+
+test('failed-withdrawal continuation rejects other states, later effects and backup drift before native operations', {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedQuotedWithdrawal(t);
+  const backup=f.repair.snapshots.find(e=>e.snapshot.kind==='file').destination;
+  const bytes=await readFile(backup);
+  for(const defect of ['prepared status','other error','later effect','no original single quote','backup drift']) {
+    const record=JSON.parse(f.priorRecord);
+    if(defect==='prepared status')record.status='prepared';
+    if(defect==='other error')record.error='Different unsupported repair failure.';
+    if(defect==='later effect')record.actions.push({agent:'codex',operation:'marketplace-remove',status:'attempted'});
+    if(defect==='no original single quote') {
+      await writeFile(backup,bytes.toString().replace("[plugins.'qs-specialists@quickstark']",'[plugins."qs-specialists@quickstark"]'));
+      const snapshot=await captureMigrationPath(backup);
+      const saved=record.snapshots.find(e=>e.destination===backup).snapshot;
+      Object.assign(saved,{contentSha256:snapshot.contentSha256,bytes:snapshot.bytes,entries:snapshot.entries});
+    }
+    if(defect==='backup drift')await appendFile(backup,'Changed original backup.');
+    await writeJSON(f.repair.recordPath,record);
+    const before=await fixtureHomeState(f.homeDirectory);let calls=0;
+    const result=await updateInstalledHarnesses({...f.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi'],runtime:{runCommand:async()=>{calls++;throw Error('Unexpected native operation.');}}});
+    assert.equal(result.status,'failed',defect);assert.match(result.results[0].error,defect==='backup drift'?/backup changed/:/not prepared for continuation/);
+    assert.equal(calls,0,defect);assert.deepEqual(await fixtureHomeState(f.homeDirectory),before,defect);
+    await writeFile(f.repair.recordPath,f.priorRecord);await writeFile(backup,bytes);
+  }
+});
 
 test('a failed 4.4.1 Codex and Pi install continues on 4.4.2 without discarding its receipt or journal', {skip:!['codex','pi'].every(available)}, async t=>{
   const f=await failedVersionedRepair(t);
@@ -229,6 +296,52 @@ test('actual Codex and Pi update accepts commented enablement while preserving o
   const settings=await readJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'));
   assert.equal(settings.theme,'community-preserved');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
   assert.equal((await executeManagedSkills({...args.options,agents:['codex','pi'],action:'verify'})).status,'verified');
+});
+
+async function singleQuotedRepairFixture(t) {
+  const args=await fixture(t,{bootstrap:false});const old=path.join(args.base,'old-source');
+  await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
+  await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],args.nativeOptions);
+  await runNativePackageCommand('codex',['plugin','add','qs-specialists@quickstark','--json'],args.nativeOptions);
+  const config=path.join(args.homeDirectory,'.codex/config.toml');
+  const text=await readFile(config,'utf8');assert.match(text,/\[plugins\."qs-specialists@quickstark"\]/);
+  await writeFile(config,text.replace('[plugins."qs-specialists@quickstark"]',"[plugins.'qs-specialists@quickstark']")+'\n[projects."/fixture-preserved"]\ntrust_level = "trusted"\n');
+  const foreign=path.join(args.homeDirectory,'.codex/plugins/cache/remote-vendor/demo/1.0.0/skills/vendor-helper');
+  await mkdir(foreign,{recursive:true});await writeFile(path.join(foreign,'SKILL.md'),'---\nname: vendor-helper\ndescription: Preserve unrelated instructions.\n---\nVendor fixture.\n');
+  const before=await captureMigrationPath(path.join(args.homeDirectory,'.codex/plugins/cache/remote-vendor'));
+  return {...args,config,before,agents:['codex','pi']};
+}
+
+test('Codex and Pi repair accepts single-quoted plugin headers and preserves unrelated settings and caches', {skip:!['codex','pi'].every(available)}, async t=>{
+  const args=await singleQuotedRepairFixture(t);const {config,before,agents}=args;
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.deepEqual(await captureMigrationPath(before.path),before);
+  assert.match(await readFile(config,'utf8'),/\[projects\."\/fixture-preserved"\]\ntrust_level = "trusted"/);
+  const repair=await readJSON(result.results[0].repairJournalPath);assert.equal(repair.status,'complete');
+  assert.match(await readFile(repair.snapshots.find(e=>e.snapshot.path===config).destination,'utf8'),/\[plugins\.'qs-specialists@quickstark'\]/);
+  assert.ok(result.results[0].targets.codex.desired.packages.includes('qs-specialists'));
+  assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
+});
+
+for(const target of ['configuration','foreign cache']) test(`single-quoted Codex repair still rejects a real unrelated ${target} change`, {skip:!['codex','pi'].every(available)}, async t=>{
+  const args=await singleQuotedRepairFixture(t);let effects=0;
+  const changed=target==='configuration'?args.config:path.join(args.before.path,'demo/1.0.0/skills/vendor-helper/SKILL.md');
+  const runtime={runCommand:async(command,argv,context)=>{
+    const result=await runNativePackageCommand(command,argv,context);
+    if(command==='codex'&&argv[1]==='remove') {
+      effects++;
+      if(target==='configuration')await writeFile(changed,(await readFile(changed,'utf8')).replace('trust_level = "trusted"','trust_level = "untrusted"'));
+      else await appendFile(changed,'Concurrent vendor edit.');
+    }
+    return result;
+  }};
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,runtime,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'failed');assert.equal(effects,1);
+  assert.match(result.results[0].error,/Native manager changed unrelated state/);
+  assert.match(await readFile(changed,'utf8'),target==='configuration'?/trust_level = "untrusted"/:/Concurrent vendor edit/);
+  assert.equal((await readJSON(result.results[0].repairJournalPath)).status,'failed');
 });
 
 test('a prepared Codex and Pi repair completes from its bound source with commented enablement', {skip:!['codex','pi'].every(available) ? 'Codex or Pi unavailable; pending native repair unverified.' : false}, async t=>{

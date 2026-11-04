@@ -176,3 +176,14 @@ these portability repairs. Native integration tests use temporary isolated homes
 and synthetic repositories. Conditional Claude validation remains unavailable
 when the CLI is absent. Full-suite results and platform skips must be reported
 separately from Linux runtime verification and installed-host acceptance.
+## Single-quoted Codex repair regression
+
+The dirk-dev report identifies Codex 0.165.0, Node 24.21.0 and a single-quoted
+owned plugin table on Linux. Its unrelated TOML semantics were unchanged after
+withdrawal, but the double-quote-only projection reported unrelated-state drift.
+The native adapter and repair now recognize the same literal selector under
+either quote style. The focused regression first failed against the original
+implementation with the reported message. Recovery coverage includes the already
+failed receipt receiving a source-bound newer-release successor, plus rejection
+of actual unrelated edits and unsupported predecessor evidence. See
+[the installer review](versioned-installer-review.md#single-quoted-codex-table-keys-on-dirk-dev).

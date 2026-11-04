@@ -37,6 +37,26 @@ test('Codex comment support still rejects duplicate enablement, unknown settings
   ]) assert.throws(() => codexConfig(header + body, packages), /unsupported|enablement|Duplicate/);
 });
 
+test('single-quoted owned Codex table keys match double-quoted keys without hiding vendor settings', () => {
+  const packages = [{ name: 'qs-specialists', marketplace: 'quickstark' }];
+  const unrelated = 'model = "fixture-preserved"\n[plugins]\n"vendor@independent" = { enabled = true }\n';
+  for (const enabled of [true, false]) {
+    const expected = codexConfig(unrelated + `[plugins."qs-specialists@quickstark"]\nenabled = ${enabled}\n`, packages);
+    const owned = `[plugins.'qs-specialists@quickstark']\nenabled = ${enabled}\n`;
+    assert.deepEqual(codexConfig(unrelated + owned, packages), expected);
+    assert.notEqual(codexConfig(unrelated.replace('enabled = true', 'enabled = false') + owned, packages).unrelatedHash, expected.unrelatedHash);
+  }
+});
+
+test('single-quoted owned Codex headers retain strict enablement and cross-quote duplicate checks', () => {
+  const packages = [{ name: 'qs-specialists', marketplace: 'quickstark' }];
+  const prefix = "[plugins.'qs-specialists@quickstark']\n";
+  for (const value of ['', 'enabled = "true"', 'enabled = true\nother = true', 'enabled = true\nenabled = false']) {
+    assert.throws(() => codexConfig(prefix + value, packages), /unsupported|enablement|Duplicate/);
+  }
+  assert.throws(() => codexConfig(prefix + 'enabled = true\n[plugins."qs-specialists@quickstark"]\nenabled = true\n', packages), /Duplicate/);
+});
+
 const nativeFixtureProgram = `
 import {readFile,writeFile,mkdir,readdir,cp,rm} from 'node:fs/promises';import path from 'node:path';
 const [host,...args]=process.argv.slice(2);const home=process.env.HOME;

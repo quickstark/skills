@@ -48,7 +48,16 @@ async function read(file, fallback, maximumBytes = 2 * 1024 * 1024) {
 
 async function repairContinuationEvidence({ paths, agents, repositoryRoot, pending, record }) {
   const prior = record.value;
-  check(prior.schemaVersion === 1 && prior.status === 'prepared-for-install' && prior.repositoryRoot === pending.value.repositoryRoot
+  // The old single-quote matcher can fail immediately after its first Codex
+  // withdrawal. Re-inventory that narrow failure in a fresh repair; never replay
+  // its attempted effect or reinterpret it as a prepared installation.
+  const first = prior.actions?.[0];
+  const failedQuotedWithdrawal = prior.status === 'failed'
+    && prior.error === 'Native manager changed unrelated state; originals and recovery records are retained.'
+    && Array.isArray(prior.actions) && prior.actions.length === 1
+    && first?.agent === 'codex' && agents.includes('codex') && ids.has(first.packageId)
+    && first.operation === 'withdraw' && first.status === 'attempted';
+  check(prior.schemaVersion === 1 && (prior.status === 'prepared-for-install' || failedQuotedWithdrawal) && prior.repositoryRoot === pending.value.repositoryRoot
     && stable(prior.agents) === stable(agents), 'Pending repair is not prepared for continuation; its original state remains retained.');
   const owner = await read(path.join(paths.homeDirectory, '.local/state/quickstark/installer/checkout.json'), null);
   check(owner.value?.schemaVersion === 2 && owner.value.remoteUrl === SKILLS_ORIGIN && Array.isArray(owner.value.releases), 'Pending repair continuation requires recorded official versioned sources.');
@@ -90,6 +99,16 @@ async function repairContinuationEvidence({ paths, agents, repositoryRoot, pendi
     check(actual.kind === entry.snapshot.kind && actual.contentSha256 === entry.snapshot.contentSha256, 'Pending repair original backup changed; originals remain retained.');
     backups.push(actual);
   }
+  if (failedQuotedWithdrawal) {
+    const index = prior.snapshots.findIndex(entry => entry.snapshot.path === path.join(paths.codexHomeDirectory, 'config.toml'));
+    const original = backups[index];
+    check(original?.kind === 'file' && original.bytes <= 2 * 1024 * 1024, 'Failed withdrawal has no bounded original Codex configuration.');
+    const text = await readFile(original.path, 'utf8');
+    check(new RegExp(`^\\s*\\[plugins\\.'${first.packageId}@quickstark'\\]\\s*$`, 'm').test(text)
+      && codexConfig(text, [{ name: first.packageId, marketplace: 'quickstark' }]).selected[`${first.packageId}@quickstark`]?.enabled === true,
+      'Pending repair is not prepared for continuation; the failed withdrawal has no original single-quoted enablement.');
+    await revalidateBackup(original);
+  }
   return { records: [pending.snapshot, record.snapshot, owner.snapshot], backups, recordContentSha256: record.snapshot.contentSha256, nextRevision: newSource.revision };
 }
 
@@ -126,7 +145,7 @@ function codexUnrelated(text) {
   for (const line of text.split(/\r?\n/)) {
     if (/^\s*#/.test(line)) { comments.push(line.trim()); continue; }
     if (!line.trim()) continue;
-    if (/^\s*\[/.test(line)) owned = /^\s*\[(?:plugins\."[a-z0-9-]+@quickstark"|marketplaces\.(?:quickstark|"quickstark"))\]\s*(?:#.*)?$/.test(line);
+    if (/^\s*\[/.test(line)) owned = /^\s*\[(?:plugins\.(?:"[a-z0-9-]+@quickstark"|'[a-z0-9-]+@quickstark')|marketplaces\.(?:quickstark|"quickstark"))\]\s*(?:#.*)?$/.test(line);
     if (!owned) { for (const comment of comments) lines.push(comment); lines.push(line.trim()); }
     comments = [];
   }
