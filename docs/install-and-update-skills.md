@@ -50,8 +50,10 @@ It selects the highest stable `vMAJOR.MINOR.PATCH` Git tag from the official
 repository, resolves it to one commit and checks generated packages and committed
 acceptance evidence locally before replacing the managed checkout. Numeric version
 ordering handles versions such as 4.10.0 correctly; prereleases are ignored.
-There are no client-side GitHub Actions queries or CI polling delays. Linux/macOS
-validation runs before explicit publication through `release.yml`.
+There are no client-side GitHub Actions queries or CI polling delays. Explicit
+publication through `release.yml` creates the repository's version tag and GitHub
+release directly. Linux/macOS tests are available in a separate manual workflow;
+hosted runner availability does not gate publishing or local updates.
 
 Use `--version MAJOR.MINOR.PATCH` to select an existing published version.
 Automatic downgrades and changed source under the same version are rejected.

@@ -8,8 +8,8 @@
   waiting for GitHub Actions. Pin the release through native transactions, retain
   local acceptance and recovery protections, reject version regression and moved
   same-version sources, and resume the original version after newer publication.
-- Publish prepared versions only by explicit workflow dispatch after Linux/macOS
-  validation; synchronize all six packages at 4.4.1. Include the installer, cache
+- Publish prepared versions directly by explicit workflow dispatch; hosted tests
+  are a separate manual workflow. Synchronize all six packages at 4.4.1. Include the installer, cache
   preservation, native inventory and profile repairs made after the v4.4.0 tag.
 
 ## 4.4.0

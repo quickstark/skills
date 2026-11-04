@@ -9,11 +9,7 @@ permissions:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  validate:
-    uses: ./.github/workflows/validate.yml
-
   publish:
-    needs: validate
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
@@ -25,7 +21,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node scripts/validate-skill-release.mjs .
       - name: Publish the prepared version
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

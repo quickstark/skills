@@ -160,7 +160,7 @@ test('release context is explicit, bounded and removed before managed flag parsi
   for(const args of [['--release'],['--release','main'],['--release',value,'--release',value]]) assert.throws(()=>parseReleaseContext(args));
 });
 
-test('manual publication waits for validation and tags only the prepared commit, with safe retries', async t => {
+test('manual publication has no test-job dependency and tags only the prepared commit, with safe retries', async t => {
   const f=await fixture(t); const remote=path.join(f.base,'published.git');
   await exec('git',['init','--bare','--quiet',remote]); await f.git('remote','add','origin',remote);
   await writeFile(path.join(f.origin,'package.json'),JSON.stringify({version:'4.4.2'})); await f.git('add','.'); await f.git('commit','--quiet','-m','Prepared version');
@@ -169,7 +169,10 @@ test('manual publication waits for validation and tags only the prepared commit,
   await writeFile(path.join(bin,'gh'),`#!${process.execPath}\nconst fs=require('node:fs');const args=process.argv.slice(2);if(args[1]==='view')process.exit(fs.existsSync(process.env.QS_TEST_RELEASE_RECORD)?0:1);fs.writeFileSync(process.env.QS_TEST_RELEASE_RECORD,JSON.stringify(args));\n`,{mode:0o755});
   const workflow=await readFile(path.resolve(import.meta.dirname,'../.github/workflows/release.yml'),'utf8');
   assert.match(workflow,/on:\s*\n  workflow_dispatch:/); assert.doesNotMatch(workflow,/\n  push:|changeset version/);
-  assert.match(workflow,/uses: \.\/\.github\/workflows\/validate.yml/); assert.match(workflow,/publish:\s*\n    needs: validate/);
+  assert.doesNotMatch(workflow,/\bneeds:|uses: \.\/\.github\/workflows\/validate.yml|npm (?:ci|test)|validate-skill-release/);
+  const validation=await readFile(path.resolve(import.meta.dirname,'../.github/workflows/validate.yml'),'utf8');
+  assert.match(validation,/on:\s*\n  workflow_dispatch:/);
+  assert.doesNotMatch(validation,/\n  (?:push|pull_request|workflow_call):/);
   const body=workflow.split('        run: |\n')[1].split('\n').map(line=>line.replace(/^          /,'')).join('\n');
   const script=path.join(f.base,'publish.sh'); await writeFile(script,body);
   const env={...process.env,PATH:`${bin}${path.delimiter}${process.env.PATH}`,GITHUB_SHA:head,GITHUB_REPOSITORY:'fixture/skills',QS_TEST_RELEASE_RECORD:record};

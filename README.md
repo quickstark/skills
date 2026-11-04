@@ -429,10 +429,11 @@ npm test
 ```
 
 The [release workflow](./.github/workflows/release.yml) is explicitly dispatched
-on `main` after preparing and synchronizing a new version. It runs Linux/macOS
-validation before creating that version's tag and GitHub release. Pushes do not
-publish automatically. Ordinary installations download the published tag without
-waiting for CI. See the [versioned installation specification](./docs/specs/quickstark-versioned-installation.md).
+on `main` after preparing and synchronizing a new version. It creates that
+version's tag and GitHub release directly. Hosted tests are a separate manual
+workflow and do not block publication. Pushes do not publish automatically.
+Ordinary installations download the published repository version without waiting
+for CI. See the [versioned installation specification](./docs/specs/quickstark-versioned-installation.md).
 
 This flow starts with version 4.4.1, which must be published before installation.
 The existing v4.4.0 tag must remain unchanged. A tag is not installed-host rollout

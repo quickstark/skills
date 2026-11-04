@@ -5,6 +5,9 @@
 The owner selected the latest published version tag for ordinary updates, with
 new installer fixes included in the next version. This supersedes the earlier
 installer policy requiring successful live CI for every latest-main checkout.
+After hosted macOS allocation failed during publication, the owner also removed
+hosted tests from the publication path. Publishing now creates a version tag and
+GitHub release directly; Linux/macOS tests remain available as a manual workflow.
 The implementation is prepared as 4.4.1; this record does not publish it or claim
 installation on a real Mac/Linux profile.
 
@@ -33,9 +36,9 @@ problem; retrying CI did not repair the owner's version-based update requirement
   ordinary authentication or the existing native workload-identity protections.
 - Synchronize the root, lockfile and all six active host projections at 4.4.1.
   Changes to generated manifests are version-only; the PS 3.8.0 payload is unchanged.
-- Explicit publication reuses the Linux/macOS validation matrix before creating
-  the exact tag and GitHub release. Repeated publication preserves an existing tag
-  and refuses a different source commit. No workflow was dispatched by this repair.
+- Explicit publication creates the exact tag and GitHub release without a hosted
+  test dependency. Validation runs only when separately dispatched. Repeated
+  publication preserves an existing tag and refuses a different source commit.
 
 ## Evidence and limits
 
@@ -45,6 +48,8 @@ prerelease exclusion, version mismatch, moved tags, downgrade, hidden edits,
 backups and resume. Publisher tests run the workflow's actual shell body against
 an isolated bare Git remote and a synthetic GitHub-release client; they assert
 the exact tagged commit, idempotent retries and refusal to move an existing tag.
+They also assert that publishing has no test dependency and hosted validation
+has only a manual trigger.
 Existing native tests separately verify the host adapters and recovery behavior.
 The legacy downgrade regression failed before its guard and passed afterward;
 upgrade coverage verifies dirty legacy-source retention and provenance without

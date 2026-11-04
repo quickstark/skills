@@ -41,8 +41,8 @@ The hosted `install.sh` and `npm run skills:update` entry points select the late
 stable published version tag, pin its commit and validate its packages locally
 before retaining a separate checkout for each version. Native registrations and
 journals keep physical versioned paths; current is only a convenience link.
-Installation never polls GitHub Actions;
-Linux/macOS CI runs before explicit version publication. Development clones remain
+Installation never polls GitHub Actions; hosted validation is manual and does not
+gate version publication. Development clones remain
 untouched; modified managed checkouts are retained in backups. The installer detects Codex, Claude and Pi on
 PATH unless explicit host/home flags or a recovery journal select targets.
 Default homes share a transaction; custom homes remain separate. Replacement of
@@ -72,8 +72,9 @@ When Claude is available, validate `.`, `packages/qs-specialists`,
 Packaging validation is separate from native install/migration acceptance.
 
 The release workflow is manually dispatched on main after version preparation.
-It reuses Linux/macOS validation before publishing the exact package version tag
-and GitHub release. Synchronize root/lockfile and all active projections before
+It publishes the exact package version tag and GitHub release directly, without
+waiting for hosted test jobs. Linux/macOS validation is a separate manual workflow.
+Synchronize root/lockfile and all active projections before
 publication; keep the retained PS payload unchanged. Publication and installed-host
 rollout remain separate. See docs/specs/quickstark-versioned-installation.md.
 

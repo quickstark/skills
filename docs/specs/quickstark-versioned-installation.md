@@ -6,7 +6,8 @@ Status: prepared for 4.4.1; not published or deployed by this change.
 
 The repository owner selected published version tags as the ordinary update source.
 Installation must work on macOS and Linux without querying or waiting for GitHub
-Actions. CI belongs before publication, not in each machine's update path.
+Actions. The owner subsequently removed hosted test gates from publication too:
+this repository distributes skills to local machines. Hosted tests are manual.
 
 - Select the highest stable `vMAJOR.MINOR.PATCH` tag from the official repository,
   ordered numerically; ignore prereleases. An explicit `--version` may select a
@@ -21,9 +22,11 @@ Actions. CI belongs before publication, not in each machine's update path.
 - Resume a versioned transaction at its original published tag and commit, not the
   latest version. Preserve legacy journals that cannot be matched to a versioned
   source; do not silently reinterpret them.
-- Publish only by explicit dispatch of `release.yml` on main. Reuse Linux/macOS
-  validation, then validate accepted package closures and create the exact version
-  tag and GitHub release. Retries must not move an existing tag.
+- Publish only by explicit dispatch of `release.yml` on main. Create the exact
+  version tag and GitHub release directly, without depending on hosted test jobs.
+  Keep Linux/macOS tests available through manual dispatch of `validate.yml`.
+  Retries must not move an existing tag. Preserve local installation integrity,
+  ownership and package checks.
 
 The first version containing this installer is 4.4.1. Existing v4.4.0 predates its
 entry points and several engine repairs; this change must be published in a new
