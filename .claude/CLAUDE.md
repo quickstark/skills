@@ -37,10 +37,13 @@ package, helper reference or source directory does not authorize installation.
 Target native transactions support Codex, Claude Code and Pi. Claude targets use
 `claude` or `claude-code`, enabled user-scoped packages and verified local marketplace
 bindings. Keep custom host homes, saved selections and recovery journals isolated.
-The hosted `install.sh` and `npm run skills:update` entry points validate the exact
-published main commit against the Linux/macOS GitHub workflow before preparing a
-clean managed checkout. Development clones remain untouched; modified managed
-checkouts are retained in backups. The installer detects Codex, Claude and Pi on
+The hosted `install.sh` and `npm run skills:update` entry points select the latest
+stable published version tag, pin its commit and validate its packages locally
+before retaining a separate checkout for each version. Native registrations and
+journals keep physical versioned paths; current is only a convenience link.
+Installation never polls GitHub Actions;
+Linux/macOS CI runs before explicit version publication. Development clones remain
+untouched; modified managed checkouts are retained in backups. The installer detects Codex, Claude and Pi on
 PATH unless explicit host/home flags or a recovery journal select targets.
 Default homes share a transaction; custom homes remain separate. Replacement of
 known QuickStark registrations requires a verified official source, accepted
@@ -68,10 +71,11 @@ When Claude is available, validate `.`, `packages/qs-specialists`,
 `packages/qs-execution` using `claude plugin validate <root> --strict`.
 Packaging validation is separate from native install/migration acceptance.
 
-The current Changesets workflow versions the root and tags; it does not run the
-required projection synchronization after versioning. Before any intended release,
-regenerate all active versioned outputs and run required checks. Do not infer
-publication, installed-host rollout or acceptance from a queued command or a tag.
+The release workflow is manually dispatched on main after version preparation.
+It reuses Linux/macOS validation before publishing the exact package version tag
+and GitHub release. Synchronize root/lockfile and all active projections before
+publication; keep the retained PS payload unchanged. Publication and installed-host
+rollout remain separate. See docs/specs/quickstark-versioned-installation.md.
 
 ## Root-run contract
 

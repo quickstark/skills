@@ -735,7 +735,10 @@
         "scripts/install-skills.mjs",
         "scripts/managed-package-repair.mjs",
         "scripts/validate-skill-release.mjs",
-        "tests/install-skills.test.mjs"
+        "tests/install-skills.test.mjs",
+        "docs/validation/versioned-installer-review.md",
+        "docs/specs/quickstark-versioned-installation.md",
+        ".github/workflows/release.yml"
       ]
     },
     "AC-16": {
@@ -848,7 +851,10 @@
         "scripts/install-skills.mjs",
         "scripts/managed-package-repair.mjs",
         "scripts/validate-skill-release.mjs",
-        "tests/install-skills.test.mjs"
+        "tests/install-skills.test.mjs",
+        "docs/validation/versioned-installer-review.md",
+        "docs/specs/quickstark-versioned-installation.md",
+        ".github/workflows/release.yml"
       ]
     },
     "AC-18": {
@@ -1157,7 +1163,10 @@
         "scripts/install-skills.mjs",
         "scripts/managed-package-repair.mjs",
         "scripts/validate-skill-release.mjs",
-        "tests/install-skills.test.mjs"
+        "tests/install-skills.test.mjs",
+        "docs/validation/versioned-installer-review.md",
+        "docs/specs/quickstark-versioned-installation.md",
+        ".github/workflows/release.yml"
       ]
     },
     "AC-24": {
@@ -4451,11 +4460,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "958aa530cf76846604f34d8d165344b2154a4a1f4da6327cee300d64c13d9f91"
+      "contentSha256": "2d188fe03f6780746e7f5ad5f3a5ca9314aa08f7d5dd4b41c4051a7c48b8b289"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "759054d0b8dc65feb81216345b95944179c995d65c7461102601cc36831f285e"
+      "contentSha256": "889dfa9a198095d9df12d01315d81751631cb5bcefd8c6158d06651327492ac2"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -4475,7 +4484,7 @@
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "0585b3653eb8c187e0a32ec30914553d0d4f836d092355f25f9df9c91418a83e"
+      "contentSha256": "c2023da697e415834e0e1877f17f95aac34100ab7428bb3ff489ac8e7354cbf0"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -4607,15 +4616,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "7382e0decb46272336f598cb20b1e5d51baaf8702160d2e810a74eec104dcf95"
+      "contentSha256": "cf30fa7053fd0bc1e443d04df56ba110715db4a31e75f0efb06bb36e263054f2"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "e01c83bbf7af06763c894a563a4b8e6a2762160fa5e99a462b77724a0a444bb9"
+      "contentSha256": "2bbeff50e4b25b5c6d95c881052e1f69a8827a9b3f32fd9dd0907059feac1801"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "6ffbdd011996a59f38b5b7668a18ed7e177408605caf9e3ee058475f36b12d8e"
+      "contentSha256": "4ef348f74b983d390bd9f466492d7a7fb1443ff905f35634931cfb7691c6464f"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -4655,15 +4664,15 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "075d78dbf4975314fed2dee5740b337789250fd0c57b8e342a19468dfd6a4614"
+      "contentSha256": "329a8cb6a0da1c74d82cd9b97d9f4a4972d36d9d7752c637e680590f19645eeb"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "6cab269447c93bfe28055f0a60418c8c668e2e9165b047bac9b89b3fdb68388f"
+      "contentSha256": "7dc03299cef73083f0ea7c8ae32a1c8e50b088ff72e4301c734c231f800857cb"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "cf4a19b92a0727324b3615441115cb50233a7bdccb2fac2bdcd289dd24a07708"
+      "contentSha256": "3bb6f9aa2179305cb493146e8b5be9d36ea8003dd0e89c7e4a31f3dd9c1783b0"
     },
     "skills/advanced": {
       "kind": "directory",
@@ -4719,15 +4728,15 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "220544947a0c557b7bb264d8b07630cb6d49af6b666e1111525fc90de1f86e66"
+      "contentSha256": "3b7e832ed3c8e1c0bcaf80805f6035d56e062d15fc1e6567c754f4060cd744e7"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "8f29b05f6a6354713b54a30ca39d668d260bfe0421b10b08c8d661094a8196ca"
+      "contentSha256": "46ee0a11956aaa8c0382e7b5a3089e940eb7f5565423c657b261cc1b008a9434"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "3d1635c744ac3bafa1e78d91c0ff1747cb99c9147a98890332335b8b19fac42a"
+      "contentSha256": "5e3df054245c93bcfa515d75bd59a57cca457bba81680014c4ed6c4638e6ff5e"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
@@ -4751,15 +4760,15 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "2ead2234dfa5c5ea783c89e20241420fba8add19af7b817499d59377d12d7338"
+      "contentSha256": "6703e6d388980984fb9bcf83745217ce25124ec05d647edbe2b577cea3861dfd"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "565b5ea4f56ed390e5f3598c33400abb13091d189404e6ed93f1eaaba2bad91a"
+      "contentSha256": "0317b3d23fcddc65edf4cfec8c900734fb5d0e8885864f36d76e6f52e9bab10d"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "bbf39e345087307e7868a20a0f20ee0613190da0bfdbe0336ba62c6380f60ef1"
+      "contentSha256": "fd0726d4eb68ecdf4c87edeed0a3e3ca82d1ea99721e74cb700478d5da4b001e"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -4767,15 +4776,15 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "ef96995810c15aee4b33f1473963462172fb22a3eb203e88a6bf5b31f05ffb2e"
+      "contentSha256": "c0fd7eaa46e429c4b8dd66df19036da390b4271be3c3381289be6126ee0c9d48"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "9cf706b93dfba00c264c48494bbc064ca3c30c82bbdc5a1f76fe9775fa90016f"
+      "contentSha256": "54a633574ce3685ba40666fcb0de305305220801eca9f866dad8e4cadf02279b"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "448da0feb500c6510fa4159833edd0b7ab1ae8aa5f2af1d83eeeec3af96eae95"
+      "contentSha256": "602974b7b9477f5eff31ebeb1a9346cc71a2c60473acf3f7acde3d84efa9af19"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
@@ -4783,7 +4792,7 @@
     },
     "packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "784c5a6168c3749b4a869f0cd17bbec4eb92a877f072675b41c03f72323092cc"
+      "contentSha256": "24eb7a96fd259812c3c24a80a1b21bad9d71c699f4a8917f74ed93f876c44a6f"
     },
     "scripts/claude-core-migration.mjs": {
       "kind": "file",
@@ -4795,11 +4804,11 @@
     },
     "scripts/update-skills.mjs": {
       "kind": "file",
-      "contentSha256": "73f792931ef0e6897b415bb4cf929fa4d43d9c76af1485a0b0902414dd5b40ca"
+      "contentSha256": "78b99f6aa699092c533232a620c7939ddac439d61fe0da7c0b99602a0b8ba111"
     },
     ".github/workflows/validate.yml": {
       "kind": "file",
-      "contentSha256": "c59cc60b4d9a9bb21c0f87a19fdd488ed60ccbc726312090e4f4f58f6f0b47ff"
+      "contentSha256": "133559dbc4c8f01a35ea8fe7370f58158500b5bf5c0c9a132f7e97d0b2288eaa"
     },
     "install.sh": {
       "kind": "file",
@@ -4807,7 +4816,7 @@
     },
     "scripts/install-skills.mjs": {
       "kind": "file",
-      "contentSha256": "a27fc82c0f9201f5b8fc029321bbb9bb9fefe315ec1c630a7b0192d54d7ec7c0"
+      "contentSha256": "1ba8fd226b146d7357a8e72afe8eb084487452c57f4b2ed62bb4d0de2a248c01"
     },
     "scripts/managed-package-repair.mjs": {
       "kind": "file",
@@ -5133,7 +5142,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "a5a31d9b09631c837c93811f34a425cd0289ab084c749542fd4c4c2daea652bc"
+      "sha256": "dbaf84995f43d9cb18b09b2ff70e331853c08e048cb5032b5e3a6996ed8dcf10"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -5141,7 +5150,7 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "ce5395d8556c53095de06e8328d10dce517ad1ec2d941a965ef0b4064292de0a"
+      "sha256": "974c6b5ea64d69f230da31356cf90ddf736d6ce8197db2d53de2527c7cbafdb0"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
@@ -5149,7 +5158,7 @@
     },
     "docs/contributing.md": {
       "path": "docs/contributing.md",
-      "sha256": "a9787346d15686488e028041a81a23dbcd5800c3f48bc2c5c8359e7111e8ba11"
+      "sha256": "19071d828e7296e65515438087ea964554f81e071353b1c475b5e0e3e0b34735"
     },
     "docs/personal-skills.md": {
       "path": "docs/personal-skills.md",
@@ -5157,7 +5166,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "9e197eb2d3aad2246f26ccf961d1297959d08ae524e203d236707c24b4b07265"
+      "sha256": "b3c0c7d075beb2f1710fa50b312699078326d9a7a62d87580b170accbf157b4c"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -5309,7 +5318,7 @@
     },
     "scripts/update-skills.mjs": {
       "path": "scripts/update-skills.mjs",
-      "sha256": "e841c99f8861e6e1a850ecb11edb0dc80015f8f8319cdd9f05d1dd4e74beda52"
+      "sha256": "2b9032ceee9a1afd3b2dd5ac7095819365e930f272116bb60c5461100f1e0b9a"
     },
     "scripts/managed-marketplace-bootstrap.mjs": {
       "path": "scripts/managed-marketplace-bootstrap.mjs",
@@ -5333,11 +5342,11 @@
     },
     ".github/workflows/validate.yml": {
       "path": ".github/workflows/validate.yml",
-      "sha256": "03d93276583dcec08ef1b15be165d793bd9a3ad1a9a5c3a40a58de4468e3bbf6"
+      "sha256": "6f3a98df7ff33a645e590925c5640077292b64e8420da6b92fd0eabac65dcf15"
     },
     "scripts/install-skills.mjs": {
       "path": "scripts/install-skills.mjs",
-      "sha256": "60e0ed5cbad38f03a5802000383f8f09ae1e0cc24b22c0e6ebe51e3342f6e07a"
+      "sha256": "d0aa4e1af7167076759619b4140a80d699864cdcce031fdd5ef1da37b7f32630"
     },
     "scripts/managed-package-repair.mjs": {
       "path": "scripts/managed-package-repair.mjs",
@@ -5349,7 +5358,7 @@
     },
     "tests/install-skills.test.mjs": {
       "path": "tests/install-skills.test.mjs",
-      "sha256": "244974e34241f51698d04dcc2da719ae15c8c3d017704ceacfcb557cf61d89b9"
+      "sha256": "942dbb64b80fa5690989ccbb6e8ed434312d87c37e0115c225938b0e746f39a6"
     },
     "scripts/managed-skill-migration.mjs": {
       "path": "scripts/managed-skill-migration.mjs",
@@ -5361,7 +5370,19 @@
     },
     "package.json": {
       "path": "package.json",
-      "sha256": "11cdb4c59e01cf7203e16f92845d069c701c8cdcd151061d69a3d220e6dbc964"
+      "sha256": "98ca5b9ccfad26f28cc7e9304f3d829e5b55d6dfafabb7d5948d2998fe98a0d9"
+    },
+    "docs/validation/versioned-installer-review.md": {
+      "path": "docs/validation/versioned-installer-review.md",
+      "sha256": "20fe81fd87e8b2f751dc3ee9cfc0041631bea6610a0d0424474fa5e42520d4ff"
+    },
+    "docs/specs/quickstark-versioned-installation.md": {
+      "path": "docs/specs/quickstark-versioned-installation.md",
+      "sha256": "b6e60c53c0d723934a46eb0eeb1737b4cb778e86ec1f152d6b119d999e758fa9"
+    },
+    ".github/workflows/release.yml": {
+      "path": ".github/workflows/release.yml",
+      "sha256": "056da735312b0b6eef9cfd2d695e9bd5b1c0fcace6f84fe455a3fb555a0ffb45"
     }
   }
 }

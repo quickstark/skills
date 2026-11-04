@@ -1,5 +1,17 @@
 # QuickStark Skills changelog
 
+## 4.4.1
+
+### Patch Changes
+
+- Install the latest stable published version tag on macOS and Linux without
+  waiting for GitHub Actions. Pin the release through native transactions, retain
+  local acceptance and recovery protections, reject version regression and moved
+  same-version sources, and resume the original version after newer publication.
+- Publish prepared versions only by explicit workflow dispatch after Linux/macOS
+  validation; synchronize all six packages at 4.4.1. Include the installer, cache
+  preservation, native inventory and profile repairs made after the v4.4.0 tag.
+
 ## 4.4.0
 
 ### Minor Changes

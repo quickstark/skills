@@ -87,10 +87,12 @@ Keep `package.json`, `package-lock.json`, all six active Claude, Codex and Pi ma
 
 Put active release changesets for the `qs-skills` package directly in `.changeset/`, and keep the Changesets GitHub configuration pointed at `quickstark/skills`. Matt Pocock's original `mattpocock-skills` changesets are preserved in `docs/upstream/changesets/` as MIT-licensed historical reference; do not place them in the active Changesets directory.
 
-After publishing an authorized versioned commit, verify the `Release` workflow
-for that commit. If a push does not start a run, dispatch the same workflow with
-`gh workflow run release.yml --ref main` and verify its result and release tag.
-Inspect existing runs and tags before retrying to avoid duplicate publication.
+After integrating an authorized prepared version into main, explicitly dispatch
+`gh workflow run release.yml --ref main`. The Publish version workflow runs the
+Linux/macOS validation matrix, verifies accepted package closures, then publishes
+that exact version tag and GitHub release. Pushes do not start publication.
+Inspect existing runs, tags and releases before retrying. Existing tags may not
+move to different commits. Ordinary installers use published tags without polling CI.
 
 ## Respect the upstream
 

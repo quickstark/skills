@@ -3,6 +3,10 @@ import { access, stat, realpath } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { readFile } from 'node:fs/promises';
+import { exactCheckout } from './install-skills.mjs';
 import { executeManagedSkills, normalizeManagedAgents, parseManagedSkillsArguments } from './managed-skills.mjs';
 import { resolveManagedSkillPaths } from './managed-skill-paths.mjs';
 import { readMigrationJournal } from './migration-transaction.mjs';
@@ -11,6 +15,32 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const commands = { codex: 'codex', 'claude-code': 'claude', pi: 'pi' };
 const labels = { codex: 'Codex', 'claude-code': 'Claude Code', pi: 'Pi' };
 const check = (condition, message) => { if (!condition) throw new Error(message); };
+const exec = promisify(execFile);
+
+export function parseReleaseContext(arguments_) {
+  const flags = [...arguments_]; const index = flags.indexOf('--release');
+  if (index === -1) return { flags, release: null };
+  const match = flags[index + 1]?.match(/^v((?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))@([a-f0-9]{40})$/);
+  check(match, 'A release requires vMAJOR.MINOR.PATCH@COMMIT.');
+  flags.splice(index, 2); check(!flags.includes('--release'), 'Choose one release.');
+  return { flags, release: { tag: `v${match[1]}`, version: match[1], revision: match[2] } };
+}
+
+/** A published checkout is pinned to its tag, independently of moving main. */
+export async function verifyPublishedReleaseFreshness({ repositoryRoot, release, runGit } = {}) {
+  check(release && /^v(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/.test(release.tag) && release.tag === `v${release.version}` && /^[a-f0-9]{40}$/.test(release.revision), 'Invalid published release context.');
+  const git = runGit ?? (async args => (await exec('git', ['-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false', ...args], { cwd: repositoryRoot, encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,
+    env: { ...Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.toUpperCase().startsWith('GIT_'))), GIT_TERMINAL_PROMPT: '0' } })).stdout.trim());
+  const origin = await git(['config', '--get', 'remote.origin.url']);
+  check(['https://github.com/quickstark/skills.git', 'https://github.com/quickstark/skills'].includes(origin), 'Published releases require the official QuickStark origin.');
+  const head = await git(['rev-parse', 'HEAD']);
+  check(head === release.revision && !await git(['status', '--porcelain', '--untracked-files=all']), 'Published checkout changed; preserve it before retrying.');
+  const refs = await git(['ls-remote', '--exit-code', 'origin', `refs/tags/${release.tag}`, `refs/tags/${release.tag}^{}`]);
+  const entries = new Map(refs.split('\n').map(line => line.split(/\s+/)) .map(([sha, ref]) => [ref, sha]));
+  check((entries.get(`refs/tags/${release.tag}^{}`) ?? entries.get(`refs/tags/${release.tag}`)) === head, 'Published release tag changed; installed skills are unchanged.');
+  check(JSON.parse(await readFile(path.join(repositoryRoot, 'package.json'))).version === release.version && await exactCheckout(repositoryRoot, head), 'Published version or checkout bytes changed.');
+  return { head, releaseTag: release.tag, version: release.version };
+}
 
 export async function detectInstalledHarnesses({ environment = process.env } = {}) {
   const agents = [];
@@ -29,7 +59,7 @@ export async function detectInstalledHarnesses({ environment = process.env } = {
   return agents;
 }
 
-export async function updateInstalledHarnesses({ arguments_: flags = [], repositoryRoot = root, homeDirectory = homedir(), environment = process.env,
+export async function updateInstalledHarnesses({ arguments_: flags = [], release = null, repositoryRoot = root, homeDirectory = homedir(), environment = process.env,
   detect = detectInstalledHarnesses, execute = executeManagedSkills, readJournal = readMigrationJournal, onProgress = () => {}, ...execution } = {}) {
   const options = parseManagedSkillsArguments(['update', ...flags]);
   const explicitAgents = flags.some(flag => flag === '--agent' || flag === '--target');
@@ -60,6 +90,7 @@ export async function updateInstalledHarnesses({ arguments_: flags = [], reposit
   const results = [];
   for (const group of groups) {
     const selected = { repairManagedPackages: environment.QS_REPAIR_MANAGED === '1', ...execution, ...options, repositoryRoot, homeDirectory, environment, agents: group, bootstrapMarketplaces: true };
+    if (release) selected.verifyRepositoryFreshness = options => verifyPublishedReleaseFreshness({ ...options, release });
     for (const [agent, field] of [['codex','codexHomeDirectory'],['claude-code','claudeHomeDirectory'],['pi','piHomeDirectory']]) if (!group.includes(agent)) delete selected[field];
     // Validate profiles before touching managers; resume remains one frozen call.
     const homes = resolveManagedSkillPaths(selected);
@@ -103,7 +134,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(await realpath(process.
   } else {
     const json = flags.includes('--json');
     try {
-      const result = await updateInstalledHarnesses({ arguments_: flags, onProgress: ({ agents }) => {
+      const context = parseReleaseContext(flags);
+      const result = await updateInstalledHarnesses({ arguments_: context.flags, release: context.release, onProgress: ({ agents }) => {
         if (!json) process.stdout.write(`Updating ${agents.map(agent => labels[agent]).join(', ')}…\n`);
       } });
       process.stdout.write(`${json ? JSON.stringify(result) : formatUpdateResult(result)}\n`);

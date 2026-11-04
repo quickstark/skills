@@ -46,21 +46,28 @@ curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh |
 ```
 
 The bootstrap uses Node built-ins and local modules; `npm ci` is for development.
-It waits for a successful `validate.yml` push run for the exact official main SHA.
-That workflow checks generated projections and runs the isolated test suite with
-pinned Codex, Claude Code and Pi CLIs on Linux and macOS. Pending validation is polled
-with backoff for about fifty minutes to accommodate the slower macOS suite without
-frequent API requests; a failed or unavailable gate leaves
-installed skills unchanged. The candidate's generated packages and committed
-acceptance evidence are checked locally before replacing the managed checkout.
+It selects the highest stable `vMAJOR.MINOR.PATCH` Git tag from the official
+repository, resolves it to one commit and checks generated packages and committed
+acceptance evidence locally before replacing the managed checkout. Numeric version
+ordering handles versions such as 4.10.0 correctly; prereleases are ignored.
+There are no client-side GitHub Actions queries or CI polling delays. Linux/macOS
+validation runs before explicit publication through `release.yml`.
 
-The installer maintains `~/.local/share/quickstark/skills`; authoring clones and
-their local edits stay untouched. A modified or older managed checkout is retained
-as a complete `checkout-backup-*` beside the managed checkout before replacement.
-Installer ownership and pending source-swap records live under
-`~/.local/state/quickstark/installer`. A subsequent invocation restores an interrupted
-source swap before proceeding. A known installer lock is recovered only after its
-recorded process is proven absent; active or unknown locks remain protected.
+Use `--version MAJOR.MINOR.PATCH` to select an existing published version.
+Automatic downgrades and changed source under the same version are rejected.
+The first release with this installer is 4.4.1; publish it before using that version.
+Earlier v4.4.0 lacks the new entry points and must not be retagged in place.
+
+The installer retains versioned source checkouts under
+`~/.local/share/quickstark/releases`; `~/.local/share/quickstark/current` is a
+convenience link for local commands. Native packages and transaction journals use
+physical versioned paths. A newer version does not rename or overwrite the source
+needed by another profile or an interrupted transaction. Edited prior checkouts
+are retained at their original paths while a clean replacement gets a new path.
+Legacy `~/.local/share/quickstark/skills` directories and development clones remain
+untouched. Installer ownership records remain under
+`~/.local/state/quickstark/installer`; a recorded interrupted legacy source swap is
+restored before proceeding. Active or unknown installer locks remain protected.
 
 The updater detects executable `codex`, `claude` and `pi` commands on PATH, updates
 their selections, and verifies installed state. Fresh hosts get core only. Existing
@@ -95,7 +102,7 @@ the intended selection before withdrawal, so a retry can restore that selection
 after interruption. Failed operations retain original bytes and their repair record;
 successful updates retain backups and save selection only after verification.
 
-From an updated clone, `npm run skills:update` invokes the same hosted-validation
+From an updated clone, `npm run skills:update` invokes the same published-version
 flow. Older clones may still contain the old npm command: use the hosted command
 to bypass them. Extra flags can be passed with `| bash -s -- --agent codex`, for
 example. `--json` selects structured updater results; installer progress uses stderr.
@@ -103,7 +110,7 @@ example. `--json` selects structured updater results; installer progress uses st
 For the advanced local commands below, first use the managed checkout:
 
 ```bash
-cd "$HOME/.local/share/quickstark/skills"
+cd "$HOME/.local/share/quickstark/current"
 ```
 
 For an optional read-only preview, use `npm run skills:plan -- --json --agent codex`
@@ -205,7 +212,7 @@ npm run skills:update -- --agent pi --pi-home "$HOME/.pi-demo"
 
 ## Normal update and explicit additions
 
-Use the hosted command again; it handles GitHub validation and the managed checkout:
+Use the hosted command again; it selects a published version and maintains the managed checkout:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash
@@ -221,18 +228,22 @@ Repeat `--with` for other selected packages. Omit `--profile core` during an ord
 update unless you deliberately intend to replace the desired selection with core.
 Restart the host or begin a new task after changing discovery.
 
-The lower-level transaction queries the current `origin/main` without fetching
+Direct development callers of the lower-level transaction query `origin/main` without fetching
 or changing refs and requires exact checkout HEAD equality. A stale clean main
 checkout gets a fast-forward recovery command; a dirty, detached or non-main
-checkout gets an isolated-worktree diagnostic. The hosted installer avoids that
-manual authoring-checkout repair by maintaining its own clean source. A denied freshness request is an attempted request, not proof of
+checkout gets an isolated-worktree diagnostic. The hosted installer instead verifies its pinned published tag and clean checkout,
+so later main commits do not invalidate a release. It preserves authoring checkouts. A denied freshness request is an attempted request, not proof of
 zero network activity.
 
 ## Verification and recovery
 
-`npm run skills:verify -- --agent codex --agent pi` runs repository checks/tests
-and then read-only selected-state verification. `node scripts/managed-skills.mjs
-verify --json --agent codex --agent pi` performs only the selected-state check.
+From the managed checkout, `node scripts/managed-skills.mjs verify --json --agent
+codex --agent pi` performs the read-only selected-state check. Ordinary updates
+already verify their result; this command is optional.
+
+For development, `npm run skills:verify -- --agent codex --agent pi` also runs the
+repository checks and full test suite. Run it from a development checkout with an
+attached branch and local `main`, rather than a detached published checkout.
 Verification checks accepted package bindings and requires selected legacy
 identities to have completed migration; a package version string alone is insufficient.
 
@@ -251,12 +262,17 @@ failure's journal and backups. For an interrupted transaction, use its exact pat
 npm run skills:update -- --resume /absolute/path/to/transaction.json
 ```
 
-Ordinary resume continues the frozen forward plan using the journal's selection;
+Older sources remain at their original physical paths, including after another
+profile installs a newer version. Ordinary resume continues the frozen forward
+plan using the journal's selection;
 do not add profile or package flags. Failed transactions retain their journal,
 backups and residuals. Restoring a prior release or journaled effects requires
 separately verified, transaction-specific recovery authority; no automatic rollback
 is promised.
-It must match the home, repository and release revision. A stale updater lock is
+A versioned resume reuses the managed checkout's original tag and commit, even
+when a newer version exists. It must match the home, repository and release revision.
+A legacy unversioned journal requires its original verified checkout and cannot be
+silently resumed as a new published version. A stale updater lock is
 never automatically stolen; investigate the recorded owner before explicit recovery.
 Never repair a conflict by deleting a cache or rewriting a lock blindly. A failed
 rollback must retain its residual paths and diagnostics rather than claim success.

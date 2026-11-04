@@ -7,8 +7,7 @@ add optional packages for the workflows you use. Ordinary updates preserve that
 selection. See the [changelog](./CHANGELOG.md) for release history.
 
 The [Notion companion guide](https://app.notion.com/p/3a9238a125b28031bbbee1fcba64733f)
-has the same update commands and per-agent skill examples, plus machine-specific
-rollout history. GitHub remains the source for installation and package membership.
+contains per-agent skill examples and machine-specific rollout history. GitHub remains the source for installation and package membership.
 
 | Package | Public commands | Scope |
 | --- | ---: | --- |
@@ -35,17 +34,19 @@ curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh |
 ```
 
 Have Git, Node (CI uses Node 22) and curl installed, along with the harness CLIs you use. The script
-waits for Linux/macOS GitHub validation of the exact published main commit,
-validates its generated packages and acceptance evidence, then detects `codex`,
+selects the highest stable published version tag, validates its generated packages
+and acceptance evidence locally, then detects `codex`,
 `claude` and `pi` on PATH and updates their skills.
 
-It maintains a clean checkout at `~/.local/share/quickstark/skills`. Your development
-clones and their local edits stay untouched. If the managed checkout is edited,
-the complete previous checkout is retained before replacement. Known QuickStark
+It retains each version in a separate checkout under
+`~/.local/share/quickstark/releases`. The `~/.local/share/quickstark/current` link
+selects the current version for local commands. Native managers and journals use
+the actual versioned path, so updating one profile cannot move another profile's
+source. Edited and older checkouts stay intact; development clones are untouched. Known QuickStark
 marketplace bindings and damaged installed packages are repaired after originals
 are backed up and replacements pass acceptance. Unrelated packages and settings
 remain preserved. The [installation guide](./docs/install-and-update-skills.md)
-describes the validation gate, profiles and recovery records.
+describes version selection, profiles and recovery records.
 
 From an updated repository, `npm run skills:update` runs the same installer.
 No manual pull, stash, dependency installation or separate verification is needed
@@ -62,8 +63,20 @@ curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh |
 
 Repeat `--with` for other packages. Selection is saved after success in
 `~/.config/quickstark/skills-selection.json`, or profile-specific state for custom
-homes. The installer verifies its managed checkout against the published commit
+homes. The installer verifies its managed checkout against the published tag commit
 and checks ownership and release acceptance before replacement.
+
+### Choose a version
+
+Ordinary updates select the highest stable `vMAJOR.MINOR.PATCH` tag. Newer commits
+on `main` and prerelease tags are ignored. To select a particular published version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --version 4.4.1
+```
+
+The selected version must be published first. Automatic downgrades and changed
+source under the same version are rejected. Publish package changes in a new version.
 
 ### Choose agents explicitly
 
@@ -96,7 +109,7 @@ curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh |
 After installation, use the managed checkout for optional local commands:
 
 ```bash
-cd "$HOME/.local/share/quickstark/skills"
+cd "$HOME/.local/share/quickstark/current"
 npm run skills:plan -- --json --agent codex
 node scripts/managed-skills.mjs verify --json --agent codex
 ```
@@ -415,12 +428,15 @@ npm run check:codex
 npm test
 ```
 
-The [release workflow](./.github/workflows/release.yml) currently runs
-`changeset version` and `changeset tag`; it does not synchronize or validate the
-generated manifests for a version bump. Before an intended release, synchronize
-the root package/lockfile and every active Claude, Codex and Pi manifest/projection,
-then run the checks above. Keep the pinned PS transition payload unchanged and
-outside active-version synchronization. A tag is not installed-host rollout evidence.
+The [release workflow](./.github/workflows/release.yml) is explicitly dispatched
+on `main` after preparing and synchronizing a new version. It runs Linux/macOS
+validation before creating that version's tag and GitHub release. Pushes do not
+publish automatically. Ordinary installations download the published tag without
+waiting for CI. See the [versioned installation specification](./docs/specs/quickstark-versioned-installation.md).
+
+This flow starts with version 4.4.1, which must be published before installation.
+The existing v4.4.0 tag must remain unchanged. A tag is not installed-host rollout
+evidence.
 
 ## Upstreams and provenance
 
