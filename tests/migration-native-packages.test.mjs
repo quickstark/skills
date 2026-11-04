@@ -8,9 +8,35 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
+import { codexConfig, createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
+
+test('Codex managed enablement accepts full-line and inline TOML comments', () => {
+  const packages = [{ name: 'qs-advanced', marketplace: 'quickstark' }];
+  for (const newline of ['\n', '\r\n']) for (const enabled of [true, false]) {
+    const unrelated = ['# unrelated preference', 'model = "fixture#literal"', ''];
+    const plain = [...unrelated, '[plugins."qs-advanced@quickstark"]', `enabled = ${enabled}`, '# trailing fixture note', ''].join(newline);
+    const commented = [...unrelated, '# fixture plugin note', '[plugins."qs-advanced@quickstark"]', '# fixture note with [table] and enabled = false', `enabled = ${enabled} # fixture inline note`, '', '# trailing fixture note', ''].join(newline);
+    assert.deepEqual(codexConfig(commented, packages), codexConfig(plain, packages));
+    assert.notEqual(codexConfig(commented.replace('# unrelated preference', '# changed unrelated preference'), packages).unrelatedHash, codexConfig(plain, packages).unrelatedHash);
+    assert.notEqual(codexConfig(commented.replace('# trailing fixture note', '# changed trailing note'), packages).unrelatedHash, codexConfig(plain, packages).unrelatedHash);
+  }
+});
+
+test('Codex comment support still rejects duplicate enablement, unknown settings and invalid values', () => {
+  const packages = [{ name: 'qs-advanced', marketplace: 'quickstark' }];
+  const header = '[plugins."qs-advanced@quickstark"]\n';
+  for (const body of [
+    'enabled = true # fixture\nenabled = false # duplicate',
+    'enabled = true # fixture\nunknown = true',
+    'enabled = "true" # wrong type',
+    'enabled = true trailing # invalid syntax',
+    '# comment without explicit enablement',
+    'enabled = true # fixture\n' + header + 'enabled = true',
+  ]) assert.throws(() => codexConfig(header + body, packages), /unsupported|enablement|Duplicate/);
+});
+
 const nativeFixtureProgram = `
 import {readFile,writeFile,mkdir,readdir,cp,rm} from 'node:fs/promises';import path from 'node:path';
 const [host,...args]=process.argv.slice(2);const home=process.env.HOME;
@@ -60,6 +86,31 @@ async function fixture(t, host, { real = false } = {}) {
   const step = (before, packageId, phase) => ({ id: `${phase}-${packageId}`, phase, operation: `native-${phase}`, native: { host, packageId }, ownedTargets: targets, before, after: predictNativePackageTransition(before, { packageId, phase, packages }) });
   return { base, options, configPath, context, step, command, adapter: createNativePackageAdapter(options) };
 }
+
+test('real isolated Codex comments survive in backups through withdrawal, exposure and recovery', { skip: !available('codex') ? 'Codex executable unavailable; native comment handling unverified.' : false }, async t => {
+  const args = await fixture(t, 'codex', { real: true });
+  const text = await readFile(args.configPath, 'utf8');
+  const index = text.indexOf('[plugins."ps-probe@qs-native-fixture"]');
+  assert.ok(index >= 0);
+  const commented = text.slice(0, index) + '# fixture plugin note\n' + text.slice(index).replace(/enabled\s*=\s*true/, '# fixture setting note\nenabled = true # fixture inline note\n# fixture trailing note');
+  await writeFile(args.configPath, commented);
+  const before = (await observeNativePackages(args.options)).state;
+  const withdraw = args.step(before, 'old', 'withdraw');
+  const backup = await args.adapter.prepare(withdraw, args.context);
+  assert.equal(await readFile(path.join(backup.reference, 'target-0'), 'utf8'), commented);
+  await args.adapter.apply(withdraw, args.context);
+  assert.deepEqual(await args.adapter.inspect(withdraw, args.context), withdraw.after);
+  const expose = args.step(withdraw.after, 'new', 'expose');
+  const next = await args.adapter.prepare(expose, args.context);
+  await args.adapter.apply(expose, args.context);
+  assert.deepEqual(await args.adapter.inspect(expose, args.context), expose.after);
+  await args.adapter.recover(expose, next.reference, args.context);
+  await args.adapter.recover(withdraw, backup.reference, args.context);
+  assert.deepEqual(await args.adapter.inspect(withdraw, args.context), before);
+  assert.match(await readFile(args.configPath, 'utf8'), /# unrelated user preference/);
+  assert.match(await readFile(args.configPath, 'utf8'), /# fixture trailing note/);
+  assert.equal(await readFile(path.join(backup.reference, 'target-0'), 'utf8'), commented);
+});
 
 test('unlisted foreign Codex caches remain collision and preservation guards', async (t) => {
   const args=await fixture(t,'codex');

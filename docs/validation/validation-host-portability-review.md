@@ -122,6 +122,45 @@ adapter source binding and the evidence hashes for the regression file and this
 review are refreshed. Criterion decisions, historical results and unrelated
 bindings remain unchanged.
 
+## Codex enablement comments
+
+The reported macOS 4.4.1 update failed with Codex CLI 0.162.0 because an owned
+`qs-advanced@quickstark` table contained a full-line comment and an inline comment
+on its only setting, the boolean `enabled`. The native adapter accepted only an
+uncommented assignment. Both comment forms reproduced the exact rejection in
+isolated tests; they are valid TOML, not unsupported settings. Codex and Pi shared
+one update transaction, so its failure was reported for both agents. That output
+does not establish a separate Pi defect.
+
+The parser now accepts comments attached to owned headers and boolean assignments.
+It buffers full-line comments until their following entry is known: Codex removes
+comments attached to a removed header or setting, but retains comments attached to
+an unrelated entry or the end of the file. The latter remain in the unrelated
+configuration digest. Simply ignoring every comment inside an owned table passed
+the parser test but failed the real native withdrawal test when Codex retained a
+trailing comment. Unknown settings, duplicate tables or assignments, non-booleans
+and malformed values remain rejected. Unrelated configuration and cache guards,
+authentication isolation, timeouts and ownership checks are unchanged.
+
+Regressions cover both boolean values and LF/CRLF input, comment placement,
+unrelated-comment drift, unsupported settings, real isolated Codex withdrawal,
+exposure and recovery, a combined Codex/Pi update with saved optional selection,
+and completion of a source-bound `prepared-for-install` repair. The pending-repair
+case also rejects a different source checkout before retrying successfully from
+the bound source and clearing the pending pointer. Native backups retain the exact
+original commented configuration. Recovery verifies registration semantics;
+Codex can discard comments attached to removed settings in the live configuration.
+These tests do not assert that native uninstall/reinstall preserves those comments.
+
+The Mac's reported recovery record was `prepared-for-install`, with a pending
+pointer matching that record. The record, backups, source path and target group
+must remain intact. A new release does not rebind an older pending repair. A
+temporary retry with the existing 4.4.1 source requires backing up the live config
+and removing only the comments inside the affected enabled-only owned table,
+preserving the boolean and all other settings. Do not patch the tagged source or
+delete the pending pointer to bypass this boundary. This local source repair does
+not publish a version or establish successful recovery on the reported Mac.
+
 ## Boundaries
 
 No installed skill, user configuration, canonical skill body, package projection,

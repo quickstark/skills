@@ -1,5 +1,15 @@
 # QuickStark Skills changelog
 
+## 4.4.2
+
+### Patch Changes
+
+- Accept full-line and inline comments in owned Codex enablement tables so valid
+  configuration does not block a combined Codex/Pi update. Preserve unrelated
+  comments and original configuration backups, reject unsupported settings, and
+  retain source-bound recovery checks. Add regression coverage for native
+  withdrawal/recovery, saved selections and completion of pending repairs.
+
 ## 4.4.1
 
 ### Patch Changes

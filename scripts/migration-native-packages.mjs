@@ -120,19 +120,23 @@ export async function inspectNativePayload(host, root) {
 export function codexConfig(text, packages) {
   check(!text.includes('"""') && !text.includes("'''"), 'Multiline TOML requires a separately verified native config adapter.');
   const owned = new Set(packages.map((pkg) => `${pkg.name}@${pkg.marketplace}`));
-  const selected = {}; const opaque = []; let current = null;
+  const selected = {}; const opaque = []; let current = null; let comments = [];
   for (const line of text.split(/\r?\n/)) {
+    if (/^\s*#/.test(line)) { comments.push(line); continue; }
+    if (!line.trim()) continue;
     if (/^\s*\[/.test(line)) {
       const match = line.match(/^\s*\[plugins\."([a-z0-9-]+@[a-z0-9-]+)"\]\s*$/);
       current = match && owned.has(match[1]) ? match[1] : null;
-      if (current) { check(!Object.hasOwn(selected, current), 'Duplicate owned Codex configuration table.'); selected[current] = {}; continue; }
+      if (current) { check(!Object.hasOwn(selected, current), 'Duplicate owned Codex configuration table.'); selected[current] = {}; comments = []; continue; }
     }
     if (current) {
-      if (!line.trim()) continue;
-      const enabled = line.match(/^\s*enabled\s*=\s*(true|false)\s*$/);
+      comments = [];
+      const enabled = line.match(/^\s*enabled\s*=\s*(true|false)\s*(?:#.*)?$/);
       check(enabled && !Object.hasOwn(selected[current], 'enabled'), 'Owned Codex table contains settings unsupported by reversible migration.'); selected[current].enabled = enabled[1] === 'true';
-    } else if (line.trim()) opaque.push(line);
+    } else { opaque.push(...comments, line); comments = []; }
   }
+  // Codex retains comments attached to the next unrelated entry or end of file.
+  opaque.push(...comments);
   for (const value of Object.values(selected)) check(typeof value.enabled === 'boolean', 'Owned Codex table lacks explicit enablement.');
   return { selected, unrelatedHash: digest(opaque) };
 }

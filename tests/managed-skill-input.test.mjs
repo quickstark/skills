@@ -18,7 +18,7 @@ import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
 import { resolveManagedSkillPaths } from '../scripts/managed-skill-paths.mjs';
 import { fixtureHomeState } from './helpers/fixture-home-state.mjs';
 import { updateInstalledHarnesses } from '../scripts/update-skills.mjs';
-import { pendingManagedRepair } from '../scripts/managed-package-repair.mjs';
+import { pendingManagedRepair, repairManagedPackages } from '../scripts/managed-package-repair.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 const nativeTest = (name, callback) => test(name, { skip: !available('codex') || name.startsWith('actual Pi') && !available('pi') ? 'Required native executable unavailable; no host support claimed.' : false }, callback);
@@ -100,6 +100,51 @@ test('catalog obligations retain prompt, parity, all video modules and measured 
   const video=derivePackageAcceptanceObligations('qs-video',document); assert.equal(video.capabilityIds.filter(id=>id.startsWith('video-internal:')).length,21); assert.ok(video.requiredChecks.includes('video-runtime'));
   assert.ok(derivePackageAcceptanceObligations('qs-specialists',document).capabilityIds.includes('qs:qs-deploy-prompt'));
   assert.ok(advanced.requiredCriteria.includes('AC-09')); assert.throws(()=>derivePackageAcceptanceObligations('ps-skills',document),/Unknown/);
+});
+
+test('actual Codex and Pi update accepts commented enablement while preserving optional selection', {skip:!['codex','pi'].every(available) ? 'Codex or Pi unavailable; combined native update unverified.' : false}, async t=>{
+  const args=await fixture(t);
+  assert.equal((await executeManagedSkills({...args.options,action:'update',withPackages:['qs-advanced']})).status,'complete');
+  const file=path.join(args.homeDirectory,'.codex/config.toml');
+  const original=await readFile(file,'utf8');
+  const header='[plugins."qs-advanced@quickstark"]';
+  const index=original.indexOf(header);assert.ok(index>=0);
+  const commented=original.slice(0,index)+original.slice(index).replace(/enabled\s*=\s*true/,'# fixture setting note\nenabled = true # fixture inline note');
+  await writeFile(file,commented);
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.deepEqual([...result.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.deepEqual(result.results[0].targets.pi.desired.packages,['qs-skills']);
+  assert.equal(await readFile(file,'utf8'),commented,'A same-version verification must retain the commented Codex config.');
+  const settings=await readJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'));
+  assert.equal(settings.theme,'community-preserved');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
+  assert.equal((await executeManagedSkills({...args.options,agents:['codex','pi'],action:'verify'})).status,'verified');
+});
+
+test('a prepared Codex and Pi repair completes from its bound source with commented enablement', {skip:!['codex','pi'].every(available) ? 'Codex or Pi unavailable; pending native repair unverified.' : false}, async t=>{
+  const args=await fixture(t,{bootstrap:false});const old=path.join(args.base,'old-source');
+  await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
+  await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],args.nativeOptions);
+  for(const id of ['qs-skills','qs-advanced']) await runNativePackageCommand('codex',['plugin','add',`${id}@quickstark`,'--json'],args.nativeOptions);
+  const agents=['codex','pi'];const paths=resolveManagedSkillPaths({...args.options,agents});
+  const repair=await repairManagedPackages({repositoryRoot:args.repositoryRoot,paths,agents});
+  assert.equal(repair.status,'prepared-for-install');
+  assert.equal((await pendingManagedRepair({repositoryRoot:args.repositoryRoot,paths,agents})).recordPath,repair.recordPath);
+  await assert.rejects(pendingManagedRepair({repositoryRoot:old,paths,agents}),/another checkout/);
+  await runNativePackageCommand('codex',['plugin','add','qs-advanced@quickstark','--json'],args.nativeOptions);
+  const file=path.join(args.homeDirectory,'.codex/config.toml');
+  await writeFile(file,(await readFile(file,'utf8')).replace(/enabled\s*=\s*true/,'# fixture setting note\nenabled = true # fixture inline note'));
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.equal(result.results[0].repairJournalPath,repair.recordPath);
+  assert.equal((await readJSON(repair.recordPath)).status,'complete');
+  assert.equal(await pendingManagedRepair({repositoryRoot:args.repositoryRoot,paths,agents}),null);
+  assert.deepEqual([...result.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.deepEqual(result.results[0].targets.pi.desired.packages,['qs-skills']);
+  const settings=await readJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'));
+  assert.equal(settings.theme,'community-preserved');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
+  assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
 });
 
 nativeTest('automatic Codex update uses scoped inventory when global remote inventory is unavailable',async t=>{
