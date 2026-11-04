@@ -27,18 +27,18 @@ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const writeJSON = async (file, data) => { await mkdir(path.dirname(file), {recursive:true}); await writeFile(file, JSON.stringify(data,null,2)+'\n'); };
 const readJSON = async (file) => JSON.parse(await readFile(file));
 async function git(root, args) { return run('git', ['-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false','-c','user.name=Isolated Fixture','-c','user.email=fixture@example.invalid',...args],{cwd:root,encoding:'utf8'}); }
-async function fixture(t, {bootstrap = true, host = 'codex'} = {}) {
+async function fixture(t, {bootstrap = true, host = 'codex', version = '4.0.0'} = {}) {
   const base = await mkdtemp(path.join(tmpdir(),'qs-selected-caller-')); t.after(()=>rm(base,{recursive:true,force:true}));
   const repositoryRoot = path.join(base,'repo'); const homeDirectory = path.join(base,'home'); await mkdir(repositoryRoot); await mkdir(path.join(homeDirectory,'.codex'),{recursive:true}); await mkdir(path.join(homeDirectory,'.pi/agent'),{recursive:true});
   const document = await readJSON(path.join(actualRoot,'config/skill-migrations.json'));
   await writeJSON(path.join(repositoryRoot,'config/skill-migrations.json'),document);
   await writeJSON(path.join(repositoryRoot,'config/skill-profiles.json'),{schemaVersion:1,defaultProfile:'core',profiles:{core:{packages:['qs-skills'],resources:[]},advanced:{packages:['qs-skills','qs-advanced'],resources:[]}}});
   await writeJSON(path.join(repositoryRoot,'config/skill-provenance.json'),{fixture:'Synthetic test evidence only; never production acceptance.'});
-  await writeJSON(path.join(repositoryRoot,'package.json'),{name:'isolated-selected-test',version:'4.0.0'});
+  await writeJSON(path.join(repositoryRoot,'package.json'),{name:'isolated-selected-test',version});
   for(const collection of TARGET_SKILL_COLLECTIONS) for(const [agent,relative] of [['codex',collection.codexPackageRoot],['pi',collection.piPackageRoot],['claude-code',collection.claudePackageRoot]]) {
     const root=path.join(repositoryRoot,relative);
     for(const name of collection.publicCommands) { await mkdir(path.join(root,'skills',name),{recursive:true}); await writeFile(path.join(root,'skills',name,'SKILL.md'),`---\nname: ${name}\ndescription: Isolated synthetic fixture.\n---\nFixture only.\n`); }
-    await writeJSON(path.join(root,agent==='codex'?'.codex-plugin/plugin.json':agent==='claude-code'?'.claude-plugin/plugin.json':'package.json'),agent==='codex'?{name:collection.id,version:'4.0.0',skills:'./skills/'}:agent==='claude-code'?{name:collection.id,version:'4.0.0',skills:collection.publicCommands.map(name=>`./skills/${name}`)}:{name:collection.id,version:'4.0.0',private:true,pi:{skills:['./skills']}});
+    await writeJSON(path.join(root,agent==='codex'?'.codex-plugin/plugin.json':agent==='claude-code'?'.claude-plugin/plugin.json':'package.json'),agent==='codex'?{name:collection.id,version,skills:'./skills/'}:agent==='claude-code'?{name:collection.id,version,skills:collection.publicCommands.map(name=>`./skills/${name}`)}:{name:collection.id,version,private:true,pi:{skills:['./skills']}});
   }
   await writeJSON(path.join(repositoryRoot,'.claude-plugin/marketplace.json'),{name:'quickstark',owner:{name:'Fixture'},plugins:TARGET_SKILL_COLLECTIONS.map(entry=>({name:entry.id,source:`./${entry.claudePackageRoot}`}))});
   const definitions=TARGET_SKILL_COLLECTIONS.map(entry=>({name:entry.id,source:{source:'local',path:`./plugins/${entry.id}`},policy:{installation:'AVAILABLE',authentication:'ON_INSTALL'}}));
@@ -69,6 +69,116 @@ async function fixture(t, {bootstrap = true, host = 'codex'} = {}) {
   const options={repositoryRoot,homeDirectory,environment:{},agents:[host],registryState:'target',verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
   return {base,repositoryRoot,homeDirectory,revision,document,options,nativeOptions,audit};
 }
+
+async function failedVersionedRepair(t) {
+  const args=await fixture(t,{bootstrap:false,version:'4.4.1'});
+  const releases=path.join(args.homeDirectory,'.local/share/quickstark/releases');await mkdir(releases,{recursive:true});
+  const old=path.join(releases,'v4.4.1-fixture');await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
+  await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  const agents=['codex','pi'];const paths=resolveManagedSkillPaths({...args.options,agents});
+  const nativeOptions={...args.nativeOptions,cwd:old};
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],nativeOptions);
+  for(const id of ['qs-skills','qs-advanced'])await runNativePackageCommand('codex',['plugin','add',`${id}@quickstark`,'--json'],nativeOptions);
+  const repair=await repairManagedPackages({repositoryRoot:old,paths,agents});
+  let interrupted=false;
+  const runtime={runCommand:async(command,argv,context)=>{
+    const result=await runNativePackageCommand(command,argv,context);
+    if(!interrupted&&command==='codex'&&argv[1]==='add'&&argv[2]==='qs-advanced@quickstark') {
+      interrupted=true;
+      const file=path.join(args.homeDirectory,'.codex/config.toml');
+      const text=await readFile(file,'utf8');const index=text.indexOf('[plugins."qs-advanced@quickstark"]');assert.ok(index>=0);
+      await writeFile(file,text.slice(0,index)+'[projects."/fixture-preserved"]\ntrust_level = "trusted"\n\n'+text.slice(index).replace(/enabled\s*=\s*true/,'enabled = true # fixture inline note\n# fixture trailing note'));
+      throw Error('Owned Codex table contains settings unsupported by reversible migration.');
+    }
+    return result;
+  }};
+  const failed=await updateInstalledHarnesses({...args.options,repositoryRoot:old,runtime,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(failed.status,'failed');assert.ok(interrupted);assert.equal((await readJSON(repair.recordPath)).status,'prepared-for-install');
+  const journalPath=failed.results[0].journalPath;assert.ok(journalPath);await readMigrationJournal(journalPath);
+  const priorRecord=await readFile(repair.recordPath,'utf8');const priorJournal=await readFile(journalPath,'utf8');
+  for(const file of ['package.json',...TARGET_SKILL_COLLECTIONS.flatMap(c=>[`${c.codexPackageRoot}/.codex-plugin/plugin.json`,`${c.claudePackageRoot}/.claude-plugin/plugin.json`,`${c.piPackageRoot}/package.json`])]) {
+    const data=await readJSON(path.join(args.repositoryRoot,file));data.version='4.4.2';await writeJSON(path.join(args.repositoryRoot,file),data);
+  }
+  const audit=await readJSON(path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'));
+  for(const source of Object.keys(audit.sources)) {const snapshot=await captureMigrationPath(path.join(args.repositoryRoot,source));audit.sources[source]={kind:snapshot.kind,contentSha256:snapshot.contentSha256};}
+  await writeJSON(path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'),audit);
+  await git(args.repositoryRoot,['add','.']);await git(args.repositoryRoot,['commit','--quiet','-m','Synthetic published 4.4.2']);
+  const revision=(await git(args.repositoryRoot,['rev-parse','HEAD'])).stdout.trim();
+  const newer=path.join(releases,'v4.4.2-fixture');await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,newer]);
+  await git(newer,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  const ownerPath=path.join(args.homeDirectory,'.local/state/quickstark/installer/checkout.json');
+  const owner={schemaVersion:2,remoteUrl:'https://github.com/quickstark/skills.git',repositoryRoot:newer,releases:[{repositoryRoot:old,version:'4.4.1',tag:'v4.4.1',revision:args.revision},{repositoryRoot:newer,version:'4.4.2',tag:'v4.4.2',revision}]};
+  await writeJSON(ownerPath,owner);
+  const options={...args.options,repositoryRoot:newer,agents,verifyRepositoryFreshness:async()=>({head:revision,originMain:revision})};
+  return {...args,old,newer,repair,priorRecord,priorJournal,journalPath,paths,agents,options,owner,ownerPath};
+}
+
+test('a failed 4.4.1 Codex and Pi install continues on 4.4.2 without discarding its receipt or journal', {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedVersionedRepair(t);
+  const oldBackups=await captureMigrationPath(path.dirname(f.repair.recordPath));
+  const result=await updateInstalledHarnesses({...f.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  const successor=await readJSON(result.results[0].repairJournalPath);
+  assert.notEqual(result.results[0].repairJournalPath,f.repair.recordPath);
+  assert.equal(successor.previousRecord,f.repair.recordPath);assert.equal(successor.repositoryRoot,f.newer);assert.equal(successor.status,'complete');
+  assert.equal(successor.previousRecordContentSha256,(await captureMigrationPath(f.repair.recordPath)).contentSha256);
+  assert.equal(await readFile(f.repair.recordPath,'utf8'),f.priorRecord);assert.equal(await readFile(f.journalPath,'utf8'),f.priorJournal);
+  assert.deepEqual(await captureMigrationPath(oldBackups.path),oldBackups);
+  assert.equal(await pendingManagedRepair({repositoryRoot:f.newer,paths:f.paths,agents:f.agents}),null);
+  assert.deepEqual([...result.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.deepEqual(result.results[0].targets.pi.desired.packages,['qs-skills']);
+  const config=await readFile(path.join(f.homeDirectory,'.codex/config.toml'),'utf8');
+  assert.match(config,/\[projects\."\/fixture-preserved"\]/);assert.match(config,/# fixture trailing note/);
+  const settings=await readJSON(path.join(f.homeDirectory,'.pi/agent/settings.json'));
+  assert.equal(settings.theme,'community-preserved');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
+  assert.equal((await executeManagedSkills({...f.options,action:'verify'})).status,'verified');
+});
+
+for(const defect of ['unrecorded source','edited old source','changed backup','different agents','different home','unrelated history','changed selection']) test(`published repair continuation rejects ${defect} before native effects`, {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedVersionedRepair(t);let flags=['--agent','codex','--agent','pi'];let expected;
+  if(defect==='unrecorded source') {f.owner.releases.pop();await writeJSON(f.ownerPath,f.owner);expected=/release ledger/;}
+  if(defect==='edited old source') {await appendFile(path.join(f.old,'package.json'),' ');expected=/retained source changed/;}
+  if(defect==='changed backup') {await appendFile(f.repair.snapshots.find(entry=>entry.snapshot.kind==='file').destination,'changed');expected=/backup changed/;}
+  if(defect==='different agents') {flags=['--agent','codex'];expected=/harness group/;}
+  if(defect==='different home') {
+    const record=await readJSON(f.repair.recordPath);record.snapshots.find(entry=>entry.snapshot.path.endsWith('/config.toml')).snapshot.path=path.join(f.homeDirectory,'other-codex/config.toml');
+    await writeJSON(f.repair.recordPath,record);expected=/configuration home/;
+  }
+  if(defect==='unrelated history') {
+    await git(f.old,['checkout','--quiet','--orphan','unrelated-fixture']);await git(f.old,['commit','--quiet','-m','Unrelated history']);
+    const revision=(await git(f.old,['rev-parse','HEAD'])).stdout.trim();f.owner.releases[0].revision=revision;await writeJSON(f.ownerPath,f.owner);
+    const record=await readJSON(f.repair.recordPath);record.revision=revision;await writeJSON(f.repair.recordPath,record);expected=/not an ancestor/;
+  }
+  if(defect==='changed selection') {flags.push('--with','qs-video');expected=/frozen selection/;}
+  const before=await fixtureHomeState(f.homeDirectory);let mutations=0;
+  const runtime={runCommand:async(command,argv,context)=>{if(argv[0]==='install'||argv[0]==='remove'||argv[0]==='plugin'&&!(argv[1]==='list'||argv[1]==='marketplace'&&argv[2]==='list'))mutations++;return runNativePackageCommand(command,argv,context);}};
+  const result=await updateInstalledHarnesses({...f.options,runtime,repairManagedPackages:true,arguments_:flags});
+  assert.equal(result.status,'failed');assert.match(result.results[0].error,expected);assert.equal(mutations,0);
+  assert.deepEqual(await fixtureHomeState(f.homeDirectory),before);
+});
+
+test('published repair continuation validates replacement packages before replacing its pointer', {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedVersionedRepair(t);const before=await fixtureHomeState(f.homeDirectory);
+  const result=await updateInstalledHarnesses({...f.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi'],runtime:{validateRepairRelease:async()=>{throw Error('Replacement acceptance rejected.');}}});
+  assert.equal(result.status,'failed');assert.match(result.results[0].error,/Replacement acceptance rejected/);
+  assert.deepEqual(await fixtureHomeState(f.homeDirectory),before);
+});
+
+test('published repair continuation retries a successor interrupted after withdrawal', {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedVersionedRepair(t);let interrupted=false;
+  const runtime={runCommand:async(command,argv,context)=>{const result=await runNativePackageCommand(command,argv,context);if(!interrupted&&command==='codex'&&argv[1]==='remove'){interrupted=true;throw Error('Interrupted successor withdrawal.');}return result;}};
+  const failed=await updateInstalledHarnesses({...f.options,runtime,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(failed.status,'failed');assert.ok(interrupted);
+  const successorPath=failed.results[0].repairJournalPath;assert.notEqual(successorPath,f.repair.recordPath);
+  const successor=await readJSON(successorPath);assert.equal(successor.status,'failed');assert.equal(successor.previousRecord,f.repair.recordPath);
+  assert.equal((await pendingManagedRepair({repositoryRoot:f.newer,paths:f.paths,agents:f.agents})).recordPath,successorPath);
+  const retried=await updateInstalledHarnesses({...f.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(retried.status,'complete',JSON.stringify(retried.results));
+  assert.deepEqual([...retried.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
+  assert.equal(await readFile(f.repair.recordPath,'utf8'),f.priorRecord);assert.equal(await readFile(f.journalPath,'utf8'),f.priorJournal);
+  assert.equal(await pendingManagedRepair({repositoryRoot:f.newer,paths:f.paths,agents:f.agents}),null);
+  assert.equal((await executeManagedSkills({...f.options,action:'verify'})).status,'verified');
+});
 
 test('home nonmutation oracle observes links without following them and leaves payload rejection strict',async t=>{
   const base=await mkdtemp(path.join(tmpdir(),'qs-home-oracle-'));t.after(()=>rm(base,{recursive:true,force:true}));

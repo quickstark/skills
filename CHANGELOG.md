@@ -1,5 +1,15 @@
 # QuickStark Skills changelog
 
+## 4.4.3
+
+### Patch Changes
+
+- Continue a prepared repair from an older retained release when an ordinary
+  update selects a newer version. Verify source lineage, matching profiles, saved
+  selection and original backups before creating a linked successor repair.
+  Preserve the original receipt and failed transaction journal, validate accepted
+  replacements before effects, and support retry after successor interruption.
+
 ## 4.4.2
 
 ### Patch Changes

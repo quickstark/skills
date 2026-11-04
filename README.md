@@ -122,9 +122,14 @@ agent and custom-home flags afterward. A hosted update already verifies its resu
 Use the same host flags as the update. Restart the host or begin a new task to
 refresh its skill catalog. A Git pull alone does not refresh cached plugins.
 
-If an update is interrupted, retain its journal and backups and resume its exact
-path. Use the original custom-home flag again when applicable; do not add new
-package or profile selections to a resumed transaction:
+If the updater reports a retained `repair.json`, keep that file and its backup
+directory and re-run the same update command with the same agent and home flags.
+In 4.4.3 and later, a newer published version can continue a prepared repair from
+an older retained version while preserving its original backups and saved packages.
+
+To resume a specific transaction journal, use its exact path with `--resume`;
+this flag takes the transaction journal, not `repair.json`. Use the original
+custom-home flag again when applicable; do not add new package or profile selections:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --resume /absolute/path/to/transaction.json

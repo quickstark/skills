@@ -161,6 +161,13 @@ preserving the boolean and all other settings. Do not patch the tagged source or
 delete the pending pointer to bypass this boundary. This local source repair does
 not publish a version or establish successful recovery on the reported Mac.
 
+That same-source workaround described the 4.4.1/4.4.2 limitation. The prepared
+4.4.3 repair now verifies and retains the predecessor before creating a linked
+successor under the newer release. Its regression covers the failed older install
+followed by an ordinary newer-version retry; see
+[prepared repair continuation](./versioned-installer-review.md#prepared-repair-continuation-in-a-newer-release).
+It does not edit either published tag or reinterpret the old transaction journal.
+
 ## Boundaries
 
 No installed skill, user configuration, canonical skill body, package projection,

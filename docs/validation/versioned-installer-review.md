@@ -65,3 +65,44 @@ link is separate from native registrations and frozen journals; another profile
 can install a newer version without moving the earlier source. Edited prior roots
 are retained rather than overwritten. Resume tests use real hash-chained journals
 and actually install a newer source before recovering the original version.
+
+## Prepared repair continuation in a newer release
+
+The 4.4.2 publication fixed commented Codex enablement but left an ordinary update
+unable to finish a pending 4.4.1 repair: the latest source was selected correctly,
+then the repair loader rejected its predecessor's physical checkout. The earlier
+native regression retried from the same source and did not cover that transition.
+The new regression first performs a real isolated Codex/Pi repair at 4.4.1, then
+injects the reported legacy parser error after a real native add, leaving a valid
+failed transaction journal and `prepared-for-install` receipt. Updating from a
+separate 4.4.2 descendant checkout reproduced the exact source/group rejection.
+With the repair it completes both agents, preserves saved optional packages and
+unrelated settings, and leaves the original receipt, backups and journal unchanged.
+
+Only installer-authorized updates can request this continuation. Both sources must
+appear in the same official versioned-source ledger at their original physical
+paths, have matching Git revisions and checkout bytes, and have increasing versions
+with the old commit in the new commit's history. The predecessor must be prepared
+for install, match the selected agents and homes, retain its bound selection and
+have intact original backups. The normal strict repair lookup and frozen journal
+resume rules remain unchanged. Missing or edited sources, backup drift, other
+profiles, unrelated history and selection changes are rejected before native
+effects. Replacement acceptance is checked before changing the pending pointer.
+
+The expanded retry fixture also places an unrelated project table before the
+commented plugin and a full-line comment after its enablement setting. Codex
+retains that trailing comment when removing the plugin table. This reproduced a
+second failure in the repair's unrelated-state check after the source handoff was
+fixed. Repair now tracks full-line comments by their following entry or end of
+file, matching native TOML editing and the existing package adapter. The regression
+requires the project settings and retained trailing comment to survive the full
+update; unrelated configuration is not globally excluded from preservation checks.
+
+The successor records its predecessor path and content digest, retains fresh
+live-state backups, and revalidates predecessor evidence before replacing the
+pointer. An interruption after native withdrawal reports the successor receipt;
+an ordinary retry finishes with the frozen selection. Completing the successor
+clears only its matching pending pointer. It does not rewrite or execute the old
+transaction journal. These are isolated Linux tests, not acceptance on the
+reported Mac. A new version is required to publish the engine repair; existing
+4.4.1 and 4.4.2 tags must remain unchanged.

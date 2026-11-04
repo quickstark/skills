@@ -527,8 +527,12 @@ async function executeSelectedManagedSkillsUnlocked(options = {}) {
     return { action, ...result, journalPath: assembly.journalPath };
   }
   const marketplaceActions = [];
-  const repair = repairRecord ?? (repairManagedPackages && action === 'update' ? await pendingManagedRepair({ paths: managedPaths, agents, repositoryRoot }) : null);
+  let repair = repairRecord;
   try {
+    if (!repair && repairManagedPackages && action === 'update') {
+      repair = await pendingManagedRepair({ paths: managedPaths, agents, repositoryRoot, allowPublishedContinuation: true });
+      if (repair?.continuationEvidence) repair = await repairPackages({ repositoryRoot, paths: managedPaths, agents, profile, withPackages, runtime, allowPublishedContinuation: true });
+    }
     if (action === 'update' && bootstrapMarketplaces) {
       await validateManagedSkillSelection({ repositoryRoot, selectionPath: managedPaths.selectionPath, agents, profile, withPackages });
       await bootstrapManagedMarketplaces({ repositoryRoot, ...managedPaths, agents, runtime, actions: marketplaceActions });
@@ -571,7 +575,7 @@ async function executeSelectedManagedSkillsUnlocked(options = {}) {
       return executeSelectedManagedSkillsUnlocked({ ...options, managedPaths, homeDirectory, repairManagedPackages: false, repairSelection: repaired.selection, repairRecord: repaired });
     }
     if (marketplaceActions.length) error.marketplaceActions = marketplaceActions;
-    if (repair) error.repairJournalPath = repair.recordPath;
+    if (repair) error.repairJournalPath ??= repair.recordPath;
     throw error;
   }
 }

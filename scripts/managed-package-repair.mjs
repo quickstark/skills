@@ -1,7 +1,7 @@
 import { execFile } from 'node:child_process';
 import { randomUUID, createHash } from 'node:crypto';
 import { constants } from 'node:fs';
-import { chmod, cp, lchmod, lstat, mkdir, open, readFile, rename, unlink } from 'node:fs/promises';
+import { chmod, cp, lchmod, lstat, mkdir, open, readFile, realpath, rename, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { TARGET_SKILL_COLLECTIONS, LEGACY_SKILL_COLLECTIONS } from './skill-collection-registry.mjs';
@@ -9,6 +9,7 @@ import { captureMigrationPath, revalidateMigrationPath, assertMigrationParents }
 import { readSelectionRecord, resolveTargetSelection } from './skill-selection.mjs';
 import { runNativePackageCommand, captureCodexForeignCaches, codexConfig } from './migration-native-packages.mjs';
 import { validateSkillRelease } from './validate-skill-release.mjs';
+import { compareVersions, exactCheckout, SKILLS_ORIGIN } from './install-skills.mjs';
 
 const exec = promisify(execFile);
 const check = (ok, message) => { if (!ok) throw new Error(message); };
@@ -45,16 +46,64 @@ async function read(file, fallback, maximumBytes = 2 * 1024 * 1024) {
   const value = json(await readFile(file, 'utf8')); await revalidateMigrationPath(snapshot); return { value, snapshot };
 }
 
-export async function pendingManagedRepair({ paths, agents, repositoryRoot }) {
+async function repairContinuationEvidence({ paths, agents, repositoryRoot, pending, record }) {
+  const prior = record.value;
+  check(prior.schemaVersion === 1 && prior.status === 'prepared-for-install' && prior.repositoryRoot === pending.value.repositoryRoot
+    && stable(prior.agents) === stable(agents), 'Pending repair is not prepared for continuation; its original state remains retained.');
+  const owner = await read(path.join(paths.homeDirectory, '.local/state/quickstark/installer/checkout.json'), null);
+  check(owner.value?.schemaVersion === 2 && owner.value.remoteUrl === SKILLS_ORIGIN && Array.isArray(owner.value.releases), 'Pending repair continuation requires recorded official versioned sources.');
+  const sources = path.join(paths.homeDirectory, '.local/share/quickstark/releases');
+  const find = root => {
+    const matches = owner.value.releases.filter(entry => entry.repositoryRoot === root);
+    check(matches.length === 1, 'Pending repair source is absent or ambiguous in the retained release ledger.');
+    const entry = matches[0];
+    check(path.dirname(root) === sources && /^[a-f0-9]{40}$/.test(entry.revision) && entry.tag === `v${entry.version}`, 'Pending repair source binding is invalid.');
+    return entry;
+  };
+  const oldSource = find(prior.repositoryRoot); const newSource = find(repositoryRoot);
+  check(oldSource.revision === prior.revision && compareVersions(newSource.version, oldSource.version) > 0, 'Pending repair continuation requires a newer recorded release.');
+  const git = async (root, args) => (await exec('git', ['-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false', ...args], {
+    cwd: root, encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,
+    env: { ...Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.toUpperCase().startsWith('GIT_'))), GIT_TERMINAL_PROMPT: '0' },
+  })).stdout.trim();
+  for (const entry of [oldSource, newSource]) {
+    await assertMigrationParents(entry.repositoryRoot);
+    check(await realpath(entry.repositoryRoot) === entry.repositoryRoot, 'Pending repair source must remain at its original physical path.');
+    check(await git(entry.repositoryRoot, ['config', '--get', 'remote.origin.url']) === SKILLS_ORIGIN
+      && await git(entry.repositoryRoot, ['rev-parse', 'HEAD']) === entry.revision
+      && JSON.parse(await readFile(path.join(entry.repositoryRoot, 'package.json'), 'utf8')).version === entry.version
+      && await exactCheckout(entry.repositoryRoot, entry.revision), 'Pending repair retained source changed; preserve it for explicit recovery.');
+  }
+  try { await git(repositoryRoot, ['merge-base', '--is-ancestor', oldSource.revision, newSource.revision]); }
+  catch { throw new Error('Pending repair source is not an ancestor of the verified newer release.'); }
+  check(Array.isArray(prior.snapshots) && prior.snapshots.length > 0, 'Pending repair has no retained original-state snapshots.');
+  for (const agent of agents) {
+    const config = agent === 'codex' ? path.join(paths.codexHomeDirectory, 'config.toml')
+      : path.join(agent === 'pi' ? paths.piHomeDirectory : paths.claudeHomeDirectory, 'settings.json');
+    check(prior.snapshots.some(entry => entry.snapshot?.path === config), 'Pending repair belongs to another configuration home.');
+  }
+  const backups = [];
+  for (const [index, entry] of prior.snapshots.entries()) {
+    check(entry.destination === path.join(path.dirname(pending.value.recordPath), `original-${index}`)
+      && ['absent', 'file', 'directory'].includes(entry.snapshot?.kind), 'Pending repair backup binding is invalid.');
+    const actual = await captureBackup(entry.destination);
+    check(actual.kind === entry.snapshot.kind && actual.contentSha256 === entry.snapshot.contentSha256, 'Pending repair original backup changed; originals remain retained.');
+    backups.push(actual);
+  }
+  return { records: [pending.snapshot, record.snapshot, owner.snapshot], backups, recordContentSha256: record.snapshot.contentSha256, nextRevision: newSource.revision };
+}
+
+export async function pendingManagedRepair({ paths, agents, repositoryRoot, allowPublishedContinuation = false }) {
   const pending = await read(pointerPath(paths), null);
   if (!pending.value) return null;
   const p = pending.value;
-  check(p.schemaVersion === 1 && p.repositoryRoot === repositoryRoot && stable(p.agents) === stable(agents)
+  check(p.schemaVersion === 1 && (p.repositoryRoot === repositoryRoot || allowPublishedContinuation) && stable(p.agents) === stable(agents)
     && path.resolve(p.recordPath) === p.recordPath && p.recordPath.startsWith(paths.backupRoot + path.sep)
     && path.basename(p.recordPath) === 'repair.json', 'Pending repair belongs to another checkout or harness group.');
   const record = await read(p.recordPath, undefined, maximumRepairRecordBytes);
   check(sha(record.value.selection) === p.selectionSha256, 'Pending repair selection changed; originals remain retained.');
-  return { ...record.value, recordPath: p.recordPath };
+  const continuationEvidence = p.repositoryRoot === repositoryRoot ? null : await repairContinuationEvidence({ paths, agents, repositoryRoot, pending, record });
+  return { ...record.value, recordPath: p.recordPath, ...(continuationEvidence ? { continuationEvidence } : {}) };
 }
 
 async function trustedSource(root) {
@@ -73,11 +122,16 @@ async function inventory(agent, options, run) {
 }
 
 function codexUnrelated(text) {
-  const lines = []; let owned = false;
+  const lines = []; let owned = false; let comments = [];
   for (const line of text.split(/\r?\n/)) {
+    if (/^\s*#/.test(line)) { comments.push(line.trim()); continue; }
+    if (!line.trim()) continue;
     if (/^\s*\[/.test(line)) owned = /^\s*\[(?:plugins\."[a-z0-9-]+@quickstark"|marketplaces\.(?:quickstark|"quickstark"))\]\s*(?:#.*)?$/.test(line);
-    if (!owned && line.trim()) lines.push(line.trim());
+    if (!owned) { for (const comment of comments) lines.push(comment); lines.push(line.trim()); }
+    comments = [];
   }
+  // Match native TOML editing: trailing comments survive removal of an owned table.
+  for (const comment of comments) lines.push(comment);
   return lines;
 }
 
@@ -104,10 +158,11 @@ async function unrelated(agent, options, run) {
 }
 
 /** Replacement authority comes from the installer, not from treating unknown bytes as trusted history. */
-export async function repairManagedPackages({ repositoryRoot, paths, agents, profile = null, withPackages = [], runtime = {}, onProgress = () => {} }) {
+export async function repairManagedPackages({ repositoryRoot, paths, agents, profile = null, withPackages = [], runtime = {}, onProgress = () => {}, allowPublishedContinuation = false }) {
   const run = runtime.runCommand ?? runNativePackageCommand;
   const saved = await readSelectionRecord(paths.selectionPath);
-  const previous = await pendingManagedRepair({ paths, agents, repositoryRoot });
+  const previous = await pendingManagedRepair({ paths, agents, repositoryRoot, allowPublishedContinuation });
+  check(!previous?.continuationEvidence || !profile && withPackages.length === 0, 'Pending repair continues its frozen selection; omit profile/addition flags.');
   const selection = structuredClone(previous?.selection ?? saved.record ?? { schemaVersion: 1, targets: {}, templateRevision: null, lastSuccessfulTransaction: null });
   const profiles = json(await readFile(path.join(repositoryRoot, 'config/skill-profiles.json'), 'utf8'));
   const hosts = [];
@@ -189,6 +244,7 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   // Validate every replacement before creating any withdrawal effect.
   onProgress('Validating accepted replacement packages before repairing installed state…');
   const release = await (runtime.validateRepairRelease ?? validateSkillRelease)({ repositoryRoot, agents, packageIds: [...new Set(agents.flatMap(a => selection.targets[a].packages))] });
+  check(!previous?.continuationEvidence || release.revision === previous.continuationEvidence.nextRevision, 'Pending repair replacement revision changed before continuation.');
   const backupRoot = path.join(paths.backupRoot, `repair-${randomUUID()}`);
   await assertMigrationParents(backupRoot); await mkdir(backupRoot, { recursive: true, mode: 0o700 });
   const snapshots = [];
@@ -215,8 +271,13 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   }
   for (const snapshot of release.evidenceSnapshots ?? []) await revalidateMigrationPath(snapshot);
   const recordPath = path.join(backupRoot, 'repair.json');
-  const record = { schemaVersion: 1, status: 'prepared', repositoryRoot, agents, selection, revision: release.revision, snapshots, actions: [], previousRecord: previous?.recordPath ?? null };
+  const record = { schemaVersion: 1, status: 'prepared', repositoryRoot, agents, selection, revision: release.revision, snapshots, actions: [], previousRecord: previous?.recordPath ?? null,
+    ...(previous?.continuationEvidence ? { previousRecordContentSha256: previous.continuationEvidence.recordContentSha256 } : {}) };
   await save(recordPath, record);
+  if (previous?.continuationEvidence) {
+    for (const snapshot of previous.continuationEvidence.records) await revalidateMigrationPath(snapshot);
+    for (const snapshot of previous.continuationEvidence.backups) await revalidateBackup(snapshot);
+  }
   await save(pointerPath(paths), { schemaVersion: 1, repositoryRoot, agents, recordPath, selectionSha256: sha(selection) });
   onProgress(`Original QuickStark state retained at ${backupRoot}`);
   try {

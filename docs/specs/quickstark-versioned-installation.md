@@ -22,6 +22,14 @@ this repository distributes skills to local machines. Hosted tests are manual.
 - Resume a versioned transaction at its original published tag and commit, not the
   latest version. Preserve legacy journals that cannot be matched to a versioned
   source; do not silently reinterpret them.
+- An ordinary update may continue a `prepared-for-install` managed repair in a
+  newer recorded official release. Verify both retained physical sources, their
+  Git ancestry, matching agent homes, the frozen selection and original backups.
+  Validate replacements and retain fresh live-state backups before creating a
+  linked successor receipt. Preserve the predecessor receipt and transaction
+  journal unchanged; this is a new repair, not a reinterpretation of that journal.
+  Reject missing evidence, drift, unsupported repair states and profile changes
+  before native effects. Retry an interrupted successor from its own receipt.
 - Publish only by explicit dispatch of `release.yml` on main. Create the exact
   version tag and GitHub release directly, without depending on hosted test jobs.
   Keep Linux/macOS tests available through manual dispatch of `validate.yml`.
