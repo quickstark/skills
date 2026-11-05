@@ -66,17 +66,34 @@ test('PATH detection returns no targets when no supported executables exist', as
   assert.deepEqual(await detectInstalledHarnesses({ environment: { PATH: directory } }), []);
 });
 
-test('default profiles share one transaction so shared resources can migrate together', async () => {
+test('clean updates try each client independently after a native failure', async () => {
+  const fixture = harness({ execute: async selected => selected.agents.includes('codex')
+    ? { status: 'failed', error: 'Codex unavailable' } : { status: 'complete' } });
+  const result = await fixture.run();
+  assert.deepEqual(result.results.map(result => result.agents), [['codex'], ['claude-code'], ['pi']]);
+  assert.deepEqual(result.results.map(result => result.status), ['failed', 'complete', 'complete']);
+  assert.deepEqual(result.pendingAgents, []);
+});
+
+test('an invalid client home is reported without preventing healthy clients', async () => {
+  const fixture = harness();
+  const result = await fixture.run({ environment: { CODEX_HOME: '/' } });
+  assert.equal(result.status, 'failed');
+  assert.deepEqual(result.results.map(result => result.status), ['failed', 'complete', 'complete']);
+  assert.deepEqual(fixture.calls.map(call => call.agents), [['claude-code'], ['pi']]);
+});
+
+test('ordinary installation gives each client an independent clean install', async () => {
   const fixture = harness();
   const result = await fixture.run();
   assert.equal(fixture.detections, 1);
-  assert.equal(fixture.calls.length, 1);
-  assert.deepEqual(fixture.calls[0].agents, agents);
+  assert.equal(fixture.calls.length, 3);
+  assert.deepEqual(fixture.calls.map(call => call.agents), agents.map(agent => [agent]));
   assert.equal(fixture.calls[0].bootstrapMarketplaces, true);
   assert.deepEqual(fixture.calls[0].withPackages, []);
-  assert.deepEqual(fixture.progress.map(({ agents }) => agents), [agents]);
+  assert.deepEqual(fixture.progress.map(({ agents }) => agents), agents.map(agent => [agent]));
   assert.equal(fixture.progress[0].homes.selectionPath, `${homeDirectory}/.config/quickstark/skills-selection.json`);
-  assert.deepEqual(result, { action: 'update', status: 'complete', agents, results: [{ agents, status: 'complete' }], pendingAgents: [] });
+  assert.deepEqual(result, { action: 'update', status: 'complete', agents, results: agents.map(agent => ({ agents:[agent], status:'complete' })), pendingAgents: [] });
 });
 
 test('detected subset updates only that subset', async () => {
@@ -97,16 +114,16 @@ test('explicit agent and target options bypass discovery and normalize the Claud
   const fixture = harness({ detect: async () => { throw new Error('discovery must not run'); } });
   const result = await fixture.run({ arguments_: ['--agent', 'claude', '--target', 'pi', '--agent', 'claude-code'] });
   assert.deepEqual(result.agents, ['claude-code', 'pi']);
-  assert.deepEqual(fixture.calls.map(({ agents }) => agents), [['claude-code', 'pi']]);
+  assert.deepEqual(fixture.calls.map(({ agents }) => agents), [['claude-code'], ['pi']]);
 });
 
 test('inherited custom profiles split from default targets and keep isolated updater state', async () => {
   const fixture = harness();
   const result = await fixture.run({ environment: { CODEX_HOME: '/profiles/codex', PI_CODING_AGENT_DIR: '/profiles/pi' } });
   assert.equal(result.status, 'complete');
-  assert.deepEqual(fixture.calls.map(({ agents }) => agents), [['claude-code'], ['codex'], ['pi']]);
+  assert.deepEqual(fixture.calls.map(({ agents }) => agents), [['codex'], ['claude-code'], ['pi']]);
   assert.equal(new Set(fixture.progress.map(({ homes }) => homes.selectionPath)).size, 3);
-  assert.equal(fixture.progress[1].homes.codexHomeDirectory, '/profiles/codex');
+  assert.equal(fixture.progress[0].homes.codexHomeDirectory, '/profiles/codex');
   assert.equal(fixture.progress[2].homes.piHomeDirectory, '/profiles/pi');
 });
 
@@ -185,13 +202,13 @@ test('update forwards package selection, manifest, profile, JSON, authorization,
   assert.equal(selected.runtime, runtime);
 });
 
-test('a failed group retains its recovery report and leaves later groups pending', async () => {
+test('an explicit legacy repair retains its recovery report and leaves later groups pending', async () => {
   const calls = [];
   const fixture = harness({ execute: async (selected) => {
     calls.push(selected.agents);
     return selected.agents.includes('codex') ? { status: 'failed', error: 'native verification failed', journalPath: '/recovery/codex.json' } : { status: 'complete' };
   } });
-  const result = await fixture.run({ environment: { CODEX_HOME: '/profiles/codex', PI_CODING_AGENT_DIR: '/profiles/pi' } });
+  const result = await fixture.run({ repairManagedPackages:true, environment: { CODEX_HOME: '/profiles/codex', PI_CODING_AGENT_DIR: '/profiles/pi' } });
   assert.deepEqual(calls, [['claude-code'], ['codex']]);
   assert.equal(result.status, 'failed');
   assert.deepEqual(result.pendingAgents, ['pi']);
@@ -199,12 +216,12 @@ test('a failed group retains its recovery report and leaves later groups pending
   assert.equal(result.results[1].error, 'native verification failed');
 });
 
-test('a thrown manager error becomes a failed result and stops pending groups', async () => {
+test('a thrown manager error is reported for each independently attempted client', async () => {
   const fixture = harness({ execute: async () => { throw new Error('manager unavailable'); } });
   const result = await fixture.run({ environment: { CODEX_HOME: '/profiles/codex' } });
   assert.equal(result.status, 'failed');
-  assert.deepEqual(result.results, [{ agents: ['claude-code', 'pi'], status: 'failed', error: 'manager unavailable' }]);
-  assert.deepEqual(result.pendingAgents, ['codex']);
+  assert.deepEqual(result.results, agents.map(agent => ({ agents:[agent], status:'failed',error:'manager unavailable' })));
+  assert.deepEqual(result.pendingAgents, []);
 });
 
 test('partial marketplace registrations survive a thrown error in the machine result and human report', async () => {

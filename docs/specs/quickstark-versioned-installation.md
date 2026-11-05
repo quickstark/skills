@@ -1,6 +1,6 @@
 # Versioned QuickStark installation
 
-Status: prepared for 4.4.1; not published or deployed by this change.
+Status: clean ordinary installation prepared for 4.4.6; publication and installed-device verification remain separate.
 
 ## Required behavior
 
@@ -14,9 +14,20 @@ this repository distributes skills to local machines. Hosted tests are manual.
   published stable version. Resolve annotated tags to their commit.
 - Pin one tag, version and commit through checkout preparation and native update.
   Require root/generated versions to match. Moving `main` must not invalidate it.
-- Verify actual checkout bytes and executable bits, local generated projections,
-  package acceptance, ownership and replacement checks before native effects.
-  Preserve saved selections, unrelated packages, custom-home isolation and backups.
+- Verify actual checkout bytes and executable bits, local generated projections
+  and replacement acceptance before native removal. Preserve package choices,
+  unrelated plugins/settings, custom-home isolation and original QuickStark backups.
+- Ordinary updates clean-reinstall only known QuickStark packages through native
+  managers. Remember the desired selection before removal, replace same-version or
+  edited managed caches, and verify installed registrations and package payloads.
+  Retain old sources, backups and historical journals without inspecting them as
+  prerequisites. Never traverse unrelated plugin caches during this ordinary path.
+- Attempt selected clients independently. A failed client must not prevent other
+  selected clients from installing. A plain rerun restores the desired selection;
+  ordinary installation creates no migration journal or pending repair pointer.
+- Keep the historical transaction engine for explicit journal recovery and direct
+  migration callers. The continuation and frozen-journal requirements below govern
+  that retained engine, rather than the ordinary clean-installation path.
 - Reject automatic downgrades and different source under an existing version.
   Dirty managed checkouts may be replaced only with a retained original backup.
 - Support Pi settings stored behind a symbolic link to an existing bounded regular
