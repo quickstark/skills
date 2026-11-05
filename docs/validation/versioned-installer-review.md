@@ -1,5 +1,37 @@
 # Versioned installer repair review
 
+## Linked Pi settings in 4.4.5
+
+The reported Mac update at 4.4.4 had no pending repair pointer, a regular installer
+ledger, and a symbolic link at Pi's settings path. An isolated Codex/Pi installation
+with the same layout reproduced `Repair metadata must be a bounded regular file.`
+The settings link was rejected both by repair inventory and by the later native
+configuration/ownership checks. Pi's settings writer updates the file through
+the link; requiring a regular file at the logical path excluded that supported layout.
+
+The repair binds the literal link and its physical regular target separately.
+Original target bytes are backed up before native effects; relative package
+registrations still resolve from the logical Pi configuration directory. The link
+binding is retained in repair receipts and serialized transaction options, then
+revalidated during inventory, update, continuation and recovery. The target is the
+owned write path; the link remains immutable evidence. Other metadata and package
+payloads retain their strict link policy.
+
+Regression coverage includes a combined actual Codex/Pi old-source repair with a
+relative link to a target outside the user home, optional package/settings
+preservation, original target backups, post-install verification, continuation
+across published source versions, and retry after a successor withdrawal fails.
+Native Pi tests cover withdrawal, exposure and rollback, plus rejection before
+effects for retargeted or replaced links, edited targets, and broken or oversized
+targets. Frozen-journal coverage verifies an interrupted installation resumes
+without installing twice. These are isolated Linux checks; the reported Mac still
+needs the published replacement and an installed-profile retry.
+
+Root and generated active versions are prepared as 4.4.5. Acceptance refreshes bind
+the reviewed engine sources, this review and version-only generated changes;
+historical criterion decisions and installed-host evidence remain unchanged.
+This change does not publish a tag or update the user's Mac.
+
 ## Governing decision
 
 The owner selected the latest published version tag for ordinary updates, with

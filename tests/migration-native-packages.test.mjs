@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { codexConfig, createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
+import { captureNativeConfiguration, codexConfig, createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 
@@ -69,7 +69,7 @@ else if(args[1]==='list'){const m=JSON.parse(await read(path.join(root(),'.agent
 else {const name=args[2].split('@')[0];const key='[plugins."'+args[2]+'"]';const start=config.indexOf(key);if(start>=0){let end=config.indexOf('\\n[',start);if(end<0)end=config.length;config=config.slice(0,start)+config.slice(end);}if(args[1]==='remove')await rm(path.join(home,'.codex/plugins/cache',marketName,name),{recursive:true,force:true});else {const index=args.indexOf('-c');const sourceRoot=index<0?root():JSON.parse(args[index+1].split('=').slice(1).join('='));const m=JSON.parse(await read(path.join(sourceRoot,'.agents/plugins/marketplace.json')));const def=m.plugins.find(entry=>entry.name===name);const source=path.resolve(sourceRoot,def.source.path);const manifest=JSON.parse(await read(path.join(source,'.codex-plugin/plugin.json')));const dest=path.join(home,'.codex/plugins/cache',marketName,name,manifest.version);await mkdir(path.dirname(dest),{recursive:true});await cp(source,dest,{recursive:true});config+='\\n'+key+'\\nenabled = true\\n';}await writeFile(file,config);console.log('{}');}}
 `;
 
-async function fixture(t, host, { real = false } = {}) {
+async function fixture(t, host, { real = false, linkedSettings = false } = {}) {
   const base = await mkdtemp(path.join(tmpdir(), 'qs-native-adapter-')); t.after(() => rm(base, { recursive: true, force: true }));
   const homeDirectory = path.join(base, 'home'); const market = path.join(base, 'market'); const backupRoot = path.join(base, 'backups');
   await mkdir(path.join(homeDirectory, '.codex'), { recursive: true }); await mkdir(path.join(homeDirectory, '.pi/agent'), { recursive: true });
@@ -101,6 +101,12 @@ async function fixture(t, host, { real = false } = {}) {
     await command(['install', packages[0].source]);
   }
   const configPath = path.join(homeDirectory, host === 'codex' ? '.codex/config.toml' : host === 'claude-code' ? '.claude/settings.json' : '.pi/agent/settings.json');
+  if (linkedSettings) {
+    options.cwd = path.join(base, 'work');await mkdir(options.cwd);
+    const target = path.join(homeDirectory, 'pi-dotfiles/settings.json');await mkdir(path.dirname(target),{recursive:true});
+    await writeFile(target,await readFile(configPath));await rm(configPath);await symlink(path.relative(path.dirname(configPath),target),configPath);
+    options.piSettingsBinding = (await captureNativeConfiguration(options)).binding;
+  }
   const targets = nativePackageOwnedTargets(options);
   const context = { transactionId: 'isolated-native-fixture' };
   const step = (before, packageId, phase) => ({ id: `${phase}-${packageId}`, phase, operation: `native-${phase}`, native: { host, packageId }, ownedTargets: targets, before, after: predictNativePackageTransition(before, { packageId, phase, packages }) });
@@ -297,6 +303,39 @@ test('changed unrelated configuration blocks stale application and recovery', as
   const settings = JSON.parse(await readFile(args.configPath)); settings.theme = 'user-changed'; await writeFile(args.configPath, JSON.stringify(settings));
   await assert.rejects(args.adapter.recover(step, backup.reference, args.context), /state changed/);
   assert.equal(JSON.parse(await readFile(args.configPath)).theme, 'user-changed');
+});
+
+for (const real of [false,true]) test(`${real ? 'real isolated' : 'executable fixture'} Pi linked settings survive withdrawal, exposure and recovery`, {skip:real&&!available('pi')},async t=>{
+  const args=await fixture(t,'pi',{real,linkedSettings:true});const link=await captureMigrationPath(args.configPath);
+  const before=(await observeNativePackages(args.options)).state;const withdraw=args.step(before,'old','withdraw');
+  assert.equal(withdraw.ownedTargets[0].path,args.options.piSettingsBinding.target);
+  const backup=await args.adapter.prepare(withdraw,args.context);
+  const original=JSON.parse(await readFile(path.join(backup.reference,'target-0')));assert.equal(original.theme,'community-kept');
+  await args.adapter.apply(withdraw,args.context);assert.deepEqual(await args.adapter.inspect(withdraw,args.context),withdraw.after);
+  const expose=args.step(withdraw.after,'new','expose');const next=await args.adapter.prepare(expose,args.context);
+  await args.adapter.apply(expose,args.context);assert.deepEqual(await args.adapter.inspect(expose,args.context),expose.after);
+  await args.adapter.recover(expose,next.reference,args.context);await args.adapter.recover(withdraw,backup.reference,args.context);
+  assert.deepEqual(await args.adapter.inspect(withdraw,args.context),before);assert.deepEqual(await captureMigrationPath(args.configPath),link);
+});
+
+for (const defect of ['retarget','replace link','edit target','link target']) test(`Pi linked settings reject ${defect} before native effects`,async t=>{
+  const args=await fixture(t,'pi',{linkedSettings:true});const before=(await observeNativePackages(args.options)).state;
+  const step=args.step(before,'old','withdraw');await args.adapter.prepare(step,args.context);
+  const target=args.options.piSettingsBinding.target;const bytes=await readFile(target);
+  const other=path.join(args.options.homeDirectory,'other-settings.json');await writeFile(other,bytes);
+  if(defect==='retarget'){await rm(args.configPath);await symlink(other,args.configPath);}
+  if(defect==='replace link'){await rm(args.configPath);await writeFile(args.configPath,bytes);}
+  if(defect==='edit target')await writeFile(target,JSON.stringify({...JSON.parse(bytes),theme:'user-edited'}));
+  if(defect==='link target'){await rm(target);await symlink(other,target);}
+  let calls=0;const adapter=createNativePackageAdapter({...args.options,runCommand:async()=>{calls++;throw Error('Unexpected native effect.');}});
+  const contents=await readFile(target);await assert.rejects(adapter.apply(step,args.context),/settings link changed|state changed/);
+  assert.equal(calls,0);assert.deepEqual(await readFile(target),contents);assert.deepEqual(await readFile(other),bytes);
+});
+
+test('dangling and oversized linked Pi settings reject before native effects',async t=>{
+  const args=await fixture(t,'pi',{linkedSettings:true});const target=args.options.piSettingsBinding.target;
+  await writeFile(target,'x'.repeat(1024*1024+1));await assert.rejects(observeNativePackages(args.options),/bounded regular file/);
+  await rm(target);await assert.rejects(observeNativePackages(args.options),/existing regular file/);
 });
 
 test('linked metadata and unbound ownership targets reject without native effects', async (t) => {

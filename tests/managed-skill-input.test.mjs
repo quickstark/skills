@@ -70,13 +70,17 @@ async function fixture(t, {bootstrap = true, host = 'codex', version = '4.0.0'} 
   return {base,repositoryRoot,homeDirectory,revision,document,options,nativeOptions,audit};
 }
 
-async function failedVersionedRepair(t, {oldVersion='4.4.1',newVersion='4.4.2'}={}) {
+async function failedVersionedRepair(t, {oldVersion='4.4.1',newVersion='4.4.2',linkedSettings=false}={}) {
   const args=await fixture(t,{bootstrap:false,version:oldVersion});
   const releases=path.join(args.homeDirectory,'.local/share/quickstark/releases');await mkdir(releases,{recursive:true});
   const old=path.join(releases,`v${oldVersion}-fixture`);await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);
   await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
   const agents=['codex','pi'];const paths=resolveManagedSkillPaths({...args.options,agents});
   const nativeOptions={...args.nativeOptions,cwd:old};
+  if(linkedSettings) {
+    const config=path.join(args.homeDirectory,'.pi/agent/settings.json');const target=path.join(args.homeDirectory,'dotfiles/pi-settings.json');
+    await mkdir(path.dirname(target),{recursive:true});await writeFile(target,await readFile(config));await rm(config);await symlink(path.relative(path.dirname(config),target),config);
+  }
   await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],nativeOptions);
   for(const id of ['qs-skills','qs-advanced'])await runNativePackageCommand('codex',['plugin','add',`${id}@quickstark`,'--json'],nativeOptions);
   const repair=await repairManagedPackages({repositoryRoot:old,paths,agents});
@@ -180,8 +184,9 @@ test('failed-withdrawal continuation rejects other states, later effects and bac
   }
 });
 
-test('a failed 4.4.1 Codex and Pi install continues on 4.4.2 without discarding its receipt or journal', {skip:!['codex','pi'].every(available)}, async t=>{
-  const f=await failedVersionedRepair(t);
+for(const linkedSettings of [false,true]) test(`a failed 4.4.1 Codex and Pi install continues on 4.4.2 without discarding its receipt or journal${linkedSettings ? ' with linked Pi settings' : ''}`, {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedVersionedRepair(t,{linkedSettings});
+  const link=linkedSettings ? await captureMigrationPath(path.join(f.homeDirectory,'.pi/agent/settings.json')) : null;
   const oldBackups=await captureMigrationPath(path.dirname(f.repair.recordPath));
   const result=await updateInstalledHarnesses({...f.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
   assert.equal(result.status,'complete',JSON.stringify(result.results));
@@ -197,6 +202,7 @@ test('a failed 4.4.1 Codex and Pi install continues on 4.4.2 without discarding 
   const config=await readFile(path.join(f.homeDirectory,'.codex/config.toml'),'utf8');
   assert.match(config,/\[projects\."\/fixture-preserved"\]/);assert.match(config,/# fixture trailing note/);
   const settings=await readJSON(path.join(f.homeDirectory,'.pi/agent/settings.json'));
+  if(link)assert.deepEqual(await captureMigrationPath(link.path),link);
   assert.equal(settings.theme,'community-preserved');assert.ok(settings.packages.includes('npm:fixture-community-theme'));
   assert.equal((await executeManagedSkills({...f.options,action:'verify'})).status,'verified');
 });
@@ -231,8 +237,8 @@ test('published repair continuation validates replacement packages before replac
   assert.deepEqual(await fixtureHomeState(f.homeDirectory),before);
 });
 
-test('published repair continuation retries a successor interrupted after withdrawal', {skip:!['codex','pi'].every(available)}, async t=>{
-  const f=await failedVersionedRepair(t);let interrupted=false;
+test('published repair continuation retries a successor interrupted after withdrawal with linked Pi settings', {skip:!['codex','pi'].every(available)}, async t=>{
+  const f=await failedVersionedRepair(t,{linkedSettings:true});let interrupted=false;
   const runtime={runCommand:async(command,argv,context)=>{const result=await runNativePackageCommand(command,argv,context);if(!interrupted&&command==='codex'&&argv[1]==='remove'){interrupted=true;throw Error('Interrupted successor withdrawal.');}return result;}};
   const failed=await updateInstalledHarnesses({...f.options,runtime,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
   assert.equal(failed.status,'failed');assert.ok(interrupted);
@@ -498,6 +504,28 @@ nativeTest('installer retries a failed-after-effect withdrawal without losing th
   assert.equal((await readJSON(failed.results[0].repairJournalPath)).status,'complete');
 });
 
+test('installer repairs Codex and Pi with linked Pi settings while retaining the link and original target', {skip:!['codex','pi'].every(available)},async t=>{
+  const args=await fixture(t,{bootstrap:false});const old=path.join(args.base,'old-source');
+  await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
+  await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(old,'codex')],args.nativeOptions);
+  await runNativePackageCommand('codex',['plugin','add','qs-advanced@quickstark','--json'],args.nativeOptions);
+  const config=path.join(args.homeDirectory,'.pi/agent/settings.json');const target=path.join(args.base,'dotfiles/pi-settings.json');
+  const settings={theme:'preserved',packages:['npm:fixture-community-theme',path.join(old,'pi/packages/qs-advanced')]};
+  await writeJSON(target,settings);await rm(config);await symlink(path.relative(path.dirname(config),target),config);
+  const link=await captureMigrationPath(config);const original=await readFile(target,'utf8');
+  const agents=['codex','pi'];
+  const result=await updateInstalledHarnesses({...args.options,repairManagedPackages:true,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));
+  assert.deepEqual(await captureMigrationPath(config),link);
+  const repair=await readJSON(result.results[0].repairJournalPath);
+  assert.equal(repair.configBindings.pi.target,target);
+  const backup=repair.snapshots.find(entry=>entry.snapshot.path===target);assert.ok(backup);
+  assert.equal(await readFile(backup.destination,'utf8'),original);
+  const updated=await readJSON(target);assert.equal(updated.theme,settings.theme);assert.ok(updated.packages.includes('npm:fixture-community-theme'));
+  assert.ok(updated.packages.some(entry=>path.resolve(path.dirname(config),entry)===path.join(args.repositoryRoot,'pi/packages/qs-advanced')));
+  assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
+});
+
 test('installer reconciles all three old-source harnesses, retaining dirty source and unrelated settings', {skip:!['codex','claude','pi'].every(available)},async t=>{
   const args=await fixture(t,{bootstrap:false});const old=path.join(args.base,'old-source');
   await git(args.base,['clone','--quiet','--no-hardlinks',args.repositoryRoot,old]);await git(old,['remote','set-url','origin','https://github.com/quickstark/skills.git']);
@@ -639,6 +667,22 @@ nativeTest('actual Pi update preserves unknown community package entries and sav
   const next=await executeManagedSkills({...options,action:'plan'}); assert.deepEqual(next.targets.pi.desired.packages,['qs-skills']); assert.equal(next.targets.pi.basis,'saved');
   const filtered={...settings,packages:settings.packages.map(entry=>entry.startsWith('npm:')?entry:{source:entry,skills:[]})}; await writeJSON(path.join(args.homeDirectory,'.pi/agent/settings.json'),filtered);
   await assert.rejects(buildManagedSkillInput(options),/Filtered Pi/); assert.deepEqual(await readJSON(path.join(args.homeDirectory,'.pi/agent/settings.json')),filtered);
+});
+
+test('a linked Pi settings transaction resumes its frozen target after an interrupted install', {skip:!['codex','pi'].every(available)},async t=>{
+  const args=await fixture(t,{host:'pi',bootstrap:false});
+  const config=path.join(args.homeDirectory,'.pi/agent/settings.json');const target=path.join(args.homeDirectory,'pi-dotfiles.json');
+  await writeFile(target,await readFile(config));await rm(config);await symlink(path.relative(path.dirname(config),target),config);
+  const link=await captureMigrationPath(config);let installs=0;
+  const runtime={runCommand:async(command,argv,context)=>{
+    const result=await runNativePackageCommand(command,argv,context);
+    if(command==='pi'&&argv[0]==='install'){installs++;throw Error('Interrupted linked Pi installation after effect.');}return result;
+  }};
+  const failed=await executeManagedSkills({...args.options,action:'update',runtime});assert.equal(failed.status,'failed');
+  const journal=await readMigrationJournal(failed.journalPath);assert.equal(journal.plan.controlPlane.nativeOptions.pi.piSettingsBinding.target,target);
+  const resumed=await executeManagedSkills({...args.options,action:'update',resume:failed.journalPath,runtime:{nativeOptions:{pi:{runCommand:runtime.runCommand}}}});
+  assert.equal(resumed.status,'complete',resumed.error);assert.equal(installs,1);assert.deepEqual(await captureMigrationPath(config),link);
+  assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
 });
 
 nativeTest('unresolved or stale criterion audit blocks native update before effects',async t=>{

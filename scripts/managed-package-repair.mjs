@@ -7,7 +7,7 @@ import { promisify } from 'node:util';
 import { TARGET_SKILL_COLLECTIONS, LEGACY_SKILL_COLLECTIONS } from './skill-collection-registry.mjs';
 import { captureMigrationPath, revalidateMigrationPath, assertMigrationParents } from './migration-filesystem.mjs';
 import { readSelectionRecord, resolveTargetSelection } from './skill-selection.mjs';
-import { runNativePackageCommand, captureCodexForeignCaches, codexConfig } from './migration-native-packages.mjs';
+import { captureNativeConfiguration, runNativePackageCommand, captureCodexForeignCaches, codexConfig } from './migration-native-packages.mjs';
 import { validateSkillRelease } from './validate-skill-release.mjs';
 import { compareVersions, exactCheckout, SKILLS_ORIGIN } from './install-skills.mjs';
 
@@ -88,7 +88,8 @@ async function repairContinuationEvidence({ paths, agents, repositoryRoot, pendi
   check(Array.isArray(prior.snapshots) && prior.snapshots.length > 0, 'Pending repair has no retained original-state snapshots.');
   for (const agent of agents) {
     const config = agent === 'codex' ? path.join(paths.codexHomeDirectory, 'config.toml')
-      : path.join(agent === 'pi' ? paths.piHomeDirectory : paths.claudeHomeDirectory, 'settings.json');
+      : agent === 'pi' && prior.configBindings?.pi ? prior.configBindings.pi.target
+        : path.join(agent === 'pi' ? paths.piHomeDirectory : paths.claudeHomeDirectory, 'settings.json');
     check(prior.snapshots.some(entry => entry.snapshot?.path === config), 'Pending repair belongs to another configuration home.');
   }
   const backups = [];
@@ -121,6 +122,7 @@ export async function pendingManagedRepair({ paths, agents, repositoryRoot, allo
     && path.basename(p.recordPath) === 'repair.json', 'Pending repair belongs to another checkout or harness group.');
   const record = await read(p.recordPath, undefined, maximumRepairRecordBytes);
   check(sha(record.value.selection) === p.selectionSha256, 'Pending repair selection changed; originals remain retained.');
+  if (record.value.configBindings?.pi) await captureNativeConfiguration({ ...paths, host: 'pi', cwd: repositoryRoot, piSettingsBinding: record.value.configBindings.pi });
   const continuationEvidence = p.repositoryRoot === repositoryRoot ? null : await repairContinuationEvidence({ paths, agents, repositoryRoot, pending, record });
   return { ...record.value, recordPath: p.recordPath, ...(continuationEvidence ? { continuationEvidence } : {}) };
 }
@@ -163,7 +165,9 @@ async function unrelated(agent, options, run) {
     return sha({ settings: codexUnrelated(text), caches: caches.hash });
   }
   const home = agent === 'pi' ? options.piHomeDirectory : options.claudeHomeDirectory;
-  const settings = (await read(path.join(home, 'settings.json'), {})).value;
+  const configuration = agent === 'pi' ? await captureNativeConfiguration(options) : null;
+  const settings = (await read(configuration?.snapshot.path ?? path.join(home, 'settings.json'), {})).value;
+  if (configuration?.binding) await captureNativeConfiguration(options);
   check(object(settings), 'Native settings must be an object.');
   if (agent === 'pi') return sha({ ...settings, packages: (settings.packages ?? []).filter(item => !options.sources.includes(typeof item === 'string' ? item : item?.source)) });
   const plugins = (await read(path.join(home, 'plugins/installed_plugins.json'), { version: 2, plugins: {} })).value;
@@ -190,8 +194,11 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
     let packages, market, root;
     const targets = [];
     if (agent === 'pi') {
-      const config = path.join(paths.piHomeDirectory, 'settings.json'); targets.push(config);
-      const settings = (await read(config, {})).value; check(object(settings) && (!settings.packages || Array.isArray(settings.packages)), 'Pi settings shape is unsupported.');
+      const config = path.join(paths.piHomeDirectory, 'settings.json');
+      const configuration = await captureNativeConfiguration({ ...options, ...(previous?.configBindings?.pi ? { piSettingsBinding: previous.configBindings.pi } : {}) });
+      if (configuration.binding) options.piSettingsBinding = configuration.binding;
+      targets.push(configuration.snapshot.path);
+      const settings = (await read(configuration.snapshot.path, {})).value; check(object(settings) && (!settings.packages || Array.isArray(settings.packages)), 'Pi settings shape is unsupported.');
       packages = [];
       for (const entry of settings.packages ?? []) {
         const value = typeof entry === 'string' ? entry : entry?.source;
@@ -290,7 +297,9 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   }
   for (const snapshot of release.evidenceSnapshots ?? []) await revalidateMigrationPath(snapshot);
   const recordPath = path.join(backupRoot, 'repair.json');
+  const configBindings = Object.fromEntries(hosts.filter(host => host.options.piSettingsBinding).map(host => [host.agent, host.options.piSettingsBinding]));
   const record = { schemaVersion: 1, status: 'prepared', repositoryRoot, agents, selection, revision: release.revision, snapshots, actions: [], previousRecord: previous?.recordPath ?? null,
+    ...(Object.keys(configBindings).length ? { configBindings } : {}),
     ...(previous?.continuationEvidence ? { previousRecordContentSha256: previous.continuationEvidence.recordContentSha256 } : {}) };
   await save(recordPath, record);
   if (previous?.continuationEvidence) {
@@ -301,6 +310,7 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   onProgress(`Original QuickStark state retained at ${backupRoot}`);
   try {
     for (const entry of snapshots) await revalidateBackup(entry.snapshot);
+    for (const host of hosts) if (host.options.piSettingsBinding) await captureNativeConfiguration(host.options);
     for (const host of hosts) {
       const { agent, options } = host;
       check(await unrelated(agent, options, run) === host.unrelated, 'Unrelated settings changed before repair; they remain preserved.');
@@ -340,6 +350,7 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
 export async function completeManagedRepair({ paths, record }) {
   const pending = await read(pointerPath(paths), null);
   if (pending.value?.recordPath !== record.recordPath) return;
+  if (record.configBindings?.pi) await captureNativeConfiguration({ ...paths, host: 'pi', cwd: record.repositoryRoot, piSettingsBinding: record.configBindings.pi });
   const actual = await read(record.recordPath, undefined, maximumRepairRecordBytes); actual.value.status = 'complete'; await save(record.recordPath, actual.value);
   await revalidateMigrationPath(pending.snapshot); await unlink(pointerPath(paths));
 }

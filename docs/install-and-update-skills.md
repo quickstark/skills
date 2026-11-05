@@ -91,6 +91,13 @@ backups record and copy those links literally without following external targets
 they retain file modes and use separate bounded capacity for large historical caches.
 Installed package and accepted source verification still reject descendant links.
 
+Pi's `settings.json` may be a symbolic link to an existing regular dotfile. The
+updater preserves that link, binds its physical target, and backs up the target
+before changing package registrations through Pi. Relative package paths still
+resolve from the Pi configuration directory. Retargeting or replacing the link,
+or changing the target during a planned update or recovery, blocks further effects.
+Broken links and non-regular or oversized targets require correction before updating.
+
 Codex inventory calls are scoped to the managed marketplaces, avoiding a refresh
 of unrelated remote catalogs. Other cached skills remain collision and preservation
 guards: their bytes and potential public names are inspected without claiming ownership

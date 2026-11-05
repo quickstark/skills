@@ -2,7 +2,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { constants } from 'node:fs';
-import { cp, lstat, mkdir, open, readdir, rm, rename, unlink, rmdir } from 'node:fs/promises';
+import { cp, lstat, mkdir, open, readdir, realpath, rm, rename, unlink, rmdir } from 'node:fs/promises';
 import path from 'node:path';
 import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { adoptionSourceContentSha256 } from './adoption-acceptance.mjs';
@@ -33,6 +33,32 @@ async function boundedRead(file, maximum = 1024 * 1024) {
     check(size === before.size && size <= maximum && after.size === before.size && after.mtimeMs === before.mtimeMs && after.ctimeMs === before.ctimeMs && named.ino === before.ino && named.dev === before.dev && named.nlink === 1, 'Native metadata changed during inspection.');
     return buffer.subarray(0, size);
   } finally { await handle.close(); }
+}
+
+/** Pi supports dotfile-managed settings links. Freeze the link separately from
+ * its regular, physical write target; package payloads and other metadata keep
+ * their existing no-links policy. Relative package sources still use configPath. */
+export async function captureNativeConfiguration(options) {
+  const configPath = options.host === 'codex' ? path.join(options.codexHomeDirectory ?? path.join(options.homeDirectory, '.codex'), 'config.toml')
+    : path.join(options.host === 'claude-code' ? options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude') : options.piHomeDirectory ?? path.join(options.homeDirectory, '.pi/agent'), 'settings.json');
+  const logical = await captureMigrationPath(configPath);
+  const expected = options.piSettingsBinding;
+  if (options.host === 'pi' && logical.kind === 'symlink') {
+    let target;
+    try { target = await realpath(configPath); }
+    catch { throw new Error('Linked Pi settings must resolve to an existing regular file; contents withheld.'); }
+    check(!expected || expected.target === target && migrationSnapshotMatches(expected.link, logical), 'Pi settings link changed after planning; preserve it and replan.');
+    check((!options.cwd || target !== options.cwd && !within(target, options.cwd))
+      && (options.packages ?? []).every(pkg => target !== pkg.source && !within(target, pkg.source)), 'Linked Pi settings must remain separate from release sources.');
+    const snapshot = await captureMigrationPath(target);
+    check(snapshot.kind === 'file' && snapshot.bytes <= 1024 * 1024, 'Linked Pi settings must resolve to a bounded regular file.');
+    await revalidateMigrationPath(logical);
+    check(await realpath(configPath) === target, 'Pi settings link changed during inspection.');
+    return { snapshot, binding: { target, link: logical } };
+  }
+  check(!expected, 'Pi settings link changed after planning; preserve it and replan.');
+  check(['file', 'absent'].includes(logical.kind), 'Native config must be a regular file.');
+  return { snapshot: logical, binding: null };
 }
 
 /** No shell, bounded output, isolated path overrides, and no command output in errors. */
@@ -70,6 +96,9 @@ function optionsFor(options) {
   const claudeHomeDirectory = options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude');
   const piHomeDirectory = options.piHomeDirectory ?? path.join(options.homeDirectory, '.pi/agent');
   check(absolute(claudeHomeDirectory) && absolute(piHomeDirectory), 'Explicit normalized Claude and Pi homes required.');
+  if (options.piSettingsBinding) check(options.host === 'pi' && absolute(options.piSettingsBinding.target)
+    && options.piSettingsBinding.link?.path === path.join(piHomeDirectory, 'settings.json')
+    && options.piSettingsBinding.link.kind === 'symlink', 'Invalid linked Pi settings binding.');
   return { ...options, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, packages: JSON.parse(JSON.stringify(options.packages)), runCommand: options.runCommand ?? runNativePackageCommand, command: options.command ?? (options.host === 'claude-code' ? 'claude' : options.host),
     configPath: options.host === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(options.host === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'settings.json') };
 }
@@ -79,7 +108,7 @@ const selector = (options, pkg) => options.host !== 'pi' ? `${pkg.name}@${pkg.ma
 export function nativePackageOwnedTargets(options) {
   const config = options.host === 'codex' ? path.join(options.codexHomeDirectory, 'config.toml')
     : path.join(options.host === 'claude-code' ? options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude') : options.piHomeDirectory ?? path.join(options.homeDirectory, '.pi/agent'), 'settings.json');
-  return [{ path: config, ownershipRecord: options.packages[0].ownershipRecord },
+  return [{ path: options.host === 'pi' && options.piSettingsBinding ? options.piSettingsBinding.target : config, ownershipRecord: options.packages[0].ownershipRecord },
     ...(options.host === 'claude-code' ? [{ path: path.join(options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude'), 'plugins/installed_plugins.json'), ownershipRecord: options.packages[0].ownershipRecord }] : []),
     ...(options.host !== 'pi' ? options.packages.map((pkg) => ({ path: path.join(options.host === 'codex' ? options.codexHomeDirectory : (options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude')), 'plugins/cache', pkg.marketplace, pkg.name, pkg.version, ...(pkg.legacyRootCore ? ['.orphaned_at'] : [])), ownershipRecord: pkg.ownershipRecord })) : [])];
 }
@@ -199,10 +228,12 @@ export async function captureCodexForeignCaches(codexHomeDirectory, managedMarke
  */
 export async function observeNativePackages(input) {
   const options = optionsFor(input); const { packages, host, configPath } = options;
-  const configSnapshot = await captureMigrationPath(configPath); check(['file', 'absent'].includes(configSnapshot.kind), 'Native config must be a regular file.');
+  const configuration = await captureNativeConfiguration(options);
+  check(!configuration.binding || options.piSettingsBinding, 'Linked Pi settings require a frozen target binding.');
+  const configSnapshot = configuration.snapshot;
   const mutableSnapshots = [configSnapshot];
   const payloadSnapshots = [];
-  const bytes = configSnapshot.kind === 'absent' ? Buffer.alloc(0) : await boundedRead(configPath);
+  const bytes = configSnapshot.kind === 'absent' ? Buffer.alloc(0) : await boundedRead(configSnapshot.path);
   const sourcePayloads = [];
   for (const pkg of packages) {
     if (pkg.installedOnly) { sourcePayloads.push({ id: pkg.id, name: pkg.name, version: pkg.version, publicNames: [...pkg.publicNames].sort(), role: 'installed-cache', expectedPayloadSha256: pkg.payloadSha256 }); continue; }
@@ -374,8 +405,14 @@ export async function observeNativePackages(input) {
   const allNames = [...active.flatMap((item) => item.publicNames), ...unrelatedPublicNames];
   check(new Set(allNames).size === allNames.length, 'Duplicate native public identities are exposed.');
   const data = { host, scope: 'native-packages-only', configPath, config, unrelatedDiscoveryComplete, unrelatedPublicNames, native: { packages: active.sort((a, b) => a.id.localeCompare(b.id)) }, sources: sourcePayloads, caches, unrelatedHash: digest(foreignCaches ? { registrations: unrelated, caches: foreignCaches.hash } : unrelated) };
+  if (configuration.binding) {
+    data.piSettingsTarget = configuration.binding.target;
+    await captureNativeConfiguration(options);
+    await revalidateMigrationPath(configSnapshot);
+  }
   if (host === 'claude-code') for (const snapshot of [...mutableSnapshots,...payloadSnapshots]) await revalidateMigrationPath(snapshot);
-  return { state: { snapshotHash: digest(data), ...data }, evidence: { mutableSnapshots, payloadSnapshots, configSnapshot, rawConfigSha256: sha(bytes), unrelatedPublicNames, unrelatedDiscoveryComplete } };
+  return { state: { snapshotHash: digest(data), ...data }, evidence: { mutableSnapshots, payloadSnapshots, configSnapshot,
+    ...(configuration.binding ? { configLinkSnapshot: configuration.binding.link } : {}), rawConfigSha256: sha(bytes), unrelatedPublicNames, unrelatedDiscoveryComplete } };
 }
 
 /** Predict only the supported one-package registration transition. Actual native
@@ -416,12 +453,14 @@ export function createNativePackageAdapter(input) {
   const options = optionsFor(input); check(absolute(options.backupRoot), 'Explicit backup root required.');
   check([options.codexHomeDirectory, (options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude')), options.piHomeDirectory].every((root) => options.backupRoot !== root && !within(options.backupRoot, root) && !within(root, options.backupRoot)), 'Backups must remain outside host discovery roots.');
   check(options.packages.every((pkg) => options.backupRoot !== pkg.source && !within(options.backupRoot, pkg.source) && !within(pkg.source, options.backupRoot)), 'Backups must remain separate from bound source payloads.');
+  if (options.piSettingsBinding) check(!within(options.piSettingsBinding.target, options.backupRoot) && !within(options.backupRoot, options.piSettingsBinding.target)
+    && options.piSettingsBinding.target !== options.backupRoot, 'Linked Pi settings must remain separate from backups.');
   const contextCheck = (step, context) => {
     check(context && /^[a-z0-9][a-z0-9-]*$/.test(context.transactionId) && /^[a-z0-9][a-z0-9-]*$/.test(step.id), 'Bounded transaction/step identity required.');
     check(['withdraw', 'expose'].includes(step.phase) && step.operation === `native-${step.phase}` && step.native?.host === options.host, 'Native adapter only accepts explicit package withdrawal/exposure.');
     const pkg = options.packages.find((item) => item.id === step.native.packageId); check(pkg, 'Step package lacks approved ownership binding.');
     const allowed = new Set(nativePackageOwnedTargets(options).map((target) => target.path));
-    const required = [options.configPath, ...(options.host !== 'pi' ? [path.join(options.host === 'codex' ? options.codexHomeDirectory : (options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude')), 'plugins/cache', pkg.marketplace, pkg.name, pkg.version, ...(pkg.legacyRootCore ? ['.orphaned_at'] : []))] : [])];
+    const required = [options.piSettingsBinding?.target ?? options.configPath, ...(options.host !== 'pi' ? [path.join(options.host === 'codex' ? options.codexHomeDirectory : (options.claudeHomeDirectory ?? path.join(options.homeDirectory, '.claude')), 'plugins/cache', pkg.marketplace, pkg.name, pkg.version, ...(pkg.legacyRootCore ? ['.orphaned_at'] : []))] : [])];
     check(step.ownedTargets.length === allowed.size && new Set(step.ownedTargets.map((target) => target.path)).size === allowed.size && step.ownedTargets.every((target) => allowed.has(target.path)), 'Native step ownership must cover the exact config and all bound cache targets.');
     check(required.every((file) => step.ownedTargets.some((target) => target.path === file && target.ownershipRecord === pkg.ownershipRecord)), 'Native effect targets/ownership do not bind config and cache.');
     return pkg;

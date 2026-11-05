@@ -19,6 +19,12 @@ this repository distributes skills to local machines. Hosted tests are manual.
   Preserve saved selections, unrelated packages, custom-home isolation and backups.
 - Reject automatic downgrades and different source under an existing version.
   Dirty managed checkouts may be replaced only with a retained original backup.
+- Support Pi settings stored behind a symbolic link to an existing bounded regular
+  file. Preserve and freeze the link separately from its physical write target;
+  back up the target and retain the binding in repair receipts and transaction
+  journals. Keep relative package resolution at the logical configuration directory.
+  Reject changed links, changed planned targets and invalid targets before effects;
+  retain the existing strict policy for package payloads and other metadata.
 - Resume a versioned transaction at its original published tag and commit, not the
   latest version. Preserve legacy journals that cannot be matched to a versioned
   source; do not silently reinterpret them.

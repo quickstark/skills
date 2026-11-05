@@ -12,7 +12,7 @@ import { EXECUTION_INTERNAL_CAPABILITIES } from './execution-skill-catalog.mjs';
 import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { captureManagedSkillPayload } from './managed-skill-migration.mjs';
 import { captureMigrationPath, revalidateMigrationPath } from './migration-filesystem.mjs';
-import { observeNativePackages, runNativePackageCommand, nativePayloadSha256, listCodexPlugins } from './migration-native-packages.mjs';
+import { captureNativeConfiguration, observeNativePackages, runNativePackageCommand, nativePayloadSha256, listCodexPlugins } from './migration-native-packages.mjs';
 import { verifyAdoptionAcceptance } from './adoption-acceptance.mjs';
 import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from './skill-selection.mjs';
 import { validateSkillMigrations } from './skill-migrations.mjs';
@@ -153,8 +153,9 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
   const evidenceSnapshots = [];
   for (const agent of agents) {
     const configPath = agent === 'codex' ? path.join(codexHomeDirectory, 'config.toml') : path.join(agent === 'claude-code' ? claudeHomeDirectory : piHomeDirectory, 'settings.json');
-    const configSnapshot = await captureMigrationPath(configPath); check(['file', 'absent'].includes(configSnapshot.kind), 'Native config must be a regular file.'); configs[agent] = configSnapshot;
     const nativeOptions = { host: agent, homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, cwd: repositoryRoot, runCommand: command, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
+    const configuration = await captureNativeConfiguration(nativeOptions); const configSnapshot = configuration.snapshot; configs[agent] = configSnapshot;
+    if (configuration.binding) nativeOptions.piSettingsBinding = configuration.binding;
     let installed;
     if (agent === 'codex') {
       const inventory = await listCodexPlugins(nativeOptions);
@@ -176,7 +177,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
         return { ...entry, name: entry.id.split('@')[0], installed: true, source: { source: 'local', path: entry.readFromFolder } };
       });
     } else {
-      const settings = await jsonFile(configPath, {}); check(settings.value && !Array.isArray(settings.value) && (!settings.value.packages || Array.isArray(settings.value.packages)), 'Pi settings shape is unsupported.');
+      const settings = await jsonFile(configSnapshot.path, {}); check(settings.value && !Array.isArray(settings.value) && (!settings.value.packages || Array.isArray(settings.value.packages)), 'Pi settings shape is unsupported.');
       installed = [];
       for (const entry of settings.value.packages ?? []) {
         const value = typeof entry === 'string' ? entry : entry?.source;
@@ -247,7 +248,8 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
     const observedNative = await observeNativePackages({ ...nativeOptions, packages: bindings });
     unrelatedNames[agent] = observedNative.evidence.unrelatedPublicNames ?? [];
     await revalidateMigrationPath(configSnapshot);
-    native[agent] = { packages: bindings, command: nativeOptions.command }; configs[agent] = observedNative.evidence.configSnapshot;
+    native[agent] = { packages: bindings, command: nativeOptions.command,
+      ...(configuration.binding ? { piSettingsBinding: configuration.binding } : {}) }; configs[agent] = observedNative.evidence.configSnapshot;
   }
   if (customCodexHome || customOtherHome) {
     for (const legacy of document.migrations.flatMap((migration) => migration.legacy).filter((entry) => entry.kind === 'resource')) {

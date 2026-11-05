@@ -4460,11 +4460,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "54fcc4e1cdf36aceeeda8b1b6f28885df9077959628069bf5e5e669ca57114ef"
+      "contentSha256": "4c7b6cc67e28822ea9ec72f0320973047be98824b1a5386eeafdcce2d52a7052"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "226c0ea128c18f60a898bbf152ea9a7ea8d4d4ad8dcb45a24414c091c18cd924"
+      "contentSha256": "fbbb4c21e3bec5cdc0204fb9f4a4d366724c1c9a0a7136d9a5232df1041a097e"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -4484,7 +4484,7 @@
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "06b5964776ab616547fc8be0c3fb054ba62e18eb3d74f2ad35982ec7d038bf8a"
+      "contentSha256": "a6debb1d6a60b4194ce85d4e9322418661e227a1e912279ab78521aa861e6702"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -4504,11 +4504,11 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "7d642350972e36ad5f344a75da536d85e1e4fa61e300db66b0a2cde5cc1a2aff"
+      "contentSha256": "5eef5f07643a95f74aaa5b98042f68bba40e5b19664b312542b2e10b73c73a14"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
-      "contentSha256": "7d67eb552687ccf09e373fadcfa02b887c05623172b13062441fc6e6e56df672"
+      "contentSha256": "d2d6a04277b055cd2d200cb675b616b324d22b81c2650c607332bd2977f715bb"
     },
     "scripts/managed-skill-paths.mjs": {
       "kind": "file",
@@ -4524,7 +4524,7 @@
     },
     "scripts/migration-native-packages.mjs": {
       "kind": "file",
-      "contentSha256": "0b1b248e42a221d29e0cf57493a4852de1287b43bc9c8d24dee696179efe887e"
+      "contentSha256": "b18096797d779bc0dcd1b9950327e0a96beed319419b2b0c49f33b5d5abe451d"
     },
     "scripts/migration-owned-paths.mjs": {
       "kind": "file",
@@ -4616,15 +4616,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "cf1b02fa0a1f785d9220e81a1bea240b9893e6d6a9f829252ee78cbf9bb762be"
+      "contentSha256": "c2c52bb656fffc12c32ff5799e393b13d572d87d1f158bac5c270d02478c9a34"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "2559be38349ee268195149f50d812ad84b0c02ee18d7814ce4c3c4eb75f77556"
+      "contentSha256": "02a96b326c53019f9a3562d5c053b913bacfb1b74a16e83abf9fd4c4c01f792b"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "b0884ab81c414a4f2c2a63f98b02fdb335d0e05b9d3c1e236c509d7adf23e0ce"
+      "contentSha256": "67c10a03e833c20f39d0dcf771db562fc3dcd247e3428c4422489a798a632e86"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -4664,15 +4664,15 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "454d2acc8df95d660d24b3108671769d02621a246b79f6cf8547579081e77deb"
+      "contentSha256": "da16ab99c804d5aa3ba516f4add74ce140175e0312b73569530a6da0505f2bf5"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "552cec3037467bbb64c5baab9d267df85cc75b53aef34c20c87a725f42912007"
+      "contentSha256": "42544ea1eb71f11b19ab368f01f050e57e4e1cd9251e09f36b97f536f10d92cd"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "41e95a90ca2e692766807829bf6a2f07fa3629c9976ae99892a3e6ab400c1509"
+      "contentSha256": "8b8df4707cb54da049b07ffb2d7d1c4b05eadb0095e8eac58e4787e176625218"
     },
     "skills/advanced": {
       "kind": "directory",
@@ -4728,15 +4728,15 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "7fc4c8baed7289eca88f41cc4d14cfeca76bfd046d216184fd95e02082e6b157"
+      "contentSha256": "2769ec25ee3b43abfe71224dd2ed928b4b6d4f1b2474441072b8b3868091fe35"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "374d7e582d22fc3cca8da0406bdf5c11a3e47b7aac772a59d5a9cbb806ec5e47"
+      "contentSha256": "c672ed7bbbee3faefff7e57caeaec45c95195b7215394990c9a9a6ba46fce597"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "fbb23819e3dc5b5db9d6865f721ef2014765b45589088220126f93e0e2a07149"
+      "contentSha256": "79ab0a8dea0c80bdaf4a37dbe5a1e02ef307313914e16e65618e017e29eb5204"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
@@ -4760,15 +4760,15 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "ce1034e6bd44b42609e790d69c798b4d705336996c7a732243d8b44d4e592783"
+      "contentSha256": "cf5a6f624a826668885fd6b8389f2c9a6f040aad111d2dfb726652bbed29df26"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "91508e932e31c21f63d03a5f29b08fa3a47abab4e4e9d77c65f9eef9da2c90fe"
+      "contentSha256": "07ed2b614b7315d176f00654fd9d89171281dffee1f9d85f71a4a778f93773bc"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "182b4cd95fee8593a1b7117fbeee22403ab79d8db45c399e1785c883661dd4b2"
+      "contentSha256": "ed1269b9c53933987c5125c968f8418ea19a1ca156ce12f65819be0bde18ba19"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -4776,15 +4776,15 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "a5c5f9b0cbe89b4d9f7befa38efad4446a41593ac99525224b375c0c6ddc8863"
+      "contentSha256": "17132452b00589adb68fb784c9bdc77f9cd2ad8e86ca62741ca44d642f430451"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "6f444ccd2e11dd941c517fefe550ab01f60761b633a203327dba792534286b76"
+      "contentSha256": "3c8647eb96457ccdd4502b863cafcf446281186d84d37698e7492137b5c6a689"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "edb010f51e50498ca1e097af1605e4698302107b1607b5a1b8aa5b09cfb8b6e5"
+      "contentSha256": "876cbe918d90a54bc9c15e6d95158c79076a3f30a286436330dd58220b4ef11e"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
@@ -4792,7 +4792,7 @@
     },
     "packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "e330d82b32bd2fd83291048db3aa3376b5910d799b7e6e46649471a796baccff"
+      "contentSha256": "2aea2374cb735e95655718de1b60a097120ab5fa44ab18b40b813e82b635ef8f"
     },
     "scripts/claude-core-migration.mjs": {
       "kind": "file",
@@ -4820,7 +4820,7 @@
     },
     "scripts/managed-package-repair.mjs": {
       "kind": "file",
-      "contentSha256": "62fc36e82d6542ab71961d606230c9c3cfd8f472ab5b0f59cc47d45e01e72419"
+      "contentSha256": "3ea2e5a393e09748ba6d103a1fa5a5002f63d557a768ef9659031953dfa589ad"
     },
     "scripts/validate-skill-release.mjs": {
       "kind": "file",
@@ -5078,7 +5078,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "cf2599474e8179c6ff20e7650ee99aa791b14af857925d711b4d716dea06657b"
+      "sha256": "8ea481c89d71d8bfc7665f1294a4f79e9b79ad7c7765ec02fc788b04f983a364"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
@@ -5106,7 +5106,7 @@
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
-      "sha256": "4aca40bbcab9c492f15f2e5fba53e51a290d1c8e156e7a09d13b8aad5a0b9311"
+      "sha256": "2ee2363197533350cb5382c055afe354e0c66fd4ddb6ca77576d36ffe646bbb0"
     },
     "tests/managed-skill-migration.test.mjs": {
       "path": "tests/managed-skill-migration.test.mjs",
@@ -5166,7 +5166,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "e4e3022230a83971089e919577db12f0d48c0b3bc60cfbc11a5336d1d7f177d5"
+      "sha256": "59e16835031f05b7e415e843e3afe1243ec2af84046dafe1e8dfc12ab43e8027"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -5186,7 +5186,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",
-      "sha256": "91fd8547654dac8deeebfd21612875f74103416be1152bfe2e7732391748e172"
+      "sha256": "a662fd125f229737a364074c7b5cabe3ac6a55169a18346b8902630c5a96961a"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
@@ -5350,7 +5350,7 @@
     },
     "scripts/managed-package-repair.mjs": {
       "path": "scripts/managed-package-repair.mjs",
-      "sha256": "c927c878b216b6d63afc6ab5785d92c3de26e4558e9c084404dfbd0473e85915"
+      "sha256": "5edaa29e61023f81ea21f439a820c7f73fa39b1413929809a4cebb9b6d48afa7"
     },
     "scripts/validate-skill-release.mjs": {
       "path": "scripts/validate-skill-release.mjs",
@@ -5362,7 +5362,7 @@
     },
     "scripts/managed-skill-migration.mjs": {
       "path": "scripts/managed-skill-migration.mjs",
-      "sha256": "e29ebb18bca96ea732cf317276c842838aad89371f333170d6de717491234f23"
+      "sha256": "8ace82e5e3df10898bedad0833ceba224feca34291a840aa5dfdc913f5b97222"
     },
     "tests/personal-skills-v2.test.mjs": {
       "path": "tests/personal-skills-v2.test.mjs",
@@ -5370,15 +5370,15 @@
     },
     "package.json": {
       "path": "package.json",
-      "sha256": "d61527885dd70d29250d40cce4ace01c31bd43b15e4d0c153b222c6e1ae05c6d"
+      "sha256": "1f4966b3ae60b29708922de538d5e60c4f3b87e8701335b3e626a494056b3b47"
     },
     "docs/validation/versioned-installer-review.md": {
       "path": "docs/validation/versioned-installer-review.md",
-      "sha256": "b5c44bc54bc916772624492fff469b4f17efc05642ab3c29a380a4bed3c92d00"
+      "sha256": "e2896604f88f861ab45431cb2d2a550fc4673e1978ca1111aadcef43830d9f37"
     },
     "docs/specs/quickstark-versioned-installation.md": {
       "path": "docs/specs/quickstark-versioned-installation.md",
-      "sha256": "9019ec1f4ee1f0d26cfd7e443b9744afe2ad21fc556cb22b02fdc606fb667578"
+      "sha256": "d33559174b7aa96adee41a5b71eb2f32df32db83eca6071dc50bd2270ebbb659"
     },
     ".github/workflows/release.yml": {
       "path": ".github/workflows/release.yml",

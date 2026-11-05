@@ -8,7 +8,7 @@ import { planSkillMigrations, readSkillMigrations } from './skill-migrations.mjs
 import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { captureMigrationPath, revalidateMigrationPath } from './migration-filesystem.mjs';
 import { createOwnedPathAdapter, ownedFileState, ownedPathState } from './migration-owned-paths.mjs';
-import { createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, nativePackageOwnedTargets, nativePayloadSha256 } from './migration-native-packages.mjs';
+import { captureNativeConfiguration, createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, nativePackageOwnedTargets, nativePayloadSha256 } from './migration-native-packages.mjs';
 import { readMigrationJournal, runMigrationTransaction, validateMigrationTransactionPlan } from './migration-transaction.mjs';
 import { lockEntryMatches } from './personal-skills/lock.mjs';
 
@@ -101,8 +101,12 @@ async function checkedObservation(observed, snapshots, input) {
   if (input.runtime?.verifyOwnership) {
     const verified = await input.runtime.verifyOwnership(observed, { homeDirectory: input.homeDirectory, document: input.document, native: input.native?.[observed.agent] });
     check(verified && same(verified.binding, binding) && Array.isArray(verified.evidenceSnapshots) && verified.evidenceSnapshots.length > 0, 'Derived ownership requires an exact binding and original evidence snapshots.');
-    const originalPath = observed.kind === 'resource' ? path.join(input.homeDirectory, '.agents/.skill-lock.json')
+    let originalPath = observed.kind === 'resource' ? path.join(input.homeDirectory, '.agents/.skill-lock.json')
       : observed.agent === 'codex' ? path.join(input.codexHomeDirectory ?? path.join(input.homeDirectory, '.codex'), 'config.toml') : path.join(observed.agent === 'claude-code' ? input.claudeHomeDirectory ?? path.join(input.homeDirectory,'.claude') : input.piHomeDirectory ?? path.join(input.homeDirectory,'.pi/agent'), 'settings.json');
+    if (observed.kind === 'package' && observed.agent === 'pi' && input.native?.pi?.piSettingsBinding) {
+      const configuration = await captureNativeConfiguration({ host: 'pi', homeDirectory: input.homeDirectory, piHomeDirectory: input.piHomeDirectory, cwd: input.cwd, piSettingsBinding: input.native.pi.piSettingsBinding });
+      originalPath = configuration.snapshot.path; proofSnapshots.push(configuration.binding.link);
+    }
     check(verified.evidenceSnapshots.some((snapshot) => snapshot.path === originalPath), 'Derived ownership must bind the existing manager config or Agent Skills lock.');
     for (const snapshot of verified.evidenceSnapshots) { check(snapshot.kind === 'file', 'Ownership evidence must bind original regular files.'); await revalidateMigrationPath(snapshot); proofSnapshots.push(snapshot); }
   } else {
@@ -209,8 +213,10 @@ export async function previewManagedSkillMigration(input) {
         const binding = nativeInput.packages.find((entry) => entry.name === id && entry.version === pkg.version && entry.source === pkg.artifact.source && entry.payloadSha256 === nativePayloadSha256(agent,pkg.artifact.snapshot) && !entry.installedOnly);
         check(binding && same([...binding.publicNames].sort(), [...pkg.publicSkills].sort()), 'Desired package does not match exact native source/version/public-identity bindings.');
       }
-      native[agent] = { options: { host: agent, homeDirectory: input.homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, cwd: input.cwd, packages: nativeInput.packages, ...(nativeInput.command ? { command: nativeInput.command } : {}) }, state: observation.state };
+      native[agent] = { options: { host: agent, homeDirectory: input.homeDirectory, codexHomeDirectory, claudeHomeDirectory, piHomeDirectory, cwd: input.cwd, packages: nativeInput.packages,
+        ...(nativeInput.piSettingsBinding ? { piSettingsBinding: nativeInput.piSettingsBinding } : {}), ...(nativeInput.command ? { command: nativeInput.command } : {}) }, state: observation.state };
       if (observation.evidence?.configSnapshot) snapshots.push(observation.evidence.configSnapshot);
+      if (observation.evidence?.configLinkSnapshot) snapshots.push(observation.evidence.configLinkSnapshot);
     } catch (error) { conflicts.push({ agent, reason: error.message }); }
   }
   for (const observed of selectedResources.values()) for (const consumer of observed.consumers) {
@@ -306,7 +312,9 @@ export async function assembleManagedSkillMigration(preview, { transactionId, st
   const contentsToSave = JSON.stringify(record, null, 2) + '\n'; const mode = preview.selectionSnapshot.kind === 'file' ? preview.selectionSnapshot.entries[0].mode : 0o600;
   steps.push(ownedStep('save-selection', 'state', preview.selectionPath, preview.selectionSnapshot, ownedFileState(preview.selectionPath, contentsToSave, mode), { kind: 'write-state', contents: contentsToSave, mode }, 'verified-saved-selection'));
   const ownedRoots = sorted([preview.homeDirectory, stagingRoot,
-    ...[preview.codexHomeDirectory, preview.claudeHomeDirectory, preview.piHomeDirectory].filter((root) => root && !inside(root, preview.homeDirectory))]);
+    ...[preview.codexHomeDirectory, preview.claudeHomeDirectory, preview.piHomeDirectory,
+      ...Object.values(preview.native).filter(native => native.options.piSettingsBinding).map(native => path.dirname(native.options.piSettingsBinding.target))]
+      .filter((root) => root && !inside(root, preview.homeDirectory))]);
   const plan = { schemaVersion: 1, id: transactionId, revision: preview.revision, evidenceHash: preview.previewHash, discoveryRoots, stagingRoots: [stagingRoot], ownedRoots, steps,
     controlPlane: { schemaVersion: 1, backupRoot, nativeOptions: Object.fromEntries(preview.agents.map((agent) => [agent, preview.native[agent].options])), evidenceSnapshots: preview.snapshots } };
   validateMigrationTransactionPlan(plan, journalPath);
