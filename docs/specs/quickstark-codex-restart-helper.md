@@ -14,7 +14,7 @@ reference remains available. Actual macOS runtime validation remains unverified.
 
 | Criteria | Current scope and verification |
 | --- | --- |
-| AC-01 | Bash/zsh copy block downloads the complete helper from immutable commit `4420b2ab2c578a585a879fcfea8bca770860bd27` before running it; no predefined PID variables or inline heredoc. Failed downloads prevent execution; temporary files are removed on all exits. |
+| AC-01 | Bash/zsh copy block downloads the complete helper from immutable commit `eba049e0dfb2290d1b4b15e8428940e8748a2a9f` before running it; no predefined PID variables or inline heredoc. Failed downloads prevent execution; temporary files are removed on all exits. |
 | AC-02 | Explicit profile, inherited CODEX_HOME, then account default. Exact Linux argv/owner/profile match excludes proxies, stdio and other profiles; zero/multiple matches refuse. |
 | AC-03/AC-04 | Dedicated systemd/launchd adapters removed after owner requested simplification. Codex's own managed daemon works through its native command on Linux/macOS; external launchers stop. |
 | AC-05 | Known Linux command preserves executable, argv, initial environment, cwd, umask, /dev/null stdin and owned regular log destinations without truncating prior contents. Synthetic proc fixtures cover context; owned process/socket fixture covers stop/start. |

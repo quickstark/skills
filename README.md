@@ -14,7 +14,7 @@ Node, Codex and curl must be on PATH.
   set -e
   qs_restart_file="$(mktemp "${TMPDIR:-/tmp}/quickstark-codex-restart.XXXXXX")"
   trap 'rm -f "$qs_restart_file"' EXIT
-  curl -fsSL 'https://raw.githubusercontent.com/quickstark/skills/4420b2ab2c578a585a879fcfea8bca770860bd27/scripts/restart-codex.mjs' --output "$qs_restart_file"
+  curl -fsSL 'https://raw.githubusercontent.com/quickstark/skills/eba049e0dfb2290d1b4b15e8428940e8748a2a9f/scripts/restart-codex.mjs' --output "$qs_restart_file"
   node --input-type=module - < "$qs_restart_file"
 )
 ```

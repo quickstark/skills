@@ -206,7 +206,7 @@ test('cleanup failures are redacted and return nonzero',async()=>{
   const f=fixture({lock:async()=>async()=>{throw Error('private token');}});const result=await run(f);assert.notEqual(result.code,0);assert.doesNotMatch(result.text,/private token/);
 });
 
-const restartCommit='4420b2ab2c578a585a879fcfea8bca770860bd27';
+const restartCommit='eba049e0dfb2290d1b4b15e8428940e8748a2a9f';
 const restartURL=`https://raw.githubusercontent.com/quickstark/skills/${restartCommit}/scripts/restart-codex.mjs`;
 async function copyBlock(file='README.md') {
   const text=await fs.readFile(new URL('../'+file,import.meta.url),'utf8');
