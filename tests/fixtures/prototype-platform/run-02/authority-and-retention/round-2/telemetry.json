@@ -1,0 +1,52 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 47535.470539,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [
+    {
+      "input_tokens": 30795,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1496,
+      "reasoning_output_tokens": 831
+    }
+  ],
+  "completedTurn": true,
+  "responsePresent": true,
+  "toolItems": [],
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 475,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+  },
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+  "runnerSHA256": "8de4eb6b35079130666b3f964931798c964d6c8fcc3dfbd1dcc7f0b515aede4f",
+  "promptSHA256": "7990cbb6687c7460b4aa0a6e5ff59c9eb4b26c8a1ba4f546515b9f7e6e263e27",
+  "promptUtf8Bytes": 20940,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-prototype-response-y0qYx8",
+    "--json",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "e162972c0a77bc9622899048ecbaa5ee189b29f60ac057faf057ef7e78eebaa3",
+    "stderr": "42834662ac4dc7088c8fec6150fa4b7e6c70246402f711517a88de0d75fe026c"
+  }
+}

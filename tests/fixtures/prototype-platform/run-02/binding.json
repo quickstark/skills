@@ -1,0 +1,46 @@
+{
+  "kind": "prototype-platform-instruction-trials",
+  "startedAt": "2026-11-05T16:23:47.217Z",
+  "cli": "codex-cli 0.162.1",
+  "overrides": [],
+  "sourceBindings": [
+    {
+      "path": "skills/engineering/qs-design-prototype/SKILL.md",
+      "sourceSHA256": "910228c81a00194345a014174820cc4ce31ceef3429597707d9035c2ebf82dbf",
+      "derivedSHA256": "99d182f461d9929f0ee24cfeb26b86b3794f4b5b014f98170b7ed71297b5918c",
+      "bytes": 12473
+    },
+    {
+      "path": "skills/engineering/qs-design-prototype/UI.md",
+      "sourceSHA256": "d8d6cfa498a03c1fc7b455bb16ba6bf108997188ffb816406baaf85e2f55659b",
+      "derivedSHA256": "d8d6cfa498a03c1fc7b455bb16ba6bf108997188ffb816406baaf85e2f55659b",
+      "bytes": 2713
+    },
+    {
+      "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+      "sourceSHA256": "d90a9695c1d2e8045878483c36dc6e6d3c08e243c455bdf76ca62a466e054b98",
+      "derivedSHA256": "d90a9695c1d2e8045878483c36dc6e6d3c08e243c455bdf76ca62a466e054b98",
+      "bytes": 3029
+    },
+    {
+      "path": "skills/engineering/qs-design-prototype/WEB.md",
+      "sourceSHA256": "0b96feab6cff5aabf67ca71dd7ff714deaadb7dc6c7e37aa0b878e7b395132ed",
+      "derivedSHA256": "0b96feab6cff5aabf67ca71dd7ff714deaadb7dc6c7e37aa0b878e7b395132ed",
+      "bytes": 3397
+    },
+    {
+      "path": "skills/engineering/qs-design-prototype/MACOS.md",
+      "sourceSHA256": "d708a66d373c3cc6fbfa75c6cfd63988ace7a51301554ae078bba9859c6ae271",
+      "derivedSHA256": "d708a66d373c3cc6fbfa75c6cfd63988ace7a51301554ae078bba9859c6ae271",
+      "bytes": 4001
+    }
+  ],
+  "scenariosSHA256": "9bb2473025cd4fa6f53e721cbd65d3461c6f1827a993046f53551cfebd8c997c",
+  "runnerSHA256": "d1b3dd699d7e90ece4feda72d27caa715852ce15322eab3f3fc620211d3148e3",
+  "supervisorSHA256": "8de4eb6b35079130666b3f964931798c964d6c8fcc3dfbd1dcc7f0b515aede4f",
+  "attemptsPerCase": 1,
+  "retries": 0,
+  "maximumRounds": 3,
+  "concurrency": 2,
+  "limits": "Fresh ephemeral contexts, demanded frozen references, synthetic observations. Runtime model is unverified unless emitted. These are plans/verdicts, not native Mac or browser execution evidence. No efficiency or universal compliance claim."
+}

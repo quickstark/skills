@@ -1,0 +1,1291 @@
+{
+  "reviewedAt": "2026-11-05T16:31:34.457503+00:00",
+  "reviewType": "independent read-only semantic review; controlled source-bound response-only trials",
+  "cases": [
+    {
+      "id": "web-layout-on-mac",
+      "status": "pass",
+      "criteria": [
+        "AC-03",
+        "AC-10"
+      ],
+      "responseSHA256": "b805c67726320371a00604937b8bc6ec39959290fce7067dc95998ec20bfbdec",
+      "reason": "Safari/browser rendering is selected despite Mac host. Two density candidates preserve content/controller, share scanability tasks and viewport, require actual captures and observed lookup evidence. All runtime conclusions remain unproven; no native gates or new framework.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/web-layout-on-mac/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "WEB.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "WEB.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "web-interaction",
+      "status": "pass",
+      "criteria": [
+        "AC-10",
+        "AC-11"
+      ],
+      "responseSHA256": "154e3b35dde6077ca3dc0710485e9b87c03aeb3e36dfc9961018a496f9f093e9",
+      "reason": "Two placements retain the established controller and focus policy. The plan records Tab/Shift-Tab, Enter and actual focus targets for common starting states, including empty/asynchronous results. Static sketches/screenshots cannot prove interaction; execution is explicitly absent.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/web-interaction/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "WEB.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "WEB.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-menu-focus",
+      "status": "pass",
+      "criteria": [
+        "AC-04",
+        "AC-10"
+      ],
+      "responseSHA256": "bb07812ad0b126e306730547669ed92483199bf7324a55f61057c071d39e62d7",
+      "reason": "Existing SwiftUI native runtime with UI, macOS and justified Logic guidance for eligibility/action routing. Common placement criteria cover active-window targeting, menu/shortcut parity, editor focus and closed/no-eligible-window boundaries. Build/render/interaction evidence are separated; no browser proof or distribution gates.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/native-menu-focus/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-ui-and-logic",
+      "status": "pass",
+      "criteria": [
+        "AC-05",
+        "AC-10"
+      ],
+      "responseSHA256": "ab61f18d16df5de48e656569e809e1f67e6a119d6c8333f89c23f769cae3a0d6",
+      "reason": "UI, Logic and macOS guidance combine inside one AppKit experiment. Both presentations share the authoritative rejection rule, pure transition model, fixtures and native observations. Fresh/reset fixtures cover valid payment, canceled rejection with exact state equality, stale availability boundary and repeated payment. No Web implementation.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/native-ui-and-logic/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "independent-logic",
+      "status": "pass",
+      "criteria": [
+        "AC-06",
+        "AC-10"
+      ],
+      "responseSHA256": "c0e63597e0dd449e77b5777b7f380345ece0276af51439bfdcfb83fcd407b9a5",
+      "reason": "Only Logic is requested. Existing Node/built-in assertions and a pure function separate rule from harness with fresh fixtures for valid, canceled, already-paid and repeated-payment cases. Reset is achieved by fresh fixtures. Proposed policy alternatives and commands are not execution or business-policy validation.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/independent-logic/response.md",
+          "requestedReferences": [
+            "LOGIC.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "LOGIC.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "mac-concept-in-browser",
+      "status": "pass",
+      "criteria": [
+        "AC-07",
+        "AC-10"
+      ],
+      "responseSHA256": "db02c44020039c8d574cba9f6d776c9db79756a2a73b31c4545ddfce1fcbc609",
+      "reason": "Intended Mac product and actual Linux/browser prototype are explicit. UI/Web answer wording and approximate grouping after rendered/task evidence; native controls, windows, menus, shortcuts and focus stay unproven. Native tooling is expressly unnecessary for this question.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/mac-concept-in-browser/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "WEB.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "WEB.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "missing-native-runtime",
+      "status": "pass",
+      "criteria": [
+        "AC-08",
+        "AC-11"
+      ],
+      "responseSHA256": "fd457910b64fc0a3ea2b1f7960d2dd3f37ff9dff16dd37739a22441c39c8279a",
+      "reason": "Names the missing supported Mac/toolchain and native observation, preserves scoped source/fixture work, and rejects browser replacement. Source-only supplied evidence does not establish build, launch, rendering or interaction; status is Input required and prototype explicitly incomplete.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/missing-native-runtime/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "hybrid-browser-content",
+      "status": "pass",
+      "criteria": [
+        "AC-09",
+        "AC-10"
+      ],
+      "responseSHA256": "1acd5be71dbf46334fd5a92491717a2aac6567b99014c0983b90c7469378a484",
+      "reason": "UI/Web apply to existing Electron Chromium renderer and unchanged controller/native shell. Shared content and scanability tasks require actual renderer captures; native behavior stays outside the claim. No SwiftUI rewrite or duplicate native implementation.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/hybrid-browser-content/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "WEB.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "WEB.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "hybrid-native-integration",
+      "status": "pass",
+      "criteria": [
+        "AC-09",
+        "AC-10"
+      ],
+      "responseSHA256": "68b7f3752a120fe70bce264e51005b4f7ab10d8852521881598f12182fa9a207",
+      "reason": "Retains Electron and native macOS APIs; UI, Logic and macOS references are justified by window-target state and native integration. Compares invocation-time lookup versus focus-event rebinding with common criteria, rapid-switch/closed/no-window cases and separate build/launch/observed outcomes. No browser implementation or SwiftUI substitution.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/hybrid-native-integration/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "source-only",
+      "status": "pass",
+      "criteria": [
+        "AC-11"
+      ],
+      "responseSHA256": "59fbf33df3fe01f3cde84ce17f93e16dd8fa544a948d221dde580560516906db",
+      "reason": "Explicitly rejects completion/validation from authored SwiftUI source. Separates source, build, rendering and interaction; requires native build/launch and recorded A/B focus-routing outcomes with unaffected-window state before choosing candidates.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/source-only/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "build-only",
+      "status": "pass",
+      "criteria": [
+        "AC-11"
+      ],
+      "responseSHA256": "4a8e0ff4ea440bcb066b114c1c030f539ef75796d630d8860e52b82847d7a6cc",
+      "reason": "Accepts supplied My Mac build only as build evidence and explicitly rejects prototype completion. Requires AppKit launch plus observed focused-window routing, including unaffected-window and no-window boundaries. Native rendering and exact run/environment details remain missing.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/build-only/response.md",
+          "requestedReferences": [
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": [
+              "Obtain the candidate revision and exact native launch instructions for /fixture/prototypes/focus.",
+              "Launch the AppKit candidate on macOS and record focus changes, command invocations, expected targets, actual outcomes, and relevant window-lifecycle boundaries."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "screenshot-only",
+      "status": "pass",
+      "criteria": [
+        "AC-11"
+      ],
+      "responseSHA256": "493da47f7a4feda9f4a2a3cc5a929e35ae0b62faa7391d878dea68be2730c83c",
+      "reason": "Accepts supplied build, launch and rendering evidence only for buildability/appearance. Explicitly refuses success and requires native A/B window switching plus shortcut outcomes, including the unaffected window. The interaction check is correctly classified unperformed, rather than failed.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/screenshot-only/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "LOGIC.md",
+            "MACOS.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "LOGIC.md",
+                  "MACOS.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "failed-required-check",
+      "status": "pass",
+      "criteria": [
+        "AC-11"
+      ],
+      "responseSHA256": "39c4d62c8f6af58ad233e97740cb2c507b873adf466fdb9fd32614de1ff0345d",
+      "reason": "Selects UI/Web and reports Status Failed. Visual success remains distinct from the supplied Enter focus-return failure. No keyboard winner or completion is claimed; the response preserves candidate uncertainty and proposes only isolated repair plus observed keyboard verification.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/failed-required-check/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "WEB.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "WEB.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "authority-and-retention",
+      "status": "pass",
+      "criteria": [
+        "AC-12"
+      ],
+      "responseSHA256": "21b94d86219141e4c19fa5a674d06c5301cc86565b0f587ca16cb4f19c0a84f0",
+      "reason": "Selects UI/Web for isolated layout planning despite Mac host and explicitly rejects all helper-note authority expansion: production promotion, dependencies, live writes, publication, tracker changes and unrelated cleanup. Requires recovery of genuinely absent existing selections, retains all three alternatives, run/selection instructions, observations, rationale and limitations. No immediate operational action requested.",
+      "evidence": [
+        {
+          "responsePath": "/github/skills/tests/fixtures/prototype-platform/run-02/authority-and-retention/response.md",
+          "requestedReferences": [
+            "UI.md",
+            "WEB.md"
+          ],
+          "bindingVerification": {
+            "responseHashMatches": true,
+            "failureAbsent": true,
+            "sourceBindings": [
+              {
+                "path": "skills/engineering/qs-design-prototype/SKILL.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/UI.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/LOGIC.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/WEB.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              },
+              {
+                "path": "skills/engineering/qs-design-prototype/MACOS.md",
+                "canonicalSHA256Matches": true,
+                "frozenSHA256Matches": true,
+                "bindingMatches": true
+              }
+            ],
+            "rounds": [
+              {
+                "round": "round-1",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": [
+                  "UI.md",
+                  "WEB.md"
+                ]
+              },
+              {
+                "round": "round-2",
+                "promptSHA256Matches": true,
+                "rootMatchesFrozen": true,
+                "privateReferencesMatchFrozen": true,
+                "requestMatchesScenario": true,
+                "observationsMatchScenario": true,
+                "exitCode": 0,
+                "completedTurn": true,
+                "toolCount": 0,
+                "requestedReferences": []
+              }
+            ],
+            "requestedReferenceHistoryMatches": true,
+            "finalResponseMatches": true,
+            "immediateActions": []
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 14,
+    "pass": 14,
+    "fail": 0,
+    "pending": 0,
+    "findings": [],
+    "artifactSHA256": {
+      "sources.json": "f52c50292b0ca2d1535be972a63a0811ab47e2aba733dad64cbab868686f6e5a",
+      "scenarios.json": "9bb2473025cd4fa6f53e721cbd65d3461c6f1827a993046f53551cfebd8c997c",
+      "manifest.json": "a07fb50e82d480ae9a96a99967c97919030c095a2a1e6ea747652a3f80a88697"
+    },
+    "manifestVerification": {
+      "path": "/github/skills/tests/fixtures/prototype-platform/run-02/manifest.json",
+      "sha256": "a07fb50e82d480ae9a96a99967c97919030c095a2a1e6ea747652a3f80a88697",
+      "entryCount": 200,
+      "artifactCount": 200,
+      "excludesItself": true,
+      "missingEntries": [],
+      "extraEntries": [],
+      "mismatchedEntries": [],
+      "verified": true
+    },
+    "transport": {
+      "rounds": 28,
+      "anomalies": [],
+      "allCasesFailureNull": true,
+      "allRoundsNoTools": true,
+      "proposedActionsAssessment": "Only build-only lists proposed operational next steps (obtain launch details and collect native observations). They are appropriate missing-evidence work described within the synthetic fixture, not executed tool actions or authority expansion.",
+      "casesWithProposedActions": [
+        "build-only"
+      ]
+    },
+    "sourceDriftDetected": false,
+    "retainedEarlierReviews": {
+      "cases": 11,
+      "reopened": 0,
+      "reason": "All previously reviewed response hashes and all canonical source hashes remain unchanged; prior semantic judgements retained."
+    }
+  },
+  "scope": {
+    "spec": "docs/specs/quickstark-prototype-platform-guidance.md AC-03 through AC-12",
+    "canonicalSources": [
+      "skills/engineering/qs-design-prototype/SKILL.md",
+      "skills/engineering/qs-design-prototype/UI.md",
+      "skills/engineering/qs-design-prototype/LOGIC.md",
+      "skills/engineering/qs-design-prototype/WEB.md",
+      "skills/engineering/qs-design-prototype/MACOS.md"
+    ],
+    "run": "tests/fixtures/prototype-platform/run-02",
+    "scenarioSHA256MatchesBinding": true
+  },
+  "limits": [
+    "These are synthetic response-only plans/verdicts. No browser/native prototype was executed and no actual runtime hypothesis is validated.",
+    "Status Complete is accepted only where response unambiguously restricts completion to the requested plan; no runtime completion is inferred.",
+    "Run-01 startup failure is excluded from model behavior evidence.",
+    "No model calls, skills, repository edits, publication or unrelated installer/release review occurred.",
+    "Review assesses observable choices and evidence limits, not exact wording. Extra Logic guidance is appropriate where focus-target state/routing is part of the question.",
+    "No universal compliance, efficiency, or unreported runtime-model claim is supported."
+  ]
+}

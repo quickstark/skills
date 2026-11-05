@@ -186,7 +186,9 @@
         "tests/fixtures/adoption-final-discovery/release-4.4.0/result.json",
         "docs/specs/quickstark-multi-agent-delegation.md",
         "tests/multi-agent-delegation.test.mjs",
-        "tests/fixtures/adoption-release-4.4.0/tests.log"
+        "tests/fixtures/adoption-release-4.4.0/tests.log",
+        "docs/validation/prototype-platform-guidance-review.md",
+        "tests/fixtures/prototype-platform/review-run-02.json"
       ]
     },
     "AC-05": {
@@ -4464,7 +4466,7 @@
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "fbbb4c21e3bec5cdc0204fb9f4a4d366724c1c9a0a7136d9a5232df1041a097e"
+      "contentSha256": "3acc2f38a5e2bc89ead222ff548d68e82ce14835be16a623518a36cfeb49fd47"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -4476,7 +4478,7 @@
     },
     "config/skill-provenance.json": {
       "kind": "file",
-      "contentSha256": "258958f6fd32beee7fc86effc8169ebbaa2d2d37c5af4076fff4f391742f41ef"
+      "contentSha256": "2213c8ec6cedf4face2a5ce47772a2251a41e01cb27357e9c12b63aabbb60ed8"
     },
     "docs/skill-run-contract.md": {
       "kind": "file",
@@ -4544,7 +4546,7 @@
     },
     "scripts/qs-skill-catalog.mjs": {
       "kind": "file",
-      "contentSha256": "f38363fcbc97be31989870f3705ecce724c2cc6259328060c1ea28c4f22e46e7"
+      "contentSha256": "403ac617d9871864e098e13b2a8732c61c728321ace97325633f1abeace15ec7"
     },
     "scripts/skill-collection-registry.mjs": {
       "kind": "file",
@@ -4616,15 +4618,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "c2c52bb656fffc12c32ff5799e393b13d572d87d1f158bac5c270d02478c9a34"
+      "contentSha256": "92eab0f89b72cc449aaffba328ecb51c2c415cc7e7c84bf08a231d234b36c2be"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "02a96b326c53019f9a3562d5c053b913bacfb1b74a16e83abf9fd4c4c01f792b"
+      "contentSha256": "665996383a0f9bb729ef25523940ddb393067b420d7e01581a703d19d2147426"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "67c10a03e833c20f39d0dcf771db562fc3dcd247e3428c4422489a798a632e86"
+      "contentSha256": "108fd26ac1bd5e5cd29e49d4eb7df6dc16ab5f320e899f3d85067acf84593aff"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -4636,7 +4638,7 @@
     },
     "skills/engineering/qs-design-prototype": {
       "kind": "directory",
-      "contentSha256": "f5c05dbfd51852043dcda4bbd4d766742805abff595953492c7ce3a882e5d27a"
+      "contentSha256": "fd48035654aa20977b938309c09368651078b8c307991c25b06676fa16b7264f"
     },
     "skills/engineering/qs-plan-research": {
       "kind": "directory",
@@ -4664,11 +4666,11 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "da16ab99c804d5aa3ba516f4add74ce140175e0312b73569530a6da0505f2bf5"
+      "contentSha256": "a06b37578cde40e29878008cb1cb917e0cfbc1f9d87088752e6f635f2771b5e1"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "42544ea1eb71f11b19ab368f01f050e57e4e1cd9251e09f36b97f536f10d92cd"
+      "contentSha256": "c286d47feb294da9be7538dcd8fc46d4661a264389f54452b1f16e73a2195c69"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
@@ -4728,11 +4730,11 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "2769ec25ee3b43abfe71224dd2ed928b4b6d4f1b2474441072b8b3868091fe35"
+      "contentSha256": "27790d8411d4a48cb8fab5d29f2477b436c89559eff8d1c83773e467d6c8b809"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "c672ed7bbbee3faefff7e57caeaec45c95195b7215394990c9a9a6ba46fce597"
+      "contentSha256": "13df99b575a2ba08de0bcb8d346d4d4c2ade90d7557d321f0a5486d2359216c0"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
@@ -4760,11 +4762,11 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "cf5a6f624a826668885fd6b8389f2c9a6f040aad111d2dfb726652bbed29df26"
+      "contentSha256": "aebf2a07c243f071e14ae7da59d53b1ceb411c9edb1bc85de3f36b73b15edbae"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "07ed2b614b7315d176f00654fd9d89171281dffee1f9d85f71a4a778f93773bc"
+      "contentSha256": "7d0c6b8df2c0b2795e7bfe1e74e89a93461f94e6e2c42a1bf55ce8e0c791e2d4"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
@@ -4776,11 +4778,11 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "17132452b00589adb68fb784c9bdc77f9cd2ad8e86ca62741ca44d642f430451"
+      "contentSha256": "3189f3ebad640f14b635f92f436767fe7e9e77d50ae42b9aa86f43d93681aeae"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "3c8647eb96457ccdd4502b863cafcf446281186d84d37698e7492137b5c6a689"
+      "contentSha256": "8c59973c2cc389407f49d50d4f7cd602a71d75327d258a3617cc645e53e59ea0"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
@@ -4792,7 +4794,7 @@
     },
     "packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "2aea2374cb735e95655718de1b60a097120ab5fa44ab18b40b813e82b635ef8f"
+      "contentSha256": "085a2543d4c45c183f2a5f6614124fd9c63607742abe8dd9a156b04b1771bccd"
     },
     "scripts/claude-core-migration.mjs": {
       "kind": "file",
@@ -4954,7 +4956,7 @@
     },
     "config/skill-provenance.json": {
       "path": "config/skill-provenance.json",
-      "sha256": "645c7fb921229a4fa9fb85abc21650925ce6cf5b16f9bd9d324cc2a1f6e3fa99"
+      "sha256": "a50c8794df08cb6bbbad45ff4b6db000bdc4669c21cbdeaab7033e38146a4b76"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
@@ -5010,7 +5012,7 @@
     },
     "tests/upstream-adoption-qs.test.mjs": {
       "path": "tests/upstream-adoption-qs.test.mjs",
-      "sha256": "136f97fd93a47e851865f412111e8118d018fe038221458c1e4db40a62eaab82"
+      "sha256": "226c09d1a5f15e1db5568c300f59c8ba6cbe9d3e78f634dd1df46d1120ca809a"
     },
     "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json": {
       "path": "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
@@ -5383,6 +5385,14 @@
     ".github/workflows/release.yml": {
       "path": ".github/workflows/release.yml",
       "sha256": "fa77b9f2e1b21e3c25533c910e1188db80e0c9f1bd1f4a6230144fc3dfd5b30c"
+    },
+    "docs/validation/prototype-platform-guidance-review.md": {
+      "path": "docs/validation/prototype-platform-guidance-review.md",
+      "sha256": "d24de5001ef9c0002fcdb7ce4e2259e1f8e074466104fa4bd258d284f6775e7d"
+    },
+    "tests/fixtures/prototype-platform/review-run-02.json": {
+      "path": "tests/fixtures/prototype-platform/review-run-02.json",
+      "sha256": "4c4c0c0cde5c5deb431a18d495a9b38169fcd573769ae8f415fd5d5cf915d45e"
     }
   }
 }

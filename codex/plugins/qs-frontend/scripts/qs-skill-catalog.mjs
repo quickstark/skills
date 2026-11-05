@@ -93,6 +93,11 @@ const LEGACY_V2_SKILLS = Object.freeze([
     shortDescription: "Prototype an interface or design decision",
     prompt: "build a focused prototype to answer this design question",
     userInvoked: false,
+    documentationNotes: Object.freeze([
+      "One public command selects private Web or native macOS guidance by the experience being tested, independently of UI and logic guidance. A website viewed on a Mac still uses Web guidance.",
+      "Use the existing runtime and the smallest evidence that answers the question. Browser mockups can explore a Mac concept's content or approximate layout; native window, menu, shortcut and focus claims require native observation.",
+      "Missing required tooling or failed checks stay unproven. Candidates, run instructions and decision evidence remain isolated; choosing a direction never promotes prototype code automatically.",
+    ]),
   },
   {
     bucket: "engineering",

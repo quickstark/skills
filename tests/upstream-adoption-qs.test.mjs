@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseResponse, promptFor, referenceNames } from '../scripts/prototype-platform-trials.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');
@@ -68,12 +69,48 @@ test('new conditional references resolve inside their owning skill and are not p
   }
 });
 
+test('prototype subject and platform references stay private and reach every owning host package', async () => {
+  const source = 'skills/engineering/qs-design-prototype';
+  const expected = ['LOGIC.md', 'MACOS.md', 'UI.md', 'WEB.md'];
+  const references = (text) => [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]).sort();
+  const canonical = await body(`${source}/SKILL.md`);
+  assert.deepEqual(references(canonical), expected, 'The root must independently select subject and platform guidance');
+  for (const directory of [source, ...['packages', 'codex/plugins', 'pi/packages'].map((host) => `${host}/qs-specialists/skills/qs-design-prototype`)]) {
+    assert.deepEqual(references(await body(`${directory}/SKILL.md`)), expected, `${directory}: reference closure`);
+    for (const name of expected) {
+      const content = await read(`${directory}/${name}`);
+      assert.doesNotMatch(content, /^---\s*\n(?:[^\n]*\n)*?name:/, `${directory}/${name}: no public command metadata`);
+      assert.equal(content, await read(`${source}/${name}`), `${directory}/${name}: canonical private content`);
+    }
+  }
+});
+
+test('prototype trials withhold review criteria and reject premature or unknown reference responses', async () => {
+  const scenarios = JSON.parse(await read('tests/fixtures/prototype-platform/scenarios.json'));
+  assert.equal(new Set(scenarios.map((item) => item.id)).size, scenarios.length);
+  const covered = new Set(scenarios.flatMap((item) => item.criteria));
+  for (const id of ['AC-03', 'AC-04', 'AC-05', 'AC-06', 'AC-07', 'AC-08', 'AC-09', 'AC-10', 'AC-11', 'AC-12']) assert.ok(covered.has(id), `${id}: missing behavior case`);
+  for (const scenario of scenarios) {
+    const prompt = promptFor(scenario, 'ROOT_INSTRUCTION');
+    assert.ok(prompt.includes(scenario.request));
+    assert.equal(prompt, promptFor({ ...scenario, expected: ['WITHHELD_RUBRIC'], criteria: ['WITHHELD_AC'] }, 'ROOT_INSTRUCTION'));
+    assert.ok(!prompt.includes('WITHHELD_RUBRIC'));
+  }
+  assert.deepEqual(parseResponse('{"response":"","requestedActions":[],"requestedReferences":["MACOS.md"]}').requestedReferences, ['MACOS.md']);
+  for (const names of [['missing.md'], ['../MACOS.md'], ['WEB.md', 'WEB.md']]) {
+    assert.throws(() => parseResponse(JSON.stringify({ response: '', requestedActions: [], requestedReferences: names })), /Invalid/);
+  }
+  assert.throws(() => parseResponse('{"response":"Premature verdict","requestedActions":[],"requestedReferences":["UI.md"]}'), /Invalid/);
+  assert.throws(() => parseResponse('{"response":"","requestedActions":[],"requestedReferences":[]}'), /Invalid/);
+  assert.deepEqual([...referenceNames].sort(), ['LOGIC.md', 'MACOS.md', 'UI.md', 'WEB.md']);
+});
+
 test('retained helper text cannot reintroduce the known authority and routing contradictions', async () => {
   const help = await body('skills/engineering/qs-help/SKILL.md');
   const handoff = await body('skills/productivity/qs-flow-handoff/SKILL.md');
   const glossary = await read('skills/productivity/qs-skill-write/GLOSSARY.md');
   assert.doesNotMatch(`${help}\n${handoff}\n${glossary}`, /three (?:ranked copy-ready continuations|commands)|two (?:concise|useful) alternatives|description\*\* stripped/);
-  for (const name of ['UI.md', 'LOGIC.md']) {
+  for (const name of ['UI.md', 'LOGIC.md', 'WEB.md', 'MACOS.md']) {
     const content = await read(`skills/engineering/qs-design-prototype/${name}`);
     assert.doesNotMatch(content, /Fold the winner into the real code|promote the winning variant to a real route|logic module shouldn't be|Don't add tests/);
   }

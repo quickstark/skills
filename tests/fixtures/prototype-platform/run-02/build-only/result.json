@@ -1,0 +1,16 @@
+{
+  "id": "build-only",
+  "mode": "response-only instruction trial; no prototype executed",
+  "requestedReferences": [
+    "LOGIC.md",
+    "MACOS.md"
+  ],
+  "requestedActions": [
+    "Obtain the candidate revision and exact native launch instructions for /fixture/prototypes/focus.",
+    "Launch the AppKit candidate on macOS and record focus changes, command invocations, expected targets, actual outcomes, and relevant window-lifecycle boundaries."
+  ],
+  "rounds": 2,
+  "responseSHA256": "4a8e0ff4ea440bcb066b114c1c030f539ef75796d630d8860e52b82847d7a6cc",
+  "failure": null,
+  "review": "Pending independent semantic review"
+}

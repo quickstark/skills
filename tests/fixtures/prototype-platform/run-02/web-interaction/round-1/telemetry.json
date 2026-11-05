@@ -1,0 +1,73 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 9069.523687,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [
+    {
+      "input_tokens": 29597,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 133,
+      "reasoning_output_tokens": 110
+    }
+  ],
+  "completedTurn": true,
+  "responsePresent": true,
+  "toolItems": [],
+  "processCleanup": [
+    {
+      "pid": 426225,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804613",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 426226,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804614",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 426227,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804614",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 426402,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804746",
+      "action": "SIGTERM to observed owned descendant"
+    }
+  ],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 85,
+    "skippedTicks": 2,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+  },
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+  "runnerSHA256": "8de4eb6b35079130666b3f964931798c964d6c8fcc3dfbd1dcc7f0b515aede4f",
+  "promptSHA256": "3a0aa5b2677c5fe4058a3fa3ef0e0059c9a7e517f394cc8b68bda440782a05d1",
+  "promptUtf8Bytes": 14355,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-prototype-response-K5jR8V",
+    "--json",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "44e9e496ddf2662c5ec73e5eed316d7cf26ae324fd3d2b2dd693a9382bb27ec4",
+    "stderr": "f393f340a1ec0d1cebcac1906bb81f48783389d88761707bd8e18b1ee6f74883"
+  }
+}

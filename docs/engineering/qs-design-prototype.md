@@ -17,6 +17,12 @@ codex plugin add qs-specialists@quickstark
 
 Use `/qs-design-prototype` when the requested primary outcome is: build a focused prototype to answer this design question. Choose another root command when that would be only an intermediate technique.
 
+## Command behavior
+
+- One public command selects private Web or native macOS guidance by the experience being tested, independently of UI and logic guidance. A website viewed on a Mac still uses Web guidance.
+- Use the existing runtime and the smallest evidence that answers the question. Browser mockups can explore a Mac concept's content or approximate layout; native window, menu, shortcut and focus claims require native observation.
+- Missing required tooling or failed checks stay unproven. Candidates, run instructions and decision evidence remain isolated; choosing a direction never promotes prototype code automatically.
+
 ## Where it fits
 
 This is lifecycle position 140 in the specialist projection and is installed through `qs-specialists`. It owns one bounded root run and never starts another public skill automatically.

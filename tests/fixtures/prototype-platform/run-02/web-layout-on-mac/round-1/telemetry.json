@@ -1,0 +1,73 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 7571.938195,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": null,
+  "usage": [
+    {
+      "input_tokens": 29612,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 103,
+      "reasoning_output_tokens": 80
+    }
+  ],
+  "completedTurn": true,
+  "responsePresent": true,
+  "toolItems": [],
+  "processCleanup": [
+    {
+      "pid": 426218,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804603",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 426219,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804604",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 426220,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804604",
+      "action": "SIGTERM to observed owned descendant"
+    },
+    {
+      "pid": 426404,
+      "identity": "5b0972a5-80f6-4638-ad3e-c64af85bf428:182804753",
+      "action": "SIGTERM to observed owned descendant"
+    }
+  ],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 72,
+    "skippedTicks": 1,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their task children; no whole-host /proc enumeration. An unobserved process that detached and reparented between samples is not proven absent."
+  },
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "imageCallClassification": "No tool items observed; contingent on complete event stream.",
+  "runnerSHA256": "8de4eb6b35079130666b3f964931798c964d6c8fcc3dfbd1dcc7f0b515aede4f",
+  "promptSHA256": "4aed8fea7b0222aaa9f632227ee36f3de9012c9cf5ceaf69fe1f7a42586bd000",
+  "promptUtf8Bytes": 14432,
+  "args": [
+    "exec",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--cd",
+    "/tmp/qs-prototype-response-n3hOLW",
+    "--json",
+    "-"
+  ],
+  "runtimeFiles": {
+    "events": "c3e0272c8f53c83df673ca00f7e36445114c1ea596f697afc8674a921910e7ef",
+    "stderr": "bdc861686c291813e4db515cbe0c55e9672574c78d661304e2a67f4798febd97"
+  }
+}
