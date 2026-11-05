@@ -1,5 +1,28 @@
 # README evidence and retained transition identity re-review
 
+## Current 4.4.6 documentation reconciliation — 2026-11-05
+
+The README and installation guide now put Codex restart instructions first. The
+commands distinguish the CLI client, Codex-managed daemon, desktop/editor/SSH
+launchers, verified Linux systemd units, macOS launchd jobs and manual servers.
+Daemon restart and version controls were checked with local read-only CLI help;
+`/daemon`, `/quit`, resume behavior and transports were checked against the
+[official command guide](https://learn.chatgpt.com/docs/developer-commands)
+and [App Server guide](https://learn.chatgpt.com/docs/app-server). No server was
+restarted to update documentation.
+
+Current installation guidance follows published 4.4.6 at
+`fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3`: independent per-client clean installation,
+choices saved before removal, retained originals, plain retries and isolated custom
+homes. Direct plan/verify and explicit recovery retain their historical engine
+constraints. The source guide and changelog record 4.4.4–4.4.6; earlier reviews and
+machine results below remain historical. The Notion companion and linked Codex
+Commands page are reconciled with this guidance; all 39 per-agent examples retain
+their registry literals. This is documentation reconciliation, without a new
+behavior trial, release or installed-device acceptance decision.
+
+## Historical reviews
+
 ## Scope and decision
 
 This is a source/documentation review of the README change in `cebc841`, merged

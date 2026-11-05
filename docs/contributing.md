@@ -56,6 +56,7 @@ Do not claim that a Claude validation ran if the CLI is unavailable.
 Update the existing authoritative document before adding another page:
 
 - Use `README.md` for installation, skill discovery, and the main workflow.
+- Keep the [installation guide](./install-and-update-skills.md) and [Notion companion](https://app.notion.com/p/3a9238a125b28031bbbee1fcba64733f) aligned for ordinary updates, profiles and Codex restart commands. Preserve version-specific machine history and distinguish publication from installed-device verification.
 - Use `docs/architecture.md` for component ownership and trust boundaries.
 - Use `docs/skill-run-contract.md` for completion states, direct-chat presentation, clear writing, and continuation behavior.
 - Use `docs/engineering/` and `docs/productivity/` for promoted-skill reference pages.
@@ -88,9 +89,9 @@ Keep `package.json`, `package-lock.json`, all six active Claude, Codex and Pi ma
 Put active release changesets for the `qs-skills` package directly in `.changeset/`, and keep the Changesets GitHub configuration pointed at `quickstark/skills`. Matt Pocock's original `mattpocock-skills` changesets are preserved in `docs/upstream/changesets/` as MIT-licensed historical reference; do not place them in the active Changesets directory.
 
 After integrating an authorized prepared version into main, explicitly dispatch
-`gh workflow run release.yml --ref main`. The Publish version workflow publishes
+`gh workflow run release.yml --repo quickstark/skills --ref main`. The Publish version workflow publishes
 that exact version tag and GitHub release directly. Hosted tests are separate
-from publishing: run `gh workflow run validate.yml --ref main` when Linux/macOS
+from publishing: run `gh workflow run validate.yml --repo quickstark/skills --ref main` when Linux/macOS
 validation is wanted. Neither pushes nor publication automatically start tests.
 Pushes do not start publication.
 Inspect existing runs, tags and releases before retrying. Existing tags may not

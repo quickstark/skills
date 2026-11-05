@@ -37,7 +37,13 @@ clients installable, and linked settings that would write into an accepted sourc
 Installed bytes are compared with payloads captured before native installation;
 a changed Pi source cannot certify itself by becoming both sides of the comparison.
 These isolated checks do not establish successful installation on every reported
-device. Version 4.4.6 is prepared separately from publication.
+device. Version 4.4.6 was subsequently published on 2026-11-05 at
+`fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3`: the [tag and release](https://github.com/quickstark/skills/releases/tag/v4.4.6)
+and [successful release.yml run 42105077560](https://github.com/quickstark/skills/actions/runs/42105077560)
+reference that commit. Publication validation passed 721 tests with one expected
+Linux platform skip, generated-package checks, all 18 package/host acceptance
+pairs and six strict Claude package validations. Actual-device installation,
+including the personal Mac, remains unverified.
 
 ## Linked Pi settings in 4.4.5
 

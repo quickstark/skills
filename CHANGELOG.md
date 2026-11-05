@@ -1,5 +1,34 @@
 # QuickStark Skills changelog
 
+## 4.4.6
+
+### Patch Changes
+
+- Clean-reinstall selected QuickStark packages separately in Codex, Claude Code
+  and Pi on every ordinary update. Save package choices before removal, back up
+  originals and support a plain retry without reading historical recovery journals.
+- Preserve unrelated plugins and settings, older source checkouts and linked Pi
+  settings. Protect foreign bindings and source-overlapping settings, reclaim only
+  verified abandoned clean-installer locks, and verify installed payloads against
+  source bytes captured before native installation.
+- Clarify prototype guidance for web and native macOS work.
+
+## 4.4.5
+
+### Patch Changes
+
+- Support Pi settings linked to a bounded regular dotfile. Back up and verify the
+  physical target, preserve the link, and resolve relative package paths from the
+  logical configuration directory during update and historical recovery.
+
+## 4.4.4
+
+### Patch Changes
+
+- Accept single-quoted owned Codex plugin headers. Permit a narrowly verified
+  successor repair for the confirmed first-withdrawal failure while preserving
+  original backups, source and profile checks, and unrelated-state protection.
+
 ## 4.4.3
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 # Versioned QuickStark installation
 
-Status: clean ordinary installation prepared for 4.4.6; publication and installed-device verification remain separate.
+Status: [4.4.6 published](https://github.com/quickstark/skills/releases/tag/v4.4.6) on 2026-11-05 at `fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3` through [release.yml run 42105077560](https://github.com/quickstark/skills/actions/runs/42105077560). Installed-device verification remains separate and unverified.
 
 ## Required behavior
 
@@ -31,15 +31,15 @@ this repository distributes skills to local machines. Hosted tests are manual.
 - Reject automatic downgrades and different source under an existing version.
   Dirty managed checkouts may be replaced only with a retained original backup.
 - Support Pi settings stored behind a symbolic link to an existing bounded regular
-  file. Preserve and freeze the link separately from its physical write target;
-  back up the target and retain the binding in repair receipts and transaction
-  journals. Keep relative package resolution at the logical configuration directory.
+  file. Preserve the link separately from its physical write target and back up
+  the target. The historical engine also freezes the binding in repair receipts
+  and transaction journals. Keep relative package resolution at the logical configuration directory.
   Reject changed links, changed planned targets and invalid targets before effects;
   retain the existing strict policy for package payloads and other metadata.
 - Resume a versioned transaction at its original published tag and commit, not the
   latest version. Preserve legacy journals that cannot be matched to a versioned
   source; do not silently reinterpret them.
-- An ordinary update may continue a `prepared-for-install` managed repair in a
+- The retained historical repair engine may continue a `prepared-for-install` repair in a
   newer recorded official release. Verify both retained physical sources, their
   Git ancestry, matching agent homes, the frozen selection and original backups.
   Validate replacements and retain fresh live-state backups before creating a

@@ -1,5 +1,96 @@
 # Install and update QuickStark skills
 
+## Restart Codex after an update
+
+After updating QuickStark, start a fresh Codex chat to check that the skills load. Restart the App Server if the client still sees stale skills. A server restart can interrupt active or queued work across connected chats, so wait for that work to finish.
+
+### Restart the client or the Codex-managed daemon
+
+- **Terminal client** — Enter `/quit`, then run `codex` from the shell. Use `codex resume` to choose a saved chat or `codex resume --last` to continue the latest chat. These commands may reconnect to an existing App Server.
+- **Desktop or editor-launched server** — Quit and reopen the desktop app, or reload the editor window that launched Codex. If the desktop app launched the server over SSH, disconnect and reconnect the host. For an independently managed remote server, restart it on the remote host, then reconnect.
+- **Codex-managed App Server** — In the CLI, open `/daemon` and choose **Restart background server** if the menu offers it. From a shell on the server host, use the same OS account and `CODEX_HOME` as the running daemon.
+
+```bash
+codex app-server daemon restart
+codex app-server daemon version
+```
+
+Check for a running App Server version, then reconnect and test a fresh chat. If your build lacks the shell command, check `codex app-server daemon --help` for its available controls. [OpenAI’s Codex command guide](https://learn.chatgpt.com/docs/developer-commands#manage-the-background-server-with-daemon)
+
+### Find the account and launcher
+
+If the daemon command reports `app server is running but is not managed by codex app-server daemon`, use the launcher that owns it. If a signal returns `Operation not permitted`, check the process account. Both checks matter because a system service can run as an ordinary user.
+
+Run on the server host. Set `codex_pid` to the App Server PID you identify, then inspect its parent using the same `ps` command with the PPID.
+
+```bash
+id -un
+ps -axww -o user,pid,ppid,command | grep -E '[c]odex.*app-server'
+ps -ww -p "$codex_pid" -o user,pid,ppid,command
+```
+
+Keep the existing account, `CODEX_HOME`, and socket or port. Running the Codex CLI with plain `sudo` can select root’s configuration and start a different server.
+
+### Linux with systemd
+
+Use the PID to look up the unit. Run the user lookup from the service owner’s login. Check that the unit actually launches Codex before restarting it, since the system lookup can return a broader login scope or user manager.
+
+```bash
+systemctl --user status "$codex_pid"
+systemctl status "$codex_pid"
+```
+
+Set `codex_unit` to the verified App Server service name and use the matching restart command.
+
+```bash
+# User service, from the owning account
+systemctl --user restart "$codex_unit" && systemctl --user status "$codex_unit"
+
+# System service, from an admin account
+sudo systemctl restart "$codex_unit" && sudo systemctl status "$codex_unit"
+```
+
+For another account’s user service, SSH into the host as that account. If you already have admin access and systemd supports targeting a local user bus, set `codex_owner` to that account and check its service before restarting it.
+
+```bash
+sudo systemctl --user --machine="${codex_owner}@.host" status "$codex_unit"
+sudo systemctl --user --machine="${codex_owner}@.host" restart "$codex_unit"
+sudo systemctl --user --machine="${codex_owner}@.host" status "$codex_unit"
+```
+
+Use the live unit on the affected host because transient `run-*.service` names can change. [systemctl manual](https://manpages.debian.org/trixie/systemd/systemctl.1.en.html)
+
+### macOS with a custom launchd job
+
+If you installed a standalone launchd job, set `codex_label` to its verified label. Use its loaded domain. Run the GUI example from the owner’s logged-in Mac session. Use `user/UID` instead if that is where the job is loaded.
+
+```bash
+# GUI LaunchAgent
+launchctl print "gui/$(id -u)/$codex_label" &&
+  launchctl kickstart -k "gui/$(id -u)/$codex_label"
+
+# System LaunchDaemon
+sudo launchctl print "system/$codex_label" &&
+  sudo launchctl kickstart -k "system/$codex_label"
+```
+
+Rerun the matching `launchctl print` to confirm the job is running. The desktop app’s bundled server is restarted by quitting and reopening the app.
+
+### Manually launched App Server
+
+For a foreground server, press Ctrl+C in its original terminal and rerun its launch command. For a detached server such as a `nohup` launch, use the owning account and confirm the PID immediately before sending `kill -TERM "$codex_pid"`. Wait for the process to exit and for its listener to be released, then rerun the original command with the same flags and environment. The old blanket `pkill … || true` can hide a permission error and attempt a second launch while the first server is still running.
+
+The companion [Codex Commands](https://app.notion.com/p/3be238a125b280a29cc9d255a7ca2a7a) page has a shorter restart reference. For an existing legacy Unix-socket setup, the start half is below. Use it only if it matches that server’s original launch. Run it after the old process exits.
+
+```bash
+nohup codex -c features.code_mode_host=true app-server --listen unix:// \
+  >>"$HOME/.codex-app-server.log" 2>&1 </dev/null &
+```
+
+Check the launcher status or startup log, then reconnect to the same host or socket and open a fresh chat to verify the updated skill appears. [OpenAI’s App Server guide](https://learn.chatgpt.com/docs/app-server)
+
+## Installation overview
+
 This guide describes the six-package target updater. Selection options require
 the target registry; an older checkout using the legacy updater rejects
 `--profile`, `--with` and `--resume`. Do not use documentation alone as
@@ -9,7 +100,8 @@ Ordinary installation clean-reinstalls QuickStark separately in Codex, Claude Co
 and Pi (the coding-agent harness). Use `--agent codex`, `--agent claude` (or `claude-code`), or `--agent pi`.
 The updater detects those executables on PATH when no host is selected. Explicit
 flags override detection; host selection is independent of the agent running it.
-Repeat the flag to update multiple hosts with default configuration homes.
+Repeat the flag to update multiple hosts; ordinary installation processes their
+default or custom configuration homes independently.
 
 ## Selection and the repository template
 
@@ -58,7 +150,9 @@ hosted runner availability does not gate publishing or local updates.
 
 Use `--version MAJOR.MINOR.PATCH` to select an existing published version.
 Automatic downgrades and changed source under the same version are rejected.
-The first release with this installer is 4.4.1; publish it before using that version.
+Published-version installation was introduced in 4.4.1. The current published
+release is [4.4.6](https://github.com/quickstark/skills/releases/tag/v4.4.6), at
+`fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3`. Device installation remains unverified.
 Earlier v4.4.0 lacks the new entry points and must not be retagged in place.
 
 The installer retains versioned source checkouts under
@@ -173,8 +267,9 @@ Use `--codex-home` when the Codex configuration profile is not the default
 `~/.codex`. Resolution is explicit `--codex-home`, then inherited `CODEX_HOME`,
 then `<resolved user home>/.codex`. `--home` still selects the operating-system
 user home; `--profile` selects a QuickStark package profile; neither substitutes
-for `--codex-home`. A custom Codex home currently supports a Codex-only transaction,
-so do not combine it with `--agent pi`.
+for `--codex-home`. Ordinary installation can combine a custom Codex home with
+other selected clients. The retained historical migration engine requires a
+Codex-only transaction for that custom home.
 
 Update the selected profile directly; pass the same home to standalone verification
 or recovery:
@@ -198,16 +293,16 @@ Resume refuses a journal created for another normalized Codex home.
 | Pi | `--pi-home` | `PI_CODING_AGENT_DIR` | `<user home>/.pi/agent` |
 
 Explicit paths take precedence over environment variables. `--home` sets the user
-home; it does not change package selection. A custom configuration home requires
-a single-host transaction and has separate selection, lock, journal and backup
-paths. Pass the same host home to plan, update, verify and resume. Native commands
+home; it does not change package selection. Each custom configuration home has
+separate selection, lock, journal and backup paths. Only the retained historical
+migration engine requires a single-host transaction for a custom home. Pass the same host home to plan, update, verify and resume. Native commands
 receive the resolved paths, preventing inherited overrides from redirecting a
 transaction to another profile. Paths are resolved by Node without assuming a
 particular checkout directory or shell. The GitHub validation matrix runs source
 checks and isolated native integration tests with pinned Codex, Claude Code and Pi
 CLIs on Linux and macOS 15. This is separate from deployment to a user's installed
-profiles. Windows manager behavior is unverified. Automatic detection
-groups default homes together and updates custom homes separately. Explicit home
+profiles. Windows manager behavior is unverified. Ordinary installation attempts
+each client independently, whether its home is default or custom. Explicit home
 flags without `--agent` select only those hosts. A journal resumes its original
 host group without rediscovering PATH; supply the original custom home again.
 
@@ -279,8 +374,10 @@ is promised.
 A versioned resume reuses the managed checkout's original tag and commit, even
 when a newer version exists. It must match the home, repository and release revision.
 A legacy unversioned journal requires its original verified checkout and cannot be
-silently resumed as a new published version. A stale updater lock is
-never automatically stolen; investigate the recorded owner before explicit recovery.
+silently resumed as a new published version. Historical transaction locks are
+never automatically stolen. Ordinary clean installation can reclaim only a
+recognized same-host lock whose owner is proven absent; live and unknown locks
+remain protected.
 Never repair a conflict by deleting a cache or rewriting a lock blindly. A failed
 rollback must retain its residual paths and diagnostics rather than claim success.
 

@@ -1,5 +1,12 @@
 # Upstream adoption evidence and remaining gates
 
+Historical inspection: this map preserves the 2026-09-25 state and its remaining
+work at that time. It does not describe today's registry or supported hosts.
+For current membership, source acceptance and installation behavior, use the
+[registry](../../scripts/skill-collection-registry.mjs), [bound acceptance audit](./upstream-adoption-acceptance.json)
+and [installation guide](../install-and-update-skills.md). Current publication
+and device limits are recorded in the [versioned installer review](./versioned-installer-review.md).
+
 This is an evidence map for [AC-01–24](../specs/quickstark-upstream-adoption.md#acceptance-matrix), not a passing acceptance audit. It records the state inspected on 2026-09-25 after documentation preparation commit `79afb5d715fe82b601fd6943a4ded8d03f3d0516`, with the subsequent index-generator change verified against the bound evidence below. HEAD alone does not identify those working bytes. The parent owns final decisions, revision binding, activation, publication and machine rollout.
 
 The [registry](../../scripts/skill-collection-registry.mjs) still selects `legacy`. Its separate target inventory has six packages and 38 public roots: core 12, specialists 8, advanced 12, frontend 4, video 1 and execution 1. There are 51 target private capabilities. The [native rehearsal](../../tests/fixtures/target-activation-probe/README.md) observed all 38 intended commands in isolated Codex and Pi installations; final release and actual-machine discovery remain required. The [provenance records](../../config/skill-provenance.json) retain 71 baseline identities (51 public/contributor plus 20 private), with target decisions still pending at this inspection.

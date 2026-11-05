@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment. Historical-cache backup delta: retained whole-repository caches use bounded literal-link snapshots and copies without following targets; default package/source snapshots remain strict. Focused controls cover literal-link preservation, three-harness reconciliation and large repair-record retries. Read-only GMK inspection reproduced a retained 4.2.0 cache with 21,984 entries and ten symbolic links; no new live deployment or Mac success is claimed by this evidence update. Scoped Codex inventory delta: native queries select managed marketplaces instead of refreshing unrelated remote catalogs. Foreign cache bytes and potential public names remain non-owning preservation/collision guards. Enabled known selectors omitted by stale catalogs are withdrawn through the native manager after verified backups. Isolated regressions cover unavailable global inventory, foreign-cache collisions and edits, and stale catalogs retaining later-package configuration/caches. Read-only GMK reproduction showed a global-list timeout and a 65 ms scoped query; this update does not itself claim a completed live deployment or new platform/model acceptance.",
+  "scope": "Current documentation reconciliation (2026-11-05): 4.4.6 is published at fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3. The active collection has six packages and 39 commands, with core-only fresh selection and explicit optional additions. Ordinary installation selects published tags without GitHub Actions polling, clean-reinstalls each client independently, saves choices before removal and supports a plain retry. Default and custom homes are processed independently. Restart instructions cover the managed daemon and actual external launchers. Historical trial decisions and installed-host limits below remain unchanged; no 4.4.6 device rollout is established. Historical audit narrative (retained): Reviewed 4.4.0 source acceptance: preserve original decisions/history and extend package closure, notices, native discovery and updater evidence for repository-authored multi-agent delegation, including the new qs-internal:delegation obligation. The 4.4.0 delta was reviewed by its authoring agent without an independent or blinded behavioral trial; see tests/fixtures/adoption-release-4.4.0/review.md. No new actual-machine installation or rollout success is claimed. Unreleased Codex portability delta: independently reviewed native-copy identity now uses Git executable-bit semantics while strict source and backup snapshots retain exact permissions. Isolated Linux regressions cover directory modes, same-version verification, executable-bit rejection and recovery. Existing model-behavior and actual-machine rollout limitations remain unchanged. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment. Historical-cache backup delta: retained whole-repository caches use bounded literal-link snapshots and copies without following targets; default package/source snapshots remain strict. Focused controls cover literal-link preservation, three-harness reconciliation and large repair-record retries. Read-only GMK inspection reproduced a retained 4.2.0 cache with 21,984 entries and ten symbolic links; no new live deployment or Mac success is claimed by this evidence update. Scoped Codex inventory delta: native queries select managed marketplaces instead of refreshing unrelated remote catalogs. Foreign cache bytes and potential public names remain non-owning preservation/collision guards. Enabled known selectors omitted by stale catalogs are withdrawn through the native manager after verified backups. Isolated regressions cover unavailable global inventory, foreign-cache collisions and edits, and stale catalogs retaining later-package configuration/caches. Read-only GMK reproduction showed a global-list timeout and a 65 ms scoped query; this update does not itself claim a completed live deployment or new platform/model acceptance.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -1100,7 +1100,7 @@
     },
     "AC-23": {
       "status": "passed",
-      "note": "Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
+      "note": "Current documentation reconciliation (2026-11-05): 4.4.6 is published at fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3. The active collection has six packages and 39 commands, with core-only fresh selection and explicit optional additions. Ordinary installation selects published tags without GitHub Actions polling, clean-reinstalls each client independently, saves choices before removal and supports a plain retry. Default and custom homes are processed independently. Restart instructions cover the managed daemon and actual external launchers. Historical trial decisions and installed-host limits below remain unchanged; no 4.4.6 device rollout is established. Historical audit narrative (retained): Applied README, repository instructions, architecture/context/contribution, installer/control-plane and generated provenance/index docs match six optional packages,38roots, original attribution, supported host/runtime limits and retained-baseline outcome. Historical sources/specs remain historical. Publication and actual migration remain separate. Unreleased installer delta: the reviewed update front door detects executable harnesses, preserves saved selections, groups default homes and isolates custom homes. Absence-only marketplace registration runs after lock/freshness and selection validation, preserves conflicting namespaces, and reports attempted or completed registrations on failure. Focused automated controls cover detection, native fresh setup, profile isolation, malformed metadata, concurrent edits and safe retry. This extends installer evidence only; no new model-behavior trial or Mac/Windows rollout is claimed. Hosted installer repair delta: a standalone bootstrap gates the exact official main SHA on GitHub Linux/macOS validation, checks candidate bytes and accepted package closures, and maintains a private managed checkout while retaining edited prior checkouts. Bounded native repair verifies the old official source, validates replacements before withdrawal, retains exact original payload/configuration backups, preserves unrelated state and carries a frozen selection through retries. Isolated controls cover dirty checkouts, CI rejection, aliased entry paths, modified caches, old bindings, interrupted withdrawal and three-harness reconciliation. Prior model-behavior decisions and rollout limitations remain unchanged; configured remote validation is not itself proof of a run or deployment.",
       "evidence": [
         "tests/fixtures/target-index-generation/evidence/parent-review.json",
         "tests/fixtures/target-documentation-preparation/README.md",
@@ -5146,7 +5146,7 @@
     },
     "docs/validation/upstream-adoption-evidence-map.md": {
       "path": "docs/validation/upstream-adoption-evidence-map.md",
-      "sha256": "c87069ee96f625b29a1ed9b78e9431785b184a49539f5f8da005683d30eaff59"
+      "sha256": "9060018461a0dc91f8a092c09aa30bddddf1277f52c8799d03532f3012cf0593"
     },
     "tests/fixtures/target-index-generation/evidence/parent-review.json": {
       "path": "tests/fixtures/target-index-generation/evidence/parent-review.json",
@@ -5154,7 +5154,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "d9aae60247073bfdfed8755145f40292467ecd2a7dc5ca90778b21cba6490993"
+      "sha256": "48e13b24d3f8594448822f3d83fa9c819b4109497b36d7afaa354a1041e2eae8"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -5166,27 +5166,27 @@
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
-      "sha256": "512463d78763d047c5530578580b2b584553f68bf5e98981c6cba5174babf997"
+      "sha256": "97ef182cedc4015d4e7863cd755eec340e0eaf9a079f4314d910d818f9d2f1bf"
     },
     "docs/contributing.md": {
       "path": "docs/contributing.md",
-      "sha256": "ff114676408a019e322c8720b34f6c6cdd65e720012bb823639d30d4521bc8ae"
+      "sha256": "792a09a8da0dc59395aa745ab4899dbe2b41edb01e3947535fd56b2dba7e5278"
     },
     "docs/personal-skills.md": {
       "path": "docs/personal-skills.md",
-      "sha256": "6c9191b74e6d2b27e686361111f977a06f81c1c1b38d0738563d4e0f07ddafec"
+      "sha256": "de13f2674bd8d9c29b9f5e5a230044289cc5a238f1cd6dd72f327abf0a889295"
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "5e634c59951f76686a7002265336bf9233ce79c004923b38b2930d326f807bc4"
+      "sha256": "91a40af0b6c646f9279f2c16996ac08e1c064f3e6aa534e9378a2ea6bb17ef01"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
-      "sha256": "8283e26217c5878081c60e541212136d68a34c71dcc0913484d1c071e8877f81"
+      "sha256": "5abe6ee4b9491348b4403629ee79211569aaaf821f168a72dfb56449bb2612e4"
     },
     "docs/upstream/README.md": {
       "path": "docs/upstream/README.md",
-      "sha256": "996ccad513a10ca5bc55ec17f1d28e325f71fa0cad4120132f54c4af30a20a23"
+      "sha256": "f08bbda4315534bf389a629f5378a77f1034e2b7761da4c085eb17df763f4014"
     },
     "tests/fixtures/target-documentation-preparation/README.md": {
       "path": "tests/fixtures/target-documentation-preparation/README.md",
@@ -5386,11 +5386,11 @@
     },
     "docs/validation/versioned-installer-review.md": {
       "path": "docs/validation/versioned-installer-review.md",
-      "sha256": "6d561fca27cd51f043b50d76cdf41fdc9b427ad7e62f17bee8317082be908d0d"
+      "sha256": "e7d6efddceb8362d4462d09da2602a03435b6583ec65688462ea682a5e6ea2ea"
     },
     "docs/specs/quickstark-versioned-installation.md": {
       "path": "docs/specs/quickstark-versioned-installation.md",
-      "sha256": "1972f56051f303a2aac99706b758e6a0a8b30e1b69bc5798e2a34a9d10457fdb"
+      "sha256": "57d27505ab58e5548a9a76ffbcf1a2275600d635113cd0c4dba455094b635ddd"
     },
     ".github/workflows/release.yml": {
       "path": ".github/workflows/release.yml",

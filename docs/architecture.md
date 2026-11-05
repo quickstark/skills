@@ -31,6 +31,9 @@ flowchart LR
 | Shared output policy | `docs/skill-run-contract.md`, `scripts/sync-skill-output-contracts.mjs` | Direct chat presentation, completion states, internal clear-writing pass, and exact next-prompt format. |
 | Documentation generator | `scripts/sync-v3-docs.mjs` | Concise command pages generated from registered metadata. |
 | Package projector | `scripts/sync-codex-plugin.mjs` | Deterministic Claude, Codex, and Pi packages, manifests, capabilities, notices, and shared catalog metadata. |
+| Published-version installer | `install.sh`, `scripts/install-skills.mjs` | Resolve a stable published tag, pin its commit, validate packages locally and retain versioned source checkouts. |
+| Ordinary client update | `scripts/update-skills.mjs`, `scripts/clean-install-skills.mjs` | Save package choices, back up originals, clean-reinstall known packages and verify each client independently. |
+| Historical migration and recovery | `scripts/managed-skills.mjs` and migration modules | Read-only plan/verify, explicitly authorized resource migration and frozen-journal recovery; old journals do not drive ordinary installation. |
 | Behavioral verification | `tests/` | Public surface, routing, safety, direct-chat contracts, clear writing, and projection integrity. |
 
 Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
@@ -39,7 +42,7 @@ Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress
 
 Each public command belongs to exactly one package:
 
-- `qs-skills`: twelve lifecycle-ordered core commands and four private QS capabilities.
+- `qs-skills`: twelve lifecycle-ordered core commands and five private QS capabilities, including delegation.
 - `qs-specialists`: nine optional specialist commands.
 - `qs-advanced`: twelve distinct PS-derived outcomes, sixteen private capabilities and the Lauren Tan notice.
 - `qs-frontend`: four output-specific roots and private design/image references.
@@ -71,6 +74,10 @@ The clear-writing pass is shared policy, not a public command and not a cross-pa
 The PS catalog retains `plain-writing` as one of its fixed sixteen internal capabilities because it is the disposition of upstream `skill:unslop`. QS commands receive the same final synthesis through the shared output contract without changing the fixed PS inventory.
 
 ## GitHub integration and release
+
+The [installation guide](./install-and-update-skills.md) begins with client and
+server restart commands. After package updates, refresh the active client's skill
+catalog; source synchronization alone does not refresh a running App Server.
 
 Implementation, appropriate tests, and independent review precede delivery. `/qs-git-merge` inspects the actual branch, remote tracking, pull request, checks, and mergeability before selecting an integration operation. `/qs-deploy-release` remains a separate explicitly approved release or deployment operation.
 
