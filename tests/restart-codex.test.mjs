@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {main} from '../scripts/restart-codex.mjs';
+import {main,preserveLimits} from '../scripts/restart-codex.mjs';
 
 const home='/profiles/test';
 const old={pid:40,start:'old',home,exe:'/original/codex',argv:['codex','-c','features.code_mode_host=true','app-server','--listen','unix://'],env:{HOME:'/users/test',SECRET:'private'},cwd:'/work with spaces'};
@@ -102,6 +102,7 @@ async function procFixture(t) {
   const exe=path.join(root,'codex');await fs.writeFile(exe,'fixture executable');
   const log=path.join(root,'server log');await fs.writeFile(log,'retained\n');
   const socket=path.join(profile,'app-server-control/app-server-control.sock');
+  await fs.mkdir(path.dirname(socket),{recursive:true});await fs.writeFile(socket,'synthetic socket');
   await fs.writeFile(proc+'/net/unix',`Num RefCount Protocol Flags Type St Inode Path\nx: 2 0 00010000 0001 01 123 ${socket}\n`);
   async function processEntry(number,args=old.argv,env={HOME:root,CODEX_HOME:profile,SECRET:'never print this'},start='700') {
     const dir=`${proc}/${number}`;await fs.mkdir(dir+'/fd',{recursive:true});await fs.mkdir(dir+'/fdinfo');
@@ -205,11 +206,105 @@ test('cleanup failures are redacted and return nonzero',async()=>{
   const f=fixture({lock:async()=>async()=>{throw Error('private token');}});const result=await run(f);assert.notEqual(result.code,0);assert.doesNotMatch(result.text,/private token/);
 });
 
-test('README and installation guide embed the exact executable source',async()=>{
-  const source=await fs.readFile(new URL('../scripts/restart-codex.mjs',import.meta.url),'utf8');
-  for(const file of ['README.md','docs/install-and-update-skills.md']) {
-    const text=await fs.readFile(new URL('../'+file,import.meta.url),'utf8');
-    const embedded=text.match(/node --input-type=module - <<'QUICKSTARK_RESTART'\n([\s\S]*?)QUICKSTARK_RESTART\n```/);
-    assert.equal(embedded?.[1],source,file+' copy block must match standalone source');
+const restartCommit='4420b2ab2c578a585a879fcfea8bca770860bd27';
+const restartURL=`https://raw.githubusercontent.com/quickstark/skills/${restartCommit}/scripts/restart-codex.mjs`;
+async function copyBlock(file='README.md') {
+  const text=await fs.readFile(new URL('../'+file,import.meta.url),'utf8');
+  const section=text.split('<!-- quickstark-codex-restart:start -->')[1]?.split('<!-- quickstark-codex-restart:end -->')[0];
+  const block=section?.match(/```bash\n([\s\S]*?)```/)?.[1];
+  assert.ok(block?.includes(restartURL),'copy block must download the published script at its immutable commit');
+  assert.doesNotMatch(block,/QUICKSTARK_RESTART|<<|import fs/,'no inline module or heredoc terminator');
+  return block;
+}
+
+test('README and installation guide use the same short pinned download block',async()=>{
+  const block=await copyBlock();assert.equal(await copyBlock('docs/install-and-update-skills.md'),block);
+});
+
+for(const shell of ['/bin/bash','/bin/zsh']) {
+  for(const [label,curlExit,nodeExit] of [['success',0,0],['failed partial download',22,0],['helper failure',0,7]]) {
+    test(`${shell} copy block: ${label}`,async t=>{
+      try{await fs.access(shell,constants.X_OK);}catch{t.skip('shell unavailable on this test host');return;}
+      const block=await copyBlock(); // Refuse old inline source before executing any artifact.
+      const root=await fs.mkdtemp(path.join(os.tmpdir(),'qs-restart-copy with spaces-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+      const bin=path.join(root,'bin');await fs.mkdir(bin);
+      await fs.writeFile(bin+'/curl',`#!/bin/sh
+out=
+for arg do
+  if [ "$previous" = '--output' ]; then out="$arg"; fi
+  previous="$arg"
+done
+[ -n "$out" ] || exit 99
+printf '%s\\n' 'process.stdout.write("isolated helper ran\\n"); process.exitCode=Number(process.env.QS_FIXTURE_NODE_EXIT);' > "$out"
+exit "$QS_FIXTURE_CURL_EXIT"
+`,{mode:0o700});
+      const env={...process.env,PATH:bin+':'+process.env.PATH,TMPDIR:root,CODEX_HOME:root+'/private-profile',QS_FIXTURE_CURL_EXIT:String(curlExit),QS_FIXTURE_NODE_EXIT:String(nodeExit)};
+      let result;
+      try{result=await exec(shell,[...(shell.endsWith('zsh')?['-f']:['--noprofile','--norc']),'-c',block],{cwd:root,env});result.code=0;}catch(error){result=error;}
+      assert.equal(result.code,curlExit||nodeExit,result.stderr);
+      if(curlExit)assert.doesNotMatch(result.stdout,/isolated helper ran/);else assert.match(result.stdout,/isolated helper ran/);
+      assert.deepEqual((await fs.readdir(root)).sort(),['bin'],'temporary download must be removed on success and failure');
+    });
   }
+}
+
+
+test('Node-raised open-file limit is restored for the launch, then reset in the helper',async t=>{
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'qs-limit-child-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
+  const moduleURL=new URL('../scripts/restart-codex.mjs',import.meta.url).href;
+  const source=`import {preserveLimits} from ${JSON.stringify(moduleURL)};
+import fs from 'node:fs/promises';
+const before=await fs.readFile('/proc/self/limits','utf8');
+const pattern=/^Max open files[ \\t]+(\\d+)[ \\t]+(\\d+)[^\\n]*$/m,row=before.match(pattern);
+if(!row||BigInt(row[1])<1024n)throw Error('unsupported owned fixture limits');
+const desired=before.replace(row[0],row[0].replace(row[1],'1024'));
+const release=await preserveLimits(desired);
+try{
+const after=await fs.readFile('/proc/self/limits','utf8');if(after.match(pattern)[1]!=='1024'||after.match(pattern)[2]!==row[2]||after.replace(pattern,'')!==before.replace(pattern,''))throw Error('original launch limit was not adopted');
+const {execFile}=await import('node:child_process');
+const childLimits=await new Promise((resolve,reject)=>execFile('/bin/cat',['/proc/self/limits'],(error,stdout)=>error?reject(error):resolve(stdout)));
+if(childLimits.match(pattern)[1]!=='1024')throw Error('replacement did not inherit the original limit');
+}
+finally{await release();}
+if(await fs.readFile('/proc/self/limits','utf8')!==before)throw Error('helper limits were not restored');
+console.log('owned child adopted and restored limits');`;
+  if(process.platform!=='linux'){t.skip('Linux process-limit fixture');return;}
+  const result=await exec(process.execPath,['--input-type=module','-e',source],{cwd:root});assert.match(result.stdout,/adopted and restored/);
+});
+
+
+test('logical control-socket symlink resolves to the owned kernel listener',async t=>{
+  const f=await procFixture(t),logical=path.join(f.profile,'app-server-control/app-server-control.sock'),physical=path.join(f.root,'short-socket');
+  await fs.unlink(logical);await fs.writeFile(physical,'synthetic socket');await fs.symlink(physical,logical);
+  await fs.writeFile(f.proc+'/net/unix',(await fs.readFile(f.proc+'/net/unix','utf8')).replace(logical,physical));
+  const target=(await f.world.legacyServers())[0],plan=await f.world.prepare(target);
+  try{await f.world.revalidate(target,plan);}finally{await plan.release();}
+  await fs.unlink(physical);
+  assert.equal(await f.world.listenerFree(),false,'the original listening inode still owns the real path');
+  await fs.writeFile(f.proc+'/net/unix','Num RefCount Protocol Flags Type St Inode Path\n');
+  assert.equal(await f.world.listenerFree(),true,'cached physical path remains usable after the old socket file is removed');
+  assert.deepEqual(f.effects,[]);
+});
+
+test('ordinary Codex log handles at EOF retain existing bytes on restart preparation',async t=>{
+  const f=await procFixture(t),size=(await fs.stat(f.log)).size;
+  for(const fd of [1,2])await fs.writeFile(`${f.proc}/40/fdinfo/${fd}`,`pos:\t${size}\nflags:\t0100001\n`);
+  const target=(await f.world.legacyServers())[0],plan=await f.world.prepare(target);
+  try{await f.world.revalidate(target,plan);assert.equal(await fs.readFile(f.log,'utf8'),'retained\n');}finally{await plan.release();}
+  assert.deepEqual(f.effects,[]);
+});
+
+test('unreproducible hard limits refuse before running prlimit',async t=>{
+  if(process.platform!=='linux'){t.skip('Linux resource metadata');return;}
+  const before=await fs.readFile('/proc/self/limits','utf8'),row=before.match(/^Max open files[ \t]+(\d+)[ \t]+(\d+)[^\n]*$/m);
+  const different=before.replace(row[0],`Max open files            1024                 ${BigInt(row[2])+1n}              files`);
+  await assert.rejects(preserveLimits(different,{readFile:async()=>before,run:async()=>assert.fail('cannot change a hard limit')}),/differ beyond/);
+});
+
+test('denied prlimit refuses without touching a server',async t=>{
+  if(process.platform!=='linux'){t.skip('Linux resource metadata');return;}
+  const before=await fs.readFile('/proc/self/limits','utf8'),row=before.match(/^Max open files[ \t]+(\d+)[ \t]+(\d+)[^\n]*$/m);
+  const target=before.replace(row[0],row[0].replace(row[1],'512'));let attempts=0;
+  await assert.rejects(preserveLimits(target,{readFile:async()=>before,run:async()=>{attempts++;throw Error('denied');}}),/Cannot preserve/);
+  assert.equal(attempts,1);
 });

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Standalone module: documentation embeds this file verbatim.
+// Standalone module downloaded by the documentation's pinned copy block.
 import fs from 'node:fs/promises';
 import {constants} from 'node:fs';
 import path from 'node:path';
@@ -88,6 +88,29 @@ export async function main(args=process.argv.slice(2),{world,output=console.log,
   }
 }
 
+// Node raises RLIMIT_NOFILE at startup. Reproduce the server's soft limit only
+// in this short-lived helper; never alter the live server or its hard limits.
+export async function preserveLimits(original,{proc='/proc',readFile=file=>fs.readFile(file,'utf8'),run=(exe,args)=>exec(exe,args,{timeout:5000,maxBuffer:16384})}={}) {
+  const filename=proc+'/self/limits',before=await readFile(filename,16384);
+  const normalized=text=>text.trim().replace(/[ \t]+/g,' ');
+  if(normalized(original)===normalized(before))return async()=>{};
+  const row=/^Max open files[ \t]+(\d+)[ \t]+(\d+)[^\n]*$/m;
+  const target=original.match(row),own=before.match(row);
+  if(!target||!own||target[2]!==own[2]||normalized(original.replace(row,''))!==normalized(before.replace(row,''))||BigInt(target[1])>BigInt(target[2]))stop('Server resource limits differ beyond the supported open-file soft limit. No restart attempted.');
+  const maxFD=Math.max(0,...(await fs.readdir(proc+'/self/fd')).map(Number));
+  if(BigInt(target[1])<=BigInt(maxFD+16))stop('Original open-file limit is too low for this helper. No restart attempted.');
+  const set=soft=>run('/usr/bin/prlimit',['--pid',String(process.pid),`--nofile=${soft}:${target[2]}`]);
+  let changed=false;
+  try {
+    await set(target[1]);changed=true;
+    if(normalized(await readFile(filename,16384))!==normalized(original))stop('Original open-file limit could not be verified.');
+    return async()=>{await set(own[1]);if(normalized(await readFile(filename,16384))!==normalized(before))stop('Helper resource-limit restoration failed.');};
+  } catch(error) {
+    if(changed)await set(own[1]);
+    stop('Cannot preserve the original open-file limit with prlimit. No restart attempted.');
+  }
+}
+
 // OS observations are injectable for isolated fixtures; the CLI always uses real OS data.
 export async function systemWorld(selectedHome,environment=process.env,{proc='/proc',runCommand=exec,signal=process.kill.bind(process),spawnProcess=spawn}={}) {
   const home=await fs.realpath(selectedHome),uid=process.getuid?.();
@@ -103,9 +126,11 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
   const status=text=>Object.fromEntries(text.trim().split('\n').map(line=>{const i=line.indexOf(':');return [line.slice(0,i),line.slice(i+1).trim()];}));
   const command=(exe,args,context={})=>runCommand(exe,args,{env:{...environment,CODEX_HOME:home},timeout:5000,maxBuffer:1048576,...context});
   const version=async target=>JSON.parse((await command(target?.exe||'codex',['app-server','daemon','version'],target?{env:{...target.env,CODEX_HOME:home},cwd:target.cwd}:{})).stdout);
+  let physicalSocket;
   const listeners=async()=>{
+    try{const current=await fs.realpath(socketFor(home));if(physicalSocket&&physicalSocket!==current)stop('Control-socket target changed; no restart attempted.');physicalSocket=current;}catch(error){if(error.code!=='ENOENT'||!physicalSocket)throw error;}
     const rows=(await read(proc+'/net/unix')).split('\n').slice(1).filter(Boolean);
-    return rows.map(row=>row.trim().match(/^\S+\s+\S+\s+\S+\s+(\S+)\s+(\S+)\s+\S+\s+(\d+)(?:\s+(.*))?$/)).filter(m=>m&&(parseInt(m[1],16)&0x10000)&&m[2]==='0001'&&m[4]===socketFor(home)).map(m=>m[3]);
+    return rows.map(row=>row.trim().match(/^\S+\s+\S+\s+\S+\s+(\S+)\s+(\S+)\s+\S+\s+(\d+)(?:\s+(.*))?$/)).filter(m=>m&&(parseInt(m[1],16)&0x10000)&&m[2]==='0001'&&m[4]===physicalSocket).map(m=>m[3]);
   };
   const ownsListener=async pid=>{
     const inodes=new Set(await listeners());
@@ -136,7 +161,7 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
     const root=`${proc}/${target.pid}`,own=status(await read(proc+'/self/status',16384));
     if(target.ppid!==1||!(await read(root+'/cgroup',16384)).trim().split('\n').some(line=>/^0::\/user\.slice\/user-\d+\.slice\/session-[\w-]+\.scope$/.test(line)))stop('Use the original launcher for this supervised or foreground server.');
     for(const key of ['Uid','Gid','Groups','NoNewPrivs','Seccomp','CapEff'])if(target.status[key]!==own[key])stop('Server credentials or sandbox cannot be preserved.');
-    if(await read(root+'/limits',16384)!==await read(proc+'/self/limits',16384))stop('Server resource limits cannot be preserved.');
+    const originalLimits=await read(root+'/limits',16384);
     if(!/^[0-7]{3,4}$/.test(target.status.Umask||''))stop('Server umask cannot be preserved.');
     for(const fd of await fs.readdir(root+'/fd'))if(Number(fd)>2) {
       const flags=(await read(root+'/fdinfo/'+fd,16384)).match(/^flags:\s*([0-7]+)$/m);
@@ -147,12 +172,14 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
     try {
       for(const fd of [1,2]) {
         const name=await fs.readlink(root+'/fd/'+fd),original=await fs.stat(root+'/fd/'+fd);
-        const flags=(await read(root+'/fdinfo/'+fd,16384)).match(/^flags:\s*([0-7]+)$/m);
-        if(!path.isAbsolute(name)||!original.isFile()||original.uid!==uid||!flags||(parseInt(flags[1],8)&constants.O_APPEND)===0)stop('Server output must use owned append log files.');
+        const info=await read(root+'/fdinfo/'+fd,16384),flags=info.match(/^flags:\s*([0-7]+)$/m),position=info.match(/^pos:\s*(\d+)$/m);
+        const mode=flags?parseInt(flags[1],8):0;
+        if(!path.isAbsolute(name)||!original.isFile()||original.uid!==uid||(mode&3)===0||(!(mode&constants.O_APPEND)&&(!position||BigInt(position[1])<BigInt(original.size))))stop('Server output must use owned logs with append mode or an end-of-file position.');
         const h=await fs.open(name,constants.O_WRONLY|constants.O_APPEND|constants.O_NOFOLLOW);logs.push(h);
         const opened=await h.stat();if(opened.dev!==original.dev||opened.ino!==original.ino)stop('Server log changed during inspection.');
       }
-      return {target,logs,release:async()=>{await Promise.all(logs.map(h=>h.close()));}};
+      const restoreLimits=await preserveLimits(originalLimits,{proc,readFile:read,run:command});
+      return {target,logs,limits:originalLimits,release:async()=>{try{await Promise.all(logs.map(h=>h.close()));}finally{await restoreLimits();}}};
     } catch(error){await Promise.all(logs.map(h=>h.close()));throw error;}
   };
   return {
@@ -165,8 +192,9 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
     revalidate:async (target,plan)=>{
       const current=await inspect(target.pid);
       if(!same(target,current)||JSON.stringify(current)!==JSON.stringify(target)||!await ownsListener(target.pid))stop('Server identity or launch context changed; no restart attempted.');
+      if(await fs.realpath(socketFor(home))!==physicalSocket)stop('Control-socket target changed; no restart attempted.');
       const fresh=await prepare(current);
-      try {if(plan)for(let i=0;i<2;i++){const a=await plan.logs[i].stat(),b=await fresh.logs[i].stat();if(a.dev!==b.dev||a.ino!==b.ino)stop('Server log changed; no restart attempted.');}}finally{await fresh.release();}
+      try {if(plan&&plan.limits!==fresh.limits)stop('Server resource limits changed; no restart attempted.');if(plan)for(let i=0;i<2;i++){const a=await plan.logs[i].stat(),b=await fresh.logs[i].stat();if(a.dev!==b.dev||a.ino!==b.ino)stop('Server log changed; no restart attempted.');}}finally{await fresh.release();}
     },
     listenerFree:async()=>!(await listeners()).length,
     stop:async target=>signal(target.pid,'SIGTERM'),
