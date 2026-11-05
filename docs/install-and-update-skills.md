@@ -5,8 +5,8 @@ the target registry; an older checkout using the legacy updater rejects
 `--profile`, `--with` and `--resume`. Do not use documentation alone as
 proof that a target package is accepted or installed.
 
-The target native transaction supports Codex, Claude Code and Pi (the coding-agent
-harness). Use `--agent codex`, `--agent claude` (or `claude-code`), or `--agent pi`.
+Ordinary installation clean-reinstalls QuickStark separately in Codex, Claude Code
+and Pi (the coding-agent harness). Use `--agent codex`, `--agent claude` (or `claude-code`), or `--agent pi`.
 The updater detects those executables on PATH when no host is selected. Explicit
 flags override detection; host selection is independent of the agent running it.
 Repeat the flag to update multiple hosts with default configuration homes.
@@ -22,16 +22,17 @@ The six packages are core `qs-skills` (12 roots), `qs-specialists` (9),
 | --- | --- |
 | Fresh machine, no selection flags | `qs-skills` only; no standalone resources |
 | Saved machine, no selection flags | Saved packages and resources for each selected host |
-| Previously managed machine without saved selection | Verified ownership/capability migration preview; ambiguous or expanded exposure blocks |
+| Previously managed machine without saved selection | Install core plus known QuickStark packages reported by the native manager |
 | `--with <package-id>` | Explicit addition to the current selection; repeat for multiple additions |
-| `--profile core` | Explicit desired core selection; reduction is not deletion authority |
+| `--profile core` | Clean-reinstall core; remove other QuickStark package registrations |
 
 `--agent` selects a host independently of package selection. `skills:update`
 detects installed harnesses; direct plan/verify commands default to Codex.
 The implemented addition flag is `--with`, not `--with-package`. Unknown IDs and
 duplicate additions fail. New optional packages do not join an ordinary update.
-The selection file is `~/.config/quickstark/skills-selection.json`; it is saved
-only after the transaction succeeds. Do not edit it to bypass a migration conflict.
+The selection file is `~/.config/quickstark/skills-selection.json`. Requested
+packages are saved before native removal, so a plain rerun keeps optional choices
+after interruption. Installed bytes and registrations are verified before reporting success.
 For a non-default host home, selection, updater locks, journals and backups use a
 home-specific state directory instead, so profiles cannot inherit or replace
 one another's saved selection or interrupted transaction.
@@ -76,40 +77,37 @@ their selections, and verifies installed state. Fresh hosts get core only. Exist
 saved selections and already registered optional capabilities are retained. No
 supported executable is an error; an incompatible manager fails visibly.
 
-An unused marketplace is registered automatically. An old local QuickStark binding
-or edited installed package can be repaired only after the old source's Git origin
-proves it is the official repository and every replacement passes release acceptance.
-Original configuration, caches and Pi source payloads are copied and verified,
-including exact permissions, into private `repair-*` recovery directories before
-native withdrawal. Native managers remove only known QuickStark registrations.
-Remaining caches are retained, old source checkouts stay untouched, and unrelated
-packages/settings are checked for preservation. Disabled, filtered, foreign or
-unknown registrations are preserved rather than silently overwritten.
+## Clean installation on every update
 
-Historical caches can include whole repositories and dependency links. Original-state
-backups record and copy those links literally without following external targets;
-they retain file modes and use separate bounded capacity for large historical caches.
-Installed package and accepted source verification still reject descendant links.
+The ordinary path validates the published replacement, remembers the desired
+packages, backs up QuickStark settings and caches, removes the known QuickStark
+registrations, registers the selected release and installs those packages fresh.
+It verifies the resulting registrations and package payloads. An edited or
+same-version QuickStark cache is replaced rather than treated as a migration.
+Original settings and caches remain in private `clean-<client>-*` directories
+under the existing backup root. Old source checkouts are never edited or deleted.
 
-Pi's `settings.json` may be a symbolic link to an existing regular dotfile. The
-updater preserves that link, binds its physical target, and backs up the target
-before changing package registrations through Pi. Relative package paths still
-resolve from the Pi configuration directory. Retargeting or replacing the link,
-or changing the target during a planned update or recovery, blocks further effects.
-Broken links and non-regular or oversized targets require correction before updating.
+Codex, Claude Code and Pi are attempted independently. If one fails, the other
+selected clients still run and their individual results are reported. A plain
+rerun performs the same clean installation using the remembered selection. It
+does not require a transaction journal, repair receipt or `--resume` command.
+If a clean installer is killed, the next run can reclaim its recorded lock only
+when its owner on the same host is no longer running. Live, unknown and historical
+locks remain protected. Selection writes are atomic under that installer lock.
 
-Codex inventory calls are scoped to the managed marketplaces, avoiding a refresh
-of unrelated remote catalogs. Other cached skills remain collision and preservation
-guards: their bytes and potential public names are inspected without claiming ownership
-or adopting them. Unrelated configuration and cache contents must remain unchanged.
-Enabled QuickStark selectors retained by an older catalog are reconciled through
-the native manager after backups, preserving their selected capabilities. Disabled
-or unknown registrations retain their existing protection.
+Only the finite known QuickStark package IDs are removed. Other plugins and
+settings are left to the native managers. Their caches are not traversed or
+fingerprinted. Foreign marketplace bindings, unknown QuickStark entries, filtered
+Pi entries and project-scoped Claude packages are preserved and reported before
+removal. Pi settings may remain a symlink to a regular dotfile; Pi updates it
+through that link, and relative package paths still use its configuration directory.
+Settings must remain outside both the accepted release and retained source checkouts.
 
-Repair does not certify modified bytes as trusted history. A pending repair records
-the intended selection before withdrawal, so a retry can restore that selection
-after interruption. Failed operations retain original bytes and their repair record;
-successful updates retain backups and save selection only after verification.
+Existing migration journals, pending repair records, historical standalone skills
+and backups are retained unchanged. They are not inputs to ordinary installation.
+The direct plan/verify/migration engine and explicit `--resume` option remain
+available for recovery of a selected historical transaction. Those advanced
+commands retain their stricter historical ownership and snapshot checks.
 
 From an updated clone, `npm run skills:update` invokes the same published-version
 flow. Older clones may still contain the old npm command: use the hosted command
@@ -127,11 +125,10 @@ For an optional read-only preview, use `npm run skills:plan -- --json --agent co
 fresh host they require `codex plugin marketplace add ./codex` or
 `claude plugin marketplace add .` first. Normal installation needs only update.
 
-## Claude setup
+## Claude setup and legacy migration
 
 Use the automatic updater, or select Claude explicitly. Claude packages use user
-scope; existing project/local or disabled
-QuickStark registrations require explicit reconciliation. The core marketplace
+scope; existing project/local QuickStark registrations require explicit reconciliation. The core marketplace
 entry points to the generated `packages/qs-skills` package, so the plugin cache
 contains the public roots and private closure without copying the whole repository.
 
@@ -139,9 +136,9 @@ contains the public roots and private closure without copying the whole reposito
 npm run skills:update -- --agent claude
 ```
 
-A foreign marketplace source remains a conflict. The hosted installer can preserve
-and replace known local QuickStark bindings as described above. Direct engine
-callers keep their strict migration checks. Existing root-based Claude core packages migrate after their manifest,
+A foreign marketplace source remains a conflict. The hosted installer clean-replaces known local QuickStark bindings as described
+above. The remaining migration details in this section apply to direct engine
+callers and retained historical transactions. Existing root-based Claude core packages migrate after their manifest,
 declared core skills and private resources match an immutable Git ancestor. The
 updater checks at most 32 manifest revisions in local history; unverifiable or
 edited resources remain a conflict. The old cache is retained, including unrelated
@@ -264,7 +261,8 @@ permissions and reject source changes after planning. Recorded backup snapshots
 also retain exact permissions; installed-cache identity uses the portable comparison.
 
 `skills:sync -- --authorize` remains the explicit review-then-authorize interface.
-Update/sync use an exclusive updater lock and a transaction journal. Preserve a
+Ordinary clean installation uses an exclusive updater lock and no transaction journal.
+The direct legacy update/sync engine uses a transaction journal. Preserve a
 failure's journal and backups. For an interrupted transaction, use its exact path:
 
 ```bash

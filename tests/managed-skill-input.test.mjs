@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { execFile } from 'node:child_process';
+import { execFile, spawn } from 'node:child_process';
+import { once } from 'node:events';
 import { promisify } from 'node:util';
-import { mkdtemp, mkdir, readFile, readlink, writeFile, appendFile, rm, symlink, chmod, lchmod } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readlink, writeFile, appendFile, rm, symlink, chmod, lchmod, lstat } from 'node:fs/promises';
 import path from 'node:path';
-import { tmpdir } from 'node:os';
+import { hostname, tmpdir } from 'node:os';
+import { pathToFileURL } from 'node:url';
 import test from 'node:test';
 import { derivePackageAcceptanceObligations, buildManagedSkillInput } from '../scripts/managed-skill-input.mjs';
 import { executeManagedSkills, parseManagedSkillsArguments } from '../scripts/managed-skills.mjs';
@@ -26,6 +28,109 @@ const run = promisify(execFile); const actualRoot = path.resolve(import.meta.dir
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const writeJSON = async (file, data) => { await mkdir(path.dirname(file), {recursive:true}); await writeFile(file, JSON.stringify(data,null,2)+'\n'); };
 const readJSON = async (file) => JSON.parse(await readFile(file));
+
+for (const host of ['codex', 'claude-code', 'pi']) test(`clean ${host} installation replaces edited QuickStark packages and ignores old journals and foreign caches`,
+  {skip:!available('codex')||!available(host==='claude-code'?'claude':host)},async t=>{
+  const args=await fixture(t,{host});const agents=[host];
+  await git(args.repositoryRoot,['remote','add','origin','https://github.com/quickstark/skills.git']);
+  const first=await executeManagedSkills({...args.options,action:'update',withPackages:['qs-advanced']});assert.equal(first.status,'complete',first.error);
+  const paths=resolveManagedSkillPaths({...args.options,agents,environment:{}});
+  const config=path.join(host==='codex'?paths.codexHomeDirectory:host==='claude-code'?paths.claudeHomeDirectory:paths.piHomeDirectory,host==='codex'?'config.toml':'settings.json');
+  if(host==='codex')await appendFile(config,'\n[projects."/fixture-clean-preserved"]\ntrust_level = "trusted"\n');
+  else await writeJSON(config,{...await readJSON(config),fixturePreserved:'keep-this-setting'});
+  if(host==='pi') {
+    const target=path.join(args.homeDirectory,'pi-dotfiles.json');await writeFile(target,await readFile(config));await rm(config);await symlink(path.relative(path.dirname(config),target),config);
+  }
+  const cache=host==='pi'?path.join(args.repositoryRoot,'pi/packages/qs-skills'):path.join(host==='codex'?paths.codexHomeDirectory:paths.claudeHomeDirectory,'plugins/cache/quickstark/qs-skills/4.0.0');
+  // Pi installs the maintained source itself; keep that accepted source immutable.
+  if(host!=='pi')await appendFile(path.join(cache,'skills/qs-help/SKILL.md'),'Old locally edited package.');
+  const foreign=host==='pi'?path.join(args.homeDirectory,'unrelated-plugin-cache'):path.join(host==='codex'?paths.codexHomeDirectory:paths.claudeHomeDirectory,'plugins/cache/fixture-community');
+  await mkdir(foreign,{recursive:true});await symlink('/unavailable-unrelated-target',path.join(foreign,'resource'));
+  await run('mkfifo',[path.join(foreign,'live-control-pipe')]);
+  const before={link:await readlink(path.join(foreign,'resource')),pipe:(await lstat(path.join(foreign,'live-control-pipe'))).ino};
+  const pending=path.join(paths.transactionRoot,'managed-repair-pending.json');await writeJSON(pending,{unsupported:'Retain this historical record without reading it.'});
+  const pendingBytes=await readFile(pending,'utf8');
+  for(let attempt=0;attempt<2;attempt++) {
+    const result=await updateInstalledHarnesses({...args.options,arguments_:['--agent',host]});
+    assert.equal(result.status,'complete',JSON.stringify(result.results));
+    assert.deepEqual([...result.results[0].targets[host].desired.packages].sort(),['qs-advanced','qs-skills']);
+    assert.equal(result.results[0].journalPath,undefined);
+    assert.equal(await readFile(pending,'utf8'),pendingBytes);
+    assert.deepEqual({link:await readlink(path.join(foreign,'resource')),pipe:(await lstat(path.join(foreign,'live-control-pipe'))).ino},before);
+    if(host!=='pi') {
+      assert.doesNotMatch(await readFile(path.join(cache,'skills/qs-help/SKILL.md'),'utf8'),/Old locally edited/);
+      if(attempt===0)assert.match(await readFile(path.join(result.results[0].backupRoot,'cache-qs-skills/4.0.0/skills/qs-help/SKILL.md'),'utf8'),/Old locally edited/);
+    }
+    if(host==='codex')assert.match(await readFile(config,'utf8'),/fixture-clean-preserved/);
+    else assert.equal((await readJSON(config)).fixturePreserved,'keep-this-setting');
+    if(host==='pi')assert.equal(await readlink(config),path.relative(path.dirname(config),path.join(args.homeDirectory,'pi-dotfiles.json')));
+  }
+});
+
+test('a failed clean Pi install retains desired optional packages for an ordinary rerun', {skip:!['codex','pi'].every(available)},async t=>{
+  const args=await fixture(t,{host:'pi',bootstrap:false});await git(args.repositoryRoot,['remote','add','origin','https://github.com/quickstark/skills.git']);
+  let interrupted=false;const runtime={runCommand:async(command,argv,options)=>{
+    const result=await runNativePackageCommand(command,argv,options);
+    if(!interrupted&&command==='pi'&&argv[0]==='install'){interrupted=true;throw Error('Interrupted clean installation.');}return result;
+  }};
+  const failed=await updateInstalledHarnesses({...args.options,runtime,arguments_:['--agent','pi','--with','qs-advanced']});
+  assert.equal(failed.status,'failed');assert.ok(interrupted);assert.ok(failed.results[0].backupRoot);
+  const retried=await updateInstalledHarnesses({...args.options,arguments_:['--agent','pi']});
+  assert.equal(retried.status,'complete',JSON.stringify(retried.results));assert.deepEqual([...retried.results[0].targets.pi.desired.packages].sort(),['qs-advanced','qs-skills']);
+});
+
+test('ordinary clean installation replaces a failed older release without resuming its journal', {skip:!['codex','pi'].every(available)},async t=>{
+  const f=await failedVersionedRepair(t,{oldVersion:'4.4.5',newVersion:'4.4.6',linkedSettings:true});
+  const priorSource=await readFile(path.join(f.old,'codex/plugins/qs-skills/skills/qs-help/SKILL.md'),'utf8');
+  const config=path.join(f.homeDirectory,'.pi/agent/settings.json');const link=await readlink(config);
+  const result=await updateInstalledHarnesses({...f.options,arguments_:['--agent','codex','--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));assert.equal(result.results.length,2);
+  for(const item of result.results){assert.equal(item.mode,'clean-install');assert.equal(item.journalPath,undefined);assert.deepEqual([...item.targets[item.agents[0]].desired.packages].sort(),item.agents[0]==='codex'?['qs-advanced','qs-skills']:['qs-skills']);}
+  assert.equal(await readFile(f.journalPath,'utf8'),f.priorJournal);assert.equal(await readFile(f.repair.recordPath,'utf8'),f.priorRecord);
+  assert.equal(await readFile(path.join(f.old,'codex/plugins/qs-skills/skills/qs-help/SKILL.md'),'utf8'),priorSource);
+  assert.equal(await readlink(config),link);assert.ok((await readJSON(config)).packages.some(source=>path.resolve(path.dirname(config),source)===path.join(f.newer,'pi/packages/qs-skills')));
+  assert.match(await readFile(path.join(f.homeDirectory,'.codex/config.toml'),'utf8'),/fixture-preserved/);
+  assert.equal((await executeManagedSkills({...f.options,action:'verify'})).status,'verified');
+});
+test('clean installation retries a killed owner but preserves live and unknown locks', {skip:!['codex','pi'].every(available),timeout:30000},async t=>{
+  const f=await fixture(t,{host:'pi',bootstrap:false});
+  const paths=resolveManagedSkillPaths({...f.options,environment:{}});
+  const source=`import {cleanInstallSkills} from ${JSON.stringify(pathToFileURL(path.join(actualRoot,'scripts/clean-install-skills.mjs')).href)};
+    await cleanInstallSkills({...${JSON.stringify(f.options)},runtime:{validateRepairRelease:async()=>{process.stdout.write('locked');await new Promise(()=>setInterval(()=>{},1000));}}});`;
+  const child=spawn(process.execPath,['--input-type=module','-e',source],{cwd:f.repositoryRoot,stdio:['ignore','pipe','pipe']});t.after(()=>child.kill('SIGKILL'));
+  assert.equal(String((await once(child.stdout,'data'))[0]),'locked');
+  assert.equal((await readJSON(paths.lockPath)).pid,child.pid);
+  const exited=once(child,'exit');child.kill('SIGKILL');await exited;
+  const result=await updateInstalledHarnesses({...f.options,arguments_:['--agent','pi']});
+  assert.equal(result.status,'complete',JSON.stringify(result.results));assert.equal(existsSync(paths.lockPath),false);
+  for(const owner of ['unknown historical lock',JSON.stringify({kind:'quickstark-clean-install',hostname:hostname(),pid:process.pid})]){
+    await writeFile(paths.lockPath,owner);
+    const blocked=await updateInstalledHarnesses({...f.options,arguments_:['--agent','pi']});
+    assert.equal(blocked.status,'failed');assert.match(blocked.results[0].error,/Another installer owns/);assert.equal(await readFile(paths.lockPath,'utf8'),owner);await rm(paths.lockPath);
+  }
+});
+
+test('clean Pi installation rejects a source changed by native installation against its accepted payload', {skip:!['codex','pi'].every(available)},async t=>{
+  const f=await fixture(t,{host:'pi',bootstrap:false});let changed=false;
+  const runtime={runCommand:async(command,argv,options)=>{
+    const result=await runNativePackageCommand(command,argv,options);
+    if(command==='pi'&&argv[0]==='install'){
+      changed=true;await appendFile(path.join(f.repositoryRoot,'pi/packages/qs-skills/skills/qs-help/SKILL.md'),'Unexpected native source change.');
+    }
+    return result;
+  }};
+  const result=await updateInstalledHarnesses({...f.options,runtime,arguments_:['--agent','pi']});
+  assert.ok(changed);assert.equal(result.status,'failed');assert.match(result.results[0].error,/differs from the accepted release/);
+});
+
+test('clean Pi installation rejects settings linked into the accepted release before writing', {skip:!available('codex')},async t=>{
+  const f=await fixture(t,{host:'pi',bootstrap:false});
+  const config=path.join(f.homeDirectory,'.pi/agent/settings.json');const manifest=path.join(f.repositoryRoot,'pi/packages/qs-skills/package.json');
+  const bytes=await readFile(manifest,'utf8');await rm(config);await symlink(manifest,config);
+  const result=await updateInstalledHarnesses({...f.options,arguments_:['--agent','pi'],runtime:{runCommand:async()=>{throw Error('No native mutation expected.');}}});
+  assert.equal(result.status,'failed');assert.match(result.results[0].error,/settings must remain outside the accepted release/);
+  assert.equal(await readFile(manifest,'utf8'),bytes);assert.equal(await readlink(config),manifest);
+});
 async function git(root, args) { return run('git', ['-c','core.hooksPath=/dev/null','-c','commit.gpgsign=false','-c','user.name=Isolated Fixture','-c','user.email=fixture@example.invalid',...args],{cwd:root,encoding:'utf8'}); }
 async function fixture(t, {bootstrap = true, host = 'codex', version = '4.0.0'} = {}) {
   const base = await mkdtemp(path.join(tmpdir(),'qs-selected-caller-')); t.after(()=>rm(base,{recursive:true,force:true}));
@@ -557,20 +662,19 @@ for (const host of ['codex','claude-code']) test(`automatic updater bootstraps a
   const args=await fixture(t,{bootstrap:false,host});
   const result=await updateInstalledHarnesses({...args.options,arguments_:['--agent',host]});
   assert.equal(result.status,'complete',JSON.stringify(result.results.map(entry=>entry.error)));
-  assert.equal(result.results[0].marketplaceActions.length,1);
+  assert.equal(result.results[0].mode,'clean-install');
   const paths=resolveManagedSkillPaths({...args.options,environment:{}});
   assert.deepEqual((await readJSON(paths.selectionPath)).targets[host].packages,['qs-skills']);
   assert.equal((await executeManagedSkills({...args.options,action:'verify'})).status,'verified');
 });
 
-test('automatic detection updates all three native harnesses in one default-home transaction', {skip:!['codex','claude','pi'].every(available)}, async t=>{
+test('automatic detection clean-installs all three native harnesses independently', {skip:!['codex','claude','pi'].every(available)}, async t=>{
   const args=await fixture(t,{bootstrap:false});
   const agents=['codex','claude-code','pi'];
   const result=await updateInstalledHarnesses({...args.options,detect:async()=>agents});
   assert.equal(result.status,'complete',JSON.stringify(result.results.map(entry=>entry.error)));
-  assert.equal(result.results.length,1);
-  assert.equal(result.results[0].marketplaceActions.length,2);
-  for(const agent of agents) assert.deepEqual(result.results[0].targets[agent].desired.packages,['qs-skills']);
+  assert.equal(result.results.length,3);
+  for(const agent of agents) assert.deepEqual(result.results.find(result=>result.agents.includes(agent)).targets[agent].desired.packages,['qs-skills']);
   assert.equal((await executeManagedSkills({...args.options,agents,action:'verify'})).status,'verified');
 });
 
@@ -581,7 +685,7 @@ nativeTest('automatic update preserves a saved optional selection on its next or
   const ordinary=await updateInstalledHarnesses({...args.options,detect:async()=>['codex']});
   assert.equal(ordinary.status,'complete',JSON.stringify(ordinary.results));
   assert.deepEqual([...ordinary.results[0].targets.codex.desired.packages].sort(),['qs-advanced','qs-skills']);
-  assert.deepEqual(ordinary.results[0].marketplaceActions,[]);
+  assert.equal(ordinary.results[0].mode,'clean-install');
 });
 
 nativeTest('automatic marketplace setup isolates an explicitly selected Codex home',async t=>{
@@ -591,7 +695,7 @@ nativeTest('automatic marketplace setup isolates an explicitly selected Codex ho
   const result=await updateInstalledHarnesses({...args.options,arguments_:['--codex-home',custom]});
   assert.equal(result.status,'complete',JSON.stringify(result.results));
   assert.deepEqual(await captureMigrationPath(path.join(args.homeDirectory,'.codex')),before);
-  assert.equal(result.results[0].marketplaceActions[0].root,path.join(args.repositoryRoot,'codex'));
+  assert.equal(result.results[0].mode,'clean-install');
   assert.equal((await executeManagedSkills({...args.options,action:'verify',codexHomeDirectory:custom})).status,'verified');
 });
 

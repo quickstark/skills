@@ -45,7 +45,10 @@ Installation never polls GitHub Actions; hosted validation is manual and does no
 gate version publication. Development clones remain
 untouched; modified managed checkouts are retained in backups. The installer detects Codex, Claude and Pi on
 PATH unless explicit host/home flags or a recovery journal select targets.
-Default homes share a transaction; custom homes remain separate. Replacement of
+Ordinary updates clean-reinstall each client independently; custom homes keep
+separate state. A plain rerun restores saved package choices without reading old
+migration journals. Direct migration callers and explicit journal recovery retain
+the historical transaction engine. Replacement of
 known QuickStark registrations requires a verified official source, accepted
 replacement packages and durable original-state backups. Unknown or unrelated
 ownership stays protected. Direct plan/verify commands remain read-only and

@@ -1252,6 +1252,7 @@
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
         "scripts/claude-core-migration.mjs",
+        "scripts/clean-install-skills.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
@@ -1751,6 +1752,7 @@
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
         "scripts/claude-core-migration.mjs",
+        "scripts/clean-install-skills.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
@@ -2269,6 +2271,7 @@
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
         "scripts/claude-core-migration.mjs",
+        "scripts/clean-install-skills.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
@@ -2781,6 +2784,7 @@
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
         "scripts/claude-core-migration.mjs",
+        "scripts/clean-install-skills.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
@@ -3302,6 +3306,7 @@
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
         "scripts/claude-core-migration.mjs",
+        "scripts/clean-install-skills.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
@@ -3893,6 +3898,7 @@
         "scripts/adoption-acceptance.mjs",
         "scripts/advanced-skill-catalog.mjs",
         "scripts/claude-core-migration.mjs",
+        "scripts/clean-install-skills.mjs",
         "scripts/execution-skill-catalog.mjs",
         "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
@@ -4462,11 +4468,11 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "4c7b6cc67e28822ea9ec72f0320973047be98824b1a5386eeafdcce2d52a7052"
+      "contentSha256": "4fbda5d1186a136fb0eacd656f38776346795ccb365b962dee9c066b2d94ef79"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
-      "contentSha256": "3acc2f38a5e2bc89ead222ff548d68e82ce14835be16a623518a36cfeb49fd47"
+      "contentSha256": "457938e8268fb99f6dfd255af07814e9af37294789b65b26905b4ce1b5bea305"
     },
     "config/skill-migrations.json": {
       "kind": "file",
@@ -4486,7 +4492,7 @@
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "a6debb1d6a60b4194ce85d4e9322418661e227a1e912279ab78521aa861e6702"
+      "contentSha256": "56381b8d0ff70245318875c1fc09cdd33060938d352ba86208d0133bebc96c9c"
     },
     "scripts/adoption-acceptance.mjs": {
       "kind": "file",
@@ -4506,7 +4512,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "5eef5f07643a95f74aaa5b98042f68bba40e5b19664b312542b2e10b73c73a14"
+      "contentSha256": "a4cf60b9a0dd3d1e3d2bc732f3b46441b98e57870426165ecbc77637e1e482b2"
     },
     "scripts/managed-skill-migration.mjs": {
       "kind": "file",
@@ -4618,15 +4624,15 @@
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "92eab0f89b72cc449aaffba328ecb51c2c415cc7e7c84bf08a231d234b36c2be"
+      "contentSha256": "a7641d44017924554448309d3dea9c42b6edb678ee5fed362ee12fb685e8fdac"
     },
     "packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "665996383a0f9bb729ef25523940ddb393067b420d7e01581a703d19d2147426"
+      "contentSha256": "bb80150bab4ec9be44830c2e7f3a75df799d5cdd9e8c5fa6bd344648af533234"
     },
     "pi/packages/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "108fd26ac1bd5e5cd29e49d4eb7df6dc16ab5f320e899f3d85067acf84593aff"
+      "contentSha256": "b5a1c135313c20e0750cfc07568e31cc3b5d96f5210d611f5eba761eed4d470f"
     },
     "skills/engineering/qs-code-document": {
       "kind": "directory",
@@ -4666,15 +4672,15 @@
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "a06b37578cde40e29878008cb1cb917e0cfbc1f9d87088752e6f635f2771b5e1"
+      "contentSha256": "f131b97f6dc742355eee7e5eb3bb144837d891abaaf3f38278de6428ee059ece"
     },
     "packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "c286d47feb294da9be7538dcd8fc46d4661a264389f54452b1f16e73a2195c69"
+      "contentSha256": "6e26372a8435f7afda05e5419d3bc83d822df37bad70b881270ce46bbeb349c2"
     },
     "pi/packages/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "8b8df4707cb54da049b07ffb2d7d1c4b05eadb0095e8eac58e4787e176625218"
+      "contentSha256": "a7c4aa32d981c03dea61aaf8fff7d964362b9bdeba1023eb1e035af883dc18da"
     },
     "skills/advanced": {
       "kind": "directory",
@@ -4730,15 +4736,15 @@
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "27790d8411d4a48cb8fab5d29f2477b436c89559eff8d1c83773e467d6c8b809"
+      "contentSha256": "4fc58474f2dd680ec6c7f0fe219713183e9a32ea87e9048f86c4b46985e5a33e"
     },
     "packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "13df99b575a2ba08de0bcb8d346d4d4c2ade90d7557d321f0a5486d2359216c0"
+      "contentSha256": "2bf415771e938df3b361c403b6d1faa7825687fc60c34bde3bb1d3a91074ddf9"
     },
     "pi/packages/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "79ab0a8dea0c80bdaf4a37dbe5a1e02ef307313914e16e65618e017e29eb5204"
+      "contentSha256": "ebc2318c5d3de9c568e1e1fc2ca9c41f8e022d1a8721d4a8ab81b8cc7d4f2595"
     },
     "skills/engineering/qs-design-frontend": {
       "kind": "directory",
@@ -4762,15 +4768,15 @@
     },
     "codex/plugins/qs-video": {
       "kind": "directory",
-      "contentSha256": "aebf2a07c243f071e14ae7da59d53b1ceb411c9edb1bc85de3f36b73b15edbae"
+      "contentSha256": "a5aa28ce3f4a3defc7ea47d5767bdabea3ad115153953e02f46eb1a34ad48084"
     },
     "packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "7d0c6b8df2c0b2795e7bfe1e74e89a93461f94e6e2c42a1bf55ce8e0c791e2d4"
+      "contentSha256": "b51cc7c2a5c7f491a3b6fe3b8ffad026dbb7af409c5e60b49bf95b3df63d83db"
     },
     "pi/packages/qs-video": {
       "kind": "directory",
-      "contentSha256": "ed1269b9c53933987c5125c968f8418ea19a1ca156ce12f65819be0bde18ba19"
+      "contentSha256": "8ce1035f8ba9e3527cd44d23eb7c6604462227f753a87ee5c2f6af04f472677c"
     },
     "skills/video/qs-video": {
       "kind": "directory",
@@ -4778,15 +4784,15 @@
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
-      "contentSha256": "3189f3ebad640f14b635f92f436767fe7e9e77d50ae42b9aa86f43d93681aeae"
+      "contentSha256": "ca808d201cb0d6f4ee55f3a7aae01f85268377eb6eda4f85a15217481031d2ea"
     },
     "packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "8c59973c2cc389407f49d50d4f7cd602a71d75327d258a3617cc645e53e59ea0"
+      "contentSha256": "b920b4230515d7a451e65096aceee0d50396af13c54372f02baddc65e2461c83"
     },
     "pi/packages/qs-execution": {
       "kind": "directory",
-      "contentSha256": "876cbe918d90a54bc9c15e6d95158c79076a3f30a286436330dd58220b4ef11e"
+      "contentSha256": "ff6137bf946440d915e6f5e2dde1366bb1bd3f1c13497235900dfad75fda5b9f"
     },
     "skills/engineering/qs-unlazy": {
       "kind": "directory",
@@ -4794,7 +4800,7 @@
     },
     "packages/qs-skills": {
       "kind": "directory",
-      "contentSha256": "085a2543d4c45c183f2a5f6614124fd9c63607742abe8dd9a156b04b1771bccd"
+      "contentSha256": "ac9c2de6a635701bab3af4c6c84f4eafc9869746f8ab429fe6ef15144acf4f55"
     },
     "scripts/claude-core-migration.mjs": {
       "kind": "file",
@@ -4806,7 +4812,7 @@
     },
     "scripts/update-skills.mjs": {
       "kind": "file",
-      "contentSha256": "78b99f6aa699092c533232a620c7939ddac439d61fe0da7c0b99602a0b8ba111"
+      "contentSha256": "0fc64bdd849534620001144264fe50c9760bfc6683634d3aa74c9295c3be5cc0"
     },
     ".github/workflows/validate.yml": {
       "kind": "file",
@@ -4827,6 +4833,10 @@
     "scripts/validate-skill-release.mjs": {
       "kind": "file",
       "contentSha256": "a09777989144a598cbe820a97ec8b5e66e09c8538b05705ba308035a51991a29"
+    },
+    "scripts/clean-install-skills.mjs": {
+      "kind": "file",
+      "contentSha256": "ff6e3a7c29d7c992a950cc890cfe32c01804b151599f0f3a706c0d3feb1d27a4"
     }
   },
   "evidence": {
@@ -5080,7 +5090,7 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "8ea481c89d71d8bfc7665f1294a4f79e9b79ad7c7765ec02fc788b04f983a364"
+      "sha256": "fb49f5d657cadce0c0545d205cffe9df3b33c5430e2ff1e556f0815440432474"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
@@ -5144,7 +5154,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "9ca8386375f62d8e9ea89e6051700a41b79682644906530a395fc59dcd77dd4e"
+      "sha256": "d9aae60247073bfdfed8755145f40292467ecd2a7dc5ca90778b21cba6490993"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -5152,7 +5162,7 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "25a54406caa5b2cc4837de1869f1ddfb99ba6a9edab2691b9fa751d0c9f95459"
+      "sha256": "7cdd65319ee4585306aaaa3ecbc68a91f7743430ed8fbcf46fb27d447a99b91a"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
@@ -5168,7 +5178,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "59e16835031f05b7e415e843e3afe1243ec2af84046dafe1e8dfc12ab43e8027"
+      "sha256": "5e634c59951f76686a7002265336bf9233ce79c004923b38b2930d326f807bc4"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -5188,7 +5198,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "scripts/managed-skill-input.mjs",
-      "sha256": "a662fd125f229737a364074c7b5cabe3ac6a55169a18346b8902630c5a96961a"
+      "sha256": "d3f0a16fd8f32e012a04183e70c856f56dc2b6abd9b58d37200dc537ac793057"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
@@ -5312,7 +5322,7 @@
     },
     "tests/update-skills.test.mjs": {
       "path": "tests/update-skills.test.mjs",
-      "sha256": "54ff0ba4474f276a045ee4d6234c0d37f82bec1a60c931decfb6fe81f0a129bb"
+      "sha256": "ee3eb20b088c898dfd4464a1a7590a0e985d9187c8a8aa142a447c05cdf06056"
     },
     "tests/managed-marketplace-bootstrap.test.mjs": {
       "path": "tests/managed-marketplace-bootstrap.test.mjs",
@@ -5320,7 +5330,7 @@
     },
     "scripts/update-skills.mjs": {
       "path": "scripts/update-skills.mjs",
-      "sha256": "2b9032ceee9a1afd3b2dd5ac7095819365e930f272116bb60c5461100f1e0b9a"
+      "sha256": "52f55e1078b22477d52c73d0657d40fa1d751adc4d7b47b5d4671aaeab32c819"
     },
     "scripts/managed-marketplace-bootstrap.mjs": {
       "path": "scripts/managed-marketplace-bootstrap.mjs",
@@ -5372,15 +5382,15 @@
     },
     "package.json": {
       "path": "package.json",
-      "sha256": "1f4966b3ae60b29708922de538d5e60c4f3b87e8701335b3e626a494056b3b47"
+      "sha256": "77aa6de079991af709d71d0a2d2e69d948132b4e3f3649ce507c4f00a7147386"
     },
     "docs/validation/versioned-installer-review.md": {
       "path": "docs/validation/versioned-installer-review.md",
-      "sha256": "e2896604f88f861ab45431cb2d2a550fc4673e1978ca1111aadcef43830d9f37"
+      "sha256": "6d561fca27cd51f043b50d76cdf41fdc9b427ad7e62f17bee8317082be908d0d"
     },
     "docs/specs/quickstark-versioned-installation.md": {
       "path": "docs/specs/quickstark-versioned-installation.md",
-      "sha256": "d33559174b7aa96adee41a5b71eb2f32df32db83eca6071dc50bd2270ebbb659"
+      "sha256": "1972f56051f303a2aac99706b758e6a0a8b30e1b69bc5798e2a34a9d10457fdb"
     },
     ".github/workflows/release.yml": {
       "path": ".github/workflows/release.yml",

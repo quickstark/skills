@@ -42,11 +42,13 @@ It retains each version in a separate checkout under
 `~/.local/share/quickstark/releases`. The `~/.local/share/quickstark/current` link
 selects the current version for local commands. Native managers and journals use
 the actual versioned path, so updating one profile cannot move another profile's
-source. Edited and older checkouts stay intact; development clones are untouched. Known QuickStark
-marketplace bindings and damaged installed packages are repaired after originals
-are backed up and replacements pass acceptance. Unrelated packages and settings
-remain preserved. The [installation guide](./docs/install-and-update-skills.md)
-describes version selection, profiles and recovery records.
+source. Edited and older checkouts stay intact; development clones are untouched.
+Every ordinary update clean-reinstalls the selected QuickStark packages through
+each client's native manager. Original QuickStark settings and caches are backed
+up first. Unrelated plugins, settings and historical journals remain untouched.
+Clients install independently; a Codex failure does not prevent Pi from updating.
+After interruption, rerun the same command. The [installation guide](./docs/install-and-update-skills.md)
+describes version selection, profiles and retained backups.
 
 From an updated repository, `npm run skills:update` runs the same installer.
 No manual pull, stash, dependency installation or separate verification is needed
@@ -61,7 +63,7 @@ hosts. For example, add frontend to Codex explicitly:
 curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --agent codex --with qs-frontend
 ```
 
-Repeat `--with` for other packages. Selection is saved after success in
+Repeat `--with` for other packages. The requested selection is remembered before installation in
 `~/.config/quickstark/skills-selection.json`, or profile-specific state for custom
 homes. The installer verifies its managed checkout against the published tag commit
 and checks ownership and release acceptance before replacement.

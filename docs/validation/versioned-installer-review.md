@@ -1,5 +1,44 @@
 # Versioned installer repair review
 
+## Ordinary clean installation in 4.4.6
+
+After another 4.4.5 device installation failed during native exposure with
+`Migration payload changed during inspection`, the owner selected a simpler
+deployment contract: clean-reinstall QuickStark on every ordinary update. The
+retained local journal confirms that a generic transaction had already exposed
+some packages before its filesystem inspection failed. The exact concurrent
+metadata change has not been established; this change removes that transaction
+and unrelated-cache snapshotting from the ordinary installation path.
+
+The default updater now invokes native uninstall/install per client. It validates
+the replacement first, remembers package choices before removal, copies original
+QuickStark settings and caches into a private backup directory, replaces only the
+known QuickStark package IDs, and verifies the resulting registrations and payloads.
+One client's failure does not prevent the others from installing. Ordinary retry
+repeats the clean installation rather than interpreting a recovery journal.
+
+Old source checkouts, historical standalone skills, pending repair records and
+journals remain unchanged. Direct migration callers and explicit journal recovery
+retain the historical engine. Unknown or foreign marketplace ownership, filtered
+Pi registrations and project-scoped Claude registrations still block removal;
+unrelated plugin caches are never traversed by clean installation.
+
+Native regression coverage exercises Codex, Claude and Pi twice at the same
+version, replaces edited managed payloads while retaining their originals,
+preserves unrelated settings and symlinked Pi settings, ignores retained journals
+and unrelated caches containing links and FIFOs, and restores optional choices
+after an interrupted installation. Host-routing tests cover independent outcomes.
+An older failed version can also be replaced without resuming or changing its
+journal, repair record or source checkout. Without a saved selection, installation
+includes core plus the packages still reported by that client's native manager.
+Additional regressions cover a killed installer followed by a plain rerun,
+preservation of live and unknown locks, invalid client homes that leave healthy
+clients installable, and linked settings that would write into an accepted source.
+Installed bytes are compared with payloads captured before native installation;
+a changed Pi source cannot certify itself by becoming both sides of the comparison.
+These isolated checks do not establish successful installation on every reported
+device. Version 4.4.6 is prepared separately from publication.
+
 ## Linked Pi settings in 4.4.5
 
 The reported Mac update at 4.4.4 had no pending repair pointer, a regular installer
