@@ -41,14 +41,14 @@ and acceptance evidence. Source implementation, behavioral acceptance, activatio
 
 ## Target ownership and acceptance status
 
-The target registry declares six packages and 38 public roots: unchanged core 12
-and specialists 8, advanced 12, frontend 4, video 1 and execution 1. The advanced
+The active target registry declares six packages and 39 public roots: core 12
+and specialists 9, advanced 12, frontend 4, video 1 and execution 1. The advanced
 mapping preserves visual parity as a dedicated root; frontend preserves separate
 prompt/image/code outcomes. Video retains all 21 private modules and execution
 retains the complete Unlazy module closure. Original public and contributor names
 remain source records, not QS aliases.
 
-The provenance schema keeps 71 baseline capability records and all 113 source
+The provenance schema keeps 73 baseline capability records and all 113 source
 records, including many-to-one origins, stable migration IDs, original revisions,
 notices and separate original/derived digests. Target owners are separate records.
 Reviewed is not adopted; a pinned baseline is not a claim about current upstream;
@@ -86,8 +86,10 @@ native transactions are Codex, Claude Code and Pi. Native state, owned payloads
 and selected capability equivalence are verified separately from generated packaging.
 
 Release preparation must synchronize all active manifests/projections after the
-root version changes. The current Changesets action versions and tags only;
-neither versioning nor this review log proves publication or installed rollout.
+root version changes. Explicit dispatch of `release.yml` on main publishes the
+prepared version tag and GitHub release; hosted tests use a separate manual
+workflow. Published 4.4.6 is recorded in the [installation specification](../specs/quickstark-versioned-installation.md).
+Neither source acceptance nor publication establishes installed-device rollout.
 
 ## Source inventory
 

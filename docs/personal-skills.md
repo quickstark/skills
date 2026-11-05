@@ -4,6 +4,12 @@ Use the [installation guide](./install-and-update-skills.md) for normal updates.
 The target updater applies a saved or explicitly selected set, not every package
 and resource in the repository. Source preparation is not an installed-state claim.
 
+Ordinary 4.4.6 updates clean-reinstall known QuickStark packages independently per
+client, saving choices before removal and retaining original settings and caches.
+A plain hosted retry does not read old journals. The transaction details below
+describe the retained direct migration engine and explicit historical recovery.
+Use the installation guide for current update and restart commands.
+
 ## Ownership and selection
 
 QuickStark canonical roots and private dependencies live in this repository;
@@ -17,7 +23,9 @@ and map accepted replacements. Machine selection lives at
 `~/.config/quickstark/skills-selection.json`. Ordinary updates preserve it;
 `--with <package-id>` adds explicitly and `--profile core` starts a new desired
 selection. Unknown packages, ambiguous ownership and capability expansion block.
-Dropping a selected name does not authorize deletion.
+For the retained migration engine, dropping a selected name does not authorize
+deletion. Ordinary `--profile core` explicitly removes other QuickStark native
+registrations after backup; omit it to preserve optional choices.
 
 Target transactions support Codex, Claude Code and Pi. Claude accepts both
 `--agent claude` and `--agent claude-code`, using user-scoped native plugin
@@ -31,7 +39,7 @@ the canonical tree.
 
 ```bash
 npm run skills:plan -- --json --agent codex --agent pi
-npm run skills:update -- --agent codex --agent pi
+npm run skills:sync -- --authorize --agent codex --agent pi
 ```
 
 The selected updater verifies the exact repository revision, active manifest
@@ -50,7 +58,7 @@ skill names remain untouched; collisions involving managed commands still block.
 Accepted replacement payloads are staged and verified before retired discovery is
 withdrawn and replacements exposed. Selection and ownership state are saved only after
 verification. Failed transactions retain their journal, backups and exact residuals;
-they do not automatically compensate. Ordinary `--resume` continues the frozen
+they do not automatically compensate. Explicit historical `--resume` continues the frozen
 forward plan against its verified home/repository/revision, without new selection
 flags. Restoring a prior release or journaled effects requires separately verified,
 transaction-specific recovery authority; no automatic rollback is promised.

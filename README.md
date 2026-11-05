@@ -1,5 +1,28 @@
 # QuickStark Skills
 
+## Restart Codex after an update
+
+Start a fresh chat after updating skills. For a Codex-managed background server,
+use `/daemon` → **Restart background server**, or run these commands on the server
+host with its existing OS account and `CODEX_HOME`:
+
+```bash
+codex app-server daemon restart
+codex app-server daemon version
+```
+
+For the terminal client, enter `/quit`, then run `codex`; use `codex resume` or
+`codex resume --last` to continue a saved chat. For the desktop app, quit and reopen;
+for an editor, reload its window; for an app-launched SSH connection, disconnect
+and reconnect. These clients may reconnect to an existing server.
+
+For an externally managed server, use its verified systemd unit, launchd job or
+original manual launcher. The [restart command reference](./docs/install-and-update-skills.md#restart-codex-after-an-update)
+includes Linux user/system services, another account's user service, macOS launchd
+and manual processes. Finish active work before restarting a shared server.
+
+## Overview
+
 QuickStark is a collection of concise skills for planning, building, reviewing,
 documenting and delivering work. All 39 public commands use the `qs-` namespace
 and belong to one of six packages. Fresh setup selects the twelve-command core;
@@ -74,7 +97,7 @@ Ordinary updates select the highest stable `vMAJOR.MINOR.PATCH` tag. Newer commi
 on `main` and prerelease tags are ignored. To select a particular published version:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --version 4.4.1
+curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh | bash -s -- --version 4.4.6
 ```
 
 The selected version must be published first. Automatic downgrades and changed
@@ -124,12 +147,12 @@ agent and custom-home flags afterward. A hosted update already verifies its resu
 Use the same host flags as the update. Restart the host or begin a new task to
 refresh its skill catalog. A Git pull alone does not refresh cached plugins.
 
-If the updater reports a retained `repair.json`, keep that file and its backup
-directory and re-run the same update command with the same agent and home flags.
-In 4.4.3 and later, a newer published version can continue a prepared repair from
-an older retained version while preserving its original backups and saved packages.
+For an interrupted ordinary update, rerun the same hosted command with the same
+agent and home flags. The desired selection is saved before removal. Keep old
+`repair.json` files, journals and backups; ordinary clean installation does not
+read them or require recovery commands.
 
-To resume a specific transaction journal, use its exact path with `--resume`;
+To explicitly recover a historical transaction journal, use its exact path with `--resume`;
 this flag takes the transaction journal, not `repair.json`. Use the original
 custom-home flag again when applicable; do not add new package or profile selections:
 
@@ -148,9 +171,10 @@ curl -fsSL https://raw.githubusercontent.com/quickstark/skills/main/install.sh |
 `--codex-home` overrides inherited `CODEX_HOME`; otherwise the updater uses
 `<user home>/.codex`. It isolates saved selection and transaction state by Codex
 home. `--home` remains the operating-system user home, while `--profile` chooses
-a QuickStark package selection. Automatic detection groups default homes in one
-transaction and updates custom homes separately. Explicit multiple-host flags
-require default homes. Claude and Pi likewise accept
+a QuickStark package selection. Ordinary installation attempts each client
+independently, including default homes and multiple selected custom homes. The
+retained historical migration engine requires a single-host transaction for a
+custom home. Claude and Pi likewise accept
 `--claude-home` / `CLAUDE_CONFIG_DIR` and `--pi-home` / `PI_CODING_AGENT_DIR`; explicit
 flags override environment variables and each custom home has separate updater state.
 
@@ -178,8 +202,10 @@ back into Git or synchronize machines with one another.
 | npm reports an old version, or Git pull refuses local edits | Run the hosted command from any directory. It uses a private clean checkout and preserves your existing clones and edits. |
 | `Unsupported managed skill target: claude` | Use the hosted command to bypass the old updater. The current updater accepts both `claude` and `claude-code`. |
 | Pi reports a stale QuickStark path | The hosted installer reconciles verified local QuickStark sources with the managed checkout and retains originals. Foreign or filtered sources remain protected. |
-| Shared-consumer conflict | Include all required consuming agents when that repair is authorized; do not bypass ownership or selection checks. |
-| Codex reports installed bytes differ from trusted history | Run the hosted installer. Directory permission differences remain portable; paths, file contents and executable bits are checked. Modified known packages are retained in backups before accepted replacements are installed. |
+| Shared-consumer conflict | This applies to the retained historical migration engine. Ordinary 4.4.6 installation attempts clients independently; explicitly chosen legacy migrations retain their all-consumer and ownership checks. |
+| Codex reports installed bytes differ from trusted history | Use the current hosted installer. Known caches are backed up and reinstalled, then source, file contents, paths and executable bits are verified. |
+| `Repair metadata must be a bounded regular file.` with linked Pi settings | Use the current hosted installer. Support shipped in 4.4.5 and remains in 4.4.6; the settings link is preserved and its bounded regular target is backed up. |
+| `Migration payload changed during inspection` on an older release | Ordinary 4.4.6 installation bypasses historical journals and unrelated-cache inspection. Retain originals and rerun with the same homes. The exact earlier concurrent change was not established; report exact output if current source or installed-byte verification fails. |
 
 ## Use a skill
 
@@ -442,9 +468,11 @@ workflow and do not block publication. Pushes do not publish automatically.
 Ordinary installations download the published repository version without waiting
 for CI. See the [versioned installation specification](./docs/specs/quickstark-versioned-installation.md).
 
-This flow starts with version 4.4.1, which must be published before installation.
-The existing v4.4.0 tag must remain unchanged. A tag is not installed-host rollout
-evidence.
+Published-version installation was introduced in 4.4.1. The current published
+release is [4.4.6](https://github.com/quickstark/skills/releases/tag/v4.4.6), at
+`fab40148cffd0c1ef3e0de6b4d44bc91bd411ca3`. Existing tags remain unchanged.
+Publication does not establish installed-device rollout; 4.4.6 device installation
+remains unverified.
 
 ## Upstreams and provenance
 
