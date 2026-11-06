@@ -308,3 +308,112 @@ test('denied prlimit refuses without touching a server',async t=>{
   await assert.rejects(preserveLimits(target,{readFile:async()=>before,run:async()=>{attempts++;throw Error('denied');}}),/Cannot preserve/);
   assert.equal(attempts,1);
 });
+
+
+async function systemdFixture(t,{user=false}={}) {
+  const f=await procFixture(t),uid=process.getuid(),unit='run-fixture.service';
+  const group=user?`/user.slice/user-${uid}.slice/user@${uid}.service/app.slice/${unit}`:`/system.slice/${unit}`;
+  const argv=['codex','-c','features.example=true','-c','features.example=true',...old.argv.slice(1)];
+  const info={Id:unit,LoadState:'loaded',ActiveState:'active',SubState:'running',MainPID:user?'40':'55',ControlGroup:group,InvocationID:'a'.repeat(32),NeedDaemonReload:'no',ExecStart:'{ path=/usr/bin/sudo ; argv[]=sudo -u fixture codex ... ; pid=55 ; }',User:'',Group:'',WorkingDirectory:f.root,Environment:'SECRET=never print this',EnvironmentFiles:''};
+  const state={info,definition:'[Service]\nExecStart=/fixture/saved-launch\n',pending:0,versionDelay:0,auto:true,denied:false,catCalls:0};
+  const events=[];
+  async function wrapper(pid) {
+    await fs.mkdir(`${f.proc}/${pid}`,{recursive:true});
+    await fs.writeFile(`${f.proc}/${pid}/status`,'Uid:\t0\t0\t0\t0\n');
+    await fs.writeFile(`${f.proc}/${pid}/cmdline`,'/usr/bin/sudo\0-n\0-H\0-u\0fixture\0');
+  }
+  async function server(pid,parent) {
+    if(pid!==40)await f.processEntry(pid,argv);
+    await fs.writeFile(`${f.proc}/${pid}/cmdline`,argv.join('\0')+'\0');
+    await fs.writeFile(`${f.proc}/${pid}/cgroup`,'0::'+group+'\n');
+    await fs.writeFile(`${f.proc}/${pid}/stat`,(await fs.readFile(`${f.proc}/${pid}/stat`,'utf8')).replace(' S 1 ',` S ${parent} `));
+  }
+  await wrapper(55);await server(40,user?1:55);
+  const world=await systemWorld(f.profile,{HOME:f.root},{proc:f.proc,
+    signal:()=>assert.fail('systemd must never manually signal'),spawnProcess:()=>assert.fail('systemd must never manually launch'),
+    runCommand:async(executable,args,opts)=>{
+      events.push({executable,args});
+      if(executable==='/usr/bin/sudo'||args.includes('try-restart')) {
+        assert.ok(args.includes('try-restart'));assert.equal(args.at(-1),unit);assert.equal(args.at(-2),'--');
+        assert.equal(opts.timeout,30000);
+        if(!user&&uid!==0){assert.equal(executable,'/usr/bin/sudo');assert.deepEqual(args.slice(0,3),['-n','--','/usr/bin/systemctl']);}
+        else assert.equal(executable,'/usr/bin/systemctl');
+        if(state.denied)throw Error('SECRET=never print this');
+        if(state.auto){await fs.rm(`${f.proc}/40`,{recursive:true});await wrapper(56);await server(41,user?1:56);Object.assign(info,{MainPID:user?'41':'56',InvocationID:'b'.repeat(32),ExecStart:'{ path=/usr/bin/sudo ; argv[]=sudo -u fixture codex ... ; pid=56 ; }'});}
+        await state.afterRestart?.();return {stdout:''};
+      }
+      if(executable==='/usr/bin/systemctl') {
+        assert.equal(args.includes('--user'),user);assert.equal(args.at(-1),unit);
+        if(args.includes('show')) {
+          const snapshot={...info};
+          if(events.some(e=>e.args.includes('try-restart'))&&state.pending-->0)Object.assign(snapshot,{ActiveState:'activating',SubState:'start',MainPID:'0',ControlGroup:'',InvocationID:''});
+          return {stdout:Object.entries(snapshot).map(([k,v])=>`${k}=${v}`).join('\n')+'\n'};
+        }
+        assert.ok(args.includes('cat'));state.catCalls++;
+        if(state.changeDefinition&&state.catCalls>1)return {stdout:'changed unit definition'};
+        return {stdout:state.definition};
+      }
+      assert.deepEqual(args,['app-server','daemon','version']);
+      assert.equal(opts.env.CODEX_HOME,f.profile);
+      if(events.some(e=>e.args.includes('try-restart'))&&state.versionDelay-->0)throw Error('socket missing during startup');
+      return {stdout:JSON.stringify({status:'running',socketPath:path.join(f.profile,'app-server-control/app-server-control.sock'),appServerVersion:'fixture-alpha'})};
+    },
+  });
+  let time=0;world.now=()=>time;world.sleep=async ms=>{time+=ms;};world.readyTimeout=1200;world.platform='linux';
+  return {...f,world,events,state,info,argv,server,unit,group};
+}
+
+test('system service uses its saved sudo launcher and waits through socket startup',async t=>{
+  const f=await systemdFixture(t);f.state.pending=1;f.state.versionDelay=1;
+  const result=await run(f);assert.equal(result.code,0,result.text);
+  assert.equal(f.events.filter(e=>e.args.includes('try-restart')).length,1);
+  assert.ok(f.events.filter(e=>e.args.includes('version')).length>=3);
+  assert.doesNotMatch(result.text,/never print this/);
+  assert.deepEqual((await f.world.inspect(41)).argv,f.argv,'all repeated configuration flags remain intact');
+});
+test('systemd user service restarts through the owning user manager without sudo',async t=>{
+  const f=await systemdFixture(t,{user:true});assert.equal((await run(f)).code,0);
+  const restart=f.events.find(e=>e.args.includes('try-restart'));assert.equal(restart.executable,'/usr/bin/systemctl');assert.ok(restart.args.includes('--user'));
+});
+test('systemd --check verifies service and socket without sudo or restart',async t=>{
+  const f=await systemdFixture(t),result=await run(f,['--check']);assert.equal(result.code,0,result.text);assert.match(result.text,/systemd system service/);
+  assert.equal(f.events.filter(e=>e.args.includes('try-restart')||e.executable==='/usr/bin/sudo').length,0);
+});
+for(const [name,alter] of [
+  ['unrelated main process',async f=>{f.info.MainPID='99';}],
+  ['shell rather than sudo wrapper',async f=>fs.writeFile(f.proc+'/55/cmdline','/bin/sh\0-c\0some work\0')],
+  ['changed loaded configuration',async f=>{f.state.changeDefinition=true;}],
+  ['pending daemon reload',async f=>{f.info.NeedDaemonReload='yes';}],
+  ['wrong service cgroup',async f=>{f.info.ControlGroup='/system.slice/other.service';}],
+  ['multiple matching servers',async f=>{await f.server(41,55);} ],
+])test(`systemd refuses ${name} before any restart`,async t=>{
+  const f=await systemdFixture(t);await alter(f);assert.notEqual((await run(f)).code,0);assert.ok(!f.events.some(e=>e.args.includes('try-restart')));
+});
+test('systemd permission failure is actionable and never retries or falls back',async t=>{
+  const f=await systemdFixture(t);f.state.denied=true;const result=await run(f);
+  assert.notEqual(result.code,0);assert.match(result.text,/sudo -v/);assert.doesNotMatch(result.text,/never print this/);assert.equal(f.events.filter(e=>e.args.includes('try-restart')).length,1);assert.ok(await f.world.inspect(40));
+});
+for(const [name,alter] of [
+  ['no new service invocation',async f=>{f.state.auto=false;}],
+  ['socket never ready',async f=>{f.state.versionDelay=100;}],
+  ['replacement does not own socket',async f=>{f.state.afterRestart=()=>fs.unlink(f.proc+'/41/fd/3');}],
+  ['replacement has another profile',async f=>{await fs.mkdir(f.root+'/other');f.state.afterRestart=()=>fs.writeFile(f.proc+'/41/environ',`HOME=${f.root}\0CODEX_HOME=${f.root}/other\0`);} ],
+])test(`systemd ${name} cannot report success or trigger a second restart`,async t=>{
+  const f=await systemdFixture(t);await alter(f);const result=await run(f);assert.notEqual(result.code,0);assert.doesNotMatch(result.text,/Codex restarted and responding/);assert.equal(f.events.filter(e=>e.args.includes('try-restart')).length,1);
+});
+test('macOS managed restart waits through a temporary missing socket',async()=>{
+  let calls=0;const f=fixture({platform:'darwin',version:async()=>{
+    calls++;if(calls===2)throw Error('socket not yet ready');
+    return {status:'running',backend:'pid',socketPath:home+'/app-server-control/app-server-control.sock',appServerVersion:'fixture'};
+  }});
+  const result=await run(f);assert.equal(result.code,0,result.text);assert.equal(calls,3);assert.deepEqual(f.events,['lock','native','unlock']);
+});
+
+test('systemd changing configuration during restart cannot report success',async t=>{
+  const f=await systemdFixture(t);f.state.afterRestart=async()=>{f.state.definition='different launch configuration';};
+  const result=await run(f);assert.notEqual(result.code,0);assert.match(result.text,/configuration changed/);assert.equal(f.events.filter(e=>e.args.includes('try-restart')).length,1);
+});
+test('managed restart never accepts another profile or launches a fallback',async()=>{
+  let calls=0;const f=fixture({version:async()=>({status:'running',backend:'pid',socketPath:++calls===1?home+'/app-server-control/app-server-control.sock':'/other/app-server-control/app-server-control.sock',appServerVersion:'fixture'})});
+  const result=await run(f);assert.notEqual(result.code,0);assert.match(result.text,/readiness timed out/);assert.deepEqual(f.events,['lock','native','unlock']);
+});

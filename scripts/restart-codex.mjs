@@ -14,10 +14,17 @@ class Refusal extends Error {}
 const stop=message=>{throw new Refusal(message);};
 const same=(a,b)=>Boolean(a&&b&&a.pid===b.pid&&a.start===b.start&&a.exe===b.exe);
 const socketFor=home=>path.join(home,'app-server-control','app-server-control.sock');
+const manualArgs=['-c','features.code_mode_host=true','app-server','--listen','unix://'];
+function serverArgs(argv) {
+  if(path.basename(argv[0]||'')!=='codex'||JSON.stringify(argv.slice(-3))!==JSON.stringify(['app-server','--listen','unix://']))return false;
+  const config=argv.slice(1,-3);
+  return config.length%2===0&&config.every((value,i)=>i%2?value.includes('='):['-c','--config'].includes(value));
+}
 const help=`Restart Codex on its server host, as its existing account.
 Usage: node restart-codex.mjs [--check] [--codex-home PATH]
-Supports Codex-managed daemons on Linux/macOS and the known detached Linux
-launch: codex -c features.code_mode_host=true app-server --listen unix://
+Supports Codex-managed daemons on Linux/macOS, dedicated Linux systemd services,
+and the detached Linux launch: codex -c features.code_mode_host=true app-server --listen unix://
+System services use cached sudo permission; run sudo -v first if required.
 --check inspects without restarting. --help shows this help.
 Finish active work first. Uncertain targets stop without a restart.`;
 
@@ -36,6 +43,14 @@ export function options(args,env=process.env) {
 function ready(version,home) {
   return version?.status==='running'&&version.socketPath===socketFor(home)&&typeof version.appServerVersion==='string'&&version.appServerVersion.length>0;
 }
+async function waitReady(world,check,message) {
+  const deadline=world.now()+world.readyTimeout;
+  do {
+    try {if(await check())return;}catch(error){if(error instanceof Refusal)throw error;}
+    await world.sleep(200);
+  } while(world.now()<deadline);
+  stop(message);
+}
 export async function main(args=process.argv.slice(2),{world,output=console.log,environment=process.env}={}) {
   let unlock,plan,changed=false;
   try {
@@ -47,36 +62,39 @@ export async function main(args=process.argv.slice(2),{world,output=console.log,
     if(version.backend==='pid') {
       if(opts.check){output('Codex-managed server found. No restart performed.');return 0;}
       changed=true;await world.nativeRestart();
-      const after=await world.version();
-      if(!ready(after,world.home)||after.backend!=='pid')stop('Native restart returned, but Codex readiness was not verified.');
+      await waitReady(world,async()=>{const after=await world.version();return ready(after,world.home)&&after.backend==='pid';},'Native restart returned, but Codex readiness timed out.');
     } else {
       if(version.backend!==undefined)stop('Unknown Codex manager. Use the original launcher; no restart attempted.');
       if(world.platform!=='linux')stop('This server uses an external launcher. Use that original launcher, or quit and reopen its owning app. No restart attempted.');
       const candidates=await world.legacyServers();
       if(candidates.length!==1)stop('Expected exactly one supported background server. No restart attempted.');
-      const target=candidates[0];plan=await world.prepare(target);
-      await world.revalidate(target,plan);
-      if(opts.check){output(`Background server PID ${target.pid}; launch context verified. No restart performed.`);return 0;}
-      changed=true;await world.stop(target);
-      const deadline=world.now()+world.stopTimeout;
-      while(same(target,await world.inspect(target.pid))) {
-        if(world.now()>=deadline)stop('Stop timed out; no replacement launched.');
-        await world.sleep(100);
-      }
-      if(!await world.listenerFree())stop('Socket remains occupied; no replacement launched.');
-      const replacement=await world.launch(plan),until=world.now()+world.readyTimeout;
-      let verified=false;
-      while(world.now()<until) {
-        if(!same(replacement,await world.inspect(replacement.pid)))stop('Replacement exited or changed identity; readiness unverified.');
-        try {
+      const target=candidates[0],service=await world.systemdPlan?.(target);
+      if(service) {
+        await service.revalidate();
+        if(opts.check){output(`${service.description}; launch context verified. No restart performed.`);return 0;}
+        changed=true;await service.restart();
+        await waitReady(world,service.ready,'systemd restart returned, but Codex readiness timed out. Inspect the service before retrying.');
+      } else {
+        plan=await world.prepare(target);
+        await world.revalidate(target,plan);
+        if(opts.check){output(`Background server PID ${target.pid}; launch context verified. No restart performed.`);return 0;}
+        changed=true;await world.stop(target);
+        const deadline=world.now()+world.stopTimeout;
+        while(same(target,await world.inspect(target.pid))) {
+          if(world.now()>=deadline)stop('Stop timed out; no replacement launched.');
+          await world.sleep(100);
+        }
+        if(!await world.listenerFree())stop('Socket remains occupied; no replacement launched.');
+        const replacement=await world.launch(plan);
+        await waitReady(world,async()=>{
+          if(!same(replacement,await world.inspect(replacement.pid)))stop('Replacement exited or changed identity; readiness unverified.');
           if(ready(await world.version(replacement),world.home)&&await world.ownsListener(replacement.pid)) {
             if(!same(replacement,await world.inspect(replacement.pid)))stop('Replacement identity changed.');
-            verified=true;break;
+            return true;
           }
-        } catch(error) {if(error instanceof Refusal)throw error;}
-        await world.sleep(200);
+          return false;
+        },'Replacement started, but Codex readiness timed out.');
       }
-      if(!verified)stop('Replacement started, but Codex readiness timed out.');
     }
     output('Codex restarted and responding. Reconnect your client and open a fresh chat.');return 0;
   } catch(error) {
@@ -145,7 +163,7 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
       const root=`${proc}/${pid}`,s=status(await read(root+'/status',16384));
       if(!s.Uid||s.Uid.split(/\s+/).some(value=>Number(value)!==uid))return null;
       const argv=(await read(root+'/cmdline',65536)).split('\0');if(argv.at(-1)==='')argv.pop();
-      if(path.basename(argv[0]||'')!=='codex'||JSON.stringify(argv.slice(1))!==JSON.stringify(['-c','features.code_mode_host=true','app-server','--listen','unix://']))return null;
+      if(!serverArgs(argv))return null;
       const text=await read(root+'/stat',16384),fields=text.slice(text.lastIndexOf(')')+2).trim().split(/\s+/);
       if(!/^\d+$/.test(fields[19]||'')||fields[0]==='Z')return null;
       const env={};for(const entry of (await read(root+'/environ')).split('\0').filter(Boolean)) {
@@ -159,6 +177,7 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
   };
   const prepare=async target=>{
     const root=`${proc}/${target.pid}`,own=status(await read(proc+'/self/status',16384));
+    if(JSON.stringify(target.argv.slice(1))!==JSON.stringify(manualArgs))stop('This manual launch is unsupported. Use its original launcher. No restart attempted.');
     if(target.ppid!==1||!(await read(root+'/cgroup',16384)).trim().split('\n').some(line=>/^0::\/user\.slice\/user-\d+\.slice\/session-[\w-]+\.scope$/.test(line)))stop('Use the original launcher for this supervised or foreground server.');
     for(const key of ['Uid','Gid','Groups','NoNewPrivs','Seccomp','CapEff'])if(target.status[key]!==own[key])stop('Server credentials or sandbox cannot be preserved.');
     const originalLimits=await read(root+'/limits',16384);
@@ -182,13 +201,79 @@ export async function systemWorld(selectedHome,environment=process.env,{proc='/p
       return {target,logs,limits:originalLimits,release:async()=>{try{await Promise.all(logs.map(h=>h.close()));}finally{await restoreLimits();}}};
     } catch(error){await Promise.all(logs.map(h=>h.close()));throw error;}
   };
+  const scan=async()=>{
+    const names=(await fs.readdir(proc)).filter(name=>/^\d+$/.test(name));if(names.length>16384)stop('Too many processes to inspect safely.');
+    const result=[];for(const name of names){const p=await inspect(Number(name));if(p)result.push(p);}return result;
+  };
+  const cgroup=async pid=>{
+    const rows=(await read(`${proc}/${pid}/cgroup`,16384)).trim().split('\n');
+    return rows.length===1&&rows[0].startsWith('0::/')?rows[0].slice(3):null;
+  };
+  const systemdPlan=async target=>{
+    const group=await cgroup(target.pid),unit=group?.split('/').at(-1);
+    if(!unit?.endsWith('.service'))return null;
+    if(!/^[A-Za-z0-9_][A-Za-z0-9_:@.\\-]{0,240}\.service$/.test(unit))stop('Unsupported systemd service identity. No restart attempted.');
+    const userPrefix=`/user.slice/user-${uid}.slice/user@${uid}.service/`;
+    const user=group.startsWith(userPrefix)&&group.slice(userPrefix.length).split('/').slice(0,-1).every(part=>/^[A-Za-z0-9_.@-]+\.slice$/.test(part));
+    if(!user&&group!==`/system.slice/${unit}`)stop('Unsupported systemd cgroup. Use the original launcher. No restart attempted.');
+    const base=user?['--user']:[],ctl=(args,context={})=>command('/usr/bin/systemctl',[...base,'--no-ask-password','--no-pager',...args,'--',unit],context);
+    const properties=['Id','LoadState','ActiveState','SubState','MainPID','ControlGroup','InvocationID','NeedDaemonReload','ExecStart','User','Group','WorkingDirectory','Environment','EnvironmentFiles'];
+    const service=async(strict=true)=>{
+      const text=(await ctl(['show',...properties.flatMap(key=>['--property',key])])).stdout;
+      const info={};for(const line of text.trim().split('\n')){const i=line.indexOf('=');if(i<1||Object.hasOwn(info,line.slice(0,i)))stop('Unsupported systemd metadata.');info[line.slice(0,i)]=line.slice(i+1);}
+      if(info.Id!==unit||info.LoadState!=='loaded'||info.NeedDaemonReload!=='no'||!info.ExecStart)stop('Cannot verify the loaded systemd service.');
+      if(strict&&(info.ControlGroup!==group||!/^\d+$/.test(info.MainPID||'')||Number(info.MainPID)===0||!/^([a-f0-9]{32})$/.test(info.InvocationID||'')))stop('Cannot verify the running systemd service.');
+      return info;
+    };
+    const definition=async()=>createHash('sha256').update((await ctl(['cat'])).stdout).digest('hex');
+    const belongs=async (candidate,info)=>{
+      if(await cgroup(candidate.pid)!==group)return false;
+      if(Number(info.MainPID)===candidate.pid)return true;
+      if(candidate.ppid!==Number(info.MainPID))return false;
+      // The observed system service holds a root sudo wrapper as MainPID.
+      // Do not treat a shell, container, user manager or arbitrary ancestor as a dedicated launcher.
+      const root=`${proc}/${info.MainPID}`,s=status(await read(root+'/status',16384));
+      const argv=(await read(root+'/cmdline',65536)).split('\0');
+      return path.basename(argv[0]||'')==='sudo'&&Boolean(s.Uid)&&s.Uid.split(/\s+/).every(value=>Number(value)===0);
+    };
+    const before=await service(),config=await definition();
+    if(before.ActiveState!=='active'||before.SubState!=='running'||!await belongs(target,before)||!await ownsListener(target.pid))stop('Service is not a verified running Codex launcher. No restart attempted.');
+    const stable=info=>Object.fromEntries(properties.filter(key=>!['MainPID','InvocationID','ExecStart','ActiveState','SubState'].includes(key)).map(key=>[key,info[key]]));
+    return {
+      description:`systemd ${user?'user':'system'} service ${unit}`,
+      revalidate:async()=>{
+        const current=await inspect(target.pid),info=await service();
+        if(!same(target,current)||JSON.stringify(current)!==JSON.stringify(target)||JSON.stringify(info)!==JSON.stringify(before)||await definition()!==config||!await belongs(current,info)||!await ownsListener(target.pid))stop('systemd target or launch configuration changed; no restart attempted.');
+      },
+      restart:async()=>{
+        const args=[...base,'--no-ask-password','--no-pager','try-restart','--',unit];
+        try {
+          if(user||uid===0)await command('/usr/bin/systemctl',args,{timeout:30000});
+          else await command('/usr/bin/sudo',['-n','--','/usr/bin/systemctl',...args],{timeout:30000});
+        } catch {
+          stop(user?'systemd restart failed; inspect the service before retrying. No manual fallback attempted.':'systemd restart failed or needs admin permission. Inspect the service; if permission was denied, run sudo -v in your terminal before retrying. No manual fallback attempted.');
+        }
+      },
+      ready:async()=>{
+        const info=await service(false);
+        if(info.ActiveState!=='active'||info.SubState!=='running')return false;
+        if(info.ControlGroup!==group||!/^\d+$/.test(info.MainPID||'')||Number(info.MainPID)===0||!/^([a-f0-9]{32})$/.test(info.InvocationID||''))stop('Cannot verify the replacement service identity.');
+        if(await definition()!==config||JSON.stringify(stable(info))!==JSON.stringify(stable(before)))stop('systemd launch configuration changed; readiness unverified.');
+        if(info.InvocationID===before.InvocationID)return false;
+        const candidates=await scan(),matches=[];
+        for(const p of candidates)if(await cgroup(p.pid)===group)matches.push(p);
+        if(matches.length!==1)return false;
+        const replacement=matches[0];
+        if(same(target,replacement)||!await belongs(replacement,info)||!await ownsListener(replacement.pid))return false;
+        if(!ready(await version(replacement),home))return false;
+        return same(replacement,await inspect(replacement.pid))&&JSON.stringify(await service())===JSON.stringify(info);
+      },
+    };
+  };
   return {
     home,platform:process.platform,version,inspect,prepare,ownsListener,sleep,now:Date.now,stopTimeout:10000,readyTimeout:30000,
     nativeRestart:()=>command('codex',['app-server','daemon','restart'],{timeout:30000}),
-    legacyServers:async()=>{
-      const names=(await fs.readdir(proc)).filter(name=>/^\d+$/.test(name));if(names.length>16384)stop('Too many processes to inspect safely.');
-      const result=[];for(const name of names){const p=await inspect(Number(name));if(p)result.push(p);}return result;
-    },
+    legacyServers:scan,systemdPlan,
     revalidate:async (target,plan)=>{
       const current=await inspect(target.pid);
       if(!same(target,current)||JSON.stringify(current)!==JSON.stringify(target)||!await ownsListener(target.pid))stop('Server identity or launch context changed; no restart attempted.');
