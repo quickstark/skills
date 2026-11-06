@@ -3,27 +3,30 @@
 Date: 2026-11-05. Build: current checkout `codex/docs-446-restart`, base
 `f9ce331c9fc8bd0d19a1d1e0fe161e6fb97851f8`. No new worktrees.
 
-The owner asked for a copy/paste restart script and rejected changing how Codex
-starts. This supersedes the earlier universal-launcher design: keep the existing
-setup, use Codex's native restart when managed, support the known GMK detached
-Linux command, and stop for other launchers. No migration or service creation.
-Systemd/launchd automation from original AC-03/AC-04 is out of scope; their manual
-reference remains available. Actual macOS runtime validation remains unverified.
+The owner requested completion on 2026-11-06 after the dirk-dev systemd restart
+was verified manually. The current scope is one copy/paste entry point using the
+existing Codex-managed daemon on Linux/macOS, a verified dedicated Linux systemd
+user/system service, or the known detached GMK Linux launch. Keep the existing
+setup and configuration. Unknown launchers stop. No migration or service creation.
+External launchd jobs and app-owned servers retain their documented original
+restart controls. Actual Mac execution remains unverified. This completion request
+supersedes the earlier exclusion of the narrow systemd adapter; a universal
+launcher framework remains outside this change.
 
 ## Behavior and evidence
 
 | Criteria | Current scope and verification |
 | --- | --- |
-| AC-01 | Bash/zsh copy block downloads the complete helper from immutable commit `eba049e0dfb2290d1b4b15e8428940e8748a2a9f` before running it; no predefined PID variables or inline heredoc. Failed downloads prevent execution; temporary files are removed on all exits. |
-| AC-02 | Explicit profile, inherited CODEX_HOME, then account default. Exact Linux argv/owner/profile match excludes proxies, stdio and other profiles; zero/multiple matches refuse. |
-| AC-03/AC-04 | Dedicated systemd/launchd adapters removed after owner requested simplification. Codex's own managed daemon works through its native command on Linux/macOS; external launchers stop. |
+| AC-01 | Bash/zsh copy block downloads the complete helper from immutable commit `2a885c9155bc4885182874dc3a945963d784e5f4` before running it; no predefined PID variables or inline heredoc. Failed downloads prevent execution; temporary files are removed on all exits. |
+| AC-02 | Explicit profile, inherited CODEX_HOME, then account default. Linux owner/profile and app-server/listener argument parsing excludes proxies, exec-server, stdio and other profiles. Repeated configuration arguments are retained for systemd services; the detached manual path still requires its exact known command. Zero/multiple matches refuse. |
+| AC-03/AC-04 | Codex-managed daemons use their native command on Linux/macOS. Linux systemd discovers the selected server’s live cgroup and verifies its dedicated service, main process or direct root sudo wrapper, current configuration and socket ownership. It delegates to the original user/system manager. External launchd jobs remain outside the helper. |
 | AC-05 | Known Linux command preserves executable, argv, initial environment, cwd, umask, /dev/null stdin and owned regular log destinations without truncating prior contents. Synthetic proc fixtures cover context; owned process/socket fixture covers stop/start. |
 | AC-06 | Revalidate PID/start identity, context and listener before TERM; unsupported credentials/hard limits/FDs/logs stop; the helper temporarily adopts the server's open-file soft limit and restores its own afterward. Per-profile helper lock rejects concurrent runs. |
 | AC-07 | Bounded stop; occupied listener prevents launch; launch at most once; native failure never falls back to manual killing. |
-| AC-08/AC-09 | Query selected profile through native daemon version; require running server version and correct socket. Manual replacement must retain identity and own that listening socket. Native restart owns its PID validation and protocol readiness. |
-| AC-10 | No configuration/skills edits, credentials printed, sudo, KILL, new manager or alternate listener. Output from subprocess failures is withheld. |
+| AC-08/AC-09 | All paths use a bounded readiness poll after restart; require a running server version on the selected profile socket. Manual/systemd replacements must retain identity and own that listening socket. Systemd also requires a new invocation and stable loaded configuration. Native restart owns its PID validation. Timeouts never trigger a second restart or manual fallback. |
+| AC-10 | No configuration/skills edits, credentials printed, KILL, new manager or alternate listener. A verified system-level service may use cached sudo permission only for `/usr/bin/systemctl ... try-restart -- <verified unit>`; user services and `--check` never invoke sudo. Missing permission produces an instruction to run `sudo -v` separately. Subprocess failure details remain withheld. |
 | AC-11 | README, installation guide and both existing Notion pages include the same short pinned download block at the top. Existing history remains. |
-| AC-12 | Injected observations, private fixture metadata and owned process/socket only; full repository checks and internal Standards/Spec review. No live restart, release, tag change, commit or push. |
+| AC-12 | Injected observations, private fixture metadata and owned process/socket only; full repository checks and internal Standards/Spec review. No live restart, release or tag change. Maintenance commits/pushes make the pinned standalone script available independently of release installation. |
 
 Node is already an installation prerequisite. The standalone source is
 [scripts/restart-codex.mjs](../../scripts/restart-codex.mjs); focused tests are
@@ -39,13 +42,13 @@ commit; the existing 4.4.6 release does not contain this maintenance tool.
 | Ticket | Blocked by | Scope | State |
 | --- | --- | --- | --- |
 | RH-01 | none | CLI and exact discovery | verified |
-| RH-02 | RH-01 | Delegate managed restart; refuse other managers | verified |
+| RH-02 | RH-01 | Delegate native/systemd restart; refuse unsupported launchers | verified in isolated fixtures |
 | RH-03 | RH-01 | Preserve known manual launch and verify readiness | verified |
 | RH-04 | RH-02, RH-03 | README, guide, two Notion copy blocks | verified |
 | RH-05 | RH-04 | Review, acceptance bindings and repository validation | verified |
 
-Root integration is serial in the existing checkout, with read-only review
-helpers. No commits, branches or worktrees created. Verification logs remain in
+Root integration remains serial in the existing checkout. Maintenance commits
+carry the standalone script and synchronized documentation; no release is published. Verification logs remain in
 `/tmp/qs-restart-*`; these are session evidence, not packaged release evidence.
 
 ## References
@@ -101,7 +104,26 @@ The repaired local helper completed `--check` on GMK: “Background server PID
 cover resource-limit adoption/restoration/inheritance, unreproducible/denied
 limits, socket aliases and regular EOF logs. No live server was restarted.
 
-Dirk-dev is not reachable from this chat. Its exact current daemon version and
-process command output have been requested; no target detection or launcher
-changes have been guessed from the zero-match message. That device remains
-unverified pending its output.
+Dirk-dev is not reachable from this chat. The operator supplied its exact process
+and cgroup evidence: a system-level transient service with a root sudo wrapper
+launching Codex as `dirk`, profile `/home/dev-user/.codex`, and repeated `-c` flags.
+The operator restarted its live service manually. The first immediate version
+query found no socket; later checks showed active/running, Result=success, and
+Codex `0.168.0-alpha.7` responding (CLI `0.165.0`). This verifies that manual route.
+
+The completed adapter keeps all flags under the existing systemd definition and
+resolves the live unit on every invocation. It refuses broad supervisors,
+configuration changes, ambiguous targets, wrong profiles and unverified sockets.
+The new systemd path and macOS native startup-delay behavior pass isolated
+regression fixtures. No live helper restart on dirk-dev or the Mac is claimed.
+
+
+## Completion validation (2026-11-06)
+
+The source commit pinned by the copy block is `2a885c9155bc4885182874dc3a945963d784e5f4`.
+Focused validation passed 58 restart tests, including systemd user/system services,
+startup delays, permission denial, changing configuration, wrong profiles and
+socket ownership, no-op restarts, ambiguity, and macOS native readiness polling.
+Full repository, generated-package, release-acceptance and strict Claude checks
+are required before the documentation promotion is committed. No live servers
+are restarted by those checks. The package version remains 4.4.6.
