@@ -1,0 +1,175 @@
+{
+  "commit": "41716d7b52278faecd446539a8aa1814aeb0dd47",
+  "modelRequests": 0,
+  "identities": [
+    {
+      "name": "codex",
+      "path": "/home/djn12313/.local/bin/codex",
+      "resolvedPath": "/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/bin/codex",
+      "versionStdout": "codex-cli 0.162.1\n",
+      "versionStderr": "WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)\n",
+      "exitCode": 0
+    },
+    {
+      "name": "claude",
+      "path": "/home/djn12313/.local/bin/claude",
+      "resolvedPath": "/home/djn12313/.local/share/claude/versions/2.1.317",
+      "versionStdout": "2.1.317 (Claude Code)\n",
+      "versionStderr": "",
+      "exitCode": 0
+    },
+    {
+      "name": "pi",
+      "path": "/home/djn12313/.npm-global/bin/pi",
+      "resolvedPath": "/home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js",
+      "versionStdout": "1.5.2\n",
+      "versionStderr": "",
+      "exitCode": 0
+    }
+  ],
+  "staticInspection": {
+    "classification": "inspectNativePayload, not native discovery",
+    "payloads": 18,
+    "exactExpectedPublicNames": true,
+    "file": "static-payloads.json"
+  },
+  "codex": {
+    "classification": "native source marketplace plugin/read; source skills/list activation not proved",
+    "raw": "codex-native-source-corrected.json",
+    "marketplacePath": "/github/skills/codex/.agents/plugins/marketplace.json",
+    "sourceSkillCount": 39,
+    "allPathsFromSource": true,
+    "counts": {
+      "qs-skills": 12,
+      "qs-specialists": 9,
+      "qs-advanced": 12,
+      "qs-frontend": 4,
+      "qs-video": 1,
+      "qs-execution": 1
+    },
+    "confounds": [
+      "plugin/read summary.installed=true reflects existing user registrations; this run did not install or register anything",
+      "skills/list cwds are source package roots, but all returned QS skills originate from installed caches, not source roots"
+    ],
+    "skillsListSourcePathMatches": 0,
+    "initialRefusalRaw": "codex-native-source.json",
+    "incorrectMarketplaceDirectoryAttemptRaw": "codex-native-source-normal.json"
+  },
+  "claude": {
+    "classification": "native transient source plugin loading proved by CLI loader debug plus initialization command enumeration",
+    "raw": "claude-debug.json",
+    "control": "claude-control.json",
+    "sourceDebug": "claude-native-loader.debug",
+    "sourceSkillPaths": [
+      "/github/skills/packages/qs-advanced/skills/qs-blast-radius",
+      "/github/skills/packages/qs-advanced/skills/qs-create-verification-skill",
+      "/github/skills/packages/qs-advanced/skills/qs-hillclimb",
+      "/github/skills/packages/qs-advanced/skills/qs-how",
+      "/github/skills/packages/qs-advanced/skills/qs-maintain-verification-skill",
+      "/github/skills/packages/qs-advanced/skills/qs-pr-babysit",
+      "/github/skills/packages/qs-advanced/skills/qs-runtime-forensics",
+      "/github/skills/packages/qs-advanced/skills/qs-skill-eval",
+      "/github/skills/packages/qs-advanced/skills/qs-trace-forensics",
+      "/github/skills/packages/qs-advanced/skills/qs-visual-parity",
+      "/github/skills/packages/qs-advanced/skills/qs-why",
+      "/github/skills/packages/qs-advanced/skills/qs-worktree-cleanup",
+      "/github/skills/packages/qs-execution/skills/qs-unlazy",
+      "/github/skills/packages/qs-frontend/skills/qs-design-frontend",
+      "/github/skills/packages/qs-frontend/skills/qs-design-image-mobile",
+      "/github/skills/packages/qs-frontend/skills/qs-design-image-to-code",
+      "/github/skills/packages/qs-frontend/skills/qs-design-image-web",
+      "/github/skills/packages/qs-skills/skills/qs-code-build",
+      "/github/skills/packages/qs-skills/skills/qs-code-debug",
+      "/github/skills/packages/qs-skills/skills/qs-deploy-release",
+      "/github/skills/packages/qs-skills/skills/qs-flow-handoff",
+      "/github/skills/packages/qs-skills/skills/qs-flow-triage",
+      "/github/skills/packages/qs-skills/skills/qs-git-merge",
+      "/github/skills/packages/qs-skills/skills/qs-help",
+      "/github/skills/packages/qs-skills/skills/qs-plan-clarify",
+      "/github/skills/packages/qs-skills/skills/qs-plan-roadmap",
+      "/github/skills/packages/qs-skills/skills/qs-plan-spec",
+      "/github/skills/packages/qs-skills/skills/qs-review-code",
+      "/github/skills/packages/qs-skills/skills/qs-setup",
+      "/github/skills/packages/qs-specialists/skills/qs-code-document",
+      "/github/skills/packages/qs-specialists/skills/qs-deploy-prompt",
+      "/github/skills/packages/qs-specialists/skills/qs-design-prototype",
+      "/github/skills/packages/qs-specialists/skills/qs-learn-teach",
+      "/github/skills/packages/qs-specialists/skills/qs-plan-research",
+      "/github/skills/packages/qs-specialists/skills/qs-repo-cleanup",
+      "/github/skills/packages/qs-specialists/skills/qs-skill-write",
+      "/github/skills/packages/qs-specialists/skills/qs-test-author",
+      "/github/skills/packages/qs-specialists/skills/qs-test-verify",
+      "/github/skills/packages/qs-video/skills/qs-video"
+    ],
+    "sourcePathCount": 39,
+    "sourceOverridesInstalled": [
+      "qs-advanced",
+      "qs-execution",
+      "qs-frontend",
+      "qs-skills",
+      "qs-specialists",
+      "qs-video"
+    ],
+    "nativeCommandNamesAddedVersusInstalledControl": [],
+    "nativeCommandNamesRemovedVersusInstalledControl": [],
+    "confound": "Initial command-name comparison alone added no names because all 39 were already installed. Native debug independently proves source package precedence and source skill loading. This is not installed-host source-version acceptance."
+  },
+  "pi": {
+    "classification": "installed native SDK source loader only; no successful native CLI enumeration",
+    "sdkRaw": "pi-native-loader.json",
+    "cliRefusalRaw": "pi-native-source.json",
+    "sdkCounts": {
+      "qs-skills": 12,
+      "qs-specialists": 9,
+      "qs-advanced": 12,
+      "qs-frontend": 4,
+      "qs-video": 1,
+      "qs-execution": 1
+    },
+    "sdkAllNamesMatch": true,
+    "sdkDiagnosticCount": 0,
+    "blocker": "Native CLI attempts a real-user trust.json.lock before get_commands and is blocked by EROFS. No trust bypass, home redirection or settings edit was attempted."
+  },
+  "controlHashComparisons": [
+    {
+      "before": "controls-before-normal.json",
+      "after": "controls-after-normal.json",
+      "sampledFilesAndAbsentPaths": 149,
+      "identical": true
+    },
+    {
+      "before": "controls-before-corrected.json",
+      "after": "controls-after-corrected.json",
+      "sampledFilesAndAbsentPaths": 149,
+      "identical": true
+    },
+    {
+      "before": "controls-before-claude.json",
+      "after": "controls-after-claude.json",
+      "sampledFilesAndAbsentPaths": 149,
+      "identical": true
+    },
+    {
+      "before": "controls-before-claude-debug.json",
+      "after": "controls-after-claude-debug.json",
+      "sampledFilesAndAbsentPaths": 149,
+      "identical": true
+    }
+  ],
+  "limitations": [
+    "Discovery proves public enumeration only; private dependency runtime closure remains separately unverified.",
+    "Private helpers absent from public enumeration is supported by exact catalog name sets, not helper execution.",
+    "No installed-host migration/activation or model routing proved.",
+    "Hash snapshots start only at named before-* points; no retroactive pre-initial-probe snapshot claimed."
+  ],
+  "schemaRetention": {
+    "kept": [
+      "v2/PluginReadParams.json",
+      "v2/PluginReadResponse.json",
+      "v2/SkillsListParams.json",
+      "v2/SkillsListResponse.json"
+    ],
+    "removedGeneratedFiles": 443,
+    "removedGeneratedPathHashesAggregateSha256": "282743e84e8a9b04b7e398948f1888633da5241952408b47cf45497143ec7f18"
+  }
+}

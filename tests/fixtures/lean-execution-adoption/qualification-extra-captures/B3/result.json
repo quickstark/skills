@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B3",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Cancelled — delivery incomplete.\n\nStop further work immediately. No release job has begun, so no running deployment needs cancellation. Do not deploy, roll back, retry, or select another workflow.\n\nStage: Staging release | Stage estimate: ~0% | Overall estimate: unavailable | stopped — authorization revoked before release began. Input needed: none.\n\n- [x] Build — verified; supplied build and review evidence remains valid at `abc123`.\n- [x] Git — verified; supplied publication evidence remains valid for `origin/feature/export` at `abc123`.\n- [ ] Release — skipped because the user cancelled; deployment and health verification remain unsatisfied.\n\nPrior weights and the last overall estimate were not supplied; no replacement percentage is invented. Skipping release does not make delivery complete.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — previously verified build and Git outcomes remain valid at `abc123`; no new operations are claimed.\n- Next — none authorized. Staging artifact/version and `/health` HTTP 200 evidence remain missing.\n\nThe goal was last reported active. No goal-state update has occurred. The supported goal tool has no cancellation status; cancellation must not be recorded as completion, and no explicit pause request or qualifying blocked condition was supplied.\n\nNext work prompt: None — further work revoked.",
+    "requestedActions": [
+      "Stop scheduling or executing all further delivery work.",
+      "Preserve the supplied build and Git evidence at abc123 and record cancellation without claiming successful deployment or changing host goal state."
+    ]
+  },
+  "promptSHA256": "80e8f5613b7846083bee2010c671a09339b8677ea7ec7caa2e381afa01f00897",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27511,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1202,
+      "reasoning_output_tokens": 844,
+      "total_tokens": 28713
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

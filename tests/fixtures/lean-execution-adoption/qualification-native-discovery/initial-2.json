@@ -1,0 +1,10 @@
+{
+  "status": "fulfilled",
+  "value": {
+    "chunk_id": "b0c370",
+    "wall_time_seconds": 0,
+    "exit_code": 1,
+    "original_token_count": 421,
+    "output": "1.5.2\nnode:fs:1410\n  const result = binding.mkdir(\n                         ^\n\nError: EROFS: read-only file system, mkdir '/home/djn12313/.pi/agent/trust.json.lock'\n    at Object.mkdirSync (node:fs:1410:26)\n    at newFs.<computed> [as mkdir] (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:21875)\n    at acquireLock (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:16930)\n    at RetryOperation._fn (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:19942)\n    at RetryOperation.attempt (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:9334)\n    at file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:19929\n    at resolveCanonicalPath (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:16763)\n    at lock (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:19796)\n    at file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:22210\n    at lock.lockSync (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:23018) {\n  errno: -30,\n  code: 'EROFS',\n  syscall: 'mkdir',\n  path: '/home/djn12313/.pi/agent/trust.json.lock'\n}\n\nNode.js v24.21.0\n"
+  }
+}

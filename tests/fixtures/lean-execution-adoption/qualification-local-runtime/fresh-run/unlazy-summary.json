@@ -1,0 +1,19 @@
+{
+  "scope": "Fresh actual local Node 24 Linux engine execution only; no hooks or installed host acceptance.",
+  "engine": "/github/skills/skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs",
+  "engineSHA256": "29dee3acfdf566c24eedace85163a4e7a66eda01b712c5b4b76a99eae1eda8a1",
+  "oracleSHA256": "7dacf4f0e2a07c56e3c186136edea8518a03aa5ec05c2f09d0108c6ca9f55d25",
+  "commands": 8,
+  "expectedExitCodes": [
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1
+  ],
+  "allExpected": true,
+  "network": "No network APIs in fixture or gate commands. No package/model acquisition."
+}

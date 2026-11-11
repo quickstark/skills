@@ -1,0 +1,19 @@
+[
+  {
+    "label": "unapproved",
+    "executable": "/usr/bin/node",
+    "args": [
+      "/github/skills/skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs",
+      "--shell",
+      "/bin/sh",
+      "--root",
+      "/tmp/qs-lex-runtime-st2tih6o/unlazy-project",
+      "GATES.md"
+    ],
+    "expected": 1,
+    "status": 0,
+    "signal": null,
+    "stdout": "  RUN  GATES:G1 shell=/bin/sh cwd=/tmp/qs-lex-runtime-st2tih6o/unlazy-project PATH=/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\n  PASS GATES:G1: Three source rows calculate total 83\n       exit=0; EXPECT=matched; output=sha256=3d4b5831856551d7d474811b61f13e73555bbc7bbba2606a68782aad235d965f; bytes=20\nGATES.md: 1 gates\nALL MET (1 met)\n",
+    "stderr": ""
+  }
+]

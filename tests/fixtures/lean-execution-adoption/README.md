@@ -39,6 +39,28 @@ historical bindings; no historical receipt or snapshot is upgraded. The explicit
 provenance metadata overlay changes review records only. Packaging integrity,
 scoped response behavior and full package acceptance remain separate.
 
+`lex12-noninstall-evidence.json` records later actual probes at implementation
+revision `41716d7b52278faecd446539a8aa1814aeb0dd47`. Eight fresh response cases cover
+the previously missing goal boundaries and additional review, verification,
+evaluation and mobile scope. Seven responses qualify. B8 has a retained owning-root
+and continuation-route defect despite preserving prompt-only scope; it is not
+relabelled a clean pass or retried until green.
+
+`qualification-native-discovery/` contains native Claude source-loader evidence for
+all 39 commands, native Codex source metadata enumeration, and the Pi native SDK
+loader results. Claude's command-name-only control was confounded by preexisting
+installations; later loader debug explicitly proves source precedence and paths.
+Codex's active index still uses installed caches; Pi's CLI stops at its trust-lock
+write. These results do not certify activation or installed-host acceptance.
+The original convenience symlink `latest` is explicitly excluded from the archive.
+
+`qualification-local-runtime/` preserves eight fresh local Unlazy gate probes,
+earlier failed fixture attempts, exact closure hashes, and a video preflight refusal
+for missing pinned runtime binaries. Fresh inspection of retained PNG/WAV/video
+hashes remains historical-output evidence; it is not a new render, new matting or
+decoded rendered-audio validation. All six packages, source adoption and unknown
+closure acceptance remain pending. No installation or acquisition was performed.
+
 `original-*.json` retain exact provenance and private closure records from the
 baseline Git revision. Source-only audit refreshes do not renew old source,
 publication or installed-host acceptance. Changed adaptations remain pending.

@@ -1,0 +1,63 @@
+{
+  "kind": "new-noninstallation-evidence-validation-not-package-acceptance",
+  "sourceRevision": "41716d7b52278faecd446539a8aa1814aeb0dd47",
+  "workingTree": "Uncommitted evidence fixtures and regression tests; product source unchanged",
+  "reviewedSHA256": {
+    "tests/lean-execution.test.mjs": "8e65b2080881c2ab2882c0b1b138a13fe8dde6046900e15a844de59a8ba8e120",
+    "tests/fixtures/lean-execution-adoption/README.md": "19807b17c55297b6c38ad2ba6c79d2b5127d169ed998cafb89fb38de4ad61081",
+    "tests/fixtures/lean-execution-adoption/lex12-noninstall-evidence.json": "b00f674e77a959fd01e1dbc4a5dd84ea699acd4ca049fdec9254abaaa71a2d4e"
+  },
+  "evidenceSHA256": {
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-focused.log": "fa38d7cfd3bca9ea058d443e0e20ab0cffbfddbdce0aed29c0931f9b348459d7",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-sync.log": "767672eef018d95f8a12cd5a2b6c537ee32159db178fba58c5c1c4e1978a0434",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-check.log": "261afdc10ec0fc15441a35977557b358498332440211687923b914dc8c3142f6",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-tests.log": "991dfc82fa9a2aed4bfe868f62e5b12cd2c3d42a3e830b8a3e72ceaf13068ee4",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-claude-core.log": "5e6adc65f025ebfd469db59f50ec28b4213d1ec734b952f44a8183a7f8db222f",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-claude-specialists.log": "5753825930028888f78c0f6ec3af7e06d20dfa1845c300f72316a0e06fefa744",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-claude-advanced.log": "1eddbdc6ca7079c0470ad662a936778ef36690858aa02add45f0723d04712b83",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-claude-frontend.log": "a9e8230a684fb327dbffbe9674904b4ad8435e9e6b2c569f831e1ae1a5cf9d2e",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-claude-video.log": "3118c3055b061fc263204b86c075dc7de9dd65ee3aaac330705154042b86717f",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation-claude-execution.log": "55e10fed8dd09c596127797d86bc2f1d0f04968f78caa258bc3d2b0b5cdcf842"
+  },
+  "checks": {
+    "focusedTests": 11,
+    "syncCodex": "passed",
+    "checkCodex": "passed",
+    "claudeStrictPackages": 6,
+    "full": {
+      "tests": 792,
+      "passed": 791,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "skipReason": "Existing non-Linux unsupported-platform control; separate Linux capture coverage."
+    },
+    "sourceWhitespace": "passed",
+    "testOnlyFollowup": "The full suite began before the final discovery-test portability correction. Final focused validation reran all 11 lean tests after that correction; product source and captured evidence were identical throughout."
+  },
+  "independentReview": {
+    "reviewer": "lex_noninstall_evidence_review fresh-context read-only helper",
+    "result": "No new actionable findings. Verified45 source hashes,179 evidence hashes,39 runtime archive hashes and23 execution closure entries. Raw records support the classified discovery/runtime scope; four149-path control pairs match. B8 remains a pending, unqualified reporting/routing defect. Existing failed attempts and omitted convenience symlink remain explicit.",
+    "limits": "No installed activation, full package acceptance, fresh video-runtime success or savings established."
+  },
+  "qualification": {
+    "newResponseCases": 8,
+    "qualified": 7,
+    "pendingReportingFinding": "LEX-12-MOBILE-REPORT-ROUTE (B8)",
+    "claude": "39 native source-loaded skills; 6 explicit source overrides",
+    "codex": "39 source metadata entries; active index remains installed-cache data",
+    "pi": "39 SDK-loaded skills; CLI discovery remains pending",
+    "execution": "8 bounded local probes with independent total83 oracle",
+    "video": "Fresh preflight refusal and historical-artifact revalidation; no fresh render"
+  },
+  "boundaries": {
+    "sourceAdoption": "pending",
+    "fullPackageAcceptance": "pending for all six",
+    "closureAcceptance": "unknown",
+    "efficiency": "inconclusive; controlled comparison unexecuted",
+    "commit": "not authorized or performed",
+    "push": "not authorized or performed",
+    "publication": "not authorized or performed",
+    "userHostInstallation": "not authorized or performed"
+  }
+}

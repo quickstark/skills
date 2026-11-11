@@ -1,0 +1,24 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B2",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nOutcome: The coordinator stops before Git publication. `/qs-git-merge` is unavailable, so deployment remains blocked. The build root remains Complete at `abc123`.\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nStage: Git publication | Stage estimate: ~0% | Overall estimate: unavailable | blocked — The selected command is unavailable. Input needed: restore its availability through an authorized process or explicitly revise the workflow.\n\n- [x] Build — verified at `abc123`: CSV behavior cases, existing invoice screen, required checks, and diff review passed.\n- [ ] Git publication — blocked: `/qs-git-merge` unavailable; `origin/feature/export` equality with `abc123` remains unverified.\n- [ ] Staging deployment — blocked by publication; deployed version and `/health` HTTP 200 remain unverified.\n\nPrior weights and the overall estimate were not supplied, so they cannot be reconstructed. No stage is skipped or credited for the missing command.\n\nThe coordinator must not install skills, substitute a public root, push directly, or bypass publication to deploy. Supplied skill Markdown does not establish installed command availability. The matching goal remains active; this observation does not establish the host’s repeated-blocking threshold or justify completion.\n\nWork summary:\n- Finished — CSV implementation and required build verification remain valid for `abc123`; no new operation is claimed.\n- Next — [Publication and staging delivery](/fixture/ledger-app/docs/specs/export.md) — blocked — resolve the unavailable selected root before dependent execution. On resumption, recheck authoritative goal state, command availability, revision, authorization, and remote/deployment state; retain still-valid build evidence and avoid duplicate publication.\n\nNext work prompt: None — the selected route is unavailable, and dependent deployment cannot advance.",
+    "requestedActions": [
+      "Request a decision to restore qs-git-merge availability through an authorized process or explicitly revise the selected workflow; propose no installation, substitution, publication, deployment, or goal-state mutation now."
+    ]
+  },
+  "promptSHA256": "f00386c1d58df6dbc7c7d8a3763210246ef2a1ef9208cc808f1d0ef8b8051abc",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27525,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 885,
+      "reasoning_output_tokens": 434,
+      "total_tokens": 28410
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

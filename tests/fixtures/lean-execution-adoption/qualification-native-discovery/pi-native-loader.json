@@ -1,0 +1,715 @@
+{
+  "classification": "installed Pi SDK native loader; not a Pi CLI session or package installation",
+  "module": "/home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/core/skills.js",
+  "modelRequests": 0,
+  "results": [
+    {
+      "collection": "qs-skills",
+      "source": "/github/skills/pi/packages/qs-skills/skills",
+      "expected": [
+        "qs-help",
+        "qs-setup",
+        "qs-plan-clarify",
+        "qs-plan-roadmap",
+        "qs-plan-spec",
+        "qs-code-build",
+        "qs-code-debug",
+        "qs-review-code",
+        "qs-git-merge",
+        "qs-deploy-release",
+        "qs-flow-triage",
+        "qs-flow-handoff"
+      ],
+      "actual": [
+        "qs-code-build",
+        "qs-code-debug",
+        "qs-deploy-release",
+        "qs-flow-handoff",
+        "qs-flow-triage",
+        "qs-git-merge",
+        "qs-help",
+        "qs-plan-clarify",
+        "qs-plan-roadmap",
+        "qs-plan-spec",
+        "qs-review-code",
+        "qs-setup"
+      ],
+      "matches": true,
+      "result": {
+        "skills": [
+          {
+            "name": "qs-code-build",
+            "description": "Implement one scoped change with an evidence-based test and validation strategy.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-code-build/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-code-build",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-code-build/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-code-build"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-code-debug",
+            "description": "Diagnose and repair one reproducible defect before changing behavior.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-code-debug/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-code-debug",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-code-debug/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-code-debug"
+            },
+            "disableModelInvocation": false
+          },
+          {
+            "name": "qs-deploy-release",
+            "description": "Validate and execute an explicitly approved documented release or deployment.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-deploy-release/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-deploy-release",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-deploy-release/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-deploy-release"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-flow-handoff",
+            "description": "Preserve verified state and ranked next actions for another operator or invocation.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-flow-handoff/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-flow-handoff",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-flow-handoff/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-flow-handoff"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-flow-triage",
+            "description": "Assess incoming work and record one bounded recommended route.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-flow-triage/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-flow-triage",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-flow-triage/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-flow-triage"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-git-merge",
+            "description": "Inspect and safely integrate only explicitly selected Git and GitHub changes.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-git-merge/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-git-merge",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-git-merge/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-git-merge"
+            },
+            "disableModelInvocation": false
+          },
+          {
+            "name": "qs-help",
+            "description": "Choose one bounded QuickStark workflow from the v3 core or optional specialists.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-help/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-help",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-help/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-help"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-plan-clarify",
+            "description": "Turn ambiguity into a confirmed problem, scope, constraints, and decisions.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-plan-clarify/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-plan-clarify",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-plan-clarify/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-plan-clarify"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-plan-roadmap",
+            "description": "Sequence confirmed outcomes, decisions, and dependencies into a practical roadmap.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-plan-roadmap/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-plan-roadmap",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-plan-roadmap/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-plan-roadmap"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-plan-spec",
+            "description": "Produce an actionable specification, dependency-aware tickets, or both.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-plan-spec/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-plan-spec",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-plan-spec/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-plan-spec"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-review-code",
+            "description": "Review a change or selected codebase scope and optionally improve or refactor it safely.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-review-code/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-review-code",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-review-code/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-review-code"
+            },
+            "disableModelInvocation": false
+          },
+          {
+            "name": "qs-setup",
+            "description": "Prepare or verify QuickStark configuration for one project.",
+            "filePath": "/github/skills/pi/packages/qs-skills/skills/qs-setup/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-setup",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-skills/skills/qs-setup/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-skills/skills/qs-setup"
+            },
+            "disableModelInvocation": true
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "collection": "qs-specialists",
+      "source": "/github/skills/pi/packages/qs-specialists/skills",
+      "expected": [
+        "qs-plan-research",
+        "qs-design-prototype",
+        "qs-code-document",
+        "qs-test-author",
+        "qs-test-verify",
+        "qs-learn-teach",
+        "qs-skill-write",
+        "qs-deploy-prompt",
+        "qs-repo-cleanup"
+      ],
+      "actual": [
+        "qs-code-document",
+        "qs-deploy-prompt",
+        "qs-design-prototype",
+        "qs-learn-teach",
+        "qs-plan-research",
+        "qs-repo-cleanup",
+        "qs-skill-write",
+        "qs-test-author",
+        "qs-test-verify"
+      ],
+      "matches": true,
+      "result": {
+        "skills": [
+          {
+            "name": "qs-code-document",
+            "description": "Write concise documentation from verified project behavior and interfaces.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-code-document/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-code-document",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-code-document/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-code-document"
+            },
+            "disableModelInvocation": false
+          },
+          {
+            "name": "qs-deploy-prompt",
+            "description": "Generate one execution-ready goal prompt for autonomous feature delivery without executing it.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-deploy-prompt/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-deploy-prompt",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-deploy-prompt/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-deploy-prompt"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-design-prototype",
+            "description": "Build a disposable prototype to answer one design question.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-design-prototype/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-design-prototype",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-design-prototype/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-design-prototype"
+            },
+            "disableModelInvocation": false
+          },
+          {
+            "name": "qs-learn-teach",
+            "description": "Teach one bounded subject through explanation, practice, and feedback.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-learn-teach/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-learn-teach",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-learn-teach/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-learn-teach"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-plan-research",
+            "description": "Answer one bounded question using reliable, attributable evidence.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-plan-research/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-plan-research",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-plan-research/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-plan-research"
+            },
+            "disableModelInvocation": false
+          },
+          {
+            "name": "qs-repo-cleanup",
+            "description": "Audit or clean verified repository clutter while preserving behavior, user work, and historical evidence.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-repo-cleanup/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-repo-cleanup",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-repo-cleanup/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-repo-cleanup"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-skill-write",
+            "description": "Create or improve one focused, testable agent skill.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-skill-write/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-skill-write",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-skill-write/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-skill-write"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-test-author",
+            "description": "Add or improve focused automated tests for already-established behavior.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-test-author/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-test-author",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-test-author/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-test-author"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-test-verify",
+            "description": "Run and report a selected software verification matrix without changing the software.",
+            "filePath": "/github/skills/pi/packages/qs-specialists/skills/qs-test-verify/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-test-verify",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-specialists/skills/qs-test-verify/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-specialists/skills/qs-test-verify"
+            },
+            "disableModelInvocation": true
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "collection": "qs-advanced",
+      "source": "/github/skills/pi/packages/qs-advanced/skills",
+      "expected": [
+        "qs-how",
+        "qs-why",
+        "qs-blast-radius",
+        "qs-runtime-forensics",
+        "qs-trace-forensics",
+        "qs-create-verification-skill",
+        "qs-maintain-verification-skill",
+        "qs-skill-eval",
+        "qs-hillclimb",
+        "qs-visual-parity",
+        "qs-pr-babysit",
+        "qs-worktree-cleanup"
+      ],
+      "actual": [
+        "qs-blast-radius",
+        "qs-create-verification-skill",
+        "qs-hillclimb",
+        "qs-how",
+        "qs-maintain-verification-skill",
+        "qs-pr-babysit",
+        "qs-runtime-forensics",
+        "qs-skill-eval",
+        "qs-trace-forensics",
+        "qs-visual-parity",
+        "qs-why",
+        "qs-worktree-cleanup"
+      ],
+      "matches": true,
+      "result": {
+        "skills": [
+          {
+            "name": "qs-blast-radius",
+            "description": "Map the impact of one proposed change across callers, contracts, data, tests, and operations.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-blast-radius/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-blast-radius",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-blast-radius/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-blast-radius"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-create-verification-skill",
+            "description": "Create a project-local rerunnable verification workflow and feature map.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-create-verification-skill/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-create-verification-skill",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-create-verification-skill/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-create-verification-skill"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-hillclimb",
+            "description": "Improve one declared metric through bounded measured experiments.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-hillclimb/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-hillclimb",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-hillclimb/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-hillclimb"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-how",
+            "description": "Explain how a selected subsystem works from code and observed interfaces.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-how/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-how",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-how/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-how"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-maintain-verification-skill",
+            "description": "Reconcile an existing verification workflow with observed product behavior.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-maintain-verification-skill/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-maintain-verification-skill",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-maintain-verification-skill/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-maintain-verification-skill"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-pr-babysit",
+            "description": "Drive one selected pull request to a truthful merge-ready assessment.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-pr-babysit/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-pr-babysit",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-pr-babysit/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-pr-babysit"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-runtime-forensics",
+            "description": "Diagnose one live runtime symptom from actual measurements without repairing it.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-runtime-forensics/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-runtime-forensics",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-runtime-forensics/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-runtime-forensics"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-skill-eval",
+            "description": "Compare a skill or prompt variant with its control through blinded recorded trials.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-skill-eval/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-skill-eval",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-skill-eval/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-skill-eval"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-trace-forensics",
+            "description": "Diagnose one supplied profiling or trace artifact without changing product behavior.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-trace-forensics/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-trace-forensics",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-trace-forensics/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-trace-forensics"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-visual-parity",
+            "description": "Converge a selected implementation toward a verified immutable visual baseline.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-visual-parity/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-visual-parity",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-visual-parity/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-visual-parity"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-why",
+            "description": "Explain why a behavior or design exists from attributable evidence.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-why/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-why",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-why/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-why"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-worktree-cleanup",
+            "description": "Audit reclaimable worktrees and remove only explicitly confirmed exact targets.",
+            "filePath": "/github/skills/pi/packages/qs-advanced/skills/qs-worktree-cleanup/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-worktree-cleanup",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-advanced/skills/qs-worktree-cleanup/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-advanced/skills/qs-worktree-cleanup"
+            },
+            "disableModelInvocation": true
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "collection": "qs-frontend",
+      "source": "/github/skills/pi/packages/qs-frontend/skills",
+      "expected": [
+        "qs-design-frontend",
+        "qs-design-image-web",
+        "qs-design-image-mobile",
+        "qs-design-image-to-code"
+      ],
+      "actual": [
+        "qs-design-frontend",
+        "qs-design-image-mobile",
+        "qs-design-image-to-code",
+        "qs-design-image-web"
+      ],
+      "matches": true,
+      "result": {
+        "skills": [
+          {
+            "name": "qs-design-frontend",
+            "description": "Build or revise the selected frontend",
+            "filePath": "/github/skills/pi/packages/qs-frontend/skills/qs-design-frontend/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-frontend",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-frontend/skills/qs-design-frontend/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-frontend"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-design-image-mobile",
+            "description": "Create mobile screen images or prompts",
+            "filePath": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-mobile/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-mobile",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-mobile/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-mobile"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-design-image-to-code",
+            "description": "Implement an authoritative design reference",
+            "filePath": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-to-code/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-to-code",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-to-code/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-to-code"
+            },
+            "disableModelInvocation": true
+          },
+          {
+            "name": "qs-design-image-web",
+            "description": "Create web design images or prompts",
+            "filePath": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-web/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-web",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-web/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-frontend/skills/qs-design-image-web"
+            },
+            "disableModelInvocation": true
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "collection": "qs-video",
+      "source": "/github/skills/pi/packages/qs-video/skills",
+      "expected": [
+        "qs-video"
+      ],
+      "actual": [
+        "qs-video"
+      ],
+      "matches": true,
+      "result": {
+        "skills": [
+          {
+            "name": "qs-video",
+            "description": "Create, edit, inspect, or render a selected video with preserved project and provider boundaries.",
+            "filePath": "/github/skills/pi/packages/qs-video/skills/qs-video/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-video/skills/qs-video",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-video/skills/qs-video/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-video/skills/qs-video"
+            },
+            "disableModelInvocation": true
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "collection": "qs-execution",
+      "source": "/github/skills/pi/packages/qs-execution/skills",
+      "expected": [
+        "qs-unlazy"
+      ],
+      "actual": [
+        "qs-unlazy"
+      ],
+      "matches": true,
+      "result": {
+        "skills": [
+          {
+            "name": "qs-unlazy",
+            "description": "Complete substantial scoped work using explicit acceptance gates and verified evidence.",
+            "filePath": "/github/skills/pi/packages/qs-execution/skills/qs-unlazy/SKILL.md",
+            "baseDir": "/github/skills/pi/packages/qs-execution/skills/qs-unlazy",
+            "sourceInfo": {
+              "path": "/github/skills/pi/packages/qs-execution/skills/qs-unlazy/SKILL.md",
+              "source": "explicit source path",
+              "scope": "temporary",
+              "origin": "top-level",
+              "baseDir": "/github/skills/pi/packages/qs-execution/skills/qs-unlazy"
+            },
+            "disableModelInvocation": true
+          }
+        ],
+        "diagnostics": []
+      }
+    }
+  ]
+}

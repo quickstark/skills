@@ -1,0 +1,290 @@
+2026-11-11T20:28:57.243Z [DEBUG] MDM settings load completed in 0ms
+2026-11-11T20:28:57.257Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: /etc/claude-code/managed-settings.json
+2026-11-11T20:28:57.259Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: /github/skills/.claude/settings.json
+2026-11-11T20:28:57.260Z [DEBUG] Broken symlink or missing file encountered for settings.json at path: /github/skills/.claude/settings.local.json
+2026-11-11T20:28:57.261Z [DEBUG] CA certs: Config fallback - globalEnv keys: , settingsEnv keys: none
+2026-11-11T20:28:57.264Z [DEBUG] [init] configureGlobalMTLS starting
+2026-11-11T20:28:57.264Z [DEBUG] [init] configureGlobalMTLS complete
+2026-11-11T20:28:57.264Z [DEBUG] [init] configureGlobalAgents starting
+2026-11-11T20:28:57.264Z [DEBUG] CA certs: stores=bundled,system, extraCertsPath=undefined
+2026-11-11T20:28:57.264Z [DEBUG] CA certs: Loaded 118 bundled root certificates
+2026-11-11T20:28:57.272Z [DEBUG] CA certs: Loaded 121 system CA certificates
+2026-11-11T20:28:57.276Z [DEBUG] CA certs: Dropped blocked certificate 40f6af0346a99aa1cd1d555a4e9cce62c7f9634603ee406615833dc8c8d00367 from bundled
+2026-11-11T20:28:57.284Z [DEBUG] CA certs: Dropped blocked certificate bc4d809b15189d78db3e1d8cf4f9726a795da1643ca5f1358e1ddb0edc0d7eb3 from system
+2026-11-11T20:28:57.284Z [DEBUG] CA certs: Dropped blocked certificate 125609aa301da0a249b97a8239cb6a34216f44dcac9f3954b14292f2e8c8608f from system
+2026-11-11T20:28:57.284Z [DEBUG] CA certs: Dropped blocked certificate 40f6af0346a99aa1cd1d555a4e9cce62c7f9634603ee406615833dc8c8d00367 from system
+2026-11-11T20:28:57.293Z [DEBUG] mTLS: Creating HTTPS agent with custom certificates
+2026-11-11T20:28:57.297Z [DEBUG] [init] configureGlobalAgents complete
+2026-11-11T20:28:57.299Z [DEBUG] Git remote URL: null
+2026-11-11T20:28:57.299Z [DEBUG] No git remote URL found
+2026-11-11T20:28:57.300Z [DEBUG] Error log sink initialized
+2026-11-11T20:28:57.301Z [DEBUG] clearPluginCache: invalidating loadAllPlugins cache (preAction: --plugin-dir inline plugins)
+2026-11-11T20:28:57.322Z [DEBUG] Applying permission update: Adding 4 allow rule(s) to destination 'userSettings': ["Bash(gh pr merge:*)","Bash(gh run list:*)","Bash(gh run view:*)","Bash(gh run watch:*)"]
+2026-11-11T20:28:57.324Z [DEBUG] [ToolSearch:optimistic] mode=tst, ENABLE_TOOL_SEARCH=undefined, result=true
+2026-11-11T20:28:57.325Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-11-11T20:28:57.326Z [DEBUG] [STARTUP] Running setup()...
+2026-11-11T20:28:57.338Z [DEBUG] Loading skills from: managed=/etc/claude-code/.claude/skills, user=/home/djn12313/.claude/skills, project=[]
+2026-11-11T20:28:57.340Z [DEBUG] [claudeai-mcp] Fetching from https://api.anthropic.com/v1/mcp_servers?limit=1000&include_additional_installs=true
+2026-11-11T20:28:57.341Z [DEBUG] mcp runtime arm: v2 (source: growthbook)
+2026-11-11T20:28:57.351Z [DEBUG] [skills] skipping reserved dir name 'synced' under /home/djn12313/.claude/skills: 'synced' is the sync-owned root
+2026-11-11T20:28:57.352Z [DEBUG] Failed to stat directory /etc/claude-code/.claude/agents: ENOENT: no such file or directory, stat '/etc/claude-code/.claude/agents'
+2026-11-11T20:28:57.352Z [DEBUG] Failed to stat directory /home/djn12313/.claude/agents: ENOENT: no such file or directory, stat '/home/djn12313/.claude/agents'
+2026-11-11T20:28:57.354Z [DEBUG] --plugin-dir /github/skills/packages/qs-skills is one plugin: .claude-plugin at its top marks it
+2026-11-11T20:28:57.354Z [DEBUG] --plugin-dir /github/skills/packages/qs-video is one plugin: .claude-plugin at its top marks it
+2026-11-11T20:28:57.354Z [DEBUG] --plugin-dir /github/skills/packages/qs-specialists is one plugin: .claude-plugin at its top marks it
+2026-11-11T20:28:57.354Z [DEBUG] --plugin-dir /github/skills/packages/qs-advanced is one plugin: .claude-plugin at its top marks it
+2026-11-11T20:28:57.354Z [DEBUG] --plugin-dir /github/skills/packages/qs-frontend is one plugin: .claude-plugin at its top marks it
+2026-11-11T20:28:57.354Z [DEBUG] --plugin-dir /github/skills/packages/qs-execution is one plugin: .claude-plugin at its top marks it
+2026-11-11T20:28:57.354Z [DEBUG] Failed to stat directory /etc/claude-code/.claude/commands: ENOENT: no such file or directory, stat '/etc/claude-code/.claude/commands'
+2026-11-11T20:28:57.354Z [DEBUG] Failed to stat directory /home/djn12313/.claude/commands: ENOENT: no such file or directory, stat '/home/djn12313/.claude/commands'
+2026-11-11T20:28:57.357Z [ERROR] Failed to fetch oauth profile from OAuth token: [REDACTED] getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:57.358Z [DEBUG] [claudeai-mcp] Transient fetch error (EAI_AGAIN), retrying in 500ms (attempt 1/3)
+2026-11-11T20:28:57.367Z [DEBUG] Loaded 6 installed plugins from /home/djn12313/.claude/plugins/installed_plugins.json
+2026-11-11T20:28:57.369Z [DEBUG] [plugins] skipping skills-dir entry 'synced': the sync-owned root name is never adopted as a plugin
+2026-11-11T20:28:57.378Z [DEBUG] Git remote URL: https://github.com/quickstark/skills.git
+2026-11-11T20:28:57.379Z [DEBUG] Parsed repository: github.com/quickstark/skills from URL: https://github.com/quickstark/skills.git
+2026-11-11T20:28:57.389Z [DEBUG] Loaded 13 unique skills (13 unconditional, 0 conditional, managed: 0, user: 0, project: 0, additional: 0, legacy commands: 0)
+2026-11-11T20:28:57.391Z [DEBUG] Loaded inline plugin from path: qs-frontend
+2026-11-11T20:28:57.391Z [DEBUG] Loaded inline plugin from path: qs-skills
+2026-11-11T20:28:57.392Z [DEBUG] Loaded inline plugin from path: qs-specialists
+2026-11-11T20:28:57.392Z [DEBUG] Loaded inline plugin from path: qs-execution
+2026-11-11T20:28:57.392Z [DEBUG] Loaded inline plugin from path: qs-advanced
+2026-11-11T20:28:57.392Z [DEBUG] Loaded inline plugin from path: qs-video
+2026-11-11T20:28:57.393Z [DEBUG] Loaded 6 directory-loaded plugins
+2026-11-11T20:28:57.393Z [ERROR] [uds-messaging] Server error: Failed to listen at /run/user/1000/cc-socks/4.sock
+2026-11-11T20:28:57.393Z [ERROR] [uds-messaging] Failed to start: Error: Failed to listen at /run/user/1000/cc-socks/4.sock
+2026-11-11T20:28:57.395Z [DEBUG] Error log sink initialized
+2026-11-11T20:28:57.398Z [DEBUG] Failed to acquire lock for 2.1.317: Error: EROFS: read-only file system, open '/home/djn12313/.local/state/claude/locks/2.1.317.lock.tmp.661b5e35'
+2026-11-11T20:28:57.398Z [ERROR] NON-FATAL: Lock acquisition failed for /home/djn12313/.local/share/claude/versions/2.1.317 (expected in multi-process scenarios): Lock already held by another process
+2026-11-11T20:28:57.398Z [DEBUG] [STARTUP] setup() completed in 72ms
+2026-11-11T20:28:57.399Z [DEBUG] Cleared mTLS configuration cache
+2026-11-11T20:28:57.399Z [DEBUG] Cleared proxy agent cache
+2026-11-11T20:28:57.407Z [DEBUG] [STARTUP] Loading commands and agents...
+2026-11-11T20:28:57.414Z [DEBUG] [concurrentSessions] updatePidFile failed: ENOENT: no such file or directory, open '/home/djn12313/.claude/sessions/4.json'
+2026-11-11T20:28:57.423Z [DEBUG] memory index backfill: ENOENT: no such file or directory, scandir '/home/djn12313/.claude/projects/-github-skills/memory/'
+2026-11-11T20:28:57.430Z [DEBUG] [plugins-scope] send: token carries user:plugins
+2026-11-11T20:28:57.439Z [DEBUG] [plugins-scope] send: token carries user:plugins
+2026-11-11T20:28:57.444Z [DEBUG] Plugin "qs-advanced" from --plugin-dir overrides installed version
+2026-11-11T20:28:57.444Z [DEBUG] Plugin "qs-execution" from --plugin-dir overrides installed version
+2026-11-11T20:28:57.444Z [DEBUG] Plugin "qs-frontend" from --plugin-dir overrides installed version
+2026-11-11T20:28:57.444Z [DEBUG] Plugin "qs-skills" from --plugin-dir overrides installed version
+2026-11-11T20:28:57.444Z [DEBUG] Plugin "qs-specialists" from --plugin-dir overrides installed version
+2026-11-11T20:28:57.444Z [DEBUG] Plugin "qs-video" from --plugin-dir overrides installed version
+2026-11-11T20:28:57.444Z [DEBUG] Found 11 plugins (10 enabled, 1 disabled)
+2026-11-11T20:28:57.445Z [DEBUG] getPluginSkills: Processing 10 enabled plugins
+2026-11-11T20:28:57.445Z [DEBUG] Checking plugin qs-skills: skillsPath=exists, skillsPaths=12 paths
+2026-11-11T20:28:57.445Z [DEBUG] Attempting to load skills from plugin qs-skills default skillsPath: /github/skills/packages/qs-skills/skills
+2026-11-11T20:28:57.445Z [DEBUG] Checking plugin qs-specialists: skillsPath=exists, skillsPaths=9 paths
+2026-11-11T20:28:57.445Z [DEBUG] Attempting to load skills from plugin qs-specialists default skillsPath: /github/skills/packages/qs-specialists/skills
+2026-11-11T20:28:57.445Z [DEBUG] Checking plugin qs-advanced: skillsPath=exists, skillsPaths=12 paths
+2026-11-11T20:28:57.445Z [DEBUG] Attempting to load skills from plugin qs-advanced default skillsPath: /github/skills/packages/qs-advanced/skills
+2026-11-11T20:28:57.445Z [DEBUG] Checking plugin qs-frontend: skillsPath=exists, skillsPaths=4 paths
+2026-11-11T20:28:57.446Z [DEBUG] Attempting to load skills from plugin qs-frontend default skillsPath: /github/skills/packages/qs-frontend/skills
+2026-11-11T20:28:57.446Z [DEBUG] Checking plugin qs-video: skillsPath=exists, skillsPaths=1 paths
+2026-11-11T20:28:57.446Z [DEBUG] Attempting to load skills from plugin qs-video default skillsPath: /github/skills/packages/qs-video/skills
+2026-11-11T20:28:57.446Z [DEBUG] Checking plugin qs-execution: skillsPath=exists, skillsPaths=1 paths
+2026-11-11T20:28:57.446Z [DEBUG] Attempting to load skills from plugin qs-execution default skillsPath: /github/skills/packages/qs-execution/skills
+2026-11-11T20:28:57.446Z [DEBUG] Checking plugin cc-plugin-agents-md: skillsPath=none, skillsPaths=0 paths
+2026-11-11T20:28:57.446Z [DEBUG] Checking plugin cc-plugin-telemetry: skillsPath=none, skillsPaths=0 paths
+2026-11-11T20:28:57.446Z [DEBUG] Checking plugin cc-plugin-privacy: skillsPath=none, skillsPaths=0 paths
+2026-11-11T20:28:57.446Z [DEBUG] Checking plugin cc-plugin-plugin-authoring: skillsPath=none, skillsPaths=0 paths
+2026-11-11T20:28:57.446Z [DEBUG] Total plugin workflows loaded: 0
+2026-11-11T20:28:57.447Z [DEBUG] Total plugin commands loaded: 0
+2026-11-11T20:28:57.449Z [DEBUG] cc-plugin-sec-default@builtin not seated: no managed settings and not a Team or Enterprise organization (pro)
+2026-11-11T20:28:57.449Z [DEBUG] Total plugin agents loaded: 0
+2026-11-11T20:28:57.451Z [DEBUG] plugin cc-plugin-agents-md: no pluginConfigs["agents-md@builtin" or "cc-plugin-agents-md@builtin"].options in user, --settings or managed settings (project settings are not read); every option is its default
+2026-11-11T20:28:57.451Z [DEBUG] cc-plugin-telemetry: hooks telemetry for: anthropic, collector
+2026-11-11T20:28:57.452Z [DEBUG] hooks native host made (for the plugins the binary carries)
+2026-11-11T20:28:57.453Z [DEBUG] hooks module cc-plugin-agents-md@builtin loaded (native, environment 1, tier builtin); events: session.start,prompt.context,command.run,session.compact,prompt.submit,turn.start,turn.complete,agent.spawn,tool.call,prompt.mention
+2026-11-11T20:28:57.454Z [DEBUG] hooks module cc-plugin-telemetry@builtin loaded (native, environment 2, tier builtin); events: telemetry.*,telemetry.log,telemetry.mark,session.start,session.end,engine.create
+2026-11-11T20:28:57.455Z [DEBUG] hooks module cc-plugin-plugin-authoring@builtin loaded (native, environment 3, tier builtin); events: skill.prompt,tool.check,tool.call
+2026-11-11T20:28:57.455Z [DEBUG] hooks module cc-plugin-privacy@builtin loaded (native, environment 4, tier builtin); events: tool.check
+2026-11-11T20:28:57.457Z [DEBUG] hooks module cc-plugin-telemetry@builtin engine.create settled in 0.8ms (native hop, next() included)
+2026-11-11T20:28:57.457Z [DEBUG] engine.create: no plugin-provided interfaces; $ built for cc-plugin-agents-md,cc-plugin-telemetry,cc-plugin-plugin-authoring,cc-plugin-privacy
+2026-11-11T20:28:57.457Z [DEBUG] plugin.register: cc-plugin-agents-md (builtin, cc-plugin-agents-md@builtin), judged by core alone: admitted
+2026-11-11T20:28:57.458Z [DEBUG] plugin.register: cc-plugin-telemetry (builtin, cc-plugin-telemetry@builtin), judged by core alone: admitted
+2026-11-11T20:28:57.458Z [DEBUG] plugin.register: cc-plugin-plugin-authoring (builtin, cc-plugin-plugin-authoring@builtin), judged by core alone: admitted
+2026-11-11T20:28:57.458Z [DEBUG] plugin.register: cc-plugin-privacy (builtin, cc-plugin-privacy@builtin), judged by core alone: admitted
+2026-11-11T20:28:57.461Z [DEBUG] Registered 0 hooks from 10 plugins
+2026-11-11T20:28:57.462Z [DEBUG] settings.read: the engine's merge was raised (the loaded plugins changed) in 0.1 ms; 0 keys answered otherwise than the files.
+2026-11-11T20:28:57.462Z [DEBUG] settings.read: the engine's merge is not raised again (the loaded plugins changed): neither the loaded plugins nor the settings changed.
+2026-11-11T20:28:57.469Z [DEBUG] Loaded 1 skills from plugin qs-video default directory
+2026-11-11T20:28:57.469Z [DEBUG] Attempting to load skills from plugin qs-video skillsPaths: /github/skills/packages/qs-video/skills/qs-video
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-video/skills/qs-video for plugin qs-video
+2026-11-11T20:28:57.469Z [DEBUG] Loaded 4 skills from plugin qs-frontend default directory
+2026-11-11T20:28:57.469Z [DEBUG] Attempting to load skills from plugin qs-frontend skillsPaths: /github/skills/packages/qs-frontend/skills/qs-design-frontend, /github/skills/packages/qs-frontend/skills/qs-design-image-web, /github/skills/packages/qs-frontend/skills/qs-design-image-mobile, /github/skills/packages/qs-frontend/skills/qs-design-image-to-code
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-frontend/skills/qs-design-frontend for plugin qs-frontend
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-frontend/skills/qs-design-image-web for plugin qs-frontend
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-frontend/skills/qs-design-image-mobile for plugin qs-frontend
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-frontend/skills/qs-design-image-to-code for plugin qs-frontend
+2026-11-11T20:28:57.469Z [DEBUG] Loaded 12 skills from plugin qs-skills default directory
+2026-11-11T20:28:57.469Z [DEBUG] Attempting to load skills from plugin qs-skills skillsPaths: /github/skills/packages/qs-skills/skills/qs-help, /github/skills/packages/qs-skills/skills/qs-setup, /github/skills/packages/qs-skills/skills/qs-plan-clarify, /github/skills/packages/qs-skills/skills/qs-plan-roadmap, /github/skills/packages/qs-skills/skills/qs-plan-spec, /github/skills/packages/qs-skills/skills/qs-code-build, /github/skills/packages/qs-skills/skills/qs-code-debug, /github/skills/packages/qs-skills/skills/qs-review-code, /github/skills/packages/qs-skills/skills/qs-git-merge, /github/skills/packages/qs-skills/skills/qs-deploy-release, /github/skills/packages/qs-skills/skills/qs-flow-triage, /github/skills/packages/qs-skills/skills/qs-flow-handoff
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-help for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-setup for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-plan-clarify for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-plan-roadmap for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-plan-spec for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-code-build for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-code-debug for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-review-code for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-git-merge for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-deploy-release for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-flow-triage for plugin qs-skills
+2026-11-11T20:28:57.469Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-skills/skills/qs-flow-handoff for plugin qs-skills
+2026-11-11T20:28:57.470Z [DEBUG] Loaded 1 skills from plugin qs-execution default directory
+2026-11-11T20:28:57.470Z [DEBUG] Attempting to load skills from plugin qs-execution skillsPaths: /github/skills/packages/qs-execution/skills/qs-unlazy
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-execution/skills/qs-unlazy for plugin qs-execution
+2026-11-11T20:28:57.470Z [DEBUG] Loaded 12 skills from plugin qs-advanced default directory
+2026-11-11T20:28:57.470Z [DEBUG] Attempting to load skills from plugin qs-advanced skillsPaths: /github/skills/packages/qs-advanced/skills/qs-how, /github/skills/packages/qs-advanced/skills/qs-why, /github/skills/packages/qs-advanced/skills/qs-blast-radius, /github/skills/packages/qs-advanced/skills/qs-runtime-forensics, /github/skills/packages/qs-advanced/skills/qs-trace-forensics, /github/skills/packages/qs-advanced/skills/qs-create-verification-skill, /github/skills/packages/qs-advanced/skills/qs-maintain-verification-skill, /github/skills/packages/qs-advanced/skills/qs-skill-eval, /github/skills/packages/qs-advanced/skills/qs-hillclimb, /github/skills/packages/qs-advanced/skills/qs-visual-parity, /github/skills/packages/qs-advanced/skills/qs-pr-babysit, /github/skills/packages/qs-advanced/skills/qs-worktree-cleanup
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-how for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-why for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-blast-radius for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-runtime-forensics for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-trace-forensics for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-create-verification-skill for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-maintain-verification-skill for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-skill-eval for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-hillclimb for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-visual-parity for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-pr-babysit for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-advanced/skills/qs-worktree-cleanup for plugin qs-advanced
+2026-11-11T20:28:57.470Z [DEBUG] Loaded 9 skills from plugin qs-specialists default directory
+2026-11-11T20:28:57.470Z [DEBUG] Attempting to load skills from plugin qs-specialists skillsPaths: /github/skills/packages/qs-specialists/skills/qs-plan-research, /github/skills/packages/qs-specialists/skills/qs-design-prototype, /github/skills/packages/qs-specialists/skills/qs-code-document, /github/skills/packages/qs-specialists/skills/qs-test-author, /github/skills/packages/qs-specialists/skills/qs-test-verify, /github/skills/packages/qs-specialists/skills/qs-learn-teach, /github/skills/packages/qs-specialists/skills/qs-skill-write, /github/skills/packages/qs-specialists/skills/qs-deploy-prompt, /github/skills/packages/qs-specialists/skills/qs-repo-cleanup
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-plan-research for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-design-prototype for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-code-document for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-test-author for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-test-verify for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-learn-teach for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-skill-write for plugin qs-specialists
+2026-11-11T20:28:57.470Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-deploy-prompt for plugin qs-specialists
+2026-11-11T20:28:57.471Z [DEBUG] Loading from skillPath: /github/skills/packages/qs-specialists/skills/qs-repo-cleanup for plugin qs-specialists
+2026-11-11T20:28:57.471Z [DEBUG] Loaded 0 skills from plugin qs-video custom path: /github/skills/packages/qs-video/skills/qs-video
+2026-11-11T20:28:57.471Z [DEBUG] Loaded 0 skills from plugin qs-frontend custom path: /github/skills/packages/qs-frontend/skills/qs-design-image-to-code
+2026-11-11T20:28:57.471Z [DEBUG] Loaded 0 skills from plugin qs-frontend custom path: /github/skills/packages/qs-frontend/skills/qs-design-image-mobile
+2026-11-11T20:28:57.471Z [DEBUG] Loaded 0 skills from plugin qs-frontend custom path: /github/skills/packages/qs-frontend/skills/qs-design-image-web
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-setup
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-plan-roadmap
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-code-debug
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-flow-handoff
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-code-build
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-plan-clarify
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-plan-spec
+2026-11-11T20:28:57.472Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-git-merge
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-help
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-frontend custom path: /github/skills/packages/qs-frontend/skills/qs-design-frontend
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-trace-forensics
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-review-code
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-runtime-forensics
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-test-author
+2026-11-11T20:28:57.473Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-why
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-flow-triage
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-blast-radius
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-skills custom path: /github/skills/packages/qs-skills/skills/qs-deploy-release
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-learn-teach
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-skill-write
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-test-verify
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-code-document
+2026-11-11T20:28:57.474Z [DEBUG] Loaded 0 skills from plugin qs-execution custom path: /github/skills/packages/qs-execution/skills/qs-unlazy
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-visual-parity
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-how
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-repo-cleanup
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-skill-eval
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-hillclimb
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-maintain-verification-skill
+2026-11-11T20:28:57.475Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-create-verification-skill
+2026-11-11T20:28:57.476Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-deploy-prompt
+2026-11-11T20:28:57.476Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-plan-research
+2026-11-11T20:28:57.476Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-worktree-cleanup
+2026-11-11T20:28:57.476Z [DEBUG] Loaded 0 skills from plugin qs-advanced custom path: /github/skills/packages/qs-advanced/skills/qs-pr-babysit
+2026-11-11T20:28:57.476Z [DEBUG] Loaded 0 skills from plugin qs-specialists custom path: /github/skills/packages/qs-specialists/skills/qs-design-prototype
+2026-11-11T20:28:57.476Z [DEBUG] Total plugin skills loaded: 39 (0 duplicate/user-owned entries skipped)
+2026-11-11T20:28:57.477Z [DEBUG] getSkills returning: 13 skill dir commands, 39 plugin skills, 31 bundled skills, 1 builtin plugin skills
+2026-11-11T20:28:57.485Z [DEBUG] [STARTUP] Commands and agents loaded in 78ms
+2026-11-11T20:28:57.490Z [DEBUG] [servedCatalog] primary: using served rows (12 rows via cache over the org route, fetched 691254s ago, stale); the served list replaces the compiled picker for this session
+2026-11-11T20:28:57.493Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-11-11T20:28:57.493Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-11-11T20:28:57.493Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-11-11T20:28:57.493Z [DEBUG] Starting background startup prefetches
+2026-11-11T20:28:57.493Z [DEBUG] [Bootstrap] Fetching
+2026-11-11T20:28:57.493Z [DEBUG] Passes: Cache stale, returning cached data and refreshing in background
+2026-11-11T20:28:57.497Z [DEBUG] [STARTUP] MCP configs resolved in 126ms (awaited at +172ms)
+2026-11-11T20:28:57.498Z [DEBUG] Artifacts MCP server not added: artifact_tool_off (sdk_default_off)
+2026-11-11T20:28:57.501Z [DEBUG] Cleared mTLS configuration cache
+2026-11-11T20:28:57.501Z [DEBUG] Cleared proxy agent cache
+2026-11-11T20:28:57.504Z [DEBUG] Fast mode unavailable: Fast mode is not available in the Agent SDK
+2026-11-11T20:28:57.504Z [DEBUG] [MCP] --mcp-config servers running fully async (nonblocking)
+2026-11-11T20:28:57.504Z [DEBUG] [MCP] claude.ai connectors running fully async (nonblocking)
+2026-11-11T20:28:57.505Z [DEBUG] [auto-mode] verifyAutoModeGateAccess: enabledState=enabled disabledBySettings=false model=claude-opus-5-5 modelSupported=true disableFastModeBreakerFires=false carouselAvailable=true canEnterAuto=true
+2026-11-11T20:28:57.512Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 10.0ms (native link, next() included)
+2026-11-11T20:28:57.513Z [DEBUG] Grove: Cache stale, returning cached data and refreshing in background
+2026-11-11T20:28:57.515Z [DEBUG] Total LSP servers loaded: 0
+2026-11-11T20:28:57.516Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-11-11T20:28:57.516Z [DEBUG] LSP manager initialized with 0 servers
+2026-11-11T20:28:57.516Z [DEBUG] LSP server manager initialized successfully
+2026-11-11T20:28:57.516Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-11-11T20:28:57.518Z [DEBUG] [Bootstrap] Fetch failed: EAI_AGAIN
+2026-11-11T20:28:57.519Z [ERROR] [Bootstrap] fetchBootstrapData failed: DNSException: getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:57.519Z [ERROR] Failed to fetch org fast mode status, standing on enabled (cached): DNSException: getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:57.519Z [DEBUG] Failed to fetch Grove notice config: DNSException: getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:57.521Z [DEBUG] [concurrentSessions] register failed: EROFS: read-only file system, chmod '/home/djn12313/.claude/sessions'
+2026-11-11T20:28:57.521Z [ERROR] Failed to fetch Grove settings: DNSException: getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:57.536Z [DEBUG] [ScheduledTasks] scheduler start() — enabled=false, hasTasks=false
+2026-11-11T20:28:57.538Z [DEBUG] session.start: raised (surface none, not interactive)
+2026-11-11T20:28:57.540Z [DEBUG] hooks module cc-plugin-telemetry@builtin session.start settled in 1.3ms (native link, next() included)
+2026-11-11T20:28:57.540Z [DEBUG] hooks module cc-plugin-agents-md@builtin session.start settled in 1.7ms (native link, next() included)
+2026-11-11T20:28:57.540Z [ERROR] Failed to fetch and cache passes eligibility: getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:57.543Z [DEBUG] [concurrentSessions] updatePidFile failed: ENOENT: no such file or directory, open '/home/djn12313/.claude/sessions/4.json'
+2026-11-11T20:28:57.544Z [DEBUG] [servedCatalog] fetch (org) failed: http
+2026-11-11T20:28:57.544Z [DEBUG] hooks module cc-plugin-telemetry@builtin (native): telemetry.log nested in cc-plugin-agents-md
+2026-11-11T20:28:57.546Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 1.1ms (native link, next() included)
+2026-11-11T20:28:57.546Z [DEBUG] cc-plugin-telemetry (builtin) answered telemetry.log without next() in 1.3ms; nothing beneath it ran for this dispatch
+2026-11-11T20:28:57.556Z [DEBUG] Watching for changes in skill/command directories: /home/djn12313/.claude/skills, /home/djn12313/.claude/skills/synced...
+2026-11-11T20:28:57.563Z [DEBUG] Watching for changes in setting files /home/djn12313/.claude/settings.json, /github/skills/.claude/settings.json, /github/skills/.claude/settings.local.json...
+2026-11-11T20:28:57.564Z [DEBUG] [servedCatalog] headless retry marker write failed: EROFS
+2026-11-11T20:28:57.570Z [DEBUG] [servedCatalog] shadow compare logged (fetch=error, rows=12, source=served)
+2026-11-11T20:28:57.570Z [DEBUG] [servedCatalog] primary: served list replaces the compiled picker; every compiled row is served
+2026-11-11T20:28:57.570Z [DEBUG] Failed to stat directory /etc/claude-code/.claude/output-styles: ENOENT: no such file or directory, stat '/etc/claude-code/.claude/output-styles'
+2026-11-11T20:28:57.570Z [DEBUG] Failed to stat directory /home/djn12313/.claude/output-styles: ENOENT: no such file or directory, stat '/home/djn12313/.claude/output-styles'
+2026-11-11T20:28:57.571Z [DEBUG] Total plugin output styles loaded: 0
+2026-11-11T20:28:57.575Z [DEBUG] Fast mode unavailable: Fast mode is not available in the Agent SDK
+2026-11-11T20:28:57.583Z [DEBUG] [startupWorkGate] open (shutdown) after 184ms; running 5 held task(s): tengu_init, permission_context_log, plugin_init, telemetry_init, idle_startup_work
+2026-11-11T20:28:57.587Z [DEBUG] LSP server manager shut down successfully
+2026-11-11T20:28:57.605Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.4ms (native link, next() included)
+2026-11-11T20:28:57.606Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.606Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.606Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.606Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.607Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.608Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.608Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.608Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.608Z [DEBUG] hooks module cc-plugin-telemetry@builtin telemetry.log settled in 0.1ms (native link, next() included)
+2026-11-11T20:28:57.610Z [DEBUG] $.process.run (cc-plugin-telemetry): sh with 2 args in /github/skills (pid 46)
+2026-11-11T20:28:57.617Z [ERROR] Failed to save config with lock: Error: EROFS: read-only file system, mkdir '/home/djn12313/.claude.json.lock'
+2026-11-11T20:28:57.628Z [DEBUG] $.process.run (cc-plugin-telemetry): sh exited 0 in 19ms, 42 + 0 chars
+2026-11-11T20:28:57.634Z [DEBUG] Preserving file permissions: 100600
+2026-11-11T20:28:57.635Z [DEBUG] Writing to temp file: /home/djn12313/.claude.json.tmp.4.b040a688b683
+2026-11-11T20:28:57.635Z [ERROR] Failed to write file atomically: Error: EROFS: read-only file system, open '/home/djn12313/.claude.json.tmp.4.b040a688b683'
+2026-11-11T20:28:57.636Z [DEBUG] Failed to clean up temp file: Error: EROFS: read-only file system, unlink '/home/djn12313/.claude.json.tmp.4.b040a688b683'
+2026-11-11T20:28:57.636Z [ERROR] Config fallback write also failed; continuing without persisting: Error: EROFS: read-only file system, open '/home/djn12313/.claude.json.tmp.4.b040a688b683'
+2026-11-11T20:28:57.638Z [DEBUG] $.fs.read (cc-plugin-telemetry): /sys/hypervisor/uuid failed: ENOENT: no such file or directory, open '/sys/hypervisor/uuid'
+2026-11-11T20:28:57.639Z [DEBUG] $.session (cc-plugin-telemetry): no session bound; id, cwd and model answered from the process
+2026-11-11T20:28:57.639Z [DEBUG] $.session (cc-plugin-telemetry): no session bound; id, cwd and model answered from the process
+2026-11-11T20:28:57.640Z [DEBUG] $.http.fetch (cc-plugin-telemetry): POST https://api.anthropic.com/api/event_logging/v2/batch
+2026-11-11T20:28:57.861Z [DEBUG] [claudeai-mcp] Transient fetch error (EAI_AGAIN), retrying in 1500ms (attempt 2/3)
+2026-11-11T20:28:57.933Z [DEBUG] [fs.watch probe] verdict: delivers
+2026-11-11T20:28:58.159Z [DEBUG] $.http.fetch (cc-plugin-telemetry): POST https://api.anthropic.com/api/event_logging/v2/batch
+2026-11-11T20:28:58.161Z [DEBUG] [cc-plugin-telemetry] $.ui.log (to debug): telemetry: 1 row(s) not sent: cc-plugin-telemetry: $.http.fetch(https://api.anthropic.com/api/event_logging/v2/batch) failed: EAI_AGAIN: getaddrinfo EAI_AGAIN api.anthropic.com
+2026-11-11T20:28:58.161Z [DEBUG] hooks module cc-plugin-telemetry@builtin session.end settled in 560.9ms (native link, next() included)
+2026-11-11T20:28:58.170Z [ERROR] Failed to flush logs to Datadog: DNSException: getaddrinfo EAI_AGAIN http-intake.logs.us5.datadoghq.com
+2026-11-11T20:28:58.172Z [ERROR] 1P event logging: failed to persist failed-event queue to /home/djn12313/.claude/telemetry/1p_failed_events.60e3e471-ad41-4a97-8140-008dc73ff6b3.6f771d0f-b5ed-489e-97fe-162ab38b4a5c.json: EROFS: read-only file system, open '/home/djn12313/.claude/telemetry/1p_failed_events.60e3e471-ad41-4a97-8140-008dc73ff6b3.6f771d0f-b5ed-489e-97fe-162ab38b4a5c.json'
+2026-11-11T20:28:58.172Z [ERROR] 1P event logging: 172 events failed to export (code=EAI_AGAIN, getaddrinfo EAI_AGAIN api.anthropic.com)
+2026-11-11T20:28:58.172Z [DEBUG] [Anthropic telemetry] 1P event logging export failed (Failed to export 172 events (code=EAI_AGAIN, getaddrinfo EAI_AGAIN api.anthropic.com)). This is Anthropic's own telemetry pipeline, not your OTel collector; further failures are counted and summarised at shutdown.
+2026-11-11T20:28:58.172Z [DEBUG] [Anthropic telemetry] 1P event logging export: 1 failure(s) this session (last: Failed to export 172 events (code=EAI_AGAIN, getaddrinfo EAI_AGAIN api.anthropic.com))

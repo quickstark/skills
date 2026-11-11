@@ -1,0 +1,26 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-code-build\nOutcome: Build acceptance fails at `abc123`: an independently verified actionable P1 shows CSV export includes invoices excluded by the current filter. Passing tests do not resolve this finding. Repair belongs inside the active build root.\n\n- [ ] Build — active; acceptance/review gate failed; preserve and repair the P1.\n- [ ] Git — blocked; scheduled, not begun; requires verified build completion.\n- [ ] Staging release — blocked; scheduled, not begun; requires publication of the verified revision.\n\nStage: Build | Stage estimate: unavailable | Overall estimate: unavailable | active — suite passes, but the filter requirement fails. Input needed: authoritative goal state before execution; prior weights and estimates are missing, so percentages cannot be reconstructed.\n\nFirst propose verifying supported goal-tool availability and inspecting `get_goal`. Continue only with the matching goal established and its resulting state verified. Create a goal only if inspection establishes that a new matching goal is needed; never replace an unrelated active goal. Unavailable goal support or conflicting state requires input before mutation. No token budget is specified.\n\nAfter that gate, recheck repository scope, authorization, specification, dirty state, and revision. Within this build root, add a meaningful regression case for excluded rows, repair filter handling, and verify the changed revision with focused CSV checks, the required suite, existing-screen checks, and diff review. The P1 remains open until evidence verifies its resolution. Changed code requires fresh relevant verification.\n\nThe overall goal remains incomplete. Authoritative host goal state is unobserved; neither a completion update nor a blocked-state update is justified. Git and release must not advance while the P1 remains unresolved.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n\n- Finished — supplied evidence records a passing required suite and a verified P1 at `abc123`; no repair, publication, deployment, or material output is claimed.\n- Next — [CSV filter requirement](/fixture/ledger-app/docs/specs/export.md) — active repair — resolve and reverify within this build root. Publication and staging health/version verification remain blocked; deployed artifact and health evidence are missing.\n\nNext work prompt: None — repair remains within the active root; later roots are already scheduled.",
+    "requestedActions": [
+      "Verify supported goal-tool availability and propose get_goal inspection before any mutation. Establish and verify the matching goal without replacing an unrelated active goal; stop input-required if the goal gate cannot be satisfied.",
+      "After the goal gate passes, recheck scope and revision, preserve the P1, and repair the CSV filter leak within /qs-code-build authority in /fixture/ledger-app.",
+      "Verify the repaired revision with meaningful filter regression coverage, relevant CSV cases, required tests, existing-screen checks, and diff review. Keep Git and staging release blocked until build completion is verified."
+    ]
+  },
+  "promptSHA256": "416b6cee6a70c0954b3395aedad6885d36d305937ebe2f9875ca9d79c9aba06f",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27531,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1289,
+      "reasoning_output_tokens": 664,
+      "total_tokens": 28820
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

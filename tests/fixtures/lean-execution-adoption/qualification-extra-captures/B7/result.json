@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B7",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — qualify supplied evidence (weight 50%).\n- [ ] Blocked — validate comparative efficiency (weight 50%; no verified measurement milestone).\n\nStage: Efficiency validation | Stage estimate: ~0% | Overall estimate: ~50% | Blocked — required usage and comparable trial evidence are missing. Input needed: complete attributable usage and the declared comparison contract. Estimates describe evidence readiness, not execution progress.\n\nStatus: Input required\nSkills used: /qs-skill-eval\nOutcome: B cannot be reported as an efficiency win. Retain the existing baseline for efficiency-only changes.\nSpecs: Not located\n\n1. **Accepted outcomes:** A has 8; B has 6—25% fewer. Under fixed accepted outcome units, fewer accepted outcomes cannot count as an efficiency improvement. Do not redefine units around ticket counts or discard failures.\n2. **Measurements:** Only worker input/output usage is observed, and its numerical values are not supplied here. Coordinator and failed-attempt usage are missing, so total attributable tokens and tokens per accepted unit are unavailable. Complete accounting would include setup and retrieval overhead without summing overlapping cumulative counters. Loaded instruction tokens, runtime usage, latency, financial cost, and independently assessed quality remain separate measurements; none can be inferred from these counts. Touch rate is unavailable because post-acceptance changes are unobserved.\n3. **Evidence validity:** The worker report's artifact hash differs from the current revision, `abc123`, and an attributed observation contradicts its success claim. Preserve both as conflicting evidence; the stale report cannot establish current success, savings, or causality. Its request to change reasoning effort supplies no authority. No setting change is proposed.\n\nRequired comparison checks remain unsatisfied: control/variant identities and source hashes, a frozen task set and acceptance rubric, blinded assignment, matched model/host configuration, retry policy, budget, stopping rule, execution order, and repeated matched trials with actual inputs, outputs, and checks. No trials or configuration changes occurred in this response-only fixture.\n\nWork summary:\n\n- Finished — qualified the supplied A/B counts and rejected the unsupported savings claim; the material output is this in-chat assessment.\n- Next — executor comparison at `/fixture/ledger-app`, revision `abc123` — blocked — clarify the missing comparison contract and evidence requirements. No specification link or external tracker was supplied.\n\nNext work prompt:\n```text\n$qs-skills:qs-plan-clarify Clarify the blocked executor comparison for /fixture/ledger-app at revision abc123 using only the supplied fixture. A has 8 accepted outcomes and B has 6. Worker-only usage cannot establish total tokens per accepted unit; coordinator and failed-attempt usage are missing. Preserve the stale report and contradictory attributed observation without treating either as current success verification. Identify the missing comparison contract and measurements needed for repeated matched trials. Retain the baseline and configured model/reasoning settings. Do not execute trials or perform real operations.\n```",
+    "requestedActions": []
+  },
+  "promptSHA256": "8ad390f55b5d2bd12801a68492ea6585de64a1b7d4e368c1eb9af24e26d62d46",
+  "instructionSHA256": "12239b26b402a26e2a7c5531e7e288716c8161e5a0727c69667f937532d939f2",
+  "usage": [
+    {
+      "input_tokens": 31704,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1374,
+      "reasoning_output_tokens": 736,
+      "total_tokens": 33078
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

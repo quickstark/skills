@@ -158,3 +158,114 @@ test('all six packages keep exact catalog obligations and reject stale receipts 
     }
   }
 });
+
+test('new response evidence keeps controls, frozen inputs and the mobile contract finding explicit', async () => {
+  const root = new URL('../', import.meta.url).pathname;
+  const json = async p => JSON.parse(await readFile(join(fixtureRoot, p)));
+  const sha = b => createHash('sha256').update(b).digest('hex');
+  const evidence = await json('lex12-noninstall-evidence.json');
+  for (const [p, h] of Object.entries({ ...evidence.sourceSHA256, ...evidence.evidenceSHA256 })) assert.equal(sha(await readFile(join(root, p))), h, p);
+  const protocol = await json('qualification-extra-protocol.json');
+  const manifestBytes = await readFile(join(fixtureRoot, 'qualification-extra-inputs.json'));
+  assert.equal(sha(manifestBytes), protocol.manifestSHA256);
+  const manifest = JSON.parse(manifestBytes);
+  const binding = await json('qualification-extra-captures/binding.json');
+  assert.equal(binding.manifestSHA256, protocol.manifestSHA256);
+  assert.deepEqual(binding.configuredControls, protocol.controls);
+  assert.equal(protocol.tokenBudget, null);
+  for (const [p, h] of Object.entries(manifest.sourceSHA256)) assert.equal(sha(await readFile(join(root, p))), h, p);
+  for (const scenario of manifest.cases) {
+    const base = `qualification-extra-captures/${scenario.id}`;
+    const result = await json(`${base}/result.json`), telemetry = await json(`${base}/telemetry.json`);
+    assert.equal(result.acceptedCapture, true, scenario.id);
+    assert.equal(result.instructionSHA256, sha(manifest.instructions[scenario.instructionKey]));
+    assert.deepEqual(result.envelope, JSON.parse(await readFile(join(fixtureRoot, base, 'response.md'))));
+    assert.deepEqual(telemetry.effectiveControls, protocol.controls);
+    assert.equal(telemetry.toolCount, 0); assert.deepEqual(telemetry.serverRequests, []);
+    assert.equal(telemetry.processObservation.complete, true);
+  }
+  const review = await json('qualification-extra-review.json');
+  assert.deepEqual(review.ratings.filter(r => r.qualified).map(r => r.id), evidence.behavior.qualified);
+  assert.deepEqual(evidence.behavior.unqualified, ['B8']);
+  assert.equal(review.ratings.find(r => r.id === 'B8').sourceContract, 'fail');
+  const mobile = await json('qualification-extra-captures/B8/result.json');
+  assert.match(mobile.envelope.response, /Skills used: \/qs-flow-handoff/);
+  assert.match(mobile.envelope.response, /\$qs-skills:qs-plan-clarify/);
+  assert.equal(evidence.behavior.finding.status, 'pending');
+  assert.equal(evidence.retained.efficiencySHA256, sha(await readFile(join(fixtureRoot, 'evaluation-disposition.json'))));
+  assert.ok(Object.values(evidence.packageAcceptance).every(p => p.status === 'pending'));
+});
+
+test('native source discovery distinguishes Claude loading, Codex metadata and Pi SDK from activation', async () => {
+  const json = async p => JSON.parse(await readFile(join(fixtureRoot, 'qualification-native-discovery', p)));
+  const source = await json('assessment.json');
+  const marketplaceSuffix = '/codex/.agents/plugins/marketplace.json';
+  assert.ok(source.codex.marketplacePath.endsWith(marketplaceSuffix));
+  // Archived native observations keep their original checkout path when this repo moves.
+  const root = source.codex.marketplacePath.slice(0, -marketplaceSuffix.length);
+  const messages = file => file.stdout.flatMap(line => { try { return [JSON.parse(line)]; } catch { return []; } });
+  const codex = await json('codex-native-source-corrected.json');
+  const plugins = messages(codex).filter(m => m.result?.plugin).map(m => m.result.plugin);
+  assert.equal(codex.modelRequests, 0); assert.equal(plugins.length, TARGET_SKILL_COLLECTIONS.length);
+  for (const c of TARGET_SKILL_COLLECTIONS) {
+    const plugin = plugins.find(p => p.summary.name === c.id);
+    assert.equal(plugin.summary.source.path, join(root, c.codexPackageRoot));
+    assert.equal(plugin.summary.localVersion, '4.4.7');
+    assert.deepEqual(plugin.skills.map(s => s.name).sort(), c.publicCommands.map(n => codexPublicSkillLiteral(n).slice(1)).sort());
+    for (const skill of plugin.skills) assert.ok(skill.path.startsWith(join(root, c.codexPackageRoot, 'skills') + '/'));
+  }
+  assert.equal(source.codex.skillsListSourcePathMatches, 0);
+  const claude = await json('claude-debug.json');
+  const commands = messages(claude).find(m => m.type === 'control_response').response.response.commands;
+  const debug = await readFile(join(fixtureRoot, 'qualification-native-discovery/claude-native-loader.debug'), 'utf8');
+  assert.equal(claude.modelRequests, 0);
+  for (const c of TARGET_SKILL_COLLECTIONS) {
+    assert.ok(debug.includes(`Plugin "${c.id}" from --plugin-dir overrides installed version`));
+    for (const name of c.publicCommands) {
+      assert.ok(debug.includes(`Loading from skillPath: ${join(root, c.claudePackageRoot, 'skills', name)}`), name);
+      assert.ok(commands.some(command => command.name === `${c.id}:${name}` && command.aliases.includes(name)), name);
+    }
+  }
+  assert.deepEqual(source.claude.nativeCommandNamesAddedVersusInstalledControl, []);
+  const pi = await json('pi-native-loader.json');
+  assert.equal(pi.modelRequests, 0);
+  for (const c of TARGET_SKILL_COLLECTIONS) {
+    const result = pi.results.find(r => r.collection === c.id).result;
+    assert.deepEqual(result.skills.map(s => s.name).sort(), [...c.publicCommands].sort());
+    assert.deepEqual(result.diagnostics, []);
+  }
+  assert.match(source.pi.classification, /SDK.*only/i);
+  for (const pair of source.controlHashComparisons) assert.deepEqual(await json(pair.before), await json(pair.after));
+  const exclusions = await json('archive-exclusions.json');
+  assert.deepEqual(exclusions.map(e => e.path), ['latest']);
+  await assert.rejects(readFile(join(fixtureRoot, 'qualification-native-discovery/latest')), { code: 'ENOENT' });
+});
+
+test('fresh bounded engine probes retain failed attempts and never become a fresh video render claim', async () => {
+  const root = new URL('../', import.meta.url).pathname;
+  const base = 'qualification-local-runtime';
+  const json = async p => JSON.parse(await readFile(join(fixtureRoot, base, p)));
+  const sha = b => createHash('sha256').update(b).digest('hex');
+  const identity = await json('source-identities.json');
+  for (const f of identity.sourceFiles) assert.equal(sha(await readFile(join(root, f.path))), f.sha256, f.path);
+  assert.equal(identity.unlazyClosureEntriesVerified, 23);
+  for (const f of identity.unlazyFiles) assert.equal(sha(await readFile(join(root, 'skills/engineering/qs-unlazy/modules/unlazy', f.path))), f.derivedSHA256, f.path);
+  const results = await json('fresh-run/unlazy-results.json'), summary = await json('fresh-run/unlazy-summary.json');
+  assert.deepEqual(results.map(r => r.status), [1, 0, 1, 0, 0, 1, 0, 1]);
+  assert.ok(results.every(r => r.status === r.expected));
+  assert.equal(summary.commands, 8); assert.equal(summary.allExpected, true);
+  assert.equal(results.find(r => r.label === 'artifact-change-status-limit').status, 0);
+  assert.equal(results.find(r => r.label === 'parent-reverify-detects-bad-artifact').status, 1);
+  assert.match(results.find(r => r.label === 'abandonment').stdout, /HANDOFF REQUIRED/);
+  const rows = await json('fresh-run/unlazy-project/rows.json');
+  assert.equal(rows.reduce((n, row) => n + row.quantity * row.price, 0), 83);
+  const gap = await json('video-preflight-gap.json');
+  assert.equal(gap.status, 3); assert.equal(gap.fixtureUnchanged, true);
+  assert.match(gap.stderr, /No automatic download or installation/);
+  const retained = await json('retained-verification.json');
+  assert.equal(retained.embeddedManifestEntriesVerified, 97);
+  const evidence = JSON.parse(await readFile(join(fixtureRoot, 'lex12-noninstall-evidence.json')));
+  assert.equal(evidence.runtime.video.freshRender, 'pending');
+  assert.match(evidence.runtime.attemptHistory, /contaminated-store control failure/);
+  assert.ok(evidence.retained.closures.every(c => c.status === 'unknown' && c.adoptedRevision === null));
+});
