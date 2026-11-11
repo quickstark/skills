@@ -28,6 +28,17 @@ earlier records; original responses are never rewritten to match later rules.
 `phase-runner-amendment.json` preserve earlier integrity limits and corrections.
 Existing bindings are not silently upgraded to the latest runner.
 
+`lex12-acceptance.json` binds the later evidence qualification to committed source
+revision `b59827e28a2451b5d4bea65363e085c70a4fce95`. It records 19 scoped source
+assessments as reviewed, with adoption still pending. For Unlazy the assessment
+covers its changed private guidance, not a new review of the unchanged public
+root or a complete runtime qualification. The record distinguishes the 34 exact
+source mismatches in the historical acceptance audit from the still-matching
+selected source-review hashes. All 18 package/host receipt checks reject the
+historical bindings; no historical receipt or snapshot is upgraded. The explicit
+provenance metadata overlay changes review records only. Packaging integrity,
+scoped response behavior and full package acceptance remain separate.
+
 `original-*.json` retain exact provenance and private closure records from the
 baseline Git revision. Source-only audit refreshes do not renew old source,
 publication or installed-host acceptance. Changed adaptations remain pending.

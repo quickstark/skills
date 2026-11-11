@@ -4966,7 +4966,7 @@
     },
     "config/skill-provenance.json": {
       "path": "config/skill-provenance.json",
-      "sha256": "6a341c8ae3fc03671fca9d371252d8ed19f59b9be3ab4e466414c4c226306b26"
+      "sha256": "ca40c293b9781090f63e4c797ef8cb9f97936afbc6b06efde175b8033a9a74ed"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
@@ -5415,7 +5415,11 @@
     "tests/fixtures/lean-execution-adoption/evaluation-disposition.json": {
       "path": "tests/fixtures/lean-execution-adoption/evaluation-disposition.json",
       "sha256": "035ca98a6ce77f97232ad91a65c547762fe452bf956ac16321aaa4087d117161"
+    },
+    "tests/fixtures/lean-execution-adoption/lex12-acceptance.json": {
+      "path": "tests/fixtures/lean-execution-adoption/lex12-acceptance.json",
+      "sha256": "00e5c607a992d83a9228277d5ba21cb4fbad687ad009f3efaa80c63343e970c2"
     }
   },
-  "note": "undefined LEX source review refreshes only changed provenance and test-list evidence digests; the prior audit is retained in tests/fixtures/lean-execution-adoption/historical-acceptance.json. Source/projection integrity is separate from pending LEX behavior qualification and actual installed-host acceptance; existing package source snapshots are not promoted by this refresh. LEX final evidence refresh records reviewed source/test/version digests and separate behavior disposition only. Original source acceptance snapshots, package/host status and historical native receipts remain unchanged; new adaptations are pending. No efficiency, publication or installed-host acceptance is inferred."
+  "note": "undefined LEX source review refreshes only changed provenance and test-list evidence digests; the prior audit is retained in tests/fixtures/lean-execution-adoption/historical-acceptance.json. Source/projection integrity is separate from pending LEX behavior qualification and actual installed-host acceptance; existing package source snapshots are not promoted by this refresh. LEX final evidence refresh records reviewed source/test/version digests and separate behavior disposition only. Original source acceptance snapshots, package/host status and historical native receipts remain unchanged; new adaptations are pending. No efficiency, publication or installed-host acceptance is inferred. LEX-12 binds scoped reviewed decisions to b59827e without source adoption. Exact historical-audit source mismatches and all 18 receipt rejections are recorded separately; source/package/host acceptance and historical snapshots remain unchanged."
 }

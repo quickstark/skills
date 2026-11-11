@@ -5315,21 +5315,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/multi-agent-delegation.test.mjs",
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/lean-execution.test.mjs"
+            ],
+            "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
             "previous": {
-              "status": "retained-baseline",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "retained-baseline",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -5353,21 +5362,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/multi-agent-delegation.test.mjs",
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/lean-execution.test.mjs"
+            ],
+            "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
             "previous": {
-              "status": "retained-baseline",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "retained-baseline",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -5391,24 +5409,33 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/multi-agent-delegation.test.mjs",
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/adoption-behavior-review/current-01-review.json",
-              "tests/fixtures/adoption-review-eval/parent/review.json",
-              "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/lean-execution.test.mjs"
             ],
-            "note": "Adopt the reviewed local clarity, routing and authority adaptation. Evidence is scoped to the recorded cases and executable controls; it is not universal behavioral reliability. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/adoption-behavior-review/current-01-review.json",
+                "tests/fixtures/adoption-review-eval/parent/review.json",
+                "tests/fixtures/adoption-debug-repair/evidence/parent/qs-parent-debug-after.log"
+              ],
+              "note": "Adopt the reviewed local clarity, routing and authority adaptation. Evidence is scoped to the recorded cases and executable controls; it is not universal behavioral reliability. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            }
           }
         },
         "derivedDigest": {
@@ -5431,21 +5458,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/multi-agent-delegation.test.mjs",
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/lean-execution.test.mjs"
+            ],
+            "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
             "previous": {
-              "status": "adopted",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "adopted",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -5593,21 +5629,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
+            ],
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
             "previous": {
-              "status": "adopted",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "adopted",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -5721,23 +5766,32 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/adoption-behavior-review/current-01-review.json",
-              "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt the reviewed local specialist clarification while preserving this dedicated root. Behavioral evidence covers the named cases; other changes are source/contract reviewed, not newly demonstrated end-to-end workflows. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/adoption-behavior-review/current-01-review.json",
+                "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+              ],
+              "note": "Adopt the reviewed local specialist clarification while preserving this dedicated root. Behavioral evidence covers the named cases; other changes are source/contract reviewed, not newly demonstrated end-to-end workflows. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            }
           }
         },
         "derivedDigest": {
@@ -5820,32 +5874,41 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/deploy-prompt.test.mjs",
-            "tests/fixtures/lean-execution-adoption/generation-review-final.json",
-            "tests/fixtures/lean-execution-adoption/execution-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX one-shot guidance and installed-recovery availability repair have fresh scoped response evidence. No source commit, efficiency improvement or installed-host acceptance is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
             "evidence": [
-              "tests/lean-execution.test.mjs",
-              "tests/fixtures/lean-execution-adoption/core-review.json"
+              "tests/deploy-prompt.test.mjs",
+              "tests/fixtures/lean-execution-adoption/generation-review-final.json",
+              "tests/fixtures/lean-execution-adoption/execution-review.json"
             ],
-            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "note": "LEX one-shot guidance and installed-recovery availability repair have fresh scoped response evidence. No source commit, efficiency improvement or installed-host acceptance is claimed.",
             "previous": {
-              "status": "retained-baseline",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "status": "pending",
+              "revision": null,
               "evidence": [
-                "tests/fixtures/adoption-provenance-final/README.md",
-                "docs/validation/upstream-adoption-efficiency.md",
-                "tests/fixtures/adoption-behavior-review/current-01-review.json",
-                "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+                "tests/lean-execution.test.mjs",
+                "tests/fixtures/lean-execution-adoption/core-review.json"
               ],
-              "note": "Retain the established canonical instruction body; target package/literal metadata and generated completion routing are separately normalized. This record does not invent a new upstream byte adoption or newly measured behavioral improvement. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+              "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+              "previous": {
+                "status": "retained-baseline",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+                "evidence": [
+                  "tests/fixtures/adoption-provenance-final/README.md",
+                  "docs/validation/upstream-adoption-efficiency.md",
+                  "tests/fixtures/adoption-behavior-review/current-01-review.json",
+                  "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json"
+                ],
+                "note": "Retain the established canonical instruction body; target package/literal metadata and generated completion routing are separately normalized. This record does not invent a new upstream byte adoption or newly measured behavioral improvement. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+              }
             }
           }
         },
@@ -6086,24 +6149,33 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/adoption-behavior-review/current-01-review.json",
-              "tests/fixtures/adoption-review-eval/parent/review.json",
-              "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/adoption-behavior-review/current-01-review.json",
+                "tests/fixtures/adoption-review-eval/parent/review.json",
+                "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+              ],
+              "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            }
           }
         },
         "derivedDigest": {
@@ -6389,24 +6461,33 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
-              "tests/fixtures/adoption-video-native-results/parent-review.json",
-              "skills/video/qs-video/references/runtime-compatibility.md"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt the preserved private HyperFrames closure under one explicit QS root. Measured Linux render/audio/seek/caption and native inspection evidence applies only to the documented runtime; optional external providers/ASR/TTS remain conditional and unsupported requested paths must be reported. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/hyperframes-adoption/embedded-captions/evidence/summary.json",
+                "tests/fixtures/adoption-video-native-results/parent-review.json",
+                "skills/video/qs-video/references/runtime-compatibility.md"
+              ],
+              "note": "Adopt the preserved private HyperFrames closure under one explicit QS root. Measured Linux render/audio/seek/caption and native inspection evidence applies only to the documented runtime; optional external providers/ASR/TTS remain conditional and unsupported requested paths must be reported. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            }
           }
         },
         "derivedDigest": {
@@ -6429,23 +6510,32 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX changes private token-economy guidance; the complete indexed engine closure is preserved. Package behavior and installed-host acceptance remain separate.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. This is owner context for reviewed private token-economy guidance; the unchanged public root and full engine are not newly qualified. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
-              "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
-              "tests/execution-candidate.test.mjs"
+              "tests/lean-execution.test.mjs"
             ],
-            "note": "Adopt the reviewed Unlazy adapter and complete private closure at the exact reviewed pin. Linux Node16/24 and moved-install evidence is bounded; hooks remain opt-in, Windows and detached-process containment are not certified. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            "note": "LEX changes private token-economy guidance; the complete indexed engine closure is preserved. Package behavior and installed-host acceptance remain separate.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "skills/engineering/qs-unlazy/references/runtime-compatibility.md",
+                "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
+                "tests/execution-candidate.test.mjs"
+              ],
+              "note": "Adopt the reviewed Unlazy adapter and complete private closure at the exact reviewed pin. Linux Node16/24 and moved-install evidence is bounded; hooks remain opt-in, Windows and detached-process containment are not certified. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt."
+            }
           }
         },
         "derivedDigest": {
@@ -6534,21 +6624,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/multi-agent-delegation.test.mjs",
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/lean-execution.test.mjs"
+            ],
+            "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
             "previous": {
-              "status": "adopted",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "adopted",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -6605,18 +6704,27 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/multi-agent-delegation.test.mjs",
-            "tests/lean-execution.test.mjs"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt."
+            "evidence": [
+              "tests/multi-agent-delegation.test.mjs",
+              "tests/lean-execution.test.mjs"
+            ],
+            "note": "LEX core instruction adaptation. Source and projection integrity are distinct from pending independent behavior qualification; no release, installed-host acceptance or efficiency improvement is claimed.",
+            "previous": {
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt."
+            }
           }
         },
         "derivedDigest": {
@@ -6712,21 +6820,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
+            ],
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
             "previous": {
-              "status": "adopted",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "adopted",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -6975,24 +7092,33 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/adoption-behavior-review/current-01-review.json",
-              "tests/fixtures/adoption-review-eval/parent/review.json",
-              "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/adoption-behavior-review/current-01-review.json",
+                "tests/fixtures/adoption-review-eval/parent/review.json",
+                "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+              ],
+              "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            }
           }
         },
         "derivedDigest": {
@@ -7123,21 +7249,30 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
             "status": "pending",
             "revision": null,
-            "evidence": [],
-            "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+            "evidence": [
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
+            ],
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
             "previous": {
-              "status": "adopted",
-              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              "status": "pending",
+              "revision": null,
+              "evidence": [],
+              "note": "Multi-agent delegation adaptation, not yet committed or reviewed. It supersedes the earlier decision until a review records new evidence. This is not a release, installation or acceptance receipt.",
+              "previous": {
+                "status": "adopted",
+                "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac"
+              }
             }
           }
         },
@@ -7204,24 +7339,33 @@
         ],
         "originScope": "identity-and-migration",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/adoption-behavior-review/current-01-review.json",
-              "tests/fixtures/adoption-review-eval/parent/review.json",
-              "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/adoption-behavior-review/current-01-review.json",
+                "tests/fixtures/adoption-review-eval/parent/review.json",
+                "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json"
+              ],
+              "note": "Adopt the separate QS identity and source-preserving PS adaptation. The twelve outcomes and sixteen private capabilities remain distinct; static closure plus recorded boundary cases do not establish universal runtime compliance. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            }
           }
         },
         "derivedDigest": {
@@ -7434,25 +7578,34 @@
         ],
         "originScope": "owner-context",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
-              "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
-              "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
-              "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt this mapped frontend capability with the original nonmobile reviews, separately observed dialog flows and native-portrait mobile qualification under the approved reported-font amendment. Original failed grades remain; no exact font, exact numeric size or efficiency guarantee. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+                "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+                "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+                "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+              ],
+              "note": "Adopt this mapped frontend capability with the original nonmobile reviews, separately observed dialog flows and native-portrait mobile qualification under the approved reported-font amendment. Original failed grades remain; no exact font, exact numeric size or efficiency guarantee. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            }
           }
         },
         "derivedDigest": {
@@ -7511,25 +7664,34 @@
         ],
         "originScope": "owner-context",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
-              "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
-              "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
-              "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt this mapped frontend capability with the original nonmobile reviews, separately observed dialog flows and native-portrait mobile qualification under the approved reported-font amendment. Original failed grades remain; no exact font, exact numeric size or efficiency guarantee. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+                "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+                "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+                "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+              ],
+              "note": "Adopt this mapped frontend capability with the original nonmobile reviews, separately observed dialog flows and native-portrait mobile qualification under the approved reported-font amendment. Original failed grades remain; no exact font, exact numeric size or efficiency guarantee. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            }
           }
         },
         "derivedDigest": {
@@ -7552,25 +7714,34 @@
         ],
         "originScope": "owner-context",
         "decision": {
-          "status": "pending",
-          "revision": null,
+          "status": "reviewed",
+          "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
           "evidence": [
-            "tests/lean-execution.test.mjs",
-            "tests/fixtures/lean-execution-adoption/core-review.json"
+            "tests/fixtures/lean-execution-adoption/source-review-final.json",
+            "tests/fixtures/lean-execution-adoption/lex12-acceptance.json"
           ],
-          "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+          "note": "LEX-12 scoped source assessment at the committed implementation revision. Reviewed does not adopt the source or certify a package. Source adoption and full package acceptance remain pending; closure acceptance stays unknown. Existing response evidence is limited to its named cases. Efficiency remains inconclusive; no release or installed-host acceptance is claimed.",
           "previous": {
-            "status": "adopted",
-            "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+            "status": "pending",
+            "revision": null,
             "evidence": [
-              "tests/fixtures/adoption-provenance-final/README.md",
-              "docs/validation/upstream-adoption-efficiency.md",
-              "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
-              "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
-              "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
-              "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+              "tests/lean-execution.test.mjs",
+              "tests/fixtures/lean-execution-adoption/core-review.json"
             ],
-            "note": "Adopt this mapped frontend capability with the original nonmobile reviews, separately observed dialog flows and native-portrait mobile qualification under the approved reported-font amendment. Original failed grades remain; no exact font, exact numeric size or efficiency guarantee. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            "note": "LEX package guidance adaptation; current derived bytes recorded without claiming independent package behavior, efficiency or installed-host acceptance. Original source identities and notices remain unchanged.",
+            "previous": {
+              "status": "adopted",
+              "revision": "61871a2b9fa2843e4c68bfbddb3108101afa57ac",
+              "evidence": [
+                "tests/fixtures/adoption-provenance-final/README.md",
+                "docs/validation/upstream-adoption-efficiency.md",
+                "tests/fixtures/frontend-adoption-v3-final/all-review-summary.json",
+                "tests/fixtures/frontend-adoption-v3-review/f10-f11/uniform-dialog-supplement-review.json",
+                "tests/fixtures/frontend-mobile-repair-parent/closed-comparison.json",
+                "docs/specs/quickstark-upstream-adoption-font-amendment.md"
+              ],
+              "note": "Adopt this mapped frontend capability with the original nonmobile reviews, separately observed dialog flows and native-portrait mobile qualification under the approved reported-font amendment. Original failed grades remain; no exact font, exact numeric size or efficiency guarantee. Group B reporting compression is not adopted; retain the post-A baseline. This is a source adaptation decision, not a release, installation or final package-acceptance receipt. Private owner context does not assert that every linked baseline source was copied into this file."
+            }
           }
         },
         "derivedDigest": {

@@ -1,0 +1,63 @@
+{
+  "kind": "local-LEX-12-qualification-validation-not-adoption",
+  "implementationRevision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+  "qualificationState": "uncommitted metadata and regression tests on the implementation revision",
+  "changedFileSHA256": {
+    "config/skill-provenance.json": "ca40c293b9781090f63e4c797ef8cb9f97936afbc6b06efde175b8033a9a74ed",
+    "docs/upstream/provenance.md": "d3646fa88e5dbe89723dc8c098140a07cb8cfc656acadd8fbc098150813f92b2",
+    "docs/validation/upstream-adoption-acceptance.json": "a63bfba29ccde5cbebe3b50f187112d5ee02eb062ebe6a28cd8eafd0e387aa53",
+    "tests/fixtures/lean-execution-adoption/README.md": "1541f788e7a84391525323fc93a330fbdbeec1d5aa40e2832ab26444ea6744ae",
+    "tests/lean-execution.test.mjs": "f39d60d87f54abc004f5811e1e7597bba0b961843f3302a4696f31b9c68f3257",
+    "tests/fixtures/lean-execution-adoption/lex12-acceptance.json": "00e5c607a992d83a9228277d5ba21cb4fbad687ad009f3efaa80c63343e970c2"
+  },
+  "testStrategy": "Reused unchanged source-bound model trials and prior runtime evidence within their stated scopes. Added source/history binding and actual read-only stale-receipt rejection tests. Ran required projection, strict package and full repository validation for the metadata delta.",
+  "checks": {
+    "syncCodex": "passed",
+    "checkCodex": "passed",
+    "claudeStrict": {
+      "passed": 6,
+      "rootAdvisory": "Existing README marketplace-install advice; no validation failure."
+    },
+    "focused": {
+      "lean": 8,
+      "provenance": 25,
+      "adoption": 10
+    },
+    "full": {
+      "tests": 789,
+      "passed": 788,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "skipReason": "Existing unsupported-platform capture control applies on non-Linux; Linux capture is tested separately."
+    },
+    "diffWhitespace": "passed"
+  },
+  "independentReview": {
+    "reviewer": "lex12_evidence_qualification fresh-context read-only helper",
+    "result": "No actionable findings. Exactly 19 decisions changed, each previous decision is verbatim; other provenance unchanged. All93 portable bindings match with the explicit metadata overlay. Historical audit hash and34 mismatches are exact. No evidence hash cycle or inferred adoption. Real read-only receipt refusal covers all18 package/host pairs.",
+    "scope": "Qualification metadata and tests only; not a fresh review of product source or new model/runtime qualification."
+  },
+  "boundaries": {
+    "sourceReviews": "19 reviewed; zero newly adopted",
+    "packages": "All six pending; no historical snapshot or receipt upgraded",
+    "closures": "Video and execution remain unknown",
+    "efficiency": "Inconclusive, unchanged",
+    "publication": "Not authorized or performed",
+    "installedHosts": "Not authorized or performed"
+  },
+  "evidenceSHA256": {
+    "tests/fixtures/lean-execution-adoption/lex12-validation-sync.log": "767672eef018d95f8a12cd5a2b6c537ee32159db178fba58c5c1c4e1978a0434",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-check.log": "261afdc10ec0fc15441a35977557b358498332440211687923b914dc8c3142f6",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-focused.log": "2ee53405a7a5c42458830a62b0ca20746af113279d1b1417cef65032387a3069",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-provenance.log": "40297174b61bce74f8a29a248b3fc95ae6c27d47364cea36798f695c028c9793",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-adoption.log": "8ef897444a84877cb6a0fc15a92cb414585c3bdc893463309fb8b8658a0636e9",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-tests.log": "b7f0a28c66edc94d91ae4c9cec52aad9587bf467807dfde91e6e9fe8302a1f59",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-claude-core.log": "5e6adc65f025ebfd469db59f50ec28b4213d1ec734b952f44a8183a7f8db222f",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-claude-specialists.log": "5753825930028888f78c0f6ec3af7e06d20dfa1845c300f72316a0e06fefa744",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-claude-advanced.log": "1eddbdc6ca7079c0470ad662a936778ef36690858aa02add45f0723d04712b83",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-claude-frontend.log": "a9e8230a684fb327dbffbe9674904b4ad8435e9e6b2c569f831e1ae1a5cf9d2e",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-claude-video.log": "3118c3055b061fc263204b86c075dc7de9dd65ee3aaac330705154042b86717f",
+    "tests/fixtures/lean-execution-adoption/lex12-validation-claude-execution.log": "55e10fed8dd09c596127797d86bc2f1d0f04968f78caa258bc3d2b0b5cdcf842"
+  }
+}

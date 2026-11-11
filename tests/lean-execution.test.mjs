@@ -5,7 +5,11 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { fixtureRoot, verifyPlan, verifyCandidateSources, assertPhaseBinding, responsePrompt } from '../scripts/lean-execution-trials.mjs';
-import { PUBLIC_COMMANDS, codexPublicSkillLiteral, claudePublicSkillLiteral, piPublicSkillLiteral } from '../scripts/skill-collection-registry.mjs';
+import { PUBLIC_COMMANDS, TARGET_SKILL_COLLECTIONS, codexPublicSkillLiteral, claudePublicSkillLiteral, piPublicSkillLiteral } from '../scripts/skill-collection-registry.mjs';
+import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
+import { adoptionSourceContentSha256, verifyAdoptionAcceptance } from '../scripts/adoption-acceptance.mjs';
+import { derivePackageAcceptanceObligations } from '../scripts/managed-skill-input.mjs';
+import { captureManagedSkillPayload } from '../scripts/managed-skill-migration.mjs';
 
 test('the frozen LEX control preserves every command identity, host literal and historical scenario', async () => {
   const { baseline, scenarios, schedule } = await verifyPlan();
@@ -98,4 +102,59 @@ test('a changed operational plan cannot resume a phase under its earlier binding
     const after = await verifyPlan(root);
     assert.throws(() => assertPhaseBinding(binding, { ...binding, planSHA256: after.planSHA256 }), /Phase binding changed/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('LEX-12 records scoped reviews without adopting sources or upgrading historical acceptance', async () => {
+  const root = new URL('../', import.meta.url).pathname;
+  const json = async path => JSON.parse(await readFile(join(root, path)));
+  const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+  const record = await json('tests/fixtures/lean-execution-adoption/lex12-acceptance.json');
+  const provenance = await json('config/skill-provenance.json');
+  const audit = await json('docs/validation/upstream-adoption-acceptance.json');
+  assert.equal(record.revision, 'b59827e28a2451b5d4bea65363e085c70a4fce95');
+  assert.equal(record.sourceReviews.length, 19);
+  for (const [path, digest] of Object.entries(record.evidenceSHA256)) assert.equal(sha(await readFile(join(root, path))), digest, path);
+  for (const assessment of record.sourceReviews) {
+    const current = provenance.target.capabilities.find(c => c.id === assessment.id);
+    assert.equal(current.decision.status, 'reviewed');
+    assert.equal(current.decision.revision, record.revision);
+    assert.equal(assessment.adoptionStatus, 'pending');
+    assert.equal(sha(JSON.stringify(current.decision.previous)), assessment.previousDecisionSHA256);
+    assert.equal(sha(await readFile(join(root, assessment.path))), assessment.sourceSHA256);
+    assert.equal(sha(await readFile(join(root, assessment.reviewedPath))), assessment.reviewedSHA256);
+    assert.match(current.decision.note, /Source adoption and full package acceptance remain pending/);
+  }
+  for (const [id, digest] of Object.entries(record.untouchedDecisions)) assert.equal(sha(JSON.stringify(provenance.target.capabilities.find(c => c.id === id).decision)), digest, id);
+  assert.equal(sha(JSON.stringify({ sources: audit.sources, packages: audit.packages, criteria: audit.criteria })), record.historicalAcceptanceSHA256);
+  assert.deepEqual(record.closureAcceptance, provenance.target.closures.map(c => ({ owner: c.owner, status: c.adoptionStatus, adoptedRevision: c.adoptedRevision })));
+  for (const closure of record.closureAcceptance) { assert.equal(closure.status, 'unknown'); assert.equal(closure.adoptedRevision, null); }
+  const observed = record.observedHistoricalAudit;
+  assert.deepEqual(observed.mismatchedPaths, Object.entries(observed.sourceInputs).filter(([, s]) => s.contentSha256 !== s.expectedSHA256).map(([path]) => path));
+  assert.equal(observed.mismatchedPaths.length, 34);
+  for (const [path, expected] of Object.entries(observed.sourceInputs)) {
+    const current = await captureMigrationPath(join(root, path));
+    assert.equal(current.kind, expected.kind, path);
+    assert.equal(adoptionSourceContentSha256(current), (record.qualificationOverlay[path] ?? expected).contentSha256, path);
+  }
+  assert.equal(record.remaining.efficiency, 'inconclusive; unchanged evaluation-disposition.json');
+});
+
+test('all six packages keep exact catalog obligations and reject stale receipts for all three hosts', async () => {
+  const root = new URL('../', import.meta.url).pathname;
+  const record = JSON.parse(await readFile(join(fixtureRoot, 'lex12-acceptance.json')));
+  const migrations = JSON.parse(await readFile(join(root, 'config/skill-migrations.json')));
+  assert.deepEqual(Object.keys(record.packages), TARGET_SKILL_COLLECTIONS.map(c => c.id));
+  for (const collection of TARGET_SKILL_COLLECTIONS) {
+    const qualified = record.packages[collection.id];
+    const obligations = derivePackageAcceptanceObligations(collection.id, migrations);
+    assert.deepEqual(qualified.obligations, obligations, collection.id);
+    assert.equal(qualified.status, 'pending');
+    for (const agent of ['codex', 'claude-code', 'pi']) {
+      const failure = qualified.hostResults[agent];
+      assert.equal(failure.status, 'pending');
+      const packagePath = agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
+      const payload = await captureManagedSkillPayload(join(root, packagePath));
+      await assert.rejects(verifyAdoptionAcceptance({ repositoryRoot: root, auditPath: 'docs/validation/upstream-adoption-acceptance.json', packageId: collection.id, agent, ...obligations, revision: record.revision, version: record.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 }), error => error.message === failure.observedRejection, `${collection.id}/${agent}`);
+    }
+  }
 });

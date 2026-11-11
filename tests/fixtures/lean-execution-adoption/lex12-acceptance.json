@@ -1,0 +1,1692 @@
+{
+  "schemaVersion": 1,
+  "kind": "scoped-source-review-and-pending-package-qualification",
+  "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+  "version": "4.4.7",
+  "scope": "LEX-12 evidence qualification only. Reviewed is not adopted. No historical receipt, source snapshot, package/host status or acceptance criterion is upgraded.",
+  "sourceReviews": [
+    {
+      "id": "target:public:qs-plan-spec",
+      "path": "skills/engineering/qs-plan-spec/SKILL.md",
+      "sourceSHA256": "98d6d2e3c21786bf29c7fac2d876785e1acec70a49e4c841975173f0bdf9070a",
+      "reviewedPath": "skills/engineering/qs-plan-spec/SKILL.md",
+      "reviewedSHA256": "98d6d2e3c21786bf29c7fac2d876785e1acec70a49e4c841975173f0bdf9070a",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "52153655502b728e88985d7bbc9536dc54092ca8bf389f5e549c2ba8b8f3da71"
+    },
+    {
+      "id": "target:public:qs-code-build",
+      "path": "skills/engineering/qs-code-build/SKILL.md",
+      "sourceSHA256": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+      "reviewedPath": "skills/engineering/qs-code-build/SKILL.md",
+      "reviewedSHA256": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "52153655502b728e88985d7bbc9536dc54092ca8bf389f5e549c2ba8b8f3da71"
+    },
+    {
+      "id": "target:public:qs-code-debug",
+      "path": "skills/engineering/qs-code-debug/SKILL.md",
+      "sourceSHA256": "8d11272519b99e502e7e2348d086e3a58869cccfabf8c959f9baa905d6755e2a",
+      "reviewedPath": "skills/engineering/qs-code-debug/SKILL.md",
+      "reviewedSHA256": "8d11272519b99e502e7e2348d086e3a58869cccfabf8c959f9baa905d6755e2a",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "2f937862a0ee2b7d69f79edf7f18da855efe8302c2c7ba8ee67495f29fdf67d0"
+    },
+    {
+      "id": "target:public:qs-review-code",
+      "path": "skills/engineering/qs-review-code/SKILL.md",
+      "sourceSHA256": "a84ac28ad6c8551dfbf5b9cec8bbb51af277344992a759cc9cde1669023f5b88",
+      "reviewedPath": "skills/engineering/qs-review-code/SKILL.md",
+      "reviewedSHA256": "a84ac28ad6c8551dfbf5b9cec8bbb51af277344992a759cc9cde1669023f5b88",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "a9017a8a95237c61bd08d68850259c7c83c0b46b227eda6648d0d78ff277e5aa"
+    },
+    {
+      "id": "target:public:qs-plan-research",
+      "path": "skills/engineering/qs-plan-research/SKILL.md",
+      "sourceSHA256": "d5843fe2032ad13a8b29ff7ea2e2905683f7115d2c622463906040b6bc855cbc",
+      "reviewedPath": "skills/engineering/qs-plan-research/SKILL.md",
+      "reviewedSHA256": "d5843fe2032ad13a8b29ff7ea2e2905683f7115d2c622463906040b6bc855cbc",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "515739ddbccc0e6ca414797ba7f3089c07b3bd37147a8045c5cf76feabb4471f"
+    },
+    {
+      "id": "target:public:qs-test-verify",
+      "path": "skills/engineering/qs-test-verify/SKILL.md",
+      "sourceSHA256": "c0b61ff9b05dbf15c31b3954d031ca6e76dfb86a03a14c3d519fda93ac63a252",
+      "reviewedPath": "skills/engineering/qs-test-verify/SKILL.md",
+      "reviewedSHA256": "c0b61ff9b05dbf15c31b3954d031ca6e76dfb86a03a14c3d519fda93ac63a252",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "fc0bd7030a7575440bd577355aa4b6908d8c8d1673904a85331f868ebf4b74b7"
+    },
+    {
+      "id": "target:public:qs-deploy-prompt",
+      "path": "skills/engineering/qs-deploy-prompt/SKILL.md",
+      "sourceSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+      "reviewedPath": "skills/engineering/qs-deploy-prompt/SKILL.md",
+      "reviewedSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "3dd605c89b7885e1219c0ab42f4f653dfbc07ec54f72e2a16cf69b8ddf55f868"
+    },
+    {
+      "id": "target:public:qs-skill-eval",
+      "path": "skills/engineering/qs-skill-eval/SKILL.md",
+      "sourceSHA256": "e35b5014b53257f8c1f35a9d69deb5d1df0f52c3a5c03ca5a25f273543746310",
+      "reviewedPath": "skills/engineering/qs-skill-eval/SKILL.md",
+      "reviewedSHA256": "e35b5014b53257f8c1f35a9d69deb5d1df0f52c3a5c03ca5a25f273543746310",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "6c7ce536752e221b2b4944c54daa5b337a556ea639467c0d034ec938aef2dcd7"
+    },
+    {
+      "id": "target:public:qs-video",
+      "path": "skills/video/qs-video/SKILL.md",
+      "sourceSHA256": "51cbec497d9b0c89e2f332536bfc7c6d66cc4a56be57251aed7f433c8937a97b",
+      "reviewedPath": "skills/video/qs-video/SKILL.md",
+      "reviewedSHA256": "51cbec497d9b0c89e2f332536bfc7c6d66cc4a56be57251aed7f433c8937a97b",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "d3ed35e7f5d0dc714d9235e44ad74eaa1cd6bef4c5ac80fc031780d135ac85fb"
+    },
+    {
+      "id": "target:public:qs-unlazy",
+      "path": "skills/engineering/qs-unlazy/SKILL.md",
+      "sourceSHA256": "6fc749aeb04a3dc5e3e8b565363cc74be63fda4bed96a50487979e1667834112",
+      "reviewedPath": "skills/engineering/qs-unlazy/modules/unlazy/references/token-economy.md",
+      "reviewedSHA256": "ec060e102cd3661b7ba84adb7069d67d68ecd0372666d65b90cf8bf4c076d8a6",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Owner-context assessment of the changed private token-economy guidance; no fresh review of the unchanged root or full runtime.",
+      "previousDecisionSHA256": "58054aa7d70c47621b5e56e3b38876c31efe24a1ce64c9420f0a77ff0cae2671"
+    },
+    {
+      "id": "target:private:qs-skills:ticket-decomposition",
+      "path": "skills/internal/ticket-decomposition.md",
+      "sourceSHA256": "ea5fd8569ef1502f152c2961f605cd0adb722eab5cd589334fad2f24328d9af4",
+      "reviewedPath": "skills/internal/ticket-decomposition.md",
+      "reviewedSHA256": "ea5fd8569ef1502f152c2961f605cd0adb722eab5cd589334fad2f24328d9af4",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "a9017a8a95237c61bd08d68850259c7c83c0b46b227eda6648d0d78ff277e5aa"
+    },
+    {
+      "id": "target:private:qs-skills:delegation",
+      "path": "skills/internal/delegation.md",
+      "sourceSHA256": "654b87864ea08757aa62c9331cb95ee20b6c27394ad07f45df0de266e0b50fb8",
+      "reviewedPath": "skills/internal/delegation.md",
+      "reviewedSHA256": "654b87864ea08757aa62c9331cb95ee20b6c27394ad07f45df0de266e0b50fb8",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "e8e27a5f27a2a3829d6285cc7dfff3af427deb97ddb32a113cfd862aa3b99747"
+    },
+    {
+      "id": "target:private:qs-advanced:parallel-coverage",
+      "path": "skills/advanced/internal/parallel-coverage.md",
+      "sourceSHA256": "73ef3768d5f3f873b62661c310c35ed380196d9d20e4645396386ad47ef04617",
+      "reviewedPath": "skills/advanced/internal/parallel-coverage.md",
+      "reviewedSHA256": "73ef3768d5f3f873b62661c310c35ed380196d9d20e4645396386ad47ef04617",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "515739ddbccc0e6ca414797ba7f3089c07b3bd37147a8045c5cf76feabb4471f"
+    },
+    {
+      "id": "target:private:qs-advanced:context-discipline",
+      "path": "skills/advanced/internal/context-discipline.md",
+      "sourceSHA256": "100a8db274e10c285f5174f354155f3803ea5cef6045419e2195bec960266328",
+      "reviewedPath": "skills/advanced/internal/context-discipline.md",
+      "reviewedSHA256": "100a8db274e10c285f5174f354155f3803ea5cef6045419e2195bec960266328",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "07d484a53c75788ba06e142f10d012f2b950f0e47ba86e9547daad2a5915fe09"
+    },
+    {
+      "id": "target:private:qs-advanced:concurrency-ownership",
+      "path": "skills/advanced/internal/concurrency-ownership.md",
+      "sourceSHA256": "6e9b0ce12861a1d0c92dd917da7d9c3e7e9f32b93bfb32c470c69705840e3146",
+      "reviewedPath": "skills/advanced/internal/concurrency-ownership.md",
+      "reviewedSHA256": "6e9b0ce12861a1d0c92dd917da7d9c3e7e9f32b93bfb32c470c69705840e3146",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "515739ddbccc0e6ca414797ba7f3089c07b3bd37147a8045c5cf76feabb4471f"
+    },
+    {
+      "id": "target:private:qs-advanced:bounded-autonomous-loop",
+      "path": "skills/advanced/internal/bounded-autonomous-loop.md",
+      "sourceSHA256": "58f4ee2cf73abef98b5bfb0da04c5c804b190d6d3513707f8850d3ffeee6dc48",
+      "reviewedPath": "skills/advanced/internal/bounded-autonomous-loop.md",
+      "reviewedSHA256": "58f4ee2cf73abef98b5bfb0da04c5c804b190d6d3513707f8850d3ffeee6dc48",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "07d484a53c75788ba06e142f10d012f2b950f0e47ba86e9547daad2a5915fe09"
+    },
+    {
+      "id": "target:private:qs-frontend:implementation",
+      "path": "skills/frontend/internal/implementation.md",
+      "sourceSHA256": "fd56edc4498c81be8ef661ab67a7ad8f6559a272b3b83c1addc797613b82e031",
+      "reviewedPath": "skills/frontend/internal/implementation.md",
+      "reviewedSHA256": "fd56edc4498c81be8ef661ab67a7ad8f6559a272b3b83c1addc797613b82e031",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "4377c181676a7837064eb562907228cd19f4a5399708c7e2eb9ee0053ef23442"
+    },
+    {
+      "id": "target:private:qs-frontend:web-images",
+      "path": "skills/frontend/internal/web-images.md",
+      "sourceSHA256": "4e6e821b9e2e0db78b5ad6d3945c4a12506de5b1b127c0d34087deaa9d8c7d2c",
+      "reviewedPath": "skills/frontend/internal/web-images.md",
+      "reviewedSHA256": "4e6e821b9e2e0db78b5ad6d3945c4a12506de5b1b127c0d34087deaa9d8c7d2c",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "4377c181676a7837064eb562907228cd19f4a5399708c7e2eb9ee0053ef23442"
+    },
+    {
+      "id": "target:private:qs-frontend:mobile-images",
+      "path": "skills/frontend/internal/mobile-images.md",
+      "sourceSHA256": "fb0d25a411110fb404f43fceb796e8c96c0ef736045d195a3bedd9ad58fb1c53",
+      "reviewedPath": "skills/frontend/internal/mobile-images.md",
+      "reviewedSHA256": "fb0d25a411110fb404f43fceb796e8c96c0ef736045d195a3bedd9ad58fb1c53",
+      "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+      "status": "reviewed",
+      "adoptionStatus": "pending",
+      "scope": "Scoped source assessment and only the response cases explicitly covered by the existing independent reviews.",
+      "previousDecisionSHA256": "4377c181676a7837064eb562907228cd19f4a5399708c7e2eb9ee0053ef23442"
+    }
+  ],
+  "untouchedDecisions": {
+    "target:public:qs-help": "08a5f9090f3b80bd54620c54b823886d1cd92c732b997ca0445099d31bd08bcd",
+    "target:public:qs-setup": "198e5004c146f904ee3f2f29f57ebd7b8bf746150f5a5fd6f7f61f47dd9f6799",
+    "target:public:qs-plan-clarify": "fba7044c98273b93fe9ae6c51e67b4d5b03f1f6fe5e6bbe3a1f58065c862fbde",
+    "target:public:qs-plan-roadmap": "fba7044c98273b93fe9ae6c51e67b4d5b03f1f6fe5e6bbe3a1f58065c862fbde",
+    "target:public:qs-git-merge": "198e5004c146f904ee3f2f29f57ebd7b8bf746150f5a5fd6f7f61f47dd9f6799",
+    "target:public:qs-deploy-release": "198e5004c146f904ee3f2f29f57ebd7b8bf746150f5a5fd6f7f61f47dd9f6799",
+    "target:public:qs-flow-triage": "198e5004c146f904ee3f2f29f57ebd7b8bf746150f5a5fd6f7f61f47dd9f6799",
+    "target:public:qs-flow-handoff": "198e5004c146f904ee3f2f29f57ebd7b8bf746150f5a5fd6f7f61f47dd9f6799",
+    "target:public:qs-design-prototype": "0ff2b096cbcf39b4a800655f0fc99c9314bf8cb3c91c8dbf7609b522e6a7b70c",
+    "target:public:qs-code-document": "0ff2b096cbcf39b4a800655f0fc99c9314bf8cb3c91c8dbf7609b522e6a7b70c",
+    "target:public:qs-test-author": "0ff2b096cbcf39b4a800655f0fc99c9314bf8cb3c91c8dbf7609b522e6a7b70c",
+    "target:public:qs-learn-teach": "0ff2b096cbcf39b4a800655f0fc99c9314bf8cb3c91c8dbf7609b522e6a7b70c",
+    "target:public:qs-skill-write": "0ff2b096cbcf39b4a800655f0fc99c9314bf8cb3c91c8dbf7609b522e6a7b70c",
+    "target:public:qs-how": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-why": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-blast-radius": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-runtime-forensics": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-trace-forensics": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-create-verification-skill": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-maintain-verification-skill": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-hillclimb": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-visual-parity": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-pr-babysit": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-worktree-cleanup": "1260f738858dca8b2b5e19ddad1829cb4e3cdb165c722fdaaf7f8b5ef9b1a8f9",
+    "target:public:qs-design-frontend": "9c5c43b770dc3d947f6668f45a0312744b27d9a5c4bf30a10cb35fb82b36d402",
+    "target:public:qs-design-image-web": "9c5c43b770dc3d947f6668f45a0312744b27d9a5c4bf30a10cb35fb82b36d402",
+    "target:public:qs-design-image-mobile": "9c5c43b770dc3d947f6668f45a0312744b27d9a5c4bf30a10cb35fb82b36d402",
+    "target:public:qs-design-image-to-code": "9c5c43b770dc3d947f6668f45a0312744b27d9a5c4bf30a10cb35fb82b36d402",
+    "target:private:qs-skills:domain-modeling": "e5fb8931b6b100026ca53a769b043b73bcff6e9529c4e6d91c93d57367af17b3",
+    "target:private:qs-skills:module-decomposition": "e5fb8931b6b100026ca53a769b043b73bcff6e9529c4e6d91c93d57367af17b3",
+    "target:private:qs-skills:tdd-loop": "88f081bc2dce132caaf47cb72a074806b0369cb0610189a1e4349c40f025f727",
+    "target:private:qs-advanced:multi-candidate-exploration": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:decision-trail": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:typescript-discipline": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:plain-writing": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:boundary-discipline": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:rerunnable-tooling": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:structural-enforcement": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:experience-first": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:minimal-change": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:idempotent-operations": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:outcome-oriented-execution": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-advanced:type-system-discipline": "8a33e98d1a7b478fdc8b6b6d413cd1fbe4c41614859f85b0c050eaa6efb9a69a",
+    "target:private:qs-frontend:brief": "45e215dd3e12e7799211fadfd4c7007c31fc6db3b05a18887dc1b1d7b8b393b7",
+    "target:private:qs-frontend:design-direction": "45e215dd3e12e7799211fadfd4c7007c31fc6db3b05a18887dc1b1d7b8b393b7",
+    "target:private:qs-frontend:redesign": "45e215dd3e12e7799211fadfd4c7007c31fc6db3b05a18887dc1b1d7b8b393b7",
+    "target:private:qs-frontend:dimensional-style": "45e215dd3e12e7799211fadfd4c7007c31fc6db3b05a18887dc1b1d7b8b393b7",
+    "target:private:qs-frontend:restrained-style": "45e215dd3e12e7799211fadfd4c7007c31fc6db3b05a18887dc1b1d7b8b393b7",
+    "target:private:qs-frontend:prompt-construction": "45e215dd3e12e7799211fadfd4c7007c31fc6db3b05a18887dc1b1d7b8b393b7",
+    "target:private:qs-video:hyperframes": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-core": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-animation": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-keyframes": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-creative": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-audio": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-cli": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-registry": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:media-use": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:remotion-to-hyperframes": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:slideshow": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:embedded-captions": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:talking-head-recut": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:music-to-video": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:motion-graphics": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:pr-to-video": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:product-launch-video": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:faceless-explainer": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:general-video": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:figma": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-video:hyperframes-studio": "0b0444277186b7658ea151df290f6333142c5b6d1a10c33b63f84de0bda18ff1",
+    "target:private:qs-execution:unlazy": "3e7eebfc2cfd7b86334cc2a19db71284f83e04dae2a8f1d1cf08ea7e1c724115",
+    "target:public:qs-repo-cleanup": "1cb47e1f21d87d9b699c84e5c272979531071edc3bb6843475aab4a7b4a1b57e",
+    "target:private:qs-frontend:cinematic-landing": "1faa407b58900060ec2e8f911eb6ce832a9477f042dd664a4daf9a1b88f2b8d5",
+    "target:private:qs-frontend:motion-recipes": "1faa407b58900060ec2e8f911eb6ce832a9477f042dd664a4daf9a1b88f2b8d5",
+    "target:private:qs-frontend:media-recipes": "1faa407b58900060ec2e8f911eb6ce832a9477f042dd664a4daf9a1b88f2b8d5"
+  },
+  "independentQualification": {
+    "reviewer": "lex12_evidence_qualification fresh-context read-only helper",
+    "result": "Existing source and validation hashes match the exact commit. Scoped reviewed decisions are supported without implying adoption. Complete source/package/native/runtime acceptance is not established.",
+    "limits": [
+      "Reviews cover selected changed sources and response fixtures rather than all six complete runtime behaviors.",
+      "The qs-unlazy root is not directly reviewed by source-review-final; only its changed private guidance is reviewed.",
+      "Executor fixtures lack direct missing-credentials, missing-selected-skills, cancellation and actionable P0/P1 cases. Existing deterministic checks do not become new agent behavior observations."
+    ]
+  },
+  "evidenceSHA256": {
+    "tests/fixtures/lean-execution-adoption/source-review-final.json": "e9e200fa7111319c62e5bd831e641bd3386d24cbcbf82c3ae621f545a2eb8e6e",
+    "tests/fixtures/lean-execution-adoption/release-preparation.json": "dc2c2fc7713e095f9c47d5e73cbd0c39a2bd521acd3f4107f55e4d35d0cb7e4a",
+    "tests/fixtures/lean-execution-adoption/core-review.json": "0837c413156215ea233fd4a4f1e969615130774907169bbf5283d80a0445cf66",
+    "tests/fixtures/lean-execution-adoption/package-review.json": "58f3382be8df372d0bbfcd8662da73b47ffe78cdc862b2191a61fc45ac050b13",
+    "tests/fixtures/lean-execution-adoption/generation-review-final.json": "0e56b5a4dfafd683b52b0395cd0e4e0fec8e52a0d56f77f62d848093c9c92748",
+    "tests/fixtures/lean-execution-adoption/execution-review.json": "444f0db369d842dc2913ba7bcf631b2e6c284db9fb5831a3e24ac8168a203ce1",
+    "tests/fixtures/lean-execution-adoption/evaluation-disposition.json": "035ca98a6ce77f97232ad91a65c547762fe452bf956ac16321aaa4087d117161",
+    "tests/fixtures/lean-execution-adoption/plan.json": "ff1dcf22c384912b8b1926b137682868f26707fdfdd1ff57cbc97d4ba68d6b9f",
+    "tests/fixtures/lean-execution-adoption/rubric.json": "d57e1d88c1b6c0e4ec1dd50e4dc782d5622a61e06e780a69e81b7d181ee12c6e"
+  },
+  "historicalAcceptanceSHA256": "fb940fdebead66dc11bb24c875767dc27f00c21c4034b6dc2b30a07eb7966025",
+  "observedHistoricalAudit": {
+    "revision": "b59827e28a2451b5d4bea65363e085c70a4fce95",
+    "auditSHA256": "decfbcbea83c0612b8c1fbdcf88f05f8f0ed7f2a95c81da645a46de32608f839",
+    "sourceBinding": "git-content-and-executable-bits-sha256",
+    "sourceInputs": {
+      ".claude-plugin/plugin.json": {
+        "kind": "file",
+        "contentSha256": "b445dfad1441cb3e3315d00c1565f86db9623b53790cf6c3f1886388fa79fa27",
+        "expectedSHA256": "4fbda5d1186a136fb0eacd656f38776346795ccb365b962dee9c066b2d94ef79"
+      },
+      "codex/plugins/qs-skills": {
+        "kind": "directory",
+        "contentSha256": "0f3595a71762bb77c0940a4263976f8bf1aa140e8d37efe8758dde3356fe1219",
+        "expectedSHA256": "457938e8268fb99f6dfd255af07814e9af37294789b65b26905b4ce1b5bea305"
+      },
+      "config/skill-migrations.json": {
+        "kind": "file",
+        "contentSha256": "e628f563101e8527040dd3f000f51291847f05d3ed62ba744424dcbd533f15c4",
+        "expectedSHA256": "e628f563101e8527040dd3f000f51291847f05d3ed62ba744424dcbd533f15c4"
+      },
+      "config/skill-profiles.json": {
+        "kind": "file",
+        "contentSha256": "7aafa672dca8918d866599aa77ffb12052fef527e94297f7994b6f5d560c7281",
+        "expectedSHA256": "7aafa672dca8918d866599aa77ffb12052fef527e94297f7994b6f5d560c7281"
+      },
+      "config/skill-provenance.json": {
+        "kind": "file",
+        "contentSha256": "7bd47c33483bd60c700dbce9c0f97ffa0dd43df20f07e386994f4ffe8335e638",
+        "expectedSHA256": "2213c8ec6cedf4face2a5ce47772a2251a41e01cb27357e9c12b63aabbb60ed8"
+      },
+      "docs/skill-run-contract.md": {
+        "kind": "file",
+        "contentSha256": "14a6a44065ce124d078cc2a19ad64c9ddb239c45390283b4ab4610384b1abf46",
+        "expectedSHA256": "dde45aa500b5178abba3a54da1764e8064681f03a8307adb42e86c16aeff298d"
+      },
+      "pi/packages/qs-skills": {
+        "kind": "directory",
+        "contentSha256": "8189cd2ffc9ac99c3e75d115b59437928639726d94d49dcfb3b43d981c4767b0",
+        "expectedSHA256": "56381b8d0ff70245318875c1fc09cdd33060938d352ba86208d0133bebc96c9c"
+      },
+      "scripts/adoption-acceptance.mjs": {
+        "kind": "file",
+        "contentSha256": "3c7aa2e4e15ba4859d0e8f4903cf414abe6000f388ef6f459432e56e670adb77",
+        "expectedSHA256": "3c7aa2e4e15ba4859d0e8f4903cf414abe6000f388ef6f459432e56e670adb77"
+      },
+      "scripts/advanced-skill-catalog.mjs": {
+        "kind": "file",
+        "contentSha256": "8ad040a74c642bc43ff9935dd1d7c1002575770d02258570646b04d441c0f368",
+        "expectedSHA256": "8ad040a74c642bc43ff9935dd1d7c1002575770d02258570646b04d441c0f368"
+      },
+      "scripts/execution-skill-catalog.mjs": {
+        "kind": "file",
+        "contentSha256": "a13b4aaf6d523eba0c6d1779e2f9b6cb65193c1a8f6845df50c504d9c870c1e1",
+        "expectedSHA256": "a13b4aaf6d523eba0c6d1779e2f9b6cb65193c1a8f6845df50c504d9c870c1e1"
+      },
+      "scripts/frontend-skill-catalog.mjs": {
+        "kind": "file",
+        "contentSha256": "c94439c694f491b3929a68ae4432c65c57a12c27ab19f441bb5e318021d34084",
+        "expectedSHA256": "c94439c694f491b3929a68ae4432c65c57a12c27ab19f441bb5e318021d34084"
+      },
+      "scripts/managed-skill-input.mjs": {
+        "kind": "file",
+        "contentSha256": "a4cf60b9a0dd3d1e3d2bc732f3b46441b98e57870426165ecbc77637e1e482b2",
+        "expectedSHA256": "a4cf60b9a0dd3d1e3d2bc732f3b46441b98e57870426165ecbc77637e1e482b2"
+      },
+      "scripts/managed-skill-migration.mjs": {
+        "kind": "file",
+        "contentSha256": "d2d6a04277b055cd2d200cb675b616b324d22b81c2650c607332bd2977f715bb",
+        "expectedSHA256": "d2d6a04277b055cd2d200cb675b616b324d22b81c2650c607332bd2977f715bb"
+      },
+      "scripts/managed-skill-paths.mjs": {
+        "kind": "file",
+        "contentSha256": "b3b48df90fe4559eb9adb563fe1bdb0c92482ebca346541d785a9696bd940594",
+        "expectedSHA256": "b3b48df90fe4559eb9adb563fe1bdb0c92482ebca346541d785a9696bd940594"
+      },
+      "scripts/managed-skills.mjs": {
+        "kind": "file",
+        "contentSha256": "9153df125d6ec2a72bf8ace7cc577f0b327682eba57e2e59d6fcd07f3f800546",
+        "expectedSHA256": "9153df125d6ec2a72bf8ace7cc577f0b327682eba57e2e59d6fcd07f3f800546"
+      },
+      "scripts/migration-filesystem.mjs": {
+        "kind": "file",
+        "contentSha256": "c334e99c342bc7330502218baf97d85bc1ef4b2cc1d1e7027c18b397fc456d1e",
+        "expectedSHA256": "c334e99c342bc7330502218baf97d85bc1ef4b2cc1d1e7027c18b397fc456d1e"
+      },
+      "scripts/migration-native-packages.mjs": {
+        "kind": "file",
+        "contentSha256": "b18096797d779bc0dcd1b9950327e0a96beed319419b2b0c49f33b5d5abe451d",
+        "expectedSHA256": "b18096797d779bc0dcd1b9950327e0a96beed319419b2b0c49f33b5d5abe451d"
+      },
+      "scripts/migration-owned-paths.mjs": {
+        "kind": "file",
+        "contentSha256": "3952c1c0a29f8f2393686e67dd9cea68d272f6af3cc8434cdc6e722e86ff4241",
+        "expectedSHA256": "3952c1c0a29f8f2393686e67dd9cea68d272f6af3cc8434cdc6e722e86ff4241"
+      },
+      "scripts/migration-transaction.mjs": {
+        "kind": "file",
+        "contentSha256": "6f2cbe9c812d71cd50300ad4250ce50ae675ff8846bb1b93cefe06e408346f0d",
+        "expectedSHA256": "6f2cbe9c812d71cd50300ad4250ce50ae675ff8846bb1b93cefe06e408346f0d"
+      },
+      "scripts/optional-command-definition.mjs": {
+        "kind": "file",
+        "contentSha256": "a100614de3a5d5a6fa981514d16f0c9a41caa7f21086c7e990ffb39203a26602",
+        "expectedSHA256": "a100614de3a5d5a6fa981514d16f0c9a41caa7f21086c7e990ffb39203a26602"
+      },
+      "scripts/ps-skill-catalog.mjs": {
+        "kind": "file",
+        "contentSha256": "697529a4c62095b6423945a3088414f928149bd4939ebaa13e5dfc92a62cb3dc",
+        "expectedSHA256": "697529a4c62095b6423945a3088414f928149bd4939ebaa13e5dfc92a62cb3dc"
+      },
+      "scripts/qs-skill-catalog.mjs": {
+        "kind": "file",
+        "contentSha256": "403ac617d9871864e098e13b2a8732c61c728321ace97325633f1abeace15ec7",
+        "expectedSHA256": "403ac617d9871864e098e13b2a8732c61c728321ace97325633f1abeace15ec7"
+      },
+      "scripts/skill-collection-registry.mjs": {
+        "kind": "file",
+        "contentSha256": "be4c15c978b3218eb2b3453dfd323240f213b4d06223972d2cff1205143237d9",
+        "expectedSHA256": "be4c15c978b3218eb2b3453dfd323240f213b4d06223972d2cff1205143237d9"
+      },
+      "scripts/skill-migrations.mjs": {
+        "kind": "file",
+        "contentSha256": "5c1e2cff863a30303de8e965129f09c682e4fe5e17376b60a3b4f704c6f4df32",
+        "expectedSHA256": "5c1e2cff863a30303de8e965129f09c682e4fe5e17376b60a3b4f704c6f4df32"
+      },
+      "scripts/skill-selection.mjs": {
+        "kind": "file",
+        "contentSha256": "1aa4f87bfab2d3b997c3a64e6495fb0e2c07f61fb6b99e74bf6eeb53db6d4961",
+        "expectedSHA256": "1aa4f87bfab2d3b997c3a64e6495fb0e2c07f61fb6b99e74bf6eeb53db6d4961"
+      },
+      "scripts/video-skill-catalog.mjs": {
+        "kind": "file",
+        "contentSha256": "1d9c5401d736edb8ba24db250e38d6914b6f19d4c97f8a4a1871a9af7d94b2d5",
+        "expectedSHA256": "1d9c5401d736edb8ba24db250e38d6914b6f19d4c97f8a4a1871a9af7d94b2d5"
+      },
+      "skills/engineering/qs-code-build": {
+        "kind": "directory",
+        "contentSha256": "29fbe60d42ff7c192783459ebe53b9a81320619b89a5927dc25f76b33fde67a6",
+        "expectedSHA256": "1f6f69fdb1a7f7ea40da39d6ec5550f27b563375778543194195c66cf78cec4d"
+      },
+      "skills/engineering/qs-code-debug": {
+        "kind": "directory",
+        "contentSha256": "8a97fcb3d80889d39f912d426f56eaa48258c561bcc596aa0765c30c30d061e0",
+        "expectedSHA256": "668d84bb138fda43bdb4d8e5ebbd08f2ade6f07e7346361565cd51ee1b8d34e5"
+      },
+      "skills/engineering/qs-deploy-release": {
+        "kind": "directory",
+        "contentSha256": "3bdc7700381cb4632c9dd71c33b6abd4982f95fed163ade2f18ee2f73b5c18e3",
+        "expectedSHA256": "3bdc7700381cb4632c9dd71c33b6abd4982f95fed163ade2f18ee2f73b5c18e3"
+      },
+      "skills/engineering/qs-flow-triage": {
+        "kind": "directory",
+        "contentSha256": "8ba0ff269922fe016b2ecdf44777b9d0cb2bd46b1e8d548f7a3f4fd8eda3715f",
+        "expectedSHA256": "8ba0ff269922fe016b2ecdf44777b9d0cb2bd46b1e8d548f7a3f4fd8eda3715f"
+      },
+      "skills/engineering/qs-git-merge": {
+        "kind": "directory",
+        "contentSha256": "871c6d9c8de1f125c1b372947284e90a09dfd8e99d35914290b8f1903cdf9edc",
+        "expectedSHA256": "871c6d9c8de1f125c1b372947284e90a09dfd8e99d35914290b8f1903cdf9edc"
+      },
+      "skills/engineering/qs-help": {
+        "kind": "directory",
+        "contentSha256": "72b7f877f48a65bea831ca2b890039d514a63db75560cf9be96ca1f6398bd8cb",
+        "expectedSHA256": "72b7f877f48a65bea831ca2b890039d514a63db75560cf9be96ca1f6398bd8cb"
+      },
+      "skills/engineering/qs-plan-clarify": {
+        "kind": "directory",
+        "contentSha256": "40103180c378037bb858040b654c678618d1b1280d08f67a03be2fc61ecbfdfb",
+        "expectedSHA256": "40103180c378037bb858040b654c678618d1b1280d08f67a03be2fc61ecbfdfb"
+      },
+      "skills/engineering/qs-plan-roadmap": {
+        "kind": "directory",
+        "contentSha256": "439a79d5e7d1ec46875f20e2b0aa89a5bf6239119dd7edbe147d80c9f511d001",
+        "expectedSHA256": "439a79d5e7d1ec46875f20e2b0aa89a5bf6239119dd7edbe147d80c9f511d001"
+      },
+      "skills/engineering/qs-plan-spec": {
+        "kind": "directory",
+        "contentSha256": "197737ec5d0ef6c62e792781fb6772e1c9d76f22dd9735361168ac7e73ca5b58",
+        "expectedSHA256": "980dc4a3740701b8ce841915b2508154f0a48fa73aad9a754dee0da4d100328b"
+      },
+      "skills/engineering/qs-review-code": {
+        "kind": "directory",
+        "contentSha256": "8171ff3f20d20f73aeae126e8a6bf96d19d694d3c11663ef1c4c11ed0b00f0e9",
+        "expectedSHA256": "dbb183ee8da74db5e5455e26408550289590faecebba9e49bb10c64388f99b46"
+      },
+      "skills/engineering/qs-setup": {
+        "kind": "directory",
+        "contentSha256": "f8a09b9ad142628259b02569d884f2a0425076f24b4babcfaf24078513bcd821",
+        "expectedSHA256": "f8a09b9ad142628259b02569d884f2a0425076f24b4babcfaf24078513bcd821"
+      },
+      "skills/internal": {
+        "kind": "directory",
+        "contentSha256": "79f432169e59b786adcc14045fc51b4bb4068dec0acc72af09e248d5ba57f89e",
+        "expectedSHA256": "0e14fcf66f1b02c5f36ae4889d6fc6c6ce75ed0489e6f8e1a9dace2b01441275"
+      },
+      "skills/productivity/qs-flow-handoff": {
+        "kind": "directory",
+        "contentSha256": "3bb1d2003ae110e42a5c1c6225bff868f6a46730f99288f58d15bbb021a20f6b",
+        "expectedSHA256": "3bb1d2003ae110e42a5c1c6225bff868f6a46730f99288f58d15bbb021a20f6b"
+      },
+      "codex/plugins/qs-specialists": {
+        "kind": "directory",
+        "contentSha256": "46675f5de24d83c4204f6d592a88b9cf2431e5d6a2356490ff59197fa464d1c7",
+        "expectedSHA256": "a7641d44017924554448309d3dea9c42b6edb678ee5fed362ee12fb685e8fdac"
+      },
+      "packages/qs-specialists": {
+        "kind": "directory",
+        "contentSha256": "7336bbf7f7e5602941fd3325eb658ec46b2669fb2d56f1452d4420cd1968909c",
+        "expectedSHA256": "bb80150bab4ec9be44830c2e7f3a75df799d5cdd9e8c5fa6bd344648af533234"
+      },
+      "pi/packages/qs-specialists": {
+        "kind": "directory",
+        "contentSha256": "685cba46e6be2dca27f805d4175292bb7decc3e2295b360c33bba650f748523e",
+        "expectedSHA256": "b5a1c135313c20e0750cfc07568e31cc3b5d96f5210d611f5eba761eed4d470f"
+      },
+      "skills/engineering/qs-code-document": {
+        "kind": "directory",
+        "contentSha256": "e9511f3cf2c0323cc97bf19054471eeeeacfdb353f4d34b63e5e036eeda3b911",
+        "expectedSHA256": "e9511f3cf2c0323cc97bf19054471eeeeacfdb353f4d34b63e5e036eeda3b911"
+      },
+      "skills/engineering/qs-deploy-prompt": {
+        "kind": "directory",
+        "contentSha256": "910ba6da18b8b27890d8bcd755961c85693a5615e1e8ee12cd68a34f8cc244fb",
+        "expectedSHA256": "ebce922d46fc043f2962ab57bf36f30845e3f680d463c56ae8e19c2a1c403eaa"
+      },
+      "skills/engineering/qs-design-prototype": {
+        "kind": "directory",
+        "contentSha256": "fd48035654aa20977b938309c09368651078b8c307991c25b06676fa16b7264f",
+        "expectedSHA256": "fd48035654aa20977b938309c09368651078b8c307991c25b06676fa16b7264f"
+      },
+      "skills/engineering/qs-plan-research": {
+        "kind": "directory",
+        "contentSha256": "0dfe71bcf7d20740b1540c70bc133f3fd11050ac16e8908b71df3410be7a0e4c",
+        "expectedSHA256": "a3a78d01c767e12aeb60442d604567c650b8c28d43e58529a14bd34f06981e0c"
+      },
+      "skills/engineering/qs-repo-cleanup": {
+        "kind": "directory",
+        "contentSha256": "d2f201d66cfbd202d36cb492ce7ce88777b365c7c1146ba360d8670bfaab179d",
+        "expectedSHA256": "d2f201d66cfbd202d36cb492ce7ce88777b365c7c1146ba360d8670bfaab179d"
+      },
+      "skills/engineering/qs-test-author": {
+        "kind": "directory",
+        "contentSha256": "98cd57e0fc1a0ef5eaca035bbed7c8a930ce544224f1ff9e1a50fa8a3177da1d",
+        "expectedSHA256": "98cd57e0fc1a0ef5eaca035bbed7c8a930ce544224f1ff9e1a50fa8a3177da1d"
+      },
+      "skills/engineering/qs-test-verify": {
+        "kind": "directory",
+        "contentSha256": "9a90e3423c0225fc22bfbbb0edea797d18c7fce06d2c6171c7a01a9f10e6883f",
+        "expectedSHA256": "9a4efdb45f17a59d66afa34bb7d2df74385c7b613c115ef9292b910878892432"
+      },
+      "skills/productivity/qs-learn-teach": {
+        "kind": "directory",
+        "contentSha256": "61834e8a1a213372eff948754abf0b697bca5fac3e51a68a2f2eaad56f11e6f5",
+        "expectedSHA256": "61834e8a1a213372eff948754abf0b697bca5fac3e51a68a2f2eaad56f11e6f5"
+      },
+      "skills/productivity/qs-skill-write": {
+        "kind": "directory",
+        "contentSha256": "2137a7f908e3581e45e71d078b3de05cda7792931c63df6c74504c8625d625cb",
+        "expectedSHA256": "2137a7f908e3581e45e71d078b3de05cda7792931c63df6c74504c8625d625cb"
+      },
+      "codex/plugins/qs-advanced": {
+        "kind": "directory",
+        "contentSha256": "a767d6cea801e321c7b0237f65bbb3311e876f2ca21fb201f8230886d57a5779",
+        "expectedSHA256": "f131b97f6dc742355eee7e5eb3bb144837d891abaaf3f38278de6428ee059ece"
+      },
+      "packages/qs-advanced": {
+        "kind": "directory",
+        "contentSha256": "cb80cf35e8f5b8f8e40b613a879afa2ab3f9d012e0d490b83469d619f321adb8",
+        "expectedSHA256": "6e26372a8435f7afda05e5419d3bc83d822df37bad70b881270ce46bbeb349c2"
+      },
+      "pi/packages/qs-advanced": {
+        "kind": "directory",
+        "contentSha256": "6f04858a8388198f0b883580b80cef06f731dfda76be52fae90ae0b1d9999d3b",
+        "expectedSHA256": "a7c4aa32d981c03dea61aaf8fff7d964362b9bdeba1023eb1e035af883dc18da"
+      },
+      "skills/advanced": {
+        "kind": "directory",
+        "contentSha256": "bfb3a1f27c92336deef63a2fa9fa9a1b331af11a9af308ff7bc4984e7f9946a9",
+        "expectedSHA256": "080d2fc4edae4d11fc1ebf38519205c9d9ae26badaafc8b5be7b779e895732df"
+      },
+      "skills/engineering/qs-blast-radius": {
+        "kind": "directory",
+        "contentSha256": "edbd83a77843acdcea64371302eec7b32baf89a50b7e169ea447de2584bb4a27",
+        "expectedSHA256": "edbd83a77843acdcea64371302eec7b32baf89a50b7e169ea447de2584bb4a27"
+      },
+      "skills/engineering/qs-create-verification-skill": {
+        "kind": "directory",
+        "contentSha256": "e336825820fbfe01641503041660e74b80b2fae8142835c138528b481b873dde",
+        "expectedSHA256": "e336825820fbfe01641503041660e74b80b2fae8142835c138528b481b873dde"
+      },
+      "skills/engineering/qs-hillclimb": {
+        "kind": "directory",
+        "contentSha256": "2dfa4153765ee67481ffb9628f4e385f962a106b93178fc81cc2b4d9ce7290bb",
+        "expectedSHA256": "2dfa4153765ee67481ffb9628f4e385f962a106b93178fc81cc2b4d9ce7290bb"
+      },
+      "skills/engineering/qs-how": {
+        "kind": "directory",
+        "contentSha256": "973ca7374fb4170c6e4fe831ca80b4a5b70274ec1da1b8bba9bf4a0c6802c0b1",
+        "expectedSHA256": "973ca7374fb4170c6e4fe831ca80b4a5b70274ec1da1b8bba9bf4a0c6802c0b1"
+      },
+      "skills/engineering/qs-maintain-verification-skill": {
+        "kind": "directory",
+        "contentSha256": "5bc225a9e8d2966f05ea20216881ae4ccb211e3d995211f56bc185bc9d3f54bf",
+        "expectedSHA256": "5bc225a9e8d2966f05ea20216881ae4ccb211e3d995211f56bc185bc9d3f54bf"
+      },
+      "skills/engineering/qs-pr-babysit": {
+        "kind": "directory",
+        "contentSha256": "4e454510d08acc3f7e77c40ac766042b454d81dde0a71a30a33abccc171a1c3c",
+        "expectedSHA256": "4e454510d08acc3f7e77c40ac766042b454d81dde0a71a30a33abccc171a1c3c"
+      },
+      "skills/engineering/qs-runtime-forensics": {
+        "kind": "directory",
+        "contentSha256": "0ee2f3966c057a87cc751a96eab78f03729199c6a6d917d82dce327e4a8cfcf8",
+        "expectedSHA256": "0ee2f3966c057a87cc751a96eab78f03729199c6a6d917d82dce327e4a8cfcf8"
+      },
+      "skills/engineering/qs-skill-eval": {
+        "kind": "directory",
+        "contentSha256": "242894afd21ae888bf2870a58335e03f4ff7bcf08fcf47c3f172b50e0f6b259b",
+        "expectedSHA256": "3f7aaecb21cd6cba6959c2fd9cfb19c4c97bba26124f93a393e08f7c50cd2311"
+      },
+      "skills/engineering/qs-trace-forensics": {
+        "kind": "directory",
+        "contentSha256": "9ede17d0c1212a986e8b3e27cabcb0ed2c0cf06b3887f558383eff372f38c39e",
+        "expectedSHA256": "9ede17d0c1212a986e8b3e27cabcb0ed2c0cf06b3887f558383eff372f38c39e"
+      },
+      "skills/engineering/qs-visual-parity": {
+        "kind": "directory",
+        "contentSha256": "29a10863e20599b70d5a1d5a61fe7c6e70617236b304c858ecb3bd611dcd4b0d",
+        "expectedSHA256": "29a10863e20599b70d5a1d5a61fe7c6e70617236b304c858ecb3bd611dcd4b0d"
+      },
+      "skills/engineering/qs-why": {
+        "kind": "directory",
+        "contentSha256": "97d8f81f9ba1896cd1b84bae3a2a3758f64f647996c86e5783284f0399cdce9f",
+        "expectedSHA256": "97d8f81f9ba1896cd1b84bae3a2a3758f64f647996c86e5783284f0399cdce9f"
+      },
+      "skills/engineering/qs-worktree-cleanup": {
+        "kind": "directory",
+        "contentSha256": "1c0d6fab753dd07ee58a1c94a31a98da701a66122938c8899fe0931c3ad905c2",
+        "expectedSHA256": "1c0d6fab753dd07ee58a1c94a31a98da701a66122938c8899fe0931c3ad905c2"
+      },
+      "codex/plugins/qs-frontend": {
+        "kind": "directory",
+        "contentSha256": "14bd2fd33db7007ce28fecee3ac365c7735a435587272e347aca03e9c8ec532f",
+        "expectedSHA256": "4fc58474f2dd680ec6c7f0fe219713183e9a32ea87e9048f86c4b46985e5a33e"
+      },
+      "packages/qs-frontend": {
+        "kind": "directory",
+        "contentSha256": "4b3fca030f524062fbf3cd0d1ecba23dee991c780f5b453c6e49972ab8e676b1",
+        "expectedSHA256": "2bf415771e938df3b361c403b6d1faa7825687fc60c34bde3bb1d3a91074ddf9"
+      },
+      "pi/packages/qs-frontend": {
+        "kind": "directory",
+        "contentSha256": "61c24fb5ff2d78ae0cf57bee3b5ca3d21ca1ba685ca2c14f58663e6ad9b9b246",
+        "expectedSHA256": "ebc2318c5d3de9c568e1e1fc2ca9c41f8e022d1a8721d4a8ab81b8cc7d4f2595"
+      },
+      "skills/engineering/qs-design-frontend": {
+        "kind": "directory",
+        "contentSha256": "72fe215320e6604377422258814d0c639dacfcf6b9bd62c7507951e32a2d2586",
+        "expectedSHA256": "72fe215320e6604377422258814d0c639dacfcf6b9bd62c7507951e32a2d2586"
+      },
+      "skills/engineering/qs-design-image-mobile": {
+        "kind": "directory",
+        "contentSha256": "05443a6db392c87e26cc763e8f395daeb858370da9571b2fb9703b35fa8962db",
+        "expectedSHA256": "05443a6db392c87e26cc763e8f395daeb858370da9571b2fb9703b35fa8962db"
+      },
+      "skills/engineering/qs-design-image-to-code": {
+        "kind": "directory",
+        "contentSha256": "d2666d4fc8d3cb620d556eaac15a02e91803ce0fd4c1cfc5d2086331d296ce21",
+        "expectedSHA256": "d2666d4fc8d3cb620d556eaac15a02e91803ce0fd4c1cfc5d2086331d296ce21"
+      },
+      "skills/engineering/qs-design-image-web": {
+        "kind": "directory",
+        "contentSha256": "96ad9471d6822fe012560c165382caddee8e43630e8cad01cf2c08ad6f155b69",
+        "expectedSHA256": "96ad9471d6822fe012560c165382caddee8e43630e8cad01cf2c08ad6f155b69"
+      },
+      "skills/frontend": {
+        "kind": "directory",
+        "contentSha256": "b5260077ba499949890880f654f54950065c4e44d5775d97cb81e55524a8bcf4",
+        "expectedSHA256": "d81ce68b756ed323c39c3ccfdbd9c539f6db79e67e70167f3c3c2d9090bd19e2"
+      },
+      "codex/plugins/qs-video": {
+        "kind": "directory",
+        "contentSha256": "45afd006ec5dd46de217ccfb582041403c20a79884a5eede569de5822b16a404",
+        "expectedSHA256": "a5aa28ce3f4a3defc7ea47d5767bdabea3ad115153953e02f46eb1a34ad48084"
+      },
+      "packages/qs-video": {
+        "kind": "directory",
+        "contentSha256": "5771b34d8c56dd7295cef796961144b291380ba347b191720a7bff0aa9332002",
+        "expectedSHA256": "b51cc7c2a5c7f491a3b6fe3b8ffad026dbb7af409c5e60b49bf95b3df63d83db"
+      },
+      "pi/packages/qs-video": {
+        "kind": "directory",
+        "contentSha256": "dd6365c986120ee68b73d28372a7102ea94651cc59ae4885f61532bef69a61e4",
+        "expectedSHA256": "8ce1035f8ba9e3527cd44d23eb7c6604462227f753a87ee5c2f6af04f472677c"
+      },
+      "skills/video/qs-video": {
+        "kind": "directory",
+        "contentSha256": "daf1faf7e079c766b2b361e856fcad24203ec185c5bcbc901f9fbd35dc1b82c5",
+        "expectedSHA256": "fba9260d91c8bbc31436355140c5250df6d620f9b4f9b349652e789b9b280545"
+      },
+      "codex/plugins/qs-execution": {
+        "kind": "directory",
+        "contentSha256": "52693d8bebc329094bf7efe530061426517a9ecd93af50b9939f3a765734a845",
+        "expectedSHA256": "ca808d201cb0d6f4ee55f3a7aae01f85268377eb6eda4f85a15217481031d2ea"
+      },
+      "packages/qs-execution": {
+        "kind": "directory",
+        "contentSha256": "a099c0bf0219d8ae3c10a5d2bcff4c2a90faefd79400bbd892adc78df03597f2",
+        "expectedSHA256": "b920b4230515d7a451e65096aceee0d50396af13c54372f02baddc65e2461c83"
+      },
+      "pi/packages/qs-execution": {
+        "kind": "directory",
+        "contentSha256": "0152df17c7891929c4cb063d08fbf90a210abab3e2cb97d851af1aead8344327",
+        "expectedSHA256": "ff6137bf946440d915e6f5e2dde1366bb1bd3f1c13497235900dfad75fda5b9f"
+      },
+      "skills/engineering/qs-unlazy": {
+        "kind": "directory",
+        "contentSha256": "9dbb8d834eef78719137b2f98341dc5cc812c76cd94ec4a21e1551e8e3fb7d16",
+        "expectedSHA256": "6008c2ff39db96c5997f47d749105682930483223dc1a610281cc6a135008308"
+      },
+      "packages/qs-skills": {
+        "kind": "directory",
+        "contentSha256": "b95b04e9ba492c66a5d0406ecf00bad734f8d41f8214e8895782688d4210ef11",
+        "expectedSHA256": "ac9c2de6a635701bab3af4c6c84f4eafc9869746f8ab429fe6ef15144acf4f55"
+      },
+      "scripts/claude-core-migration.mjs": {
+        "kind": "file",
+        "contentSha256": "f77f561d0b9dce5069ed39d2c0ef02df8fdb63c7fd8b23f0e9e855ec33e151ad",
+        "expectedSHA256": "f77f561d0b9dce5069ed39d2c0ef02df8fdb63c7fd8b23f0e9e855ec33e151ad"
+      },
+      "scripts/managed-marketplace-bootstrap.mjs": {
+        "kind": "file",
+        "contentSha256": "fff214c72a5716846c2ddc1269f6a9fefb3b7eac111099b104ac321fa438a667",
+        "expectedSHA256": "fff214c72a5716846c2ddc1269f6a9fefb3b7eac111099b104ac321fa438a667"
+      },
+      "scripts/update-skills.mjs": {
+        "kind": "file",
+        "contentSha256": "0fc64bdd849534620001144264fe50c9760bfc6683634d3aa74c9295c3be5cc0",
+        "expectedSHA256": "0fc64bdd849534620001144264fe50c9760bfc6683634d3aa74c9295c3be5cc0"
+      },
+      ".github/workflows/validate.yml": {
+        "kind": "file",
+        "contentSha256": "331e43f302823fae2202a17fd2e48a6da4793e276fb08521d264905b4da2fb41",
+        "expectedSHA256": "331e43f302823fae2202a17fd2e48a6da4793e276fb08521d264905b4da2fb41"
+      },
+      "install.sh": {
+        "kind": "file",
+        "contentSha256": "4b8b56701f20675d3d9464f53c645319e8f2ccaa3272afcf17d94ec51d49a2a5",
+        "expectedSHA256": "4b8b56701f20675d3d9464f53c645319e8f2ccaa3272afcf17d94ec51d49a2a5"
+      },
+      "scripts/install-skills.mjs": {
+        "kind": "file",
+        "contentSha256": "1ba8fd226b146d7357a8e72afe8eb084487452c57f4b2ed62bb4d0de2a248c01",
+        "expectedSHA256": "1ba8fd226b146d7357a8e72afe8eb084487452c57f4b2ed62bb4d0de2a248c01"
+      },
+      "scripts/managed-package-repair.mjs": {
+        "kind": "file",
+        "contentSha256": "3ea2e5a393e09748ba6d103a1fa5a5002f63d557a768ef9659031953dfa589ad",
+        "expectedSHA256": "3ea2e5a393e09748ba6d103a1fa5a5002f63d557a768ef9659031953dfa589ad"
+      },
+      "scripts/validate-skill-release.mjs": {
+        "kind": "file",
+        "contentSha256": "a09777989144a598cbe820a97ec8b5e66e09c8538b05705ba308035a51991a29",
+        "expectedSHA256": "a09777989144a598cbe820a97ec8b5e66e09c8538b05705ba308035a51991a29"
+      },
+      "scripts/clean-install-skills.mjs": {
+        "kind": "file",
+        "contentSha256": "ff6e3a7c29d7c992a950cc890cfe32c01804b151599f0f3a706c0d3feb1d27a4",
+        "expectedSHA256": "ff6e3a7c29d7c992a950cc890cfe32c01804b151599f0f3a706c0d3feb1d27a4"
+      }
+    },
+    "mismatchedPaths": [
+      ".claude-plugin/plugin.json",
+      "codex/plugins/qs-skills",
+      "config/skill-provenance.json",
+      "docs/skill-run-contract.md",
+      "pi/packages/qs-skills",
+      "skills/engineering/qs-code-build",
+      "skills/engineering/qs-code-debug",
+      "skills/engineering/qs-plan-spec",
+      "skills/engineering/qs-review-code",
+      "skills/internal",
+      "codex/plugins/qs-specialists",
+      "packages/qs-specialists",
+      "pi/packages/qs-specialists",
+      "skills/engineering/qs-deploy-prompt",
+      "skills/engineering/qs-plan-research",
+      "skills/engineering/qs-test-verify",
+      "codex/plugins/qs-advanced",
+      "packages/qs-advanced",
+      "pi/packages/qs-advanced",
+      "skills/advanced",
+      "skills/engineering/qs-skill-eval",
+      "codex/plugins/qs-frontend",
+      "packages/qs-frontend",
+      "pi/packages/qs-frontend",
+      "skills/frontend",
+      "codex/plugins/qs-video",
+      "packages/qs-video",
+      "pi/packages/qs-video",
+      "skills/video/qs-video",
+      "codex/plugins/qs-execution",
+      "packages/qs-execution",
+      "pi/packages/qs-execution",
+      "skills/engineering/qs-unlazy",
+      "packages/qs-skills"
+    ],
+    "note": "These are exact source mismatches in the historical adoption audit. They are not mismatches in source-review-final.json, whose selected source hashes still match."
+  },
+  "qualificationOverlay": {
+    "config/skill-provenance.json": {
+      "kind": "file",
+      "contentSha256": "9de09059ee8dfb7eb206e5f4184b251a174c452f9e36bce4326a33502468fc49",
+      "reason": "Only scoped reviewed decisions and preserved previous decisions; no source body or acceptance adoption changed."
+    }
+  },
+  "packages": {
+    "qs-skills": {
+      "obligations": {
+        "packageId": "qs-skills",
+        "publicSkills": [
+          "qs-help",
+          "qs-setup",
+          "qs-plan-clarify",
+          "qs-plan-roadmap",
+          "qs-plan-spec",
+          "qs-code-build",
+          "qs-code-debug",
+          "qs-review-code",
+          "qs-git-merge",
+          "qs-deploy-release",
+          "qs-flow-triage",
+          "qs-flow-handoff"
+        ],
+        "selectionCapabilityIds": [
+          "qs:qs-code-build",
+          "qs:qs-code-debug",
+          "qs:qs-deploy-release",
+          "qs:qs-flow-handoff",
+          "qs:qs-flow-triage",
+          "qs:qs-git-merge",
+          "qs:qs-help",
+          "qs:qs-plan-clarify",
+          "qs:qs-plan-roadmap",
+          "qs:qs-plan-spec",
+          "qs:qs-review-code",
+          "qs:qs-setup"
+        ],
+        "capabilityIds": [
+          "qs-internal:delegation",
+          "qs-internal:domain-modeling",
+          "qs-internal:module-decomposition",
+          "qs-internal:tdd-loop",
+          "qs-internal:ticket-decomposition",
+          "qs:qs-code-build",
+          "qs:qs-code-debug",
+          "qs:qs-deploy-release",
+          "qs:qs-flow-handoff",
+          "qs:qs-flow-triage",
+          "qs:qs-git-merge",
+          "qs:qs-help",
+          "qs:qs-plan-clarify",
+          "qs:qs-plan-roadmap",
+          "qs:qs-plan-spec",
+          "qs:qs-review-code",
+          "qs:qs-setup"
+        ],
+        "sourcePaths": [
+          ".github/workflows/validate.yml",
+          "codex/plugins/qs-skills",
+          "config/skill-migrations.json",
+          "config/skill-profiles.json",
+          "config/skill-provenance.json",
+          "docs/skill-run-contract.md",
+          "install.sh",
+          "packages/qs-skills",
+          "pi/packages/qs-skills",
+          "scripts/adoption-acceptance.mjs",
+          "scripts/advanced-skill-catalog.mjs",
+          "scripts/claude-core-migration.mjs",
+          "scripts/clean-install-skills.mjs",
+          "scripts/execution-skill-catalog.mjs",
+          "scripts/frontend-skill-catalog.mjs",
+          "scripts/install-skills.mjs",
+          "scripts/managed-marketplace-bootstrap.mjs",
+          "scripts/managed-package-repair.mjs",
+          "scripts/managed-skill-input.mjs",
+          "scripts/managed-skill-migration.mjs",
+          "scripts/managed-skill-paths.mjs",
+          "scripts/managed-skills.mjs",
+          "scripts/migration-filesystem.mjs",
+          "scripts/migration-native-packages.mjs",
+          "scripts/migration-owned-paths.mjs",
+          "scripts/migration-transaction.mjs",
+          "scripts/optional-command-definition.mjs",
+          "scripts/ps-skill-catalog.mjs",
+          "scripts/qs-skill-catalog.mjs",
+          "scripts/skill-collection-registry.mjs",
+          "scripts/skill-migrations.mjs",
+          "scripts/skill-selection.mjs",
+          "scripts/update-skills.mjs",
+          "scripts/validate-skill-release.mjs",
+          "scripts/video-skill-catalog.mjs",
+          "skills/engineering/qs-code-build",
+          "skills/engineering/qs-code-debug",
+          "skills/engineering/qs-deploy-release",
+          "skills/engineering/qs-flow-triage",
+          "skills/engineering/qs-git-merge",
+          "skills/engineering/qs-help",
+          "skills/engineering/qs-plan-clarify",
+          "skills/engineering/qs-plan-roadmap",
+          "skills/engineering/qs-plan-spec",
+          "skills/engineering/qs-review-code",
+          "skills/engineering/qs-setup",
+          "skills/internal",
+          "skills/productivity/qs-flow-handoff"
+        ],
+        "requiredCriteria": [
+          "AC-01",
+          "AC-03",
+          "AC-04",
+          "AC-05",
+          "AC-06",
+          "AC-08",
+          "AC-09",
+          "AC-13",
+          "AC-14",
+          "AC-15",
+          "AC-16",
+          "AC-17",
+          "AC-22",
+          "AC-23",
+          "AC-24"
+        ],
+        "requiredChecks": [
+          "package-closure",
+          "notices",
+          "behavior",
+          "native-discovery"
+        ]
+      },
+      "hostResults": {
+        "codex": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-skills."
+        },
+        "claude-code": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-skills."
+        },
+        "pi": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-skills."
+        }
+      },
+      "status": "pending",
+      "packagingValidation": {
+        "status": "passed",
+        "evidence": "tests/fixtures/lean-execution-adoption/release-preparation.json",
+        "scope": "Projection/catalog/private closure/notices integrity and recorded strict Claude validation, reused for unchanged payload bytes; not package acceptance."
+      },
+      "responseQualification": {
+        "status": "scoped",
+        "evidence": "tests/fixtures/lean-execution-adoption/core-review.json",
+        "scope": "Only named recorded response cases; no universal package behavior or actual product operation."
+      },
+      "nextEvidence": "Independently qualify the exact declared capability, criterion and host-check obligations for this source revision before rebinding any historical acceptance snapshot. A digest refresh alone cannot supply that decision."
+    },
+    "qs-specialists": {
+      "obligations": {
+        "packageId": "qs-specialists",
+        "publicSkills": [
+          "qs-plan-research",
+          "qs-design-prototype",
+          "qs-code-document",
+          "qs-test-author",
+          "qs-test-verify",
+          "qs-learn-teach",
+          "qs-skill-write",
+          "qs-deploy-prompt",
+          "qs-repo-cleanup"
+        ],
+        "selectionCapabilityIds": [
+          "qs:qs-code-document",
+          "qs:qs-deploy-prompt",
+          "qs:qs-design-prototype",
+          "qs:qs-learn-teach",
+          "qs:qs-plan-research",
+          "qs:qs-repo-cleanup",
+          "qs:qs-skill-write",
+          "qs:qs-test-author",
+          "qs:qs-test-verify"
+        ],
+        "capabilityIds": [
+          "qs:qs-code-document",
+          "qs:qs-deploy-prompt",
+          "qs:qs-design-prototype",
+          "qs:qs-learn-teach",
+          "qs:qs-plan-research",
+          "qs:qs-repo-cleanup",
+          "qs:qs-skill-write",
+          "qs:qs-test-author",
+          "qs:qs-test-verify"
+        ],
+        "sourcePaths": [
+          ".github/workflows/validate.yml",
+          "codex/plugins/qs-specialists",
+          "config/skill-migrations.json",
+          "config/skill-profiles.json",
+          "config/skill-provenance.json",
+          "docs/skill-run-contract.md",
+          "install.sh",
+          "packages/qs-specialists",
+          "pi/packages/qs-specialists",
+          "scripts/adoption-acceptance.mjs",
+          "scripts/advanced-skill-catalog.mjs",
+          "scripts/claude-core-migration.mjs",
+          "scripts/clean-install-skills.mjs",
+          "scripts/execution-skill-catalog.mjs",
+          "scripts/frontend-skill-catalog.mjs",
+          "scripts/install-skills.mjs",
+          "scripts/managed-marketplace-bootstrap.mjs",
+          "scripts/managed-package-repair.mjs",
+          "scripts/managed-skill-input.mjs",
+          "scripts/managed-skill-migration.mjs",
+          "scripts/managed-skill-paths.mjs",
+          "scripts/managed-skills.mjs",
+          "scripts/migration-filesystem.mjs",
+          "scripts/migration-native-packages.mjs",
+          "scripts/migration-owned-paths.mjs",
+          "scripts/migration-transaction.mjs",
+          "scripts/optional-command-definition.mjs",
+          "scripts/ps-skill-catalog.mjs",
+          "scripts/qs-skill-catalog.mjs",
+          "scripts/skill-collection-registry.mjs",
+          "scripts/skill-migrations.mjs",
+          "scripts/skill-selection.mjs",
+          "scripts/update-skills.mjs",
+          "scripts/validate-skill-release.mjs",
+          "scripts/video-skill-catalog.mjs",
+          "skills/engineering/qs-code-document",
+          "skills/engineering/qs-deploy-prompt",
+          "skills/engineering/qs-design-prototype",
+          "skills/engineering/qs-plan-research",
+          "skills/engineering/qs-repo-cleanup",
+          "skills/engineering/qs-test-author",
+          "skills/engineering/qs-test-verify",
+          "skills/productivity/qs-learn-teach",
+          "skills/productivity/qs-skill-write"
+        ],
+        "requiredCriteria": [
+          "AC-01",
+          "AC-02",
+          "AC-04",
+          "AC-08",
+          "AC-09",
+          "AC-13",
+          "AC-14",
+          "AC-15",
+          "AC-16",
+          "AC-17",
+          "AC-22",
+          "AC-23",
+          "AC-24"
+        ],
+        "requiredChecks": [
+          "package-closure",
+          "notices",
+          "behavior",
+          "native-discovery"
+        ]
+      },
+      "hostResults": {
+        "codex": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-specialists."
+        },
+        "claude-code": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-specialists."
+        },
+        "pi": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-specialists."
+        }
+      },
+      "status": "pending",
+      "packagingValidation": {
+        "status": "passed",
+        "evidence": "tests/fixtures/lean-execution-adoption/release-preparation.json",
+        "scope": "Projection/catalog/private closure/notices integrity and recorded strict Claude validation, reused for unchanged payload bytes; not package acceptance."
+      },
+      "responseQualification": {
+        "status": "scoped",
+        "evidence": "tests/fixtures/lean-execution-adoption/generation-review-final.json",
+        "scope": "Only named recorded response cases; no universal package behavior or actual product operation."
+      },
+      "nextEvidence": "Independently qualify the exact declared capability, criterion and host-check obligations for this source revision before rebinding any historical acceptance snapshot. A digest refresh alone cannot supply that decision."
+    },
+    "qs-advanced": {
+      "obligations": {
+        "packageId": "qs-advanced",
+        "publicSkills": [
+          "qs-how",
+          "qs-why",
+          "qs-blast-radius",
+          "qs-runtime-forensics",
+          "qs-trace-forensics",
+          "qs-create-verification-skill",
+          "qs-maintain-verification-skill",
+          "qs-skill-eval",
+          "qs-hillclimb",
+          "qs-visual-parity",
+          "qs-pr-babysit",
+          "qs-worktree-cleanup"
+        ],
+        "selectionCapabilityIds": [
+          "ps:ps-blast-radius",
+          "ps:ps-create-verification-skill",
+          "ps:ps-hillclimb",
+          "ps:ps-how",
+          "ps:ps-maintain-verification-skill",
+          "ps:ps-pr-babysit",
+          "ps:ps-runtime-forensics",
+          "ps:ps-skill-eval",
+          "ps:ps-trace-forensics",
+          "ps:ps-visual-parity",
+          "ps:ps-why",
+          "ps:ps-worktree-cleanup"
+        ],
+        "capabilityIds": [
+          "ps-internal:boundary-discipline",
+          "ps-internal:bounded-autonomous-loop",
+          "ps-internal:concurrency-ownership",
+          "ps-internal:context-discipline",
+          "ps-internal:decision-trail",
+          "ps-internal:experience-first",
+          "ps-internal:idempotent-operations",
+          "ps-internal:minimal-change",
+          "ps-internal:multi-candidate-exploration",
+          "ps-internal:outcome-oriented-execution",
+          "ps-internal:parallel-coverage",
+          "ps-internal:plain-writing",
+          "ps-internal:rerunnable-tooling",
+          "ps-internal:structural-enforcement",
+          "ps-internal:type-system-discipline",
+          "ps-internal:typescript-discipline",
+          "ps:ps-blast-radius",
+          "ps:ps-create-verification-skill",
+          "ps:ps-hillclimb",
+          "ps:ps-how",
+          "ps:ps-maintain-verification-skill",
+          "ps:ps-pr-babysit",
+          "ps:ps-runtime-forensics",
+          "ps:ps-skill-eval",
+          "ps:ps-trace-forensics",
+          "ps:ps-visual-parity",
+          "ps:ps-why",
+          "ps:ps-worktree-cleanup"
+        ],
+        "sourcePaths": [
+          ".github/workflows/validate.yml",
+          "codex/plugins/qs-advanced",
+          "config/skill-migrations.json",
+          "config/skill-profiles.json",
+          "config/skill-provenance.json",
+          "docs/skill-run-contract.md",
+          "install.sh",
+          "packages/qs-advanced",
+          "pi/packages/qs-advanced",
+          "scripts/adoption-acceptance.mjs",
+          "scripts/advanced-skill-catalog.mjs",
+          "scripts/claude-core-migration.mjs",
+          "scripts/clean-install-skills.mjs",
+          "scripts/execution-skill-catalog.mjs",
+          "scripts/frontend-skill-catalog.mjs",
+          "scripts/install-skills.mjs",
+          "scripts/managed-marketplace-bootstrap.mjs",
+          "scripts/managed-package-repair.mjs",
+          "scripts/managed-skill-input.mjs",
+          "scripts/managed-skill-migration.mjs",
+          "scripts/managed-skill-paths.mjs",
+          "scripts/managed-skills.mjs",
+          "scripts/migration-filesystem.mjs",
+          "scripts/migration-native-packages.mjs",
+          "scripts/migration-owned-paths.mjs",
+          "scripts/migration-transaction.mjs",
+          "scripts/optional-command-definition.mjs",
+          "scripts/ps-skill-catalog.mjs",
+          "scripts/qs-skill-catalog.mjs",
+          "scripts/skill-collection-registry.mjs",
+          "scripts/skill-migrations.mjs",
+          "scripts/skill-selection.mjs",
+          "scripts/update-skills.mjs",
+          "scripts/validate-skill-release.mjs",
+          "scripts/video-skill-catalog.mjs",
+          "skills/advanced",
+          "skills/engineering/qs-blast-radius",
+          "skills/engineering/qs-create-verification-skill",
+          "skills/engineering/qs-hillclimb",
+          "skills/engineering/qs-how",
+          "skills/engineering/qs-maintain-verification-skill",
+          "skills/engineering/qs-pr-babysit",
+          "skills/engineering/qs-runtime-forensics",
+          "skills/engineering/qs-skill-eval",
+          "skills/engineering/qs-trace-forensics",
+          "skills/engineering/qs-visual-parity",
+          "skills/engineering/qs-why",
+          "skills/engineering/qs-worktree-cleanup"
+        ],
+        "requiredCriteria": [
+          "AC-01",
+          "AC-07",
+          "AC-08",
+          "AC-09",
+          "AC-11",
+          "AC-12",
+          "AC-13",
+          "AC-14",
+          "AC-15",
+          "AC-16",
+          "AC-17",
+          "AC-22",
+          "AC-23",
+          "AC-24"
+        ],
+        "requiredChecks": [
+          "package-closure",
+          "notices",
+          "behavior",
+          "native-discovery"
+        ]
+      },
+      "hostResults": {
+        "codex": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-advanced."
+        },
+        "claude-code": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-advanced."
+        },
+        "pi": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-advanced."
+        }
+      },
+      "status": "pending",
+      "packagingValidation": {
+        "status": "passed",
+        "evidence": "tests/fixtures/lean-execution-adoption/release-preparation.json",
+        "scope": "Projection/catalog/private closure/notices integrity and recorded strict Claude validation, reused for unchanged payload bytes; not package acceptance."
+      },
+      "responseQualification": {
+        "status": "scoped",
+        "evidence": "tests/fixtures/lean-execution-adoption/package-review.json",
+        "scope": "Only named recorded response cases; no universal package behavior or actual product operation."
+      },
+      "nextEvidence": "Independently qualify the exact declared capability, criterion and host-check obligations for this source revision before rebinding any historical acceptance snapshot. A digest refresh alone cannot supply that decision."
+    },
+    "qs-frontend": {
+      "obligations": {
+        "packageId": "qs-frontend",
+        "publicSkills": [
+          "qs-design-frontend",
+          "qs-design-image-web",
+          "qs-design-image-mobile",
+          "qs-design-image-to-code"
+        ],
+        "selectionCapabilityIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:image-to-code",
+          "contributor:imagegen-frontend-mobile",
+          "contributor:imagegen-frontend-web",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects"
+        ],
+        "capabilityIds": [
+          "contributor:design-taste-frontend",
+          "contributor:high-end-visual-design",
+          "contributor:image-to-code",
+          "contributor:imagegen-frontend-mobile",
+          "contributor:imagegen-frontend-web",
+          "contributor:minimalist-ui",
+          "contributor:redesign-existing-projects",
+          "frontend-internal:brief",
+          "frontend-internal:cinematic-landing",
+          "frontend-internal:design-direction",
+          "frontend-internal:dimensional-style",
+          "frontend-internal:implementation",
+          "frontend-internal:media-recipes",
+          "frontend-internal:mobile-images",
+          "frontend-internal:motion-recipes",
+          "frontend-internal:prompt-construction",
+          "frontend-internal:redesign",
+          "frontend-internal:restrained-style",
+          "frontend-internal:web-images",
+          "qs:qs-design-frontend",
+          "qs:qs-design-image-mobile",
+          "qs:qs-design-image-to-code",
+          "qs:qs-design-image-web"
+        ],
+        "sourcePaths": [
+          ".github/workflows/validate.yml",
+          "codex/plugins/qs-frontend",
+          "config/skill-migrations.json",
+          "config/skill-profiles.json",
+          "config/skill-provenance.json",
+          "docs/skill-run-contract.md",
+          "install.sh",
+          "packages/qs-frontend",
+          "pi/packages/qs-frontend",
+          "scripts/adoption-acceptance.mjs",
+          "scripts/advanced-skill-catalog.mjs",
+          "scripts/claude-core-migration.mjs",
+          "scripts/clean-install-skills.mjs",
+          "scripts/execution-skill-catalog.mjs",
+          "scripts/frontend-skill-catalog.mjs",
+          "scripts/install-skills.mjs",
+          "scripts/managed-marketplace-bootstrap.mjs",
+          "scripts/managed-package-repair.mjs",
+          "scripts/managed-skill-input.mjs",
+          "scripts/managed-skill-migration.mjs",
+          "scripts/managed-skill-paths.mjs",
+          "scripts/managed-skills.mjs",
+          "scripts/migration-filesystem.mjs",
+          "scripts/migration-native-packages.mjs",
+          "scripts/migration-owned-paths.mjs",
+          "scripts/migration-transaction.mjs",
+          "scripts/optional-command-definition.mjs",
+          "scripts/ps-skill-catalog.mjs",
+          "scripts/qs-skill-catalog.mjs",
+          "scripts/skill-collection-registry.mjs",
+          "scripts/skill-migrations.mjs",
+          "scripts/skill-selection.mjs",
+          "scripts/update-skills.mjs",
+          "scripts/validate-skill-release.mjs",
+          "scripts/video-skill-catalog.mjs",
+          "skills/engineering/qs-design-frontend",
+          "skills/engineering/qs-design-image-mobile",
+          "skills/engineering/qs-design-image-to-code",
+          "skills/engineering/qs-design-image-web",
+          "skills/frontend"
+        ],
+        "requiredCriteria": [
+          "AC-01",
+          "AC-02",
+          "AC-08",
+          "AC-09",
+          "AC-10",
+          "AC-13",
+          "AC-14",
+          "AC-15",
+          "AC-16",
+          "AC-17",
+          "AC-20",
+          "AC-22",
+          "AC-23",
+          "AC-24"
+        ],
+        "requiredChecks": [
+          "package-closure",
+          "notices",
+          "behavior",
+          "native-discovery"
+        ]
+      },
+      "hostResults": {
+        "codex": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-frontend."
+        },
+        "claude-code": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-frontend."
+        },
+        "pi": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-frontend."
+        }
+      },
+      "status": "pending",
+      "packagingValidation": {
+        "status": "passed",
+        "evidence": "tests/fixtures/lean-execution-adoption/release-preparation.json",
+        "scope": "Projection/catalog/private closure/notices integrity and recorded strict Claude validation, reused for unchanged payload bytes; not package acceptance."
+      },
+      "responseQualification": {
+        "status": "scoped",
+        "evidence": "tests/fixtures/lean-execution-adoption/package-review.json",
+        "scope": "Only named recorded response cases; no universal package behavior or actual product operation."
+      },
+      "nextEvidence": "Independently qualify the exact declared capability, criterion and host-check obligations for this source revision before rebinding any historical acceptance snapshot. A digest refresh alone cannot supply that decision."
+    },
+    "qs-video": {
+      "obligations": {
+        "packageId": "qs-video",
+        "publicSkills": [
+          "qs-video"
+        ],
+        "selectionCapabilityIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use"
+        ],
+        "capabilityIds": [
+          "contributor:hyperframes",
+          "contributor:hyperframes-animation",
+          "contributor:hyperframes-audio",
+          "contributor:hyperframes-cli",
+          "contributor:hyperframes-core",
+          "contributor:hyperframes-creative",
+          "contributor:hyperframes-keyframes",
+          "contributor:hyperframes-registry",
+          "contributor:media-use",
+          "qs:qs-video",
+          "video-internal:embedded-captions",
+          "video-internal:faceless-explainer",
+          "video-internal:figma",
+          "video-internal:general-video",
+          "video-internal:hyperframes",
+          "video-internal:hyperframes-animation",
+          "video-internal:hyperframes-audio",
+          "video-internal:hyperframes-cli",
+          "video-internal:hyperframes-core",
+          "video-internal:hyperframes-creative",
+          "video-internal:hyperframes-keyframes",
+          "video-internal:hyperframes-registry",
+          "video-internal:hyperframes-studio",
+          "video-internal:media-use",
+          "video-internal:motion-graphics",
+          "video-internal:music-to-video",
+          "video-internal:pr-to-video",
+          "video-internal:product-launch-video",
+          "video-internal:remotion-to-hyperframes",
+          "video-internal:slideshow",
+          "video-internal:talking-head-recut"
+        ],
+        "sourcePaths": [
+          ".github/workflows/validate.yml",
+          "codex/plugins/qs-video",
+          "config/skill-migrations.json",
+          "config/skill-profiles.json",
+          "config/skill-provenance.json",
+          "docs/skill-run-contract.md",
+          "install.sh",
+          "packages/qs-video",
+          "pi/packages/qs-video",
+          "scripts/adoption-acceptance.mjs",
+          "scripts/advanced-skill-catalog.mjs",
+          "scripts/claude-core-migration.mjs",
+          "scripts/clean-install-skills.mjs",
+          "scripts/execution-skill-catalog.mjs",
+          "scripts/frontend-skill-catalog.mjs",
+          "scripts/install-skills.mjs",
+          "scripts/managed-marketplace-bootstrap.mjs",
+          "scripts/managed-package-repair.mjs",
+          "scripts/managed-skill-input.mjs",
+          "scripts/managed-skill-migration.mjs",
+          "scripts/managed-skill-paths.mjs",
+          "scripts/managed-skills.mjs",
+          "scripts/migration-filesystem.mjs",
+          "scripts/migration-native-packages.mjs",
+          "scripts/migration-owned-paths.mjs",
+          "scripts/migration-transaction.mjs",
+          "scripts/optional-command-definition.mjs",
+          "scripts/ps-skill-catalog.mjs",
+          "scripts/qs-skill-catalog.mjs",
+          "scripts/skill-collection-registry.mjs",
+          "scripts/skill-migrations.mjs",
+          "scripts/skill-selection.mjs",
+          "scripts/update-skills.mjs",
+          "scripts/validate-skill-release.mjs",
+          "scripts/video-skill-catalog.mjs",
+          "skills/video/qs-video"
+        ],
+        "requiredCriteria": [
+          "AC-01",
+          "AC-02",
+          "AC-08",
+          "AC-09",
+          "AC-13",
+          "AC-14",
+          "AC-15",
+          "AC-16",
+          "AC-17",
+          "AC-18",
+          "AC-19",
+          "AC-20",
+          "AC-22",
+          "AC-23",
+          "AC-24"
+        ],
+        "requiredChecks": [
+          "package-closure",
+          "notices",
+          "behavior",
+          "native-discovery",
+          "video-runtime"
+        ]
+      },
+      "hostResults": {
+        "codex": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-video."
+        },
+        "claude-code": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-video."
+        },
+        "pi": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-video."
+        }
+      },
+      "status": "pending",
+      "packagingValidation": {
+        "status": "passed",
+        "evidence": "tests/fixtures/lean-execution-adoption/release-preparation.json",
+        "scope": "Projection/catalog/private closure/notices integrity and recorded strict Claude validation, reused for unchanged payload bytes; not package acceptance."
+      },
+      "responseQualification": {
+        "status": "scoped",
+        "evidence": "tests/fixtures/lean-execution-adoption/package-review.json",
+        "scope": "Only named recorded response cases; no universal package behavior or actual product operation."
+      },
+      "nextEvidence": "Independently qualify the exact declared capability, criterion and host-check obligations for this source revision before rebinding any historical acceptance snapshot. A digest refresh alone cannot supply that decision."
+    },
+    "qs-execution": {
+      "obligations": {
+        "packageId": "qs-execution",
+        "publicSkills": [
+          "qs-unlazy"
+        ],
+        "selectionCapabilityIds": [
+          "contributor:unlazy"
+        ],
+        "capabilityIds": [
+          "contributor:unlazy",
+          "execution-internal:unlazy",
+          "qs:qs-unlazy"
+        ],
+        "sourcePaths": [
+          ".github/workflows/validate.yml",
+          "codex/plugins/qs-execution",
+          "config/skill-migrations.json",
+          "config/skill-profiles.json",
+          "config/skill-provenance.json",
+          "docs/skill-run-contract.md",
+          "install.sh",
+          "packages/qs-execution",
+          "pi/packages/qs-execution",
+          "scripts/adoption-acceptance.mjs",
+          "scripts/advanced-skill-catalog.mjs",
+          "scripts/claude-core-migration.mjs",
+          "scripts/clean-install-skills.mjs",
+          "scripts/execution-skill-catalog.mjs",
+          "scripts/frontend-skill-catalog.mjs",
+          "scripts/install-skills.mjs",
+          "scripts/managed-marketplace-bootstrap.mjs",
+          "scripts/managed-package-repair.mjs",
+          "scripts/managed-skill-input.mjs",
+          "scripts/managed-skill-migration.mjs",
+          "scripts/managed-skill-paths.mjs",
+          "scripts/managed-skills.mjs",
+          "scripts/migration-filesystem.mjs",
+          "scripts/migration-native-packages.mjs",
+          "scripts/migration-owned-paths.mjs",
+          "scripts/migration-transaction.mjs",
+          "scripts/optional-command-definition.mjs",
+          "scripts/ps-skill-catalog.mjs",
+          "scripts/qs-skill-catalog.mjs",
+          "scripts/skill-collection-registry.mjs",
+          "scripts/skill-migrations.mjs",
+          "scripts/skill-selection.mjs",
+          "scripts/update-skills.mjs",
+          "scripts/validate-skill-release.mjs",
+          "scripts/video-skill-catalog.mjs",
+          "skills/engineering/qs-unlazy"
+        ],
+        "requiredCriteria": [
+          "AC-01",
+          "AC-08",
+          "AC-09",
+          "AC-13",
+          "AC-14",
+          "AC-15",
+          "AC-16",
+          "AC-17",
+          "AC-21",
+          "AC-22",
+          "AC-23",
+          "AC-24"
+        ],
+        "requiredChecks": [
+          "package-closure",
+          "notices",
+          "behavior",
+          "native-discovery",
+          "unlazy-runtime"
+        ]
+      },
+      "hostResults": {
+        "codex": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-execution."
+        },
+        "claude-code": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-execution."
+        },
+        "pi": {
+          "status": "pending",
+          "observedRejection": "Acceptance source changed: codex/plugins/qs-execution."
+        }
+      },
+      "status": "pending",
+      "packagingValidation": {
+        "status": "passed",
+        "evidence": "tests/fixtures/lean-execution-adoption/release-preparation.json",
+        "scope": "Projection/catalog/private closure/notices integrity and recorded strict Claude validation, reused for unchanged payload bytes; not package acceptance."
+      },
+      "responseQualification": {
+        "status": "scoped",
+        "evidence": "tests/fixtures/lean-execution-adoption/package-review.json",
+        "scope": "Only named recorded response cases; no universal package behavior or actual product operation."
+      },
+      "nextEvidence": "Independently qualify the exact declared capability, criterion and host-check obligations for this source revision before rebinding any historical acceptance snapshot. A digest refresh alone cannot supply that decision."
+    }
+  },
+  "closureAcceptance": [
+    {
+      "owner": "qs-video",
+      "status": "unknown",
+      "adoptedRevision": null
+    },
+    {
+      "owner": "qs-unlazy",
+      "status": "unknown",
+      "adoptedRevision": null
+    }
+  ],
+  "remaining": {
+    "sourceAdoption": "pending",
+    "fullPackageAcceptance": "pending for all six packages; 18 observed stale-receipt rejections",
+    "efficiency": "inconclusive; unchanged evaluation-disposition.json",
+    "publication": "not authorized or performed",
+    "installedHosts": "separate LEX-14..16, not authorized or performed; no selected target homes"
+  },
+  "testStrategy": "Evidence/metadata validation: exact source/evidence hashes, portable package-source bindings, original decision preservation and observed fail-closed historical receipt checks. No manufactured TDD RED and no repeated model trials."
+}
