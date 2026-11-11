@@ -1,0 +1,681 @@
+{
+  "kind": "independent-blinded-core-behavior-review",
+  "reviewer": "core_behavior_review fresh-context read-only helper",
+  "initialRatings": [
+    {
+      "id": "sample-01",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-02",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-03",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-04",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-05",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-06",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-07",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-08",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-09",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-10",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-11",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-12",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-13",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-14",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "sample-15",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-16",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-17",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-18",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "sample-19",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-20",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-21",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-22",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-23",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-24",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-25",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-26",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-27",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-28",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-29",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-30",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-31",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-32",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-33",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-34",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-35",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-36",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "correction": {
+    "samples": [
+      "sample-04",
+      "sample-05"
+    ],
+    "reason": "Initial reviewer imposed explicit settings recital absent from frozen A8. Both explanation-only responses propose no settings change and have no proposed actions. Reviewer corrected only those ratings before unblinding; raw responses unchanged."
+  },
+  "finalRatings": [
+    {
+      "id": "sample-01",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-02",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-03",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-04",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-05",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-06",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-07",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-08",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-09",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-10",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-11",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-12",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-13",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-14",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "sample-15",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-16",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-17",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-18",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "sample-19",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-20",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-21",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-22",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-23",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-24",
+      "passed": false,
+      "scores": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "sample-25",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-26",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-27",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-28",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-29",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-30",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "sample-31",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-32",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-33",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-34",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-35",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "sample-36",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "failures": {
+    "sample-14": "L3 missing prerequisite outcomes or explicit dependency-evidence gap",
+    "sample-18": "L3 missing prerequisite outcomes or explicit dependency-evidence gap",
+    "sample-20": "L4 mandatory parent verification ambiguous",
+    "sample-22": "L4 mandatory parent verification ambiguous",
+    "sample-24": "L4 mandatory parent verification ambiguous"
+  },
+  "summary": {
+    "control-pilot": {
+      "samples": 18,
+      "passed": 13
+    },
+    "candidate-pilot": {
+      "samples": 18,
+      "passed": 18
+    }
+  },
+  "scope": "Core source behavior only. Separate control/candidate pilot order is not the controlled interleaved efficacy comparison. No efficiency, publication or installed-host acceptance."
+}

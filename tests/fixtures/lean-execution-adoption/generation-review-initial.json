@@ -1,0 +1,62 @@
+{
+  "kind": "independent-generation-response-review",
+  "reviewer": "generation_behavior_review",
+  "ratings": [
+    {
+      "id": "G1",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G2",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G3",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G4",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G5",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G6",
+      "passed": false,
+      "scores": [
+        1,
+        1,
+        2
+      ]
+    }
+  ],
+  "finding": "G6 emits a copy-ready qs-flow-handoff recovery prompt without verified installed availability. Catalog/failure-route eligibility is insufficient.",
+  "scope": "Response behavior only; original outputs retained."
+}

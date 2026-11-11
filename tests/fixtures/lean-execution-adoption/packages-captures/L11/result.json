@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "L11",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] verified — Assess supplied context (weight 20%).\n- [ ] blocked — Validate trace evidence and diagnosis (weight 80%).\n\nStage: Context assessment | Stage estimate: ~0% | Overall estimate: ~0% | active — Scope is response-only; no operations are authorized. Input needed: none for explaining the method.\n\nStage: Trace validation | Stage estimate: ~0% | Overall estimate: ~20% | blocked — Context assessment is verified against the supplied observations; underlying evidence is absent. Input needed: the existing redacted evidence package described below.\n\nStatus: Input required\nSkills used: /qs-trace-forensics\nOutcome: The hypothesis remains unverified. The contradiction must survive evidence reduction, the stale worker return cannot validate the current revision, and the missing surface does not count as passed.\nSpecs: Not located\n\nReduce evidence around the exact diagnostic question. Retain source pointers, capture/build identity, revision, sampling method, execution order, and conflicting observations alongside dominant spans. Validate each reduced claim against its cited source; a summary alone does not establish causality. Omit secrets and sensitive payloads.\n\nPreserve the attributed contradiction explicitly. Check whether it concerns the same capture, time window, revision, population, and measurement method as the supporting summary. Test competing explanations with an existing discriminating observation. Until that comparison is possible, report the conflict and uncertainty without selecting a causal explanation.\n\nTreat the worker report as evidence about its named stale revision only. Do not relabel it as `fixture-r1` or count its checks toward current verification. Reopen any conclusion that depended on it; retain independently valid evidence. A proposed revalidation would compare its decisive claims with matching sources and captures, not repeat unaffected work.\n\nThe missing surface is **unverified/blocked**, never passed. Skipping it earns no completion credit; removing it from scope requires an explicit justification. No actual check results were supplied. The artifact, content hash, capture identity, tool/version, time range, baseline, source mapping, and exact contradictory observation remain unavailable. `fixture-r1` identifies the supplied repository context, not a verified trace build.\n\nInput needed: Provide one existing redacted evidence package containing the artifact and provenance, supporting summary and contradictory source references, worker report with its revision, and available evidence for the missing surface. Preserve the original artifact unchanged. No new live collection is authorized.\n\nWork summary:\n- Finished — Explained evidence reduction, contradiction handling, stale-return limits, and missing-surface status against the frozen instructions. Material output: this explanation; no operations or configuration changes occurred.\n- Next — None verified from the supplied task history; specifications were not supplied and no tracker was selected. Current-root validation remains blocked on evidence.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "5efca05f2b622a3f21a0d3cc617629fc810e8337f00c5857d12c3a90d9b53d8c",
+  "instructionSHA256": "035aadb8e46c871a69436d51fea8b5e11846ced06f995b969b0b7ba81cb95624",
+  "usage": [
+    {
+      "input_tokens": 27938,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1049,
+      "reasoning_output_tokens": 443,
+      "total_tokens": 28987
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

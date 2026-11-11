@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P9",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: The standalone build is ~85% complete; verification remains unfinished.\nSpecs: Not located\n\n- [x] Implementation — verified, weight 70, 100% complete per supplied evidence.\n- [ ] Verification — active, weight 30, ~50% complete; remaining checks are unverified.\n\nStage: Verification | Stage estimate: ~50% | Overall estimate: ~85% | active — supplied observations show partial verification; no process is confirmed running. Input needed: remaining check results.\n\nCalculation: (70 × 100% + 30 × 50%) / 100 = 85%. Git and Release are outside this standalone root’s scope and denominator.\n\nWork summary:\n- Finished — implementation milestone verified by the fixture; individual check results and material outputs were not supplied.\n- Next — remaining build verification — pending — retain within this root and assess the remaining check results. Check names and outcomes are missing.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "aea15985a83d7e95679d4c4ac0f0160fafc279518852fa0803adcf27db88d908",
+  "instructionSHA256": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+  "usage": [
+    {
+      "input_tokens": 28363,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 517,
+      "reasoning_output_tokens": 281,
+      "total_tokens": 28880
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

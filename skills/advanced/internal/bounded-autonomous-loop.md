@@ -14,6 +14,7 @@ Use when the user requested an iterative outcome and the root has an explicit bu
 2. Perform one bounded unit, validate its result, and update the remaining budget.
 3. Optional helpers may run independent bounded units when available and inherit the parent model.
 4. Check cancellation, authority, and stop conditions before every next unit.
+5. Diagnose repeated attempts that add no evidence before another repair; expected TDD RED is not a failed repair. Keep failures and decisive diagnostics rather than retrying them away. Preserve configured settings and explicit supported budgets, and report missing usage as unmeasured; lower effort or fewer completed outcomes is not proof of efficiency.
 
 ## Stop conditions
 

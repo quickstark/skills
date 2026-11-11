@@ -14,6 +14,7 @@ Use when the scope has independent evidence partitions, each partition has a cle
 2. Assign each partition a bounded return shape, exact source revision or content hash, and prohibit mutation. Measurement briefs also specify sample count, sample definition, and execution order; returned evidence must record these same bindings.
 3. When the host provides subagents, give each partition to a concurrent read-only helper started with a fresh context window, not a fork of the parent conversation; helpers inherit the parent model and receive context pointers rather than copied history. Without subagent support, cover the same partitions serially in the root.
 4. The root validates returned bindings, overlaps, contradictions, and missing coverage before synthesis. Reject stale revisions, mismatched sampling methods or order, missing workers, and unsupported success claims as coverage gaps; rerun only within the declared budget. A gap is not a pass.
+5. Each brief includes one outcome, scope/exclusions, starting source pointers, immutable identity, acceptance standard and the prerequisite consumed by each dependency. Return a failed partition with identity, reason, decisive evidence and affected scope. Preserve unaffected validated partitions; reopen those invalidated by input or environment changes, and retain root verification.
 
 ## Stop conditions
 

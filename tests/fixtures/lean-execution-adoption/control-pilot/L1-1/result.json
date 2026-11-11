@@ -1,0 +1,25 @@
+{
+  "scenario": "L1",
+  "repetition": 1,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — explain execution and verification strategy (weight: 100%; explanation only).\n\nStage: Execution choice | Stage estimate: ~100% | Overall estimate: ~100% | verified — explanation complete from supplied observations; implementation and checks were not performed. Input needed: none.\n\nStatus: Complete\nSkills used: /qs-code-build\nOutcome: Propose serial execution inside the owning build root. One file and one focused check provide no independent units for delegation. Keep the default standard effort and brief report; preserve configured model, reasoning, sandbox, and approvals.\nSpecs: Not located\n\nProposed execution and verification:\n1. Confirm the target file, exact replacement text, repository instructions, and existing dirty state before editing. These details were not supplied.\n2. Inspect the existing focused check. If it provides a stable assertion for the message, use internal TDD: change the expectation, confirm the intended failure, apply the message change, and rerun. Otherwise choose and explain a validation strategy from the actual coverage; do not manufacture a failing test.\n3. Run the focused check and repository-required wider validation. Exercise the caller if the focused check does not establish the displayed message. Inspect the final diff for scope, correctness, secrets, and unrelated changes. Review and repair remain inside this root.\n\nWork summary:\n- Finished — explained serial execution and necessary verification. No files changed, checks run, or artifacts created; no pass or failure results are available.\n- Next — None verified from the supplied observations and task history; no external tracker was selected.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "ce2c368d107f92139bc0e616bf35c70a3b6750eb0f7836cf9aa01f5fe53bd941",
+  "sourceSHA256": "1e979f921798bad4cd5dbc1aee3740f1c06fbef667261121e4fee3cae61f555a",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29046,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 849,
+      "reasoning_output_tokens": 491,
+      "total_tokens": 29895
+    }
+  ]
+}

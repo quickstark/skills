@@ -11,9 +11,9 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | Target / role | Package / owners | Baseline stable IDs | Decision |
 | --- | --- | --- | --- |
 | `boundary-discipline` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:boundary-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `bounded-autonomous-loop` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:bounded-autonomous-loop` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `bounded-autonomous-loop` / private | `qs-advanced` / `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:bounded-autonomous-loop` | pending (no revision claimed) |
 | `concurrency-ownership` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-skill-eval`, `qs-hillclimb`, `qs-pr-babysit` | `ps-internal:concurrency-ownership` | pending (no revision claimed) |
-| `context-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit` | `ps-internal:context-discipline` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `context-discipline` / private | `qs-advanced` / `qs-how`, `qs-why`, `qs-blast-radius`, `qs-runtime-forensics`, `qs-trace-forensics`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit` | `ps-internal:context-discipline` | pending (no revision claimed) |
 | `decision-trail` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-skill-eval`, `qs-hillclimb`, `qs-visual-parity`, `qs-pr-babysit`, `qs-worktree-cleanup` | `ps-internal:decision-trail` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `experience-first` / private | `qs-advanced` / `qs-visual-parity`, `qs-hillclimb` | `ps-internal:experience-first` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `idempotent-operations` / private | `qs-advanced` / `qs-create-verification-skill`, `qs-maintain-verification-skill`, `qs-worktree-cleanup` | `ps-internal:idempotent-operations` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -31,14 +31,14 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `cinematic-landing` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `ddfe859ffa6eb5bf307ac28581f3497b5172173a` |
 | `design-direction` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-web`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:imagegen-frontend-web`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `dimensional-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `implementation` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `implementation` / private | `qs-frontend` / `qs-design-frontend`, `qs-design-image-to-code` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:image-to-code`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | pending (no revision claimed) |
 | `media-recipes` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `ddfe859ffa6eb5bf307ac28581f3497b5172173a` |
-| `mobile-images` / private | `qs-frontend` / `qs-design-image-mobile` | `contributor:imagegen-frontend-mobile` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `mobile-images` / private | `qs-frontend` / `qs-design-image-mobile` | `contributor:imagegen-frontend-mobile` | pending (no revision claimed) |
 | `motion-recipes` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `ddfe859ffa6eb5bf307ac28581f3497b5172173a` |
 | `prompt-construction` / private | `qs-frontend` / `qs-design-image-web`, `qs-design-image-mobile`, `qs-design-image-to-code` | `contributor:image-to-code`, `contributor:imagegen-frontend-mobile`, `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `redesign` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `restrained-style` / private | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `web-images` / private | `qs-frontend` / `qs-design-image-web` | `contributor:imagegen-frontend-web` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `web-images` / private | `qs-frontend` / `qs-design-image-web` | `contributor:imagegen-frontend-web` | pending (no revision claimed) |
 | `delegation` / private | `qs-skills` / `qs-code-build`, `qs-review-code`, `qs-plan-spec` | `qs-internal:delegation` | pending (no revision claimed) |
 | `domain-modeling` / private | `qs-skills` / `qs-plan-clarify`, `qs-plan-spec`, `qs-review-code` | `qs-internal:domain-modeling` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `module-decomposition` / private | `qs-skills` / `qs-plan-spec`, `qs-code-build`, `qs-review-code` | `qs-internal:module-decomposition` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -67,10 +67,10 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `talking-head-recut` / private | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-blast-radius` / public | `qs-advanced` / `qs-blast-radius` | `ps:ps-blast-radius` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-code-build` / public | `qs-skills` / `qs-code-build` | `qs:qs-code-build` | pending (no revision claimed) |
-| `qs-code-debug` / public | `qs-skills` / `qs-code-debug` | `qs:qs-code-debug` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-code-debug` / public | `qs-skills` / `qs-code-debug` | `qs:qs-code-debug` | pending (no revision claimed) |
 | `qs-code-document` / public | `qs-specialists` / `qs-code-document` | `qs:qs-code-document` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-create-verification-skill` / public | `qs-advanced` / `qs-create-verification-skill` | `ps:ps-create-verification-skill` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-deploy-prompt` / public | `qs-specialists` / `qs-deploy-prompt` | `qs:qs-deploy-prompt` | retained-baseline `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-deploy-prompt` / public | `qs-specialists` / `qs-deploy-prompt` | `qs:qs-deploy-prompt` | pending (no revision claimed) |
 | `qs-deploy-release` / public | `qs-skills` / `qs-deploy-release` | `qs:qs-deploy-release` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-design-frontend` / public | `qs-frontend` / `qs-design-frontend` | `contributor:design-taste-frontend`, `contributor:high-end-visual-design`, `contributor:minimalist-ui`, `contributor:redesign-existing-projects` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-design-image-mobile` / public | `qs-frontend` / `qs-design-image-mobile` | `contributor:imagegen-frontend-mobile` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -94,13 +94,13 @@ Target decisions remain explicit: pending/unknown make no revision claim; review
 | `qs-review-code` / public | `qs-skills` / `qs-review-code` | `qs:qs-review-code` | pending (no revision claimed) |
 | `qs-runtime-forensics` / public | `qs-advanced` / `qs-runtime-forensics` | `ps:ps-runtime-forensics` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-setup` / public | `qs-skills` / `qs-setup` | `contributor:find-skills`, `qs:qs-setup` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-skill-eval` / public | `qs-advanced` / `qs-skill-eval` | `ps:ps-skill-eval` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-skill-eval` / public | `qs-advanced` / `qs-skill-eval` | `ps:ps-skill-eval` | pending (no revision claimed) |
 | `qs-skill-write` / public | `qs-specialists` / `qs-skill-write` | `qs:qs-skill-write` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-test-author` / public | `qs-specialists` / `qs-test-author` | `qs:qs-test-author` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-test-verify` / public | `qs-specialists` / `qs-test-verify` | `qs:qs-test-verify` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-test-verify` / public | `qs-specialists` / `qs-test-verify` | `qs:qs-test-verify` | pending (no revision claimed) |
 | `qs-trace-forensics` / public | `qs-advanced` / `qs-trace-forensics` | `ps:ps-trace-forensics` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-unlazy` / public | `qs-execution` / `qs-unlazy` | `contributor:unlazy` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
-| `qs-video` / public | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
+| `qs-unlazy` / public | `qs-execution` / `qs-unlazy` | `contributor:unlazy` | pending (no revision claimed) |
+| `qs-video` / public | `qs-video` / `qs-video` | `contributor:hyperframes`, `contributor:hyperframes-animation`, `contributor:hyperframes-audio`, `contributor:hyperframes-cli`, `contributor:hyperframes-core`, `contributor:hyperframes-creative`, `contributor:hyperframes-keyframes`, `contributor:hyperframes-registry`, `contributor:media-use` | pending (no revision claimed) |
 | `qs-visual-parity` / public | `qs-advanced` / `qs-visual-parity` | `ps:ps-visual-parity` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-why` / public | `qs-advanced` / `qs-why` | `ps:ps-why` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
 | `qs-worktree-cleanup` / public | `qs-advanced` / `qs-worktree-cleanup` | `ps:ps-worktree-cleanup` | adopted `61871a2b9fa2843e4c68bfbddb3108101afa57ac` |
@@ -111,8 +111,8 @@ Indexes retain individual original and derived hashes, source paths, destination
 
 | Owner | Index | Reviewed source revision | Index SHA-256 / source adoption |
 | --- | --- | --- | --- |
-| `qs-unlazy` | [Dependency index](../../skills/engineering/qs-unlazy/references/dependency-index.json) | `16671491f6679ad9378f52604d3bc2415b4120c7` | `e033e16d0082d2a35900d5bd9a0b178104147ae8ee2be5fc400807200c7e221c` / adapted `16671491f6679ad9378f52604d3bc2415b4120c7` |
-| `qs-video` | [Dependency index](../../skills/video/qs-video/references/dependency-index.json) | `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` | `1facca3d3fec114209cadaf01712c6b614399ec6c19e95ae1fccfa7b41857bad` / adapted `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` |
+| `qs-unlazy` | [Dependency index](../../skills/engineering/qs-unlazy/references/dependency-index.json) | `16671491f6679ad9378f52604d3bc2415b4120c7` | `85dce1f85ee07d7091e4c3b237cca89ab20e4d7ed8680bc8169ebee66d9e9608` / unknown (no revision claimed) |
+| `qs-video` | [Dependency index](../../skills/video/qs-video/references/dependency-index.json) | `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` | `1facca3d3fec114209cadaf01712c6b614399ec6c19e95ae1fccfa7b41857bad` / unknown (no revision claimed) |
 
 Target notices: [qs-advanced](../../skills/advanced/THIRD_PARTY_NOTICES.md), [qs-execution](../../skills/engineering/qs-unlazy/modules/unlazy/LICENSE), [qs-frontend](../../skills/frontend/THIRD_PARTY_NOTICES.md), [qs-video](../../skills/video/qs-video/LICENSE), [qs-video](../../skills/video/qs-video/NOTICE).
 

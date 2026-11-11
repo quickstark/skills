@@ -1,0 +1,58 @@
+{
+  "kind": "local-release-preparation-not-publication-or-installed-host-acceptance",
+  "version": "4.4.7",
+  "sourceState": "uncommitted working tree on codex/docs-446-restart",
+  "baseRevision": "80a61ff7f192ddd027e8248bc8106a64c5b3b450",
+  "createdWorktrees": [],
+  "immutableCandidateRevision": null,
+  "checks": {
+    "syncCodex": "passed",
+    "checkCodex": "passed",
+    "tests": {
+      "command": "npm test",
+      "tests": 787,
+      "passed": 786,
+      "failed": 0,
+      "skipped": 1,
+      "cancelled": 0,
+      "skipReason": "Existing non-Linux unsupported-platform capture control; Linux capture has separate tests."
+    },
+    "claudeStrict": {
+      "roots": [
+        ".",
+        "packages/qs-specialists",
+        "packages/qs-advanced",
+        "packages/qs-frontend",
+        "packages/qs-video",
+        "packages/qs-execution"
+      ],
+      "passed": 6,
+      "rootAdvice": "Existing README marketplace-install advisory; validation passed."
+    },
+    "sourceReview": "source-review-final.json; independently rechecked final disposition, audit and version preparation: no material findings",
+    "diffWhitespace": "passed"
+  },
+  "previousRun": {
+    "native": "780 pass, 2 fail, 1 platform skip before stale evidence digests and expected test inventory were repaired; exact log retained.",
+    "sandbox": "Stopped only this run after sandbox restrictions stalled socket/subprocess fixtures; authoritative full validation used normal process access."
+  },
+  "efficiency": "inconclusive; see evaluation-disposition.json. No controlled superiority claim.",
+  "boundaries": {
+    "sourceAdaptations": "pending; prior provenance retained",
+    "publication": "not authorized or performed",
+    "installedHostAcceptance": "not authorized or performed; selected target homes not supplied",
+    "requiredBeforePublication": "Explicit Git integration/publication authority, immutable validated candidate revision and resolution of pending source/package acceptance against that revision; check remote state at publication time. Never treat fixture install tests as user-host acceptance."
+  },
+  "evidenceSHA256": {
+    "sync.log": "767672eef018d95f8a12cd5a2b6c537ee32159db178fba58c5c1c4e1978a0434",
+    "check.log": "261afdc10ec0fc15441a35977557b358498332440211687923b914dc8c3142f6",
+    "integration-tests.log": "515c3dd3bdc5bf7072e0392e9844879e27ee250eaf243076db25e0429976ed05",
+    "integration-before-repairs.log": "adaafa45ea165d62a4101e6c1048ec455593200d41d1e3948a9d1520e81665fd",
+    "claude-core.log": "5e6adc65f025ebfd469db59f50ec28b4213d1ec734b952f44a8183a7f8db222f",
+    "claude-specialists.log": "5753825930028888f78c0f6ec3af7e06d20dfa1845c300f72316a0e06fefa744",
+    "claude-advanced.log": "1eddbdc6ca7079c0470ad662a936778ef36690858aa02add45f0723d04712b83",
+    "claude-frontend.log": "a9e8230a684fb327dbffbe9674904b4ad8435e9e6b2c569f831e1ae1a5cf9d2e",
+    "claude-video.log": "3118c3055b061fc263204b86c075dc7de9dd65ee3aaac330705154042b86717f",
+    "claude-execution.log": "55e10fed8dd09c596127797d86bc2f1d0f04968f78caa258bc3d2b0b5cdcf842"
+  }
+}

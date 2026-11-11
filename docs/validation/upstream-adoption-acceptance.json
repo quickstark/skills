@@ -4842,7 +4842,7 @@
   "evidence": {
     "tests/skill-provenance.test.mjs": {
       "path": "tests/skill-provenance.test.mjs",
-      "sha256": "9c077c805ce21c490f7e8ff36808ce91222de3c0fc5659b2c18c7b4b5a006a5b"
+      "sha256": "c6e3f5161c3afe6882f96b99e77359ef6802c9f02d7fff2af2d4fa3a15a01dd6"
     },
     "config/skill-migrations.json": {
       "path": "config/skill-migrations.json",
@@ -4966,7 +4966,7 @@
     },
     "config/skill-provenance.json": {
       "path": "config/skill-provenance.json",
-      "sha256": "a50c8794df08cb6bbbad45ff4b6db000bdc4669c21cbdeaab7033e38146a4b76"
+      "sha256": "6a341c8ae3fc03671fca9d371252d8ed19f59b9be3ab4e466414c4c226306b26"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
@@ -5246,7 +5246,7 @@
     },
     "tests/frontend-candidate.test.mjs": {
       "path": "tests/frontend-candidate.test.mjs",
-      "sha256": "1b28f2055f7d63b126858488d58a8bf98b94a6a9a7c58110c13719418983d6cb"
+      "sha256": "baa1bf8e5253ed729bcbb65a0487a43e1d05c59b3f0180169bf0899bbe727b07"
     },
     "tests/fixtures/managed-claude-update/README.md": {
       "path": "tests/fixtures/managed-claude-update/README.md",
@@ -5342,11 +5342,11 @@
     },
     "scripts/qs-test-environment.mjs": {
       "path": "scripts/qs-test-environment.mjs",
-      "sha256": "4b96b23beee4979e9366ee93fce16ea7d1113337b63306632c034da617fd969e"
+      "sha256": "09035137e38f671001d96f210a3b5daf15b7d65fd9449ff4a44d0410065d0c21"
     },
     "tests/qs-test-baseline.test.mjs": {
       "path": "tests/qs-test-baseline.test.mjs",
-      "sha256": "15e0c73d211b4c1d4ced7bed0f37ed836fb9c27b75294a58f1f692266f636032"
+      "sha256": "f1dccbcf33ee3d40c1bba4a93507dfdb7c444ae214c04be09ec0d07e06e88a41"
     },
     "install.sh": {
       "path": "install.sh",
@@ -5382,7 +5382,7 @@
     },
     "package.json": {
       "path": "package.json",
-      "sha256": "77aa6de079991af709d71d0a2d2e69d948132b4e3f3649ce507c4f00a7147386"
+      "sha256": "70d384bbfb03ff27b2972e594d09be3fc776d4000517672da88e2e2e00677a1a"
     },
     "docs/validation/versioned-installer-review.md": {
       "path": "docs/validation/versioned-installer-review.md",
@@ -5403,6 +5403,19 @@
     "tests/fixtures/prototype-platform/review-run-02.json": {
       "path": "tests/fixtures/prototype-platform/review-run-02.json",
       "sha256": "4c4c0c0cde5c5deb431a18d495a9b38169fcd573769ae8f415fd5d5cf915d45e"
+    },
+    "tests/fixtures/lean-execution-adoption/source-review.json": {
+      "path": "tests/fixtures/lean-execution-adoption/source-review.json",
+      "sha256": "03d14cb4122f91872044acfc0722cf406a23ec60e4836417348eb449a4159320"
+    },
+    "tests/fixtures/lean-execution-adoption/source-review-final.json": {
+      "path": "tests/fixtures/lean-execution-adoption/source-review-final.json",
+      "sha256": "e9e200fa7111319c62e5bd831e641bd3386d24cbcbf82c3ae621f545a2eb8e6e"
+    },
+    "tests/fixtures/lean-execution-adoption/evaluation-disposition.json": {
+      "path": "tests/fixtures/lean-execution-adoption/evaluation-disposition.json",
+      "sha256": "035ca98a6ce77f97232ad91a65c547762fe452bf956ac16321aaa4087d117161"
     }
-  }
+  },
+  "note": "undefined LEX source review refreshes only changed provenance and test-list evidence digests; the prior audit is retained in tests/fixtures/lean-execution-adoption/historical-acceptance.json. Source/projection integrity is separate from pending LEX behavior qualification and actual installed-host acceptance; existing package source snapshots are not promoted by this refresh. LEX final evidence refresh records reviewed source/test/version digests and separate behavior disposition only. Original source acceptance snapshots, package/host status and historical native receipts remain unchanged; new adaptations are pending. No efficiency, publication or installed-host acceptance is inferred."
 }

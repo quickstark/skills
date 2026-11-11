@@ -1,0 +1,13 @@
+{
+  "kind": "single-variant-behavior-not-efficiency-comparison",
+  "planSHA256": "ff1dcf22c384912b8b1926b137682868f26707fdfdd1ff57cbc97d4ba68d6b9f",
+  "manifestSHA256": "79dd29dcb3ff0bd214fae1637df33e99603953ca1e9913bebd1199b15a0f740d",
+  "runnerSHA256": "ba759e98158c49fac9d95e59d38aa9217e6c35ce849d7f3e24032c3b403ca7c9",
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G6",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] Blocked — Generate the execution prompt; required host goal tools are absent.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: The host must expose real goal tools before an execution-ready prompt can be generated. The latest supplied observation supersedes G1’s earlier goal-tool availability. Execution has not started.\n\nStage: Prompt generation | Stage estimate: ~50% | Overall estimate: ~50% | blocked — Scope, authorization, installed stages and staging workflow are supplied; goal capability is missing. Input needed: a host with goal-state reading, creation and update tools.\n\nEstimate uses one stage with weight 1; confidence is low because readiness is blocked.\n\nSpecs: Not located\n\nWork summary:\n- Finished — Assessed supplied readiness evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. No operations were performed or executable prompt produced.\n- Next — G1 CSV invoice export/staging — blocked — provide a goal-capable host, then regenerate the prompt with the existing scope and grants preserved.\n\nFailed readiness check: Required goal tools are unavailable; ordinary execution cannot substitute for them.\n\nNext work prompt: None — `/qs-flow-handoff` installation is unverified. Installed `/qs-plan-clarify` does not own the missing host capability; scope and authorization are already settled.",
+    "requestedActions": []
+  },
+  "promptSHA256": "4735d30cb6e66a5d796d8cd741b81a5941a2aaad26a7bb6b66bf44413f1784e8",
+  "instructionSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+  "usage": [
+    {
+      "input_tokens": 26790,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 820,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 27610
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

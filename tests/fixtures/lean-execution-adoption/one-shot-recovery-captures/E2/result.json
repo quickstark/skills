@@ -1,0 +1,27 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "E2",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-code-build\nOutcome: Build verification must reopen at `def456`: CSV escaping changed after verified revision `abc123`, and a relevant test fails. The scheduled Git push and staging release are blocked.\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — Current-revision milestones support partial progress, but the failing test prevents completion. Input needed: none.\n\n- [ ] Build — failed; reopened at `def456`, ~50%, weight 60.\n- [ ] Git — blocked by Build; not started, 0%, weight 10.\n- [ ] Release — blocked by verified Build and publication; not started, 0%, weight 30.\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Weights remain unchanged. Earlier Build completion cannot carry forward from `abc123`; the supplied current-revision evidence supports retaining 50%, rather than resetting valid partial progress.\n\nWork summary:\n\n- Finished — Evidence assessment only. The supplied observations establish a failing relevant test at `def456`; no new changes, checks, publication, or deployment are claimed.\n- Next — [CSV export](/fixture/ledger-app/docs/specs/export.md) — reopened — repair escaping within this Build root, then rerun relevant CSV cases, existing-screen validation, and diff review at the resulting revision. Git remains scheduled behind verified Build completion; staging follows verified publication.\n\nMatching goal and standing grants are confirmed by the fixture. Before any execution, host goal-tool availability and authoritative goal state still require verification. Deployed artifact/version and staging health remain unobserved; the overall goal is incomplete.\n\nNext work prompt: None — repair belongs to this root; subsequent roots are already scheduled.",
+    "requestedActions": [
+      "Hold the scheduled Git push and dependent staging release; reopen Build verification for def456.",
+      "Before execution, verify supported goal-tool availability and inspect the matching goal with get_goal. Stop with input-required if goal support is unavailable or the authoritative state conflicts; do not create a replacement goal or invent a budget.",
+      "Recheck repository scope, selected target, available skills, specification, standing authorization, and current revision before repair.",
+      "Within the authorized Build root, diagnose and repair the escaping failure, then verify CSV behavior, the existing screen, and the resulting diff at the same revision before allowing Git to advance."
+    ]
+  },
+  "promptSHA256": "72173a12030f8f0593342968608f79f69d1ada1ddb77ceb3279371059fc910f8",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27483,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 993,
+      "reasoning_output_tokens": 438,
+      "total_tokens": 28476
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

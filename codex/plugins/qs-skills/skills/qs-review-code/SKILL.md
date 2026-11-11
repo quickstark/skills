@@ -26,6 +26,8 @@ Assess correctness, maintainability, architecture, testability, security, and op
 
 ## Parallel review axes
 
+Give each reviewer the relevant starting files, immutable revision or content identity, exact question and acceptance standard. Starting pointers permit justified discovery; reviewers remain read-only. Return bounded decisive evidence with source pointers and retain contradictions. Reuse accepted evidence only while its relevant artifact and inputs remain valid; changed shared dependencies reopen affected axes rather than automatically repeating every review.
+
 Before any fan-out, validate the target: resolve the fixed point or selected path, confirm the diff or scope is non-empty, and locate the governing specification and repository standards. A bad reference or empty target fails here, not inside helpers.
 
 Apply the internal delegation capability to the axes:

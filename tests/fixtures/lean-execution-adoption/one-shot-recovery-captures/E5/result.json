@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "E5",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Continuation required\nSkills used: /qs-deploy-release\nOutcome: Supplied evidence verifies Build and Git at `abc123`. Staging job `J42` is queued for `export:abc123`; `/health` still serves the previous version. Deployment remains unverified.\n\n- [x] Build — verified at `abc123`; behavior, existing screen checks, and diff review evidence remain valid.\n- [x] Git — verified; authoritative `origin/feature/export=abc123`.\n- [ ] Release — active, waiting for `J42` and matching health evidence.\n\nStage: Release | Stage estimate: ~0% | Overall estimate: ~70% | waiting — J42 is queued; no deployment completion milestone is verified. Input needed: none; awaiting deployment and health evidence.\n\nWeights remain Build 60, Git 10, Release 30. Overall = `(60×100 + 10×100 + 30×0)/100 = 70%`. The earlier P1 estimate was 30%; resumed verification raises Build and Git to 100%. Queueing alone earns no release progress.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Supplied evidence establishes the tested and reviewed CSV implementation and its publication at `abc123`. No operations were performed in this response.\n- Next — [Staging delivery](/fixture/ledger-app/docs/deploy.md) — pending — first verify supported goal tools and inspect the matching goal with `get_goal`; then inspect existing job `J42` and confirm staging `/health` returns HTTP 200 and exactly `export:abc123`. Fresh goal-state, job-completion, and HTTP-status observations are missing. Do not duplicate the push or deployment. Keep the goal incomplete until all checks pass; rollback requires separate authorization.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify supported goal-tool availability and call get_goal to confirm the resumed matching goal before stage execution; do not create a replacement goal or invent a budget. If support is unavailable or an unrelated goal is active, stop and report input-required.",
+      "After confirming the matching goal, inspect authoritative status of existing staging job J42 and staging /health for HTTP 200 and exact version export:abc123, preserving valid Build and Git evidence without repeating publication or deployment."
+    ]
+  },
+  "promptSHA256": "dd9ffca74af32312bbcb1e858be4df939a13423a8bc7c1eec72276db33d44f46",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27511,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1033,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 28544
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

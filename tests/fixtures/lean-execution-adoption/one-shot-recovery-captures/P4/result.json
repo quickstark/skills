@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Continuation required\nSkills used: /qs-deploy-release\nOutcome: Resumption retains Overall ~85%. Existing job J42 remains live; no new progress is observed. Authoritative goal state remains unobserved, so dependent execution awaits that check.\n\n- [x] Build — verified, 100%; weight 60.\n- [x] Git — verified, 100%; weight 10.\n- [ ] Release — active, 50%; weight 30; J42 awaiting further evidence.\n\nStage: Release | Stage estimate: ~50% | Overall estimate: ~85% | waiting — unchanged revision and valid persisted evidence; J42 running establishes no additional progress. Input needed: none currently; goal inspection is the next proposed action.\n\nOverall = (60 × 100 + 10 × 100 + 30 × 50) / 100 = 85%. Persisted weights and estimates remain unchanged.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — supplied evidence preserves verified Build and Git completion at the unchanged revision. No new operations occurred.\n- Next — [Staging release](/fixture/ledger-app/docs/deploy.md) — active — first verify goal-tool availability and inspect the matching goal, then inspect J42 without restarting deployment. Completion still requires authoritative deployed artifact/version evidence matching the verified revision and staging `/health` returning HTTP 200 with that exact version. Artifact/version and health results remain missing.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Verify supported goal-tool availability and inspect authoritative state with get_goal. Resume only the matching goal; never replace an unrelated active goal. If goal support is unavailable or state conflicts, stop dependent work and report input-required.",
+      "After the goal gate passes, inspect existing job J42 and authoritative staging state without resubmitting deployment. Retain Release 50% and Overall 85% until new verified evidence supports a change."
+    ]
+  },
+  "promptSHA256": "67d9d944ab0da6e10125d71806709b043cafa70166f16b09a055173897f89671",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27509,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 919,
+      "reasoning_output_tokens": 483,
+      "total_tokens": 28428
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

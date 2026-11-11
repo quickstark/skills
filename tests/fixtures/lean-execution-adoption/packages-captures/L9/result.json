@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "L9",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] verified — Explain affected checks and preserved artifacts from the supplied instructions (weight 100%; explanation only).\n\nStage: Caption timing explanation | Stage estimate: ~100% | Overall estimate: ~100% | verified — Requested explanation is complete; video execution and verification remain unobserved. Input needed: none for this explanation.\n\nStatus: Complete\nSkills used: /qs-video\nOutcome: One caption timing change requires local timing, synchronization and seek checks. No operations were performed.\nSpecs: Not located\n\nPreserve the accepted footage, audio and scene assets without regeneration. The proposed edit would preserve caption text and styling, source ranges, picture and sound timelines, scene durations, transitions, subcomposition IDs, asset/font registration, aspect ratio and the existing project pin. Any necessary change beyond the selected caption time would reopen the affected checks.\n\nAffected checks would include:\n- **Timing boundaries:** Validate the requested time against the caption’s other endpoint, source/clip/scene limits and neighboring captions. Check immediately before, at and after both old and new boundaries using the pinned runtime’s actual endpoint rules. Confirm intended duration, overlaps or gaps and unchanged overall duration.\n- **Arbitrary seek:** Compare linear playback with direct, repeated, forward and backward seeks around those boundaries and into the caption interval. Caption visibility must match at the same timestamp regardless of playback history, with no stale or duplicated text.\n- **Synchronization and rendered content:** Observe rendered frames and play or measure decoded audio around the changed interval to confirm caption synchronization and preserved picture/sound alignment. Include affected transition endpoints and final integrated verification. Runtime checks, lint, successful commands, generated PNGs and FFprobe metadata alone would not establish correctness.\n\nThe supplied context identifies `/fixture/lean` at `fixture-r1`. It supplies no caption identity, old/new time, project pin, source file, rendered output or inspection evidence. Those observations remain missing; no video check can be marked passed or failed. Cloud rendering, provider changes and publication remain outside the authorized scope.\n\nWork summary:\n- Finished — Produced this chat explanation of preserved artifacts and affected checks, checked against the frozen instructions. No files or video artifacts were changed or verified.\n- Next — None verified after checking the supplied task history and observations; no specification links or external tracker were supplied.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "9aca0527d37ecaa690b337cae2d2461ae99e1261be0be920e05f5c08706a6247",
+  "instructionSHA256": "51cbec497d9b0c89e2f332536bfc7c6d66cc4a56be57251aed7f433c8937a97b",
+  "usage": [
+    {
+      "input_tokens": 23661,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1082,
+      "reasoning_output_tokens": 571,
+      "total_tokens": 24743
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

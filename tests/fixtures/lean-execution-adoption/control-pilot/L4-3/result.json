@@ -1,0 +1,30 @@
+{
+  "scenario": "L4",
+  "repetition": 3,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-code-build\nOutcome: C must return to internal repair. A and B retain their fixture-r1 focused-check evidence while C remains isolated. Integration validation is still pending. No repair or new check was performed.\nSpecs: Not located\n\nVerification checklist and proposed effort weights:\n\n- [x] Verified — A focused check at fixture-r1 (20%).\n- [x] Verified — B focused check at fixture-r1 (20%).\n- [ ] Failed — C repair and focused validation (40%).\n- [ ] Pending — integration validation (20%).\n\nStage: C repair | Stage estimate: ~0% | Overall estimate: ~40% | failed — C's focused check fails; no repair evidence was supplied. Input needed: failure output and a reliable reproducer before diagnosing an actual repair.\n\nThese coarse estimates use the stated weights; confidence is low because implementation effort is unknown. They measure the bounded build, not completion of this written response.\n\nProposed internal repair return: Return C alone to repair inside this root. Capture its failing check and expected behavior, establish the causal mechanism, choose regression coverage from the available test seam, and apply the smallest supported fix. Return at most 400 words identifying the repair revision, cause, changed files, checks and results, and unresolved blockers. Failure output, commands, causal evidence and a repair revision are currently missing.\n\nNext checks: Reproduce C's original failure, run its regression and focused checks, inspect the repair diff, and run relevant wider validation. Retain A and B's evidence if the repair preserves the stated isolation. Run the required integration check against the resulting artifact; focused passes cannot substitute for it.\n\nSeparately, if the later change modifies the dependency shared by A and C:\n\n- [ ] Reopened — A: its fixture-r1 pass no longer verifies behavior against the changed dependency.\n- [x] Verified — B: its fixture-r1 evidence remains applicable under the stated absence of impact.\n- [ ] Failed/unverified — C: the original failure remains historical evidence; any earlier repair pass would also require revalidation.\n- [ ] Pending — integration: still required against the final combined revision.\n\nStage: affected validation | Stage estimate: ~0% | Overall estimate: ~20% | pending — A's evidence is invalidated; B's remains valid. Input needed: the later revision and affected-check results to verify completion.\n\nThe estimate decreases because A's verification is reopened, without changing weights or discarding B's valid evidence. Re-run A and C's affected checks, then integration. Record every result against the tested revision.\n\nWork summary:\n\n- Finished — Assessed the supplied fixture-r1 evidence and described C's internal repair return, next checks and conditional evidence invalidation. Material output: this response; no files changed or checks executed.\n- Next — C — failed — diagnose, repair and validate internally; A and C after the dependency change — unverified — repeat affected checks; integration — pending — validate the final combined artifact. Item links were not supplied.\n\nRemaining repair and validation belong to this root; no distinct public workflow is needed.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": [
+      "Propose returning only C to internal repair, obtaining its failure output and reproducer before selecting a fix.",
+      "After a supported repair, propose reviewing C's diff and rerunning its reproducer, regression, focused and relevant wider checks; retain unaffected A and B evidence.",
+      "In the separate later-change scenario, propose reopening A and C verification for the changed shared dependency while retaining B's valid evidence.",
+      "Propose running the required integration check against the final combined revision before declaring the build complete."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "34de82551b223663043f5c5dc329b890fa2edc16252df20faa551ad82ff83685",
+  "sourceSHA256": "1e979f921798bad4cd5dbc1aee3740f1c06fbef667261121e4fee3cae61f555a",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29104,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1826,
+      "reasoning_output_tokens": 1018,
+      "total_tokens": 30930
+    }
+  ]
+}

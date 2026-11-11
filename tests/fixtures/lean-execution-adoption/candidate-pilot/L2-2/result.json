@@ -1,0 +1,25 @@
+{
+  "scenario": "L2",
+  "repetition": 2,
+  "variant": "b",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — Analyze dependency reasons, frontier, and cycle handling against the supplied statements (weight: 100%).\n\nStage: Dependency analysis | Stage estimate: ~100% | Overall estimate: ~100% | complete — B consumes A’s export; C supplies no prerequisite. Input needed: none for this explanation.\n\nStatus: Complete\nSkills used: /qs-plan-spec\nOutcome: B depends on A. C is independent. A mutual dependency between A and B makes the graph cyclic.\nSpecs: Not located\n\n| Ticket | Blocked by | Dependency reason |\n|---|---|---|\n| A | none | Adding the parser export has no stated prerequisite. |\n| B | A | Caller migration consumes the export that A adds. |\n| C | none | The help-string edit is unrelated; no ticket consumes its output. |\n\nWith all three tickets open and unfinished, the runnable frontier is **A and C**. Once A is verified complete, B becomes runnable even if C remains unfinished. Scheduling preference creates no additional dependency. Actual completion states were not supplied, so the current operational frontier cannot be confirmed.\n\nIf the input instead declares **A blocked by B and B blocked by A**, neither A nor B can enter the frontier while both remain unfinished. C remains structurally eligible if open, but `/qs-code-build mode=graph` must end **input-required** because the graph contains a cycle; it must not begin executing C from that invalid graph. It routes graph repair to `/qs-plan-spec`. The repair must establish the real prerequisite artifacts rather than silently discard an edge. The stated export-consumption relationship supports B blocked by A; any reverse dependency needs a concrete explanation.\n\nWork summary:\n\n- Finished — Derived dependency reasons and conditional frontiers from the supplied statements; identified cycle rejection behavior. The table and explanation are the only outputs. No operations or runtime checks occurred.\n- Next — No distinct follow-on work verified within this response-only request. Ticket states, specification links, and implementation briefs remain unavailable.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "7bf2aee886b735966b8cdca5e5a2bce8d47a883b61b13d3fec0dfc96babf2f23",
+  "sourceSHA256": "76823b55d642bdd1453b7c2ddf16f9b6bb8bf19a6fd4c970f761af0dca3e030d",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 30000,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 970,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 30970
+    }
+  ]
+}

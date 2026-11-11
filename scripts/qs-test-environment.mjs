@@ -45,6 +45,7 @@ export const TEST_FILES = Object.freeze([
   "tests/skill-migrations.test.mjs",
   "tests/video-candidate.test.mjs",
   "tests/multi-agent-delegation.test.mjs",
+  "tests/lean-execution.test.mjs",
   "tests/fixtures/upstream-adoption-efficiency/runner-lock.test.mjs",
 ]);
 

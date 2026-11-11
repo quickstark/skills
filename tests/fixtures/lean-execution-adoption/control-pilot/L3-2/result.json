@@ -1,0 +1,25 @@
+{
+  "scenario": "L3",
+  "repetition": 2,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Proposed worker brief for a fresh context window:\n\nImplement ticket B in `/fixture/lean` at revision `fixture-r1`. Use ticket B and that revision as context pointers; do not inherit the unrelated parent transcript. The ticket body and its location were not supplied. If unavailable, report that specification gap before implementing.\n\n- Start with `src/parser.ts` and `tests/parser.test.ts`. These are your entire write scope.\n- Read relevant callers and supporting definitions as needed to understand compatibility. Additional relevant reads do not require expanding write authority. Keep exploration bounded to ticket B.\n- Preserve the configured model, reasoning, sandbox and approvals. Do not invoke public skills, install dependencies, perform Git mutations, publish, or contact services.\n- Make changes only within the two permitted files. If compatibility requires another file to change, report its path, evidence and proposed change to the root. Do not edit it or assume expanded authority. Identify whether that dependency prevents a complete implementation.\n- Use `npm run test:parser` as the prescribed check. Report the actual result or why it could not run; do not treat an unrun check as passing.\n\nReturn only to the owning root, in at most 400 words: revision examined; files read and compatibility evidence with references; changes made within scope; check outcome and relevant output; unresolved gaps; and any required changes outside scope. During long work, send observed progress, blockers and invalidated evidence to the root when control permits. Emit no separate public checklist, result or continuation.\n\nThe root must keep shared mutations serialized and re-check the current revision, returned changes and verification evidence before integration or completion. Missing or stale evidence remains a coverage gap. Any delegation must occur inside an eligible `qs-code-build`, `qs-review-code`, or `qs-plan-spec` root run; no such run is established by the supplied observations.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "86b68df9f427c8fae78f73868cbb61827a029a987dcd8e700fb708092aa0622e",
+  "sourceSHA256": "5177901f4a4a57ff1223fba523f8f9e65b704ae9ac3f3539b7beaeaa239e11f3",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 20425,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1075,
+      "reasoning_output_tokens": 669,
+      "total_tokens": 21500
+    }
+  ]
+}

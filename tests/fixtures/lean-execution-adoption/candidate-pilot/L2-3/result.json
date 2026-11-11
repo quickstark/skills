@@ -1,0 +1,25 @@
+{
+  "scenario": "L2",
+  "repetition": 3,
+  "variant": "b",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] verified — Derive dependencies and explain cycle handling (weight: 1).\n\nStage: Dependency analysis | Stage estimate: ~100% | Overall estimate: ~100% | complete — Both cases assessed from supplied statements. Input needed: none.\n\nStatus: Complete\nSkills used: /qs-plan-spec\nOutcome: B depends on A. C introduces no dependency. A mutual dependency prevents graph execution.\nSpecs: Not located\n\n| Ticket | Blocked by | Dependency reason |\n|---|---|---|\n| A | none | Adding the parser export consumes no stated prerequisite. |\n| B | A | Caller migration consumes the parser export produced by A. |\n| C | none | The help-string change is independent; no ticket consumes its output. |\n\nWith all three tickets open, the runnable frontier is **{A, C}**. After A is verified done, B joins the frontier; C's completion does not affect A or B. Actual ticket states were not supplied, so this frontier is conditional.\n\nIf input instead declares **A blocked by B and B blocked by A**, A and B form a cycle and neither can become ready. If C remains open and independent, the mathematical frontier is still **{C}**. However, `/qs-code-build mode=graph` must reject the cyclic graph with **input-required** and route to `/qs-plan-spec` before implementation, including C. The proposed correction would establish the prerequisite artifact for each edge and revise or split the tickets accordingly; the reverse edge must not be silently removed.\n\nWork summary:\n- Finished — Produced dependency reasons, the conditional frontier, and cycle-handling behavior. Logical analysis uses only the supplied inputs; no repository checks or operations occurred.\n- Next — None verified after checking available task history and supplied tracker context. Ticket states, source pointers, and implementation acceptance evidence remain missing; implementation was not requested.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "7bf2aee886b735966b8cdca5e5a2bce8d47a883b61b13d3fec0dfc96babf2f23",
+  "sourceSHA256": "76823b55d642bdd1453b7c2ddf16f9b6bb8bf19a6fd4c970f761af0dca3e030d",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29984,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 942,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 30926
+    }
+  ]
+}

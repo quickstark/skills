@@ -1,0 +1,24 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P5",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: Overall progress recalibrates from ~25% to ~30% because unrelated research leaves the denominator. No additional work earns credit.\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\n- [ ] Build — blocked; weight 60, estimate ~50%, supported by supplied implementation and review milestones.\n- [ ] Git — pending; weight 10, estimate 0%, awaiting verified Build completion.\n- [ ] Release — pending; weight 30, estimate 0%, awaiting verified publication.\n- [ ] Optional research — skipped; unrelated and out of scope; weight 20 removed without completion credit.\n\nBefore: (60 × 50 + 10 × 0 + 30 × 0 + 20 × 0) / 120 = 25%.\nAfter: (60 × 50 + 10 × 0 + 30 × 0) / 100 = 30%.\n\nThe denominator changes from 120 to 100; the numerator and retained stage weights stay unchanged.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — supplied progress is preserved; goal availability/state and exact revision identity remain unobserved. Input needed: verified matching goal state and revision identity before execution resumes.\n\nWork summary:\n- Finished — progress calculation only; no operations performed or artifacts created. Required checks have no supplied pass/fail results.\n- Next — [CSV export](/fixture/ledger-app/docs/specs/export.md) — blocked — verify the goal gate and artifact revision, then finish Build checks. Git and Release remain scheduled behind their prerequisites. Deployment version and health evidence remain missing.\n\nNext work prompt: None — subsequent roots are already scheduled and remain gated.",
+    "requestedActions": [
+      "Verify supported goal-tool availability, then inspect goal state with get_goal before resuming execution. Do not replace an unrelated active goal or invent a token budget."
+    ]
+  },
+  "promptSHA256": "1be3b36f05e54fa15a99e4907b03b22515be8063a5ff64f05a4c94bbdf7e0835",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27516,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1275,
+      "reasoning_output_tokens": 834,
+      "total_tokens": 28791
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

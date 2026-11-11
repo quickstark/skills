@@ -1,0 +1,63 @@
+{
+  "kind": "independent-repaired-generation-response-review",
+  "reviewer": "generation_behavior_review read-only helper",
+  "ratings": [
+    {
+      "id": "G1",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G2",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G3",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G4",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G5",
+      "passed": true,
+      "scores": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "G6",
+      "passed": true,
+      "scores": [
+        2,
+        1,
+        2
+      ]
+    }
+  ],
+  "history": "Initial failure and source/outputs remain in generation-review-initial.json and one-shot-captures.",
+  "scope": "Response behavior only; no efficiency or installed-host acceptance",
+  "limitation": "G6 omitted a clickable grouped-item link, but preserved the capability gate and emitted no executable recovery prompt."
+}

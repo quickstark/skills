@@ -1,0 +1,30 @@
+{
+  "scenario": "L4",
+  "repetition": 2,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: Return C to repair inside this build. Preserve A and B’s passing evidence at `fixture-r1`; integration remains unverified. No repair or checks were performed here.\nSpecs: Not located\n\nVerification checklist (provisional weights: 25% each; estimates describe check coverage, not implementation effort):\n\n- [x] Verified — A passed at `fixture-r1`, per supplied observations.\n- [x] Verified — B passed at `fixture-r1`, per supplied observations.\n- [ ] Failed — C’s focused check fails; diagnosis and repair evidence are missing.\n- [ ] Pending — Required integration check.\n\nStage: C repair | Stage estimate: ~0% | Overall estimate: ~50% | blocked — C’s failure is reported, but no reproducer, causal evidence or repair result is supplied. Input needed: C’s focused-check command, redacted failure output, expected behavior and relevant test-seam evidence.\n\nProposed repair return: C alone returns to the owning build’s internal repair loop. Capture and reproduce its failure, establish the cause, then choose the test strategy from actual evidence: TDD for a stable seam, characterization for insufficiently protected behavior, or a justified alternative. Apply the smallest repair and review its diff. Return the revision, cause, changed scope, regression coverage, exact checks and results, and remaining blockers. Do not claim a successful repair without those results.\n\nNext checks: rerun C’s original reproducer and focused regression checks, then relevant wider validation and the required integration check on the resulting revision. The isolated C repair does not invalidate A or B’s evidence under the supplied independence assumption. Integration must pass before the build can complete.\n\nSeparately, after the shared dependency changes, reopen A’s verification and C’s affected checks, including any C repair evidence obtained before that change. Their earlier results remain historical evidence but cannot verify the changed revision. Preserve B’s evidence because the supplied observation excludes B from the dependency change. Rerun A and C’s affected checks and relevant dependency coverage, then integration on the resulting revision. Any earlier integration pass would also require revalidation. With the same provisional weights, currently reusable coverage falls to ~25%; this reflects invalidated evidence, not lost implementation work. The later revision is unspecified.\n\nWork summary:\n\n- Finished — Assessed the supplied results and described the bounded repair return, next checks and dependency-based invalidation. No files or secondary artifacts were created.\n- Next — C: blocked pending diagnostic evidence; A and C after the separate dependency change: verification reopened; integration: pending. No item links were supplied, and no external tracker was selected.\n\nNext work prompt: None — no follow-on needed. Repair and validation remain owned by this build; no distinct public workflow is required.",
+    "requestedActions": [
+      "Obtain C’s focused-check command, redacted failure output, expected behavior and test-seam evidence.",
+      "Return C alone to the owning build’s internal diagnosis, repair and validation loop; preserve A and B’s still-valid evidence.",
+      "After the separate shared-dependency change, reopen A and C verification while retaining B’s unaffected evidence.",
+      "Require affected focused checks, relevant wider validation and integration to pass on the resulting revision before declaring completion."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "34de82551b223663043f5c5dc329b890fa2edc16252df20faa551ad82ff83685",
+  "sourceSHA256": "1e979f921798bad4cd5dbc1aee3740f1c06fbef667261121e4fee3cae61f555a",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29096,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1643,
+      "reasoning_output_tokens": 934,
+      "total_tokens": 30739
+    }
+  ]
+}

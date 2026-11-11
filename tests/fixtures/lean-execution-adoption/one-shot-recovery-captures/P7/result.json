@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P7",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-deploy-release\nOutcome: Release and the overall goal remain incomplete. Pending health verification prevents completion; rounding cannot satisfy that gate.\n\n- [x] Build — verified per supplied fixture; weight 60; 100%.\n- [x] Git — verified per supplied fixture; weight 10; 100%.\n- [ ] Release — active, health verification pending; weight 30; at most ~95%.\n\nStage: Release | Stage estimate: ~95% | Overall estimate: ~95% | waiting — Required staging health check is pending; matching-version health evidence is absent. Input needed: authoritative goal state, exact artifact/revision identity, and HTTP 200 with the matching deployed version.\n\nThe proposed 99.8% becomes at most ~95% under the unverified-estimate cap. With unchanged weights, the reported overall ceiling is `min(95, (60×100 + 10×100 + 30×95)/100) = 95%`. These are low-confidence ceilings, not evidence that remaining work is small. The later supplied Build/Git verification supersedes the earlier partial-progress observation.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Supplied observations establish Build/Git completion. This response performed no operations or checks.\n- Next — [Staging release](/fixture/ledger-app/docs/deploy.md) — pending — establish matching goal state, then obtain authoritative artifact/version and health evidence. No failed health result was supplied. No goal completion update is justified.\n\nNext prompts: None — release is terminal.",
+    "requestedActions": [
+      "Before further execution, verify supported goal tools and inspect authoritative state with get_goal; preserve any unrelated active goal.",
+      "Once the matching goal and exact published artifact/revision are established, inspect staging deployment state and verify /health returns HTTP 200 with that exact version; do not repeat deployment merely because evidence is missing."
+    ]
+  },
+  "promptSHA256": "c15d7f7f49a4e139688b16eb66a913a2054616cbec1ae3e1319c87e937c39a36",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27510,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1088,
+      "reasoning_output_tokens": 648,
+      "total_tokens": 28598
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

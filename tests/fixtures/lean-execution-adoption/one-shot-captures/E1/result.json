@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "E1",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] Build — active; weight 60; ~50%.\n- [ ] Git — pending Build verification; weight 10; 0%.\n- [ ] Release — pending Git verification; weight 30; 0%.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 remains live. Last observed output was “124/180 tests passed” 70 seconds ago; no subsequent progress is confirmed. Input needed: none.\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Retain the supplied milestone-based estimate; elapsed time and process liveness earn no additional credit. The silence alone establishes neither failure nor completion.\n\nSkills used: /qs-code-build\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Supplied observations establish implementation and review milestones supporting Build ~50%. Full validation remains pending; no failed check is reported.\n- Next — [CSV export](/fixture/ledger-app/docs/specs/export.md) — active — obtain new output or exit status from process 81. Git publication and staging deployment remain gated on verification. No deployed version or health result is supplied.\n\nMatching goal support and state are confirmed by the supplied observation; no budget was specified. No completion or goal-state change is warranted.\n\nNext work prompt: None — Build remains active; subsequent roots are already scheduled.",
+    "requestedActions": [
+      "Poll process 81 for new output and exit status using a bounded wait that permits another update within sixty seconds.",
+      "If it remains silent, inspect bounded read-only diagnostics relevant to the test runner before deciding whether intervention is needed."
+    ]
+  },
+  "promptSHA256": "1d22adc714ba046880b01e155b264dbc9a94cdd0a8d5df95b9ebc09b09734e2f",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27490,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 787,
+      "reasoning_output_tokens": 394,
+      "total_tokens": 28277
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

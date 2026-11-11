@@ -4,6 +4,7 @@ Use only inside a root `qs-plan-spec` run when the user requests tickets, the co
 
 - Produce dependency-ordered slices with one independently verifiable outcome each.
 - Include scope, acceptance evidence, explicit `Blocked by` edges, and explicit exclusions. A ticket with no blockers says `Blocked by: none`.
+- Name the prerequisite outcome or artifact consumed by every edge; scheduling preference alone is not a dependency. Include starting source pointers and a revision or content identity in the worker brief. Permit justified additional discovery without silently widening writes.
 - Treat the tickets as a task graph. Its frontier is every open ticket whose blockers are all done; the frontier is what can be worked concurrently.
 - Size each ticket to fit one fresh context window, so a single helper can implement and verify it without the planning conversation.
 - Create tickets blockers first, then wire blocking edges in a second pass once real identifiers exist. Use the tracker's native blocking relationship where one exists; otherwise record `Blocked by` in each ticket body. Never write placeholder identifiers.

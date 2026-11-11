@@ -1,0 +1,29 @@
+{
+  "scenario": "L5",
+  "repetition": 1,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-debug\nOutcome: The expected TDD RED is a test-first milestone, not an exhausted repair attempt. The three repairs contradicting the same diagnosis are evidence to stop repeating that explanation.\nSpecs: Not located\n\n- [x] Verified — classify supplied evidence (weight 25%).\n- [ ] Blocked — identify the concrete discriminating check (weight 75%); the shared diagnosis, reproducer, and diagnostic results were not supplied.\n\nStage: Causal discrimination | Stage estimate: ~0% | Overall estimate: ~25% | blocked — classification is supported by the supplied scenario; causal evidence is missing. Input needed: one redacted evidence bundle containing the shared diagnosis, smallest reproducer, and the observation from each repair that contradicts that diagnosis. Estimates cover this bounded assessment only.\n\n**No repair progress:** Three attempted repairs fail and contradict their shared causal premise; none establishes corrected behavior. They provide diagnostic learning, but attempt count and code changes do not establish repair progress. The expected pre-implementation RED does not count toward those failed repairs.\n\n**Next discriminating action:** Pause symptom edits. State the shared premise and its three contradictory observations. Define competing explanations with different observable predictions, then propose the smallest check that distinguishes them by tracing inputs and state across the relevant boundary. The missing evidence prevents naming that boundary or check precisely. After changing the hypothesis, rerun the original reproducer before claiming a repair.\n\nWork summary:\n- Finished — distinguished expected RED from unsuccessful repairs using the supplied scenario; produced this assessment only. No operations or validation were performed.\n- Next — causal discrimination remains blocked on the evidence bundle. No linked ticket or distinct follow-on workflow is verified; this remains owned by the current debug root.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": [
+      "Pause further symptom edits based on the repeatedly contradicted diagnosis.",
+      "Request one redacted evidence bundle containing the shared diagnosis, smallest reproducer, and contradictory observation from each of the three repairs.",
+      "Use that evidence to propose a check whose observable results distinguish competing causal explanations, then reproduce the original failure under the revised hypothesis."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "e5fc5fe4ca3f7bfce3586559333c0791b8d3b2288940c26ef5ecb042962e81bb",
+  "sourceSHA256": "e6aeee820788abe58110768f8f9704663eaa2bb116c1009bf9212f44acabcd8c",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 28451,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 988,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 29439
+    }
+  ]
+}
