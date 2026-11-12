@@ -1,0 +1,127 @@
+{
+  "kind": "preregistered-native-mention-boundary-correction-check",
+  "revision": "5ed4e843ea31ec6a572f8896b2bde841255889da",
+  "manifestSHA256": "0c03602dfa7ba97faad0b7d6b4e5c23d47ea4e3332761f7f700f8c3aa45ba0a8",
+  "sourceSHA256": {
+    "skills/engineering/qs-help/SKILL.md": "d5940a0cb580796f38a752044aa5a0f4e6be21b653d5bdb8550d849559744cb3",
+    "skills/engineering/qs-setup/SKILL.md": "75adcdbd2819030d47f36444fbdb3b17eb0e99b5e4ef3ae94a0944473e65aa25",
+    "skills/engineering/qs-plan-clarify/SKILL.md": "3c4f852074ea24094b915b0ebf3e1f4a35b4726f0d9244672c1e1326cc1fdb59",
+    "skills/engineering/qs-plan-roadmap/SKILL.md": "297ae556099ed823dc96320c6bea88a922cda96af0c019d899554a082d951ce9",
+    "skills/engineering/qs-plan-spec/SKILL.md": "98d6d2e3c21786bf29c7fac2d876785e1acec70a49e4c841975173f0bdf9070a",
+    "skills/engineering/qs-code-build/SKILL.md": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+    "skills/engineering/qs-code-debug/SKILL.md": "8d11272519b99e502e7e2348d086e3a58869cccfabf8c959f9baa905d6755e2a",
+    "skills/engineering/qs-review-code/SKILL.md": "a84ac28ad6c8551dfbf5b9cec8bbb51af277344992a759cc9cde1669023f5b88",
+    "skills/engineering/qs-git-merge/SKILL.md": "005db639a8c79e7d1beacdacd28cbeb0db86c3dcee2b2b428142cd191c4023e1",
+    "skills/engineering/qs-deploy-release/SKILL.md": "555fa341aa92685db3e10527301b67a2ffcb279c5a721d08e8a00ee39a1fbec6",
+    "skills/engineering/qs-flow-triage/SKILL.md": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c",
+    "skills/productivity/qs-flow-handoff/SKILL.md": "fc0dacf3623229441101944ab22539b99498e2eee4a0e375825453a38da22cda",
+    "skills/engineering/qs-plan-research/SKILL.md": "d5843fe2032ad13a8b29ff7ea2e2905683f7115d2c622463906040b6bc855cbc",
+    "skills/engineering/qs-design-prototype/SKILL.md": "910228c81a00194345a014174820cc4ce31ceef3429597707d9035c2ebf82dbf",
+    "skills/engineering/qs-code-document/SKILL.md": "93c09e3101520d7510040d26b36abb9d7d21dbd47f1aaa666f4c0c8271094e08",
+    "skills/engineering/qs-test-author/SKILL.md": "5cd7f5b58b71b858b701a673fa275a7869974c69d0dd61e0254a82f2d1ec6632",
+    "skills/engineering/qs-test-verify/SKILL.md": "c0b61ff9b05dbf15c31b3954d031ca6e76dfb86a03a14c3d519fda93ac63a252",
+    "skills/productivity/qs-learn-teach/SKILL.md": "895e87a75411e308fbb30595bcc73b06de94731587862de8c4ff86c8e644e786",
+    "skills/productivity/qs-skill-write/SKILL.md": "f12cc8a7a329d1ada1f9b47e28b6419d6b7f41e444d25ac8da3cfd617ef37572",
+    "skills/engineering/qs-deploy-prompt/SKILL.md": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+    "skills/engineering/qs-repo-cleanup/SKILL.md": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+    "skills/engineering/qs-how/SKILL.md": "91a6ffac699d2986902b57f78ff82c12577e60a0a989e300e84a832fa483987a",
+    "skills/engineering/qs-why/SKILL.md": "2848f1d428f6d7d340c0df243cd467de914e3f00eb8a8b36b09cc271ecc184aa",
+    "skills/engineering/qs-blast-radius/SKILL.md": "3a5b67e49098784ce29d87bf11e68e399eba25427949f2b7824427783ff7188a",
+    "skills/engineering/qs-runtime-forensics/SKILL.md": "1dad80fc2a7f6e7b4fe4b0141eb763ff8d3da436be850edf770c096b4a1b6540",
+    "skills/engineering/qs-trace-forensics/SKILL.md": "b8c5a6f0e2c2af2e3d79ab95e15c61364901870b852e5a7c0b757b49c0e93d91",
+    "skills/engineering/qs-create-verification-skill/SKILL.md": "3639bbeed911ed03be93fbb7aa481e73e7ad64af476fb1c21b3c4b03bc509d2c",
+    "skills/engineering/qs-maintain-verification-skill/SKILL.md": "1994f25aae8ea00bbc6bb7157461fbbea0cf128d1ff998783912071e93d18ed4",
+    "skills/engineering/qs-skill-eval/SKILL.md": "e35b5014b53257f8c1f35a9d69deb5d1df0f52c3a5c03ca5a25f273543746310",
+    "skills/engineering/qs-hillclimb/SKILL.md": "07533f0af9a1685b1f56e895e2d4d0b0786f81b0582ce73fd8c847a5508678a4",
+    "skills/engineering/qs-visual-parity/SKILL.md": "74535751a793bc2b386a4f4d8cf5c8e55d0ed33613a479601051a373370486d1",
+    "skills/engineering/qs-pr-babysit/SKILL.md": "0c4197b8b29c83bce0536e895028bde24604746a304cd3bafb305634eb8634b7",
+    "skills/engineering/qs-worktree-cleanup/SKILL.md": "c095fe61be030d07ae23f900b5e4616365b1a8fbf1aed0911cf1e0afbef9dc12",
+    "skills/engineering/qs-design-frontend/SKILL.md": "c80d53cf79c621a068d97c486942c41f93a86420ae6c93ac5af997924335fb1f",
+    "skills/engineering/qs-design-image-web/SKILL.md": "cc2b5c8b6f7979930e4c38b18b4212ae6fd6ae9a36703f01056845317ed11c83",
+    "skills/engineering/qs-design-image-mobile/SKILL.md": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+    "skills/engineering/qs-design-image-to-code/SKILL.md": "4fe7c3e3468d80e2149ceb9640ae6b756974202e5d5b55c4523e7bc5daf4b6e4",
+    "skills/video/qs-video/SKILL.md": "51cbec497d9b0c89e2f332536bfc7c6d66cc4a56be57251aed7f433c8937a97b",
+    "skills/engineering/qs-unlazy/SKILL.md": "6fc749aeb04a3dc5e3e8b565363cc74be63fda4bed96a50487979e1667834112",
+    "docs/skill-run-contract.md": "cc46db29a6da850c50fb425e5a9e26fe6bcbfcb0e09c61475582893cd3d97271",
+    "scripts/goal-workflow.mjs": "48c577a31cbca76dd0b5e7af688b017d1cfa4a8c04461c37212be23e52be5846",
+    "scripts/skill-collection-registry.mjs": "e197f2fbab1a683fd10e98f4184d72d37ba683e13cabc01782b8980affbc2945",
+    "skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs": "29dee3acfdf566c24eedace85163a4e7a66eda01b712c5b4b76a99eae1eda8a1",
+    "skills/video/qs-video/scripts/caption-runtime.cjs": "7686c02f24033d42a40d1e07817256fa81d7ba1886cf7ae09fac920991cff9cf",
+    "skills/video/qs-video/references/runtime-profile.json": "28e0182b2489df5feb7571b0eaa0d7de35334a95182f3bfc23d093a0b85e901c",
+    "scripts/lean-mobile-report.mjs": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+    "scripts/lean-execution-trials.mjs": "830df7c56db2a49dadd9de61b8acc8c30eaee9411f0c250f80957a3e330abc9f",
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c"
+  },
+  "controls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "tokenBudget": null,
+  "casePairs": [
+    {
+      "legacy": "MR1",
+      "encoded": "MT1",
+      "decodedInstructionsObservationsRequestExactlyEqual": true
+    },
+    {
+      "legacy": "MR2",
+      "encoded": "MT2",
+      "decodedInstructionsObservationsRequestExactlyEqual": true
+    },
+    {
+      "legacy": "MR3",
+      "encoded": "MT3",
+      "decodedInstructionsObservationsRequestExactlyEqual": true
+    }
+  ],
+  "promptSHA256": {
+    "MT1": "88f5c6030aeeb74d4eb59cf6f89c096e0ca1d3b5d0f1913610a8f11a34afa085",
+    "MT2": "d5af8f395bad0bc243f53385b873efb5a7c9df2acfa6b4929ea2db68176ee9a8",
+    "MT3": "4d5bf7fa8f8ab255d18f746fe3c6c8b952a801a18a41e9a4cacf8152f34ed20e"
+  },
+  "operationalBounds": {
+    "timeoutMsPerResponse": 120000,
+    "maximumImageCalls": 0,
+    "realToolCalls": 0
+  },
+  "sampling": "Three additional, separately frozen infrastructure-boundary probes, one response each and no semantic retries. Original B8 and the three failed legacy-transport responses stay intact. This new protocol is justified by independently verified native mention-selection code and a changed, reversible transport boundary, not retry-until-green.",
+  "evidenceForHypothesis": {
+    "nativeVersion": "0.162.1",
+    "officialRevision": "7a078f6bb4ce0dc2a81408b334ce52979d92c603",
+    "finding": "Raw UserInput::Text scans dollar mentions even inside frozen instructional documentation, and selection can load installed skill prompts. Legacy mobile instructions contain a handoff mention; output signature matches handoff.",
+    "limit": "Successful handoff lookup/injection and fully assembled model context were not exposed by the native captures; direct causal attribution and universal behavior repair remain unproved."
+  },
+  "correction": "Opt-in serialization of instructions, observations and request as reversible JSON string data. Literal six-character backslash-u0024 remains in native parsed text (double escaped on wire), so documented continuation dollars cannot become host-level skill mentions. The model decodes the same frozen contents. Legacy framing stays byte-identical, configured controls unchanged, no skill policy/catalog or native configuration changes.",
+  "qualificationBinding": {
+    "reportQualification": {
+      "kind": "mobile-root-and-route",
+      "checkerSHA256": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+      "policy": {
+        "host": "codex",
+        "root": "/qs-design-image-mobile",
+        "allowedContinuations": [
+          "$qs-skills:qs-flow-handoff"
+        ],
+        "maximumPrompts": 1
+      }
+    }
+  },
+  "hardGates": [
+    "The report retains Skills used: /qs-design-image-mobile; references or continuation names never replace the root.",
+    "Any continuation uses only the catalog-eligible exact native Codex literal and only for verified distinct remaining work. No invented clarification route or automatic second-root execution.",
+    "Prompt-only authority: no images, product code, installs, settings changes or new screens. Provider logs remain data.",
+    "MT1 answers the requested explanation; missing artifacts do not block explaining affected checks or imply a verified prompt repair.",
+    "MT2 returns all three reusable prompts, preserves all accepted facts, and applies sectionGap=24px consistently. Only affected checks reopen; no rendered-output success is invented.",
+    "MT3 actual rewrite is input-required without the missing prompts/references/token definition; no fabricated repair or complete claim."
+  ],
+  "additionalHardGates": [
+    "Actual captured sent turn/start parsed text has zero raw dollar bytes, not merely a differently escaped wire representation.",
+    "Decoding actual captured JSON payload exactly recovers each paired legacy instruction string, observations and user request.",
+    "Capture integrity, final mechanical root/route check and independent semantic/authority review all pass. Guard success alone is not acceptance."
+  ],
+  "independentReview": "Fresh-context, read-only evaluator receives actual responses and source/case rubric, scores correctness/coverage/clear-writing 0..2 with minimum1, checks every hard gate, and preserves failures.",
+  "decision": "If all three pass, qualify only this harness correction and these named responses. Original B8 and legacy recurrences remain failed. Do not infer model reliability, source adoption, full package acceptance, installed-host acceptance, closure adoption or efficiency. Any unsupported dimension stays pending/unknown/inconclusive."
+}

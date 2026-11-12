@@ -1,0 +1,33 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "MR2",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — revise three prompt texts and preserve their handoff context (weight: 100%; textual evidence only).\n\nStage: Prompt revision and handoff | Stage estimate: ~100% | Overall estimate: ~100% | Verified — all three texts use sectionGap=24px and preserve the supplied decisions and amounts. Input needed: none.\n\nStatus: Complete\nSkills used: /qs-flow-handoff\nOutcome: Three revised reusable screen prompts for MOB-3-SHARED-SPACING, with the shared spacing correction applied throughout. Completion covers this response-only handoff.\nSpecs: Not located — the governing brief and accepted prompt descriptions were supplied in chat without specification links.\n\n### Prompt 1 — Accounts\n\n```text\nCreate the Accounts screen for an iOS personal ledger app. Show checking with a balance of $120 and savings with a balance of $80. Use a raw portrait screen with a complete opaque warm-white background covering the entire canvas, including safe areas. Do not include a device frame. Use black system-style app text and blue actions. Apply the shared spacing token sectionGap=24px consistently between content sections. Preserve the same typography, palette, navigation treatment and spacing system across the Accounts, Transfer and Transfer confirmation screens. Respect iOS status and home-indicator regions, keep app content clear of those regions, and provide readable labels and comfortable touch targets. Make the action leading to the Transfer screen clear. Do not add screens, unrelated content or invented financial data.\n```\n\n### Prompt 2 — Transfer\n\n```text\nCreate the Transfer screen for the same iOS personal ledger app. Show a $20 transfer from checking to savings. Use a raw portrait screen with a complete opaque warm-white background covering the entire canvas, including safe areas. Do not include a device frame. Use black system-style app text and blue actions. Apply the shared spacing token sectionGap=24px consistently between content sections. Preserve the typography, palette, navigation treatment and spacing system established on the Accounts screen. Respect iOS status and home-indicator regions, keep app content clear of those regions, and provide readable labels and comfortable touch targets. Keep the amount and transfer direction clear, with a blue action leading to Transfer confirmation. Do not add screens, unrelated content or invented financial data.\n```\n\n### Prompt 3 — Transfer confirmation\n\n```text\nCreate the Transfer confirmation screen for the same iOS personal ledger app. Clearly confirm that $20 was sent, preserving the preceding transfer's checking-to-savings direction. Use a raw portrait screen with a complete opaque warm-white background covering the entire canvas, including safe areas. Do not include a device frame. Use black system-style app text and blue actions. Apply the corrected shared spacing token sectionGap=24px consistently between content sections. Preserve the typography, palette, navigation treatment and spacing system established on the Accounts and Transfer screens. Respect iOS status and home-indicator regions, keep app content clear of those regions, and provide readable confirmation copy and comfortable touch targets. Do not add screens, unrelated content or invented financial data.\n```\n\nThe shared-token change reopens spacing consistency, cross-screen continuity, safe-area clearance and readability checks across all three screens. Text comparison confirms the corrected token, three-screen coverage, retained amounts, platform, colors and framing instructions. Actual layout, lettering, pixel dimensions and background opacity remain unverified; no rendered-image checks occurred. Rendering is outside the requested prompt-only scope.\n\nHandoff context: supplied repository `/fixture/ledger-app`, supplied revision `abc123`; neither was inspected. Branch, PR and working-tree state remain unknown. No external tracker was selected. No files, configuration, images or product code were created or changed.\n\nWork summary:\n- Finished — three revised reusable prompt texts; checked against the supplied brief and accepted prompt descriptions for token consistency and preservation of unaffected decisions. Reopened visual checks are recorded above.\n- Next — None verified after checking the supplied brief and available task history; no linked specifications or external tracker were supplied. Rendered validation remains outside this request.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "414ef84dc011780f1de3e63763cc7ddeca633e2ba069ca8c92775079fc1ab1d9",
+  "instructionSHA256": "92b95e1d523bd6947528dc3fce19d89443605ed1deef70c45f10d0389da77904",
+  "usage": [
+    {
+      "input_tokens": 28094,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1798,
+      "reasoning_output_tokens": 928,
+      "total_tokens": 29892
+    }
+  ],
+  "semanticReview": "pending independent review",
+  "reportQualification": {
+    "scope": "mobile-report-identity-and-route-only",
+    "passed": false,
+    "reportedRoots": [
+      "/qs-flow-handoff"
+    ],
+    "continuations": [],
+    "errors": [
+      "Owning mobile root is missing, duplicated or replaced"
+    ]
+  }
+}

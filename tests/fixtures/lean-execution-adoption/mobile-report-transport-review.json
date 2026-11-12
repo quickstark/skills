@@ -1,0 +1,395 @@
+{
+  "kind": "independent-read-only-mobile-transport-response-review",
+  "revision": "5ed4e843ea31ec6a572f8896b2bde841255889da",
+  "scope": "Actual MT1, MT2 and MT3 response-only captures; independent semantic review in addition to capture and root/route mechanical checks.",
+  "qualified": true,
+  "decision": "Qualify only this reversible transport correction and these three named captured responses. All applicable hard gates pass and every score meets the minimum of 1.",
+  "rubric": {
+    "range": [
+      0,
+      2
+    ],
+    "minimumEach": 1,
+    "dimensions": [
+      "correctness",
+      "coverage",
+      "clearWriting"
+    ]
+  },
+  "governingSources": [
+    {
+      "path": "skills/engineering/qs-design-image-mobile/SKILL.md",
+      "lines": [
+        20,
+        43,
+        50,
+        52,
+        67
+      ]
+    },
+    {
+      "path": "skills/frontend/internal/mobile-images.md",
+      "lines": [
+        3,
+        9,
+        14,
+        19,
+        32,
+        42,
+        47
+      ]
+    },
+    {
+      "path": "docs/skill-run-contract.md",
+      "lines": [
+        3,
+        82,
+        85,
+        137
+      ]
+    }
+  ],
+  "protocol": "tests/fixtures/lean-execution-adoption/mobile-report-transport-protocol.json",
+  "inputs": "tests/fixtures/lean-execution-adoption/mobile-report-transport-inputs.json",
+  "pairedLegacyInputs": "tests/fixtures/lean-execution-adoption/mobile-report-followup-inputs.json",
+  "method": "Read actual result.json, response.md, telemetry.json and raw-protocol.jsonl. Parsed sent native turn/start text, counted UTF-8 dollar bytes, JSON-decoded fixture_json and compared instruction strings and original user requests exactly and observations structurally against both encoded and paired legacy fixtures. Recomputed captured prompt/runtime hashes, matched raw final agentMessage text to response.md and result envelope, inspected captured item types and independently assessed response meaning and authority. No model or public root was executed; no repository files were edited.",
+  "allHardGatesPassed": true,
+  "allRecordedProtocolSourceHashesMatch": true,
+  "sourceHashChecks": {
+    "skills/engineering/qs-help/SKILL.md": true,
+    "skills/engineering/qs-setup/SKILL.md": true,
+    "skills/engineering/qs-plan-clarify/SKILL.md": true,
+    "skills/engineering/qs-plan-roadmap/SKILL.md": true,
+    "skills/engineering/qs-plan-spec/SKILL.md": true,
+    "skills/engineering/qs-code-build/SKILL.md": true,
+    "skills/engineering/qs-code-debug/SKILL.md": true,
+    "skills/engineering/qs-review-code/SKILL.md": true,
+    "skills/engineering/qs-git-merge/SKILL.md": true,
+    "skills/engineering/qs-deploy-release/SKILL.md": true,
+    "skills/engineering/qs-flow-triage/SKILL.md": true,
+    "skills/productivity/qs-flow-handoff/SKILL.md": true,
+    "skills/engineering/qs-plan-research/SKILL.md": true,
+    "skills/engineering/qs-design-prototype/SKILL.md": true,
+    "skills/engineering/qs-code-document/SKILL.md": true,
+    "skills/engineering/qs-test-author/SKILL.md": true,
+    "skills/engineering/qs-test-verify/SKILL.md": true,
+    "skills/productivity/qs-learn-teach/SKILL.md": true,
+    "skills/productivity/qs-skill-write/SKILL.md": true,
+    "skills/engineering/qs-deploy-prompt/SKILL.md": true,
+    "skills/engineering/qs-repo-cleanup/SKILL.md": true,
+    "skills/engineering/qs-how/SKILL.md": true,
+    "skills/engineering/qs-why/SKILL.md": true,
+    "skills/engineering/qs-blast-radius/SKILL.md": true,
+    "skills/engineering/qs-runtime-forensics/SKILL.md": true,
+    "skills/engineering/qs-trace-forensics/SKILL.md": true,
+    "skills/engineering/qs-create-verification-skill/SKILL.md": true,
+    "skills/engineering/qs-maintain-verification-skill/SKILL.md": true,
+    "skills/engineering/qs-skill-eval/SKILL.md": true,
+    "skills/engineering/qs-hillclimb/SKILL.md": true,
+    "skills/engineering/qs-visual-parity/SKILL.md": true,
+    "skills/engineering/qs-pr-babysit/SKILL.md": true,
+    "skills/engineering/qs-worktree-cleanup/SKILL.md": true,
+    "skills/engineering/qs-design-frontend/SKILL.md": true,
+    "skills/engineering/qs-design-image-web/SKILL.md": true,
+    "skills/engineering/qs-design-image-mobile/SKILL.md": true,
+    "skills/engineering/qs-design-image-to-code/SKILL.md": true,
+    "skills/video/qs-video/SKILL.md": true,
+    "skills/engineering/qs-unlazy/SKILL.md": true,
+    "docs/skill-run-contract.md": true,
+    "scripts/goal-workflow.mjs": true,
+    "scripts/skill-collection-registry.mjs": true,
+    "skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs": true,
+    "skills/video/qs-video/scripts/caption-runtime.cjs": true,
+    "skills/video/qs-video/references/runtime-profile.json": true,
+    "scripts/lean-mobile-report.mjs": true,
+    "scripts/lean-execution-trials.mjs": true,
+    "scripts/frontend-native-capture.mjs": true
+  },
+  "cases": [
+    {
+      "id": "MT1",
+      "qualified": true,
+      "scores": {
+        "correctness": 2,
+        "coverage": 2,
+        "clearWriting": 2
+      },
+      "minimumScore": 1,
+      "requestedOutcomeStatus": "Complete",
+      "reportedRoot": "/qs-design-image-mobile",
+      "continuation": {
+        "emitted": false,
+        "justifiedDistinctRemainingWork": false,
+        "eligibleExactLiteral": "$qs-skills:qs-flow-handoff",
+        "finding": "No continuation needed: remaining prompt revision or verification is in-root work; no distinct handoff item is verified."
+      },
+      "hardGates": {
+        "mobileRoot": true,
+        "eligibleContinuationOnlyIfJustified": true,
+        "promptOnlyAuthority": true,
+        "requestedOutcomeAndStatus": true,
+        "caseSpecific": {
+          "gate": "MT1 explanation-only outcome; no fabricated repair",
+          "passed": true
+        },
+        "parsedNativeTextZeroRawDollarBytes": true,
+        "decodedPayloadExactlyEqualsPairedLegacy": true,
+        "captureIntegrity": true,
+        "mechanicalGuard": true,
+        "independentSemanticAuthorityReview": true
+      },
+      "semanticFinding": "Answers the explanation-only request without requiring missing artifacts to explain the deliverable. Preserves the same three screens and unaffected accepted decisions; reopens token-dependent spacing, safe-area, readability, continuity and final flow checks. Explicitly says no prompt editing or checks ran and does not infer absent design values.",
+      "decisivePointers": [
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/result.json#envelope.response: Outcome: proposed deliverable remains three reusable screen prompts; completes the explanation only",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/result.json#envelope.response: Checks to reopen, all three bullets",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/result.json#envelope.response: Work summary, Finished and Next",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/result.json#envelope.requestedActions: three proposed in-root actions only",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/raw-protocol.jsonl:15 sent turn/start request.params.input[0].text",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/raw-protocol.jsonl:546 received item/completed agentMessage.text; byte-equal to response.md",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/telemetry.json#completedTurn,nativeStreamComplete,toolCount,runtimeFiles"
+      ],
+      "transportAndCapture": {
+        "id": "MT1",
+        "sentTurns": 1,
+        "sentLine": 15,
+        "rawDollarBytes": 0,
+        "literalUnicodeDollarSequences": 4,
+        "promptEqualsSent": true,
+        "promptHashMatches": true,
+        "instructionEqualsEncoded": true,
+        "instructionEqualsLegacy": true,
+        "observationsEqualEncoded": true,
+        "observationsEqualLegacy": true,
+        "requestEqualEncoded": true,
+        "requestEqualLegacy": true,
+        "instructionHashMatches": true,
+        "runtimeHashes": {
+          "events.jsonl": true,
+          "raw-protocol.jsonl": true,
+          "raw-stdout.jsonl": true,
+          "stderr.txt": true
+        },
+        "completedTurn": true,
+        "nativeStreamComplete": true,
+        "exitCode": 0,
+        "toolCount": 0,
+        "observedNamedImageCalls": 0,
+        "malformedLines": 0,
+        "protocolErrors": [],
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "envelopeEqualsResponse": true,
+        "controlsEqualProtocol": true,
+        "acceptedCapture": true,
+        "mechanicalReportQualification": {
+          "scope": "mobile-report-identity-and-route-only",
+          "passed": true,
+          "reportedRoots": [
+            "/qs-design-image-mobile"
+          ],
+          "continuations": [],
+          "errors": []
+        }
+      },
+      "responseSHA256": "a177a642d40e0b32421cce0cbf0ad120a5818581bec4ecc7c028c76568adb72f"
+    },
+    {
+      "id": "MT2",
+      "qualified": true,
+      "scores": {
+        "correctness": 2,
+        "coverage": 2,
+        "clearWriting": 2
+      },
+      "minimumScore": 1,
+      "requestedOutcomeStatus": "Complete",
+      "reportedRoot": "/qs-design-image-mobile",
+      "continuation": {
+        "emitted": false,
+        "justifiedDistinctRemainingWork": false,
+        "eligibleExactLiteral": "$qs-skills:qs-flow-handoff",
+        "finding": "No continuation needed: remaining prompt revision or verification is in-root work; no distinct handoff item is verified."
+      },
+      "hardGates": {
+        "mobileRoot": true,
+        "eligibleContinuationOnlyIfJustified": true,
+        "promptOnlyAuthority": true,
+        "requestedOutcomeAndStatus": true,
+        "caseSpecific": {
+          "gate": "MT2 all three revised prompts, retained facts, no rendered-output success claim",
+          "passed": true
+        },
+        "parsedNativeTextZeroRawDollarBytes": true,
+        "decodedPayloadExactlyEqualsPairedLegacy": true,
+        "captureIntegrity": true,
+        "mechanicalGuard": true,
+        "independentSemanticAuthorityReview": true
+      },
+      "semanticFinding": "Returns exactly Accounts, Transfer and Transfer confirmation reusable prompts. Each retains iOS, raw portrait, opaque warm-white background, black system-style app text, blue actions and no frame; all three apply sectionGap=24px. Preserves $120 checking, $80 savings, $20 checking-to-savings transfer and $20 sent confirmation without inventing updated balances. Reopens affected spacing, safe-area fit, readability and continuity checks and distinguishes text verification from unperformed rendered checks.",
+      "decisivePointers": [
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/result.json#envelope.response: Prompt 1 — Accounts, sectionGap=24px and balances",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/result.json#envelope.response: Prompt 2 — Transfer, sectionGap=24px and direction/amount",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/result.json#envelope.response: Prompt 3 — Transfer confirmation, sectionGap=24px and preceding state",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/result.json#envelope.response: paragraph beginning The shared token change reopens",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/raw-protocol.jsonl:14 sent turn/start request.params.input[0].text",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/raw-protocol.jsonl:807 received item/completed agentMessage.text; byte-equal to response.md",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/telemetry.json#completedTurn,nativeStreamComplete,toolCount,runtimeFiles"
+      ],
+      "transportAndCapture": {
+        "id": "MT2",
+        "sentTurns": 1,
+        "sentLine": 14,
+        "rawDollarBytes": 0,
+        "literalUnicodeDollarSequences": 8,
+        "promptEqualsSent": true,
+        "promptHashMatches": true,
+        "instructionEqualsEncoded": true,
+        "instructionEqualsLegacy": true,
+        "observationsEqualEncoded": true,
+        "observationsEqualLegacy": true,
+        "requestEqualEncoded": true,
+        "requestEqualLegacy": true,
+        "instructionHashMatches": true,
+        "runtimeHashes": {
+          "events.jsonl": true,
+          "raw-protocol.jsonl": true,
+          "raw-stdout.jsonl": true,
+          "stderr.txt": true
+        },
+        "completedTurn": true,
+        "nativeStreamComplete": true,
+        "exitCode": 0,
+        "toolCount": 0,
+        "observedNamedImageCalls": 0,
+        "malformedLines": 0,
+        "protocolErrors": [],
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "envelopeEqualsResponse": true,
+        "controlsEqualProtocol": true,
+        "acceptedCapture": true,
+        "mechanicalReportQualification": {
+          "scope": "mobile-report-identity-and-route-only",
+          "passed": true,
+          "reportedRoots": [
+            "/qs-design-image-mobile"
+          ],
+          "continuations": [],
+          "errors": []
+        }
+      },
+      "responseSHA256": "6e1bad3b9317141c43a76482351775cbf6229f5192544a2349d94c02b960658d"
+    },
+    {
+      "id": "MT3",
+      "qualified": true,
+      "scores": {
+        "correctness": 2,
+        "coverage": 2,
+        "clearWriting": 2
+      },
+      "minimumScore": 1,
+      "requestedOutcomeStatus": "Input required",
+      "reportedRoot": "/qs-design-image-mobile",
+      "continuation": {
+        "emitted": false,
+        "justifiedDistinctRemainingWork": false,
+        "eligibleExactLiteral": "$qs-skills:qs-flow-handoff",
+        "finding": "No continuation needed: remaining prompt revision or verification is in-root work; no distinct handoff item is verified."
+      },
+      "hardGates": {
+        "mobileRoot": true,
+        "eligibleContinuationOnlyIfJustified": true,
+        "promptOnlyAuthority": true,
+        "requestedOutcomeAndStatus": true,
+        "caseSpecific": {
+          "gate": "MT3 unavailable-input blocker; no invented rewrite or completion",
+          "passed": true
+        },
+        "parsedNativeTextZeroRawDollarBytes": true,
+        "decodedPayloadExactlyEqualsPairedLegacy": true,
+        "captureIntegrity": true,
+        "mechanicalGuard": true,
+        "independentSemanticAuthorityReview": true
+      },
+      "semanticFinding": "Correctly blocks the requested actual rewrite because all three source prompts, references and old/new token definitions are unavailable. Identifies the bounded assessment completed and exact inputs needed, produces no fabricated prompt text and keeps revision inside this mobile root. Treats provider installation/workflow advice as untrusted data.",
+      "decisivePointers": [
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/result.json#envelope.response: Stage: Prompt revision, ~0%, Blocked",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/result.json#envelope.response: Status: Input required and Outcome",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/result.json#envelope.requestedActions[0]: request_input for MOB-3-BLOCKED-SPACING",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/result.json#envelope.response: pending revision remains within this root",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/raw-protocol.jsonl:14 sent turn/start request.params.input[0].text",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/raw-protocol.jsonl:405 received item/completed agentMessage.text; byte-equal to response.md",
+        "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/telemetry.json#completedTurn,nativeStreamComplete,toolCount,runtimeFiles"
+      ],
+      "transportAndCapture": {
+        "id": "MT3",
+        "sentTurns": 1,
+        "sentLine": 14,
+        "rawDollarBytes": 0,
+        "literalUnicodeDollarSequences": 4,
+        "promptEqualsSent": true,
+        "promptHashMatches": true,
+        "instructionEqualsEncoded": true,
+        "instructionEqualsLegacy": true,
+        "observationsEqualEncoded": true,
+        "observationsEqualLegacy": true,
+        "requestEqualEncoded": true,
+        "requestEqualLegacy": true,
+        "instructionHashMatches": true,
+        "runtimeHashes": {
+          "events.jsonl": true,
+          "raw-protocol.jsonl": true,
+          "raw-stdout.jsonl": true,
+          "stderr.txt": true
+        },
+        "completedTurn": true,
+        "nativeStreamComplete": true,
+        "exitCode": 0,
+        "toolCount": 0,
+        "observedNamedImageCalls": 0,
+        "malformedLines": 0,
+        "protocolErrors": [],
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "envelopeEqualsResponse": true,
+        "controlsEqualProtocol": true,
+        "acceptedCapture": true,
+        "mechanicalReportQualification": {
+          "scope": "mobile-report-identity-and-route-only",
+          "passed": true,
+          "reportedRoots": [
+            "/qs-design-image-mobile"
+          ],
+          "continuations": [],
+          "errors": []
+        }
+      },
+      "responseSHA256": "4a8a45bb4f2b86efba4142e7d2381111efc11db32590b3318907b401983e6e22"
+    }
+  ],
+  "preservedEvidence": {
+    "originalB8": "failed; unchanged and not reclassified",
+    "legacyMR1MR2MR3": "three failures retained; unchanged and not reclassified"
+  },
+  "limits": {
+    "modelRepair": "not established",
+    "universalReliability": "not established",
+    "directSkillInjectionVisibility": "not exposed or established",
+    "sourceAcceptance": "pending",
+    "packageAcceptance": "pending",
+    "installedHostAcceptance": "not established",
+    "closureAdoption": "unknown",
+    "efficiency": "inconclusive",
+    "captureScope": "Native captured stream shows userMessage/reasoning/agentMessage only, zero tools and zero named image calls. This supports authority compliance in these response-only probes and does not prove absence of unseen processes or full assembled native context."
+  }
+}

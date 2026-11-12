@@ -61,6 +61,23 @@ hashes remains historical-output evidence; it is not a new render, new matting o
 decoded rendered-audio validation. All six packages, source adoption and unknown
 closure acceptance remain pending. No installation or acquisition was performed.
 
+`mobile-report-*` retains the B8 investigation, three further legacy-transport
+failures, and separately preregistered reversible-JSON transport probes. Exact
+Codex 0.162.1 source under `mobile-native-source/` shows that dollar skill mentions
+inside raw instructional text can select installed skill prompts. The embedded
+handoff example is therefore a contamination path; the assembled model context
+was not exposed, so actual injection remains an inference. Original source and
+license/notice bytes are retained. Canonical mobile policy is unchanged.
+The qualification guard checks visible report identity and exact catalog routes,
+binds its implementation and effective policy, and leaves semantic/authority
+assessment to independent review. Initial capture-time records are preserved;
+`mobile-report-requalification.json` applies the final checker append-only.
+Transport escaping is opt-in and losslessly decodes to the same source, context
+and request. It does not activate packages or establish source/package adoption,
+closure acceptance, installed-host acceptance, model reliability or efficiency.
+Legacy response observations remain preserved; their capture integrity alone does
+not establish isolation from installed-skill expansion of raw dollar mentions.
+
 `original-*.json` retain exact provenance and private closure records from the
 baseline Git revision. Source-only audit refreshes do not renew old source,
 publication or installed-host acceptance. Changed adaptations remain pending.

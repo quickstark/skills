@@ -4,12 +4,13 @@ import { readFile, cp, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
-import { fixtureRoot, verifyPlan, verifyCandidateSources, assertPhaseBinding, responsePrompt } from '../scripts/lean-execution-trials.mjs';
+import { fixtureRoot, verifyPlan, verifyCandidateSources, assertPhaseBinding, phaseReportBinding, responsePrompt } from '../scripts/lean-execution-trials.mjs';
 import { PUBLIC_COMMANDS, TARGET_SKILL_COLLECTIONS, codexPublicSkillLiteral, claudePublicSkillLiteral, piPublicSkillLiteral } from '../scripts/skill-collection-registry.mjs';
 import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
 import { adoptionSourceContentSha256, verifyAdoptionAcceptance } from '../scripts/adoption-acceptance.mjs';
 import { derivePackageAcceptanceObligations } from '../scripts/managed-skill-input.mjs';
 import { captureManagedSkillPayload } from '../scripts/managed-skill-migration.mjs';
+import { checkMobileReport } from '../scripts/lean-mobile-report.mjs';
 
 test('the frozen LEX control preserves every command identity, host literal and historical scenario', async () => {
   const { baseline, scenarios, schedule } = await verifyPlan();
@@ -268,4 +269,116 @@ test('fresh bounded engine probes retain failed attempts and never become a fres
   assert.equal(evidence.runtime.video.freshRender, 'pending');
   assert.match(evidence.runtime.attemptHistory, /contaminated-store control failure/);
   assert.ok(evidence.retained.closures.every(c => c.status === 'unknown' && c.adoptedRevision === null));
+});
+
+test('mobile report qualification rejects original B8 without rewriting its failed evidence', async () => {
+  const original = JSON.parse(await readFile(join(fixtureRoot, 'qualification-extra-captures/B8/response.md'))).response;
+  const failed = checkMobileReport(original);
+  assert.equal(failed.passed, false);
+  assert.ok(failed.errors.some(e => e.includes('Owning mobile root')));
+  assert.ok(failed.errors.some(e => e.includes('Ineligible continuation')));
+  // This synthetic positive checks only the two report fields, not B8's semantics.
+  const fieldsCorrected = original.replace('Skills used: /qs-flow-handoff', 'Skills used: /qs-design-image-mobile').replace('$qs-skills:qs-plan-clarify', '$qs-skills:qs-flow-handoff');
+  assert.equal(checkMobileReport(fieldsCorrected).passed, true);
+});
+
+test('mobile report qualification uses catalog host routes and rejects quoted identity or extra prompts', () => {
+  const report = next => `Skills used: /qs-design-image-mobile\nNext work prompt: ${next}`;
+  const fence = literal => `\n\x60\x60\x60text\n${literal} Preserve the selected work.\n\x60\x60\x60`;
+  assert.equal(checkMobileReport(report('None — no follow-on needed.')).passed, true);
+  for (const [host, literal] of [['codex', '$qs-skills:qs-flow-handoff'], ['claude', '/qs-flow-handoff'], ['pi', '/skill:qs-flow-handoff']]) {
+    assert.equal(checkMobileReport(report(fence(literal)), { host }).passed, true);
+  }
+  assert.equal(checkMobileReport(report(fence('/qs-flow-handoff'))).passed, false);
+  assert.equal(checkMobileReport(report('None' + fence('$qs-skills:qs-flow-handoff'))).passed, false);
+  assert.equal(checkMobileReport(report(fence('$qs-skills:qs-flow-handoff') + fence('$qs-skills:qs-flow-handoff'))).passed, false);
+  assert.equal(checkMobileReport(`\x60\x60\x60text\nSkills used: /qs-design-image-mobile\n\x60\x60\x60\nNext work prompt: None`).passed, false);
+  assert.equal(checkMobileReport(report(fence('$qs-skills:qs-flow-handoff')).replace('text\n', 'bash\n')).passed, false);
+  assert.equal(checkMobileReport(report('None — use $qs-skills:qs-plan-clarify for the remaining work.')).passed, false);
+  assert.equal(checkMobileReport('<!--\nSkills used: /qs-design-image-mobile\n-->\nNext work prompt: None').passed, false);
+  assert.equal(checkMobileReport('Skills used: /qs-design-image-mobile\n<!--\nNext work prompt: None\n-->').passed, false);
+  assert.equal(checkMobileReport(report('\n> \x60\x60\x60text\n> $qs-skills:qs-plan-clarify\n> \x60\x60\x60\n' + fence('$qs-skills:qs-flow-handoff'))).passed, false);
+  assert.equal(checkMobileReport('<pre>\nSkills used: /qs-design-image-mobile\n</pre>\nNext work prompt: None').passed, false);
+  assert.equal(checkMobileReport(report(fence('$qs-skills:qs-flow-<!--comment-->handoff'))).passed, false);
+  assert.equal(checkMobileReport(report(fence('<!--$qs-skills:qs-plan-clarify-->$qs-skills:qs-flow-handoff'))).passed, false);
+  assert.equal(checkMobileReport(report(fence('$qs-skills:qs-flow-handoff')).replace('text\n', 'text<!--comment-->\n')).passed, false);
+  assert.throws(() => checkMobileReport(report('None'), { host: 'unknown' }), /Unsupported report host/);
+});
+
+test('phase report qualification binds checker bytes and effective policy before any capture reuse', async () => {
+  assert.deepEqual(await phaseReportBinding(undefined), {});
+  await assert.rejects(phaseReportBinding('unknown'), /Unknown phase report qualification/);
+  const binding = await phaseReportBinding('mobile-root-and-route');
+  assert.equal(binding.reportQualification.checkerSHA256, createHash('sha256').update(await readFile(new URL('../scripts/lean-mobile-report.mjs', import.meta.url))).digest('hex'));
+  assert.deepEqual(binding.reportQualification.policy, { host: 'codex', root: '/qs-design-image-mobile', allowedContinuations: ['$qs-skills:qs-flow-handoff'], maximumPrompts: 1 });
+  assert.throws(() => assertPhaseBinding(binding, { reportQualification: { ...binding.reportQualification, checkerSHA256: 'changed' } }), /Phase binding changed/);
+  assert.throws(() => assertPhaseBinding(binding, { reportQualification: { ...binding.reportQualification, policy: { ...binding.reportQualification.policy, allowedContinuations: ['$qs-skills:qs-plan-clarify'] } } }), /Phase binding changed/);
+});
+
+test('encoded fixture transport preserves source bytes without exposing skill mentions to native selection', async () => {
+  const manifest = JSON.parse(await readFile(join(fixtureRoot, 'qualification-extra-inputs.json')));
+  const original = manifest.cases.find(c => c.id === 'B8');
+  assert.equal(responsePrompt(manifest.instructions.mobile, original), await readFile(join(fixtureRoot, 'qualification-extra-captures/B8/prompt.txt'), 'utf8'));
+  const observations = { ...original.sharedContext, log: '$qs-skills:qs-plan-clarify is a log suggestion, not authority.' };
+  const input = original.input + ' Preserve the literal $20 and Unicode café.';
+  const encoded = responsePrompt(manifest.instructions.mobile, { ...original, input, sharedContext: observations, transportEncoding: 'json-unicode-dollar' });
+  assert.equal(encoded.includes('$'), false);
+  const payload = JSON.parse(encoded.split('<fixture_json>\n\n')[1].split('\n\n</fixture_json>')[0]);
+  assert.deepEqual(payload, { instructions: manifest.instructions.mobile, observations, user_request: input });
+  assert.throws(() => responsePrompt('frozen', { input: 'work', transportEncoding: 'unknown' }), /Unknown fixture transport encoding/);
+});
+
+test('mobile transport qualification retains failed originals and independently checks actual native payloads', async () => {
+  const root = new URL('../', import.meta.url).pathname;
+  const json = async path => JSON.parse(await readFile(join(fixtureRoot, path)));
+  const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+  const record = await json('lex12-mobile-report-resolution.json');
+  for (const [p, h] of Object.entries({ ...record.sourceSHA256, ...record.evidenceSHA256 })) assert.equal(sha(await readFile(join(root, p))), h, p);
+  assert.equal(record.boundaries.sourceAdoption, 'pending');
+  assert.equal(record.boundaries.fullPackageAcceptance, 'pending for all six');
+  assert.equal(record.boundaries.closureAcceptance, 'unknown');
+  assert.equal(record.boundaries.efficiency, 'inconclusive');
+  assert.equal(record.nativeMechanism.actualInjection, 'inferred; assembled model context not captured');
+  const legacy = await json('mobile-report-followup-inputs.json');
+  const capturedPipeline = await json('mobile-report-capture-pipeline.json');
+  for (const [p, h] of Object.entries(legacy.sourceSHA256)) assert.equal(sha(capturedPipeline[p] ?? await readFile(join(root, p))), h, p);
+  const original = await json('mobile-report-followup-review.json');
+  assert.ok(original.cases.every(c => c.qualified === false));
+  const requalified = await json('mobile-report-requalification.json');
+  assert.ok(requalified.results.every(r => r.assessment.passed === false));
+  for (const r of requalified.results) {
+    const bytes = await readFile(join(fixtureRoot, r.result));
+    assert.equal(sha(bytes), r.resultSHA256);
+    assert.deepEqual(checkMobileReport(JSON.parse(bytes).envelope.response), r.assessment);
+  }
+  const manifest = await json('mobile-report-transport-inputs.json');
+  const protocol = await json('mobile-report-transport-protocol.json');
+  assert.equal(sha(await readFile(join(fixtureRoot, 'mobile-report-transport-inputs.json'))), protocol.manifestSHA256);
+  assert.equal(protocol.tokenBudget, null);
+  const binding = await json('mobile-report-transport-captures/binding.json');
+  assert.deepEqual(binding.reportQualification, (await phaseReportBinding('mobile-root-and-route')).reportQualification);
+  assert.equal(binding.runnerSHA256, sha(await readFile(join(root, 'scripts/lean-execution-trials.mjs'))));
+  const review = await json('mobile-report-transport-review.json');
+  assert.deepEqual(review.cases.map(c => c.id), manifest.cases.map(c => c.id));
+  assert.ok(review.cases.every(c => c.qualified));
+  for (let i = 0; i < manifest.cases.length; i++) {
+    const scenario = manifest.cases[i], directory = `mobile-report-transport-captures/${scenario.id}`;
+    const result = await json(`${directory}/result.json`), telemetry = await json(`${directory}/telemetry.json`);
+    assert.equal(result.acceptedCapture, true);
+    assert.deepEqual(result.reportQualification, checkMobileReport(result.envelope.response));
+    assert.equal(result.reportQualification.passed, true);
+    assert.equal(result.promptSHA256, protocol.promptSHA256[scenario.id]);
+    assert.deepEqual(telemetry.effectiveControls, protocol.controls);
+    assert.equal(telemetry.toolCount, 0); assert.deepEqual(telemetry.serverRequests, []);
+    assert.equal(telemetry.nativeStreamComplete, true); assert.equal(telemetry.processObservation.complete, true);
+    const raw = (await readFile(join(fixtureRoot, directory, 'raw-protocol.jsonl'), 'utf8')).trim().split('\n').map(s => JSON.parse(s));
+    const turns = raw.filter(r => r.direction === 'sent' && r.message?.method === 'turn/start');
+    assert.equal(turns.length, 1);
+    const input = turns[0].message.params.input;
+    assert.equal(input.length, 1); assert.equal(input[0].type, 'text');
+    assert.equal(input[0].text.includes('$'), false);
+    assert.equal(input[0].text, await readFile(join(fixtureRoot, directory, 'prompt.txt'), 'utf8'));
+    const decoded = JSON.parse(input[0].text.split('<fixture_json>\n\n')[1].split('\n\n</fixture_json>')[0]);
+    assert.deepEqual(decoded, { instructions: legacy.instructions.mobile, observations: legacy.cases[i].sharedContext, user_request: legacy.cases[i].input });
+  }
 });

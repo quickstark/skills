@@ -1,0 +1,15 @@
+Independent read-only recheck of revised LEX-12-MOBILE-REPORT-ROUTE guard. No repository edits, model calls, public skill execution, publication or installation.
+
+Resolved: All original reproductions now reject: HTML-comment-only owning identity; hidden continuation field/fence; None followed by an inline ineligible literal; and quoted ineligible continuation plus valid unquoted fence. phaseReportBinding now hashes the checker and binds effective host/root/routes/maximumPrompts; capturePhase compares that identity before its existing-capture skip. The added negative and binding tests pass under node --test tests/lean-execution.test.mjs.
+
+Remaining P2: Preserve literal code-fence bytes when excluding HTML comments. scripts/lean-mobile-report.mjs:24 globally strips comments before detecting fences. HTML comments inside fenced code are visible literal text, not hidden markup. Reproduction:
+
+Skills used: /qs-design-image-mobile
+Next work prompt:
+```text
+$qs-skills:qs-flow-<!--comment-->handoff preserve work
+```
+
+checkMobileReport returns passed:true and continuations:["$qs-skills:qs-flow-handoff"], falsely qualifying an actual first token that is not the eligible exact host literal. A fence beginning <!--$qs-skills:qs-plan-clarify-->$qs-skills:qs-flow-handoff also passes. Exclude comments contextually outside code fences (or conservatively reject comment syntax in continuation fences) and add a regression asserting the original fenced bytes determine the route.
+
+Additional reads: package.json to identify test entry; retained mobile-report-capture-pipeline.json keys to confirm v1 implementation capture exists. Rechecked diff and current checker/binding implementation only; no native response evaluation or acceptance claims. Original B8 and raw native result fields must remain immutable. A separately hashed v2 requalification is appropriate after correction; it does not prove semantic/package acceptance or model repair.

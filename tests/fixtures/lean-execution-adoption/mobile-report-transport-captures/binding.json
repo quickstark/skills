@@ -1,0 +1,25 @@
+{
+  "kind": "single-variant-behavior-not-efficiency-comparison",
+  "planSHA256": "ff1dcf22c384912b8b1926b137682868f26707fdfdd1ff57cbc97d4ba68d6b9f",
+  "manifestSHA256": "0c03602dfa7ba97faad0b7d6b4e5c23d47ea4e3332761f7f700f8c3aa45ba0a8",
+  "runnerSHA256": "830df7c56db2a49dadd9de61b8acc8c30eaee9411f0c250f80957a3e330abc9f",
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "reportQualification": {
+    "kind": "mobile-root-and-route",
+    "checkerSHA256": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+    "policy": {
+      "host": "codex",
+      "root": "/qs-design-image-mobile",
+      "allowedContinuations": [
+        "$qs-skills:qs-flow-handoff"
+      ],
+      "maximumPrompts": 1
+    }
+  }
+}

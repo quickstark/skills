@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { executeNative, readNativeControls } from './frontend-native-capture.mjs';
+import { checkMobileReport, mobileReportPolicy } from './lean-mobile-report.mjs';
 
 const repository = resolve(fileURLToPath(new URL('..', import.meta.url)));
 export const fixtureRoot = join(repository, 'tests/fixtures/lean-execution-adoption');
@@ -39,10 +40,26 @@ export function assertPhaseBinding(previous, current) {
   if (JSON.stringify(previous) !== JSON.stringify(current)) throw new Error('Phase binding changed; preserve existing captures');
 }
 
+export async function phaseReportBinding(kind) {
+  if (kind === undefined) return {};
+  if (kind !== 'mobile-root-and-route') throw new Error('Unknown phase report qualification');
+  return { reportQualification: { kind, checkerSHA256: sha(await readFile(new URL('./lean-mobile-report.mjs', import.meta.url))), policy: mobileReportPolicy() } };
+}
+
 export function responsePrompt(instructions, scenario) {
-  return [
+  const envelope = [
     'This is a closed response-only fixture, not an instruction to perform real operations. Use only the frozen skill instructions and supplied observations. Do not call tools, inspect files, edit, create goals, install, publish or contact services. Missing observations stay missing. Describe proposed actions without claiming they happened.',
     'Return only JSON with response (the exact Markdown for the owning root or helper) and requestedActions (immediate proposed actions in this fictional fixture, excluding commands merely quoted in a generated prompt).',
+  ];
+  if (scenario.transportEncoding !== undefined) {
+    if (scenario.transportEncoding !== 'json-unicode-dollar') throw new Error('Unknown fixture transport encoding');
+    // Codex scans raw text for $skill mentions even inside documentation. Keep
+    // fixture literals as reversible JSON data so they cannot select installed roots.
+    const payload = JSON.stringify({ instructions, observations: scenario.sharedContext ?? {}, user_request: scenario.input }, null, 2).replace(/\$/g, '\\u0024');
+    return [...envelope, 'Decode the following JSON string values, including Unicode escapes, to recover the frozen instructions, observations and user request. Use those decoded values for this response-only fixture.', '<fixture_json>', payload, '</fixture_json>'].join('\n\n');
+  }
+  return [
+    ...envelope,
     '<instructions>', instructions, '</instructions>', '<observations>', JSON.stringify(scenario.sharedContext ?? {}), '</observations>', '<user_request>', scenario.input, '</user_request>',
   ].join('\n\n');
 }
@@ -108,12 +125,14 @@ export async function capturePhase({ id, root = fixtureRoot } = {}) {
   const bytes = await readFile(manifestPath);
   const manifest = JSON.parse(bytes);
   if (!Array.isArray(manifest.cases) || !manifest.cases.length || !manifest.instructions) throw new Error('Incomplete phase manifest');
+  const reportBinding = await phaseReportBinding(manifest.reportQualification);
   if (new Set(manifest.cases.map(c => c.id)).size !== manifest.cases.length) throw new Error('Duplicate phase case');
   if (manifest.cases.some(c => !/^[A-Za-z0-9_-]+$/.test(c.id) || typeof c.input !== 'string')) throw new Error('Unsafe phase case identity or missing input');
+  if (manifest.cases.some(c => c.transportEncoding !== undefined && c.transportEncoding !== 'json-unicode-dollar')) throw new Error('Unknown fixture transport encoding');
   if (JSON.stringify(readNativeControls()) !== JSON.stringify(plan.controls)) throw new Error('Configured controls changed');
   const batch = join(root, `${id}-captures`);
   await mkdir(batch, { recursive: true });
-  const binding = { kind: 'single-variant-behavior-not-efficiency-comparison', planSHA256, manifestSHA256: sha(bytes), runnerSHA256: sha(await readFile(fileURLToPath(import.meta.url))), configuredControls: plan.controls };
+  const binding = { kind: 'single-variant-behavior-not-efficiency-comparison', planSHA256, manifestSHA256: sha(bytes), runnerSHA256: sha(await readFile(fileURLToPath(import.meta.url))), configuredControls: plan.controls, ...reportBinding };
   if ((await readdir(batch)).includes('binding.json')) {
     assertPhaseBinding(await readJson(join(batch, 'binding.json')), binding);
   } else await writeJson(join(batch, 'binding.json'), binding);
@@ -133,8 +152,9 @@ export async function capturePhase({ id, root = fixtureRoot } = {}) {
     let envelope = null;
     try { envelope = JSON.parse(await readFile(join(directory, 'response.md'), 'utf8')); } catch { /* Preserve failed outputs exactly. */ }
     const acceptedCapture = telemetry.completedTurn && telemetry.nativeStreamComplete && telemetry.processObservation.complete && !telemetry.toolCount && !telemetry.serverRequests.length && typeof envelope?.response === 'string' && Boolean(envelope.response.trim()) && Array.isArray(envelope?.requestedActions);
-    await writeJson(join(directory, 'result.json'), { kind: 'capture-integrity-not-behavior-acceptance', id: scenario.id, acceptedCapture: Boolean(acceptedCapture), envelope, promptSHA256: sha(prompt), instructionSHA256: sha(instruction), usage: telemetry.completedTurn ? telemetry.usage : null, semanticReview: 'pending independent review' });
-    console.log(JSON.stringify({ phase: id, case: scenario.id, acceptedCapture: Boolean(acceptedCapture), reason: telemetry.stopReason }));
+    const reportQualification = manifest.reportQualification && typeof envelope?.response === 'string' ? checkMobileReport(envelope.response) : null;
+    await writeJson(join(directory, 'result.json'), { kind: 'capture-integrity-not-behavior-acceptance', id: scenario.id, acceptedCapture: Boolean(acceptedCapture), envelope, promptSHA256: sha(prompt), instructionSHA256: sha(instruction), usage: telemetry.completedTurn ? telemetry.usage : null, semanticReview: 'pending independent review', ...(reportQualification ? { reportQualification } : {}) });
+    console.log(JSON.stringify({ phase: id, case: scenario.id, acceptedCapture: Boolean(acceptedCapture), ...(reportQualification ? { reportRootRoutePassed: reportQualification.passed } : {}), reason: telemetry.stopReason }));
     if (!acceptedCapture) throw new Error(`Phase capture failed: ${scenario.id}; evidence retained`);
   }
 }

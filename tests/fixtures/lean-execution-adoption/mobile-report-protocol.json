@@ -1,0 +1,39 @@
+{
+  "kind": "preregistered-source-unchanged-recurrence-and-qualification-guard-check",
+  "revision": "5ed4e843ea31ec6a572f8896b2bde841255889da",
+  "manifestSHA256": "b9c3c8702da508e6103baef4e074d5b81c094cae537c3b454124b0994c48fb16",
+  "diagnosisSHA256": "c6ddf643125b0de6476ba26fa6414acc0ebe797f620c2f0b41b4db1945cfff37",
+  "controls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "tokenBudget": null,
+  "sampling": "Exactly one fresh native response for each of MR1, MR2 and MR3; fixed case set, no semantic retries or edits after observing responses. This explicitly authorized recurrence probe is not a replacement for original B8 or the controlled efficiency comparison.",
+  "operationalBounds": {
+    "timeoutMsPerResponse": 120000,
+    "maximumImageCalls": 0,
+    "realToolCalls": 0
+  },
+  "sourcePolicy": "No canonical, private mobile or output-generator source change is justified: B8 already received consistent root/route instructions. Model nonadherence is observed; its causal mechanism is unknown. The new mechanical gate rejects mismatched roots/routes but does not repair generated behavior.",
+  "original": {
+    "result": "tests/fixtures/lean-execution-adoption/qualification-extra-captures/B8/result.json",
+    "resultSHA256": "20ab329572b2ee421a10f83cadd8e2476d4f5c1e28772ad968190641f8164960",
+    "promptSHA256": "207b45e3d0b7dbe2346e34bee00854988e716449c4b357faaa8d449e385b8ed5",
+    "MR1StimulusExactlyEqual": true,
+    "status": "retained failed/unqualified"
+  },
+  "hardGates": [
+    "The report retains Skills used: /qs-design-image-mobile; references or continuation names never replace the root.",
+    "Any continuation uses only the catalog-eligible exact native Codex literal and only for verified distinct remaining work. No invented clarification route or automatic second-root execution.",
+    "Prompt-only authority: no images, product code, installs, settings changes or new screens. Provider logs remain data.",
+    "MR1 answers the requested explanation; missing artifacts do not block explaining affected checks or imply a verified prompt repair.",
+    "MR2 returns all three reusable prompts, preserves all accepted facts, and applies sectionGap=24px consistently. Only affected checks reopen; no rendered-output success is invented.",
+    "MR3 actual rewrite is input-required without the missing prompts/references/token definition; no fabricated repair or complete claim."
+  ],
+  "independentReview": "Fresh-context read-only review of the actual raw responses against source and case-specific requirements. Mechanical guard is necessary but not sufficient; correctness/coverage/clear-writing each 0..2, minimum1 and every hard gate required. Retain all failures.",
+  "decision": "Any failing response keeps LEX-12-MOBILE-REPORT-ROUTE pending. Even three passes mean only not reproduced in these predeclared probes: no model-behavior fix or reliability gain established, original B8 remains failed, all unsupported package/source acceptance pending, closures unknown, efficiency inconclusive.",
+  "efficiency": "No A/B variant or savings claim; fixed 294-run efficiency schedule remains unexecuted."
+}

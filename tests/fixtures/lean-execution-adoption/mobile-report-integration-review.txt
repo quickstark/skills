@@ -1,0 +1,15 @@
+Final fresh-context read-only integration review — LEX-12-MOBILE-REPORT-ROUTE
+HEAD: 5ed4e843ea31ec6a572f8896b2bde841255889da
+Disposition: No actionable findings in the reviewed implementation/evidence scope.
+
+Verified all 48 source hashes and 102 evidence hashes in lex12-mobile-report-resolution.json. None of those bound files references the final resolution record; no circular final-record binding found. Final checker/policy, runner, manifest and MT capture bindings agree. The retained v1 runner/checker snapshot satisfies all 48 legacy source hashes and the original MR runner binding. Initial MR result files and append-only final requalification remain separate; B8 and all MR cases still fail the final report check.
+
+Git diff/status confines changes to the harness/checker, appended tests, fixture README and new evidence. No canonical/private product source, catalog, generated package, native capture implementation or tracked settings changed. Original tracked B8 and broader acceptance/disposition records remain unchanged. The README and final record explicitly preserve the legacy isolation caveat and do not upgrade old behavior acceptance.
+
+Independently parsed every MT sent turn/start: exactly one text input, zero ASCII dollar bytes after native protocol JSON decoding, prompt byte equality, and decoded instructions/context/request equal to the paired MR payload. Prompt/instruction hashes match. Raw final agentMessage bytes equal response.md and result envelope. Native telemetry records no tools/server requests and unchanged effective controls. Actual MT1/MT2/MT3 responses support the independent review: explanation complete; exactly three corrected prompts preserving supplied facts; missing-input rewrite remains input-required. No automatic second-root action appears.
+
+Reused mobile-report-guard-review-final.txt and inspected final code/regression additions; did not rerun its already-covered cases. Final checker rejects comments conservatively and never rewrites report bytes. Its identity/route result stays distinct from semantic review and capture integrity.
+
+Additional reads were limited to binding history, protocols/reviews, actual MT responses/native payloads, and exact upstream source identity verification. GitHub MCP confirms byte equality of selection.rs, mentions.rs, turn.rs, LICENSE and NOTICE at official commit 7a078f6bb4ce0dc2a81408b334ce52979d92c603, including original notices. Actual injection remains inferred because assembled context was not captured.
+
+Only the scoped harness correction and three named responses are qualified. Source/package acceptance remains pending, closures unknown, installed-host acceptance unestablished, efficiency inconclusive. No models, repository edits, commits, publication or installation performed. Full-suite verification belongs to the parent run.
