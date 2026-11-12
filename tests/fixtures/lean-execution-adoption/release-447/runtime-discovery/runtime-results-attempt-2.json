@@ -1,0 +1,100 @@
+{
+  "environmentOverrides": {
+    "LD_LIBRARY_PATH": "/tmp/qs-lex12-runtime/ffmpeg/usr/lib/x86_64-linux-gnu",
+    "HF_TEST_USER_DIRECTORY": "/tmp/qs-lex12-runtime/user",
+    "HF_TEST_NETWORK_LOG": "/github/skills/.unlazy/release-447/runtime-discovery/runtime-network-attempt-2.jsonl",
+    "NODE_OPTIONS": "--import=/github/skills/tests/helpers/isolated-video-runtime.mjs",
+    "QS_VIDEO_CLI": "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+    "HYPERFRAMES_BROWSER_PATH": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+    "HYPERFRAMES_FFMPEG_PATH": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+    "HYPERFRAMES_FFPROBE_PATH": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+    "HYPERFRAMES_SKIP_SKILLS": "1",
+    "HYPERFRAMES_NO_TELEMETRY": "1",
+    "DO_NOT_TRACK": "1",
+    "HF_CLI": "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+    "HF_FFMPEG": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+    "HF_FFPROBE": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+    "HF_BROWSER": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+    "HF_GSAP": "/github/skills/tests/fixtures/lean-execution-adoption/qualification-local-runtime/video-project/gsap.min.js",
+    "HF_FONT": "/github/skills/tests/fixtures/lean-execution-adoption/qualification-local-runtime/video-project/font.ttf",
+    "HF_CARVE": "/github/skills/skills/video/qs-video/modules/hyperframes-audio/scripts/carve.mjs",
+    "HF_CORE_ROOT": "/tmp/qs-lex12-runtime/node_modules/@hyperframes/core"
+  },
+  "results": [
+    {
+      "label": "node",
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "v24.21.0\n",
+      "stderr": ""
+    },
+    {
+      "label": "ffmpeg",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-version"
+      ],
+      "exitCode": 0,
+      "stdout": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers\nbuilt with gcc 13 (Ubuntu 13.2.0-23ubuntu3)\nconfiguration: --prefix=/usr --extra-version=3ubuntu5 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --disable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\nlibavutil      58. 29.100 / 58. 29.100\nlibavcodec     60. 31.102 / 60. 31.102\nlibavformat    60. 16.100 / 60. 16.100\nlibavdevice    60.  3.100 / 60.  3.100\nlibavfilter     9. 12.100 /  9. 12.100\nlibswscale      7.  5.100 /  7.  5.100\nlibswresample   4. 12.100 /  4. 12.100\nlibpostproc    57.  3.100 / 57.  3.100\n",
+      "stderr": ""
+    },
+    {
+      "label": "ffprobe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-version"
+      ],
+      "exitCode": 0,
+      "stdout": "ffprobe version 6.1.1-3ubuntu5 Copyright (c) 2007-2023 the FFmpeg developers\nbuilt with gcc 13 (Ubuntu 13.2.0-23ubuntu3)\nconfiguration: --prefix=/usr --extra-version=3ubuntu5 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --disable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared\nlibavutil      58. 29.100 / 58. 29.100\nlibavcodec     60. 31.102 / 60. 31.102\nlibavformat    60. 16.100 / 60. 16.100\nlibavdevice    60.  3.100 / 60.  3.100\nlibavfilter     9. 12.100 /  9. 12.100\nlibswscale      7.  5.100 /  7.  5.100\nlibswresample   4. 12.100 /  4. 12.100\nlibpostproc    57.  3.100 / 57.  3.100\n",
+      "stderr": ""
+    },
+    {
+      "label": "browser",
+      "argv": [
+        "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Google Chrome for Testing 151.0.7922.34\n",
+      "stderr": ""
+    },
+    {
+      "label": "hyperframes",
+      "argv": [
+        "node",
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "0.8.77\n",
+      "stderr": ""
+    },
+    {
+      "label": "adapter-preflight",
+      "argv": [
+        "node",
+        "/github/skills/skills/video/qs-video/scripts/caption-runtime.cjs",
+        "preflight-render",
+        "/github/skills/tests/fixtures/lean-execution-adoption/qualification-local-runtime/video-project"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "actual-render-audio-seek-matrix",
+      "argv": [
+        "python3",
+        "/github/skills/tests/fixtures/hyperframes-adoption/run.py",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"case\": \"caption-only\",\n    \"status\": \"passed\",\n    \"evidence\": {\n      \"white_text_pixels\": [\n        0,\n        411,\n        0\n      ],\n      \"video_sha256\": \"afbacf1f5aed3f0f748c0c42d240373cd36ab0a69625bbc30a8ba144d4f7f7d2\",\n      \"negative_control\": \"missing caption rejected\"\n    }\n  },\n  {\n    \"case\": \"hard-cut-and-zoom\",\n    \"status\": \"passed\",\n    \"evidence\": {\n      \"encoded_color\": [\n        0,\n        14,\n        255\n      ],\n      \"white_marker_widths\": [\n        40,\n        40,\n        78,\n        40\n      ],\n      \"negative_control\": \"wrong source color rejected\",\n      \"repeated_seek_equal\": true\n    }\n  },\n  {\n    \"case\": \"visual-audio-crossfade-and-seek\",\n    \"status\": \"passed\",\n    \"evidence\": {\n      \"encoded_color\": [\n        137,\n        18,\n        133\n      ],\n      \"samples\": [\n        [\n          255,\n          0,\n          0\n        ],\n        [\n          255,\n          0,\n          0\n        ],\n        [\n          127,\n          0,\n          128\n        ],\n        [\n          0,\n          0,\n          255\n        ],\n        [\n          0,\n          0,\n          255\n        ],\n        [\n          127,\n          0,\n          128\n        ],\n        [\n          255,\n          0,\n          0\n        ]\n      ],\n      \"energies\": [\n        {\n          \"220\": 2980.3523315261964,\n          \"440\": 0.31125451133213444\n        },\n        {\n          \"220\": 1492.4182885316861,\n          \"440\": 1502.8533656998998\n        },\n        {\n          \"220\": 0.3492447950862601,\n          \"440\": 2985.507121513768\n        }\n      ],\n      \"negative_control\": \"missing dissolve rejected\"\n    }\n  },\n  {\n    \"case\": \"subcomposition-local-font-asset\",\n    \"status\": \"passed\",\n    \"evidence\": {\n      \"encoded_color\": [\n        0,\n        215,\n        0\n      ],\n      \"missing_asset_negative_control\": \"runtime rejected\",\n      \"font_white_pixels\": 307,\n      \"local_asset_motion\": true,\n      \"repeat_seek_equal\": true\n    }\n  },\n  {\n    \"case\": \"aspect-ratio\",\n    \"status\": \"passed\",\n    \"evidence\": {\n      \"encoded_color\": [\n        0,\n        215,\n        0\n      ],\n      \"size\": [\n        180,\n        320\n      ],\n      \"center_and_border_verified\": true\n    }\n  },\n  {\n    \"case\": \"later-narration-carve-effects\",\n    \"status\": \"passed\",\n    \"evidence\": {\n      \"before\": {\n        \"120\": 994.9664548320686,\n        \"1000\": 3989.6240593714483,\n        \"3000\": 3977.2456832762605\n      },\n      \"after\": {\n        \"120\": 421.2972364946427,\n        \"1000\": 3077.2693445307805,\n        \"3000\": 3372.2409115529936\n      },\n      \"group_sources_preserved\": true,\n      \"negative_control\": \"no-op mix rejected\"\n    }\n  }\n]\n",
+      "stderr": ""
+    }
+  ]
+}

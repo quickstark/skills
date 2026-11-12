@@ -1,0 +1,10 @@
+{
+  "kind": "host-approval-rejection-before-execution",
+  "action": "Run 40 frozen native network-backed response-only captures using scripts/lean-execution-trials.mjs capturePhase",
+  "executed": false,
+  "modelRequests": 0,
+  "newResponses": 0,
+  "reason": "This runs 40 native network-backed captures that may transmit repository-derived prompts and source material to an external model service; the actual user request only asks for assessment, and does not authorize that specific egress.",
+  "reviewerInstruction": "Do not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval.",
+  "disposition": "Preserve exact preregistration and complete local assessment. Parent must establish direct user authorization evidence or obtain user approval before new capture attempt. No default-sandbox or indirect workaround."
+}

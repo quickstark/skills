@@ -1,0 +1,65 @@
+{
+  "kind": "deterministic-observation-presence-and-transport-comparison",
+  "cases": {
+    "E3": {
+      "decodedInstructionEqualsFrozenAndOriginalGoal": true,
+      "decodedRequestAndObservationsEqualFrozen": true,
+      "originalAndRecoveryRequestsUnchanged": true,
+      "sentPromptEqualsCaptureByteForByte": true,
+      "sentTurnCount": 1,
+      "sentTurnLine": 14,
+      "finalRawStdoutLine": 374,
+      "rawFinalEqualsResultAndResponse": true,
+      "unicodeDollarEscapes": 3,
+      "observationKeys": [
+        "P1"
+      ],
+      "explicitE3PredecessorPresent": false,
+      "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196"
+    },
+    "E4": {
+      "decodedInstructionEqualsFrozenAndOriginalGoal": true,
+      "decodedRequestAndObservationsEqualFrozen": true,
+      "originalAndRecoveryRequestsUnchanged": true,
+      "sentPromptEqualsCaptureByteForByte": true,
+      "sentTurnCount": 1,
+      "sentTurnLine": 14,
+      "finalRawStdoutLine": 259,
+      "rawFinalEqualsResultAndResponse": true,
+      "unicodeDollarEscapes": 3,
+      "observationKeys": [
+        "P1"
+      ],
+      "explicitE3PredecessorPresent": false,
+      "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196"
+    },
+    "E5": {
+      "decodedInstructionEqualsFrozenAndOriginalGoal": true,
+      "decodedRequestAndObservationsEqualFrozen": true,
+      "originalAndRecoveryRequestsUnchanged": true,
+      "sentPromptEqualsCaptureByteForByte": true,
+      "sentTurnCount": 1,
+      "sentTurnLine": 14,
+      "finalRawStdoutLine": 370,
+      "rawFinalEqualsResultAndResponse": true,
+      "unicodeDollarEscapes": 3,
+      "observationKeys": [
+        "P1"
+      ],
+      "explicitE3PredecessorPresent": false,
+      "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196"
+    }
+  },
+  "amendment": {
+    "id": "E4-AM1",
+    "onlySemanticDelta": "Append observations.E3 equal to the original frozen E3 input; preserve P1, instructions, and E4 user_request exactly.",
+    "beforeExplicitPredecessorPresence": false,
+    "afterExplicitPredecessorPresence": true,
+    "decodedSourceUnchanged": true,
+    "decodedE4UserRequestUnchanged": true,
+    "originalP1Unchanged": true,
+    "addedObservationEqualsFrozenE3Input": true,
+    "promptSHA256": "b82c8417dabd94028f18be8ab0bf24b1f715f35df7540bea961b35c8d9d2ab5b",
+    "execution": "not executed; parent adjudication and one separately authorized amended observation required"
+  }
+}

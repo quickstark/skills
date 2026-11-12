@@ -1,0 +1,26 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: unknown | Overall estimate: unknown | active, repair required — The supplied suite passes at `abc123`, but an independently verified actionable P1 shows CSV export includes invoices excluded by the current filter. Input needed: none for authorized repair, provided matching goal state is verified through supported goal tools.\n\n- [ ] Build — active; preserve the P1 and repair the filter leak within `/fixture/ledger-app`.\n- [ ] Git — blocked; scheduled, not begun. Requires verified build completion.\n- [ ] Release — blocked; scheduled, not begun. Requires the tested revision to be published.\n\nFirst propose verifying goal-tool availability and inspecting authoritative state with `get_goal`. Resume only a matching goal; create one only if no active goal exists. Unavailable goal support or an unrelated active goal requires input before execution.\n\nAfter that gate, recheck scope, authorization, available skills, references and revision. Repair the filter leak, add regression coverage for excluded rows, and verify CSV filtering, headers, escaping, the existing invoice screen and diff review at the resulting revision. Changed code requires fresh verification; the passing suite at `abc123` cannot clear this P1.\n\nThe build root is incomplete, and the overall goal must remain incomplete. No completion update, push or deployment is justified yet. Prior weights and estimates were not supplied, so numerical progress cannot be recovered without inventing observations. No deployed artifact/version or health evidence was supplied. These are proposed actions only.",
+    "requestedActions": [
+      "Verify supported goal tools and inspect authoritative goal state with get_goal before any stage execution or mutation; establish or resume only the matching goal.",
+      "After the goal gate passes, recheck execution prerequisites and preserve the verified P1 against abc123.",
+      "Repair CSV filtering within the build root's existing repository authority, add regression coverage, and run fresh relevant checks and diff review at the resulting revision."
+    ]
+  },
+  "promptSHA256": "f26c03d349bb49bc3ba5b22878fa0edc98fd78c8b99fc045bdb857a93d1e0706",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 21484,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 793,
+      "reasoning_output_tokens": 380,
+      "total_tokens": 22277
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

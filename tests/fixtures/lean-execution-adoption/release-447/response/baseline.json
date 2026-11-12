@@ -1,0 +1,756 @@
+{
+  "kind": "frozen-source-baseline-not-behavior-acceptance",
+  "revision": "80a61ff7f192ddd027e8248bc8106a64c5b3b450",
+  "branch": "codex/docs-446-restart",
+  "version": "4.4.6",
+  "initialWorktree": "clean before fixture creation",
+  "commands": [
+    {
+      "name": "qs-help",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-help",
+      "codex": "$qs-skills:qs-help",
+      "claude": "/qs-help",
+      "pi": "/skill:qs-help",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-setup",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-setup",
+      "codex": "$qs-skills:qs-setup",
+      "claude": "/qs-setup",
+      "pi": "/skill:qs-setup",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-plan-clarify",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-plan-clarify",
+      "codex": "$qs-skills:qs-plan-clarify",
+      "claude": "/qs-plan-clarify",
+      "pi": "/skill:qs-plan-clarify",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-plan-roadmap",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-plan-roadmap",
+      "codex": "$qs-skills:qs-plan-roadmap",
+      "claude": "/qs-plan-roadmap",
+      "pi": "/skill:qs-plan-roadmap",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-plan-spec",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-plan-spec",
+      "codex": "$qs-skills:qs-plan-spec",
+      "claude": "/qs-plan-spec",
+      "pi": "/skill:qs-plan-spec",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-code-build",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-code-build",
+      "codex": "$qs-skills:qs-code-build",
+      "claude": "/qs-code-build",
+      "pi": "/skill:qs-code-build",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-code-debug",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-code-debug",
+      "codex": "$qs-skills:qs-code-debug",
+      "claude": "/qs-code-debug",
+      "pi": "/skill:qs-code-debug",
+      "invocationPolicy": "model"
+    },
+    {
+      "name": "qs-review-code",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-review-code",
+      "codex": "$qs-skills:qs-review-code",
+      "claude": "/qs-review-code",
+      "pi": "/skill:qs-review-code",
+      "invocationPolicy": "model"
+    },
+    {
+      "name": "qs-git-merge",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-git-merge",
+      "codex": "$qs-skills:qs-git-merge",
+      "claude": "/qs-git-merge",
+      "pi": "/skill:qs-git-merge",
+      "invocationPolicy": "model"
+    },
+    {
+      "name": "qs-deploy-release",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-deploy-release",
+      "codex": "$qs-skills:qs-deploy-release",
+      "claude": "/qs-deploy-release",
+      "pi": "/skill:qs-deploy-release",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-flow-triage",
+      "package": "qs-skills",
+      "path": "skills/engineering/qs-flow-triage",
+      "codex": "$qs-skills:qs-flow-triage",
+      "claude": "/qs-flow-triage",
+      "pi": "/skill:qs-flow-triage",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-flow-handoff",
+      "package": "qs-skills",
+      "path": "skills/productivity/qs-flow-handoff",
+      "codex": "$qs-skills:qs-flow-handoff",
+      "claude": "/qs-flow-handoff",
+      "pi": "/skill:qs-flow-handoff",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-plan-research",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-plan-research",
+      "codex": "$qs-specialists:qs-plan-research",
+      "claude": "/qs-plan-research",
+      "pi": "/skill:qs-plan-research",
+      "invocationPolicy": "model"
+    },
+    {
+      "name": "qs-design-prototype",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-design-prototype",
+      "codex": "$qs-specialists:qs-design-prototype",
+      "claude": "/qs-design-prototype",
+      "pi": "/skill:qs-design-prototype",
+      "invocationPolicy": "model"
+    },
+    {
+      "name": "qs-code-document",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-code-document",
+      "codex": "$qs-specialists:qs-code-document",
+      "claude": "/qs-code-document",
+      "pi": "/skill:qs-code-document",
+      "invocationPolicy": "model"
+    },
+    {
+      "name": "qs-test-author",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-test-author",
+      "codex": "$qs-specialists:qs-test-author",
+      "claude": "/qs-test-author",
+      "pi": "/skill:qs-test-author",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-test-verify",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-test-verify",
+      "codex": "$qs-specialists:qs-test-verify",
+      "claude": "/qs-test-verify",
+      "pi": "/skill:qs-test-verify",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-learn-teach",
+      "package": "qs-specialists",
+      "path": "skills/productivity/qs-learn-teach",
+      "codex": "$qs-specialists:qs-learn-teach",
+      "claude": "/qs-learn-teach",
+      "pi": "/skill:qs-learn-teach",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-skill-write",
+      "package": "qs-specialists",
+      "path": "skills/productivity/qs-skill-write",
+      "codex": "$qs-specialists:qs-skill-write",
+      "claude": "/qs-skill-write",
+      "pi": "/skill:qs-skill-write",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-deploy-prompt",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-deploy-prompt",
+      "codex": "$qs-specialists:qs-deploy-prompt",
+      "claude": "/qs-deploy-prompt",
+      "pi": "/skill:qs-deploy-prompt",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-repo-cleanup",
+      "package": "qs-specialists",
+      "path": "skills/engineering/qs-repo-cleanup",
+      "codex": "$qs-specialists:qs-repo-cleanup",
+      "claude": "/qs-repo-cleanup",
+      "pi": "/skill:qs-repo-cleanup",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-how",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-how",
+      "codex": "$qs-advanced:qs-how",
+      "claude": "/qs-how",
+      "pi": "/skill:qs-how",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-why",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-why",
+      "codex": "$qs-advanced:qs-why",
+      "claude": "/qs-why",
+      "pi": "/skill:qs-why",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-blast-radius",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-blast-radius",
+      "codex": "$qs-advanced:qs-blast-radius",
+      "claude": "/qs-blast-radius",
+      "pi": "/skill:qs-blast-radius",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-runtime-forensics",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-runtime-forensics",
+      "codex": "$qs-advanced:qs-runtime-forensics",
+      "claude": "/qs-runtime-forensics",
+      "pi": "/skill:qs-runtime-forensics",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-trace-forensics",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-trace-forensics",
+      "codex": "$qs-advanced:qs-trace-forensics",
+      "claude": "/qs-trace-forensics",
+      "pi": "/skill:qs-trace-forensics",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-create-verification-skill",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-create-verification-skill",
+      "codex": "$qs-advanced:qs-create-verification-skill",
+      "claude": "/qs-create-verification-skill",
+      "pi": "/skill:qs-create-verification-skill",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-maintain-verification-skill",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-maintain-verification-skill",
+      "codex": "$qs-advanced:qs-maintain-verification-skill",
+      "claude": "/qs-maintain-verification-skill",
+      "pi": "/skill:qs-maintain-verification-skill",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-skill-eval",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-skill-eval",
+      "codex": "$qs-advanced:qs-skill-eval",
+      "claude": "/qs-skill-eval",
+      "pi": "/skill:qs-skill-eval",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-hillclimb",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-hillclimb",
+      "codex": "$qs-advanced:qs-hillclimb",
+      "claude": "/qs-hillclimb",
+      "pi": "/skill:qs-hillclimb",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-visual-parity",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-visual-parity",
+      "codex": "$qs-advanced:qs-visual-parity",
+      "claude": "/qs-visual-parity",
+      "pi": "/skill:qs-visual-parity",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-pr-babysit",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-pr-babysit",
+      "codex": "$qs-advanced:qs-pr-babysit",
+      "claude": "/qs-pr-babysit",
+      "pi": "/skill:qs-pr-babysit",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-worktree-cleanup",
+      "package": "qs-advanced",
+      "path": "skills/engineering/qs-worktree-cleanup",
+      "codex": "$qs-advanced:qs-worktree-cleanup",
+      "claude": "/qs-worktree-cleanup",
+      "pi": "/skill:qs-worktree-cleanup",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-design-frontend",
+      "package": "qs-frontend",
+      "path": "skills/engineering/qs-design-frontend",
+      "codex": "$qs-frontend:qs-design-frontend",
+      "claude": "/qs-design-frontend",
+      "pi": "/skill:qs-design-frontend",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-design-image-web",
+      "package": "qs-frontend",
+      "path": "skills/engineering/qs-design-image-web",
+      "codex": "$qs-frontend:qs-design-image-web",
+      "claude": "/qs-design-image-web",
+      "pi": "/skill:qs-design-image-web",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-design-image-mobile",
+      "package": "qs-frontend",
+      "path": "skills/engineering/qs-design-image-mobile",
+      "codex": "$qs-frontend:qs-design-image-mobile",
+      "claude": "/qs-design-image-mobile",
+      "pi": "/skill:qs-design-image-mobile",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-design-image-to-code",
+      "package": "qs-frontend",
+      "path": "skills/engineering/qs-design-image-to-code",
+      "codex": "$qs-frontend:qs-design-image-to-code",
+      "claude": "/qs-design-image-to-code",
+      "pi": "/skill:qs-design-image-to-code",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-video",
+      "package": "qs-video",
+      "path": "skills/video/qs-video",
+      "codex": "$qs-video:qs-video",
+      "claude": "/qs-video",
+      "pi": "/skill:qs-video",
+      "invocationPolicy": "explicit"
+    },
+    {
+      "name": "qs-unlazy",
+      "package": "qs-execution",
+      "path": "skills/engineering/qs-unlazy",
+      "codex": "$qs-execution:qs-unlazy",
+      "claude": "/qs-unlazy",
+      "pi": "/skill:qs-unlazy",
+      "invocationPolicy": "explicit"
+    }
+  ],
+  "sources": {
+    "docs/skill-run-contract.md": {
+      "sha256": "b900dede795db21a3eb1fd4b6179ec9753056797987e17a5dc335580dc61cbc1",
+      "bytes": 14863
+    },
+    "package-lock.json": {
+      "sha256": "fcb15785ec171b917e57b93992d9f32274338c9af55087b017669f721f3c4de3",
+      "bytes": 48488
+    },
+    "package.json": {
+      "sha256": "77aa6de079991af709d71d0a2d2e69d948132b4e3f3649ce507c4f00a7147386",
+      "bytes": 2086
+    },
+    "scripts/advanced-skill-catalog.mjs": {
+      "sha256": "b5b6d40fdd32bdf38cfd7841d923f96fb0926f365a9b34c186c96e6ec17679d3",
+      "bytes": 2872
+    },
+    "scripts/execution-skill-catalog.mjs": {
+      "sha256": "7c919f401fb208e88343129001a7003168ee1fb637cf6e5faec1baef8060c942",
+      "bytes": 962
+    },
+    "scripts/frontend-adoption-trials.mjs": {
+      "sha256": "8de4eb6b35079130666b3f964931798c964d6c8fcc3dfbd1dcc7f0b515aede4f",
+      "bytes": 34783
+    },
+    "scripts/frontend-native-capture.mjs": {
+      "sha256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+      "bytes": 20259
+    },
+    "scripts/frontend-skill-catalog.mjs": {
+      "sha256": "a70e31f3978d570a7442dee71a95c62ba479dc23b3ae015fd4825b21c2b586b5",
+      "bytes": 2092
+    },
+    "scripts/goal-workflow.mjs": {
+      "sha256": "64afc86a3bf1ddba8c9f8e385e00df445b2fe015afb74c4d4a9760f20bb3c51f",
+      "bytes": 16117
+    },
+    "scripts/progress-reporting-contract.mjs": {
+      "sha256": "49b295789f49b9924327b22c3ebb626042c2f1427b79ce595c3ce439b3db26a5",
+      "bytes": 11740
+    },
+    "scripts/qs-skill-catalog.mjs": {
+      "sha256": "1032b565c9ee20f8c5456f728ec551844c877027945177221d31619a30ce4359",
+      "bytes": 54619
+    },
+    "scripts/skill-collection-registry.mjs": {
+      "sha256": "e197f2fbab1a683fd10e98f4184d72d37ba683e13cabc01782b8980affbc2945",
+      "bytes": 18598
+    },
+    "scripts/sync-codex-plugin.mjs": {
+      "sha256": "de85b37ce5befaa9f72da7fff98c2c444655ac90ea2a4740bb6fef062d431b2d",
+      "bytes": 26070
+    },
+    "scripts/sync-skill-output-contracts.mjs": {
+      "sha256": "1ad09041169f9e29b7684262c7e64ebf08b89e18168ba427c190e789d5ea59b4",
+      "bytes": 19972
+    },
+    "scripts/sync-v3-docs.mjs": {
+      "sha256": "e157c60a87645782b4e630031a0a84417cc394592876f7a13fd71cd4009dfe16",
+      "bytes": 17554
+    },
+    "scripts/video-skill-catalog.mjs": {
+      "sha256": "6b3120815d52deeb93eb4e258b33cd3de419832fc07a7e9b7f0912cfde30f2dc",
+      "bytes": 1337
+    },
+    "skills/engineering/qs-blast-radius/SKILL.md": {
+      "sha256": "3a5b67e49098784ce29d87bf11e68e399eba25427949f2b7824427783ff7188a",
+      "bytes": 9856
+    },
+    "skills/engineering/qs-blast-radius/agents/openai.yaml": {
+      "sha256": "8e29f03a5b57650bccaebc4e34d0712c72a6a74e46d0421753ba4ad2afd793fd",
+      "bytes": 344
+    },
+    "skills/engineering/qs-code-build/SKILL.md": {
+      "sha256": "e303339fa7d083222995e66eca19b25636e5e92ce071773a41e8261cf74f7a2f",
+      "bytes": 13978
+    },
+    "skills/engineering/qs-code-build/agents/openai.yaml": {
+      "sha256": "5ed8ba9cf614d41c7ecac208aa46342a3ff11a66c5fb60ec12c7af0ecd021d6b",
+      "bytes": 435
+    },
+    "skills/engineering/qs-code-debug/SKILL.md": {
+      "sha256": "0d0de6416b837ba3ba43195aa78269239e074b4dee11cbef1ee2b00a172c9368",
+      "bytes": 10928
+    },
+    "skills/engineering/qs-code-debug/agents/openai.yaml": {
+      "sha256": "7778c30360f52558d0e5032d6ddfdd04e990b5e98a8318f0259ab6e1439424ee",
+      "bytes": 361
+    },
+    "skills/engineering/qs-code-document/SKILL.md": {
+      "sha256": "93c09e3101520d7510040d26b36abb9d7d21dbd47f1aaa666f4c0c8271094e08",
+      "bytes": 9488
+    },
+    "skills/engineering/qs-code-document/agents/openai.yaml": {
+      "sha256": "fa5e9b5179118ee382dfb42857e3ab25124956c53a83374dad8e188e03a7f808",
+      "bytes": 403
+    },
+    "skills/engineering/qs-create-verification-skill/SKILL.md": {
+      "sha256": "3639bbeed911ed03be93fbb7aa481e73e7ad64af476fb1c21b3c4b03bc509d2c",
+      "bytes": 10877
+    },
+    "skills/engineering/qs-create-verification-skill/agents/openai.yaml": {
+      "sha256": "50a027117678e96222ac36683763cb773e55e3f640573a62287d280c28290740",
+      "bytes": 354
+    },
+    "skills/engineering/qs-deploy-prompt/SKILL.md": {
+      "sha256": "f47e615e43d47daa26ea1f313d83a901c2b476356e360e4cae33604e2804763c",
+      "bytes": 17683
+    },
+    "skills/engineering/qs-deploy-prompt/agents/openai.yaml": {
+      "sha256": "62439c4731d4b3e986bbfffadda35d16ec66c6298e795e9265316d8429587dd6",
+      "bytes": 476
+    },
+    "skills/engineering/qs-deploy-release/SKILL.md": {
+      "sha256": "555fa341aa92685db3e10527301b67a2ffcb279c5a721d08e8a00ee39a1fbec6",
+      "bytes": 8281
+    },
+    "skills/engineering/qs-deploy-release/agents/openai.yaml": {
+      "sha256": "bdd94ad1fca19fe9e0b31c7645015b36e86cea4c9f293b52d9d615d651c03064",
+      "bytes": 412
+    },
+    "skills/engineering/qs-design-frontend/SKILL.md": {
+      "sha256": "c80d53cf79c621a068d97c486942c41f93a86420ae6c93ac5af997924335fb1f",
+      "bytes": 10191
+    },
+    "skills/engineering/qs-design-frontend/agents/openai.yaml": {
+      "sha256": "de566145d06644f9f0469b580636a04fcab3efe6cd959dc9b8d38b58597e1a6d",
+      "bytes": 447
+    },
+    "skills/engineering/qs-design-image-mobile/SKILL.md": {
+      "sha256": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+      "bytes": 9443
+    },
+    "skills/engineering/qs-design-image-mobile/agents/openai.yaml": {
+      "sha256": "5348ca3041bd46973586d5ce051a9335d9231a8825f5e35975bf037570594b47",
+      "bytes": 437
+    },
+    "skills/engineering/qs-design-image-to-code/SKILL.md": {
+      "sha256": "4fe7c3e3468d80e2149ceb9640ae6b756974202e5d5b55c4523e7bc5daf4b6e4",
+      "bytes": 9691
+    },
+    "skills/engineering/qs-design-image-to-code/agents/openai.yaml": {
+      "sha256": "fde8afbb9722c8dca37825e69a1156cb27e9fd3c87415400b36b91f135897812",
+      "bytes": 451
+    },
+    "skills/engineering/qs-design-image-web/SKILL.md": {
+      "sha256": "cc2b5c8b6f7979930e4c38b18b4212ae6fd6ae9a36703f01056845317ed11c83",
+      "bytes": 9500
+    },
+    "skills/engineering/qs-design-image-web/agents/openai.yaml": {
+      "sha256": "f006af5a59cf4ce108f72056557826566a4c2f6ffd45692ca10fa2f5dd6078a9",
+      "bytes": 426
+    },
+    "skills/engineering/qs-design-prototype/SKILL.md": {
+      "sha256": "910228c81a00194345a014174820cc4ce31ceef3429597707d9035c2ebf82dbf",
+      "bytes": 12474
+    },
+    "skills/engineering/qs-design-prototype/agents/openai.yaml": {
+      "sha256": "83665d6677036e030cd929dedc92783f39115410bf981eab45c8a6fc97c721fe",
+      "bytes": 373
+    },
+    "skills/engineering/qs-flow-triage/SKILL.md": {
+      "sha256": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c",
+      "bytes": 9432
+    },
+    "skills/engineering/qs-flow-triage/agents/openai.yaml": {
+      "sha256": "ff7e30f90b2ecd076c89b5d4d372006d11a841395c83419435bac0b8c5c4f11b",
+      "bytes": 403
+    },
+    "skills/engineering/qs-git-merge/SKILL.md": {
+      "sha256": "005db639a8c79e7d1beacdacd28cbeb0db86c3dcee2b2b428142cd191c4023e1",
+      "bytes": 10445
+    },
+    "skills/engineering/qs-git-merge/agents/openai.yaml": {
+      "sha256": "49689a09e054f859a9f472c5319943058b460313e7fabba9a6b38c6a05cf9d3f",
+      "bytes": 392
+    },
+    "skills/engineering/qs-help/SKILL.md": {
+      "sha256": "d5940a0cb580796f38a752044aa5a0f4e6be21b653d5bdb8550d849559744cb3",
+      "bytes": 10652
+    },
+    "skills/engineering/qs-help/agents/openai.yaml": {
+      "sha256": "2de18effaaf18a3eb6f439c11370c2d1bdd08f2448de110635f7b12c48192857",
+      "bytes": 384
+    },
+    "skills/engineering/qs-hillclimb/SKILL.md": {
+      "sha256": "07533f0af9a1685b1f56e895e2d4d0b0786f81b0582ce73fd8c847a5508678a4",
+      "bytes": 11025
+    },
+    "skills/engineering/qs-hillclimb/agents/openai.yaml": {
+      "sha256": "dc13297bb37f2672dd840f134bdf2bc96a13044e18b4f243e9b7835814bc8b68",
+      "bytes": 318
+    },
+    "skills/engineering/qs-how/SKILL.md": {
+      "sha256": "91a6ffac699d2986902b57f78ff82c12577e60a0a989e300e84a832fa483987a",
+      "bytes": 8266
+    },
+    "skills/engineering/qs-how/agents/openai.yaml": {
+      "sha256": "b85e442f922e23b18dee0e7b1362bb234478c2f54d9f8b0b2bd2dbc0701499ab",
+      "bytes": 304
+    },
+    "skills/engineering/qs-maintain-verification-skill/SKILL.md": {
+      "sha256": "1994f25aae8ea00bbc6bb7157461fbbea0cf128d1ff998783912071e93d18ed4",
+      "bytes": 10757
+    },
+    "skills/engineering/qs-maintain-verification-skill/agents/openai.yaml": {
+      "sha256": "d3c9b4f9713c2066ba113f573421621b46a0da0ea04d0ada0ddcc36cf64b90ac",
+      "bytes": 355
+    },
+    "skills/engineering/qs-plan-clarify/SKILL.md": {
+      "sha256": "3c4f852074ea24094b915b0ebf3e1f4a35b4726f0d9244672c1e1326cc1fdb59",
+      "bytes": 9621
+    },
+    "skills/engineering/qs-plan-clarify/agents/openai.yaml": {
+      "sha256": "4112854ad8cdea4629cb7f622b7f799c2d43749952312bea79d9983a819b6465",
+      "bytes": 407
+    },
+    "skills/engineering/qs-plan-research/SKILL.md": {
+      "sha256": "bd869be3a651307c93d016626aef7d18b0271661753bf057d084212da0ba783e",
+      "bytes": 10097
+    },
+    "skills/engineering/qs-plan-research/agents/openai.yaml": {
+      "sha256": "da3a92fd5f521da7cf501642b9ca2a98cfa16472b7b36b4ea58dc5c0aeaef036",
+      "bytes": 371
+    },
+    "skills/engineering/qs-plan-roadmap/SKILL.md": {
+      "sha256": "297ae556099ed823dc96320c6bea88a922cda96af0c019d899554a082d951ce9",
+      "bytes": 9333
+    },
+    "skills/engineering/qs-plan-roadmap/agents/openai.yaml": {
+      "sha256": "2f3fd507a98022188f9ab4a88a56a9ceca0b453868b852a44f7248edc0dd61e8",
+      "bytes": 411
+    },
+    "skills/engineering/qs-plan-spec/SKILL.md": {
+      "sha256": "5d59bc8802b8fb5c6896c798f5670ecdabbc1588ce4426ed01e49fe658d84970",
+      "bytes": 10582
+    },
+    "skills/engineering/qs-plan-spec/agents/openai.yaml": {
+      "sha256": "33528d52959c0f8401165e2287452ac0e66bdac6fed26fc0519771823516585a",
+      "bytes": 462
+    },
+    "skills/engineering/qs-pr-babysit/SKILL.md": {
+      "sha256": "0c4197b8b29c83bce0536e895028bde24604746a304cd3bafb305634eb8634b7",
+      "bytes": 10888
+    },
+    "skills/engineering/qs-pr-babysit/agents/openai.yaml": {
+      "sha256": "50ae68f59ea78d11a3bc30515e3ca3c20c115c971bf96accd73fb922d66daf0d",
+      "bytes": 336
+    },
+    "skills/engineering/qs-repo-cleanup/SKILL.md": {
+      "sha256": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+      "bytes": 18589
+    },
+    "skills/engineering/qs-repo-cleanup/agents/openai.yaml": {
+      "sha256": "d2ea1c6aca79c13df27846334351a809fd4be29cf7c45b713e95f2e651d51c49",
+      "bytes": 446
+    },
+    "skills/engineering/qs-review-code/SKILL.md": {
+      "sha256": "5220919c58a82f825a3e5b5d245899e4f128a7d71fb4078f276591caab37d027",
+      "bytes": 13312
+    },
+    "skills/engineering/qs-review-code/agents/openai.yaml": {
+      "sha256": "e44f0d9b51faee0b156854e89f70eaaae38b57ac8e8afe37450eadbba2c97caa",
+      "bytes": 380
+    },
+    "skills/engineering/qs-runtime-forensics/SKILL.md": {
+      "sha256": "1dad80fc2a7f6e7b4fe4b0141eb763ff8d3da436be850edf770c096b4a1b6540",
+      "bytes": 10196
+    },
+    "skills/engineering/qs-runtime-forensics/agents/openai.yaml": {
+      "sha256": "6a45d2d19b42191765b7f4367e8adc94c80a8412ca59a184ec42d208773d2e08",
+      "bytes": 341
+    },
+    "skills/engineering/qs-setup/SKILL.md": {
+      "sha256": "75adcdbd2819030d47f36444fbdb3b17eb0e99b5e4ef3ae94a0944473e65aa25",
+      "bytes": 8450
+    },
+    "skills/engineering/qs-setup/agents/openai.yaml": {
+      "sha256": "793e5f890a651b61534ab2dc7158042cda76ea792de495673ab07963c083c0fa",
+      "bytes": 395
+    },
+    "skills/engineering/qs-skill-eval/SKILL.md": {
+      "sha256": "037b559a7ef8c9bb1038e9b8641c43ca06235efe6d7c06a9fd70f5c6414e2925",
+      "bytes": 11067
+    },
+    "skills/engineering/qs-skill-eval/agents/openai.yaml": {
+      "sha256": "3228978bd36ac2852b21288211dc1382f86199615c77ed197ddb0850d91412f4",
+      "bytes": 335
+    },
+    "skills/engineering/qs-test-author/SKILL.md": {
+      "sha256": "5cd7f5b58b71b858b701a673fa275a7869974c69d0dd61e0254a82f2d1ec6632",
+      "bytes": 11976
+    },
+    "skills/engineering/qs-test-author/agents/openai.yaml": {
+      "sha256": "cba02000f54667bc2b1334a050fa6efea33aefd99fb03cc4795abc5541312912",
+      "bytes": 413
+    },
+    "skills/engineering/qs-test-verify/SKILL.md": {
+      "sha256": "b4220aba301e0a78bd48f1fe5a5a9e5ab01849578410cc9af42ff376a513c472",
+      "bytes": 12140
+    },
+    "skills/engineering/qs-test-verify/agents/openai.yaml": {
+      "sha256": "310aa2134a721018882b656e70fb04342b46a616449440ddfc1b52a129b4960b",
+      "bytes": 440
+    },
+    "skills/engineering/qs-trace-forensics/SKILL.md": {
+      "sha256": "b8c5a6f0e2c2af2e3d79ab95e15c61364901870b852e5a7c0b757b49c0e93d91",
+      "bytes": 10079
+    },
+    "skills/engineering/qs-trace-forensics/agents/openai.yaml": {
+      "sha256": "9591167f219ebef74defec0417bc10a4eb97315c8847cd863ff29ccc8146c715",
+      "bytes": 340
+    },
+    "skills/engineering/qs-unlazy/SKILL.md": {
+      "sha256": "6fc749aeb04a3dc5e3e8b565363cc74be63fda4bed96a50487979e1667834112",
+      "bytes": 10724
+    },
+    "skills/engineering/qs-unlazy/agents/openai.yaml": {
+      "sha256": "3fc9bcb082b7acf1364ad8fcfbc857b6fb937fcbe0069b5bfe35938c168d00d0",
+      "bytes": 437
+    },
+    "skills/engineering/qs-visual-parity/SKILL.md": {
+      "sha256": "74535751a793bc2b386a4f4d8cf5c8e55d0ed33613a479601051a373370486d1",
+      "bytes": 11182
+    },
+    "skills/engineering/qs-visual-parity/agents/openai.yaml": {
+      "sha256": "763a779a7551a44b33c939b1a1f56539bf881020a915c5fabc33d3c1ee3df569",
+      "bytes": 354
+    },
+    "skills/engineering/qs-why/SKILL.md": {
+      "sha256": "2848f1d428f6d7d340c0df243cd467de914e3f00eb8a8b36b09cc271ecc184aa",
+      "bytes": 8183
+    },
+    "skills/engineering/qs-why/agents/openai.yaml": {
+      "sha256": "6c0869714b38cfbc912124b80cf79a8f56cc2b2a96f7b9eabfa3bcad01396b6f",
+      "bytes": 308
+    },
+    "skills/engineering/qs-worktree-cleanup/SKILL.md": {
+      "sha256": "c095fe61be030d07ae23f900b5e4616365b1a8fbf1aed0911cf1e0afbef9dc12",
+      "bytes": 10517
+    },
+    "skills/engineering/qs-worktree-cleanup/agents/openai.yaml": {
+      "sha256": "97594fefe1d659c679fd36414b2032db99643b6b6ad25cafe673d2d574e04a69",
+      "bytes": 349
+    },
+    "skills/internal/delegation.md": {
+      "sha256": "bfcdf47061d7f91fd4f63e5420dc7caa87cc1b73badd454bbe2ad5483adbebfc",
+      "bytes": 3345
+    },
+    "skills/internal/ticket-decomposition.md": {
+      "sha256": "53344eecffe71e8ed3d9f6c4f202f4ea7b60479250da0cb3bd02edb4d6931e61",
+      "bytes": 3216
+    },
+    "skills/productivity/qs-flow-handoff/SKILL.md": {
+      "sha256": "fc0dacf3623229441101944ab22539b99498e2eee4a0e375825453a38da22cda",
+      "bytes": 9239
+    },
+    "skills/productivity/qs-flow-handoff/agents/openai.yaml": {
+      "sha256": "f8eadce6d7f7b7c2cf0905ceb4f380c19f707cec413878b58baf0995e09078c0",
+      "bytes": 418
+    },
+    "skills/productivity/qs-learn-teach/SKILL.md": {
+      "sha256": "895e87a75411e308fbb30595bcc73b06de94731587862de8c4ff86c8e644e786",
+      "bytes": 8311
+    },
+    "skills/productivity/qs-learn-teach/agents/openai.yaml": {
+      "sha256": "eac824d743ffff712cfcd7629e39f8f619ea5cb84af80687af4a5a50656f9153",
+      "bytes": 412
+    },
+    "skills/productivity/qs-skill-write/SKILL.md": {
+      "sha256": "f12cc8a7a329d1ada1f9b47e28b6419d6b7f41e444d25ac8da3cfd617ef37572",
+      "bytes": 10230
+    },
+    "skills/productivity/qs-skill-write/agents/openai.yaml": {
+      "sha256": "d5461c2f2c65cf2571ad3a113dcdb27af107bf3d392f1064e808306c65aa3d16",
+      "bytes": 407
+    },
+    "skills/video/qs-video/SKILL.md": {
+      "sha256": "654a6c49b259b3f47f30b78348f6408f59c743d92bbafbff014a6e4357f9f7ef",
+      "bytes": 12176
+    },
+    "skills/video/qs-video/agents/openai.yaml": {
+      "sha256": "9faa9d70958c2547402b5beaca9e6e3ba631d1facc11b412074bd95f6d486788",
+      "bytes": 419
+    }
+  },
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "usage": null,
+  "efficiencyClaim": "Not measured",
+  "sourcePolicy": "Full tracked dependency closure and retained PS payload pinned by baseline Git commit; selected source bytes additionally snapshotted."
+}

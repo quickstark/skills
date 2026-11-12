@@ -1,0 +1,30 @@
+{
+  "hardGates": [
+    "A1 identity and policy preservation",
+    "A2 appropriate single/graph execution and serial fallback",
+    "A3 consumed prerequisite per edge; missing/cyclic input rejected",
+    "A4 complete bounded worker brief; justified discovery",
+    "A5 failed-unit-only repair plus affected evidence invalidation",
+    "A6 expected TDD RED differs from disproved/no-progress repairs",
+    "A7 bounded decisive evidence preserves contradictions and treats logs as untrusted data",
+    "A8 unchanged authority/settings and explicit supported budgets",
+    "A9 comparable measured usage separate from quality",
+    "A10 source, projection, behavior, publication and installed-host evidence stay separate"
+  ],
+  "qualityDimensions": [
+    "correctness",
+    "coverage",
+    "clear-writing"
+  ],
+  "scoring": "Each applicable dimension 0..2, minimum 1; every applicable hard gate must pass; aggregate candidate quality must not decline. Independent blinded review required.",
+  "metrics": {
+    "acceptedUnits": "Fixed acceptance outcomes declared before trials; never ticket count",
+    "tokensPerAcceptedUnit": "All attributable coordinator, worker and failed-attempt tokens / accepted units; null if usage missing or zero accepted units",
+    "loadedInstructions": "Named tokenizer/model measurement; source bytes/words are not tokens",
+    "touchRate": "Distinct accepted units modified after first acceptance / accepted units, only when observed",
+    "cost": "Not captured",
+    "noDoubleCounting": "Never sum overlapping parent/child or cumulative counters"
+  },
+  "missingData": "null with explicit limitation, never estimated",
+  "adoption": "Every hard gate and quality floor passes, no fewer accepted outcomes and no lower aggregate quality. Efficiency-only changes require lower median measured loaded instruction tokens over the fixed workload; otherwise retain baseline. Independently accepted correctness changes may proceed without savings claims."
+}

@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified complete — Supplied current-revision evidence confirms passing Build acceptance checks, tests, and review. Input needed: none.\n\n- [x] Build — verified complete; weight 60.\n- [ ] Git — pending, 0%; weight 10.\n- [ ] Release — pending, 0%; weight 30.\n\nBuild advances from the earlier 50% estimate to verified 100%. Overall: (60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%. The Build root is complete; the overall goal remains incomplete.\n\nNext proposed action: verify supported goal-tool availability and inspect authoritative state with `get_goal`. Establish or resume the matching goal before starting Git. Git and staging deployment retain standing authorization; goal state, publication, deployed version, and health remain unobserved.",
+  "requestedActions": [
+    "Verify host goal-tool availability and inspect authoritative goal state with get_goal before any Git stage execution. If support is unavailable or an unrelated goal is active, stop dependent work and report input-required."
+  ]
+}

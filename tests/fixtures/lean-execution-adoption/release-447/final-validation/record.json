@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "kind": "final-reviewed-workspace-checks-before-immutable-candidate-validation",
+  "integratedSourceRevision": "dcbc75b4a69ef2d7dfc39e582afd005dc2264b0c",
+  "metrics": {
+    "tests": 798,
+    "pass": 797,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "checksPassed": [
+    "npm run sync:codex",
+    "npm run check:codex",
+    "npm test",
+    "six Claude plugin validate --strict roots",
+    "catalog/version/invocation/retained-PS preservation"
+  ],
+  "independentReviewSHA256": "39547a2bbec229c57796004dfa09e41afbad67e338080fea8acc8b9ffafe87d5",
+  "rawFilesSHA256": {
+    "final-sync.log": "767672eef018d95f8a12cd5a2b6c537ee32159db178fba58c5c1c4e1978a0434",
+    "final-check.log": "261afdc10ec0fc15441a35977557b358498332440211687923b914dc8c3142f6",
+    "final-tests.log": "78a085820e743c51d978448d940f649a60bd481c51eeb8a6a0aa2d16919750be",
+    "final-gates-run.log": "f4553455d72f22265f5149a4016677653f1f93f7c2164a2b5af536425959b7c1",
+    "validate-claude.mjs": "efe3d8866355b7da5ff8742462d694b5fe8a1e28280c7dc70c0f47c986622420"
+  },
+  "trackedCandidateValidation": "Separate mandatory postcommit gate; initial dirty-source refusal retained verbatim in raw gate run. This artifact does not assert later publication or installed-host acceptance.",
+  "historicalFailures": "Original B8/MR/E4 failures unchanged; E4-AM1 separately qualified; efficiency inconclusive."
+}

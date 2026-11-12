@@ -1,0 +1,6 @@
+{
+  "action": "python3 .unlazy/release-447/runtime-discovery/probe-native.py codex, escalated, original user configuration",
+  "decision": "rejected",
+  "reason": "Although source discovery is authorized, this escalated Codex app-server probe is not demonstrably read-only and previously attempted filesystem writes; it lacks isolated HOME/configuration controls and could alter native settings or registrations explicitly excluded by the task.",
+  "resolution": "No retry or bypass of the rejected nonisolated action. Existing reviewed fixture explicitly isolates HOME/USERPROFILE/CODEX_HOME/PI_CODING_AGENT_DIR and creates temporary registrations; that separate safe fixture passed without escalation. Real-user host acceptance remains unperformed."
+}

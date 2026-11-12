@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P2",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | waiting — Process 81 remains authoritatively live after 70 seconds without new output. No new evidence supports increasing progress. Input needed: none.\n\n- [ ] Build — active, waiting; weight 60, estimate 50%.\n- [ ] Git — pending; weight 10, estimate 0%.\n- [ ] Release — pending; weight 30, estimate 0%.\n\nOverall: (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Weights and valid revision evidence remain unchanged.\n\nProposed next action: verify supported goal tools and inspect goal state with `get_goal`. After confirming a matching goal, check process 81 for status and new output with a bounded wait of at most 60 seconds. Keep dependent stages pending.",
+    "requestedActions": [
+      "Verify goal-tool availability and inspect goal state with get_goal before further stage execution; preserve any unrelated active goal.",
+      "Conditional on confirming the matching goal, poll existing process 81 for status and new output with a wait bounded to 60 seconds."
+    ]
+  },
+  "promptSHA256": "70dd5f6cfef0b398bc458ad863327bd00b02dc2661b1aee2c44c42d0834f21fe",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 21442,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 892,
+      "reasoning_output_tokens": 626,
+      "total_tokens": 22334
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

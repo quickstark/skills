@@ -110,8 +110,23 @@ test('LEX-12 records scoped reviews without adopting sources or upgrading histor
   const json = async path => JSON.parse(await readFile(join(root, path)));
   const sha = bytes => createHash('sha256').update(bytes).digest('hex');
   const record = await json('tests/fixtures/lean-execution-adoption/lex12-acceptance.json');
-  const provenance = await json('config/skill-provenance.json');
-  const audit = await json('docs/validation/upstream-adoption-acceptance.json');
+  // Historical pending decisions remain exact even after separately evidenced adoption.
+  const provenanceBytes = await readFile(join(fixtureRoot, 'pre-release-447-provenance.json'));
+  const auditBytes = await readFile(join(fixtureRoot, 'pre-release-447-acceptance.json'));
+  assert.equal(sha(provenanceBytes), 'ca40c293b9781090f63e4c797ef8cb9f97936afbc6b06efde175b8033a9a74ed');
+  assert.equal(sha(auditBytes), 'a63bfba29ccde5cbebe3b50f187112d5ee02eb062ebe6a28cd8eafd0e387aa53');
+  const provenance = JSON.parse(provenanceBytes), audit = JSON.parse(auditBytes);
+  const currentProvenance = await json('config/skill-provenance.json');
+  for (const historical of provenance.target.capabilities) {
+    let decision = currentProvenance.target.capabilities.find(c => c.id === historical.id)?.decision;
+    while (decision && sha(JSON.stringify(decision)) !== sha(JSON.stringify(historical.decision))) decision = decision.previous;
+    assert.deepEqual(decision, historical.decision, historical.id);
+  }
+  for (const historical of provenance.target.closures) {
+    let closure = currentProvenance.target.closures.find(c => c.owner === historical.owner);
+    while (closure && sha(JSON.stringify(closure)) !== sha(JSON.stringify(historical))) closure = closure.previous;
+    assert.deepEqual(closure, historical, historical.owner);
+  }
   assert.equal(record.revision, 'b59827e28a2451b5d4bea65363e085c70a4fce95');
   assert.equal(record.sourceReviews.length, 19);
   for (const [path, digest] of Object.entries(record.evidenceSHA256)) assert.equal(sha(await readFile(join(root, path))), digest, path);
@@ -133,14 +148,16 @@ test('LEX-12 records scoped reviews without adopting sources or upgrading histor
   assert.deepEqual(observed.mismatchedPaths, Object.entries(observed.sourceInputs).filter(([, s]) => s.contentSha256 !== s.expectedSHA256).map(([path]) => path));
   assert.equal(observed.mismatchedPaths.length, 34);
   for (const [path, expected] of Object.entries(observed.sourceInputs)) {
-    const current = await captureMigrationPath(join(root, path));
+    const current = path === 'config/skill-provenance.json'
+      ? { kind: 'file', entries: [{ path: '', kind: 'file', mode: 0o644, bytes: provenanceBytes.length, sha256: sha(provenanceBytes) }] }
+      : await captureMigrationPath(join(root, path));
     assert.equal(current.kind, expected.kind, path);
     assert.equal(adoptionSourceContentSha256(current), (record.qualificationOverlay[path] ?? expected).contentSha256, path);
   }
   assert.equal(record.remaining.efficiency, 'inconclusive; unchanged evaluation-disposition.json');
 });
 
-test('all six packages keep exact catalog obligations and reject stale receipts for all three hosts', async () => {
+test('all six packages retain exact historical obligations and reject historical stale receipts for all three hosts', async () => {
   const root = new URL('../', import.meta.url).pathname;
   const record = JSON.parse(await readFile(join(fixtureRoot, 'lex12-acceptance.json')));
   const migrations = JSON.parse(await readFile(join(root, 'config/skill-migrations.json')));
@@ -155,7 +172,7 @@ test('all six packages keep exact catalog obligations and reject stale receipts 
       assert.equal(failure.status, 'pending');
       const packagePath = agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
       const payload = await captureManagedSkillPayload(join(root, packagePath));
-      await assert.rejects(verifyAdoptionAcceptance({ repositoryRoot: root, auditPath: 'docs/validation/upstream-adoption-acceptance.json', packageId: collection.id, agent, ...obligations, revision: record.revision, version: record.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 }), error => error.message === failure.observedRejection, `${collection.id}/${agent}`);
+      await assert.rejects(verifyAdoptionAcceptance({ repositoryRoot: root, auditPath: 'tests/fixtures/lean-execution-adoption/pre-release-447-acceptance.json', packageId: collection.id, agent, ...obligations, revision: record.revision, version: record.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 }), error => error.message === failure.observedRejection, `${collection.id}/${agent}`);
     }
   }
 });
@@ -380,5 +397,60 @@ test('mobile transport qualification retains failed originals and independently 
     assert.equal(input[0].text, await readFile(join(fixtureRoot, directory, 'prompt.txt'), 'utf8'));
     const decoded = JSON.parse(input[0].text.split('<fixture_json>\n\n')[1].split('\n\n</fixture_json>')[0]);
     assert.deepEqual(decoded, { instructions: legacy.instructions.mobile, observations: legacy.cases[i].sharedContext, user_request: legacy.cases[i].input });
+  }
+});
+
+test('v4.4.7 acceptance separately qualifies current packages while retaining failed and pending history', async () => {
+  const root = new URL('../', import.meta.url).pathname;
+  const base = 'tests/fixtures/lean-execution-adoption/release-447';
+  const json = async p => JSON.parse(await readFile(join(root, p)));
+  const sha = b => createHash('sha256').update(b).digest('hex');
+  const qualification = await json(`${base}/qualification.json`);
+  assert.equal(qualification.status, 'qualified');
+  assert.equal(qualification.version, '4.4.7');
+  assert.equal(qualification.installedHosts, 'unperformed; LEX-14..16 separate');
+  assert.equal(qualification.efficiency, 'inconclusive; frozen 294-run comparison unexecuted');
+  for (const [p, h] of Object.entries(qualification.proofSHA256)) assert.equal(sha(await readFile(join(root, p))), h, p);
+  const promotion = await json(`${base}/promotion.json`);
+  for (const artifact of promotion.files) {
+    assert.ok(artifact.destination.startsWith(`${base}/`) && !artifact.destination.split('/').includes('..'));
+    assert.equal(sha(await readFile(join(root, artifact.destination))), artifact.sha256, artifact.destination);
+  }
+  const review = await json(`${base}/semantic-review/review.json`);
+  assert.equal(review.reviewedCount, 40);
+  assert.equal(review.qualifiedCount, 39);
+  assert.deepEqual(review.failedIds, ['E4']);
+  assert.equal(review.reviews.find(r => r.id === 'E4').qualified, false);
+  const amendment = await json(`${base}/semantic-review/amendment-review.json`);
+  assert.equal(amendment.id, 'E4-AM1');
+  assert.equal(amendment.qualified, true);
+  const originalInputs = await json(`${base}/response/isolation-inputs.json`);
+  const amendedInputs = await json(`${base}/response/e4-amendment-inputs.json`);
+  const e4 = originalInputs.cases.find(c => c.id === 'E4');
+  const e3 = originalInputs.cases.find(c => c.id === 'E3');
+  const amended = amendedInputs.cases[0];
+  assert.equal(e4.sharedContext.E3, undefined);
+  assert.equal(amended.input, e4.input);
+  assert.equal(amendedInputs.instructions[amended.instructionKey], originalInputs.instructions[e4.instructionKey]);
+  assert.deepEqual(amended.sharedContext, { ...e4.sharedContext, E3: e3.input });
+  const native = await json(`${base}/runtime-discovery/isolated-native-attempt-1/result.json`);
+  const total = TARGET_SKILL_COLLECTIONS.reduce((n, c) => n + c.publicCommands.length, 0);
+  assert.deepEqual(native.counts, { codex: total, pi: total });
+  assert.equal(native.modelRequests, 0);
+  const video = await json(`${base}/runtime-discovery/video-fresh-run-attempt-2/results.json`);
+  assert.equal(video.outcomes.length, 6);
+  assert.ok(video.outcomes.every(c => c.status === 'passed'));
+  const migrations = await json('config/skill-migrations.json');
+  assert.deepEqual(qualification.packages.map(p => p.id), TARGET_SKILL_COLLECTIONS.map(c => c.id));
+  for (const collection of TARGET_SKILL_COLLECTIONS) {
+    const obligations = derivePackageAcceptanceObligations(collection.id, migrations);
+    assert.deepEqual(qualification.packages.find(p => p.id === collection.id).obligations, obligations);
+    for (const agent of ['codex', 'claude-code', 'pi']) {
+      const packagePath = agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
+      const payload = await captureManagedSkillPayload(join(root, packagePath));
+      const verified = await verifyAdoptionAcceptance({ repositoryRoot: root, auditPath: 'docs/validation/upstream-adoption-acceptance.json', packageId: collection.id, agent, ...obligations, revision: qualification.sourceRevision, version: qualification.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 });
+      assert.deepEqual(verified.receipt.verifiedCapabilities, obligations.capabilityIds);
+      assert.deepEqual(verified.receipt.checks, Object.fromEntries(obligations.requiredChecks.map(c => [c, 'passed'])));
+    }
   }
 });

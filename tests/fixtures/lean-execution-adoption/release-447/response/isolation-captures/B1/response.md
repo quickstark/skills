@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Staging deployment | Stage estimate: ~0% | Overall estimate: unavailable — blocked: required staging credential is absent. Input needed: an authorized operator must supply the credential, or explicit authorization must cover a scoped credential setup operation. Prior overall weights and estimate were not supplied, so they cannot be truthfully reconstructed.\n\n- [x] Build, review and required tests verified at `abc123`.\n- [x] Git publication verified at `abc123`.\n- [ ] Staging deployment blocked; credential setup is outside the current authorization.\n\nThe next proposed action is to request that credential decision. Deployment must wait. The matching goal remains active and incomplete; the supplied evidence does not establish the host’s threshold for marking it blocked. No deployment or staging health/version verification is established.",
+  "requestedActions": [
+    "Request that an authorized operator supply the required staging credential, or obtain explicit authorization for a scoped credential setup operation."
+  ]
+}

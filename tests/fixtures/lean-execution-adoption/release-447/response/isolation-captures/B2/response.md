@@ -1,0 +1,6 @@
+{
+  "response": "Stage: qs-git-merge | Stage estimate: unmeasured | Overall estimate: unmeasured | blocked — The selected root is unavailable. Input needed: an authorized way to restore it, or explicit approval of a revised workflow. Prior weights and estimates were not supplied, so no percentages are invented.\n\n- [x] **Verified — qs-code-build:** Build and required checks passed at `abc123`; this evidence remains valid for that revision.\n- [ ] **Blocked — qs-git-merge:** Unavailable. Publication to `origin/feature/export` remains unverified.\n- [ ] **Pending — qs-deploy-release:** Cannot advance until the required publication stage is verified. No staging artifact, version, or health result is verified.\n\nThe coordinator pauses dependent work without installing skills, substituting roots, or bypassing publication. The matching goal remains active; this observation alone does not establish eligibility for a goal-status change. On resumption, recheck authoritative revision and publication state before retrying. Changed code requires fresh relevant checks.",
+  "requestedActions": [
+    "Request an authorized path to restore the selected qs-git-merge root, or explicit revision of the workflow and its authorization."
+  ]
+}

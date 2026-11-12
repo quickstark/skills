@@ -1,0 +1,24 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P8",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified complete — Supplied current-revision evidence confirms passing Build acceptance checks, tests, and review. Input needed: none.\n\n- [x] Build — verified complete; weight 60.\n- [ ] Git — pending, 0%; weight 10.\n- [ ] Release — pending, 0%; weight 30.\n\nBuild advances from the earlier 50% estimate to verified 100%. Overall: (60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%. The Build root is complete; the overall goal remains incomplete.\n\nNext proposed action: verify supported goal-tool availability and inspect authoritative state with `get_goal`. Establish or resume the matching goal before starting Git. Git and staging deployment retain standing authorization; goal state, publication, deployed version, and health remain unobserved.",
+    "requestedActions": [
+      "Verify host goal-tool availability and inspect authoritative goal state with get_goal before any Git stage execution. If support is unavailable or an unrelated goal is active, stop dependent work and report input-required."
+    ]
+  },
+  "promptSHA256": "d92b27ba159120974f65506da9f41e697f046a0c80e038653ac00f7578d24bfb",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 25993,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 775,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 26768
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

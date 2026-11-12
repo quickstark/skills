@@ -1,0 +1,8 @@
+{
+  "response": "- [ ] Generate execution prompt — blocked; weight 100.\n\nStage: Generate execution prompt | Stage estimate: ~50% | Overall estimate: ~50% | blocked — Project evidence is supplied, but execution prerequisites remain unresolved. Estimate confidence is low. Input needed: deployment environment, deployment authorization, and available goal tools.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: No execution-ready prompt generated. Specify staging or production, explicitly authorize deployment to that environment, and provide a host with actual goal tools. Ordinary execution cannot substitute for goal support.\nSpecs: Not located\nWork summary:\n- Finished — Assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. Readiness checks identify a missing deployment target, absent deployment authorization, and unavailable goal tools.\n- Next — [CSV invoice export](/fixture/ledger-app) — blocked — Resolve those prerequisites. Preserve authorization for repository edit/build/test and commit/push to `origin` on `feature/export`; deployment remains unauthorized. Implementation and specification remain pending.\n\nNext work prompt: None — Required execution prerequisites are unresolved.",
+  "requestedActions": [
+    "Request the explicitly selected deployment environment: staging or production.",
+    "Request explicit authorization to deploy to the selected environment.",
+    "Request a host with actual goal tools before generating an execution-ready goal prompt."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G6",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — Assess supplied scope, authorization, and deployment evidence (weight 40).\n- [ ] Blocked — Generate the execution-ready goal prompt (weight 60): host goal tools are unavailable.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: The latest supplied observation overrides G1’s goal-tool availability. The host must expose tools to read, create, and update goal state before an execution-ready prompt can be generated. Ordinary execution cannot substitute for goal support.\n\nStage: Generate prompt | Stage estimate: ~0% | Overall estimate: ~40% | blocked — Scope and deployment inputs are resolved; prompt construction awaits goal capability. Input needed: host goal tools equivalent to get_goal/create_goal/update_goal.\n\nEstimates use the stated 40/60 effort weights and supplied evidence; confidence is low because remaining effort is approximate.\n\nSpecs: Not located\n\nWork summary:\n- Finished — Assessed supplied readiness evidence for CSV invoice export on feature/export at abc123. No prompt was generated and no operations were performed.\n- Next — [CSV invoice export](/fixture/ledger-app) — blocked — provide host goal capability, then regenerate the prompt for specification, implementation, authorized commit/push, and staging deployment.\n\nReadiness check failed: required goal support is absent. /qs-flow-handoff is not verified installed; the installed clarification route does not resolve this host capability gap.\n\nNext work prompt: None — the required goal capability is missing, and no eligible recovery destination is verified available.",
+    "requestedActions": []
+  },
+  "promptSHA256": "75162329547016b78067c5e32b5f3392c7a64bdb4d7f4c9d2402d82de45b60ae",
+  "instructionSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+  "usage": [
+    {
+      "input_tokens": 23326,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1063,
+      "reasoning_output_tokens": 721,
+      "total_tokens": 24389
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

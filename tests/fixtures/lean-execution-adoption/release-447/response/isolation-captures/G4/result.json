@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] blocked — Generate the execution-ready CSV export and staging prompt; required implementation skill is absent.\n\nStage: Prompt generation | Stage estimate: ~50% | Overall estimate: ~50% | blocked — Scope, specification, staging workflow and authorization are supplied; the required build route is unavailable. Input needed: verified installed availability of `$qs-skills:qs-code-build`.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: No execution prompt generated; execution has not started. `$qs-skills:qs-code-build` is required for implementation but is explicitly absent. The installed integration and release skills cannot replace it.\nSpecs: [CSV invoice export specification](/fixture/ledger-app/docs/specs/export.md)\nWork summary:\n- Finished — Assessed the supplied readiness evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`; identified the missing implementation prerequisite.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — supply verified installed availability of `$qs-skills:qs-code-build`, then regenerate the prompt within the existing staging authorization.\n\nNext work prompt: None — neither eligible recovery route, `$qs-skills:qs-plan-clarify` or `$qs-skills:qs-flow-handoff`, is verified installed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "866338cc13cd77ed988cf442e6b0f83cb9e9c75f1d18be2d2e07f654d5cda2e5",
+  "instructionSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+  "usage": [
+    {
+      "input_tokens": 23330,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1088,
+      "reasoning_output_tokens": 791,
+      "total_tokens": 24418
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

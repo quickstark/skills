@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "L7",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — Explain selective repair and required verification (weight: 100%; explanation only).\n\nStage: Selective repair guidance | Stage estimate: ~100% | Overall estimate: ~100% | complete — Explanation covers local and shared-token fixes. Input needed: none for this explanation.\n\nStatus: Complete\nSkills used: /qs-design-image-to-code\nOutcome: Repair the third screen selectively. Preserve the selected reference and accepted implementation; reopen verification wherever the change can affect behavior or appearance.\nSpecs: Not located\n\n**Local fix:** Keep the change within the third screen’s defective section or state. Preserve shared spacing tokens and the two accepted screens. Compare the repaired screen with the authoritative reference across all requested states and narrow/wide viewports. Rerun affected interaction, accessibility and visual checks, then verify final integration across all three screens.\n\n**Shared-token fix:** Change the token only when the evidence supports correcting its shared definition. Reopen affected verification for every consuming screen, including the two previously accepted screens. Their earlier acceptance does not verify the new token value. Preserve their implementation and repair only demonstrated regressions; complete final integration verification afterward.\n\n**Required coverage:** Retain every requested state, including applicable validation, loading, empty and error states. Check keyboard operation, logical tab order, visible focus, semantic controls, labels, alternative text, headings, reduced motion and overflow. A local change requires affected checks plus final integration; a shared change broadens the affected coverage across consumers.\n\nKeep the selected reference unchanged. Exact parity requires a frozen baseline, declared environment and coverage, and repository or user-approved tolerance before implementation edits. Those observations were not supplied, so neither exact parity nor passed checks can be claimed. A separate visual-parity workflow remains a distinct outcome and would not start automatically.\n\nWork summary:\n- Finished — Explained repair scope, invalidation of prior verification and required checks. Output is this guidance; no implementation or checks were performed, and no failed-check results were supplied.\n- Next — None verified from supplied context; specifications and implementation evidence are missing, and no external tracker is selected. This completes the explanation, not the screen repair.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "72fe37fa1a671d4ea67bd11c09f01330383d7106758ea6e8048d7d9d52aad460",
+  "instructionSHA256": "18680f4a08c2c2fc50dc798112b40b186e3d7ddbe6847707aa91aa5268a9f3f6",
+  "usage": [
+    {
+      "input_tokens": 21947,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 813,
+      "reasoning_output_tokens": 332,
+      "total_tokens": 22760
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

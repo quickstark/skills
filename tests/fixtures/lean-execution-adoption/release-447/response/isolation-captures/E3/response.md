@@ -1,0 +1,8 @@
+{
+  "response": "Stage: Build | Stage estimate: ~100% | Overall estimate: ~60% | continuation-required — Build, diff review, and tests are verified at `abc123`; all required checks pass. Input needed: none.\n\n- [x] Build — verified; reported status: continuation-required.\n- [ ] Git — pending; `qs-git-merge` matches the authorized next stage.\n- [ ] Release — pending; depends on verified Git publication.\n\nWeights remain Build 60, Git 10, Release 30. The new verification supersedes the earlier Build 50% estimate: overall = (60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%.\n\nProposed next: verify goal support and current prerequisites, then advance to the authorized commit/push stage for `origin/feature/export`. Publication and staging artifact/version and health evidence remain outstanding; the goal is incomplete.",
+  "requestedActions": [
+    "Verify supported goal-tool availability and inspect the confirmed matching goal with get_goal before stage execution. If support is unavailable or an unrelated goal is active, stop dependent work and report the required input.",
+    "Recheck repository /fixture/ledger-app, target origin/feature/export, qs-git-merge availability, supplied references, standing authorization, and verified revision abc123. Inspect publication state before retrying any external action.",
+    "If prerequisites remain valid, advance to qs-git-merge under the existing commit/push grant and verify origin/feature/export equals the tested revision abc123 before allowing Release to proceed."
+  ]
+}

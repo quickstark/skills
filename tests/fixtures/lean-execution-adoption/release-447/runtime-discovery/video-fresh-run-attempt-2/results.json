@@ -1,0 +1,1108 @@
+{
+  "config": {
+    "HF_CLI": "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+    "HF_FFMPEG": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+    "HF_FFPROBE": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+    "HF_BROWSER": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+    "HF_GSAP": "/github/skills/tests/fixtures/lean-execution-adoption/qualification-local-runtime/video-project/gsap.min.js",
+    "HF_FONT": "/github/skills/tests/fixtures/lean-execution-adoption/qualification-local-runtime/video-project/font.ttf"
+  },
+  "outcomes": [
+    {
+      "case": "caption-only",
+      "status": "passed",
+      "evidence": {
+        "white_text_pixels": [
+          0,
+          411,
+          0
+        ],
+        "video_sha256": "afbacf1f5aed3f0f748c0c42d240373cd36ab0a69625bbc30a8ba144d4f7f7d2",
+        "negative_control": "missing caption rejected"
+      }
+    },
+    {
+      "case": "hard-cut-and-zoom",
+      "status": "passed",
+      "evidence": {
+        "encoded_color": [
+          0,
+          14,
+          255
+        ],
+        "white_marker_widths": [
+          40,
+          40,
+          78,
+          40
+        ],
+        "negative_control": "wrong source color rejected",
+        "repeated_seek_equal": true
+      }
+    },
+    {
+      "case": "visual-audio-crossfade-and-seek",
+      "status": "passed",
+      "evidence": {
+        "encoded_color": [
+          137,
+          18,
+          133
+        ],
+        "samples": [
+          [
+            255,
+            0,
+            0
+          ],
+          [
+            255,
+            0,
+            0
+          ],
+          [
+            127,
+            0,
+            128
+          ],
+          [
+            0,
+            0,
+            255
+          ],
+          [
+            0,
+            0,
+            255
+          ],
+          [
+            127,
+            0,
+            128
+          ],
+          [
+            255,
+            0,
+            0
+          ]
+        ],
+        "energies": [
+          {
+            "220": 2980.3523315261964,
+            "440": 0.31125451133213444
+          },
+          {
+            "220": 1492.4182885316861,
+            "440": 1502.8533656998998
+          },
+          {
+            "220": 0.3492447950862601,
+            "440": 2985.507121513768
+          }
+        ],
+        "negative_control": "missing dissolve rejected"
+      }
+    },
+    {
+      "case": "subcomposition-local-font-asset",
+      "status": "passed",
+      "evidence": {
+        "encoded_color": [
+          0,
+          215,
+          0
+        ],
+        "missing_asset_negative_control": "runtime rejected",
+        "font_white_pixels": 307,
+        "local_asset_motion": true,
+        "repeat_seek_equal": true
+      }
+    },
+    {
+      "case": "aspect-ratio",
+      "status": "passed",
+      "evidence": {
+        "encoded_color": [
+          0,
+          215,
+          0
+        ],
+        "size": [
+          180,
+          320
+        ],
+        "center_and_border_verified": true
+      }
+    },
+    {
+      "case": "later-narration-carve-effects",
+      "status": "passed",
+      "evidence": {
+        "before": {
+          "120": 994.9664548320686,
+          "1000": 3989.6240593714483,
+          "3000": 3977.2456832762605
+        },
+        "after": {
+          "120": 421.2972364946427,
+          "1000": 3077.2693445307805,
+          "3000": 3372.2409115529936
+        },
+        "group_sources_preserved": true,
+        "negative_control": "no-op mix rejected"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "name": "version",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "--version"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "red.mp4-source",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "lavfi",
+        "-i",
+        "color=c=red:s=320x180:r=12:d=2",
+        "-vf",
+        "drawbox=x=140:y=70:w=40:h=40:color=white:t=fill",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions/red.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "captions-render",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "captions-render-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "captions",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "snapshot",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions",
+        "--at=0.25,0.75,1.75",
+        "--no-end",
+        "--describe=false",
+        "--no-browser-gpu",
+        "--output=/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions-snapshots"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "caption-pixel0",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions-snapshots/frame-00-at-0.25s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "caption-pixel1",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions-snapshots/frame-01-at-0.75s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "caption-pixel2",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions-snapshots/frame-02-at-1.75s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "caption-decoded-video",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "0.75",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/captions/result.mp4",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "red.mp4-source",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "lavfi",
+        "-i",
+        "color=c=red:s=320x180:r=12:d=2",
+        "-vf",
+        "drawbox=x=140:y=70:w=40:h=40:color=white:t=fill",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom/red.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "blue.mp4-source",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "lavfi",
+        "-i",
+        "color=c=blue:s=320x180:r=12:d=2",
+        "-vf",
+        "drawbox=x=140:y=70:w=40:h=40:color=white:t=fill",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom/blue.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-render",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-render-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "snapshot",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom",
+        "--at=0.9,1.01,1.8,1.01",
+        "--no-end",
+        "--describe=false",
+        "--no-browser-gpu",
+        "--output=/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cut-snapshots"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-pixel0",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cut-snapshots/frame-00-at-0.9s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-pixel1",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cut-snapshots/frame-01-at-1.01s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-pixel2",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cut-snapshots/frame-02-at-1.8s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-pixel3",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cut-snapshots/frame-03-at-1.01s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "cut-decoded-video",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1.75",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/cuts-zoom/result.mp4",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-render",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-render-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "snapshot",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade",
+        "--at=0.25,0.5,1,1.5,1.9,1,0.25",
+        "--no-end",
+        "--describe=false",
+        "--no-browser-gpu",
+        "--output=/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel0",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-00-at-0.25s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel1",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-01-at-0.5s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel2",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-02-at-1s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel3",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-03-at-1.5s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel4",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-04-at-1.9s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel5",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-05-at-1s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-pixel6",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/fade-snapshots/frame-06-at-0.25s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-decoded-video",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade/result.mp4",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-energy0",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "0.2",
+        "-t",
+        "0.2",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade/result.mp4",
+        "-vn",
+        "-ac",
+        "1",
+        "-ar",
+        "48000",
+        "-f",
+        "s16le",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-energy1",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "0.9",
+        "-t",
+        "0.2",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade/result.mp4",
+        "-vn",
+        "-ac",
+        "1",
+        "-ar",
+        "48000",
+        "-f",
+        "s16le",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "fade-energy2",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1.7",
+        "-t",
+        "0.2",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/crossfade/result.mp4",
+        "-vn",
+        "-ac",
+        "1",
+        "-ar",
+        "48000",
+        "-f",
+        "s16le",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-render",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-render-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-decoded-video",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1.5",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition/result.mp4",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "snapshot",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition",
+        "--at=0,0.5,1.5,0",
+        "--no-end",
+        "--describe=false",
+        "--no-browser-gpu",
+        "--output=/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/sub-snapshots"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-pixel0",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/sub-snapshots/frame-00-at-0s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-pixel1",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/sub-snapshots/frame-01-at-0.5s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-pixel2",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/sub-snapshots/frame-02-at-1.5s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-pixel3",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/sub-snapshots/frame-03-at-0s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "sub-missing-asset",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "check",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition",
+        "--json",
+        "--at=1"
+      ],
+      "returncode": 1
+    },
+    {
+      "name": "portrait-render",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "portrait-render-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "portrait-decoded-video",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait/result.mp4",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "portrait",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "snapshot",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait",
+        "--at=1",
+        "--no-end",
+        "--describe=false",
+        "--no-browser-gpu",
+        "--output=/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait-snapshots"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "portrait-pixels",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/portrait-snapshots/frame-00-at-1s.png",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-frames:v",
+        "1",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-before",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-before-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-write",
+      "argv": [
+        "node",
+        "/github/skills/skills/video/qs-video/modules/hyperframes-audio/scripts/carve.mjs",
+        "--comp",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/index.html",
+        "--core",
+        "/tmp/qs-lex12-runtime/node_modules/@hyperframes/core",
+        "--bed",
+        "music-bed",
+        "--voice",
+        "voice-intro",
+        "--voice",
+        "voice-later",
+        "--strength",
+        "0.8"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-after",
+      "argv": [
+        "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+        "render",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve",
+        "--fps",
+        "12",
+        "--quality",
+        "draft",
+        "--workers",
+        "1",
+        "--no-browser-gpu",
+        "--output",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-after-probe",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+        "-v",
+        "error",
+        "-show_streams",
+        "-show_format",
+        "-of",
+        "json",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-before-energy",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1.25",
+        "-t",
+        "0.2",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/baseline.mp4",
+        "-vn",
+        "-ac",
+        "1",
+        "-ar",
+        "48000",
+        "-f",
+        "s16le",
+        "pipe:1"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "carve-after-energy",
+      "argv": [
+        "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+        "-v",
+        "error",
+        "-ss",
+        "1.25",
+        "-t",
+        "0.2",
+        "-i",
+        "/github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4",
+        "-vn",
+        "-ac",
+        "1",
+        "-ar",
+        "48000",
+        "-f",
+        "s16le",
+        "pipe:1"
+      ],
+      "returncode": 0
+    }
+  ]
+}

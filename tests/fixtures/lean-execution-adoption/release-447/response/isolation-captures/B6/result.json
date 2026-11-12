@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B6",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] Verification acceptance — failed (weight 100%); required integration coverage remains unsuccessful.\n\nStage: Verification acceptance | Stage estimate: ~50% | Overall estimate: ~50% | Failed — supplied evidence establishes the integration failure; rerunnable execution details and post-run state are missing. Input needed: none for this report. Estimates are provisional; work is not continuing.\n\nStatus: Failed\nSkills used: /qs-test-verify\nOutcome: Supplied observations do not support completion at `abc123`. This response assesses frozen evidence; no operations were performed.\nSpecs: Not located\n\n- **Decisive diagnostic return:** The integration check fails where the caller supplies a different CSV encoding from the isolated test. The causal error is at line 23 of the supplied 200-line log; the cleanup tail is unrelated. Exact error text, encoding names, command, environment, and a safe log location were not supplied. Preserve this boundary for diagnosis without inventing those details or pasting the full log.\n- **Coverage:** Retain the focused unit pass at `abc123` for its tested encoding and the supplied still-valid unaffected suite result. The integration failure invalidates any inference that the unit pass proves caller compatibility; it does not erase those unaffected passes. Required integration coverage remains failed.\n- **Completion:** Verification cannot complete with a failed required check. No retry, implementation change, or rerun of unaffected work is warranted by these observations. Post-run mutation and cleanup checks remain unverified.\n\nWork summary:\n- Finished — assessed the supplied verification evidence, preserved valid passes, and identified the integration failure boundary. Material output: this report only.\n- Next — CSV encoding integration failure — failed — separately diagnose the caller/test encoding mismatch. No ticket or specification link was supplied; no external tracker was selected.\n\nNext work prompt:\n```text\n$qs-skills:qs-code-debug Diagnose the CSV encoding integration failure for /fixture/ledger-app at abc123. Limit this request to read-only diagnosis; implementation is not authorized. Supplied evidence: the caller uses a different CSV encoding from the isolated test, and the causal error is at line 23 of a 200-line log; cleanup at the end is unrelated. Exact error text, encoding names, commands, environment, and log location remain unavailable. Preserve the focused unit pass and unaffected valid suite; do not rerun unaffected work. Return the smallest supported failure boundary and missing evidence needed before proposing a repair. Required integration verification remains unsuccessful.\n```",
+    "requestedActions": []
+  },
+  "promptSHA256": "39ac30f8b7df5ccc6fa8c3d78ce0a7c12c9830c3e8f99c85c0cae559d5dfc286",
+  "instructionSHA256": "edb9f514da3f4cc08d155147bda456218fa1acc8854bfdb6d7ffb42bb64df389",
+  "usage": [
+    {
+      "input_tokens": 25382,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1420,
+      "reasoning_output_tokens": 884,
+      "total_tokens": 26802
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

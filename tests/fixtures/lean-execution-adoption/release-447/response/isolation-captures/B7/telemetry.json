@@ -1,0 +1,93 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 26970.125601999927,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": null,
+  "malformedLines": 0,
+  "observedModel": "gpt-6.1-sol",
+  "effectiveControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "initialized": true,
+  "readinessOnly": false,
+  "usage": [
+    {
+      "input_tokens": 26435,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1131,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 27566
+    }
+  ],
+  "nativeUsage": {
+    "total": {
+      "totalTokens": 27566,
+      "inputTokens": 26435,
+      "cachedInputTokens": 12288,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 1131,
+      "reasoningOutputTokens": 516
+    },
+    "last": {
+      "totalTokens": 27566,
+      "inputTokens": 26435,
+      "cachedInputTokens": 12288,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 1131,
+      "reasoningOutputTokens": 516
+    },
+    "modelContextWindow": 475000
+  },
+  "completedTurn": true,
+  "responsePresent": true,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": true,
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 269,
+    "skippedTicks": 1,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+  "promptSHA256": "253c0a41e2d1de010bc78e99d2cf602ea0391838830fcbeb418be44d14ac3ac2",
+  "promptUtf8Bytes": 36595,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "89772724f2a012710799df1b02c0df98fe3e14855e08e732b7b8053d2dd6b67c",
+    "raw-protocol.jsonl": "c0b17c14b2e6b64d0546bce61a1f47ca6510442db4f673f31623c51380e49401",
+    "raw-stdout.jsonl": "b4b9949e121d901144d3c2cf2494ea502c3230cc52080ae0ebef7db8bc30e5d1",
+    "stderr.txt": "27f51bef8e3a34a2e15720ddaa22cd4e45967d0a09163c3aaeef15a94cb9a9c4"
+  }
+}
