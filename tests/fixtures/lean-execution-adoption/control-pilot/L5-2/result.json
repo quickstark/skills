@@ -1,0 +1,29 @@
+{
+  "scenario": "L5",
+  "repetition": 2,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-debug\nOutcome: The expected TDD RED establishes the pre-implementation baseline; it does not consume a repair retry. Three unsuccessful repairs that contradict the same diagnosis warrant pausing symptom edits and reconsidering that diagnosis, not declaring an arbitrary retry limit exhausted.\nSpecs: Not located\n\n- [x] verified — Classify the supplied failure reports (weight 30%).\n- [ ] blocked — Specify the causal experiment from actual diagnostic evidence (weight 70%).\n\nStage: Causal experiment | Stage estimate: ~0% | Overall estimate: ~30% | blocked — The shared premise and individual observations were not supplied. Input needed: one redacted evidence packet containing the original reproducer, shared diagnosis, and predicted versus observed results for all three repairs. Estimates reflect evidence assessment only, not repair completion.\n\nNo repair progress is demonstrated when the original failure remains reproducible and the proposed mechanism's predictions fail. Attempt counts, edits, elapsed time, or another plausible explanation do not establish improvement. The contradictory results still provide diagnostic information: they weaken the shared premise.\n\nThe next discriminating action would be to state that premise, list the observations contradicting it, and compare its predictions with a competing explanation. Using the smallest original reproducer, observe inputs and state across the suspected boundary and vary one relevant condition whose outcomes distinguish the explanations. The exact condition cannot be selected from the supplied observations. After changing the hypothesis, reproduce the original failure again before proposing a repair.\n\nWork summary:\n- Finished — Distinguished expected TDD RED from failed repair attempts and described the next evidence-gathering step. No operations, checks, or mutations were performed; no artifacts were created.\n- Next — No distinct follow-on item is verified in the supplied task history or tracker context. The missing diagnostic evidence belongs to this root.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": [
+      "Pause further symptom edits based on the contradicted diagnosis.",
+      "Request one redacted evidence packet containing the original reproducer, shared premise, and predicted versus observed results for the three repairs.",
+      "Use that evidence to propose a controlled boundary check that distinguishes competing explanations, then reproduce the original failure under the revised hypothesis."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "e5fc5fe4ca3f7bfce3586559333c0791b8d3b2288940c26ef5ecb042962e81bb",
+  "sourceSHA256": "e6aeee820788abe58110768f8f9704663eaa2bb116c1009bf9212f44acabcd8c",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 28427,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1442,
+      "reasoning_output_tokens": 957,
+      "total_tokens": 29869
+    }
+  ]
+}

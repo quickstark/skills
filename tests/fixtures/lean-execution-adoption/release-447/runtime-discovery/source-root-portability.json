@@ -1,0 +1,61 @@
+{
+  "scope": "Root and historical-source-path resolution only; not a fresh copy of full package/runtime qualification. The copied path includes spaces and a URL-significant character; CWD is outside the fixture.",
+  "sourceVerifierSHA256": "ac612174bbb81cc0e30c2655723de23340954f10f512e38069f63f17597abe1c",
+  "originalVerifierSHA256": "3fa2601937165e98ca40bff86f2c283e2587b8058663c360dec55a4d240d0533",
+  "records": [
+    {
+      "label": "copied-path-positive",
+      "argv": [
+        "node",
+        "/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/.unlazy/release-447/runtime-discovery/verify.mjs",
+        "--resolve-source-root"
+      ],
+      "cwd": "/tmp",
+      "expectedExit": 0,
+      "exitCode": 0,
+      "stdout": "SOURCE_ROOT_RESOLUTION_OK {\"repo\":\"/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source\",\"registryModule\":\"/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/scripts/skill-collection-registry.mjs\",\"sourceExample\":\"/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/skills/video/qs-video/SKILL.md\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "missing-registry-negative",
+      "argv": [
+        "node",
+        "/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/.unlazy/release-447/runtime-discovery/verify.mjs",
+        "--resolve-source-root"
+      ],
+      "cwd": "/tmp",
+      "expectedExit": 1,
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "file:///tmp/qs-lex12-portability-pxtr6tm6/checkout%20with%20spaces%20%23%20source/.unlazy/release-447/runtime-discovery/verify.mjs:11\n  if(path.dirname(dir)===dir)throw new Error('No QuickStark repository root above verifier');\n                                   ^\n\nError: No QuickStark repository root above verifier\n    at resolveRepositoryRoot (file:///tmp/qs-lex12-portability-pxtr6tm6/checkout%20with%20spaces%20%23%20source/.unlazy/release-447/runtime-discovery/verify.mjs:11:36)\n    at file:///tmp/qs-lex12-portability-pxtr6tm6/checkout%20with%20spaces%20%23%20source/.unlazy/release-447/runtime-discovery/verify.mjs:14:12\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+    },
+    {
+      "label": "unrelated-package-negative",
+      "argv": [
+        "node",
+        "/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/.unlazy/release-447/runtime-discovery/verify.mjs",
+        "--resolve-source-root"
+      ],
+      "cwd": "/tmp",
+      "expectedExit": 1,
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "file:///tmp/qs-lex12-portability-pxtr6tm6/checkout%20with%20spaces%20%23%20source/.unlazy/release-447/runtime-discovery/verify.mjs:11\n  if(path.dirname(dir)===dir)throw new Error('No QuickStark repository root above verifier');\n                                   ^\n\nError: No QuickStark repository root above verifier\n    at resolveRepositoryRoot (file:///tmp/qs-lex12-portability-pxtr6tm6/checkout%20with%20spaces%20%23%20source/.unlazy/release-447/runtime-discovery/verify.mjs:11:36)\n    at file:///tmp/qs-lex12-portability-pxtr6tm6/checkout%20with%20spaces%20%23%20source/.unlazy/release-447/runtime-discovery/verify.mjs:14:12\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+    },
+    {
+      "label": "restored-positive",
+      "argv": [
+        "node",
+        "/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/.unlazy/release-447/runtime-discovery/verify.mjs",
+        "--resolve-source-root"
+      ],
+      "cwd": "/tmp",
+      "expectedExit": 0,
+      "exitCode": 0,
+      "stdout": "SOURCE_ROOT_RESOLUTION_OK {\"repo\":\"/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source\",\"registryModule\":\"/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/scripts/skill-collection-registry.mjs\",\"sourceExample\":\"/tmp/qs-lex12-portability-pxtr6tm6/checkout with spaces # source/skills/video/qs-video/SKILL.md\"}\n",
+      "stderr": ""
+    }
+  ],
+  "allExpected": true,
+  "limits": "Full projected captureMigrationPath bindings still include exact historical directory modes. Different metadata is reported as a binding mismatch, not silently normalized."
+}

@@ -36,6 +36,7 @@ const expectedTestFiles = [
   "tests/personal-skills-v2.test.mjs",
   "tests/managed-skills.test.mjs",
   "tests/update-skills.test.mjs",
+  "tests/restart-codex.test.mjs",
   "tests/install-skills.test.mjs",
   "tests/managed-marketplace-bootstrap.test.mjs",
   "tests/pi-package-projection.test.mjs",
@@ -62,6 +63,7 @@ const expectedTestFiles = [
   "tests/skill-migrations.test.mjs",
   "tests/video-candidate.test.mjs",
   "tests/multi-agent-delegation.test.mjs",
+  "tests/lean-execution.test.mjs",
   "tests/fixtures/upstream-adoption-efficiency/runner-lock.test.mjs",
 ];
 

@@ -1,0 +1,70 @@
+{
+  "kind": "manual-discriminating-diagnosis-not-model-or-source-acceptance",
+  "case": "E4",
+  "sourceRevision": "dcbc75b4a69ef2d7dfc39e582afd005dc2264b0c",
+  "conclusion": "The original E4 response remains a semantic failure against the intended verified-bounded-Build premise. A canonical policy defect is not demonstrated. The standalone fixture omits the explicit E3 predecessor to which Same refers and supplies competing P1 Build50 observations. This is a concrete fixture limitation and a plausible explanation for model anchoring, not grounds to relabel the original failure as accepted. Model instruction-following failure remains plausible because E4 itself calls the continuation-required build verified, and the source permits that bounded outcome to be finished while Git is blocked.",
+  "observations": [
+    {
+      "citation": ".unlazy/release-447/response/isolation-inputs.json:255,265,267; isolation-captures/E3/prompt.txt:14; E4/prompt.txt:12,14; E5/prompt.txt:12,14",
+      "fact": "E3 explicitly supplies bounded build, diff review and tests verified at abc123 and all required checks passing. E4 supplies Same verified continuation-required build and later revoked push, but its sole observation is P1 Build50/Git0/Release0. No E3 observation, E3 response or prior turn is supplied in the native E4 turn. E5 likewise supplies compressed Build/Git valid while retaining P1."
+    },
+    {
+      "citation": ".unlazy/release-447/response/isolation-captures/E4/response.md:2; E4/result.json:6; E4/raw-stdout.jsonl:259",
+      "fact": "The exact native response preserves continuation-required and blocks push correctly, but leaves Build unchecked at 50% and overall30, expressly saying a verified continuation result does not establish full stage completion. That causal explanation contradicts the intended completed bounded Build premise. The arithmetic is internally correct for its selected inputs; the evidence selection is disputed."
+    },
+    {
+      "citation": ".unlazy/release-447/response/isolation-captures/E3/response.md:2; E5/response.md:2",
+      "fact": "E3 uses Build100/overall60 and explicitly supersedes earlier P1. E5 uses Build50/overall40 and asks for missing Build check results. These different input contexts support the missing-explicit-evidence hypothesis but are not a controlled causal experiment or reliability estimate."
+    },
+    {
+      "citation": "docs/skill-run-contract.md:39,64,81; scripts/progress-reporting-contract.mjs:20; scripts/goal-workflow.mjs:112,120,123,140,183",
+      "fact": "Canonical policy defines continuation-required as a finished bounded outcome, preserves valid progress while blocked, permits matched verified continuation to advance, and honors revocation. The pure transition oracle stops on revoked authorization and otherwise requires verified current result/check evidence. It is not a model-behavior or percentage oracle. No source rule directs loss of Build credit on revocation."
+    },
+    {
+      "citation": "tests/fixtures/lean-execution-adoption/one-shot-inputs.json:85,94,96; one-shot-recovery-inputs.json:22,31,33; .unlazy/release-447/response/protocol.json:403,418,420",
+      "fact": "The same compressed E4 request and P1 context predate the isolation qualification. Their provenance does not make the standalone predecessor available. The original recovery E4 response.md:2 gave Build100/overall60 and treated P1 as earlier, showing another response inferred intended precedence. Its acceptance/isolation cannot be inferred from that text; it does not cure the present failure."
+    }
+  ],
+  "competingHypotheses": [
+    {
+      "hypothesis": "source-policy-defect",
+      "assessment": "not demonstrated",
+      "support": "Generated prompt does not restate the full definition of continuation-required, so a clarifying redundancy is conceivable.",
+      "counterEvidence": "The generated policy already permits verified matched continuation advancement and preserves valid progress; canonical definition is correct. One model result with competing fixture observations cannot establish a broken source policy.",
+      "discriminator": "First supply the missing exact predecessor while holding source and requirements fixed; do not edit canonical policy before that discrimination."
+    },
+    {
+      "hypothesis": "incomplete-or-competing-closed-fixture-context",
+      "assessment": "concrete fixture limitation; strongest testable explanation, causal attribution unproven",
+      "support": "Only P1 is in E4 observations. Same has no embedded E3 antecedent, and P1 describes Build50 at current revision without marking it historical. The response explicitly selects that supplied milestone evidence.",
+      "counterEvidence": "E4 still says verified continuation-required, so a competent response can preserve bounded completion without inventing observations. The original failed response must remain visible.",
+      "discriminator": "Append only exact frozen E3 input as observations.E3, preserving E4 user request, P1 and source bytes; independently assert predecessor absent before and present afterward."
+    },
+    {
+      "hypothesis": "actual-model-semantic-error",
+      "assessment": "observed against intended premise; not separable from fixture ambiguity with present captures",
+      "support": "The model explicitly rejects full stage completion while accepting the Build as verified continuation-required, selecting competing P1 evidence instead of inferring that the bounded outcome is finished.",
+      "counterEvidence": "Its only explicit milestone observation is P1 Build50; isolated turn has no E3 check facts. Treating incomplete standalone evidence cautiously is also consistent with the response-only missing-observations rule.",
+      "discriminator": "One separately approved amended observation can test whether the same downgrade persists with exact predecessor facts; it cannot erase the original failure or establish reliability."
+    }
+  ],
+  "transportAndIsolation": {
+    "determination": "Measurements independently assert exact sent turn text equals prompt.txt, JSON-decoded instructions/observations/request equal frozen source inputs, E3/E4/E5 instruction bodies equal the original one-shot goal instruction, and raw final envelopes equal result.json and response.md. Three dollar Unicode escapes decode back to original skill literals. This rules out text loss or body substitution in these compared fields; it does not prove absence of host/global instruction contamination.",
+    "citations": ["E3/E4/E5 raw-protocol.jsonl:14", "E4 prompt.txt:5,10,12,14", "measurements.json"],
+    "boundary": "A fresh ephemeral thread and temporary cwd do not embed E3 history. No inference of clean isolation or semantic acceptance is drawn from process metadata, acceptedCapture, cached tokens or the previous passing raw response."
+  },
+  "repairRecommendation": {
+    "canonicalChanges": "none",
+    "amendment": "Frozen E4-AM1 adds only observations.E3 equal to original E3 input. P1 remains exactly as supplied, as do the entire instruction string and E4 user request. Added predecessor is a fictional observation already in the original registered scenario, not a new product check, timestamp or result.",
+    "legitimacy": "The requirement remains preserve verified Build, honor revoked push, avoid repeating completed checks and never claim deployment. Appending the omitted antecedent makes Same self-contained; it does not lower a threshold, remove conflicting evidence, replace the original outcome or retry identical input until green.",
+    "affectedEvidence": "Only new E4-AM1 input/freeze/one separately authorized native response and its semantic review; retain original E4 failure, all P1/E3/E5/source/capture bytes and broad qualification result. E5 has an analogous limitation but requires independent adjudication; do not silently amend it or infer its acceptance.",
+    "nextAction": "Parent rereads diagnosis, verifies bindings and accepts or rejects this premise. No model/native retry has been made by this leaf. Before one authorized amended request, parent freezes this exact amendment and preserves the original outcome."
+  },
+  "fourPasses": [
+    "Prepared exact input/source/native-response comparisons and competing hypotheses.",
+    "Re-read policy semantics: verified continuation means bounded outcome finished; retained model-error possibility and original semantic failure.",
+    "Checked transport equality and original fixtures; bounded isolation claims; rejected prior passing response as proof of clean acceptance.",
+    "Polished amendment to preserve original P1/request/source exactly and append only exact E3 observation; final review found no further diagnosis change. Hash-only gate remains separate from parent semantic adjudication."
+  ],
+  "qualification": "No efficacy, reliability, efficiency, native acceptance, source repair or release-readiness claim."
+}

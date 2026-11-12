@@ -1,0 +1,24 @@
+{
+  "kind": "actual-native-input-payload-checks-not-wire-only",
+  "checks": [
+    {
+      "id": "MT1",
+      "nativeTurnStartRecords": 1,
+      "parsedTextDollarCount": 0,
+      "decodedPayloadMatchesLegacy": true
+    },
+    {
+      "id": "MT2",
+      "nativeTurnStartRecords": 1,
+      "parsedTextDollarCount": 0,
+      "decodedPayloadMatchesLegacy": true
+    },
+    {
+      "id": "MT3",
+      "nativeTurnStartRecords": 1,
+      "parsedTextDollarCount": 0,
+      "decodedPayloadMatchesLegacy": true
+    }
+  ],
+  "capturedLegacyPipelineHashMatches": true
+}

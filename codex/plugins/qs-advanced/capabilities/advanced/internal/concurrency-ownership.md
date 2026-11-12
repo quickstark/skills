@@ -14,6 +14,7 @@ Use when multiple candidates, evidence partitions, or operational targets can pr
 2. Isolate output paths or make every unit read-only. When shared writes are unavoidable, use a structural lock or serialize them; a prose ownership map alone is not mutual exclusion.
 3. When the host provides subagents, give each independent unit to a helper started with a fresh context window, not a fork of the parent conversation; helpers inherit the parent model and own only their declared scope. Without subagent support, run the units serially in the root.
 4. Serialize accepted results through the root after checking current shared state.
+5. Require a consumed prerequisite outcome for each dependency; do not confuse scheduling preference with readiness. Repair only the failed scope, preserving accepted independent work while invalidating affected evidence after shared-state changes. The root still verifies the integrated result; writer ownership never expands authority or grants filesystem isolation.
 
 ## Stop conditions
 

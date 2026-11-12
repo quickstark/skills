@@ -1,0 +1,25 @@
+{
+  "scenario": "L1",
+  "repetition": 3,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Complete\nSkills used: /qs-code-build\nOutcome: Explain a single serial change and its verification; no implementation performed.\nSpecs: Not located\n\n- [x] verified — Execution and verification explanation (weight: 100%).\n\nStage: Explanation | Stage estimate: ~100% | Overall estimate: ~100% | verified — Complete for the explanation only. Input needed: none.\n\nUse `mode=single`, with the default `effort=standard` and `report=brief`. One message change with one focused check has no independent units to delegate. Keep the configured model, reasoning, sandbox, and approvals unchanged.\n\nProposed execution:\n1. Confirm repository instructions, dirty state, target file, and exact replacement text.\n2. Inspect the existing focused check and establish its baseline. If it asserts the message, use that seam for a meaningful test-first loop: establish the expected failure before changing the message, then rerun after the change. The check’s contents are missing, so this strategy remains conditional; never invent a failing result.\n3. Apply the smallest change, preserve unrelated work, and run the focused check plus any required relevant wider validation. Inspect the final diff for correctness, scope, secrets, and unrelated changes. Keep review and repairs inside this root.\n\nWork summary:\n- Finished — Explained serial execution and necessary verification using the supplied scope. No files changed, checks run, or artifacts created; no check results were supplied.\n- Next — None verified after checking the supplied fixture context; repository evidence and tracker items remain unavailable.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "ce2c368d107f92139bc0e616bf35c70a3b6750eb0f7836cf9aa01f5fe53bd941",
+  "sourceSHA256": "1e979f921798bad4cd5dbc1aee3740f1c06fbef667261121e4fee3cae61f555a",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29070,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 869,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 29939
+    }
+  ]
+}

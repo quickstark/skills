@@ -1,0 +1,20 @@
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import assert from 'node:assert/strict';
+import {captureMigrationPath} from '/github/skills/scripts/migration-filesystem.mjs';
+import {TARGET_SKILL_COLLECTIONS} from '/github/skills/scripts/skill-collection-registry.mjs';
+const root='/github/skills',out=path.dirname(new URL(import.meta.url).pathname),read=p=>JSON.parse(fs.readFileSync(p));const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const raw=read(out+'/isolated-native-attempt-1/result.json');assert.equal(raw.status,'passed');assert.equal(raw.modelRequests,0);
+const codex=raw.rpc.codex.responses.find(r=>r.id===2).result.data[0].skills;const pi=raw.rpc.pi.responses.find(r=>r.id==='discovery').data.commands.filter(c=>c.source==='skill');
+const counts={};const bindings=[];
+for(const c of TARGET_SKILL_COLLECTIONS){
+ const expected=[...c.publicCommands].sort(),cs=codex.filter(s=>s.pluginId===c.id+'@quickstark'),ps=pi.filter(s=>s.sourceInfo.baseDir===root+'/'+c.piPackageRoot);
+ assert.deepEqual(cs.map(s=>s.name.slice(c.id.length+1)).sort(),expected);assert.deepEqual(ps.map(s=>s.name.slice('skill:'.length)).sort(),expected);
+ counts[c.id]={codex:cs.length,pi:ps.length};
+ for(const s of cs){assert.equal(s.enabled,true);assert(s.path.startsWith(raw.home+'/.codex/plugins/cache/quickstark/'+c.id+'/4.4.7/skills/'));const source=root+'/'+c.codexPackageRoot+'/skills/'+s.name.slice(c.id.length+1)+'/SKILL.md';assert.equal(hash(s.path),hash(source));bindings.push({host:'codex',name:s.name,discoveredPath:s.path,source,sha256:hash(source)});}
+ for(const s of ps){const source=root+'/'+c.piPackageRoot+'/skills/'+s.name.slice('skill:'.length)+'/SKILL.md';assert.equal(s.sourceInfo.path,source);bindings.push({host:'pi',name:s.name,discoveredPath:s.sourceInfo.path,source,sha256:hash(source)});}
+}
+const expectedCodex=TARGET_SKILL_COLLECTIONS.flatMap(c=>c.publicCommands.map(n=>c.id+':'+n)).sort();assert.deepEqual(codex.filter(s=>s.pluginId?.endsWith('@quickstark')).map(s=>s.name).sort(),expectedCodex);assert.equal(pi.length,TARGET_SKILL_COLLECTIONS.reduce((n,c)=>n+c.publicCommands.length,0));
+function walk(dir,prefix=''){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>{const name=prefix+e.name;assert(!e.isSymbolicLink());return e.isDirectory()?walk(path.join(dir,e.name),name+'/'):[{path:name,sha256:hash(path.join(dir,e.name)),executableBits:fs.statSync(path.join(dir,e.name)).mode&0o111}];}).sort((a,b)=>a.path.localeCompare(b.path));}
+const packageBindings=[];for(const c of TARGET_SKILL_COLLECTIONS){const source=root+'/'+c.codexPackageRoot,installed=raw.home+'/.codex/plugins/cache/quickstark/'+c.id+'/4.4.7';const a=await captureMigrationPath(source),b=await captureMigrationPath(installed),sourceFiles=walk(source),installedFiles=walk(installed);assert.deepEqual(sourceFiles,installedFiles,c.id);packageBindings.push({package:c.id,source,installed,sourceContentSha256:a.contentSha256,installedContentSha256:b.contentSha256,files:sourceFiles,fullTreeModesMatch:a.contentSha256===b.contentSha256});}
+const before=read(out+'/controls-before.json'),after=read(out+'/controls-after-isolated.json');assert.deepEqual(before,after);
+fs.writeFileSync(out+'/native-qualification.json',JSON.stringify({classification:'Actual isolated native package source discovery; no installed-user-host acceptance',catalogDerived:true,packageBindings,counts,codexQuickstarkCount:expectedCodex.length,piSkillCount:pi.length,privateNamesAbsentByExactCatalogSet:true,sourceBindings:bindings,realUserControlRecords:before.length,realUserControlsUnchanged:true,modelRequests:0,isolatedHome:raw.home,limits:['The temporary host defaults intentionally differ from real-user configuration; no real-user activation or model routing claimed.','Codex isolated package cache contains exact current source skill bodies; Pi get_commands resolves exact current generated paths.','No live host settings or registrations were changed; LEX-14..16 remain unperformed.']},null,2)+'\n');
+console.log('NATIVE_SOURCE_QUALIFIED');

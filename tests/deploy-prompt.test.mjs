@@ -74,7 +74,7 @@ test('recorded model responses are bound to the current skill and rendered execu
   // The parent agent reviewed the actual responses; see docs/validation/progress-deploy.md.
 });
 
-test('recorded generation keeps reporting rules inside its sole executable prompt and blocks missing inputs', async () => {
+test('recorded generation keeps reporting rules inside its sole goal prompt and permits only verified recovery when blocked', async () => {
   const record = JSON.parse(await readFile(new URL('./fixtures/progress-deploy-agent-trials/generation-percentage.json', import.meta.url), 'utf8'));
   for (const scenario of record.scenarios) {
     const prompts = [...scenario.response.matchAll(/```text\n([\s\S]*?)\n```/g)].map(match => match[1]);
@@ -86,9 +86,25 @@ test('recorded generation keeps reporting rules inside its sole executable promp
       assert.match(scenario.response, /Prompt generated; execution has not started\./);
     } else {
       assert.match(scenario.response, /Status: Input required/, scenario.id);
-      assert.equal(prompts.length, 0, scenario.id);
+      // Missing readiness forbids a deployment-ready prompt. The canonical
+      // contract still permits one installed, eligible recovery route: G3
+      // explicitly supplies clarification availability; G4/G6 supply no route.
+      assert.ok(prompts.length <= 1, scenario.id);
+      if (prompts.length) {
+        assert.equal(scenario.id, 'G3', 'Only G3 supplies an applicable installed recovery destination');
+        assert.match(prompts[0], /^\$qs-skills:qs-plan-clarify(?:\s|$)/);
+      }
     }
   }
+});
+
+test('missing goal tools never produce a handoff prompt for an unverified installed destination', async () => {
+  const record = JSON.parse(await readFile(new URL('./fixtures/progress-deploy-agent-trials/generation-percentage.json', import.meta.url), 'utf8'));
+  const response = record.scenarios.find(s => s.id === 'G6').response;
+  assert.match(response, /Status: Input required/);
+  // G6 inherits G1's installed list, which omits handoff. Failure-route
+  // eligibility must not become installation evidence in a copy-ready prompt.
+  assert.doesNotMatch(response, /```text\s*\n\$qs-skills:qs-flow-handoff\b/);
 });
 
 test('recorded percentage trials retain weighted progress through waiting, skips, reopening and resumption', async () => {

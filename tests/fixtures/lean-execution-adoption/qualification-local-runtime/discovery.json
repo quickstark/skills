@@ -1,0 +1,32 @@
+{
+  "commit": "41716d7b52278faecd446539a8aa1814aeb0dd47",
+  "profileSource": "tests/fixtures/adoption-video-native-results/capture/before/tools/runtime-profile.json",
+  "resources": [
+    {
+      "label": "cli",
+      "path": "/tmp/qs-hf-probe/node_modules/hyperframes/bin/hyperframes.mjs",
+      "exists": false,
+      "expectedSHA256": "d566bbc6149f07f76d2cef62ab687401f5245557581c4043403278ce20d6deb0"
+    },
+    {
+      "label": "browser",
+      "path": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+      "exists": true,
+      "expectedSHA256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f",
+      "actualSHA256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f",
+      "executable": true
+    },
+    {
+      "label": "ffmpeg",
+      "path": "/tmp/qs-hf-probe/ffmpeg/usr/bin/ffmpeg",
+      "exists": false,
+      "expectedSHA256": "ed16af623947494a72e284b6eb8ff225f2da22b38b5d5069c2fd4b4ba3384e41"
+    },
+    {
+      "label": "ffprobe",
+      "path": "/tmp/qs-hf-probe/ffmpeg/usr/bin/ffprobe",
+      "exists": false,
+      "expectedSHA256": "272f6ebc634a63d9c8b4ca68e964119d980f25154e5aa2c35e5487da48e9a58f"
+    }
+  ]
+}

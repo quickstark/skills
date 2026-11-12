@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — Supplied observations support partial Build progress, but goal inspection shows unrelated active goal “Migrate billing database.” Input needed: how to resolve that goal before establishing “Deliver CSV invoice export to staging.”\n\nWeights: Build 60, Git 10, Release 30. Overall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%.\n\n- [ ] Build — blocked; observed implementation and review milestones support 50% at the current revision. Required completion checks remain unverified.\n- [ ] Git — pending, 0%.\n- [ ] Release — pending, 0%.\n\nNo product mutations have occurred. The unrelated goal must not be replaced. No deployment artifact, version, or health evidence is available.\n\nHow should “Migrate billing database” be resolved before this workflow proceeds? After resolution, goal support and the matching goal state must be verified before execution.",
+  "requestedActions": [
+    "Request user direction to resolve the unrelated active goal; hold all workflow execution and mutations pending resolution."
+  ]
+}

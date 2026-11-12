@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P1",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: Build is approximately 50% complete; the overall staging-delivery goal is approximately 30% complete, based on supplied observations.\n\nStage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — Supplied implementation and review milestones support partial completion. Execution awaits verified goal-tool availability and matching goal state. Input needed: authoritative goal-state observations before execution.\n\n- [ ] Build — blocked for continuation; weight 60; estimate 50%.\n- [ ] Git — pending Build verification; weight 10; estimate 0%.\n- [ ] Release — pending Git verification; weight 30; estimate 0%.\n\nCalculation: `(60 × 50% + 10 × 0% + 30 × 0%) / (60 + 10 + 30) = 30%`.\n\nBuild’s own completion remains 50%. No stage is verified complete. These coarse estimates retain the supplied weights and current-revision evidence; the exact revision identifier and required check results were not supplied.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Progress calculation from supplied evidence only; no operations performed or check results inferred.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — verify the goal prerequisite, then finish Build and required validation before the scheduled Git and Release stages. Deployed version and health evidence remain unobserved.\n\nNext work prompt: None — subsequent stages are already scheduled and await verified prerequisites.",
+    "requestedActions": []
+  },
+  "promptSHA256": "5f63ba881da08faa21377ae3a2385b0d65ea1001ed6fe00b8e2c0aa14cb753cc",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27499,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1141,
+      "reasoning_output_tokens": 774,
+      "total_tokens": 28640
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

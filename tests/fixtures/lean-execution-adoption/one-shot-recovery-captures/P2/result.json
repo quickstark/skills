@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P2",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Process 81 is authoritatively live, with no new output after 70 seconds. This establishes continued execution, not additional progress. Input needed: none.\n\n- [ ] Build — active, 50%; weight 60\n- [ ] Git — pending, 0%; weight 10\n- [ ] Release — pending, 0%; weight 30\n\nOverall: (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. The prior milestones remain valid at the same revision; estimates and weights stay unchanged.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Previously observed implementation and review milestones support Build 50%. No new completion or validation evidence is supplied.\n- Next — Verify authoritative goal state, then continue bounded monitoring of process 81. Git and Release remain pending Build verification.\n\nNext work prompt: None — subsequent roots are already scheduled by the authorized workflow.",
+    "requestedActions": [
+      "Verify supported goal-tool availability and inspect authoritative state with get_goal. Confirm the matching objective before further stage execution; create_goal only if no active goal exists. Do not replace an unrelated active goal. If goal support is unavailable or an unrelated goal is active, stop dependent work and report input-required.",
+      "After the goal gate passes, poll process 81 for new output or completion using a bounded wait that allows another update within sixty seconds. Preserve Build 50% and Overall 30% unless new evidence justifies a change; do not restart the live process or advance dependent stages."
+    ]
+  },
+  "promptSHA256": "d8e5fdfd17458931e42249b880127df59e662452794685e83090c560570c1454",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27509,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 852,
+      "reasoning_output_tokens": 477,
+      "total_tokens": 28361
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

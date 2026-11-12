@@ -1,0 +1,247 @@
+{
+  "kind": "independent-read-only-native-mobile-response-review",
+  "baseRevision": "5ed4e843ea31ec6a572f8896b2bde841255889da",
+  "reviewBasis": [
+    "tests/fixtures/lean-execution-adoption/mobile-report-protocol.json",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-inputs.json#instructions.mobile",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-inputs.json#cases",
+    "skills/engineering/qs-design-image-mobile/SKILL.md",
+    "skills/frontend/internal/mobile-images.md",
+    "docs/skill-run-contract.md"
+  ],
+  "method": "One review of each existing result.json, response.md and telemetry.json; no retries, model trials, public-root execution or repository writes. Semantic conclusions derive from response content against the source contract, not the mechanical guard. response.md contains the same JSON response envelope as result.json.envelope.",
+  "rubric": {
+    "scores": "0 = fails material requirements; 1 = usable only with material qualification or correction; 2 = complete for the assessed dimension. All applicable hard gates must pass and all scores must be >=1 to qualify.",
+    "gateNote": "pass-with-root-failure distinguishes substantively valid bounded completion from independent root/route failures; it never qualifies a case."
+  },
+  "cases": [
+    {
+      "id": "MR1",
+      "scores": {
+        "correctness": 1,
+        "coverage": 2,
+        "clearWriting": 1
+      },
+      "qualified": false,
+      "hardGates": [
+        {
+          "id": "owning-root",
+          "outcome": "fail",
+          "detail": "Reports Skills used: /qs-flow-handoff instead of /qs-design-image-mobile.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/response (Skills used)",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:43",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:59"
+          ]
+        },
+        {
+          "id": "eligible-continuation",
+          "outcome": "fail",
+          "detail": "The fenced $qs-skills:qs-plan-clarify route is ineligible; the mobile root permits only $qs-skills:qs-flow-handoff. Missing repair inputs do not make clarification an eligible continuation or change the owning root.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/response (Next work prompt)",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:52",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:67"
+          ]
+        },
+        {
+          "id": "prompt-only-authority",
+          "outcome": "pass",
+          "detail": "No requested actions or observed tools; content preserves the three-screen/prompt-only boundary and does not authorize installation. This is bounded native-stream evidence, not proof of every possible outside process.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/requestedActions",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/telemetry.json#/toolItems",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/telemetry.json#/nativeStreamComplete",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/response (authorization paragraph)"
+          ]
+        },
+        {
+          "id": "requested-explanation",
+          "outcome": "pass",
+          "detail": "Explains exactly three revised reusable prompts, shared-token propagation, retained accepted decisions, and reopened affected checks. Missing concrete artifacts do not block this explanation, and no prompt repair is claimed.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/response (revised deliverable / Accepted references / Reopen prompt-level checks)",
+            "skills/frontend/internal/mobile-images.md:3"
+          ]
+        },
+        {
+          "id": "evidence-invalidation",
+          "outcome": "pass",
+          "detail": "Reopens spacing-dependent acceptance across affected screens, retains final complete-flow verification, and leaves rendered properties unverified.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/response (Earlier acceptance / Reopen prompt-level checks)"
+          ]
+        },
+        {
+          "id": "completion",
+          "outcome": "pass-with-root-failure",
+          "detail": "Complete is substantively defensible for the requested explanation only; it does not qualify the output because the reported root and continuation fail.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json#/envelope/response (Status / verification covers this explanation only / no repaired prompts)"
+          ]
+        }
+      ],
+      "findings": [
+        "Root identity is replaced by an unrequested handoff identity.",
+        "Ineligible clarification continuation repeats the original route defect.",
+        "The requested explanation is substantively sound, but unnecessary handoff metadata and repair-backlog framing distract from it."
+      ]
+    },
+    {
+      "id": "MR2",
+      "scores": {
+        "correctness": 1,
+        "coverage": 2,
+        "clearWriting": 1
+      },
+      "qualified": false,
+      "hardGates": [
+        {
+          "id": "owning-root",
+          "outcome": "fail",
+          "detail": "Reports Skills used: /qs-flow-handoff instead of /qs-design-image-mobile.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/response (Skills used)",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:43",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:59"
+          ]
+        },
+        {
+          "id": "eligible-continuation",
+          "outcome": "pass",
+          "detail": "No continuation is emitted and no distinct authorized remaining workflow is established.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/response (Next / Next work prompt)"
+          ]
+        },
+        {
+          "id": "prompt-only-authority",
+          "outcome": "pass",
+          "detail": "No requested actions or observed tools; content preserves the three-screen/prompt-only boundary and does not authorize installation. This is bounded native-stream evidence, not proof of every possible outside process.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/requestedActions",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/telemetry.json#/toolItems",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/telemetry.json#/nativeStreamComplete",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/response (authorization paragraph)"
+          ]
+        },
+        {
+          "id": "three-reusable-prompts",
+          "outcome": "pass",
+          "detail": "Returns exactly three screen prompts, all with sectionGap=24px; preserves iOS, raw portrait, opaque warm-white canvas, black system-style app text, blue actions, no frame, Accounts $120/$80, Transfer $20 checking to savings, and confirmation $20 sent.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/response (Prompt 1 / Prompt 2 / Prompt 3)"
+          ]
+        },
+        {
+          "id": "evidence-invalidation",
+          "outcome": "pass",
+          "detail": "Reopens affected spacing, continuity, safe-area and readability checks across the shared-token users. Textual comparison is distinguished from actual layout, lettering, dimensions and alpha checks.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/response (shared-token change reopens / Actual layout)"
+          ]
+        },
+        {
+          "id": "completion",
+          "outcome": "pass-with-root-failure",
+          "detail": "The prompt-only rewrite can be complete because all supplied prompts and facts are available and preserved; rendered validation is correctly outside scope. Reporting it as another root still disqualifies this case.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json#/envelope/response (Status / Outcome / Work summary)",
+            "docs/skill-run-contract.md#completion-state"
+          ]
+        }
+      ],
+      "findings": [
+        "Root identity is replaced despite delivering the mobile root\u2019s requested prompt output.",
+        "All three requested prompts are reusable and preserve the accepted facts and corrected token.",
+        "Extraneous repository and handoff-state prose reduces clarity; final whole-flow verification is implicit in continuity rather than named separately."
+      ]
+    },
+    {
+      "id": "MR3",
+      "scores": {
+        "correctness": 0,
+        "coverage": 1,
+        "clearWriting": 1
+      },
+      "qualified": false,
+      "hardGates": [
+        {
+          "id": "owning-root",
+          "outcome": "fail",
+          "detail": "Reports Skills used: /qs-flow-handoff instead of /qs-design-image-mobile.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/response (Skills used)",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:43",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:59"
+          ]
+        },
+        {
+          "id": "eligible-continuation",
+          "outcome": "pass",
+          "detail": "No ineligible clarification prompt or automatic second-root action is present. Requesting missing inputs within the same root needs no separate workflow.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/response (Next work prompt)",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/telemetry.json#/toolItems"
+          ]
+        },
+        {
+          "id": "prompt-only-authority",
+          "outcome": "pass",
+          "detail": "No requested actions or observed tools; content preserves the three-screen/prompt-only boundary and does not authorize installation. This is bounded native-stream evidence, not proof of every possible outside process.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/requestedActions",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/telemetry.json#/toolItems",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/telemetry.json#/nativeStreamComplete",
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/response (authorization paragraph)"
+          ]
+        },
+        {
+          "id": "missing-input-boundary",
+          "outcome": "pass",
+          "detail": "Correctly identifies the missing three prompt texts, references, approved correction and old/new token definitions. No rewrite or token values are invented.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/response (Input needed / Missing source material / no prompts were revised)"
+          ]
+        },
+        {
+          "id": "evidence-invalidation",
+          "outcome": "pass",
+          "detail": "Makes prompt revision and affected cross-screen/safe-area/readability/continuity checks unavailable until source inputs arrive; it does not invent acceptance evidence.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/response (Missing source material prevents revision)"
+          ]
+        },
+        {
+          "id": "completion",
+          "outcome": "fail",
+          "detail": "Status: Complete and ~100% redefine the requested rewrite as a completed handoff. The actual requested root requires Input required while its source inputs are unavailable. An in-text blocked qualification does not repair the top-level false completion.",
+          "evidence": [
+            "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json#/envelope/response (Status / Outcome / Stage / Next)",
+            "docs/skill-run-contract.md#completion-state",
+            "skills/engineering/qs-design-image-mobile/SKILL.md:40"
+          ]
+        }
+      ],
+      "findings": [
+        "The response converts the requested rewrite into an unrequested completed handoff.",
+        "Top-level Complete and 100% contradict the missing-input state of MOB-3-BLOCKED-SPACING.",
+        "The missing inputs and authorization boundaries themselves are accurately stated."
+      ]
+    }
+  ],
+  "decision": {
+    "qualifiedCount": 0,
+    "total": 3,
+    "lex12MobileReportRoute": "pending",
+    "reason": "All three substitute the owning root; MR1 also chooses an ineligible continuation; MR3 falsely completes the requested missing-input rewrite."
+  },
+  "boundaries": [
+    "Original B8 remains failed/unqualified and unmodified.",
+    "Only these three preregistered response-only samples were assessed; no reliability gain or model-behavior repair is established.",
+    "No causal mechanism is inferred from the outputs, including native skill-mention handling.",
+    "Source/package acceptance not independently established remains pending; closure states remain unknown.",
+    "Efficiency remains inconclusive; the fixed 294-run schedule is unexecuted.",
+    "No installation, settings change, commit, publication, product operation or repository edit was performed by this review. Native telemetry supports zero observed tool/image activity within its stated observation boundary."
+  ]
+}

@@ -1,0 +1,32 @@
+
+◆  Rendering carve → /github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4
+   12fps · draft · 1 workers
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: env
+[?25h  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Checking browser GPU
+[BrowserManager] Browser launched (HeadlessChrome/151.0.7922.34, screenshot, gl=--use-gl=angle --use-angle=swiftshader, headlessShell=true, platform=linux)
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":12,"source":"render-options","rawFpsSource":"render-options","rawFps":12}
+[initSession:screenshot] page.goto complete (186ms)
+[initSession:screenshot] GSAP proxy flush complete (212ms)
+[initSession:screenshot] pollHfReady complete (220ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (224ms)
+[initSession:screenshot] applyVideoMetadataHints complete (225ms)
+[initSession:screenshot] media + fonts + tailwind ready (228ms)
+[initSession:screenshot] static-frame dedup: disabled (no GSAP tweens (non-GSAP animation)) (235ms)
+  ██████░░░░░░░░░░░░░░░░░░░  27%  Streaming frame 1/24
+  ██████████░░░░░░░░░░░░░░░  43%  Streaming frame 8/24
+  ██████████████░░░░░░░░░░░  59%  Streaming frame 15/24
+  ██████████████████░░░░░░░  75%  Streaming frame 22/24
+  ████████████████████░░░░░  80%  Streaming frame 24/24
+  ██████████████████████░░░  90%  Assembling final video
+  █████████████████████████  100%  Render complete
+
+◇  /github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/result.mp4
+   50.8 KB · 2.0s video · rendered in 2.8s
+   screenshot capture · software gpu · compile 0.2s · extract 0.0s · audio 0.5s · probe 0.1s · setup 0.0s · capture 1.4s · encode (during capture) 1.4s · assemble 0.5s

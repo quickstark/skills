@@ -1,0 +1,30 @@
+{
+  "scenario": "L4",
+  "repetition": 3,
+  "variant": "b",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: Return C alone for diagnosis and bounded repair. Preserve A and B’s passing evidence at `fixture-r1`; C’s isolated failure does not invalidate it. No operations were performed.\nSpecs: Not located\n\n- [ ] blocked — C repair and required validation (weight 100%); diagnostic observations are missing.\n\nStage: C repair and validation | Stage estimate: ~0% | Overall estimate: ~0% | blocked — no repair or validation progress is evidenced. Input needed: C’s focused-check command, expected behavior, redacted failure excerpt, and log pointer. Estimates cover the remaining repair boundary; A and B’s accepted evidence remains preserved.\n\nRepair return:\n\n- **UNIT:** C at `/fixture/lean`, revision `fixture-r1`.\n- **REASON:** C alone fails its focused check. The causal mechanism is unknown.\n- **EVIDENCE:** Supplied observation: “C alone fails its focused check; it does not affect A or B.” Diagnostic excerpt and log pointer: not supplied.\n- **SCOPE:** Diagnose and repair C’s failing boundary. Preserve unrelated work and accepted A/B results. Select the test strategy from the diagnostic evidence before editing; do not manufacture a failing test.\n\nProposed next checks:\n\n1. Obtain C’s missing diagnostic observations and establish a reliable reproducer. After a supported repair, rerun that reproducer, C’s focused check, and applicable regression coverage.\n2. Run relevant wider checks, inspect the resulting diff, and perform required parent and integration validation. A/B checks need not be repeated solely because C failed.\n3. Separately, after the later shared-dependency change, reopen A’s verification and any C verification obtained before that change. Retain earlier results as historical evidence, but do not use them to verify the changed artifact. Rerun affected A/C checks and dependency-sensitive wider checks. B’s evidence remains valid while its artifact, relevant inputs, and environment remain unchanged. Integration validation is still required against the final combined revision; any earlier integration result affected by the dependency change must be reopened. The later revision is unspecified.\n\nWork summary:\n\n- Finished — Prepared the bounded repair return and identified evidence invalidation from the supplied observations. A/B passed at `fixture-r1`; C’s focused check failed. No repair, new checks, or artifacts are claimed.\n- Next — C — blocked — obtain diagnostic evidence, then repair and verify within this root; A/C — conditional revalidation — repeat affected checks after the dependency change; integration — pending — validate the final combined revision. Item links were not supplied.\n\nNext work prompt: None — no separate follow-on needed; repair and validation remain within this root.",
+    "requestedActions": [
+      "Obtain C’s focused-check command, expected behavior, redacted diagnostic excerpt, and log pointer.",
+      "Return C alone for evidence-based diagnosis and bounded repair; preserve accepted A/B evidence and unrelated work.",
+      "After repairing C, rerun its reproducer, focused and relevant wider checks, inspect the diff, and complete required parent and integration validation.",
+      "In the separate later-change scenario, reopen A/C and affected integration evidence, preserve still-valid B evidence, and validate against the final revision."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "d93f2e51b0c6fdc55ce0e1e222b888ec5063197c8683f54855a7f27e6c88000e",
+  "sourceSHA256": "55aad3b5de8f5e38fc0885397fa12fed20f5498cb8a835a56c44a836bf4d2712",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29744,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1533,
+      "reasoning_output_tokens": 830,
+      "total_tokens": 31277
+    }
+  ]
+}

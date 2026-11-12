@@ -1,0 +1,48 @@
+{
+  "kind": "LEX-v1-frozen-comparison-plan",
+  "specification": "LEX v1 in authorizing conversation; A1-A10, LEX-01..LEX-16",
+  "baselineRevision": "80a61ff7f192ddd027e8248bc8106a64c5b3b450",
+  "variants": {
+    "a": "frozen control",
+    "b": "candidate frozen before first model trial"
+  },
+  "repetitions": 3,
+  "scenarioCount": 49,
+  "pilotScenarios": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "L6"
+  ],
+  "runLimit": 294,
+  "tokenBudget": null,
+  "tokenBudgetReason": "No token budget supplied; no invented or claimed enforced token cap.",
+  "operationalBounds": {
+    "maximumRoundsPerResponse": 1,
+    "timeoutMsPerResponse": 120000,
+    "maximumImageCalls": 0,
+    "toolActions": "Response-only; reject real tool use",
+    "retries": "No semantic retries. One infrastructure-only retry only when no model output; retain both attempts."
+  },
+  "order": "Interleave variants per scenario/repetition, alternating first variant; fresh contexts and isolated directories; omit preferred identity and rubric from responder prompts.",
+  "baselineVariability": "Before candidate scores: if any dimension spread exceeds 1 or input-token span exceeds 10% of median, freeze a new full five-repetition schedule before superiority evaluation.",
+  "controls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "sourceIdentity": "Baseline Git revision pins full tracked closure; verify source snapshot hashes.",
+  "captureAdapter": "scripts/frontend-native-capture.mjs",
+  "files": {
+    "baseline.json": "f781f88291ef0779425aacc34a28d07e88da6f5e1965838b752bead05a4ac963",
+    "control-sources.json": "fd04ec247febe2445ffee61f040f94ca24ffbae3f49effb21c3ac6e566b6eed5",
+    "scenarios.json": "21858312aede9abcc424a6c26fc3a6e22d5a5f294e8da1e5aaae55e6442868ab",
+    "rubric.json": "d57e1d88c1b6c0e4ec1dd50e4dc782d5622a61e06e780a69e81b7d181ee12c6e",
+    "schedule.json": "4b265562a95197e84808fed78df3fe775cc4874380c319726d70626e8acd0c3f"
+  },
+  "history": "Preserve historical inputs/outputs; use this isolated fixture root; never scan private history."
+}

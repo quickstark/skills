@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "L5",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] Blocked — diagnose, repair, and validate the original failure (weight: 100%).\n\nStage: Diagnosis | Stage estimate: ~0% | Overall estimate: ~0% | blocked — causal evidence was not supplied; repair work cannot advance. Input needed: the shared diagnosis and redacted original-reproducer results from each attempted repair.\n\nStatus: Input required\nSkills used: /qs-code-debug\nOutcome: The expected TDD RED is evidence that the new test detects missing behavior. It is not an unsuccessful repair or an exhausted retry.\n\nThe three repairs count as evidence of no progress on the shared diagnosis when the original failure persists and their observed results contradict that diagnosis’s predictions. Attempt count alone is not the criterion. The premise, contradictory observations, and failing test identity remain missing here.\n\nThe next discriminating action is to pause symptom edits, state the shared premise and each contradiction, and define a check at the relevant input/state boundary whose outcomes distinguish that premise from a competing cause. The supplied observations cannot support a more specific check. After changing the hypothesis, reproduce the original failure; a plausible explanation does not verify a repair.\n\nSpecs: Not located\nWork summary:\n- Finished — distinguished expected TDD RED from contradictory repair evidence and described the next diagnostic action. No operations, configuration changes, or passed checks are established.\n- Next — None verified in the supplied context; no linked specifications, task history, or external tracker was supplied. Diagnosis remains blocked on the evidence requested above.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": [
+      "Pause further symptom edits based on the contradicted diagnosis.",
+      "Request one evidence bundle containing the shared diagnosis, failing test identity, and redacted original-reproducer results from each of the three attempted repairs."
+    ]
+  },
+  "promptSHA256": "d3810c4dc44e7838f3d6e0d59ef7681e0427bc8ac1867913b45292a071e1172f",
+  "instructionSHA256": "4a72e5cefaef6d13d235fb9e3c8ad4c3c0aa1c6b9d9f1f2263d8c8d2af59b54d",
+  "usage": [
+    {
+      "input_tokens": 27009,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1276,
+      "reasoning_output_tokens": 887,
+      "total_tokens": 28285
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

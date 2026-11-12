@@ -1,0 +1,28 @@
+{
+  "scenario": "L5",
+  "repetition": 3,
+  "variant": "b",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] verified — Classify the supplied failure evidence (weight 25%).\n- [ ] blocked — Specify a discriminating check (weight 75%); the diagnosis and diagnostic observations are missing.\n\nStage: Discriminating check | Stage estimate: ~0% | Overall estimate: ~25% | blocked — Classification is supported by the supplied account; the causal mechanism is unverified. Input needed: one redacted bundle containing the original reproducer, shared diagnosis, and each repair’s predicted versus observed result.\n\nStatus: Input required\nSkills used: /qs-code-debug\nOutcome: The expected pre-implementation TDD RED is evidence that the regression test detects missing behavior. It is not an unsuccessful repair or an exhausted retry.\nSpecs: Not located\n\nThe three repairs provide no verified repair progress where the original failure remains and their predicted effects are contradicted. They do provide diagnostic evidence against the shared explanation. Three is not a universal retry limit; repeated contradictory evidence is the reason to pause symptom edits.\n\nThe shared premise is the diagnosis assumed by all three repairs. Its actual claim, the failing test identities, and the contradictory observations were not supplied, so they cannot be stated more precisely.\n\nThe next discriminating action would be to compare that diagnosis with a competing cause, identify a boundary observation where their predictions differ, and collect inputs, state, and outputs using the smallest original reproducer under controlled conditions. After changing the hypothesis, reproduce the original failure before proposing another repair. A plausible replacement explanation alone proves nothing was fixed.\n\nWork summary:\n- Finished — Classified the reported TDD RED and contradictory repair failures using the frozen instructions. Output is this assessment; no operations or checks were performed.\n- Next — Diagnosis reassessment remains blocked within this root pending the redacted evidence bundle. No linked ticket, specification, or separate actionable workflow was verified from the supplied context.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": [
+      "Pause further symptom edits based on the repeatedly contradicted diagnosis.",
+      "Request one redacted evidence bundle containing the original reproducer, shared diagnosis, and the predicted versus observed result of each attempted repair."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "1fe8f0cba5398a77d3ab67b9f26b2975071909735522a56a73eca4526de49828",
+  "sourceSHA256": "4a72e5cefaef6d13d235fb9e3c8ad4c3c0aa1c6b9d9f1f2263d8c8d2af59b54d",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 28809,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1243,
+      "reasoning_output_tokens": 777,
+      "total_tokens": 30052
+    }
+  ]
+}

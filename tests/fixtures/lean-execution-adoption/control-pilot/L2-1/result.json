@@ -1,0 +1,25 @@
+{
+  "scenario": "L2",
+  "repetition": 1,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] verified — Analyze dependencies, frontier, and cycle behavior from supplied facts (weight: 100%).\n\nStage: Dependency analysis | Stage estimate: ~100% | Overall estimate: ~100% | complete — Logical analysis finished; no operations performed. Input needed: none for this explanation.\n\nStatus: Complete\nSkills used: /qs-plan-spec\nOutcome: B depends on A. C has no dependency on either ticket.\nSpecs: Not located\n\n| Ticket | Blocked by | Dependency reason |\n|---|---|---|\n| A | none | Adds the parser export that B requires; no prerequisite is stated. |\n| B | A | Its caller migration consumes A’s new export. |\n| C | none | Changes an unrelated help string; no ticket consumes its output. |\n\nIf all three tickets are open and unfinished, the initial runnable frontier is **{A, C}**. Once A is verified done, B enters the frontier; C remains there if still open. No ticket states were supplied, so the actual current frontier cannot be confirmed.\n\nFor the alternative input **A blocked by B; B blocked by A**, the graph contains a cycle. Neither A nor B can enter the frontier while both remain unfinished. If independent C remains included and open, the mathematical frontier is **{C}**; for A and B alone, it is empty.\n\nUnder the supplied `/qs-code-build mode=graph` rules, that cyclic input requires **Input required** and routing to `/qs-plan-spec` to correct the graph before execution. The builder must not silently remove an edge or proceed with C. A corrected dependency or decomposition needs supporting evidence; none was supplied.\n\nWork summary:\n\n- Finished — Produced dependency reasons, conditional runnable frontiers, and the required cycle-handling outcome. Validation used the supplied producer–consumer relationship and explicit cycle; no repository checks ran or tracker items were created.\n- Next — None verified from the supplied task history and tracker context. Ticket states and a specification link remain unavailable; the cycle is hypothetical.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "d96f9168bae3549299ba0b3e8c0c23668f9e6220c614c45dfb2202a8b228be36",
+  "sourceSHA256": "db60646ccb24dc5399f3cf9a02b7acb7bf58da97b078bbd60dd57d84037d2b63",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29457,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 977,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 30434
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P6",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Complete\nSkills used: /qs-code-build\nOutcome: Build is verified complete from supplied current artifact-specific tests and review. Build execution is skipped because its requirements are already satisfied; no rerun is proposed. The overall workflow remains incomplete.\n\nStage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified — Current artifact-specific tests and diff review satisfy Build. Input needed: none for this progress report.\n\n- [x] Build — verified, 100%; weight 60. Execution skipped as already satisfied.\n- [ ] Git — pending, 0%; weight 10.\n- [ ] Release — pending, 0%; weight 30.\n\nOverall = (60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%. Build remains in scope and retains its weight. The newer completion evidence supersedes the earlier Build 50% observation; it is credited once.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Build requirements, including CSV behavior, existing screen checks, and diff review, are verified by the supplied evidence. No operations were performed in this response.\n- Next — [Invoice export publication](/fixture/ledger-app/docs/specs/export.md) — pending — establish authoritative goal state, then recheck the exact tested revision and Git state before the authorized push. Staging deployment and health/version verification remain pending; no deployed version or health result was supplied.\n\nGoal-tool availability and goal state remain unobserved. Before further execution, verify support and inspect with `get_goal`; create a matching goal only if appropriate, without replacing an unrelated active goal. Unavailable support requires an input-required stop.\n\nNext work prompt: None — Git and Release are already scheduled by the authorized coordinator.",
+    "requestedActions": [
+      {
+        "action": "Verify host goal-tool availability, then inspect authoritative goal state",
+        "tool": "get_goal",
+        "arguments": {}
+      }
+    ]
+  },
+  "promptSHA256": "c04074891b742fd063b0c20583d15320a95cefe35fbe4c66400ff763744f0b73",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27512,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1224,
+      "reasoning_output_tokens": 776,
+      "total_tokens": 28736
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

@@ -1,0 +1,8 @@
+bed    music-bed (--bed)
+voice  voice-intro (--voice)
+voice  voice-later (--voice)
+carve  strength 0.8, 2 voices
+bands  400Hz -7.4dB q2.06, 630Hz -7.4dB q2.06, 1000Hz -14.8dB q2.06, 1600Hz -7.4dB q2.06, 2500Hz -7.4dB q2.06, 4000Hz -7.4dB q2.06
+level  33-point envelope, floor -7.9 dB
+lanes  7 carve
+wrote /github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/carve/index.html (id="music-bed")

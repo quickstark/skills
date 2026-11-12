@@ -1,0 +1,19 @@
+Read-only final review of guard, phase binding and optional transport. No models, repository edits, public skills, installs or publication.
+
+Resolved: Original hidden-field/inline-route/quoted-route reproductions reject. Both v2 comment-in-continuation-token reproductions now reject while preserving exact first-token bytes. phaseReportBinding includes checker SHA256 and effective host/root/routes/maximumPrompts before capture reuse.
+
+One remaining P2: Opening fence info is still rewritten before qualification. scripts/lean-mobile-report.mjs removes comments before recognizing an opening fence. This input returns passed:true:
+
+Skills used: /qs-design-image-mobile
+Next work prompt:
+```text<!--comment-->
+$qs-skills:qs-flow-handoff preserve work
+```
+
+The actual info string is text<!--comment-->, not exactly text, so this violates the guard's own exact-info rule and shared continuation format. Recognize raw opening fence lines before comment stripping when not inside a comment, preserving the actual info; alternatively reject comment-bearing fence opener lines. Add a negative fixture. Previously resolved body-token regressions should remain rejected.
+
+Transport review: No defect found in bounded optional json-unicode-dollar path. All dollars in serialized instructions/context/input are escaped; direct decoding exactly recovers strings, including literal backslash-u0024, quotes, nested dollar-bearing keys, $20 and Unicode/emoji. Legacy branch remains byte-identical per the B8 test. Unknown phase encodings reject before capture creation. Manifest and runner hashes bind transport selection/implementation. Encoding changes stimulus packaging, so new probes remain separate evidence and must not overwrite or replace the frozen native results.
+
+Verification: node --test tests/lean-execution.test.mjs passes; independent Node assertions verified transport round-trip and no raw dollar. Additional read: /tmp/lex-mobile-native-mentions-diagnosis.md to understand the supported native-scanner boundary and explicit limits on successful injection inference. No independent claim of model repair, semantic/package acceptance or efficiency follows.
+
+Final closure recheck: The checker now rejects any literal HTML-comment opener anywhere and never strips source bytes. The opening-info, spliced-token, prefixed-comment, hidden-field, inline-route and quoted-route negative fixtures all pass their rejection assertions. The valid None and exact native-host continuations remain accepted. The final added opener regression is present. node --test tests/lean-execution.test.mjs passes again. No remaining actionable finding in the reviewed guard, checker/policy binding or unchanged optional transport logic. The conservative comment rejection is consistent with a necessary-only qualification gate, rather than a general Markdown semantic parser. New native probes must still verify the parsed submitted turn text and receive separate semantic review; no such model or acceptance verification was performed by this helper.

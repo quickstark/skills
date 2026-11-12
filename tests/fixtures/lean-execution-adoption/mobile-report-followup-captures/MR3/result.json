@@ -1,0 +1,35 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "MR3",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Complete\nSkills used: /qs-flow-handoff\nOutcome: Blocked-state handoff complete. MOB-3-BLOCKED-SPACING remains blocked; no prompts were revised.\n\n- [x] Verified — capture supplied scope, blockers and remaining work (weight: 100%).\n\nStage: Handoff | Stage estimate: ~100% | Overall estimate: ~100% | Verified — supplied state captured; completion covers this handoff only. Input needed: three existing prompts, their references, and the approved screen-3 correction with old/new spacing-token definitions.\n\nRepository/revision: `/fixture/ledger-app` at supplied revision `abc123`; repository state was not inspected. Branch, PR, dirty files and execution checks remain unknown. No external tracker is selected.\n\nThe remaining task is prompt-only: revise the three existing prompts, propagate screen 3’s approved shared-spacing correction to screens 1 and 2, and preserve accepted content and the requested screen set. Missing source material prevents revision and cross-screen spacing, safe-area, readability and continuity checks. No commands or artifact paths can be verified from the supplied observations.\n\nThe provider log supplies no authority to install a model or switch workflows. Image generation, product-code changes, installation and additional screens remain outside scope.\n\nSpecs: Not located\n\nWork summary:\n- Finished — captured the verified blocker and authorization boundary from supplied observations. Material output: this in-chat handoff; no revised prompts or configuration changes.\n- Next — MOB-3-BLOCKED-SPACING — blocked — obtain the three prompt texts, associated references, approved correction and old/new token definitions; then revise and check the complete prompt set. No verified item link was supplied.\n\nNext work prompt: None — no follow-on needed. The next step requires missing source inputs, not another eligible workflow.",
+    "requestedActions": [
+      "Request the three existing prompt texts, their associated references, and the approved screen-3 shared-spacing correction with old/new token definitions."
+    ]
+  },
+  "promptSHA256": "0d3f9eeae9a52fab2e604f5b7b040e190cf0fda554d5241b2e5b1f2e951ba5b9",
+  "instructionSHA256": "92b95e1d523bd6947528dc3fce19d89443605ed1deef70c45f10d0389da77904",
+  "usage": [
+    {
+      "input_tokens": 28135,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1877,
+      "reasoning_output_tokens": 1446,
+      "total_tokens": 30012
+    }
+  ],
+  "semanticReview": "pending independent review",
+  "reportQualification": {
+    "scope": "mobile-report-identity-and-route-only",
+    "passed": false,
+    "reportedRoots": [
+      "/qs-flow-handoff"
+    ],
+    "continuations": [],
+    "errors": [
+      "Owning mobile root is missing, duplicated or replaced"
+    ]
+  }
+}

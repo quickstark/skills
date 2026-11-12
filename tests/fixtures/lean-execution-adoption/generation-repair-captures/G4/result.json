@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — Assessed scope and readiness from supplied observations (weight 40).\n- [ ] Blocked — Generate the execution prompt (weight 60).\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: Required implementation workflow `$qs-skills:qs-code-build` is absent. An execution-ready deployment prompt cannot be generated. Execution has not started.\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nStage: Generate prompt | Stage estimate: ~0% | Overall estimate: ~40% | blocked — Requirements and staging authority are supplied; the required implementation skill is unavailable. Input needed: verified installed availability of `$qs-skills:qs-code-build`. Estimates cover prompt generation only.\n\nWork summary:\n- Finished — Assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. No operations performed or execution prompt produced.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — resolve implementation skill availability, then regenerate the prompt. Existing requirements need no clarification.\n\nReadiness check: Required implementation skill unavailable. Supplying recovery skill instructions does not verify their installed availability; neither eligible recovery destination is verified installed.\n\nNext work prompt: None — required implementation capability is missing, and no eligible recovery destination is verified available.",
+    "requestedActions": []
+  },
+  "promptSHA256": "3fd90f472ce1c05b6d029977c9d823ccb6eb71885daf695ed2e82e9823c91fb3",
+  "instructionSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+  "usage": [
+    {
+      "input_tokens": 26794,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 727,
+      "reasoning_output_tokens": 417,
+      "total_tokens": 27521
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

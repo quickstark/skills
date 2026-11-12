@@ -1,0 +1,24 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "E4-AM1",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Stage: Git | Stage estimate: ~0% | Overall estimate: ~60% | blocked — Push authorization was revoked after Build verification. Input needed: renewed push authorization for origin/feature/export.\n\n- [x] Build: verified at abc123; build, tests, and diff review passed. Root status: continuation-required; nextSkill=qs-git-merge.\n- [ ] Git: blocked by revoked push authorization.\n- [ ] Release: pending verified Git completion.\n\nStable weights: Build 60, Git 10, Release 30. Build advanced from the earlier observed 50% to verified 100%; overall progress is (60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%.\n\nThe matching goal is confirmed. No Git or deployment action is proposed until authorization is restored. Deployment version and health evidence remain missing; the goal is incomplete.",
+    "requestedActions": [
+      "Request renewed push authorization for origin/feature/export before advancing to qs-git-merge."
+    ]
+  },
+  "promptSHA256": "b82c8417dabd94028f18be8ab0bf24b1f715f35df7540bea961b35c8d9d2ab5b",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 21504,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 699,
+      "reasoning_output_tokens": 463,
+      "total_tokens": 22203
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

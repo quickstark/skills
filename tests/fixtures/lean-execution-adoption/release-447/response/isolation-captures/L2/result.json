@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "L2",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — Analyze the supplied dependency graph and cycle scenario (weight: 100%; evidence: supplied request).\n\nStage: Dependency analysis | Stage estimate: ~100% | Overall estimate: ~100% | complete — Both scenarios checked against the supplied dependency rules. Input needed: none.\n\nStatus: Complete\nSkills used: /qs-plan-spec\nOutcome: Assuming all three tickets are open and unfinished, the runnable frontier is **A and C**.\nSpecs: Not located\n\n| Ticket | Blocked by | Dependency reason |\n|---|---|---|\n| A | none | Adds the parser export; no prerequisite is supplied. |\n| B | A | Its caller migration consumes the export produced by A. |\n| C | none | Changes an unrelated help string; no prerequisite is supplied. |\n\nThe only required dependency is **A → B**, where the arrow points from prerequisite to consumer. No ticket consumes C, so C blocks neither A nor B. Once A finishes, B becomes runnable; C’s completion does not affect B’s eligibility. These letters are supplied labels, not invented tracker identifiers.\n\nIf A is blocked by B and B is blocked by A, they form a cycle. Neither can enter the frontier while both remain unfinished, and no dependency-respecting execution order exists for that pair. If C remains in the graph, **C alone is runnable**; after C finishes, the frontier is empty while A and B remain blocked. If the graph contains only A and B, its frontier is empty immediately. The added prerequisite of B for A also lacks support in the supplied requirements.\n\nWork summary:\n- Finished — Produced the dependency reasons and runnable frontiers; checked prerequisite consumption, C’s independence, and the cycle logically. No repository checks or mutations occurred.\n- Next — None verified after checking available sources: only the supplied request and observations are available; no specification links, task history, or tracker records were supplied.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "promptSHA256": "199e34940355ada7fe0091269cbefe52f3131cecc1788225390bc54aa3ff54f4",
+  "instructionSHA256": "76823b55d642bdd1453b7c2ddf16f9b6bb8bf19a6fd4c970f761af0dca3e030d",
+  "usage": [
+    {
+      "input_tokens": 23851,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1142,
+      "reasoning_output_tokens": 702,
+      "total_tokens": 24993
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

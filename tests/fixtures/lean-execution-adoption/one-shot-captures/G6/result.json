@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G6",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] blocked — Generate an execution-ready deployment prompt (weight 100); required goal tools are unavailable.\n\nStage: Deployment prompt readiness | Stage estimate: ~50% | Overall estimate: ~50% | blocked — Scope and authorization are supplied; the goal capability gate remains unsatisfied. Estimate is coarse. Input needed: a host exposing real goal tools.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: The latest observation overrides G1’s earlier goal-tool availability. An execution-ready deployment prompt cannot be issued. Execution has not started.\nSpecs: Not located\nWork summary:\n- Finished — Assessed the supplied scope, authority, deployment workflow, and capability observations. No operations or checks were executed; the recovery prompt below is the only output.\n- Next — [G1 CSV invoice export/staging](/fixture/ledger-app) — blocked — preserve the verified boundary for resumption on a host with goal tools. No scope clarification is needed.\n\nReadiness blocker: The host exposes no goal tools. Ordinary execution cannot substitute for the required goal workflow.\n\nNext work prompt:\n```text\n$qs-skills:qs-flow-handoff\nPreserve G1 CSV invoice export/staging for transfer to a host exposing real goal tools. Produce a conversation-only handoff; do not implement, publish, deploy, install capabilities, or claim a receiving workflow has run.\n\nSupplied state: repository /fixture/ledger-app, branch feature/export, revision abc123. No export implementation or specification exists. Requirements are settled: export the current filtered invoices, include a header row, correctly escape CSV values, and preserve the existing screen. Remaining inputs are complete except goal capability.\n\nDeployment evidence: docs/deploy.md documents npm run deploy:staging. Acceptance requires /health returning HTTP 200 and a version matching the built artifact. Credentials are reported present; never read or display secret values. The documented recovery command is npm run rollback:staging; rollback execution is not authorized.\n\nStanding authority: edit/build/test within the repository for this feature; commit on feature/export and push that branch to origin; deploy to staging through the documented workflow. No merge, production deployment, unrelated-file changes, or rollback execution is authorized.\n\nInstalled workflows reported by G1: $qs-skills:qs-plan-spec, $qs-skills:qs-plan-clarify, $qs-skills:qs-code-build, $qs-skills:qs-git-merge, and $qs-skills:qs-deploy-release. No token budget was supplied. Preserve model, reasoning, sandbox, and approval settings.\n\nLast proven boundary: prompt generation is blocked because the latest host observation says no goal tools are exposed, superseding G1's earlier availability statement. Current goal state cannot be inspected. Dirty files, PR state, and implementation/build/test/deployment results are unobserved. No execution-ready deployment prompt was issued and no operations occurred in this fixture.\n\nCarry this evidence and authority forward without reopening settled requirements. The receiving session must verify actual goal capability and state, installed workflows, and any changed repository evidence before generating the deployment goal prompt. Missing capability remains a stop before mutations or stage execution. Do not replace an unrelated active goal or silently substitute ordinary execution. Keep the handoff distinct from implementation and deployment completion.\n```",
+    "requestedActions": []
+  },
+  "promptSHA256": "1de92f77fc2ad14e8afe16e81a804dc0b285438f0d6ca48c23d8f9638b4b4ff9",
+  "instructionSHA256": "edd9dbd99722de0266c7d8bf978cf2c5936c3c2f7046aa496fea5cd20483b918",
+  "usage": [
+    {
+      "input_tokens": 26697,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1227,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 27924
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

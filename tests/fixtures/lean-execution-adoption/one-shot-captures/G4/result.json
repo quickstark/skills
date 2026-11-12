@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] blocked — Generate the execution-ready prompt (weight: 1); required implementation skill is absent.\n\nStage: Prompt generation | Stage estimate: ~50% | Overall estimate: ~50% | blocked — Supplied requirements and deployment inputs are complete; implementation capability is missing. Input needed: an execution host with $qs-skills:qs-code-build available. Estimate is coarse and covers prompt generation only.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: No execution-ready prompt generated. Required $qs-skills:qs-code-build is absent; the installed integration and release skills cannot replace implementation. Execution has not started.\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md), [Deployment workflow](/fixture/ledger-app/docs/deploy.md)\nWork summary:\n- Finished — Assessed readiness using supplied observations: /fixture/ledger-app, branch feature/export, revision abc123; complete requirements, no implementation, staging credentials reported present, goal tools available, no active goal or specified token budget. No commands or checks ran; no artifacts were created.\n- Next — [CSV invoice export](/fixture/ledger-app/docs/specs/export.md) — blocked — provide the required implementation skill, then regenerate the prompt. Preserve authorization for repository edits/build/tests, commit/push of feature/export to origin, and documented staging deployment. Merge, production, unrelated changes, and rollback execution remain unauthorized.\n\nReadiness check: Required implementation workflow unavailable. No installed eligible recovery route is established; requirements need no further clarification or specification.\n\nNext work prompt: None — required implementation capability is missing.",
+    "requestedActions": []
+  },
+  "promptSHA256": "83774763117da63d6593a4967066f2cf3704060ba6b419cf08eae32f2472c3ec",
+  "instructionSHA256": "edd9dbd99722de0266c7d8bf978cf2c5936c3c2f7046aa496fea5cd20483b918",
+  "usage": [
+    {
+      "input_tokens": 26693,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1038,
+      "reasoning_output_tokens": 677,
+      "total_tokens": 27731
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

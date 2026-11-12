@@ -1,0 +1,11 @@
+{
+  "kind": "source-integrity-correction-not-retrospective-enforcement",
+  "originalRunner": "capture-runner-v2.txt",
+  "originalRunnerSHA256": "d8b7d9b9813799b2035393c1e19c70874c6c4ca133108e26f93bed44f08d2811",
+  "unchangedPlanSHA256": "ff1dcf22c384912b8b1926b137682868f26707fdfdd1ff57cbc97d4ba68d6b9f",
+  "baselinePlanBinding": "ff1dcf22c384912b8b1926b137682868f26707fdfdd1ff57cbc97d4ba68d6b9f",
+  "finding": "Phase resume binding omitted plan hash despite consuming operational bounds",
+  "resolution": "New captures bind the same parsed plan bytes; changed-plan resume rejection has a negative test and independent source recheck.",
+  "existingCaptures": "Original runner/bindings retained unchanged. The actual plan remains the original frozen plan; this does not claim v2 enforced that check.",
+  "behaviorAcceptance": "Separate review required"
+}

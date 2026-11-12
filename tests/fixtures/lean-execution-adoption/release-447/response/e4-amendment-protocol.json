@@ -1,0 +1,32 @@
+{
+  "kind": "single-preregistered-discriminating-missing-antecedent-observation-not-source-repair-or-identical-retry",
+  "revision": "dcbc75b4a69ef2d7dfc39e582afd005dc2264b0c",
+  "version": "4.4.7",
+  "caseIds": [
+    "E4-AM1"
+  ],
+  "controls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "tokenBudget": null,
+  "runnerSHA256": "830df7c56db2a49dadd9de61b8acc8c30eaee9411f0c250f80957a3e330abc9f",
+  "nativeRunnerSHA256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+  "manifestSHA256": "43202cf80e6be6c9c821c608b8293e8b2ec0b592662ae70f5f18f74b2a02eb15",
+  "promptSHA256": "b82c8417dabd94028f18be8ab0bf24b1f715f35df7540bea961b35c8d9d2ab5b",
+  "createdAt": "2026-11-12T16:15:26.522Z",
+  "originalOutcome": "Original E4 remains failed/unqualified. A new satisfactory output qualifies only added-antecedent disambiguation, never erases original failure or establishes source repair/reliability.",
+  "oneRequestOnly": true,
+  "noSemanticOrInfrastructureRetry": true,
+  "parentApproval": "Parent reread and reverified diagnosis leaf1.5 G2; one exact E4-AM1 capture authorized after original40finish.",
+  "preregistrationSHA256": {
+    "diagnosis.json": "128db8d2450e85482b2f891bcdf476a60dfaea4eed93d1dff2a8c1cbb0bb2939",
+    "E4-AM1-payload.json": "966e109ffbbc781fc37053e0239361b1a6604224bdd95571d59cbeb0a227208b",
+    "E4-AM1-prompt.txt": "b82c8417dabd94028f18be8ab0bf24b1f715f35df7540bea961b35c8d9d2ab5b",
+    "E4-AM1-freeze.json": "ef92b4a1c0e5a90804084b533a6cde2df622138fd2639891fd9df4c364a9a162",
+    "bindings.json": "c12b8432a9db07ed02787eea11bfbff934c24b476ae19f4f1b716baab6950179"
+  }
+}

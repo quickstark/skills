@@ -1,0 +1,28 @@
+{
+  "scenario": "L5",
+  "repetition": 1,
+  "variant": "b",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] blocked — Establish the causal mechanism and discriminating check (weight: 100%).\n\nStage: Causal diagnosis | Stage estimate: ~0% | Overall estimate: ~0% | blocked — No reproducer, diagnosis, or diagnostic traces were supplied. Estimates concern defect resolution and have low confidence. Input needed: one redacted evidence bundle described below.\n\nStatus: Input required\nSkills used: /qs-code-debug\nOutcome: The expected TDD RED establishes the pre-implementation baseline; it is not an unsuccessful repair or an exhausted retry. The three separate repairs provide no verified repair progress because each fails and contradicts their shared diagnosis. Those contradictions are useful diagnostic evidence against the premise; three is not a universal retry limit.\nSpecs: Not located\n\nPause further symptom edits. State the shared causal premise and, for each attempted repair, its predicted result and the observation that contradicts it. Their actual contents are missing here and cannot be inferred.\n\nThe next proposed discriminating action is to run the original minimal reproducer with controlled inputs and environment, tracing inputs and state across the implicated boundary. First specify different observable predictions for the current diagnosis and a competing cause. Compare the trace against those predictions before choosing another repair. After changing the hypothesis, reproduce the original failure again; a plausible explanation alone does not verify a fix.\n\nPlease supply one redacted bundle containing the original test identity, expected and actual behavior, reproduction steps and environment, shared diagnosis, and each repair’s change, prediction, and contradictory result.\n\nWork summary:\n- Finished — Classified the supplied scenario: expected RED is separate from the three contradicted repairs. No operations, changes, or validation occurred; this response is the only output.\n- Next — No distinct follow-on item is verified in the supplied history. Diagnosis, repair, regression coverage, and validation remain within this debug root, pending the evidence bundle.\n\nFailed checks: Three unsuccessful repairs are reported; their test identities and decisive excerpts are unavailable. No passing checks were supplied.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": [
+      "Pause further symptom edits based on the contradicted diagnosis.",
+      "Request one redacted evidence bundle containing the original reproducer, test identity, environment, shared diagnosis, and predicted versus observed results for all three repairs."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "1fe8f0cba5398a77d3ab67b9f26b2975071909735522a56a73eca4526de49828",
+  "sourceSHA256": "4a72e5cefaef6d13d235fb9e3c8ad4c3c0aa1c6b9d9f1f2263d8c8d2af59b54d",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 28801,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1384,
+      "reasoning_output_tokens": 888,
+      "total_tokens": 30185
+    }
+  ]
+}

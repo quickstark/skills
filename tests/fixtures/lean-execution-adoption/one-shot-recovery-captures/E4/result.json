@@ -1,0 +1,24 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "E4",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Input required\nSkills used: /qs-code-build\nOutcome: The supplied build result at `abc123` remains Continuation required. Push authorization was subsequently revoked, so the coordinator cannot advance to Git or deployment. The matching goal is confirmed; its completion remains unverified.\n\nStage: Git | Stage estimate: ~0% | Overall estimate: ~60% | blocked — Push authorization revoked; Git has not started. Input needed: renewed authorization for `origin/feature/export` or a revised workflow.\n\n- [x] Build — verified at `abc123`; root status: Continuation required; 100%; weight 60.\n- [ ] Git — blocked; 0%; weight 10.\n- [ ] Release — blocked by Git publication; 0%; weight 30.\n\nOverall: `(60 × 100 + 10 × 0 + 30 × 0) / 100 = 60%`. The latest verified build result supersedes P1’s earlier 50% build estimate and 30% overall estimate. Weights remain unchanged; revoked authorization earns no progress credit.\n\nSpecs: [CSV invoice export](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — Supplied evidence identifies the verified CSV build and required validation at `abc123`. No operations were performed in this response.\n- Next — [CSV export delivery](/fixture/ledger-app/docs/specs/export.md) — blocked — obtain a decision on push authorization before Git; staging deployment remains dependent on verified publication.\n\nRemote publication, deployed artifact/version, and staging health evidence remain missing. No goal-state update is proposed: completion is unverified, and the blocking threshold has not been established.\n\nNext work prompt: None — scheduled continuation is blocked by revoked authorization.",
+    "requestedActions": [
+      "Request a decision: explicitly renew push authorization for origin/feature/export, or revise the remaining workflow. Do not push or deploy while that decision is pending."
+    ]
+  },
+  "promptSHA256": "c4129882db94ff2a4eafd679c657dd2170fe544299da8b699531821b8160eeeb",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27489,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 947,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 28436
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

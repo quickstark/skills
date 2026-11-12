@@ -1,0 +1,82 @@
+{
+  "kind": "LEX-12-mobile-harness-correction-validation-not-package-acceptance",
+  "sourceRevision": "5ed4e843ea31ec6a572f8896b2bde841255889da",
+  "workingTree": "Uncommitted harness/checker/test/evidence changes; canonical source and package projections unchanged",
+  "environment": {
+    "node": "v24.21.0",
+    "nativeCodex": "0.162.1"
+  },
+  "reviewedSHA256": {
+    "scripts/lean-execution-trials.mjs": "830df7c56db2a49dadd9de61b8acc8c30eaee9411f0c250f80957a3e330abc9f",
+    "scripts/lean-mobile-report.mjs": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+    "tests/lean-execution.test.mjs": "b7b89fb1b94b9ae1f7ce053860570496626600348b49194ed302335b2a790295",
+    "tests/fixtures/lean-execution-adoption/README.md": "ed279f0ee77df2d42c0d91cbe21cc6cac60654678e82b8ac3cbb8d0614186f16",
+    "tests/fixtures/lean-execution-adoption/lex12-mobile-report-resolution.json": "7d82b647aaba7fc30168dc3e904b26205926aa47e8522df3277ec683ad4cfc14"
+  },
+  "evidenceSHA256": {
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-focused.log": "f461b45d9b213309493bf175878e27f12a9881b0fa853874bacfda039a6de1e0",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-sync.log": "767672eef018d95f8a12cd5a2b6c537ee32159db178fba58c5c1c4e1978a0434",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-check.log": "261afdc10ec0fc15441a35977557b358498332440211687923b914dc8c3142f6",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-tests.log": "e587fc285fd63bafb5fb201220fdb70bbcac6979c63241287a9274e82f98da12",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-capture.log": "b834b747d2d0b464ad43a26bf0b89e4a8e65d17490f9d10c11b5e563f98f3560",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-transport-capture.log": "8cb2df503cf80363743728c99e3a56810b0f9eac844a4452179005df9181ea46",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-claude-core.log": "5e6adc65f025ebfd469db59f50ec28b4213d1ec734b952f44a8183a7f8db222f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-claude-specialists.log": "5753825930028888f78c0f6ec3af7e06d20dfa1845c300f72316a0e06fefa744",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-claude-advanced.log": "1eddbdc6ca7079c0470ad662a936778ef36690858aa02add45f0723d04712b83",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-claude-frontend.log": "a9e8230a684fb327dbffbe9674904b4ad8435e9e6b2c569f831e1ae1a5cf9d2e",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-claude-video.log": "3118c3055b061fc263204b86c075dc7de9dd65ee3aaac330705154042b86717f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-validation-claude-execution.log": "55e10fed8dd09c596127797d86bc2f1d0f04968f78caa258bc3d2b0b5cdcf842",
+    "tests/fixtures/lean-execution-adoption/mobile-report-integration-review.txt": "21522db15ad144b941b99b7b2154219f0972507c8c4264f67a124066a9e1d0ed"
+  },
+  "checks": {
+    "syncCodex": "passed; generated projections and output contracts unchanged",
+    "checkCodex": "passed",
+    "claudeStrictPackages": 6,
+    "focused": {
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "command": "node --test --test-isolation=none --test-reporter=spec tests/lean-execution.test.mjs"
+    },
+    "full": {
+      "tests": 797,
+      "pass": 796,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "command": "npm test",
+      "skipEvidence": [
+        "﹣ unsupported native capture exits without artifacts or a leaked child (0.218766ms) # Unsupported-platform control runs on non-Linux; Linux capture is tested separately."
+      ]
+    },
+    "whitespace": "passed for changed source and documentation",
+    "newSourceBindings": 48,
+    "newEvidenceBindings": 102,
+    "originalSourceAndEvidenceBindingsUnchanged": 224
+  },
+  "independentReview": {
+    "guard": "mobile-report-guard-review-final.txt — no remaining actionable findings",
+    "integration": "mobile-report-integration-review.txt — no actionable findings; source/evidence/native payloads/upstream notices verified",
+    "legacyBehavior": "0 of3 independently qualified; original B8 also retained failed",
+    "transportBehavior": "3 of3 independently qualified, all correctness/coverage/clear-writing scores2"
+  },
+  "outcome": {
+    "qualified": "Opt-in reversible fixture transport and three named responses",
+    "actualInjection": "inferred; assembled model context not captured",
+    "sourceCorrection": "none; source policy was consistent",
+    "historicalEvidence": "Original B8, legacy failures and v1 result fields unchanged; requalification append-only",
+    "legacyCaveat": "Legacy integrity alone does not prove isolation from native installed-skill expansion"
+  },
+  "boundaries": {
+    "sourceAdoption": "pending",
+    "fullPackageAcceptance": "pending for all six",
+    "closureAcceptance": "unknown",
+    "efficiency": "inconclusive; controlled comparison unexecuted",
+    "commit": "not authorized or performed",
+    "push": "not authorized or performed",
+    "publication": "not authorized or performed",
+    "userHostInstallation": "not authorized or performed"
+  }
+}

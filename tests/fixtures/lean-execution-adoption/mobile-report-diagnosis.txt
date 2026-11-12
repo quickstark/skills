@@ -1,0 +1,31 @@
+LEX-12-MOBILE-REPORT-ROUTE — independent read-only diagnosis
+Starting revision: 5ed4e843ea31ec6a572f8896b2bde841255889da
+
+Observed:
+Canonical mobile root identifies itself unambiguously at skills/engineering/qs-design-image-mobile/SKILL.md:43 and :59. Its only next/failure route is qs-flow-handoff (:52), whose exact Codex literal is repeated at :67. Generator owns identity at scripts/sync-skill-output-contracts.mjs:42/:70 and routes at :21-30/:59/:88.
+Frozen B8 input repeats those instructions at qualification-extra-captures/B8/prompt.txt:49, :58, :65, :73. Mobile behavior reference :78-82 scopes selective repair and reopening affected checks. Neither reference nor shared contract changes the root. docs/skill-run-contract.md:3 preserves one root.
+qualification-extra-inputs.json:96-98 assigns B8 to mobile; :108 records source revision 41716d7b52278faecd446539a8aa1814aeb0dd47. Its mobile string equals the three current source files joined by two newlines; prompt.txt includes that string exactly. Three source hashes match the frozen record (:116-118). No wrong-root injection or stale source content found in supplied mobile construction.
+Original response.md:2 instead reports Skills used: /qs-flow-handoff and proposes $qs-skills:qs-plan-clarify. The latter literal never appears in supplied mobile instructions. Output otherwise explains requested cross-screen token invalidation and respects no-image/no-code/no-install boundaries.
+
+Conclusion:
+Observed failure is report-root and continuation nonadherence. Source conflict or faulty mobile instruction selection is not demonstrated. Confusion between allowed continuation and active root, or semantic attraction to handoff when asked to explain instead of execute, are hypotheses only. One capture cannot establish causal mechanism or reliability.
+
+Smallest justified correction:
+No canonical/reference/generator change from this evidence. Keep original B8 unchanged and record failure. Corrected behavior retains qs-design-image-mobile as root, avoids unsupported qs-plan-clarify, and offers qs-flow-handoff only when distinct verified unfinished work warrants it. Request asks for explanation (prompt.txt:307); missing actual prompts need not block that bounded explanation. Clarification/repair continuation is not automatically required because hypothetical later repair lacks inputs.
+
+Additional reads:
+Read-only git status/rev-parse verified starting checkout. Targeted rg in tests/lean-execution.test.mjs located existing B8 evidence bindings; :189-193 preserves B8 as unqualified and its observed wrong root/route. No other public skill bodies, model trials, native operations, or repository mutation were performed.
+
+Limits: all source/package acceptance pending; closure outcomes unknown; efficiency inconclusive.
+
+Mechanical comparison results:
+{
+  "current_source_join_equals_frozen_mobile": true,
+  "prompt_contains_frozen_mobile": true,
+  "frozen_mobile_contains_qs_plan_clarify": false,
+  "source_hashes_match": {
+    "skills/engineering/qs-design-image-mobile/SKILL.md": true,
+    "skills/frontend/internal/mobile-images.md": true,
+    "docs/skill-run-contract.md": true
+  }
+}

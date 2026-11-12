@@ -1,0 +1,80 @@
+{
+  "files": {
+    "cli": {
+      "path": "/tmp/qs-lex12-runtime/node_modules/hyperframes/bin/hyperframes.mjs",
+      "sha256": "d566bbc6149f07f76d2cef62ab687401f5245557581c4043403278ce20d6deb0",
+      "expectedSha256": "d566bbc6149f07f76d2cef62ab687401f5245557581c4043403278ce20d6deb0"
+    },
+    "browser": {
+      "path": "/home/djn12313/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell",
+      "sha256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f",
+      "expectedSha256": "e11fc9ce65c96313476f7ee9844b6fb6a9220fb048693cfe9eee00acf4170a9f"
+    },
+    "ffmpeg": {
+      "path": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffmpeg",
+      "sha256": "ed16af623947494a72e284b6eb8ff225f2da22b38b5d5069c2fd4b4ba3384e41",
+      "expectedSha256": "ed16af623947494a72e284b6eb8ff225f2da22b38b5d5069c2fd4b4ba3384e41"
+    },
+    "ffprobe": {
+      "path": "/tmp/qs-lex12-runtime/ffmpeg/usr/bin/ffprobe",
+      "sha256": "272f6ebc634a63d9c8b4ca68e964119d980f25154e5aa2c35e5487da48e9a58f",
+      "expectedSha256": "272f6ebc634a63d9c8b4ca68e964119d980f25154e5aa2c35e5487da48e9a58f"
+    }
+  },
+  "packages": {
+    "hyperframes": {
+      "version": "0.8.77",
+      "packageJsonSha256": "7d0c16d5792f578046b7c3fcc5c663416ec28ee4dba4f114b532a76cac49310b",
+      "integrity": "sha512-OOVwxP9ixSwkoH0y5SX7Xwf6NS9ad0mFnqf6jK053piGp2LUsxEywGd5m9KucNdaKwlQfkw+u+U8E5OxKPsa+w=="
+    },
+    "@hyperframes/core": {
+      "version": "0.8.77",
+      "packageJsonSha256": "24677594b95f1e559d79eee82053be4b77897ff6a3903b65633fd4e500e9dc15",
+      "integrity": "sha512-zIrZp6G6OEmI6VtmUHjg6g33yelPknpF4v4j71yagK/MYbVooMZVX7KsYr+uzVwIl3ZrJQIIUylm86WGx4wWWQ=="
+    },
+    "puppeteer-core": {
+      "version": "25.12.0",
+      "packageJsonSha256": "36cd46fb83780172e647da7825579a8701baf6bb36ef8fb9146a5db370b152d7"
+    },
+    "sharp": {
+      "version": "0.35.4",
+      "packageJsonSha256": "27b5a6c6e1e1f27c527b09a963c932979403837d0f5f013ab5bdfb4a0ef2269a"
+    }
+  },
+  "versions": {
+    "hyperframes": "0.8.77",
+    "node": "24.21.0",
+    "chromium": "151.0.7922.34",
+    "ffmpeg": "6.1.1"
+  },
+  "libraryPath": "/tmp/qs-lex12-runtime/ffmpeg/usr/lib/x86_64-linux-gnu",
+  "isolation": "Acquisition only into /tmp; no QuickStark host installation or registration",
+  "networkAttempts": [
+    {
+      "argv": [
+        "curl",
+        "--fail",
+        "--max-time",
+        "15",
+        "--location",
+        "--output",
+        "/tmp/qs-lex12-hyperframes-0.8.77.tgz",
+        "https://registry.npmjs.org/hyperframes/-/hyperframes-0.8.77.tgz"
+      ],
+      "exit": 6,
+      "stderr": "Could not resolve host: registry.npmjs.org"
+    },
+    {
+      "operation": "same exact tarball escalated acquisition",
+      "exit": 0
+    },
+    {
+      "operation": "npm install --ignore-scripts --no-audit --no-fund --cache /tmp/qs-lex12-npm-cache",
+      "exit": 0
+    },
+    {
+      "operation": "apt-get download ffmpeg=7:6.1.1-3ubuntu5 libavdevice60=7:6.1.1-3ubuntu5 into /tmp",
+      "exit": 0
+    }
+  ]
+}

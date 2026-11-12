@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — Current-revision implementation and review milestones remain valid. The deployment target changed to production without fresh authorization. Input needed: restore staging as the target or explicitly authorize deployment to production.\n\n- [ ] Build — blocked at ~50%; required verification remains incomplete.\n- [ ] Git — pending at 0%; depends on verified Build completion.\n- [ ] Release — blocked at 0%; production deployment is unauthorized.\n\nMatching goal confirmed. Stable effort weights: Build 60, Git 10, Release 30. Overall estimate: (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%.\n\nStatus: input-required. Preserve existing evidence and estimates for resumption. No execution or publication is proposed until the target is resolved. Deployment artifact/version and health verification remain outstanding.",
+  "requestedActions": [
+    "Request a decision to restore the authorized staging target or provide fresh explicit authorization to deploy to production."
+  ]
+}

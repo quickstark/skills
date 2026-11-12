@@ -1,0 +1,27 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G3",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] verified — Assess supplied scope and prerequisites (weight 1).\n- [ ] blocked — Generate execution-ready prompt (weight 1).\n\nStage: Generate prompt | Stage estimate: ~0% | Overall estimate: ~50% | blocked — Supplied evidence assessed; deployment decisions and goal capability remain unresolved. Input needed: selected environment, explicit deployment authorization, and a host with goal tools.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: No execution prompt generated; execution has not started. Which deployment environment should the goal target: staging or production? Selecting an environment alone does not authorize deployment.\nSpecs: Not located\n\nReadiness blockers: Neither environment has deployment authorization, and no goal tools are available. Ordinary execution cannot substitute for the required goal workflow. No commands or checks were run.\n\nWork summary:\n- Finished — Assessed the frozen observations and identified the exact readiness blockers. This response is the only output; no operations were performed.\n- Next — [CSV invoice export](/fixture/ledger-app) — blocked — resolve the deployment target and authority, then provide goal capability before regenerating the execution prompt.\n\nNext work prompt:\n```text\n$qs-skills:qs-plan-clarify\nClarify deployment readiness for CSV invoice export in /fixture/ledger-app, branch feature/export, revision abc123. Use the supplied evidence; do not treat this continuation as authorization to implement or deploy.\n\nConfirmed requirements: export the current filtered invoices with a header row and correct CSV escaping; preserve the existing screen. No export implementation or specification exists.\n\nStanding authorization covers repository edit/build/test and commit/push of feature/export to origin. Neither staging nor production has deployment authorization. Merge, production deployment, and unrelated files are outside existing authority. Credentials are reported present; do not read or display secret values.\n\nBoth staging and production are documented. Known staging documentation in docs/deploy.md specifies npm run deploy:staging, /health HTTP 200 with a version matching the built artifact, and npm run rollback:staging. Production commands were not supplied. A documented rollback command does not authorize its execution.\n\nAsk one focused question at a time: first select staging or production; then establish the exact deployment operations and target the user authorizes. Preserve rollback readiness without granting rollback authority.\n\nNo goal tools are available. Record that capability blocker explicitly: the deployment-prompt workflow requires a goal-capable host before execution and must not silently substitute ordinary execution. No token budget was specified.\n\nInstalled workflow metadata reports qs-plan-spec, qs-plan-clarify, qs-code-build, qs-git-merge, and qs-deploy-release. Do not assume other workflows are installed. Record confirmed decisions and remaining blockers; do not automatically enter specification, implementation, publication, or deployment.\n```",
+    "requestedActions": [
+      {
+        "type": "clarification",
+        "question": "Which deployment environment should the goal target: staging or production?"
+      }
+    ]
+  },
+  "promptSHA256": "68f82a153c98e6195c4ddb2bb8aa7e666f565341a477d59b139e85b663cc8a2c",
+  "instructionSHA256": "edd9dbd99722de0266c7d8bf978cf2c5936c3c2f7046aa496fea5cd20483b918",
+  "usage": [
+    {
+      "input_tokens": 26663,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1321,
+      "reasoning_output_tokens": 680,
+      "total_tokens": 27984
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

@@ -1,0 +1,25 @@
+{
+  "scenario": "L3",
+  "repetition": 3,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Proposed worker brief for the owning root:\n\n> Implement ticket B in `/fixture/lean` at revision `fixture-r1`. Start with a fresh context; do not inherit the unrelated parent transcript.\n>\n> Context pointers: ticket B and revision `fixture-r1`. Ticket requirements were not supplied here; obtain them from the root before implementing, without inventing acceptance criteria.\n>\n> Start with `src/parser.ts` and `tests/parser.test.ts`. Your only write scope is those two files. Read callers and directly relevant definitions or tests as needed to understand compatibility; starting files do not limit relevant reads. Keep exploration tied to ticket B.\n>\n> If compatibility requires writes elsewhere, leave those files unchanged and return the paths, evidence, and proposed changes to the root. The root must resolve any scope expansion and serialize mutations. Preserve configured model, reasoning, sandbox, and approvals. Do not perform Git, publication, installation, or public-skill actions.\n>\n> The required check is `npm run test:parser`. Report its actual outcome, or explicitly state that it was not run and why.\n>\n> Return at most 400 words to the root: revision examined; changes by file; compatibility findings with evidence references; check results; blockers, coverage gaps, and any requested writes outside scope. During long work, send stage evidence and remaining work to the root when control permits. Emit no separate public report or completion claim.\n\nThe root retains shared decisions, integration, verification, and completion. Before accepting the return, it must re-check the current revision and evidence; missing or stale evidence remains a coverage gap.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "86b68df9f427c8fae78f73868cbb61827a029a987dcd8e700fb708092aa0622e",
+  "sourceSHA256": "5177901f4a4a57ff1223fba523f8f9e65b704ae9ac3f3539b7beaeaa239e11f3",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 20417,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 870,
+      "reasoning_output_tokens": 513,
+      "total_tokens": 21287
+    }
+  ]
+}

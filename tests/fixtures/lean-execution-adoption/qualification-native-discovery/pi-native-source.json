@@ -1,0 +1,57 @@
+{
+  "argv": [
+    "pi",
+    "--mode",
+    "rpc",
+    "--no-session",
+    "--offline",
+    "--skill",
+    "/github/skills/pi/packages/qs-skills/skills",
+    "--skill",
+    "/github/skills/pi/packages/qs-specialists/skills",
+    "--skill",
+    "/github/skills/pi/packages/qs-advanced/skills",
+    "--skill",
+    "/github/skills/pi/packages/qs-frontend/skills",
+    "--skill",
+    "/github/skills/pi/packages/qs-video/skills",
+    "--skill",
+    "/github/skills/pi/packages/qs-execution/skills"
+  ],
+  "cwd": "/github/skills",
+  "environmentOverrides": {},
+  "requests": [
+    {
+      "id": "lex-discovery",
+      "type": "get_commands"
+    }
+  ],
+  "stdout": [],
+  "stderr": [
+    "node:fs:1410",
+    "  const result = binding.mkdir(",
+    "                         ^",
+    "",
+    "Error: EROFS: read-only file system, mkdir '/home/djn12313/.pi/agent/trust.json.lock'",
+    "    at Object.mkdirSync (node:fs:1410:26)",
+    "    at newFs.<computed> [as mkdir] (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:21875)",
+    "    at acquireLock (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:16930)",
+    "    at RetryOperation._fn (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:19942)",
+    "    at RetryOperation.attempt (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:9334)",
+    "    at file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:19929",
+    "    at resolveCanonicalPath (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:16763)",
+    "    at lock (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:19796)",
+    "    at file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:22210",
+    "    at lock.lockSync (file:///home/djn12313/.npm-global/lib/node_modules/@earendil-works/pi-coding-agent/dist/bundle/chunks/chunk-4KSTFUIK.js:3:23018) {",
+    "  errno: -30,",
+    "  code: 'EROFS',",
+    "  syscall: 'mkdir',",
+    "  path: '/home/djn12313/.pi/agent/trust.json.lock'",
+    "}",
+    "",
+    "Node.js v24.21.0"
+  ],
+  "modelRequests": 0,
+  "blocker": "No response before exit or 20 second deadline",
+  "exitCode": 1
+}

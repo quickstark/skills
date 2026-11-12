@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — Build reopened because the current revision changes CSV escaping and a required test fails. Input needed: none for this report.\n\n- [ ] Build — reopened; required test failing, estimated 50%.\n- [ ] Git — blocked by Build; 0%.\n- [ ] Release — blocked by Build and Git; 0%.\n\nWeights remain Build 60, Git 10, Release 30. Overall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. The decrease from 60% reflects invalidated Build completion evidence at the changed revision. Still-valid evidence is retained.\n\nNext proposed action: verify goal-tool availability and inspect authoritative goal state with `get_goal`. Before edits, recheck scope, authorization, skills, references, and revision. Then repair CSV escaping and rerun relevant CSV cases, existing-screen checks, and diff review. Git and Release remain blocked until Build is verified complete. If goal support is unavailable or an unrelated goal is active, stop for input.\n\nNo operations were performed. Deployment version and health evidence remain missing.",
+  "requestedActions": [
+    "Verify supported goal-tool availability and inspect authoritative goal state with get_goal before any mutation or stage execution."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Release | Stage estimate: ~95% | Overall estimate: ~95% | active — Required staging health/version verification is pending. Input needed: none identified.\n\n- [x] Build — verified.\n- [x] Git — verified.\n- [ ] Release — active; matching-version health evidence missing.\n\nKeep weights at 60/10/30. Capping the proposed Release estimate at 95% gives a weighted ceiling of `(60×100 + 10×100 + 30×95) / 100 = 98.5%`. Report overall progress as at most ~95% under the unverified-estimate cap. These are ceilings; missing Release milestone evidence limits confidence.\n\nRelease and the overall goal remain incomplete. Do not round to 100% or mark the goal complete. Completion requires authoritative evidence linking the verified revision to the staging artifact/version, plus HTTP 200 and the exact matching version from `/health`.",
+  "requestedActions": [
+    "Verify goal-tool availability and inspect the authoritative matching goal with get_goal before resuming stage execution; if support is unavailable, stop and report input-required."
+  ]
+}

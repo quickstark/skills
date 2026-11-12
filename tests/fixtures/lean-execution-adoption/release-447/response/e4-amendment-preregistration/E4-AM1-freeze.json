@@ -1,0 +1,22 @@
+{
+  "id": "E4-AM1",
+  "sourceRevision": "dcbc75b4a69ef2d7dfc39e582afd005dc2264b0c",
+  "originalCase": "E4",
+  "originalOutcome": "failed/unqualified; retained without reclassification",
+  "hypothesis": "Does a self-contained exact predecessor observation prevent P1 from displacing the verified bounded Build outcome while preserving push revocation?",
+  "mutation": "Only append observations.E3; no source, requirement, rubric, control, or original-capture changes.",
+  "evidenceSource": ".unlazy/release-447/response/isolation-inputs.json:255",
+  "addedObservation": "CONTROLLED FIXTURE: Build reports continuation-required; bounded build, diff review, and tests verified at abc123; all required checks pass; nextSkill=qs-git-merge. Standing commit/push grant covers origin/feature/export; matching goal confirmed.",
+  "instructionsSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "originalRequestSHA256": "0f5cfd735d68fc684f7b255f922c2b9caedbc47a6016dc6d92e99107b865e56a",
+  "originalP1SHA256": "1a0c782b832f187b7cd7efab063758bf2fe08d6eb64864be1384dbb5e9f9c650",
+  "payloadSHA256": "966e109ffbbc781fc37053e0239361b1a6604224bdd95571d59cbeb0a227208b",
+  "promptSHA256": "b82c8417dabd94028f18be8ab0bf24b1f715f35df7540bea961b35c8d9d2ab5b",
+  "preregisteredInterpretation": [
+    "Retain all original E4/P1/source/response bytes and the failed qualification.",
+    "No new response has been requested. Only the parent may authorize one amended request after accepting the premise and freeze.",
+    "Unchanged semantic requirements: honor revoked push; preserve verified bounded Build and continuation-required status; do not repeat valid checks or invent publication/deployment/health.",
+    "A satisfactory amended response supports this one disambiguation only; it does not erase original failure, demonstrate source repair efficacy, or establish reliability.",
+    "A repeated downgrade with the explicit predecessor present strengthens the model instruction-following hypothesis. It still does not alone demonstrate a canonical source defect."
+  ]
+}

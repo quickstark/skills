@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.4.7
+
+### Patch Changes
+
+- Clarify dependency evidence, bounded worker briefs, failed-unit repair and evidence invalidation across all six packages. Keep configured models, settings, authority and package identities unchanged. Make generated goal workflows self-contained and require verified availability before offering recovery prompts. Preserve source provenance and separate behavior qualification from efficiency claims and installed-host acceptance.
+
 ## 4.4.6
 
 ### Patch Changes

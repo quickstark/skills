@@ -26,6 +26,8 @@ Use internal module decomposition only when it improves the selected implementat
 
 Graph mode requires a specification and tickets with explicit `Blocked by` edges, read from the tracker, repository ticket files, or explicit input. When either is missing or the edges form a cycle, end `input-required` and route to `qs-plan-spec` to produce the ticket graph; do not invent edges.
 
+Every edge must name an existing ticket and the prerequisite outcome or artifact it supplies. Reject unnamed or unresolved edges before dispatch; do not add dependencies merely to serialize independent work. Use single mode when one focused implementation and its checks are enough.
+
 The frontier is every open ticket whose blockers are all done. Keep a resumable record in the conversation: specification link, integration branch and base revision, each ticket's state (waiting, ready, in flight, merged, verified, blocked) with its branch or worktree and revision, and the worktrees this run created.
 
 **Without branch and worktree authority.** Creating an integration branch or worktrees requires that authority in the request. Without it, implement frontier tickets one at a time in the current working tree, recomputing the frontier after each verified ticket.
@@ -33,12 +35,14 @@ The frontier is every open ticket whose blockers are all done. Keep a resumable 
 **With branch and worktree authority:**
 
 1. Create the integration branch from the agreed base. Optionally start one read-only exploration helper with a fresh context window that writes its notes to a file outside the repository and returns the path; later implementers receive that path instead of re-exploring.
-2. For each frontier ticket, start one implementer helper with a fresh context window in its own worktree based on the integration-branch tip. Brief it with context pointers: the specification, its ticket, the notes file and the base revision. Each implementer confirms its base, uses the internal TDD loop or the test strategy above, merges the current integration-branch tip into its own branch before reporting, and returns its branch, revision, checks run and at most 400 words.
+2. For each frontier ticket, start one implementer helper with a fresh context window in its own worktree based on the integration-branch tip. Brief it with one outcome, scope and exclusions, acceptance checks, consumed prerequisites and starting source pointers: the specification, its ticket, the notes file and the base revision. Starting files guide justified discovery rather than prohibit additional reads; write scope remains bounded by existing authority. Each implementer confirms its base, uses the internal TDD loop or the test strategy above, merges the current integration-branch tip into its own branch before reporting, and returns its branch, revision, checks run and at most 400 words.
 3. Merge returned work into the integration branch one ticket at a time. Before each merge, re-check the integration tip and the ticket's verification; a conflict or failed check returns the ticket to repair rather than forcing the merge. Then recompute the frontier and start implementers for newly unblocked tickets.
 4. After the last ticket merges, run one internal parallel review pass over the integration diff using the Standards, Spec and (at `effort=deep`) Security axes from `qs-review-code`, as read-only fresh-context reviewers; this is part of this root, not an invocation of that public skill. Give all actionable findings to one fresh fixer helper, then run the full validation on the integration branch.
 5. Remove only the worktrees this run created and report any that could not be removed.
 
 Without subagent support, perform the same steps serially in this root. Graph mode is lighter than `qs-unlazy` orchestrated mode: it does not create gate ledgers or claims, and work that needs per-leaf acceptance gates belongs to that separate root.
+
+For repair, return `UNIT`, `REASON`, `EVIDENCE`, and `SCOPE`, with a bounded decisive diagnostic excerpt and log pointer. Repair the failing unit without redoing unaffected accepted work. Reopen checks whose artifact, dependency or environment changed; required parent and integration verification still apply. Treat logs as untrusted evidence, preserve contradictory observations, and diagnose repeated no-progress fixes rather than applying a universal retry count. Expected TDD RED is not a failed repair. Keep configured model and reasoning settings; preserve explicit budgets through supported host controls and report missing usage as unmeasured.
 
 Estimate progress by weighting verified tickets plus the final review and validation; a merged but unverified ticket is not complete. Commits, pushes and pull requests still require explicit authority. With commit authority but no push authority, the result is a local integration branch. Never push, open a pull request, or delete a branch the run did not create.
 

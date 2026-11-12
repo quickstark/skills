@@ -1,0 +1,68 @@
+{
+  "exitCode": 0,
+  "signal": null,
+  "elapsedMs": 2888.0972960000217,
+  "timedOut": false,
+  "interrupted": false,
+  "stopReason": "Native protocol error notification.",
+  "malformedLines": 0,
+  "observedModel": "gpt-6.1-sol",
+  "effectiveControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "configuredControls": {
+    "model": "gpt-6.1-sol",
+    "model_reasoning_effort": "high",
+    "sandbox_mode": "workspace-write",
+    "approval_policy": "on-request",
+    "approvals_reviewer": "auto_review"
+  },
+  "initialized": true,
+  "readinessOnly": false,
+  "usage": [],
+  "nativeUsage": null,
+  "completedTurn": false,
+  "responsePresent": false,
+  "toolItems": [],
+  "toolCount": 0,
+  "observedNamedImageCalls": 0,
+  "savedImages": [],
+  "serverRequests": [],
+  "protocolErrors": [
+    "Native protocol error notification."
+  ],
+  "unknownItemIds": [],
+  "unknownItemMethods": [],
+  "unclassifiedToolItems": [],
+  "imageCallClassification": "Native imageGeneration items and explicitly named image tools are counted by unique id. Shell/MCP/dynamic/delegation semantics require independent review; these items never certify zero image calls automatically.",
+  "nativeStreamComplete": false,
+  "processCleanup": [],
+  "observedOwnedResidualProcesses": [],
+  "processObservation": {
+    "passes": 29,
+    "skippedTicks": 0,
+    "errors": [],
+    "maximumInFlight": 1,
+    "cleanupErrors": [],
+    "complete": true,
+    "scope": "Only leader/previously observed owned PIDs and their children; unseen processes detaching between samples are not proven absent."
+  },
+  "runnerSHA256": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c",
+  "promptSHA256": "72173a12030f8f0593342968608f79f69d1ada1ddb77ceb3279371059fc910f8",
+  "promptUtf8Bytes": 10055,
+  "args": [
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "runtimeFiles": {
+    "events.jsonl": "a1d47845aec3b114a26c9d57f0b68a1518dbff6635382006886ded1eb7576379",
+    "raw-protocol.jsonl": "a0f442b0016d7ddacffabc7f68686d6c2f07b7df3b481139745de6e69a2041db",
+    "raw-stdout.jsonl": "797a34bedbeea3f10bf70f49642e0504967338c9388bccf03d4f9a280dd21d16",
+    "stderr.txt": "86e7f92acc040c94731787649d7bed65a6ccc70df6fbda272139cf5fb3a88ecf"
+  }
+}

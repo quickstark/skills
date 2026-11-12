@@ -1,0 +1,36 @@
+
+◆  Rendering subcomposition → /github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition/result.mp4
+   12fps · draft · 1 workers
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: env
+[?25h
+  Lint: 1 error(s), 0 warning(s) — run with --lint-verbose for full output.
+  Continuing render despite lint issues. Use --strict to block errors.
+
+  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Checking browser GPU
+[BrowserManager] Browser launched (HeadlessChrome/151.0.7922.34, screenshot, gl=--use-gl=angle --use-angle=swiftshader, headlessShell=true, platform=linux)
+[initSession:screenshot] page.goto start (1ms)
+[HyperFrames] render runtime fps {"canonicalFps":12,"source":"render-options","rawFpsSource":"render-options","rawFps":12}
+[initSession:screenshot] page.goto complete (276ms)
+[initSession:screenshot] GSAP proxy flush complete (293ms)
+[initSession:screenshot] pollHfReady complete (293ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (297ms)
+[initSession:screenshot] applyVideoMetadataHints complete (297ms)
+[initSession:screenshot] media + fonts + tailwind ready (300ms)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=306) (917ms)
+  ██████░░░░░░░░░░░░░░░░░░░  27%  Streaming frame 1/24
+  ██████████░░░░░░░░░░░░░░░  43%  Streaming frame 8/24
+  ██████████████░░░░░░░░░░░  57%  Streaming frame 14/24
+  ████████████████████░░░░░  80%  Streaming frame 24/24
+[static-dedup] reused 9/24 frame(s) (38%), est. ~351ms saved (avg 39ms/frame)
+  ██████████████████████░░░  90%  Assembling final video
+  █████████████████████████  100%  Render complete
+
+◇  /github/skills/.unlazy/release-447/runtime-discovery/video-fresh-run-attempt-2/subcomposition/result.mp4
+   8.6 KB · 2.0s video · rendered in 2.2s
+   screenshot capture · software gpu · compile 0.3s · extract 0.0s · audio 0.0s · probe 0.1s · setup 0.0s · capture 1.7s · encode (during capture) 1.7s · assemble 0.1s

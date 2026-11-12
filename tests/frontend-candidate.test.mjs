@@ -90,7 +90,11 @@ test("MotionSites schema rejects missing/ambiguous origins, altered bytes, mappi
 test("Taste history survives schema upgrade, new references have a sole owner and bounded size", () => {
   const before = JSON.parse(readFileSync(join(root, "tests/fixtures/ms-fe-01/baseline/frontend/dependency-index.json")));
   assert.deepEqual(index.sources.slice(0, 7).map(({ repository, ...entry }) => entry), before.sources);
-  assert.deepEqual(index.derivedFiles.slice(0, before.derivedFiles.length), before.derivedFiles);
+  // LEX intentionally adapts current guidance; retain the exact earlier derived
+  // bytes in history and independently verify every current file against its hash.
+  const historical = index.derivedHistory.find(entry => entry.revision === '80a61ff7f192ddd027e8248bc8106a64c5b3b450');
+  assert.deepEqual(historical.derivedFiles.slice(0, before.derivedFiles.length), before.derivedFiles);
+  verifyPrivateClosure(privateRoot);
   for (const [id, limit] of [["cinematic-landing", 500], ["motion-recipes", 1200], ["media-recipes", 1200]]) {
     assert.deepEqual(FRONTEND_INTERNAL_CAPABILITIES.find(entry => entry.id === id).owners, ["qs-design-frontend"]);
     assert.ok(readFileSync(join(privateRoot, "internal", id + ".md"), "utf8").trim().split(/\s+/).length <= limit);

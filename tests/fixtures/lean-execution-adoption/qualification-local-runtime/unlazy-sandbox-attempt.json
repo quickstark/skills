@@ -1,0 +1,39 @@
+[
+  {
+    "label": "unapproved",
+    "executable": "/usr/bin/node",
+    "args": [
+      "/github/skills/skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs",
+      "--shell",
+      "/bin/sh",
+      "--root",
+      "/tmp/qs-lex-runtime-st2tih6o/unlazy-project",
+      "GATES.md"
+    ],
+    "expected": 1,
+    "status": 1,
+    "signal": null,
+    "error": "spawnSync /usr/bin/node EPERM",
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "approved-pass",
+    "executable": "/usr/bin/node",
+    "args": [
+      "/github/skills/skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs",
+      "--approve",
+      "--shell",
+      "/bin/sh",
+      "--root",
+      "/tmp/qs-lex-runtime-st2tih6o/unlazy-project",
+      "GATES.md"
+    ],
+    "expected": 0,
+    "status": 1,
+    "signal": null,
+    "error": "spawnSync /usr/bin/node EPERM",
+    "stdout": "",
+    "stderr": ""
+  }
+]

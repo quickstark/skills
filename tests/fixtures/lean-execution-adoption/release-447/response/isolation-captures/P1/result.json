@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P1",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | active — Supplied implementation and review milestones support Build at 50% for the current revision. Input needed: none for this progress report.\n\n- [ ] Build — active, ~50%; weight 60.\n- [ ] Git — pending, 0%; weight 10.\n- [ ] Release — pending, 0%; weight 30.\n\nOverall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = **30%**.\n\nNo stage is verified complete. Goal state, tool availability, and deployed artifact/version and health evidence were not supplied; these remain unverified before further execution.",
+    "requestedActions": []
+  },
+  "promptSHA256": "870ebf3b685f6e66faea73c49a8852ce22ae0b87c0cb7876fd9415c5ee18f7eb",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 21432,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 590,
+      "reasoning_output_tokens": 413,
+      "total_tokens": 22022
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

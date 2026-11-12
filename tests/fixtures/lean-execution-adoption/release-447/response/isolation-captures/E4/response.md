@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Git | Stage estimate: ~0% | Overall estimate: ~30% | blocked — Build returned verified continuation-required at `abc123`, with `nextSkill=qs-git-merge`, but push authorization was subsequently revoked. Input needed: renewed authorization to push `origin/feature/export`.\n\n- [ ] Build — preserve continuation-required status; supplied milestone evidence supports ~50%.\n- [ ] Git — blocked by revoked push authorization; not started.\n- [ ] Release — pending Git; not started.\n\nUsing the supplied effort weights: `(60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%`. A verified continuation result does not establish full stage completion.\n\nThe matching goal is reported confirmed. Preserve that state and existing evidence. No further execution is proposed while authorization is missing. Deployment version and health evidence remain unavailable.",
+  "requestedActions": [
+    "Request renewed authorization to push origin/feature/export before advancing to qs-git-merge."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "inconclusive-efficiency-retained-baseline-correctness-only-adoption",
+  "policy": "rubric.json: independently accepted correctness changes may proceed without savings claims; efficiency-only changes require a successful controlled comparison.",
+  "comparison": {
+    "plannedResponses": 294,
+    "executedControlledResponses": 0,
+    "state": "not executed; separate behavior pilots cannot be pooled into the interleaved comparison"
+  },
+  "observedPilot": [
+    {
+      "variant": "control-pilot",
+      "capturedResponses": 18,
+      "acceptedResponseOutcomes": 13,
+      "observedResponseTotalTokens": 488966,
+      "completeTokensPerAcceptedUnit": null,
+      "touchRate": null
+    },
+    {
+      "variant": "candidate-pilot",
+      "capturedResponses": 18,
+      "acceptedResponseOutcomes": 18,
+      "observedResponseTotalTokens": 497006,
+      "completeTokensPerAcceptedUnit": null,
+      "touchRate": null
+    }
+  ],
+  "quality": {
+    "core": "candidate 18/18 accepted, control 13/18; separate-order behavior qualification, not causal superiority evidence",
+    "packages": "6/6 accepted",
+    "generation": "6/6 accepted after retained initial G6 failure and source repair",
+    "executor": "19/19 accepted"
+  },
+  "limitations": [
+    "Coordinator and reviewer usage not captured; full run spend and tokens per accepted unit unknown.",
+    "No named instruction-token measurement captured; bytes and words cannot substitute.",
+    "One HTTP 403 infrastructure attempt has no completed response or usage; preserved before its permitted retry.",
+    "No actual product-operation trials or installed-host acceptance. Source and response behavior evidence have narrower scope.",
+    "Full 49-scenario three-repetition interleaved workload remains unexecuted. No efficiency-only change or savings claim is accepted."
+  ],
+  "disposition": {
+    "efficiency": "retain pre-LEX efficiency baseline; no compression or automatic model-routing adoption",
+    "correctness": "qualify bounded prerequisite/repair/authority guidance through the separate source-bound behavior reviews; integrated validation must still pass",
+    "sourceProvenance": "pending",
+    "publication": "not performed",
+    "installedHosts": "not performed"
+  }
+}

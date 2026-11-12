@@ -1,0 +1,86 @@
+{
+  "kind": "append-only-final-checker-requalification-not-response-rewrite",
+  "qualificationBinding": {
+    "reportQualification": {
+      "kind": "mobile-root-and-route",
+      "checkerSHA256": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+      "policy": {
+        "host": "codex",
+        "root": "/qs-design-image-mobile",
+        "allowedContinuations": [
+          "$qs-skills:qs-flow-handoff"
+        ],
+        "maximumPrompts": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "result": "qualification-extra-captures/B8/result.json",
+      "resultSHA256": "20ab329572b2ee421a10f83cadd8e2476d4f5c1e28772ad968190641f8164960",
+      "assessment": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [
+          "$qs-skills:qs-plan-clarify"
+        ],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced",
+          "Ineligible continuation literal: $qs-skills:qs-plan-clarify"
+        ]
+      }
+    },
+    {
+      "result": "mobile-report-followup-captures/MR1/result.json",
+      "resultSHA256": "a3f4931d18b20f23f23cb4df60490dc3686474982e8f890f757237a0df5abf3f",
+      "assessment": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [
+          "$qs-skills:qs-plan-clarify"
+        ],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced",
+          "Ineligible continuation literal: $qs-skills:qs-plan-clarify"
+        ]
+      }
+    },
+    {
+      "result": "mobile-report-followup-captures/MR2/result.json",
+      "resultSHA256": "d6db56510952b104e9dc5212a652ad648ccebff535d433102140f13dc72d3cdc",
+      "assessment": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced"
+        ]
+      }
+    },
+    {
+      "result": "mobile-report-followup-captures/MR3/result.json",
+      "resultSHA256": "e5e7c1d07d73886683acc51b904e71f75a9e228d510a641dbbb450695180ee42",
+      "assessment": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced"
+        ]
+      }
+    }
+  ],
+  "scope": "Mechanical identity/route only; independent semantic review is separately required. Initial capture-time qualification records remain unchanged."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "file": "/tmp/qs-lex-runtime-st2tih6o/fresh-run/unlazy-project/GATES.md",
+  "gate": "G1",
+  "signature": "e5b1c05f1b4c74c6271e8f5ffd8d87a4112d1f90c6edf821a4784966d6a0d639",
+  "oracle": {
+    "schema": 1,
+    "check": "node oracle.mjs",
+    "expect": "CALCULATED_TOTAL_83",
+    "cwd": "/tmp/qs-lex-runtime-st2tih6o/fresh-run/unlazy-project",
+    "shell": "/bin/sh",
+    "timeoutMs": 120000,
+    "maxOutputBytes": 1048576,
+    "regexTimeoutMs": 250,
+    "regexStartupTimeoutMs": 5000,
+    "maxRegexWorkers": 4,
+    "platform": "linux",
+    "path": "/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+  },
+  "approvedAt": "2026-11-11T20:26:30.759Z"
+}

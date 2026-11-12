@@ -1,0 +1,34 @@
+{
+  "kind": "independent-source-review-not-behavior-acceptance",
+  "reviewer": "core_source_review internal fresh-context read-only helper",
+  "sourceSHA256": {
+    "docs/skill-run-contract.md": "cc46db29a6da850c50fb425e5a9e26fe6bcbfcb0e09c61475582893cd3d97271",
+    "skills/internal/delegation.md": "654b87864ea08757aa62c9331cb95ee20b6c27394ad07f45df0de266e0b50fb8",
+    "skills/internal/ticket-decomposition.md": "ea5fd8569ef1502f152c2961f605cd0adb722eab5cd589334fad2f24328d9af4",
+    "skills/engineering/qs-code-build/SKILL.md": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+    "skills/engineering/qs-code-debug/SKILL.md": "8d11272519b99e502e7e2348d086e3a58869cccfabf8c959f9baa905d6755e2a",
+    "skills/engineering/qs-plan-spec/SKILL.md": "98d6d2e3c21786bf29c7fac2d876785e1acec70a49e4c841975173f0bdf9070a",
+    "skills/engineering/qs-review-code/SKILL.md": "a84ac28ad6c8551dfbf5b9cec8bbb51af277344992a759cc9cde1669023f5b88",
+    "config/skill-provenance.json": "112403a02e22ab5e353000e01a392b41cd82c3105e40b1ff97a3e25971bab5e0",
+    "scripts/lean-execution-trials.mjs": "f24df6176460e9773ee3d8c4ed97961b0c49cb0355b5be83c7e3f7c73744f4a4",
+    "tests/lean-execution.test.mjs": "82193eec42704e4686ce31354ec7a22e5df74603e0784b84073fde21b0995983",
+    "scripts/qs-test-environment.mjs": "09035137e38f671001d96f210a3b5daf15b7d65fd9449ff4a44d0410065d0c21"
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "finding": "Capture did not enforce the declared frozen candidate identity",
+      "resolution": "verifyCandidateSources validates the protocol candidate digest before using in-memory sources or binding a new capture",
+      "independentlyRechecked": true
+    }
+  ],
+  "instructionReview": "No findings against supplied core source requirements. No behavioral, efficiency, publication or installed-host acceptance granted.",
+  "provenanceReview": "Original identities, source hashes, notices and full previous decisions preserved. Changed adaptation decisions remain pending.",
+  "testListReview": "Parent verified that qs-test-environment.mjs adds the four-test LEX fixture suite without dropping existing test entries.",
+  "pilotRunnerAmendment": {
+    "original": "capture-runner-v1.txt",
+    "originalSHA256": "927916af5f8a19917da86cd16f5adb245229e058a6b89bc337f1b30c01feb005",
+    "candidateDigestVerified": "aedf295d6fa02f3823485c1d27caf99a6c2cc522b292fc00c8f85d284ab1992e",
+    "note": "Original in-flight pilot processes retain their v1 binding. The unchanged source snapshot matches the declared freeze. V2 rejects drift; old batch bindings are not rewritten."
+  }
+}

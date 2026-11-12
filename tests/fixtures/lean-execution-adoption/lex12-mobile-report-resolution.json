@@ -1,0 +1,356 @@
+{
+  "schemaVersion": 1,
+  "kind": "LEX-12-mobile-harness-boundary-correction-not-source-or-package-adoption",
+  "revision": "5ed4e843ea31ec6a572f8896b2bde841255889da",
+  "version": "4.4.7",
+  "finding": "LEX-12-MOBILE-REPORT-ROUTE",
+  "disposition": "Scoped trial-transport correction independently qualified; original B8 and legacy failures retained. No claim of canonical source or general model-behavior repair.",
+  "sourceSHA256": {
+    "skills/engineering/qs-help/SKILL.md": "d5940a0cb580796f38a752044aa5a0f4e6be21b653d5bdb8550d849559744cb3",
+    "skills/engineering/qs-setup/SKILL.md": "75adcdbd2819030d47f36444fbdb3b17eb0e99b5e4ef3ae94a0944473e65aa25",
+    "skills/engineering/qs-plan-clarify/SKILL.md": "3c4f852074ea24094b915b0ebf3e1f4a35b4726f0d9244672c1e1326cc1fdb59",
+    "skills/engineering/qs-plan-roadmap/SKILL.md": "297ae556099ed823dc96320c6bea88a922cda96af0c019d899554a082d951ce9",
+    "skills/engineering/qs-plan-spec/SKILL.md": "98d6d2e3c21786bf29c7fac2d876785e1acec70a49e4c841975173f0bdf9070a",
+    "skills/engineering/qs-code-build/SKILL.md": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+    "skills/engineering/qs-code-debug/SKILL.md": "8d11272519b99e502e7e2348d086e3a58869cccfabf8c959f9baa905d6755e2a",
+    "skills/engineering/qs-review-code/SKILL.md": "a84ac28ad6c8551dfbf5b9cec8bbb51af277344992a759cc9cde1669023f5b88",
+    "skills/engineering/qs-git-merge/SKILL.md": "005db639a8c79e7d1beacdacd28cbeb0db86c3dcee2b2b428142cd191c4023e1",
+    "skills/engineering/qs-deploy-release/SKILL.md": "555fa341aa92685db3e10527301b67a2ffcb279c5a721d08e8a00ee39a1fbec6",
+    "skills/engineering/qs-flow-triage/SKILL.md": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c",
+    "skills/productivity/qs-flow-handoff/SKILL.md": "fc0dacf3623229441101944ab22539b99498e2eee4a0e375825453a38da22cda",
+    "skills/engineering/qs-plan-research/SKILL.md": "d5843fe2032ad13a8b29ff7ea2e2905683f7115d2c622463906040b6bc855cbc",
+    "skills/engineering/qs-design-prototype/SKILL.md": "910228c81a00194345a014174820cc4ce31ceef3429597707d9035c2ebf82dbf",
+    "skills/engineering/qs-code-document/SKILL.md": "93c09e3101520d7510040d26b36abb9d7d21dbd47f1aaa666f4c0c8271094e08",
+    "skills/engineering/qs-test-author/SKILL.md": "5cd7f5b58b71b858b701a673fa275a7869974c69d0dd61e0254a82f2d1ec6632",
+    "skills/engineering/qs-test-verify/SKILL.md": "c0b61ff9b05dbf15c31b3954d031ca6e76dfb86a03a14c3d519fda93ac63a252",
+    "skills/productivity/qs-learn-teach/SKILL.md": "895e87a75411e308fbb30595bcc73b06de94731587862de8c4ff86c8e644e786",
+    "skills/productivity/qs-skill-write/SKILL.md": "f12cc8a7a329d1ada1f9b47e28b6419d6b7f41e444d25ac8da3cfd617ef37572",
+    "skills/engineering/qs-deploy-prompt/SKILL.md": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+    "skills/engineering/qs-repo-cleanup/SKILL.md": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+    "skills/engineering/qs-how/SKILL.md": "91a6ffac699d2986902b57f78ff82c12577e60a0a989e300e84a832fa483987a",
+    "skills/engineering/qs-why/SKILL.md": "2848f1d428f6d7d340c0df243cd467de914e3f00eb8a8b36b09cc271ecc184aa",
+    "skills/engineering/qs-blast-radius/SKILL.md": "3a5b67e49098784ce29d87bf11e68e399eba25427949f2b7824427783ff7188a",
+    "skills/engineering/qs-runtime-forensics/SKILL.md": "1dad80fc2a7f6e7b4fe4b0141eb763ff8d3da436be850edf770c096b4a1b6540",
+    "skills/engineering/qs-trace-forensics/SKILL.md": "b8c5a6f0e2c2af2e3d79ab95e15c61364901870b852e5a7c0b757b49c0e93d91",
+    "skills/engineering/qs-create-verification-skill/SKILL.md": "3639bbeed911ed03be93fbb7aa481e73e7ad64af476fb1c21b3c4b03bc509d2c",
+    "skills/engineering/qs-maintain-verification-skill/SKILL.md": "1994f25aae8ea00bbc6bb7157461fbbea0cf128d1ff998783912071e93d18ed4",
+    "skills/engineering/qs-skill-eval/SKILL.md": "e35b5014b53257f8c1f35a9d69deb5d1df0f52c3a5c03ca5a25f273543746310",
+    "skills/engineering/qs-hillclimb/SKILL.md": "07533f0af9a1685b1f56e895e2d4d0b0786f81b0582ce73fd8c847a5508678a4",
+    "skills/engineering/qs-visual-parity/SKILL.md": "74535751a793bc2b386a4f4d8cf5c8e55d0ed33613a479601051a373370486d1",
+    "skills/engineering/qs-pr-babysit/SKILL.md": "0c4197b8b29c83bce0536e895028bde24604746a304cd3bafb305634eb8634b7",
+    "skills/engineering/qs-worktree-cleanup/SKILL.md": "c095fe61be030d07ae23f900b5e4616365b1a8fbf1aed0911cf1e0afbef9dc12",
+    "skills/engineering/qs-design-frontend/SKILL.md": "c80d53cf79c621a068d97c486942c41f93a86420ae6c93ac5af997924335fb1f",
+    "skills/engineering/qs-design-image-web/SKILL.md": "cc2b5c8b6f7979930e4c38b18b4212ae6fd6ae9a36703f01056845317ed11c83",
+    "skills/engineering/qs-design-image-mobile/SKILL.md": "199df48377fedd063546124e953e1ac8a2253f4583fee5f6206c068bec8d603f",
+    "skills/engineering/qs-design-image-to-code/SKILL.md": "4fe7c3e3468d80e2149ceb9640ae6b756974202e5d5b55c4523e7bc5daf4b6e4",
+    "skills/video/qs-video/SKILL.md": "51cbec497d9b0c89e2f332536bfc7c6d66cc4a56be57251aed7f433c8937a97b",
+    "skills/engineering/qs-unlazy/SKILL.md": "6fc749aeb04a3dc5e3e8b565363cc74be63fda4bed96a50487979e1667834112",
+    "docs/skill-run-contract.md": "cc46db29a6da850c50fb425e5a9e26fe6bcbfcb0e09c61475582893cd3d97271",
+    "scripts/goal-workflow.mjs": "48c577a31cbca76dd0b5e7af688b017d1cfa4a8c04461c37212be23e52be5846",
+    "scripts/skill-collection-registry.mjs": "e197f2fbab1a683fd10e98f4184d72d37ba683e13cabc01782b8980affbc2945",
+    "skills/engineering/qs-unlazy/modules/unlazy/scripts/gate-check.mjs": "29dee3acfdf566c24eedace85163a4e7a66eda01b712c5b4b76a99eae1eda8a1",
+    "skills/video/qs-video/scripts/caption-runtime.cjs": "7686c02f24033d42a40d1e07817256fa81d7ba1886cf7ae09fac920991cff9cf",
+    "skills/video/qs-video/references/runtime-profile.json": "28e0182b2489df5feb7571b0eaa0d7de35334a95182f3bfc23d093a0b85e901c",
+    "scripts/lean-mobile-report.mjs": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+    "scripts/lean-execution-trials.mjs": "830df7c56db2a49dadd9de61b8acc8c30eaee9411f0c250f80957a3e330abc9f",
+    "scripts/frontend-native-capture.mjs": "98d4607519976488f4424d30fae97e37cc93af1dc451110fc301d0d82564760c"
+  },
+  "evidenceSHA256": {
+    "tests/fixtures/lean-execution-adoption/mobile-native-mentions-diagnosis.md": "6f0236e599bcbb525315f38cae00870a56a8902bfe4b572b121c288d7e23aae3",
+    "tests/fixtures/lean-execution-adoption/mobile-native-source/LICENSE": "d17f227e4df5da1600391338865ce0f3055211760a36688f816941d58232d8dc",
+    "tests/fixtures/lean-execution-adoption/mobile-native-source/NOTICE": "9d71575ecfd9a843fc1677b0efb08053c6ba9fd686a0de1a6f5382fd3c220915",
+    "tests/fixtures/lean-execution-adoption/mobile-native-source/mentions.rs": "c0b4a9cb20805d0e4bc9084418704c4fac77eca46fb815b67c73680569d749bd",
+    "tests/fixtures/lean-execution-adoption/mobile-native-source/notice-identities.json": "05b4afc2905d4ee328c03fcedb38f0dfbf94e4cde49606239e83ac8b189d83c8",
+    "tests/fixtures/lean-execution-adoption/mobile-native-source/selection.rs": "506bc732789ffa40ad03882f2dc81e4b7f6194e1eb5b0854c5d6513f40185f91",
+    "tests/fixtures/lean-execution-adoption/mobile-native-source/turn.rs": "b8d16ea9290835e8f901b4708e34a8722a74a096b0c5532706deb09765770b11",
+    "tests/fixtures/lean-execution-adoption/mobile-native-unicode-dollar-confirmation.md": "95eac1bb3bcbf9a924aa011e0bef1d6683994c2cf699bd36a18163c3df143a6c",
+    "tests/fixtures/lean-execution-adoption/mobile-report-capture-pipeline.json": "e777ec44efe11a3cb89985bc754ae4c8eb52916b48ba1c58932944d06e151dc2",
+    "tests/fixtures/lean-execution-adoption/mobile-report-diagnosis.txt": "c6ddf643125b0de6476ba26fa6414acc0ebe797f620c2f0b41b4db1945cfff37",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/configured-controls.json": "cb35d84c7ac6bbfd5171f68be55b8398e252d6d2267f035bbb9fd2c71d5bb871",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/events.jsonl": "9005c4092e3d50f33aed98eb2cbcb1e7670a3e53b3a8963bc6c6a90a456bd9f8",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/initialize-response.json": "0e7d43313d88573d11dc7542f383658101141e685be03edfcab0854b5e2d9455",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/process.json": "1516c3696630e6efd3823d935552e5c0aabf7af325673f7eb62d5dcfbef86b0b",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/prompt.txt": "207b45e3d0b7dbe2346e34bee00854988e716449c4b357faaa8d449e385b8ed5",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/raw-protocol.jsonl": "eaacbd6045e787644cb7aac9954171885e6d5b5b29f416eaa6e92d6e125aaca6",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/raw-stdout.jsonl": "885342409e6e2ff482a192136192606519cd5db7ae180268b6af6f14e32ab2b0",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/response.md": "c80a68c528a5030f80bf22f61a2326c9bf97d3427f123247c3d2f1b779da49d3",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json": "a3f4931d18b20f23f23cb4df60490dc3686474982e8f890f757237a0df5abf3f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/stderr.txt": "dfeac295be4dca11f5c71993f23502740b7d05809ba72dedabe0e016b217c597",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/telemetry.json": "74e50a96f4a73d6be36f75e43b01b78ac1b5abb7c9500f9d43600fc85cf56302",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/thread-start-response.json": "503758b8bbc870e89c878b1c7e4844aeabd17f5cf2a84f981d983671341d7bd3",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/configured-controls.json": "cb35d84c7ac6bbfd5171f68be55b8398e252d6d2267f035bbb9fd2c71d5bb871",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/events.jsonl": "52469e06f68a06fdd9c69a6fdddc68d3ccd40d69d09db522bc1992ca5b409c9a",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/initialize-response.json": "0e7d43313d88573d11dc7542f383658101141e685be03edfcab0854b5e2d9455",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/process.json": "6bb61f3919d5a1b544edbdffd8fe418ecf5620d63dbad77331489447dfdcc355",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/prompt.txt": "414ef84dc011780f1de3e63763cc7ddeca633e2ba069ca8c92775079fc1ab1d9",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/raw-protocol.jsonl": "630432fda37b85e6e19075d33dca0ea6860311fc842b5ab58064b4bb5096151a",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/raw-stdout.jsonl": "6c9c8a97c2d4bc5d0c37be101aec70641583524a897c33c85d61245f93725d76",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/response.md": "528cbf96089a447cf10dc81326d8bbd6515425cf54baa8d8d11c9bce87aea18f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json": "d6db56510952b104e9dc5212a652ad648ccebff535d433102140f13dc72d3cdc",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/stderr.txt": "a0b905bf7830b9a28e6b698932dced56c2ef167b803687d34761c1504ae9e626",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/telemetry.json": "bc633f1824fb6d90701f2ae0af57f8c620ad90a50f806c4a99c00c225262c15a",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/thread-start-response.json": "6325b317ca803b07689354b35a4a0b80637334a7b9a1d56b5bf11c81817ae662",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/configured-controls.json": "cb35d84c7ac6bbfd5171f68be55b8398e252d6d2267f035bbb9fd2c71d5bb871",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/events.jsonl": "f2169b51f85408ee294b86c966bb70109c0db2f8b5f95d0b95b8963e6763ee86",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/initialize-response.json": "0e7d43313d88573d11dc7542f383658101141e685be03edfcab0854b5e2d9455",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/process.json": "e6a2a40b8b6a56a771de9912daaf811e48db0953e201d257fe80aa733c3925f3",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/prompt.txt": "0d3f9eeae9a52fab2e604f5b7b040e190cf0fda554d5241b2e5b1f2e951ba5b9",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/raw-protocol.jsonl": "ca845e9962a7cfb989fd306f474eccd9690120e391f90f06f6e1fd03c9359f60",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/raw-stdout.jsonl": "556af5612576dc68adf356f80a287acc5cecfb8dff647cfe174da2e44f03aee1",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/response.md": "7c212b5c5c694fcfd59539ed67f3514ec4dd69707bd5800bb3e28a088b468315",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json": "e5e7c1d07d73886683acc51b904e71f75a9e228d510a641dbbb450695180ee42",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/stderr.txt": "5832866d9b10be098016ef88c51a41bca67c0f557bcae830676885b107b3b222",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/telemetry.json": "2338a84995b165aea1b97d1b6f00641e611d3ef3ef4d3a9063bcb1947cf2f9c7",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/thread-start-response.json": "b288078bf2f41a993e67f60408ade823d8bc8f61e3ccc6d5ebdcc12ef1295d77",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/binding.json": "c52491cd42abd6ed8cd2a3c40cdc6778234a9237e82d5fac4f8d74a10aa1fe0c",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-inputs.json": "b9c3c8702da508e6103baef4e074d5b81c094cae537c3b454124b0994c48fb16",
+    "tests/fixtures/lean-execution-adoption/mobile-report-followup-review.json": "de851dc69bea0bac06fab6d0e4ad85bfeebb53876c1b88336984e56a83e9b058",
+    "tests/fixtures/lean-execution-adoption/mobile-report-guard-review-final.txt": "c30ac27f896b0b23b013ce564295d833361aefbef726f486a605403347881827",
+    "tests/fixtures/lean-execution-adoption/mobile-report-guard-review-initial.txt": "9e2c34909148add75196687c34c45fdd4d127bac494f32e99a1ee02cfc2ee735",
+    "tests/fixtures/lean-execution-adoption/mobile-report-guard-review-v2.txt": "bef19b058d97ad7b7525e68a73824c4df97672355bfe77219018017226852755",
+    "tests/fixtures/lean-execution-adoption/mobile-report-native-payload-checks.json": "78f334f48fcea97d5b496c0777eba98f2fe39d4faecca935b03d7d55d8e55756",
+    "tests/fixtures/lean-execution-adoption/mobile-report-protocol.json": "92d9909a1d90a58cdf1df67c06e1b462f310e5a3b7a6ebc6be5810e5a6d09e67",
+    "tests/fixtures/lean-execution-adoption/mobile-report-requalification.json": "88fed01cd37c80867512882f2ade789cb97bd16b5439a52ca2b402b59e549b5f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/configured-controls.json": "cb35d84c7ac6bbfd5171f68be55b8398e252d6d2267f035bbb9fd2c71d5bb871",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/events.jsonl": "bb38317f0842399887e63e86a8d54096d2776edabf24ced573cd69f9dba91a6c",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/initialize-response.json": "0e7d43313d88573d11dc7542f383658101141e685be03edfcab0854b5e2d9455",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/process.json": "c5d1e087022f25261ec34476f00caa9553a97172fbace7b662759ca712e1aa18",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/prompt.txt": "88f5c6030aeeb74d4eb59cf6f89c096e0ca1d3b5d0f1913610a8f11a34afa085",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/raw-protocol.jsonl": "a9fb4f34eab2609f02d4cfb591a215cf20e0797f44e680eae57ee5349270ef69",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/raw-stdout.jsonl": "35e6015298c5c0b336bf0a24f1be258f5200f0dd3f8894565e95eb0b41950aa3",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/response.md": "a177a642d40e0b32421cce0cbf0ad120a5818581bec4ecc7c028c76568adb72f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/result.json": "7407c8ffa6b0b4c99f52f93e9bd200cf61ade16293b5c2679eb42335101e5cde",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/stderr.txt": "dd60fcdaffd0a17eb7dec5a2cf74811d506430b265378e4a1f5bb02eb219f506",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/telemetry.json": "e19165cde0298a6898b9edc0456c879c1896c7e8f57f63a0d30717ae4c3c6a17",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/thread-start-response.json": "7d574a088d6a84a990e3e0a611d63a14d59224187a2107d8a785bbdc4b508d99",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/configured-controls.json": "cb35d84c7ac6bbfd5171f68be55b8398e252d6d2267f035bbb9fd2c71d5bb871",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/events.jsonl": "6591f7f3a49ef8f7733a7c39d2d736eb4349c607c2fbf6418cdb95002eb3727a",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/initialize-response.json": "0e7d43313d88573d11dc7542f383658101141e685be03edfcab0854b5e2d9455",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/process.json": "16702090d5bfd984de14de8a84640acd3e5d612effea529975a5f66e646e12d5",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/prompt.txt": "d5af8f395bad0bc243f53385b873efb5a7c9df2acfa6b4929ea2db68176ee9a8",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/raw-protocol.jsonl": "5d5dc961798be52716d4c0bac4eed8f9ae8a6e69e5ebbc9f1bfdaba729a6774c",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/raw-stdout.jsonl": "364706e1f45729011b6793858bb85a5db7ad7fb16c13ccceb52d7613548ab4c1",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/response.md": "6e1bad3b9317141c43a76482351775cbf6229f5192544a2349d94c02b960658d",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/result.json": "3f2aec31d9754cb17f9f0a2f5d71729924aaf00bc012be1bb656eddb80586fe0",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/stderr.txt": "78b35b2e903e050dc23e0f747585a9004f525e2dfc27cc9a190b2e4bd1cbf646",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/telemetry.json": "24fe8ba204884ae2dcaf7e1b96a865b1b2f166fc666647d39ab4e161395497f1",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/thread-start-response.json": "24ebc1d2e3cf88da3a7b4af8f4ae4c348a76287c6e2dad75bb5c56a542fd3a7e",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/configured-controls.json": "cb35d84c7ac6bbfd5171f68be55b8398e252d6d2267f035bbb9fd2c71d5bb871",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/events.jsonl": "f229c8a8acce79ce7c637a928be0b6c5f7570cf654dce80c005dccbf5efe77f8",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/initialize-response.json": "0e7d43313d88573d11dc7542f383658101141e685be03edfcab0854b5e2d9455",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/process.json": "603127b61123b442afff1d073b9e777ccd3df20c45f988d0846e28c5797ea48c",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/prompt.txt": "4d5bf7fa8f8ab255d18f746fe3c6c8b952a801a18a41e9a4cacf8152f34ed20e",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/raw-protocol.jsonl": "d8d4bef1bfe423184a60a455b54db52a8304261c429fbec5569df9b7794d0e2a",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/raw-stdout.jsonl": "14b00b3e1adef293f2559da0b340e8f7a278fb3103a4f6e126791e7a53f1722f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/response.md": "4a8a45bb4f2b86efba4142e7d2381111efc11db32590b3318907b401983e6e22",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/result.json": "d0cb8a0dd184599cb4f9783cb9eb75f0ac9608f1c1622a084f3202e9befbf759",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/stderr.txt": "9e8a3d322845bb6769389daa0671ba073e6dd7f43267e51cc1e2c513072bd758",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/telemetry.json": "458914d4c000549f6b324fbe25739a660c419308ff5499af29fb37b380db64d4",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/thread-start-response.json": "09183b0dcfd582084e702a8e02e79a83036b803294c417eb5929504dc2d5101f",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/binding.json": "1235c68c9759e2dbba0fae8ec08cad534b62d7c07f77d1874b53ff734dae5789",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-inputs.json": "0c03602dfa7ba97faad0b7d6b4e5c23d47ea4e3332761f7f700f8c3aa45ba0a8",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-protocol.json": "40c8b2f143da2e127bcaadbd3a67eaac4c56111a43533f4d06db0c27c61cdc5e",
+    "tests/fixtures/lean-execution-adoption/mobile-report-transport-review.json": "3733bf112d6cb920528a0142567091f0001aea765a973cee57b68486e8a20664",
+    "tests/fixtures/lean-execution-adoption/lex12-noninstall-evidence.json": "b00f674e77a959fd01e1dbc4a5dd84ea699acd4ca049fdec9254abaaa71a2d4e",
+    "tests/fixtures/lean-execution-adoption/lex12-acceptance.json": "00e5c607a992d83a9228277d5ba21cb4fbad687ad009f3efaa80c63343e970c2",
+    "tests/fixtures/lean-execution-adoption/evaluation-disposition.json": "035ca98a6ce77f97232ad91a65c547762fe452bf956ac16321aaa4087d117161",
+    "tests/fixtures/lean-execution-adoption/noninstall-validation.json": "4875a44bdcc09ecffaec072ac78a003d0874a348ddb2d84d4999584b48b6c217",
+    "tests/fixtures/lean-execution-adoption/qualification-extra-captures/B8/result.json": "20ab329572b2ee421a10f83cadd8e2476d4f5c1e28772ad968190641f8164960",
+    "tests/fixtures/lean-execution-adoption/qualification-extra-captures/B8/prompt.txt": "207b45e3d0b7dbe2346e34bee00854988e716449c4b357faaa8d449e385b8ed5",
+    "tests/fixtures/lean-execution-adoption/qualification-extra-captures/B8/response.md": "b664a120c5acca1aaa53f366e1a41245136d77f79c1bfc3dcd0d67cd54d69ce6"
+  },
+  "originalB8": {
+    "status": "failed/unqualified; original record remains pending and unchanged",
+    "resultSHA256": "20ab329572b2ee421a10f83cadd8e2476d4f5c1e28772ad968190641f8164960",
+    "owningRootAndRouteFailureRetained": true
+  },
+  "diagnosis": {
+    "initial": "Canonical/frozen source is consistent. Original output violates that contract, but output alone does not establish source conflict or the causal mechanism.",
+    "refinement": "The native host scans dollar skill mentions in the raw frozen documentation and can select installed roots. This is a concrete contamination path omitted by a source-only diagnosis.",
+    "sourceChange": "No canonical, private mobile, output-generator, catalog, invocation-policy or configured-settings change."
+  },
+  "nativeMechanism": {
+    "version": "0.162.1",
+    "officialRevision": "7a078f6bb4ce0dc2a81408b334ce52979d92c603",
+    "sourceRoot": "tests/fixtures/lean-execution-adoption/mobile-native-source",
+    "references": [
+      {
+        "file": "tests/fixtures/lean-execution-adoption/mobile-native-source/selection.rs",
+        "url": "https://github.com/openai/codex/blob/7a078f6bb4ce0dc2a81408b334ce52979d92c603/codex-rs/skills/src/selection.rs"
+      },
+      {
+        "file": "tests/fixtures/lean-execution-adoption/mobile-native-source/mentions.rs",
+        "url": "https://github.com/openai/codex/blob/7a078f6bb4ce0dc2a81408b334ce52979d92c603/codex-rs/skills/src/mentions.rs"
+      },
+      {
+        "file": "tests/fixtures/lean-execution-adoption/mobile-native-source/turn.rs",
+        "url": "https://github.com/openai/codex/blob/7a078f6bb4ce0dc2a81408b334ce52979d92c603/codex-rs/core/src/session/turn.rs"
+      }
+    ],
+    "actualInjection": "inferred; assembled model context not captured",
+    "observation": "Legacy native text contains the documented handoff literal. The three resulting reports select handoff, whose own continuation policy matches the observed clarification route. A formal native root switch or actual prompt injection was not exposed by protocol.",
+    "license": "Exact upstream LICENSE and NOTICE retained with original identities."
+  },
+  "correction": {
+    "transport": "Opt-in json-unicode-dollar representation; the native parsed text keeps six-character backslash-u0024 sequences. Decoded source, context and request are byte-equivalent to paired legacy fixtures.",
+    "legacyCompatibility": "Default responsePrompt behavior and original B8 stimulus remain byte-identical.",
+    "guard": "Read-only mechanical check of owning root and exact host/catalog continuation; conservatively unqualified HTML/comments/quoted continuation ambiguity. It never rewrites a response and cannot establish semantic authority or package acceptance.",
+    "binding": {
+      "reportQualification": {
+        "kind": "mobile-root-and-route",
+        "checkerSHA256": "41c2b11892323485daa10557129e0dceaebe6a8200eb2c3a0064eee17f992d67",
+        "policy": {
+          "host": "codex",
+          "root": "/qs-design-image-mobile",
+          "allowedContinuations": [
+            "$qs-skills:qs-flow-handoff"
+          ],
+          "maximumPrompts": 1
+        }
+      }
+    },
+    "historicalPipeline": "mobile-report-capture-pipeline.json preserves v1 runner/checker bytes; append-only final requalification preserves initial capture-time result fields."
+  },
+  "legacyResponses": [
+    {
+      "id": "MR1",
+      "result": "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR1/result.json",
+      "resultSHA256": "a3f4931d18b20f23f23cb4df60490dc3686474982e8f890f757237a0df5abf3f",
+      "captureIntegrity": true,
+      "finalReportCheck": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [
+          "$qs-skills:qs-plan-clarify"
+        ],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced",
+          "Ineligible continuation literal: $qs-skills:qs-plan-clarify"
+        ]
+      },
+      "independentQualified": false,
+      "toolCount": 0,
+      "observedImageCalls": 0
+    },
+    {
+      "id": "MR2",
+      "result": "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR2/result.json",
+      "resultSHA256": "d6db56510952b104e9dc5212a652ad648ccebff535d433102140f13dc72d3cdc",
+      "captureIntegrity": true,
+      "finalReportCheck": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced"
+        ]
+      },
+      "independentQualified": false,
+      "toolCount": 0,
+      "observedImageCalls": 0
+    },
+    {
+      "id": "MR3",
+      "result": "tests/fixtures/lean-execution-adoption/mobile-report-followup-captures/MR3/result.json",
+      "resultSHA256": "e5e7c1d07d73886683acc51b904e71f75a9e228d510a641dbbb450695180ee42",
+      "captureIntegrity": true,
+      "finalReportCheck": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": false,
+        "reportedRoots": [
+          "/qs-flow-handoff"
+        ],
+        "continuations": [],
+        "errors": [
+          "Owning mobile root is missing, duplicated or replaced"
+        ]
+      },
+      "independentQualified": false,
+      "toolCount": 0,
+      "observedImageCalls": 0
+    }
+  ],
+  "transportResponses": [
+    {
+      "id": "MT1",
+      "result": "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT1/result.json",
+      "resultSHA256": "7407c8ffa6b0b4c99f52f93e9bd200cf61ade16293b5c2679eb42335101e5cde",
+      "captureIntegrity": true,
+      "finalReportCheck": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": true,
+        "reportedRoots": [
+          "/qs-design-image-mobile"
+        ],
+        "continuations": [],
+        "errors": []
+      },
+      "independentQualified": true,
+      "toolCount": 0,
+      "observedImageCalls": 0
+    },
+    {
+      "id": "MT2",
+      "result": "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT2/result.json",
+      "resultSHA256": "3f2aec31d9754cb17f9f0a2f5d71729924aaf00bc012be1bb656eddb80586fe0",
+      "captureIntegrity": true,
+      "finalReportCheck": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": true,
+        "reportedRoots": [
+          "/qs-design-image-mobile"
+        ],
+        "continuations": [],
+        "errors": []
+      },
+      "independentQualified": true,
+      "toolCount": 0,
+      "observedImageCalls": 0
+    },
+    {
+      "id": "MT3",
+      "result": "tests/fixtures/lean-execution-adoption/mobile-report-transport-captures/MT3/result.json",
+      "resultSHA256": "d0cb8a0dd184599cb4f9783cb9eb75f0ac9608f1c1622a084f3202e9befbf759",
+      "captureIntegrity": true,
+      "finalReportCheck": {
+        "scope": "mobile-report-identity-and-route-only",
+        "passed": true,
+        "reportedRoots": [
+          "/qs-design-image-mobile"
+        ],
+        "continuations": [],
+        "errors": []
+      },
+      "independentQualified": true,
+      "toolCount": 0,
+      "observedImageCalls": 0
+    }
+  ],
+  "independentReviews": {
+    "source": "mobile-report-diagnosis.txt",
+    "native": "mobile-native-mentions-diagnosis.md",
+    "guard": "mobile-report-guard-review-final.txt",
+    "legacyBehavior": "mobile-report-followup-review.json",
+    "transportBehavior": "mobile-report-transport-review.json"
+  },
+  "qualificationScope": "Three named corrected-transport responses and the tested harness boundary. Not an efficacy benchmark, model reliability estimate, user-host activation, full runtime/package qualification or efficiency comparison.",
+  "boundaries": {
+    "sourceAdoption": "pending",
+    "fullPackageAcceptance": "pending for all six",
+    "closureAcceptance": "unknown",
+    "efficiency": "inconclusive",
+    "efficiencySHA256": "035ca98a6ce77f97232ad91a65c547762fe452bf956ac16321aaa4087d117161",
+    "controlledComparison": "unexecuted; frozen 294-run schedule unchanged",
+    "commit": "not authorized or performed",
+    "push": "not authorized or performed",
+    "publication": "not authorized or performed",
+    "userHostInstallation": "not authorized or performed"
+  },
+  "legacyTransportCaveat": "Prior raw responses remain observations, but legacy capture integrity does not establish isolation from installed-skill prompt expansion when raw dollar skill literals are present. This pass does not retroactively upgrade or rewrite historical behavior acceptance. Source reviews, source hashes and deterministic validations remain reusable where unchanged."
+}

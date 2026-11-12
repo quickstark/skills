@@ -1,5 +1,11 @@
 # Platform-aware mobile images
 
+Repair failed requested screens or prompts selectively, preserving accepted screens,
+references and the complete requested state set. Shared navigation, assets or design
+tokens reopen affected cross-screen, safe-area, continuity and readability evidence.
+Retain final flow verification. Prompt-only repair makes no image or product-code
+calls; missing usage and capabilities stay unverified rather than guessed.
+
 Preserve the selected iOS, Android or cross-platform mode. Use its established
 navigation, controls and system-region conventions. Check current project/platform
 references when details matter instead of inventing native components. A neutral

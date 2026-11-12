@@ -1,0 +1,25 @@
+{
+  "scenario": "L1",
+  "repetition": 3,
+  "variant": "b",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — explain execution and verification (weight: 100%); grounded in the supplied scope.\n\nStage: Execution choice | Stage estimate: ~100% | Overall estimate: ~100% | complete — explanation finished; implementation was not performed. Input needed: none for this explanation.\n\nStatus: Complete\nSkills used: /qs-code-build\nOutcome: Use single mode, working serially inside the owning root. One message change and one focused check provide no independent units that justify delegation, graph mode, or module decomposition. Keep implementation, review, repair, and validation inside this root.\nSpecs: Not located\n\nBefore editing, confirm repository requirements, dirty state, the exact replacement message, and what the existing check covers. Its contents were not supplied, so a meaningful TDD seam is not yet verified. If it asserts the message, use the internal TDD loop within authorized scope: establish the baseline, confirm an expectation for the new message fails for the intended reason, then change the message and rerun. If test-first work is impractical within that scope, document why and use the focused check plus direct verification through the real caller. Do not manufacture a failing test or silently expand the file scope.\n\nAfter the change, rerun the focused check, perform repository-required wider validation, and inspect the final diff for correctness, secrets, and unrelated changes. Repair failures and repeat affected checks inside this root. No checks, edits, commits, or publication occurred in this fixture.\n\nWork summary:\n- Finished — explained serial execution and the necessary verification strategy; the material output is this explanation. No check results were supplied.\n- Next — None verified from the supplied observations and task history; no external tracker was selected. File identities, check contents, and repository requirements remain unavailable.\n\nNext work prompt: None — no follow-on needed.",
+    "requestedActions": []
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "64cab15ead8b112a037206752fa002a177f85b69adc709aaaf1d8509754690c7",
+  "sourceSHA256": "55aad3b5de8f5e38fc0885397fa12fed20f5498cb8a835a56c44a836bf4d2712",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29702,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 904,
+      "reasoning_output_tokens": 503,
+      "total_tokens": 30606
+    }
+  ]
+}

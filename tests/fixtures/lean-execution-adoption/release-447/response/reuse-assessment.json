@@ -1,0 +1,56 @@
+{
+  "kind": "reuse-only-no-recapture",
+  "zeroDollarCaptures": [
+    {
+      "caseId": "L3",
+      "capture": "candidate-pilot/L3-1",
+      "scope": "Scoped original candidate response accepted independently; actual native turn/start text has no raw dollar bytes."
+    },
+    {
+      "caseId": "L3",
+      "capture": "candidate-pilot/L3-2",
+      "scope": "Scoped original candidate response accepted independently; actual native turn/start text has no raw dollar bytes."
+    },
+    {
+      "caseId": "L3",
+      "capture": "candidate-pilot/L3-3",
+      "scope": "Scoped original candidate response accepted independently; actual native turn/start text has no raw dollar bytes."
+    },
+    {
+      "caseId": "L6",
+      "capture": "candidate-pilot/L6-1",
+      "scope": "Scoped original candidate response accepted independently; actual native turn/start text has no raw dollar bytes."
+    },
+    {
+      "caseId": "L6",
+      "capture": "candidate-pilot/L6-2",
+      "scope": "Scoped original candidate response accepted independently; actual native turn/start text has no raw dollar bytes."
+    },
+    {
+      "caseId": "L6",
+      "capture": "candidate-pilot/L6-3",
+      "scope": "Scoped original candidate response accepted independently; actual native turn/start text has no raw dollar bytes."
+    },
+    {
+      "caseId": "P10",
+      "capture": "one-shot-recovery-captures/P10",
+      "scope": "Internal helper bounded evidence behavior; no raw dollar in actual native turn/start text."
+    }
+  ],
+  "mobile": {
+    "caseIds": [
+      "MT1",
+      "MT2",
+      "MT3"
+    ],
+    "review": "tests/fixtures/lean-execution-adoption/mobile-report-transport-review.json",
+    "scope": "Retained corrected-transport mobile explanation, actual prompt rewrite, and missing-input block. Covers mobile correction; original B8/MR1\u2013MR3 remain failed. No repeat."
+  },
+  "limits": "Historical raw-dollar responses still observations; their semantic acceptance is not rewritten. Zero-dollar reuse addresses only native text dollar-mention contamination, not full assembled context isolation, actual product runtime, installed-host acceptance or efficiency.",
+  "localSemanticCrossCheck": {
+    "L3": "All three returns preserve fresh worker context, supplied revision, two-file write scope, independent caller reads, missing prerequisite/requirement gaps, bounded return and parent recheck ownership. Existing blinded independent decisions are retained.",
+    "L6": "All three returns identify supplied causal line 20, reject instruction at line 195, preserve unavailable diagnostic text/path and unmeasured usage/budget. Existing blinded independent decisions are retained.",
+    "P10": "Preserves 3 valid inspected cases, reopens 1 invalidated and leaves 4 untouched; no helper status or separate percentage. Existing independent decision is retained.",
+    "independence": "This local cross-check is not a new independent acceptance decision."
+  }
+}

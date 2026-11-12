@@ -255,7 +255,14 @@ test('target notices and explicit closure adoption cannot disappear or be inferr
   rejects(doc => { doc.target.notices.push(structuredClone(doc.target.notices[0])); }, /notice coverage differs/);
   rejects(doc => { doc.target.notices[0].sha256 = 'b'.repeat(64); }, /notice digest mismatch/);
   rejects(doc => { const closure = doc.target.closures[0]; closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; closure.adoptionEvidence = []; }, /adoption evidence|adopted owner decision/);
-  rejects(doc => { const closure = doc.target.closures[0]; doc.target.capabilities.find(entry => entry.role === 'public' && entry.name === closure.owner).decision = { status: 'pending', revision: null, evidence: [], note: 'Unresolved owner negative control.' }; }, /adopted owner decision/);
+  rejects(doc => {
+    const closure = doc.target.closures[0];
+    // Exercise an explicit adoption claim even when current source adaptations
+    // honestly leave the repository's owner/closure acceptance pending.
+    closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision;
+    closure.adoptionEvidence = ['tests/skill-provenance.test.mjs'];
+    doc.target.capabilities.find(entry => entry.role === 'public' && entry.name === closure.owner).decision = { status: 'pending', revision: null, evidence: [], note: 'Unresolved owner negative control.' };
+  }, /adopted owner decision/);
   const doc = structuredClone(baseline), closure = doc.target.closures[0];
   const evidence = ['docs/specs/quickstark-upstream-adoption.md'];
   closure.adoptionStatus = 'adapted'; closure.adoptedRevision = closure.reviewedRevision; closure.adoptionEvidence = evidence;

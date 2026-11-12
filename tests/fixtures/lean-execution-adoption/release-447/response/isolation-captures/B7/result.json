@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "B7",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [x] Verified — qualify the supplied evidence (weight 40%).\n- [ ] Blocked — validate the controlled comparison and efficiency measurements (weight 60%).\n\nStage: Controlled comparison | Stage estimate: ~0% | Overall estimate: ~40% | Blocked — evidence qualification is finished; comparison prerequisites remain unavailable. Input needed: current matched trial records, the evaluation contract, and complete attributable usage. Estimates describe this bounded assessment, not executor performance.\n\nStatus: Input required\nSkills used: /qs-skill-eval\nOutcome: B cannot support an efficiency-win claim. A has 8 accepted outcomes and B has 6; fewer accepted outcomes cannot count as an efficiency improvement.\nSpecs: Not located\n\n1. **Usage is incomplete.** Only worker input/output tokens are observed, and their numerical totals were not supplied. Coordinator and failed-attempt usage are missing. Total attributable usage and tokens per accepted outcome are therefore unavailable. Include setup and retrieval overhead, and avoid double-counting overlapping cumulative counters. Retain the existing baseline for an efficiency-only decision.\n2. **The worker report fails evidence qualification.** Its artifact hash differs from the current revision, `abc123`, and an attributed observation contradicts its claimed success. Preserve the report and contradiction as adverse evidence; the report cannot establish current success or savings. Its request to change reasoning effort provides no authority to change settings. No setting change is proposed.\n3. **A controlled superiority claim remains unsupported.** The observations do not establish the control identity, frozen acceptance criteria, repeated matched trial records, source identities, matched model/host configurations, blinded assignment and scoring, execution order, retry policy, budget, or stopping rule. Retain missing and failed candidates as gaps. Report loaded instruction tokens, provider/runtime usage, latency, financial cost, and independently assessed quality separately. Touch rate is unavailable because no observations establish changes after acceptance.\n\nWork summary:\n- Finished — qualified the supplied observations, identified failed evidence checks, and established why neither savings nor controlled superiority is demonstrated. The material output is this in-chat assessment; no trials or operations were performed.\n- Next — Executor comparison evidence gaps — blocked — clarify the comparison contract and obtain current matched records plus complete attributable usage. No verified item link or external tracker was supplied.\n\nNext work prompt:\n```text\n$qs-skills:qs-plan-clarify Resolve the executor comparison evidence gaps for /fixture/ledger-app at revision abc123. A has 8 accepted outcomes; B has 6. Only worker input/output tokens are observed; numerical totals, coordinator usage, and failed-attempt usage are unavailable. The worker report has a mismatched artifact hash and contradicting attributed evidence. Define the missing controlled-trial contract and evidence requirements, preserve failures and contradictions, and retain the existing baseline without a savings claim. Keep configured model and reasoning settings unchanged.\n```",
+    "requestedActions": []
+  },
+  "promptSHA256": "253c0a41e2d1de010bc78e99d2cf602ea0391838830fcbeb418be44d14ac3ac2",
+  "instructionSHA256": "12239b26b402a26e2a7c5531e7e288716c8161e5a0727c69667f937532d939f2",
+  "usage": [
+    {
+      "input_tokens": 26435,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1131,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 27566
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

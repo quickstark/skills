@@ -1,0 +1,22 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "L12",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-test-verify\nOutcome: One genuine failure is reported. Preserve the already-verified unaffected suite; no fourth attempt solely to obtain a pass is justified.\n\n- [x] Verified — unaffected suite, as supplied in the request; identifying evidence was not supplied.\n- [ ] Failed — genuine failing test; identity and decisive diagnostic evidence are missing.\n\nStage: Verification | Stage estimate: unknown | Overall estimate: unknown | failed — Failure remains unresolved. Input needed: test identity, command, environment, and bounded failure evidence. Progress telemetry and effort weights were not supplied, so percentages cannot be substantiated.\n\nThe bounded diagnostic return should identify the failing unit, reason, decisive diagnostic excerpt, affected scope, and safe source or log pointer. Record the exact command, artifact revision, environment, and limitations. Only revision `fixture-r1` is supplied here; the remaining details and attempt history stay unknown. No diagnosis, execution, or repair is claimed.\n\nRerun affected checks when the artifact, dependencies, or environment changes and invalidates their passes. Retry a failure only for an identified transient condition within a declared bound, retaining both attempts. Preserve still-valid unaffected results. Every required integration check remains mandatory; none has a supplied result here. Repeated runs without progress require separate diagnosis, not another attempt to obtain green results.\n\nSpecs: Not located\nWork summary:\n- Finished — bounded assessment of the supplied failure and unaffected-suite result; no new verification results or material outputs.\n- Next — reported failing test (identity and link not supplied) — failed — establish the smallest reliable failure boundary through separate diagnosis.\n\nNext work prompt:\n```text\n$qs-skills:qs-code-debug Diagnose the genuine failing test reported in this verification request at revision fixture-r1. First establish its identity, exact command, environment, reason, bounded decisive evidence, affected scope, and a safe source or log pointer; these details were not supplied. Preserve the already-verified unaffected suite unless new evidence invalidates its pass. Missing telemetry and attempt history remain unknown. Do not make a fourth attempt solely to obtain a pass. Retain failure evidence and rerun only affected checks or an identified transient condition within a declared retry bound; required integration checks remain mandatory.\n```",
+    "requestedActions": []
+  },
+  "promptSHA256": "d9d5de309088c2bef80306b012effd3113b7b00d2681f8d82895bb848f4e648f",
+  "instructionSHA256": "c0b61ff9b05dbf15c31b3954d031ca6e76dfb86a03a14c3d519fda93ac63a252",
+  "usage": [
+    {
+      "input_tokens": 22128,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1405,
+      "reasoning_output_tokens": 912,
+      "total_tokens": 23533
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

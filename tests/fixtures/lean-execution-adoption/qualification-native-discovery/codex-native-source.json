@@ -1,0 +1,34 @@
+{
+  "argv": [
+    "codex",
+    "app-server",
+    "--listen",
+    "stdio://"
+  ],
+  "cwd": "/github/skills",
+  "environmentOverrides": {},
+  "requests": [
+    {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "clientInfo": {
+          "name": "qs-lex-source-discovery",
+          "version": "1"
+        },
+        "capabilities": {
+          "experimentalApi": true
+        }
+      }
+    }
+  ],
+  "stdout": [],
+  "stderr": [
+    "WARNING: proceeding, even though we could not create PATH aliases: Read-only file system (os error 30)",
+    "Error: Read-only file system (os error 30)"
+  ],
+  "modelRequests": 0,
+  "blocker": "No response before exit or 20 second deadline",
+  "exitCode": 1
+}

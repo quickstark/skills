@@ -1,0 +1,6 @@
+{
+  "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | blocked — Supplied implementation and review milestones support Build 50%. Input needed: supported goal-tool availability and authoritative matching goal state before further execution.\n\nOptional research is unrelated and out of scope, so its weight is removed without awarding completion credit:\n\n- Denominator: 60 + 10 + 30 + 20 = 120 → 100.\n- Weighted progress remains 60 × 50% = 30.\n- Overall estimate: 30 / 120 = 25% → 30 / 100 = **30%**.\n\nThe increase reflects the scope correction; no additional work is credited.\n\n- [ ] Build — blocked at ~50%; supplied milestones retained pending authoritative resumption checks.\n- [ ] Git — pending, 0%; weight 10.\n- [ ] Release — pending, 0%; weight 30.\n- [ ] Optional research — skipped; scope evidence establishes it is unrelated. Weight 20 excluded.\n\nBuild retains weight 60. Required completion checks and deployment artifact/version/health evidence remain missing. No operations were performed.",
+  "requestedActions": [
+    "Verify supported goal-tool availability, then inspect authoritative goal state with get_goal if available. Require input before dependent execution if goal support is unavailable or an unrelated active goal exists."
+  ]
+}

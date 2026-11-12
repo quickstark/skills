@@ -1,0 +1,32 @@
+APPROVAL REQUIRED GATES:G4
+    CHECK: npm test > .unlazy/release-447/final-tests.log 2>&1 && cat .unlazy/release-447/final-tests.log
+    EXPECT: /# fail 0|ℹ fail 0/
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-447-gate-approvals/5b9bf9e304c1f1f45b5590f7a2544cb8163b008193bd2773aae752ebd80cf072.json
+APPROVAL REQUIRED GATES:G9
+    CHECK: node .unlazy/release-447/preservation.mjs
+    EXPECT: PRESERVATION_OK
+    CWD: /github/skills
+    SHELL: /bin/sh
+    PATH: /home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+    APPROVED: /tmp/qs-447-gate-approvals/321fa8ad33f9d0474b70c3f98a893afa73c056a03cf66c38f6ebbcc9681dca8d.json
+  RUN  GATES:G3 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  RUN  GATES:G4 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  RUN  GATES:G5 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  RUN  GATES:G6 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  RUN  GATES:G9 shell=/bin/sh cwd=/github/skills PATH=/home/djn12313/.codex/packages/standalone/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/djn12313/.local/bin:/home/djn12313/.npm-global/bin:/home/djn12313/.openclaw/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  PASS GATES:G3: Canonical projections are synchronized.
+       exit=0; EXPECT=matched; output=Verified deterministic active projections for 6 packages across Codex, Claude, and Pi. | Verified provenance documentation for 73 capabilities.
+  PASS GATES:G4: Full regression suite passes.
+       exit=0; EXPECT=matched; output=ℹ todo 0 | ℹ duration_ms 665775.346796
+  FAIL GATES:G5: Full replacement validator accepts the candidate for every package and host.
+       exit=1; EXPECT=not matched; output=Acceptance source and evidence must be tracked, unchanged release files; uncommitted audit decisions cannot authorize rollout.
+  PASS GATES:G6: Available Claude strict validation passes all six roots.
+       exit=0; EXPECT=matched; output=✔ Validation passed | CLAUDE_SIX_OK
+  PASS GATES:G9: Catalog membership, active versions, invocation policy and PS transition payload are preserved.
+       exit=0; EXPECT=matched; output={"publicCommands":39,"packages":6,"activeManifests":19,"retainedTransitionPayloads":3,"videoModules":21} | PRESERVATION_OK
+GATES.md: 9 gates
+UNMET: 4 (met: 5)
+  GATES:G2, GATES:G5, GATES:G7, GATES:G8

@@ -1,0 +1,30 @@
+{
+  "scenario": "L4",
+  "repetition": 1,
+  "variant": "a",
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Failed\nSkills used: /qs-code-build\nOutcome: Return C alone for repair within this root. A and B retain their supplied passing evidence at `fixture-r1`; integration remains unverified. No operations were performed.\nSpecs: Not located\n\nProvisional effort weights: A 20%, B 20%, C repair 40%, integration validation 20%. Estimates have low confidence because implementation effort is unspecified.\n\n- [x] Verified — A: supplied pass at `fixture-r1`.\n- [x] Verified — B: supplied pass at `fixture-r1`.\n- [ ] Failed — C: supplied focused-check failure; repair unverified.\n- [ ] Pending — required integration check.\n\nStage: C repair | Stage estimate: ~0% | Overall estimate: ~40% | failed — C's focused check fails; A and B evidence remains valid. Input needed: C's check command, expected behavior, and redacted failure output.\n\n**Proposed repair return:** C only, based on `fixture-r1`. Capture and reproduce the failure, establish its cause, select regression coverage from the actual test seam, and propose the smallest coherent repair. Review the resulting diff. Return the resulting revision, affected files, causal evidence, exact check commands and results, and remaining blockers. No repair or passing result is established by the supplied observations.\n\n**Next checks:** Rerun C's reproducer and focused regression checks after repair, then the required integration check and any wider checks justified by the repair. C's isolated failure alone does not require repeating A or B.\n\n**Separate dependency-change scenario:** Reopen A's verification and invalidate any earlier C verification for the changed dependency. Earlier results remain historical evidence for their original revisions, not proof for the changed revision. Preserve B's evidence because its dependency is unaffected. With the same weights, credited progress would fall from ~40% to ~20%. Recheck A and C against the changed revision, then run integration. No integration pass was supplied to invalidate; that requirement remains pending.\n\nWork summary:\n\n- Finished — Classified supplied evidence and described C's proposed repair return and validation sequence. Material output: this response only; no repair or check execution claimed.\n- Next — C — failed — obtain reproduction evidence and repair internally; A and C — revalidation required in the separate dependency-change scenario — rerun affected checks; integration — pending — validate the resulting revision. No item links or exact commands were supplied; no external tracker was selected.\n\nNext work prompt: None — no distinct follow-on needed; repair and validation remain owned by this root.",
+    "requestedActions": [
+      "In the fictional fixture, obtain C's focused-check command, expected behavior, and redacted failure output.",
+      "Propose returning C alone for diagnosis, regression coverage where practical, the smallest coherent repair, and diff review within the owning build root.",
+      "After the proposed repair, rerun C's reproducer and focused checks, then required integration and relevant wider validation; retain unaffected A and B evidence.",
+      "In the separate shared-dependency-change scenario, reopen A and C verification, retain B's unaffected evidence, and rerun A, C, and integration against the changed revision."
+    ]
+  },
+  "telemetryPath": "telemetry.json",
+  "promptSHA256": "34de82551b223663043f5c5dc329b890fa2edc16252df20faa551ad82ff83685",
+  "sourceSHA256": "1e979f921798bad4cd5dbc1aee3740f1c06fbef667261121e4fee3cae61f555a",
+  "semanticReview": "pending independent blinded review",
+  "usage": [
+    {
+      "input_tokens": 29088,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1610,
+      "reasoning_output_tokens": 921,
+      "total_tokens": 30698
+    }
+  ]
+}

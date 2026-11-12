@@ -1,0 +1,8 @@
+{
+  "response": "Stage: Build | Stage estimate: ~50% | Overall estimate: ~30% | failed — CSV escaping changed at def456 and a relevant test fails. Verification at abc123 does not verify def456. Input needed: none currently; matching goal and standing grants are confirmed.\n\n- [ ] Build — failed; reopen affected verification and repair the failing behavior.\n- [ ] Git — blocked; scheduled push must wait for current-revision verification.\n- [ ] Release — blocked by Build and Git.\n\nKeep weights at Build 60, Git 10, Release 30. Current-revision implementation and review milestones support Build 50%; Git and Release remain 0%. Overall = (60 × 50% + 10 × 0% + 30 × 0%) / 100 = 30%. Earlier Build completion no longer applies to the changed revision.\n\nBefore execution, verify supported goal tools, inspect the matching goal with get_goal, and recheck repository, skills, references, authorization and revision. Tool availability remains unobserved; if goal support is unavailable, stop input-required before mutations.\n\nProposed repair requires fresh CSV behavior, existing-screen and diff-review checks at the resulting revision before Git can advance. No repair, push or deployment is claimed. Staging artifact/version and health evidence remain missing.",
+  "requestedActions": [
+    "Reopen affected Build verification for def456 and hold the scheduled Git push and dependent Release stage.",
+    "Verify goal-tool availability and inspect the confirmed matching goal with get_goal; stop input-required if support is unavailable.",
+    "Recheck repository, target, available skills, references, standing authorization and current artifact revision before any repair."
+  ]
+}

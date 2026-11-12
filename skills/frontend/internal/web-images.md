@@ -19,3 +19,9 @@ do not crop or regenerate an immutable supplied parity target.
 Present the actual images as the primary deliverable, identifying any unresolved
 legibility or factual-text error. A concise chat report accompanies them; it does
 not substitute prose for requested images.
+
+Correct only failed requested images or prompts while preserving accepted sections
+and authoritative references. A shared design change reopens affected consistency
+and readability checks across the set; it never reduces requested coverage. Keep
+provider/settings and actual budgets unchanged, report missing usage honestly,
+and do not turn prompt-only repair into image generation or implementation.

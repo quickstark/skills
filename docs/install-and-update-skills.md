@@ -2,6 +2,38 @@
 
 ## Restart Codex after an update
 
+<!-- quickstark-codex-restart:start -->
+### Copy/paste restart script
+
+Run this on the server host as the account that runs Codex, after active work
+finishes. Paste the whole block once into Bash or zsh at a normal shell prompt.
+Node, Codex and curl must be on PATH.
+
+```bash
+(
+  set -e
+  qs_restart_file="$(mktemp "${TMPDIR:-/tmp}/quickstark-codex-restart.XXXXXX")"
+  trap 'rm -f "$qs_restart_file"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/quickstark/skills/2a885c9155bc4885182874dc3a945963d784e5f4/scripts/restart-codex.mjs' --output "$qs_restart_file"
+  node --input-type=module - < "$qs_restart_file"
+)
+```
+
+It uses Codex's native restart on Linux/macOS, the existing dedicated systemd
+service on Linux (including dirk-dev), or the detached GMK Linux launch. It finds
+the current target, preserves its configuration and excludes proxies. It waits
+for Codex readiness before reporting success; uncertain targets stop.
+
+The download is pinned to the tested script commit; a failed download stops
+before execution. The temporary file is removed afterward. For a custom profile,
+set `CODEX_HOME` first. To inspect without restarting, add `--check` after the `-`
+on the `node` line. For a system-level service, the helper uses cached sudo
+permission only for the verified service restart. If permission is required, run
+`sudo -v` separately in your terminal, then paste the block again. User services
+need no sudo. Actual Mac execution remains unverified; external launchd jobs and
+app-owned servers use their original restart controls below.
+<!-- quickstark-codex-restart:end -->
+
 After updating QuickStark, start a fresh Codex chat to check that the skills load. Restart the App Server if the client still sees stale skills. A server restart can interrupt active or queued work across connected chats, so wait for that work to finish.
 
 ### Restart the client or the Codex-managed daemon
@@ -12,8 +44,13 @@ After updating QuickStark, start a fresh Codex chat to check that the skills loa
 
 ```bash
 codex app-server daemon restart
-codex app-server daemon version
 ```
+
+Then retry `codex app-server daemon version` for up to 30 seconds with the same
+account and `CODEX_HOME`. Require `status: running`, the expected profile socket
+and a nonempty `appServerVersion`. A service being active is not Codex readiness;
+an initial missing socket may clear during startup. The copy/paste helper above
+waits automatically. If readiness times out, inspect the launcher before retrying.
 
 Check for a running App Server version, then reconnect and test a fresh chat. If your build lacks the shell command, check `codex app-server daemon --help` for its available controls. [OpenAI’s Codex command guide](https://learn.chatgpt.com/docs/developer-commands#manage-the-background-server-with-daemon)
 
@@ -58,7 +95,9 @@ sudo systemctl --user --machine="${codex_owner}@.host" restart "$codex_unit"
 sudo systemctl --user --machine="${codex_owner}@.host" status "$codex_unit"
 ```
 
-Use the live unit on the affected host because transient `run-*.service` names can change. [systemctl manual](https://manpages.debian.org/trixie/systemd/systemctl.1.en.html)
+The helper above resolves a dedicated service from the selected server’s current cgroup, verifies its main process (or the observed root sudo wrapper), and uses the service’s loaded launch configuration. It never saves a transient `run-*.service` name as a permanent command. System service restarts use `sudo -n` with cached permission; `--check` never invokes sudo or restarts a service. It verifies a new service invocation, the replacement server’s profile and socket ownership, and Codex readiness. Unknown service layouts stop.
+
+For a manual restart, use the live unit on the affected host because transient `run-*.service` names can change. The dirk-dev operator verified its manual systemd restart and a responding Codex `0.168.0-alpha.7`; the first immediate socket query was too early. The new helper’s systemd route has isolated fixture coverage; live helper execution on dirk-dev remains unverified. [systemctl manual](https://manpages.debian.org/trixie/systemd/systemctl.1.en.html)
 
 ### macOS with a custom launchd job
 

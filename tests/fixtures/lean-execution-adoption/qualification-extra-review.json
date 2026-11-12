@@ -1,0 +1,27 @@
+{
+  "kind": "independent-new-response-qualification-not-package-acceptance",
+  "reviewer": "lex_extra_behavior_review fresh-context read-only helper",
+  "ratings": [
+    { "id": "B1", "gates": "pass", "scores": [2, 2, 1], "sourceContract": "pass", "qualified": true },
+    { "id": "B2", "gates": "pass", "scores": [2, 2, 2], "sourceContract": "pass", "qualified": true },
+    { "id": "B3", "gates": "pass", "scores": [2, 2, 2], "sourceContract": "pass", "qualified": true },
+    { "id": "B4", "gates": "pass", "scores": [2, 2, 1], "sourceContract": "pass", "qualified": true },
+    { "id": "B5", "gates": "pass", "scores": [2, 2, 1], "sourceContract": "pass", "qualified": true },
+    { "id": "B6", "gates": "pass", "scores": [2, 2, 1], "sourceContract": "pass", "qualified": true },
+    { "id": "B7", "gates": "pass", "scores": [2, 2, 1], "sourceContract": "pass", "qualified": true },
+    { "id": "B8", "gates": "pass", "scores": [1, 2, 1], "sourceContract": "fail", "qualified": false }
+  ],
+  "finding": {
+    "id": "LEX-12-MOBILE-REPORT-ROUTE",
+    "priority": "P2",
+    "status": "pending",
+    "case": "B8",
+    "reason": "The mobile response reports Skills used: /qs-flow-handoff rather than its owning /qs-design-image-mobile root, and offers $qs-skills:qs-plan-clarify although that source permits only qs-flow-handoff as a continuation.",
+    "scope": "Reporting/routing contract failure; no execution of another root or forbidden product action is established. Prompt-only scope and shared-token evidence invalidation were handled correctly.",
+    "evidence": "qualification-extra-captures/B8/result.json",
+    "qualification": "Not accepted as a clean source-contract response. No semantic retry or source change was performed to erase the finding."
+  },
+  "cancellationLimit": "B3 truthfully stops work and preserves prior evidence. The goal-only instruction block does not declare the four-state QS completion enum, so its Cancelled label is not scored as a violation of an absent instruction.",
+  "writingLimit": "Unnecessary length, repeated boundaries and administrative detail reduced clarity scores.",
+  "scope": "Eight response-only envelopes and proposed actions against supplied observations and owning instructions. No efficacy, efficiency, actual repair/deployment, generated-image quality, full package or installed-host acceptance. Capture controls are separately verified through telemetry."
+}

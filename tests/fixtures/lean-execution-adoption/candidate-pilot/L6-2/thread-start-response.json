@@ -1,0 +1,77 @@
+{
+  "thread": {
+    "id": "01a1cba3-ed8f-7ac0-8c36-7cc8ad510b9c",
+    "environments": [
+      {
+        "environmentId": "local",
+        "cwd": "/tmp/qs-lex-fixture-rSa3Ep",
+        "runtimeWorkspaceRoots": [
+          "/tmp/qs-lex-fixture-rSa3Ep",
+          "/docker/stacks",
+          "/docker/appdata",
+          "/github"
+        ]
+      }
+    ],
+    "extra": null,
+    "sessionId": "01a1cba3-ed8f-7ac0-8c36-7cc8ad510b9c",
+    "forkedFromId": null,
+    "parentThreadId": null,
+    "preview": "",
+    "ephemeral": true,
+    "section": null,
+    "sectionEnteredAt": null,
+    "projectId": null,
+    "historyMode": "paginated",
+    "modelProvider": "openai",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "createdAt": 1794417880,
+    "updatedAt": 1794417880,
+    "recencyAt": 1794417880,
+    "status": {
+      "type": "idle"
+    },
+    "path": null,
+    "cwd": "/tmp/qs-lex-fixture-rSa3Ep",
+    "cliVersion": "0.162.1",
+    "originator": "quickstark_native_trials",
+    "source": "vscode",
+    "canAcceptDirectInput": true,
+    "threadSource": null,
+    "agentNickname": null,
+    "agentRole": null,
+    "gitInfo": null,
+    "name": null,
+    "daybreakEnabled": null,
+    "turns": []
+  },
+  "model": "gpt-6.1-sol",
+  "modelProvider": "openai",
+  "serviceTier": "priority",
+  "disabledPluginIds": [],
+  "cwd": "/tmp/qs-lex-fixture-rSa3Ep",
+  "runtimeWorkspaceRoots": [
+    "/tmp/qs-lex-fixture-rSa3Ep",
+    "/docker/stacks",
+    "/docker/appdata",
+    "/github"
+  ],
+  "instructionSources": [],
+  "approvalPolicy": "on-request",
+  "approvalsReviewer": "auto_review",
+  "sandbox": {
+    "type": "workspaceWrite",
+    "writableRoots": [
+      "/docker/stacks",
+      "/docker/appdata",
+      "/github"
+    ],
+    "networkAccess": true,
+    "excludeTmpdirEnvVar": false,
+    "excludeSlashTmp": false
+  },
+  "activePermissionProfile": null,
+  "reasoningEffort": "high",
+  "multiAgentMode": "explicitRequestOnly"
+}

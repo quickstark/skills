@@ -1,0 +1,32 @@
+{
+  "kind": "reviewed-evidence-digest-refresh-not-new-acceptance",
+  "changed": [
+    {
+      "key": "tests/skill-provenance.test.mjs",
+      "previousSHA256": "9c077c805ce21c490f7e8ff36808ce91222de3c0fc5659b2c18c7b4b5a006a5b",
+      "currentSHA256": "c6e3f5161c3afe6882f96b99e77359ef6802c9f02d7fff2af2d4fa3a15a01dd6"
+    },
+    {
+      "key": "config/skill-provenance.json",
+      "previousSHA256": "112403a02e22ab5e353000e01a392b41cd82c3105e40b1ff97a3e25971bab5e0",
+      "currentSHA256": "6a341c8ae3fc03671fca9d371252d8ed19f59b9be3ab4e466414c4c226306b26"
+    },
+    {
+      "key": "tests/frontend-candidate.test.mjs",
+      "previousSHA256": "1b28f2055f7d63b126858488d58a8bf98b94a6a9a7c58110c13719418983d6cb",
+      "currentSHA256": "baa1bf8e5253ed729bcbb65a0487a43e1d05c59b3f0180169bf0899bbe727b07"
+    },
+    {
+      "key": "tests/qs-test-baseline.test.mjs",
+      "previousSHA256": "15e0c73d211b4c1d4ced7bed0f37ed836fb9c27b75294a58f1f692266f636032",
+      "currentSHA256": "f1dccbcf33ee3d40c1bba4a93507dfdb7c444ae214c04be09ec0d07e06e88a41"
+    },
+    {
+      "key": "package.json",
+      "previousSHA256": "77aa6de079991af709d71d0a2d2e69d948132b4e3f3649ce507c4f00a7147386",
+      "currentSHA256": "70d384bbfb03ff27b2972e594d09be3fc776d4000517672da88e2e2e00677a1a"
+    }
+  ],
+  "preserved": "Historical pre-LEX audit in historical-acceptance.json; audit.sources and all package/host acceptance statuses remain unchanged.",
+  "review": "source-review-final.json"
+}

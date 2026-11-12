@@ -1,0 +1,26 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P10",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Build stage: the process remains live with no new result, so no additional progress is confirmed. Of the 4 previously inspected cases, a code change invalidated 1; preserve evidence for the other 3 where still applicable and reopen the invalidated case in the parent’s checklist.\n\nRemaining work: reinspect the invalidated case and inspect the 4 untouched cases, leaving 5 of 8 without valid verification. Completion timing is unknown; no required user input was supplied. The parent should revise affected estimates and retain ownership of overall progress calculations.",
+    "requestedActions": [
+      "Reopen the invalidated case in the parent’s checklist and revise affected estimates.",
+      "Reinspect the invalidated case and inspect the 4 untouched cases.",
+      "Report new revision-bound evidence to the parent when available; during continued waiting, provide status within sixty seconds when host control permits."
+    ]
+  },
+  "promptSHA256": "67968024dde59a8c3a417ca5cb53d8f505c1a38e6d6e46d70ce8f87c980a7be5",
+  "instructionSHA256": "bdef5d8e19dbafa28cd0e9a719d2c18d4b4b67ea77f4fca092ba6a57fe0780b9",
+  "usage": [
+    {
+      "input_tokens": 19744,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 492,
+      "reasoning_output_tokens": 298,
+      "total_tokens": 20236
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

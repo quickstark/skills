@@ -1,0 +1,25 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "P8",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "Status: Complete (Build root only)\nSkills used: /qs-code-build\nOutcome: Supplied fixture evidence confirms the CSV implementation, acceptance tests, existing invoice screen checks, and diff review pass at the current revision. The overall goal remains incomplete.\n\nStage: Build | Stage estimate: ~100% | Overall estimate: ~60% | verified — Build completion supersedes the earlier 50% milestone. Input needed: none for this report.\n\n- [x] Build — verified, 100%; weight 60\n- [ ] Git — pending, 0%; weight 10\n- [ ] Release — pending, 0%; weight 30\n\nOverall = (60 × 100% + 10 × 0% + 30 × 0%) / 100 = 60%, up from 30%. Weights remain unchanged.\n\nSpecs: [CSV export specification](/fixture/ledger-app/docs/specs/export.md)\n\nWork summary:\n- Finished — CSV build and required validation, according to supplied evidence. No operations were performed in this response.\n- Next — [origin/feature/export](/fixture/ledger-app) — pending — verify supported goal tools and inspect authoritative goal state first; then recheck repository context and tested revision before the authorized commit/push. Verify the remote equals the tested revision before staging deployment.\n\nGoal state and the exact revision identifier remain unobserved. No deployed version or staging health evidence is supplied. Preserve Build completion evidence, but do not mark the overall goal complete.\n\nNext work prompt: None — Git is already scheduled by the submitted workflow; no duplicate continuation prompt.",
+    "requestedActions": [
+      "Verify availability of the host's supported get_goal, create_goal, and update_goal tools.",
+      "Use get_goal to inspect authoritative state. Resume only a matching goal; propose create_goal without a token budget only if no active goal exists. Verify the resulting matching goal state before stage execution. If support is unavailable or an unrelated goal is active, stop and report input-required."
+    ]
+  },
+  "promptSHA256": "93cc158a431c87498ad1974573835ad48778345b1a1b0e87a3cf245589cf23de",
+  "instructionSHA256": "b8b7f97b9a939749d7dad7943648e52f2d2f0bf60f38951246063e325ebb8196",
+  "usage": [
+    {
+      "input_tokens": 27511,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 955,
+      "reasoning_output_tokens": 516,
+      "total_tokens": 28466
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

@@ -22,6 +22,13 @@ coverage; never claim it from subjective resemblance or a replaced target. Prese
 the independent QS visual-parity outcome and route only when a distinct authorized
 run is needed and actually available; do not automatically invoke it.
 
+Repair the failed section or state without rebuilding accepted independent work.
+Changes to shared tokens, assets, components or behavior reopen affected viewport,
+interaction, accessibility and visual evidence; final integration verification
+remains required. Give helpers bounded outcomes, starting references, revision or
+content identities, write scopes and acceptance checks. Justify additional reads
+without expanding writes, and retain decisive source evidence rather than full logs.
+
 Generation is optional only when creating a design is inside this task. In that
 case use private prompt construction and available image tools, then implement the
 selected result. The supplied reference otherwise stays authoritative.

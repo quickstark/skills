@@ -1,0 +1,63 @@
+{
+  "initialAggregateEquality": "failed; native copying normalized directory modes in qs-skills",
+  "differences": [
+    {
+      "package": "qs-skills",
+      "path": "skills/qs-deploy-release",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-skills",
+      "path": "skills/qs-deploy-release/agents",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-specialists",
+      "path": "skills/qs-code-document",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-specialists",
+      "path": "skills/qs-test-author",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-specialists",
+      "path": "skills/qs-test-verify",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-specialists",
+      "path": "skills/qs-code-document/agents",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-specialists",
+      "path": "skills/qs-test-author/agents",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    },
+    {
+      "package": "qs-specialists",
+      "path": "skills/qs-test-verify/agents",
+      "kind": "directory",
+      "sourceMode": "0o700",
+      "installedMode": "0o775"
+    }
+  ],
+  "filePathsBytesExecutableBits": "all six source/cache package projections match exactly",
+  "qualificationLimit": "Full production tree digest equality is not claimed for qs-skills or qs-specialists; eight directory mode normalizations remain explicit."
+}

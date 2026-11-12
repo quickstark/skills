@@ -1,0 +1,26 @@
+{
+  "kind": "capture-integrity-not-behavior-acceptance",
+  "id": "G3",
+  "acceptedCapture": true,
+  "envelope": {
+    "response": "- [ ] Generate execution prompt — blocked; weight 100.\n\nStage: Generate execution prompt | Stage estimate: ~50% | Overall estimate: ~50% | blocked — Project evidence is supplied, but execution prerequisites remain unresolved. Estimate confidence is low. Input needed: deployment environment, deployment authorization, and available goal tools.\n\nStatus: Input required\nSkills used: /qs-deploy-prompt\nOutcome: No execution-ready prompt generated. Specify staging or production, explicitly authorize deployment to that environment, and provide a host with actual goal tools. Ordinary execution cannot substitute for goal support.\nSpecs: Not located\nWork summary:\n- Finished — Assessed supplied evidence for `/fixture/ledger-app`, branch `feature/export`, revision `abc123`. Readiness checks identify a missing deployment target, absent deployment authorization, and unavailable goal tools.\n- Next — [CSV invoice export](/fixture/ledger-app) — blocked — Resolve those prerequisites. Preserve authorization for repository edit/build/test and commit/push to `origin` on `feature/export`; deployment remains unauthorized. Implementation and specification remain pending.\n\nNext work prompt: None — Required execution prerequisites are unresolved.",
+    "requestedActions": [
+      "Request the explicitly selected deployment environment: staging or production.",
+      "Request explicit authorization to deploy to the selected environment.",
+      "Request a host with actual goal tools before generating an execution-ready goal prompt."
+    ]
+  },
+  "promptSHA256": "7f9658b8ace81d79f92a87e78b77e2096aab7c79429894f4eb31d0d220b1fc31",
+  "instructionSHA256": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+  "usage": [
+    {
+      "input_tokens": 23300,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1208,
+      "reasoning_output_tokens": 907,
+      "total_tokens": 24508
+    }
+  ],
+  "semanticReview": "pending independent review"
+}

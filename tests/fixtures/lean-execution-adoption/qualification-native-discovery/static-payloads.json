@@ -1,0 +1,461 @@
+[
+  {
+    "host": "codex",
+    "collection": "qs-skills",
+    "source": "/github/skills/codex/plugins/qs-skills",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-skills",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-code-build",
+        "qs-code-debug",
+        "qs-deploy-release",
+        "qs-flow-handoff",
+        "qs-flow-triage",
+        "qs-git-merge",
+        "qs-help",
+        "qs-plan-clarify",
+        "qs-plan-roadmap",
+        "qs-plan-spec",
+        "qs-review-code",
+        "qs-setup"
+      ],
+      "payloadSha256": "0f3595a71762bb77c0940a4263976f8bf1aa140e8d37efe8758dde3356fe1219",
+      "snapshot": {
+        "path": "/github/skills/codex/plugins/qs-skills",
+        "kind": "directory",
+        "contentSha256": "cc64638a3c618895c5ee0547a99c393135d9d48c6f11288cc0667e86b611d5a8"
+      }
+    }
+  },
+  {
+    "host": "claude-code",
+    "collection": "qs-skills",
+    "source": "/github/skills/packages/qs-skills",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-skills",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-code-build",
+        "qs-code-debug",
+        "qs-deploy-release",
+        "qs-flow-handoff",
+        "qs-flow-triage",
+        "qs-git-merge",
+        "qs-help",
+        "qs-plan-clarify",
+        "qs-plan-roadmap",
+        "qs-plan-spec",
+        "qs-review-code",
+        "qs-setup"
+      ],
+      "payloadSha256": "b95b04e9ba492c66a5d0406ecf00bad734f8d41f8214e8895782688d4210ef11",
+      "snapshot": {
+        "path": "/github/skills/packages/qs-skills",
+        "kind": "directory",
+        "contentSha256": "60df70f778318cc4b065b65430254cc8d8c207ca83169f1e2dd2e0bf736d8933"
+      }
+    }
+  },
+  {
+    "host": "pi",
+    "collection": "qs-skills",
+    "source": "/github/skills/pi/packages/qs-skills",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-skills",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-code-build",
+        "qs-code-debug",
+        "qs-deploy-release",
+        "qs-flow-handoff",
+        "qs-flow-triage",
+        "qs-git-merge",
+        "qs-help",
+        "qs-plan-clarify",
+        "qs-plan-roadmap",
+        "qs-plan-spec",
+        "qs-review-code",
+        "qs-setup"
+      ],
+      "payloadSha256": "cc5bc480cdbc2faf80f508b76b95b21538bb56b726921ef419a083447a6d36a7",
+      "snapshot": {
+        "path": "/github/skills/pi/packages/qs-skills",
+        "kind": "directory",
+        "contentSha256": "cc5bc480cdbc2faf80f508b76b95b21538bb56b726921ef419a083447a6d36a7"
+      }
+    }
+  },
+  {
+    "host": "codex",
+    "collection": "qs-specialists",
+    "source": "/github/skills/codex/plugins/qs-specialists",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-specialists",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-code-document",
+        "qs-deploy-prompt",
+        "qs-design-prototype",
+        "qs-learn-teach",
+        "qs-plan-research",
+        "qs-repo-cleanup",
+        "qs-skill-write",
+        "qs-test-author",
+        "qs-test-verify"
+      ],
+      "payloadSha256": "46675f5de24d83c4204f6d592a88b9cf2431e5d6a2356490ff59197fa464d1c7",
+      "snapshot": {
+        "path": "/github/skills/codex/plugins/qs-specialists",
+        "kind": "directory",
+        "contentSha256": "9f84e6c99aba792c9541780aac42020cdc476ffa3c45c1ffa878b4c3220a7d4b"
+      }
+    }
+  },
+  {
+    "host": "claude-code",
+    "collection": "qs-specialists",
+    "source": "/github/skills/packages/qs-specialists",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-specialists",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-code-document",
+        "qs-deploy-prompt",
+        "qs-design-prototype",
+        "qs-learn-teach",
+        "qs-plan-research",
+        "qs-repo-cleanup",
+        "qs-skill-write",
+        "qs-test-author",
+        "qs-test-verify"
+      ],
+      "payloadSha256": "7336bbf7f7e5602941fd3325eb658ec46b2669fb2d56f1452d4420cd1968909c",
+      "snapshot": {
+        "path": "/github/skills/packages/qs-specialists",
+        "kind": "directory",
+        "contentSha256": "94d1c2a021f0cc222ad449d5c9060430b758223f5523a6043317bbe3713c0eae"
+      }
+    }
+  },
+  {
+    "host": "pi",
+    "collection": "qs-specialists",
+    "source": "/github/skills/pi/packages/qs-specialists",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-specialists",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-code-document",
+        "qs-deploy-prompt",
+        "qs-design-prototype",
+        "qs-learn-teach",
+        "qs-plan-research",
+        "qs-repo-cleanup",
+        "qs-skill-write",
+        "qs-test-author",
+        "qs-test-verify"
+      ],
+      "payloadSha256": "0a76537a5d4184552c8254a368b061fa7836308fa6d237cca9c823dbcf7ee5fd",
+      "snapshot": {
+        "path": "/github/skills/pi/packages/qs-specialists",
+        "kind": "directory",
+        "contentSha256": "0a76537a5d4184552c8254a368b061fa7836308fa6d237cca9c823dbcf7ee5fd"
+      }
+    }
+  },
+  {
+    "host": "codex",
+    "collection": "qs-advanced",
+    "source": "/github/skills/codex/plugins/qs-advanced",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-advanced",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-blast-radius",
+        "qs-create-verification-skill",
+        "qs-hillclimb",
+        "qs-how",
+        "qs-maintain-verification-skill",
+        "qs-pr-babysit",
+        "qs-runtime-forensics",
+        "qs-skill-eval",
+        "qs-trace-forensics",
+        "qs-visual-parity",
+        "qs-why",
+        "qs-worktree-cleanup"
+      ],
+      "payloadSha256": "a767d6cea801e321c7b0237f65bbb3311e876f2ca21fb201f8230886d57a5779",
+      "snapshot": {
+        "path": "/github/skills/codex/plugins/qs-advanced",
+        "kind": "directory",
+        "contentSha256": "9bcfed68828d5755079773eb13457d03a4935ec615a4d60e4affba4bfde15718"
+      }
+    }
+  },
+  {
+    "host": "claude-code",
+    "collection": "qs-advanced",
+    "source": "/github/skills/packages/qs-advanced",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-advanced",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-blast-radius",
+        "qs-create-verification-skill",
+        "qs-hillclimb",
+        "qs-how",
+        "qs-maintain-verification-skill",
+        "qs-pr-babysit",
+        "qs-runtime-forensics",
+        "qs-skill-eval",
+        "qs-trace-forensics",
+        "qs-visual-parity",
+        "qs-why",
+        "qs-worktree-cleanup"
+      ],
+      "payloadSha256": "cb80cf35e8f5b8f8e40b613a879afa2ab3f9d012e0d490b83469d619f321adb8",
+      "snapshot": {
+        "path": "/github/skills/packages/qs-advanced",
+        "kind": "directory",
+        "contentSha256": "17a3dbb4519614a03cffee4517dc51cfb0531c04c3245aae89acdc79f89f2f33"
+      }
+    }
+  },
+  {
+    "host": "pi",
+    "collection": "qs-advanced",
+    "source": "/github/skills/pi/packages/qs-advanced",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-advanced",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-blast-radius",
+        "qs-create-verification-skill",
+        "qs-hillclimb",
+        "qs-how",
+        "qs-maintain-verification-skill",
+        "qs-pr-babysit",
+        "qs-runtime-forensics",
+        "qs-skill-eval",
+        "qs-trace-forensics",
+        "qs-visual-parity",
+        "qs-why",
+        "qs-worktree-cleanup"
+      ],
+      "payloadSha256": "cce3c326d09da10c4cbb566dd217dff268408269e08dfe8040e48c13ff4cfb06",
+      "snapshot": {
+        "path": "/github/skills/pi/packages/qs-advanced",
+        "kind": "directory",
+        "contentSha256": "cce3c326d09da10c4cbb566dd217dff268408269e08dfe8040e48c13ff4cfb06"
+      }
+    }
+  },
+  {
+    "host": "codex",
+    "collection": "qs-frontend",
+    "source": "/github/skills/codex/plugins/qs-frontend",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-frontend",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-design-frontend",
+        "qs-design-image-mobile",
+        "qs-design-image-to-code",
+        "qs-design-image-web"
+      ],
+      "payloadSha256": "14bd2fd33db7007ce28fecee3ac365c7735a435587272e347aca03e9c8ec532f",
+      "snapshot": {
+        "path": "/github/skills/codex/plugins/qs-frontend",
+        "kind": "directory",
+        "contentSha256": "651eb429b236f9db73be1249befb31ff43e47f362048faffc89845bfff987011"
+      }
+    }
+  },
+  {
+    "host": "claude-code",
+    "collection": "qs-frontend",
+    "source": "/github/skills/packages/qs-frontend",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-frontend",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-design-frontend",
+        "qs-design-image-mobile",
+        "qs-design-image-to-code",
+        "qs-design-image-web"
+      ],
+      "payloadSha256": "4b3fca030f524062fbf3cd0d1ecba23dee991c780f5b453c6e49972ab8e676b1",
+      "snapshot": {
+        "path": "/github/skills/packages/qs-frontend",
+        "kind": "directory",
+        "contentSha256": "4a64a2d45da65aa3a6e149479bfb193b56078b53d2d0d3d23d80837c8d93d0eb"
+      }
+    }
+  },
+  {
+    "host": "pi",
+    "collection": "qs-frontend",
+    "source": "/github/skills/pi/packages/qs-frontend",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-frontend",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-design-frontend",
+        "qs-design-image-mobile",
+        "qs-design-image-to-code",
+        "qs-design-image-web"
+      ],
+      "payloadSha256": "68ce5d51c494bc0da90033ec8cd3593114a9e6dd798dc852f33d6577a3c14372",
+      "snapshot": {
+        "path": "/github/skills/pi/packages/qs-frontend",
+        "kind": "directory",
+        "contentSha256": "68ce5d51c494bc0da90033ec8cd3593114a9e6dd798dc852f33d6577a3c14372"
+      }
+    }
+  },
+  {
+    "host": "codex",
+    "collection": "qs-video",
+    "source": "/github/skills/codex/plugins/qs-video",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-video",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-video"
+      ],
+      "payloadSha256": "45afd006ec5dd46de217ccfb582041403c20a79884a5eede569de5822b16a404",
+      "snapshot": {
+        "path": "/github/skills/codex/plugins/qs-video",
+        "kind": "directory",
+        "contentSha256": "411d596b0cf2905d963b76c639d22fc54458545aa7bb27b68d91b04861e1fdb0"
+      }
+    }
+  },
+  {
+    "host": "claude-code",
+    "collection": "qs-video",
+    "source": "/github/skills/packages/qs-video",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-video",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-video"
+      ],
+      "payloadSha256": "5771b34d8c56dd7295cef796961144b291380ba347b191720a7bff0aa9332002",
+      "snapshot": {
+        "path": "/github/skills/packages/qs-video",
+        "kind": "directory",
+        "contentSha256": "08211ef2e2c2fdfeaf2836fb05fc10b9a7465cc236788cd1312af8a8716d075e"
+      }
+    }
+  },
+  {
+    "host": "pi",
+    "collection": "qs-video",
+    "source": "/github/skills/pi/packages/qs-video",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-video",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-video"
+      ],
+      "payloadSha256": "92bdf2603ae652310f3c32e455d391666d1ca64b46767a740e1ecd606f8a8c7e",
+      "snapshot": {
+        "path": "/github/skills/pi/packages/qs-video",
+        "kind": "directory",
+        "contentSha256": "92bdf2603ae652310f3c32e455d391666d1ca64b46767a740e1ecd606f8a8c7e"
+      }
+    }
+  },
+  {
+    "host": "codex",
+    "collection": "qs-execution",
+    "source": "/github/skills/codex/plugins/qs-execution",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-execution",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-unlazy"
+      ],
+      "payloadSha256": "52693d8bebc329094bf7efe530061426517a9ecd93af50b9939f3a765734a845",
+      "snapshot": {
+        "path": "/github/skills/codex/plugins/qs-execution",
+        "kind": "directory",
+        "contentSha256": "830fd3157c8c3bd3c1fe8c719ef3a9eca6a249459f919a1781afe560d381e7fc"
+      }
+    }
+  },
+  {
+    "host": "claude-code",
+    "collection": "qs-execution",
+    "source": "/github/skills/packages/qs-execution",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-execution",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-unlazy"
+      ],
+      "payloadSha256": "a099c0bf0219d8ae3c10a5d2bcff4c2a90faefd79400bbd892adc78df03597f2",
+      "snapshot": {
+        "path": "/github/skills/packages/qs-execution",
+        "kind": "directory",
+        "contentSha256": "61790f395e6d9e5e53c5c4ce97b5f27cf4b52cd686bd51a55a79d23ee718f5ee"
+      }
+    }
+  },
+  {
+    "host": "pi",
+    "collection": "qs-execution",
+    "source": "/github/skills/pi/packages/qs-execution",
+    "classification": "static payload inspection; not native host discovery",
+    "matches": true,
+    "payload": {
+      "name": "qs-execution",
+      "version": "4.4.7",
+      "publicNames": [
+        "qs-unlazy"
+      ],
+      "payloadSha256": "fd40bcff3ef287885da7958946d2951a5d567f7e340c4167549dbce6512402a4",
+      "snapshot": {
+        "path": "/github/skills/pi/packages/qs-execution",
+        "kind": "directory",
+        "contentSha256": "fd40bcff3ef287885da7958946d2951a5d567f7e340c4167549dbce6512402a4"
+      }
+    }
+  }
+]
