@@ -3,7 +3,7 @@ import { mkdtemp, mkdir, readFile, writeFile, symlink, link, readdir, rm } from 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { normalizeSelectionRecord, resolveTargetSelection, selectionRecordPath, readSelectionRecord, saveSelectionRecord } from "../scripts/skill-selection.mjs";
+import { normalizeSelectionRecord, resolveTargetSelection, selectionRecordPath, readSelectionRecord, saveSelectionRecord } from "../tooling/install/skill-selection.mjs";
 
 const profiles = { schemaVersion: 1, defaultProfile: "core", profiles: {
   core: { packages: ["qs-skills"], resources: [] },

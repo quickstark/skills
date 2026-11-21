@@ -4,13 +4,13 @@ import { mkdtemp, mkdir, readFile, writeFile, appendFile, cp, rm, readdir, symli
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { captureManagedSkillPayload, previewManagedSkillMigration, assembleManagedSkillMigration, executeManagedSkillMigration, restoreManagedSkillMigration } from '../scripts/managed-skill-migration.mjs';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { createOwnedPathAdapter } from '../scripts/migration-owned-paths.mjs';
-import { nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
-import { readSkillMigrations } from '../scripts/skill-migrations.mjs';
-import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
-import { V3_CORE_SKILLS, V3_SPECIALIST_SKILLS } from '../scripts/qs-skill-catalog.mjs';
+import { captureManagedSkillPayload, previewManagedSkillMigration, assembleManagedSkillMigration, executeManagedSkillMigration, restoreManagedSkillMigration } from '../tooling/install/managed-skill-migration.mjs';
+import { captureMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { createOwnedPathAdapter } from '../tooling/install/migration-owned-paths.mjs';
+import { nativePayloadSha256 } from '../tooling/install/migration-native-packages.mjs';
+import { readSkillMigrations } from '../tooling/install/skill-migrations.mjs';
+import { desiredLockFields } from '../tooling/install/personal-skills/lock.mjs';
+import { V3_CORE_SKILLS, V3_SPECIALIST_SKILLS } from '../tooling/catalog/qs-skill-catalog.mjs';
 
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 const stable = (value) => JSON.stringify(value, function (key, entry) { return entry && typeof entry === 'object' && !Array.isArray(entry) ? Object.fromEntries(Object.keys(entry).sort().map((name) => [name, entry[name]])) : entry; });

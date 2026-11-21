@@ -5,8 +5,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import test from 'node:test';
-import { PUBLIC_COMMANDS, SKILL_COLLECTIONS } from '../scripts/skill-collection-registry.mjs';
-import { V3_SKILL_DISPOSITIONS_BY_NAME } from '../scripts/qs-skill-catalog.mjs';
+import { PUBLIC_COMMANDS, SKILL_COLLECTIONS } from '../tooling/catalog/skill-collection-registry.mjs';
+import { V3_SKILL_DISPOSITIONS_BY_NAME } from '../tooling/catalog/qs-skill-catalog.mjs';
 
 test('repository cleanup is one explicit specialist with no publication continuation', () => {
   const command = PUBLIC_COMMANDS.find(item => item.name === 'qs-repo-cleanup');

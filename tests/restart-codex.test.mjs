@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {main,preserveLimits} from '../scripts/restart-codex.mjs';
+import {main,preserveLimits} from '../tooling/install/restart-codex.mjs';
 
 const home='/profiles/test';
 const old={pid:40,start:'old',home,exe:'/original/codex',argv:['codex','-c','features.code_mode_host=true','app-server','--listen','unix://'],env:{HOME:'/users/test',SECRET:'private'},cwd:'/work with spaces'};
@@ -83,7 +83,7 @@ import path from 'node:path';
 import net from 'node:net';
 import {spawn,execFile} from 'node:child_process';
 import {promisify} from 'node:util';
-import {systemWorld,options} from '../scripts/restart-codex.mjs';
+import {systemWorld,options} from '../tooling/install/restart-codex.mjs';
 const exec=promisify(execFile);
 
 test('explicit profile overrides environment and default',()=>{
@@ -186,8 +186,8 @@ test('real owned process and Unix socket restart once, preserving launch values'
 });
 
 test('real CLI --help and pasted source run from another directory without discovery',async()=>{
-  const source=await fs.readFile(new URL('../scripts/restart-codex.mjs',import.meta.url),'utf8');
-  const modulePath=new URL('../scripts/restart-codex.mjs',import.meta.url).pathname;
+  const source=await fs.readFile(new URL('../tooling/install/restart-codex.mjs',import.meta.url),'utf8');
+  const modulePath=new URL('../tooling/install/restart-codex.mjs',import.meta.url).pathname;
   const result=await exec(process.execPath,[modulePath,'--help'],{cwd:os.tmpdir()});assert.match(result.stdout,/Restart Codex/);
   const pasted=spawn(process.execPath,['--input-type=module','-','--help'],{cwd:os.tmpdir(),stdio:['pipe','pipe','pipe']});
   let out='';pasted.stdout.on('data',data=>out+=data);pasted.stdin.end(source);
@@ -251,7 +251,7 @@ exit "$QS_FIXTURE_CURL_EXIT"
 
 test('Node-raised open-file limit is restored for the launch, then reset in the helper',async t=>{
   const root=await fs.mkdtemp(path.join(os.tmpdir(),'qs-limit-child-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));
-  const moduleURL=new URL('../scripts/restart-codex.mjs',import.meta.url).href;
+  const moduleURL=new URL('../tooling/install/restart-codex.mjs',import.meta.url).href;
   const source=`import {preserveLimits} from ${JSON.stringify(moduleURL)};
 import fs from 'node:fs/promises';
 const before=await fs.readFile('/proc/self/limits','utf8');

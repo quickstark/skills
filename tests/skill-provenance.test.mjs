@@ -1,4 +1,4 @@
-import { currentSourcePath } from "../scripts/historical-source-path.mjs";
+import { currentSourcePath } from "../tooling/catalog/historical-source-path.mjs";
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, mkdtempSync, mkdirSync, cpSync, writeFileSync, unlinkSync, rmSync } from 'node:fs';
@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
-import { assertSkillProvenance, getProvenanceInventory, readSkillProvenance, renderSkillProvenanceMarkdown, validateSkillProvenance } from '../scripts/skill-provenance.mjs';
+import { assertSkillProvenance, getProvenanceInventory, readSkillProvenance, renderSkillProvenanceMarkdown, validateSkillProvenance } from '../tooling/catalog/skill-provenance.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const baseline = readSkillProvenance(root);
@@ -207,11 +207,11 @@ test('malformed target records return diagnostics', () => {
 test('complete private closure rejects missing, duplicate, changed and unindexed resources', () => {
   const temporary = mkdtempSync(path.join(tmpdir(), 'qs-provenance-'));
   try {
-    for (const relative of ['config/personal-skills.manifest.json', 'config/skill-migrations.json', 'skills/qs-unlazy', 'skills/qs-video']) {
+    for (const relative of ['tooling/install/personal-skills/personal-skills.manifest.json', 'tooling/install/skill-migrations.json', 'skills/qs-unlazy', 'skills/qs-video']) {
       mkdirSync(path.dirname(path.join(temporary, relative)), { recursive: true });
       cpSync(path.join(root, relative), path.join(temporary, relative), { recursive: true });
     }
-    const liveManifestPath = path.join(temporary, 'config/personal-skills.manifest.json');
+    const liveManifestPath = path.join(temporary, 'tooling/install/personal-skills/personal-skills.manifest.json');
     const liveManifest = JSON.parse(readFileSync(liveManifestPath));
     liveManifest.resources = []; writeFileSync(liveManifestPath, JSON.stringify(liveManifest));
     assert.equal(getProvenanceInventory(temporary).length, 73, 'retired live manifest must not erase baseline identities');

@@ -15,19 +15,19 @@ import {
   V3_SKILL_DISPOSITIONS_BY_NAME,
   V3_SPECIALIST_SKILLS,
   validateV3CatalogModel,
-} from "../scripts/qs-skill-catalog.mjs";
+} from "../tooling/catalog/qs-skill-catalog.mjs";
 import {
   PUBLIC_COMMANDS,
   REGISTRY_STATE,
   SKILL_COLLECTIONS,
   SPEC_PROGRESS_COMMAND_NAMES,
   codexPublicSkillLiteral,
-} from "../scripts/skill-collection-registry.mjs";
+} from "../tooling/catalog/skill-collection-registry.mjs";
 import {
   renderDocumentationOutputContract,
   renderSkillOutputContract,
-} from "../scripts/sync-skill-output-contracts.mjs";
-import { validatePublicSkillText, validateV3Skills } from "../scripts/validate-v3-skills.mjs";
+} from "../tooling/generation/sync-skill-output-contracts.mjs";
+import { validatePublicSkillText, validateV3Skills } from "../tooling/verification/validate-v3-skills.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const execFileAsync = promisify(execFile);
@@ -447,6 +447,6 @@ test("migration documentation accounts for every v2 command exactly once", async
 });
 
 test("package projections are deterministic and synchronized", async () => {
-  const { stdout } = await execFileAsync(process.execPath, ["scripts/sync-codex-plugin.mjs", "--check"], { cwd: root });
+  const { stdout } = await execFileAsync(process.execPath, ["tooling/generation/sync-codex-plugin.mjs", "--check"], { cwd: root });
   assert.equal(stdout.trim(), `Verified deterministic active projections for ${REGISTRY_STATE === "target" ? 6 : 3} packages across Codex, Claude, and Pi.`);
 });

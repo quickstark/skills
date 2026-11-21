@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { PUBLIC_COMMANDS, COLLECTION_REGISTRY, validateSkillCollectionRegistryModel } from '../scripts/skill-collection-registry.mjs';
-import { renderSkillOutputContract, renderDocumentationOutputContract } from '../scripts/sync-skill-output-contracts.mjs';
-import { PUBLIC_PROGRESS_CONTRACT, HELPER_PROGRESS_CONTRACT } from '../scripts/progress-reporting-contract.mjs';
+import { PUBLIC_COMMANDS, COLLECTION_REGISTRY, validateSkillCollectionRegistryModel } from '../tooling/catalog/skill-collection-registry.mjs';
+import { renderSkillOutputContract, renderDocumentationOutputContract } from '../tooling/generation/sync-skill-output-contracts.mjs';
+import { PUBLIC_PROGRESS_CONTRACT, HELPER_PROGRESS_CONTRACT } from '../tooling/generation/progress-reporting-contract.mjs';
 
 const command = PUBLIC_COMMANDS.find(({name}) => name === 'qs-deploy-prompt');
 test('deployment generator is the eighth explicit specialist with its own output contract', () => {
@@ -41,7 +41,7 @@ test('canonical generator includes executable-prompt boundaries rather than side
 
 test('recorded model responses are bound to the current skill and rendered execution prompt', async () => {
   const { createHash } = await import('node:crypto');
-  const { renderGoalWorkflowPrompt } = await import('../scripts/goal-workflow.mjs');
+  const { renderGoalWorkflowPrompt } = await import('../tooling/catalog/goal-workflow.mjs');
   const read = async (name) => JSON.parse(await readFile(new URL(`./fixtures/progress-deploy-agent-trials/${name}.json`, import.meta.url), 'utf8'));
   const sha = (value) => createHash('sha256').update(value).digest('hex');
   const generation = await read('generation-percentage');

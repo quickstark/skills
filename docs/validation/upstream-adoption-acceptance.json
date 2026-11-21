@@ -2550,39 +2550,15 @@
       "sourcePaths": [
         ".github/workflows/validate.yml",
         "codex/plugins/qs-skills",
-        "config/skill-migrations.json",
-        "config/skill-profiles.json",
-        "config/skill-provenance.json",
         "docs/skill-run-contract.md",
         "install.sh",
         "packages/qs-skills",
         "pi/packages/qs-skills",
-        "scripts/adoption-acceptance.mjs",
-        "scripts/advanced-skill-catalog.mjs",
-        "scripts/claude-core-migration.mjs",
-        "scripts/clean-install-skills.mjs",
-        "scripts/execution-skill-catalog.mjs",
-        "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
-        "scripts/managed-marketplace-bootstrap.mjs",
-        "scripts/managed-package-repair.mjs",
-        "scripts/managed-skill-input.mjs",
-        "scripts/managed-skill-migration.mjs",
-        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
-        "scripts/migration-filesystem.mjs",
-        "scripts/migration-native-packages.mjs",
-        "scripts/migration-owned-paths.mjs",
-        "scripts/migration-transaction.mjs",
-        "scripts/optional-command-definition.mjs",
-        "scripts/ps-skill-catalog.mjs",
-        "scripts/qs-skill-catalog.mjs",
-        "scripts/skill-collection-registry.mjs",
-        "scripts/skill-migrations.mjs",
-        "scripts/skill-selection.mjs",
+        "scripts/sync-codex-plugin.mjs",
         "scripts/update-skills.mjs",
         "scripts/validate-skill-release.mjs",
-        "scripts/video-skill-catalog.mjs",
         "skills/_shared/core",
         "skills/qs-code-build",
         "skills/qs-code-debug",
@@ -2595,7 +2571,37 @@
         "skills/qs-plan-roadmap",
         "skills/qs-plan-spec",
         "skills/qs-review-code",
-        "skills/qs-setup"
+        "skills/qs-setup",
+        "tooling/catalog/advanced-skill-catalog.mjs",
+        "tooling/catalog/execution-skill-catalog.mjs",
+        "tooling/catalog/frontend-skill-catalog.mjs",
+        "tooling/catalog/optional-command-definition.mjs",
+        "tooling/catalog/ps-skill-catalog.mjs",
+        "tooling/catalog/qs-skill-catalog.mjs",
+        "tooling/catalog/skill-collection-registry.mjs",
+        "tooling/catalog/skill-provenance.json",
+        "tooling/catalog/video-skill-catalog.mjs",
+        "tooling/generation/sync-codex-plugin.mjs",
+        "tooling/install/claude-core-migration.mjs",
+        "tooling/install/clean-install-skills.mjs",
+        "tooling/install/managed-marketplace-bootstrap.mjs",
+        "tooling/install/managed-package-repair.mjs",
+        "tooling/install/managed-skill-input.mjs",
+        "tooling/install/managed-skill-migration.mjs",
+        "tooling/install/managed-skill-paths.mjs",
+        "tooling/install/managed-skills.mjs",
+        "tooling/install/migration-filesystem.mjs",
+        "tooling/install/migration-native-packages.mjs",
+        "tooling/install/migration-owned-paths.mjs",
+        "tooling/install/migration-transaction.mjs",
+        "tooling/install/skill-migrations.json",
+        "tooling/install/skill-migrations.mjs",
+        "tooling/install/skill-profiles.json",
+        "tooling/install/skill-selection.mjs",
+        "tooling/install/update-skills.mjs",
+        "tooling/release/validate-skill-release.mjs",
+        "tooling/repository-root.mjs",
+        "tooling/verification/adoption-acceptance.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -3524,39 +3530,15 @@
       "sourcePaths": [
         ".github/workflows/validate.yml",
         "codex/plugins/qs-specialists",
-        "config/skill-migrations.json",
-        "config/skill-profiles.json",
-        "config/skill-provenance.json",
         "docs/skill-run-contract.md",
         "install.sh",
         "packages/qs-specialists",
         "pi/packages/qs-specialists",
-        "scripts/adoption-acceptance.mjs",
-        "scripts/advanced-skill-catalog.mjs",
-        "scripts/claude-core-migration.mjs",
-        "scripts/clean-install-skills.mjs",
-        "scripts/execution-skill-catalog.mjs",
-        "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
-        "scripts/managed-marketplace-bootstrap.mjs",
-        "scripts/managed-package-repair.mjs",
-        "scripts/managed-skill-input.mjs",
-        "scripts/managed-skill-migration.mjs",
-        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
-        "scripts/migration-filesystem.mjs",
-        "scripts/migration-native-packages.mjs",
-        "scripts/migration-owned-paths.mjs",
-        "scripts/migration-transaction.mjs",
-        "scripts/optional-command-definition.mjs",
-        "scripts/ps-skill-catalog.mjs",
-        "scripts/qs-skill-catalog.mjs",
-        "scripts/skill-collection-registry.mjs",
-        "scripts/skill-migrations.mjs",
-        "scripts/skill-selection.mjs",
+        "scripts/sync-codex-plugin.mjs",
         "scripts/update-skills.mjs",
         "scripts/validate-skill-release.mjs",
-        "scripts/video-skill-catalog.mjs",
         "skills/qs-code-document",
         "skills/qs-deploy-prompt",
         "skills/qs-design-prototype",
@@ -3565,7 +3547,37 @@
         "skills/qs-repo-cleanup",
         "skills/qs-skill-write",
         "skills/qs-test-author",
-        "skills/qs-test-verify"
+        "skills/qs-test-verify",
+        "tooling/catalog/advanced-skill-catalog.mjs",
+        "tooling/catalog/execution-skill-catalog.mjs",
+        "tooling/catalog/frontend-skill-catalog.mjs",
+        "tooling/catalog/optional-command-definition.mjs",
+        "tooling/catalog/ps-skill-catalog.mjs",
+        "tooling/catalog/qs-skill-catalog.mjs",
+        "tooling/catalog/skill-collection-registry.mjs",
+        "tooling/catalog/skill-provenance.json",
+        "tooling/catalog/video-skill-catalog.mjs",
+        "tooling/generation/sync-codex-plugin.mjs",
+        "tooling/install/claude-core-migration.mjs",
+        "tooling/install/clean-install-skills.mjs",
+        "tooling/install/managed-marketplace-bootstrap.mjs",
+        "tooling/install/managed-package-repair.mjs",
+        "tooling/install/managed-skill-input.mjs",
+        "tooling/install/managed-skill-migration.mjs",
+        "tooling/install/managed-skill-paths.mjs",
+        "tooling/install/managed-skills.mjs",
+        "tooling/install/migration-filesystem.mjs",
+        "tooling/install/migration-native-packages.mjs",
+        "tooling/install/migration-owned-paths.mjs",
+        "tooling/install/migration-transaction.mjs",
+        "tooling/install/skill-migrations.json",
+        "tooling/install/skill-migrations.mjs",
+        "tooling/install/skill-profiles.json",
+        "tooling/install/skill-selection.mjs",
+        "tooling/install/update-skills.mjs",
+        "tooling/release/validate-skill-release.mjs",
+        "tooling/repository-root.mjs",
+        "tooling/verification/adoption-acceptance.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -4523,39 +4535,15 @@
       "sourcePaths": [
         ".github/workflows/validate.yml",
         "codex/plugins/qs-advanced",
-        "config/skill-migrations.json",
-        "config/skill-profiles.json",
-        "config/skill-provenance.json",
         "docs/skill-run-contract.md",
         "install.sh",
         "packages/qs-advanced",
         "pi/packages/qs-advanced",
-        "scripts/adoption-acceptance.mjs",
-        "scripts/advanced-skill-catalog.mjs",
-        "scripts/claude-core-migration.mjs",
-        "scripts/clean-install-skills.mjs",
-        "scripts/execution-skill-catalog.mjs",
-        "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
-        "scripts/managed-marketplace-bootstrap.mjs",
-        "scripts/managed-package-repair.mjs",
-        "scripts/managed-skill-input.mjs",
-        "scripts/managed-skill-migration.mjs",
-        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
-        "scripts/migration-filesystem.mjs",
-        "scripts/migration-native-packages.mjs",
-        "scripts/migration-owned-paths.mjs",
-        "scripts/migration-transaction.mjs",
-        "scripts/optional-command-definition.mjs",
-        "scripts/ps-skill-catalog.mjs",
-        "scripts/qs-skill-catalog.mjs",
-        "scripts/skill-collection-registry.mjs",
-        "scripts/skill-migrations.mjs",
-        "scripts/skill-selection.mjs",
+        "scripts/sync-codex-plugin.mjs",
         "scripts/update-skills.mjs",
         "scripts/validate-skill-release.mjs",
-        "scripts/video-skill-catalog.mjs",
         "skills/_shared/advanced",
         "skills/qs-blast-radius",
         "skills/qs-create-verification-skill",
@@ -4568,7 +4556,37 @@
         "skills/qs-trace-forensics",
         "skills/qs-visual-parity",
         "skills/qs-why",
-        "skills/qs-worktree-cleanup"
+        "skills/qs-worktree-cleanup",
+        "tooling/catalog/advanced-skill-catalog.mjs",
+        "tooling/catalog/execution-skill-catalog.mjs",
+        "tooling/catalog/frontend-skill-catalog.mjs",
+        "tooling/catalog/optional-command-definition.mjs",
+        "tooling/catalog/ps-skill-catalog.mjs",
+        "tooling/catalog/qs-skill-catalog.mjs",
+        "tooling/catalog/skill-collection-registry.mjs",
+        "tooling/catalog/skill-provenance.json",
+        "tooling/catalog/video-skill-catalog.mjs",
+        "tooling/generation/sync-codex-plugin.mjs",
+        "tooling/install/claude-core-migration.mjs",
+        "tooling/install/clean-install-skills.mjs",
+        "tooling/install/managed-marketplace-bootstrap.mjs",
+        "tooling/install/managed-package-repair.mjs",
+        "tooling/install/managed-skill-input.mjs",
+        "tooling/install/managed-skill-migration.mjs",
+        "tooling/install/managed-skill-paths.mjs",
+        "tooling/install/managed-skills.mjs",
+        "tooling/install/migration-filesystem.mjs",
+        "tooling/install/migration-native-packages.mjs",
+        "tooling/install/migration-owned-paths.mjs",
+        "tooling/install/migration-transaction.mjs",
+        "tooling/install/skill-migrations.json",
+        "tooling/install/skill-migrations.mjs",
+        "tooling/install/skill-profiles.json",
+        "tooling/install/skill-selection.mjs",
+        "tooling/install/update-skills.mjs",
+        "tooling/release/validate-skill-release.mjs",
+        "tooling/repository-root.mjs",
+        "tooling/verification/adoption-acceptance.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -5510,44 +5528,50 @@
       "sourcePaths": [
         ".github/workflows/validate.yml",
         "codex/plugins/qs-frontend",
-        "config/skill-migrations.json",
-        "config/skill-profiles.json",
-        "config/skill-provenance.json",
         "docs/skill-run-contract.md",
         "install.sh",
         "packages/qs-frontend",
         "pi/packages/qs-frontend",
-        "scripts/adoption-acceptance.mjs",
-        "scripts/advanced-skill-catalog.mjs",
-        "scripts/claude-core-migration.mjs",
-        "scripts/clean-install-skills.mjs",
-        "scripts/execution-skill-catalog.mjs",
-        "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
-        "scripts/managed-marketplace-bootstrap.mjs",
-        "scripts/managed-package-repair.mjs",
-        "scripts/managed-skill-input.mjs",
-        "scripts/managed-skill-migration.mjs",
-        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
-        "scripts/migration-filesystem.mjs",
-        "scripts/migration-native-packages.mjs",
-        "scripts/migration-owned-paths.mjs",
-        "scripts/migration-transaction.mjs",
-        "scripts/optional-command-definition.mjs",
-        "scripts/ps-skill-catalog.mjs",
-        "scripts/qs-skill-catalog.mjs",
-        "scripts/skill-collection-registry.mjs",
-        "scripts/skill-migrations.mjs",
-        "scripts/skill-selection.mjs",
+        "scripts/sync-codex-plugin.mjs",
         "scripts/update-skills.mjs",
         "scripts/validate-skill-release.mjs",
-        "scripts/video-skill-catalog.mjs",
         "skills/_shared/frontend",
         "skills/qs-design-frontend",
         "skills/qs-design-image-mobile",
         "skills/qs-design-image-to-code",
-        "skills/qs-design-image-web"
+        "skills/qs-design-image-web",
+        "tooling/catalog/advanced-skill-catalog.mjs",
+        "tooling/catalog/execution-skill-catalog.mjs",
+        "tooling/catalog/frontend-skill-catalog.mjs",
+        "tooling/catalog/optional-command-definition.mjs",
+        "tooling/catalog/ps-skill-catalog.mjs",
+        "tooling/catalog/qs-skill-catalog.mjs",
+        "tooling/catalog/skill-collection-registry.mjs",
+        "tooling/catalog/skill-provenance.json",
+        "tooling/catalog/video-skill-catalog.mjs",
+        "tooling/generation/sync-codex-plugin.mjs",
+        "tooling/install/claude-core-migration.mjs",
+        "tooling/install/clean-install-skills.mjs",
+        "tooling/install/managed-marketplace-bootstrap.mjs",
+        "tooling/install/managed-package-repair.mjs",
+        "tooling/install/managed-skill-input.mjs",
+        "tooling/install/managed-skill-migration.mjs",
+        "tooling/install/managed-skill-paths.mjs",
+        "tooling/install/managed-skills.mjs",
+        "tooling/install/migration-filesystem.mjs",
+        "tooling/install/migration-native-packages.mjs",
+        "tooling/install/migration-owned-paths.mjs",
+        "tooling/install/migration-transaction.mjs",
+        "tooling/install/skill-migrations.json",
+        "tooling/install/skill-migrations.mjs",
+        "tooling/install/skill-profiles.json",
+        "tooling/install/skill-selection.mjs",
+        "tooling/install/update-skills.mjs",
+        "tooling/release/validate-skill-release.mjs",
+        "tooling/repository-root.mjs",
+        "tooling/verification/adoption-acceptance.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -6515,40 +6539,46 @@
       "sourcePaths": [
         ".github/workflows/validate.yml",
         "codex/plugins/qs-video",
-        "config/skill-migrations.json",
-        "config/skill-profiles.json",
-        "config/skill-provenance.json",
         "docs/skill-run-contract.md",
         "install.sh",
         "packages/qs-video",
         "pi/packages/qs-video",
-        "scripts/adoption-acceptance.mjs",
-        "scripts/advanced-skill-catalog.mjs",
-        "scripts/claude-core-migration.mjs",
-        "scripts/clean-install-skills.mjs",
-        "scripts/execution-skill-catalog.mjs",
-        "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
-        "scripts/managed-marketplace-bootstrap.mjs",
-        "scripts/managed-package-repair.mjs",
-        "scripts/managed-skill-input.mjs",
-        "scripts/managed-skill-migration.mjs",
-        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
-        "scripts/migration-filesystem.mjs",
-        "scripts/migration-native-packages.mjs",
-        "scripts/migration-owned-paths.mjs",
-        "scripts/migration-transaction.mjs",
-        "scripts/optional-command-definition.mjs",
-        "scripts/ps-skill-catalog.mjs",
-        "scripts/qs-skill-catalog.mjs",
-        "scripts/skill-collection-registry.mjs",
-        "scripts/skill-migrations.mjs",
-        "scripts/skill-selection.mjs",
+        "scripts/sync-codex-plugin.mjs",
         "scripts/update-skills.mjs",
         "scripts/validate-skill-release.mjs",
-        "scripts/video-skill-catalog.mjs",
-        "skills/qs-video"
+        "skills/qs-video",
+        "tooling/catalog/advanced-skill-catalog.mjs",
+        "tooling/catalog/execution-skill-catalog.mjs",
+        "tooling/catalog/frontend-skill-catalog.mjs",
+        "tooling/catalog/optional-command-definition.mjs",
+        "tooling/catalog/ps-skill-catalog.mjs",
+        "tooling/catalog/qs-skill-catalog.mjs",
+        "tooling/catalog/skill-collection-registry.mjs",
+        "tooling/catalog/skill-provenance.json",
+        "tooling/catalog/video-skill-catalog.mjs",
+        "tooling/generation/sync-codex-plugin.mjs",
+        "tooling/install/claude-core-migration.mjs",
+        "tooling/install/clean-install-skills.mjs",
+        "tooling/install/managed-marketplace-bootstrap.mjs",
+        "tooling/install/managed-package-repair.mjs",
+        "tooling/install/managed-skill-input.mjs",
+        "tooling/install/managed-skill-migration.mjs",
+        "tooling/install/managed-skill-paths.mjs",
+        "tooling/install/managed-skills.mjs",
+        "tooling/install/migration-filesystem.mjs",
+        "tooling/install/migration-native-packages.mjs",
+        "tooling/install/migration-owned-paths.mjs",
+        "tooling/install/migration-transaction.mjs",
+        "tooling/install/skill-migrations.json",
+        "tooling/install/skill-migrations.mjs",
+        "tooling/install/skill-profiles.json",
+        "tooling/install/skill-selection.mjs",
+        "tooling/install/update-skills.mjs",
+        "tooling/release/validate-skill-release.mjs",
+        "tooling/repository-root.mjs",
+        "tooling/verification/adoption-acceptance.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -7715,40 +7745,46 @@
       "sourcePaths": [
         ".github/workflows/validate.yml",
         "codex/plugins/qs-execution",
-        "config/skill-migrations.json",
-        "config/skill-profiles.json",
-        "config/skill-provenance.json",
         "docs/skill-run-contract.md",
         "install.sh",
         "packages/qs-execution",
         "pi/packages/qs-execution",
-        "scripts/adoption-acceptance.mjs",
-        "scripts/advanced-skill-catalog.mjs",
-        "scripts/claude-core-migration.mjs",
-        "scripts/clean-install-skills.mjs",
-        "scripts/execution-skill-catalog.mjs",
-        "scripts/frontend-skill-catalog.mjs",
         "scripts/install-skills.mjs",
-        "scripts/managed-marketplace-bootstrap.mjs",
-        "scripts/managed-package-repair.mjs",
-        "scripts/managed-skill-input.mjs",
-        "scripts/managed-skill-migration.mjs",
-        "scripts/managed-skill-paths.mjs",
         "scripts/managed-skills.mjs",
-        "scripts/migration-filesystem.mjs",
-        "scripts/migration-native-packages.mjs",
-        "scripts/migration-owned-paths.mjs",
-        "scripts/migration-transaction.mjs",
-        "scripts/optional-command-definition.mjs",
-        "scripts/ps-skill-catalog.mjs",
-        "scripts/qs-skill-catalog.mjs",
-        "scripts/skill-collection-registry.mjs",
-        "scripts/skill-migrations.mjs",
-        "scripts/skill-selection.mjs",
+        "scripts/sync-codex-plugin.mjs",
         "scripts/update-skills.mjs",
         "scripts/validate-skill-release.mjs",
-        "scripts/video-skill-catalog.mjs",
-        "skills/qs-unlazy"
+        "skills/qs-unlazy",
+        "tooling/catalog/advanced-skill-catalog.mjs",
+        "tooling/catalog/execution-skill-catalog.mjs",
+        "tooling/catalog/frontend-skill-catalog.mjs",
+        "tooling/catalog/optional-command-definition.mjs",
+        "tooling/catalog/ps-skill-catalog.mjs",
+        "tooling/catalog/qs-skill-catalog.mjs",
+        "tooling/catalog/skill-collection-registry.mjs",
+        "tooling/catalog/skill-provenance.json",
+        "tooling/catalog/video-skill-catalog.mjs",
+        "tooling/generation/sync-codex-plugin.mjs",
+        "tooling/install/claude-core-migration.mjs",
+        "tooling/install/clean-install-skills.mjs",
+        "tooling/install/managed-marketplace-bootstrap.mjs",
+        "tooling/install/managed-package-repair.mjs",
+        "tooling/install/managed-skill-input.mjs",
+        "tooling/install/managed-skill-migration.mjs",
+        "tooling/install/managed-skill-paths.mjs",
+        "tooling/install/managed-skills.mjs",
+        "tooling/install/migration-filesystem.mjs",
+        "tooling/install/migration-native-packages.mjs",
+        "tooling/install/migration-owned-paths.mjs",
+        "tooling/install/migration-transaction.mjs",
+        "tooling/install/skill-migrations.json",
+        "tooling/install/skill-migrations.mjs",
+        "tooling/install/skill-profiles.json",
+        "tooling/install/skill-selection.mjs",
+        "tooling/install/update-skills.mjs",
+        "tooling/release/validate-skill-release.mjs",
+        "tooling/repository-root.mjs",
+        "tooling/verification/adoption-acceptance.mjs"
       ],
       "criteria": [
         "AC-01",
@@ -8905,99 +8941,99 @@
       "kind": "directory",
       "contentSha256": "a1b598f7b0b1af221e2441776185ded1533c059ef0a90e2b63b8f222e60051b7"
     },
-    "config/skill-migrations.json": {
+    "tooling/install/skill-migrations.json": {
       "kind": "file",
       "contentSha256": "e628f563101e8527040dd3f000f51291847f05d3ed62ba744424dcbd533f15c4"
     },
-    "config/skill-profiles.json": {
+    "tooling/install/skill-profiles.json": {
       "kind": "file",
       "contentSha256": "7aafa672dca8918d866599aa77ffb12052fef527e94297f7994b6f5d560c7281"
     },
-    "config/skill-provenance.json": {
+    "tooling/catalog/skill-provenance.json": {
       "kind": "file",
       "contentSha256": "a39c5bbe0b9fd115f22ea4286e4357d849d7e4b7cf596aee093b53f72bc7ec59"
     },
     "docs/skill-run-contract.md": {
       "kind": "file",
-      "contentSha256": "14a6a44065ce124d078cc2a19ad64c9ddb239c45390283b4ab4610384b1abf46"
+      "contentSha256": "34aee763dd6733051e1fbc2dd15f5ad68dcd11d67686582aafdebaafb707b567"
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
       "contentSha256": "a9ad9a731b867471118cdb77bc16f46e02a91de60d80ca4652fe476b1c8524e3"
     },
-    "scripts/adoption-acceptance.mjs": {
+    "tooling/verification/adoption-acceptance.mjs": {
       "kind": "file",
-      "contentSha256": "3c7aa2e4e15ba4859d0e8f4903cf414abe6000f388ef6f459432e56e670adb77"
+      "contentSha256": "9041d3b7f5c35466bf25a9bfd72f35e68d3b3b90904a0650192b4374f4a8f14f"
     },
-    "scripts/advanced-skill-catalog.mjs": {
+    "tooling/catalog/advanced-skill-catalog.mjs": {
       "kind": "file",
       "contentSha256": "7c7a2f2ffe342c486317ff17fcb5e942ad6023204717e2390dab03ed362ef4b2"
     },
-    "scripts/execution-skill-catalog.mjs": {
+    "tooling/catalog/execution-skill-catalog.mjs": {
       "kind": "file",
       "contentSha256": "8578df5bb0d4ec551744d93a8272bbc33125d41ebe0ffaad6a8d2b2df6e7fb37"
     },
-    "scripts/frontend-skill-catalog.mjs": {
+    "tooling/catalog/frontend-skill-catalog.mjs": {
       "kind": "file",
       "contentSha256": "8175178591e24142688b75e887c78096c5f76ae31dd5d8d04b55459b263ce090"
     },
-    "scripts/managed-skill-input.mjs": {
+    "tooling/install/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "7332070c948905273cbd828acd82fda4ea09aa45b2a17bd98d32264c3b8922b5"
+      "contentSha256": "3db17e772a9bc796cc584e855239657060da3924558e639586462640940191cb"
     },
-    "scripts/managed-skill-migration.mjs": {
+    "tooling/install/managed-skill-migration.mjs": {
       "kind": "file",
       "contentSha256": "d2d6a04277b055cd2d200cb675b616b324d22b81c2650c607332bd2977f715bb"
     },
-    "scripts/managed-skill-paths.mjs": {
+    "tooling/install/managed-skill-paths.mjs": {
       "kind": "file",
       "contentSha256": "b3b48df90fe4559eb9adb563fe1bdb0c92482ebca346541d785a9696bd940594"
     },
-    "scripts/managed-skills.mjs": {
+    "tooling/install/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "9153df125d6ec2a72bf8ace7cc577f0b327682eba57e2e59d6fcd07f3f800546"
+      "contentSha256": "91146de1cba04fee20d6932ddd7b0f3c9895376a7a90bf0b276c4f7e1e86414a"
     },
-    "scripts/migration-filesystem.mjs": {
+    "tooling/install/migration-filesystem.mjs": {
       "kind": "file",
       "contentSha256": "c334e99c342bc7330502218baf97d85bc1ef4b2cc1d1e7027c18b397fc456d1e"
     },
-    "scripts/migration-native-packages.mjs": {
+    "tooling/install/migration-native-packages.mjs": {
       "kind": "file",
-      "contentSha256": "b18096797d779bc0dcd1b9950327e0a96beed319419b2b0c49f33b5d5abe451d"
+      "contentSha256": "df1dd6731bc638195ab0a1b82a3e1fe1ebcfd5e7d25f832ffea575cfc125920e"
     },
-    "scripts/migration-owned-paths.mjs": {
+    "tooling/install/migration-owned-paths.mjs": {
       "kind": "file",
       "contentSha256": "3952c1c0a29f8f2393686e67dd9cea68d272f6af3cc8434cdc6e722e86ff4241"
     },
-    "scripts/migration-transaction.mjs": {
+    "tooling/install/migration-transaction.mjs": {
       "kind": "file",
       "contentSha256": "6f2cbe9c812d71cd50300ad4250ce50ae675ff8846bb1b93cefe06e408346f0d"
     },
-    "scripts/optional-command-definition.mjs": {
+    "tooling/catalog/optional-command-definition.mjs": {
       "kind": "file",
       "contentSha256": "49f1b8e7fd0444a76d66a70b17751eaac225ea1a79d66d608e00cd7900b88a66"
     },
-    "scripts/ps-skill-catalog.mjs": {
+    "tooling/catalog/ps-skill-catalog.mjs": {
       "kind": "file",
       "contentSha256": "23b21fdd2c9740406768f37fcaadf3853f6cea79c29dd358d5473ac9381df538"
     },
-    "scripts/qs-skill-catalog.mjs": {
+    "tooling/catalog/qs-skill-catalog.mjs": {
       "kind": "file",
       "contentSha256": "c87259a75b83759ad2f0a6dfcbbcc17de5f68d449fd5588a0158dd3548f9fea8"
     },
-    "scripts/skill-collection-registry.mjs": {
+    "tooling/catalog/skill-collection-registry.mjs": {
       "kind": "file",
       "contentSha256": "1f77836dcd00d53b105e375680b72b1f6e2d69fa71c988ccdfef9583deac77b5"
     },
-    "scripts/skill-migrations.mjs": {
+    "tooling/install/skill-migrations.mjs": {
       "kind": "file",
-      "contentSha256": "5c1e2cff863a30303de8e965129f09c682e4fe5e17376b60a3b4f704c6f4df32"
+      "contentSha256": "95851201159bfcfb346348f9bf76ac452e9d255ac17d0b16ac24c3cf51e7d65b"
     },
-    "scripts/skill-selection.mjs": {
+    "tooling/install/skill-selection.mjs": {
       "kind": "file",
       "contentSha256": "1aa4f87bfab2d3b997c3a64e6495fb0e2c07f61fb6b99e74bf6eeb53db6d4961"
     },
-    "scripts/video-skill-catalog.mjs": {
+    "tooling/catalog/video-skill-catalog.mjs": {
       "kind": "file",
       "contentSha256": "1321a2524216ee6f99eadf84f3cc907cfe0a14a2ccbe16f193af5f654b39550f"
     },
@@ -9233,17 +9269,17 @@
       "kind": "directory",
       "contentSha256": "61f7426fbc1e7ef9946ca9a9391f854f93e94b0de2b4db17a977cec97df1b108"
     },
-    "scripts/claude-core-migration.mjs": {
+    "tooling/install/claude-core-migration.mjs": {
       "kind": "file",
-      "contentSha256": "cde32abf9063ab3cf57df1e5c01f9e6def7ab5d1d975120730ce92050fbc626f"
+      "contentSha256": "d4a8b5ce82aa8cb31229842644f361aa453c28854f408d01e18d5ca716e4734c"
     },
-    "scripts/managed-marketplace-bootstrap.mjs": {
+    "tooling/install/managed-marketplace-bootstrap.mjs": {
       "kind": "file",
-      "contentSha256": "fff214c72a5716846c2ddc1269f6a9fefb3b7eac111099b104ac321fa438a667"
+      "contentSha256": "08a29848c73d0ab6f6dabbd582ced71ce508dec8c3359313773c3e36814e0d76"
     },
-    "scripts/update-skills.mjs": {
+    "tooling/install/update-skills.mjs": {
       "kind": "file",
-      "contentSha256": "0fc64bdd849534620001144264fe50c9760bfc6683634d3aa74c9295c3be5cc0"
+      "contentSha256": "993e40980e92c6078834995ceb3817320a82822bd7f4ac79ecb4421131a5e7ca"
     },
     ".github/workflows/validate.yml": {
       "kind": "file",
@@ -9255,33 +9291,57 @@
     },
     "scripts/install-skills.mjs": {
       "kind": "file",
-      "contentSha256": "1ba8fd226b146d7357a8e72afe8eb084487452c57f4b2ed62bb4d0de2a248c01"
+      "contentSha256": "148248e11c4056de24311eba0656145aa810726a35342dbafca02dbf30a2f1a0"
     },
-    "scripts/managed-package-repair.mjs": {
+    "tooling/install/managed-package-repair.mjs": {
       "kind": "file",
-      "contentSha256": "3ea2e5a393e09748ba6d103a1fa5a5002f63d557a768ef9659031953dfa589ad"
+      "contentSha256": "7c937775b629834f14bceb6b4f39a60faa4ca52e63e0c3da95ed2a41d314c80a"
+    },
+    "tooling/release/validate-skill-release.mjs": {
+      "kind": "file",
+      "contentSha256": "d0cfa38bd32e68dd9d593cd9d8902d4290e8f883dacf94758bfa594c1a6c720c"
+    },
+    "tooling/install/clean-install-skills.mjs": {
+      "kind": "file",
+      "contentSha256": "d99b4d5ff7427cac75918087c07f365cfaa133635b9a729765133af7778e59df"
+    },
+    "tooling/repository-root.mjs": {
+      "kind": "file",
+      "contentSha256": "af58819f726aa2ddaa33ff0d539fcc2b5f18f003b3cdc718bb0f441b2467d7dd"
+    },
+    "scripts/managed-skills.mjs": {
+      "kind": "file",
+      "contentSha256": "ede0516282318c613fa86ca5345c156d340146c84d8d7d2a42862b59b33b3307"
+    },
+    "scripts/update-skills.mjs": {
+      "kind": "file",
+      "contentSha256": "ade1a9f9a8d77ba79cc456ed89f6ee7f3b610aef7ed35264903c14ffaf805a3a"
     },
     "scripts/validate-skill-release.mjs": {
       "kind": "file",
-      "contentSha256": "a09777989144a598cbe820a97ec8b5e66e09c8538b05705ba308035a51991a29"
+      "contentSha256": "59c50f88ad9084db30acb520347f2aeba00b470e79d14adc81ad8892cbbf7e32"
     },
-    "scripts/clean-install-skills.mjs": {
+    "scripts/sync-codex-plugin.mjs": {
       "kind": "file",
-      "contentSha256": "ff6e3a7c29d7c992a950cc890cfe32c01804b151599f0f3a706c0d3feb1d27a4"
+      "contentSha256": "b5c7748129c206fd57e5940c215adc344936a37c71a0a1456d119124253dd089"
+    },
+    "tooling/generation/sync-codex-plugin.mjs": {
+      "kind": "file",
+      "contentSha256": "0d37b6391e2ae66799648a79663ade49f927ea00ac61bb2910e176164eca9397"
     }
   },
   "evidence": {
     "tests/skill-provenance.test.mjs": {
       "path": "tests/skill-provenance.test.mjs",
-      "sha256": "a87bda1f6822c660c3af721c589dc8bdac3956a71f738ece67202f453753b1ff"
+      "sha256": "8ffa85962b24d8ac138b4c1eb6124fd40330c46021c862112d0d413373852f6c"
     },
     "config/skill-migrations.json": {
-      "path": "config/skill-migrations.json",
+      "path": "tooling/install/skill-migrations.json",
       "sha256": "edfb01cdaeccecf3c61965a3a51f4f4027c21941418d3771f0d1ac254d0cba30"
     },
     "tests/adoption-projection.test.mjs": {
       "path": "tests/adoption-projection.test.mjs",
-      "sha256": "e4a501c99da8c7128dddd367d1861141b48e015440cdfdabb842bd463737bdad"
+      "sha256": "aa49fca1869aa52ffae3e6c48cde194a81a25692e954b4762575f2bd904c0234"
     },
     "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json": {
       "path": "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
@@ -9396,7 +9456,7 @@
       "sha256": "89dc1a5f2b523b24dc25811d01561fbd0ec3d4f486bd8416183dd9383d384aa2"
     },
     "config/skill-provenance.json": {
-      "path": "config/skill-provenance.json",
+      "path": "tooling/catalog/skill-provenance.json",
       "sha256": "a03a9d5ad8341b301e3391a0e3a3e4d801b7c8c6adf6033b3d966157cd7c73ce"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
@@ -9429,7 +9489,7 @@
     },
     "tests/upstream-adoption-routing.test.mjs": {
       "path": "tests/upstream-adoption-routing.test.mjs",
-      "sha256": "dca92fbc40cac39088885980cea1002d41a783999c556771e34dc1a2345e95b9"
+      "sha256": "44b98a586d1a0e3439d108fcbe1a0f9e8ad5600b942563718a46fadf55d2e12e"
     },
     "tests/fixtures/adoption-review-eval/parent/review.json": {
       "path": "tests/fixtures/adoption-review-eval/parent/review.json",
@@ -9449,11 +9509,11 @@
     },
     "tests/advanced-candidates.test.mjs": {
       "path": "tests/advanced-candidates.test.mjs",
-      "sha256": "fafcdc0bfb09077a763d01b94e94f7f42da1c13c6c7c74e97d56669f78dc9249"
+      "sha256": "8bcc4efaf66c2d772b45a38d42b4bc0afdda5c342c3a836f0038514cb571e595"
     },
     "tests/upstream-adoption-qs.test.mjs": {
       "path": "tests/upstream-adoption-qs.test.mjs",
-      "sha256": "e96303c5d6c406c04ed7975650682be085c567414b784c3fbe282d70da6320e1"
+      "sha256": "226ece25d49c39e30723a51d44082acaf4a585c7f550bc2d540150798e07a0e2"
     },
     "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json": {
       "path": "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
@@ -9521,11 +9581,11 @@
     },
     "tests/managed-skill-input.test.mjs": {
       "path": "tests/managed-skill-input.test.mjs",
-      "sha256": "14aba3218d602ff95e1dc5167912970c5c097db662116237136732a4824e0d8c"
+      "sha256": "9b772e76da6f57487dca071f98535856509451bc7b7d2e75d0cf7d33be9b2bb0"
     },
     "tests/helpers/fixture-home-state.mjs": {
       "path": "tests/helpers/fixture-home-state.mjs",
-      "sha256": "c8a8ab661b14fca646b8fb39dd2a6e83111c929882ad9cf4d40e8efb6a0264ee"
+      "sha256": "22c179ecdf164931199af96461f448c71a289811c9b4e8053836076fdf9ae638"
     },
     "docs/validation/validation-host-portability-review.md": {
       "path": "docs/validation/validation-host-portability-review.md",
@@ -9537,23 +9597,23 @@
     },
     "tests/migration-owned-paths.test.mjs": {
       "path": "tests/migration-owned-paths.test.mjs",
-      "sha256": "de97f396de85d631b34b4de5eecb650f4f3147fe218231ad377cb05bf49d8622"
+      "sha256": "e652c7a73d07dc37762a6a347af6b2f8e9e0c12d97d7683f04f8f20395869cb5"
     },
     "tests/migration-filesystem.test.mjs": {
       "path": "tests/migration-filesystem.test.mjs",
-      "sha256": "22eefe62a3b039dae8df2c978236d60a565d544ce93f58957337739229b46381"
+      "sha256": "4335b57f4e8fc5f8b9fec96ac6c188d043833238ac9a55a64df6d8020fa13063"
     },
     "tests/migration-transaction.test.mjs": {
       "path": "tests/migration-transaction.test.mjs",
-      "sha256": "71bf6a7cfad679a17c2daac990349bc389f3988fae9267bea5b6c5f97a96c4d3"
+      "sha256": "88fddf95211d9157bb078f39c799f2eaaebdc2f90625d14fefce5412f89c9f30"
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
-      "sha256": "2ee2363197533350cb5382c055afe354e0c66fd4ddb6ca77576d36ffe646bbb0"
+      "sha256": "63cc00c918f252376e265b59c8611d885e6c144d63f006c75b983db17ea9d46f"
     },
     "tests/managed-skill-migration.test.mjs": {
       "path": "tests/managed-skill-migration.test.mjs",
-      "sha256": "7d292343385cf25143bddda9c84b9919aefefb3c60b7497eda594521040004eb"
+      "sha256": "a874272a4abcf46303f50d990a188d6bf7bfcf02676ba94697e6f39f8cfa3e0a"
     },
     "tests/fixtures/hyperframes-adoption/README.md": {
       "path": "tests/fixtures/hyperframes-adoption/README.md",
@@ -9573,7 +9633,7 @@
     },
     "tests/execution-candidate.test.mjs": {
       "path": "tests/execution-candidate.test.mjs",
-      "sha256": "d417ce6e71b2fe2312632c5ec7be627020bbc2bfad9b2ae6cde111f9a8337616"
+      "sha256": "b381bb0c6d26de4da6197dd208ceeb0f0fe58eb26b8876050900a542d808de6b"
     },
     "docs/validation/upstream-adoption-evidence-map.md": {
       "path": "docs/validation/upstream-adoption-evidence-map.md",
@@ -9585,7 +9645,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "5365401dc57ba426e75b4c61cc62f0590035d1beb6c6cd45fa976f17a5cf8008"
+      "sha256": "cdf1ffbcce72fd72af46f02f199f287971a7ddcd1d01fe10baa0e1736a281b5a"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -9593,19 +9653,19 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "3f70eb12388742b627f431f7a5ece0d0d48410d82ee2929117742cf3d13b865f"
+      "sha256": "fce59bd8aae33ff19c9a394f669db39a2aa9b46721a79ee2ad6883e15e29a482"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
-      "sha256": "922381fb6268d63eb3dfdfaec907e73fb688f7b033d19fa0172c24a593f3165c"
+      "sha256": "df219351035fcfe320a0d30af2b78f26aa14415e77a4f5a175164e7be187de79"
     },
     "docs/contributing.md": {
       "path": "docs/contributing.md",
-      "sha256": "541d56ae2d2868bf651bc467f34b0eedbcb00512c68db30353fc1e0cadc5c3e8"
+      "sha256": "104d2c6c97837227ac9ff477abcd1ca46d84dcb4be5d7d8e583886cde871947b"
     },
     "docs/personal-skills.md": {
       "path": "docs/personal-skills.md",
-      "sha256": "de13f2674bd8d9c29b9f5e5a230044289cc5a238f1cd6dd72f327abf0a889295"
+      "sha256": "b0551d9066cb1f9a09256bf1099e1b419039a334a72ca6b01af1b075e1acae22"
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
@@ -9617,27 +9677,27 @@
     },
     "docs/upstream/README.md": {
       "path": "docs/upstream/README.md",
-      "sha256": "6b9499eac13feb7514f481824aaa24645fec83545ec5a7da44f644a075ee1864"
+      "sha256": "dd6c41f24fd11cd468a96c24854d22eb639beec5ef545de2dc094e31aab31bd0"
     },
     "tests/fixtures/target-documentation-preparation/README.md": {
       "path": "tests/fixtures/target-documentation-preparation/README.md",
       "sha256": "b1c8b15545c0af64ac220661bf257934c59c3b182a59031fbd079a554c49a70a"
     },
     "scripts/adoption-acceptance.mjs": {
-      "path": "scripts/adoption-acceptance.mjs",
-      "sha256": "374a969dfae5d4107ec7dc2d12c8d412bb3bdcbff016acf00819909aca3ca059"
+      "path": "tooling/verification/adoption-acceptance.mjs",
+      "sha256": "5140f7e19039ae543869ddf815ecb99f425962a6eba01dfcaac8f67e6a0ecb39"
     },
     "scripts/managed-skill-input.mjs": {
-      "path": "scripts/managed-skill-input.mjs",
-      "sha256": "5652014ba7395b85cffcd56acbea36eb09aea67aceda21ecebedbaabfc2cc1cc"
+      "path": "tooling/install/managed-skill-input.mjs",
+      "sha256": "7c1285405002a6a5efb2ac4c5b3e761a896299086ec31828b1bdcdad2ff14538"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
-      "sha256": "e2eb3c94ce8b39261bfffa387edaa62bc2d265c21f4a6343898120c614e29612"
+      "sha256": "30d7ea7f796d5d0c67e70932c1450d74025d3b6d20770a9fa0fee1d4f4f2a767"
     },
     "tests/repo-cleanup.test.mjs": {
       "path": "tests/repo-cleanup.test.mjs",
-      "sha256": "7bab111498585e26bc743fa53219b9adaddf7bef71f3b3f2374c2e66a30dd89d"
+      "sha256": "5d56b5ac94207346a9c291c65f0e20dbb50605cee11883158a51f2badca4cbf0"
     },
     "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json": {
       "path": "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
@@ -9677,7 +9737,7 @@
     },
     "tests/frontend-candidate.test.mjs": {
       "path": "tests/frontend-candidate.test.mjs",
-      "sha256": "73bfd085c614cd4232026a478dd78ade0e3ca590ca315fd510df5131b59e2a72"
+      "sha256": "1db0004b47b08547a351f0a35b913d50169a2abb619c6acbceb6e7a2f4e06558"
     },
     "tests/fixtures/managed-claude-update/README.md": {
       "path": "tests/fixtures/managed-claude-update/README.md",
@@ -9745,7 +9805,7 @@
     },
     "tests/multi-agent-delegation.test.mjs": {
       "path": "tests/multi-agent-delegation.test.mjs",
-      "sha256": "28f977415f9f5645c73ce23569ac125ec72c55ef91bb7cc47dfd246a71247a51"
+      "sha256": "3ab60d6d366c36072aaae878b471b833eb2ac352ca292a0b03d9f794bc7541f5"
     },
     "tests/fixtures/adoption-release-4.4.0/tests.log": {
       "path": "tests/fixtures/adoption-release-4.4.0/tests.log",
@@ -9753,31 +9813,31 @@
     },
     "tests/update-skills.test.mjs": {
       "path": "tests/update-skills.test.mjs",
-      "sha256": "ee3eb20b088c898dfd4464a1a7590a0e985d9187c8a8aa142a447c05cdf06056"
+      "sha256": "e2bc89f212ce33746898312b25093f1a4287dd48dc3b036f24d099d333caf02a"
     },
     "tests/managed-marketplace-bootstrap.test.mjs": {
       "path": "tests/managed-marketplace-bootstrap.test.mjs",
-      "sha256": "7a612b72418735d4e4fa7818a69ab3f026b43076db48d1547b25850cd3010c6a"
+      "sha256": "314851078345e1850b946776d3fcc0221c6c0e31783a6f7b6c0be86d724eedd4"
     },
     "scripts/update-skills.mjs": {
-      "path": "scripts/update-skills.mjs",
-      "sha256": "52f55e1078b22477d52c73d0657d40fa1d751adc4d7b47b5d4671aaeab32c819"
+      "path": "tooling/install/update-skills.mjs",
+      "sha256": "de0aaeff9ed067e2bcc0276c284ee540f8c98a9debb8f4e12195a410f2c5ad6b"
     },
     "scripts/managed-marketplace-bootstrap.mjs": {
-      "path": "scripts/managed-marketplace-bootstrap.mjs",
-      "sha256": "ca7b68f23e95054f98b336232e9a429d665e5c321418cb6cbfff0967414fd22f"
+      "path": "tooling/install/managed-marketplace-bootstrap.mjs",
+      "sha256": "c6738c7b56f2d4b09149d1af98a47c093d3502a86dc43816633b414af126b543"
     },
     "scripts/managed-skills.mjs": {
-      "path": "scripts/managed-skills.mjs",
-      "sha256": "714fd6893402eb2f3308792d159c50deca6d6088005019b9c0a8eb91e1db20ae"
+      "path": "tooling/install/managed-skills.mjs",
+      "sha256": "a2c047adf43ffd2f26a4812772026b79fcc127e7c88df989143237c5b6da9dc4"
     },
     "scripts/qs-test-environment.mjs": {
-      "path": "scripts/qs-test-environment.mjs",
+      "path": "tooling/verification/qs-test-environment.mjs",
       "sha256": "09035137e38f671001d96f210a3b5daf15b7d65fd9449ff4a44d0410065d0c21"
     },
     "tests/qs-test-baseline.test.mjs": {
       "path": "tests/qs-test-baseline.test.mjs",
-      "sha256": "f1dccbcf33ee3d40c1bba4a93507dfdb7c444ae214c04be09ec0d07e06e88a41"
+      "sha256": "70ca7f12a0d49df816863bc84c015e37f4670c6735c9f60ac8acc55596f5a5c2"
     },
     "install.sh": {
       "path": "install.sh",
@@ -9789,31 +9849,31 @@
     },
     "scripts/install-skills.mjs": {
       "path": "scripts/install-skills.mjs",
-      "sha256": "d0aa4e1af7167076759619b4140a80d699864cdcce031fdd5ef1da37b7f32630"
+      "sha256": "c9a9eb7e436895d1eb3acd285a0928cf8abbff91d402ee4d873eab90d5b1963a"
     },
     "scripts/managed-package-repair.mjs": {
-      "path": "scripts/managed-package-repair.mjs",
-      "sha256": "5edaa29e61023f81ea21f439a820c7f73fa39b1413929809a4cebb9b6d48afa7"
+      "path": "tooling/install/managed-package-repair.mjs",
+      "sha256": "7b1072d8d300ebb20e37e85013b6edb2a656abbce9bd86d262b8855ad41ca08d"
     },
     "scripts/validate-skill-release.mjs": {
-      "path": "scripts/validate-skill-release.mjs",
-      "sha256": "ecc7607b895ceae37d88bdb5cf7cb9524ee7be8b3e6b484fd71f0cd065bbbb5d"
+      "path": "tooling/release/validate-skill-release.mjs",
+      "sha256": "993a18d3828cb37fa4008423451b774c0444aadc2c7d4cc50c5df8c4614bff1b"
     },
     "tests/install-skills.test.mjs": {
       "path": "tests/install-skills.test.mjs",
-      "sha256": "b5a41be3a7341be368b419b0356d7750c173ba9150d16a6dde60106536e1aa05"
+      "sha256": "b94a7da0c7d540ae9c34ded076d64543344dc83627ebb9611de60fbeb77cae89"
     },
     "scripts/managed-skill-migration.mjs": {
-      "path": "scripts/managed-skill-migration.mjs",
+      "path": "tooling/install/managed-skill-migration.mjs",
       "sha256": "8ace82e5e3df10898bedad0833ceba224feca34291a840aa5dfdc913f5b97222"
     },
     "tests/personal-skills-v2.test.mjs": {
       "path": "tests/personal-skills-v2.test.mjs",
-      "sha256": "f2103129b78777d33986e7e899e5bb0d51b97289795247c50a7a0fb1cbbb8d3f"
+      "sha256": "0b55223b7b43c19c143ac7ac0cd38a8701cdafd2903265cfd5e8ad6d2104fd3b"
     },
     "package.json": {
       "path": "package.json",
-      "sha256": "2f9986aa790e6e68b8a4d6cdcfb75da00f2b40b42333831ba8b6ea8844d42e0b"
+      "sha256": "3d5b0adc0a99c21f28655694935301406490a82666878f6ca0d3d0b42df778e2"
     },
     "docs/validation/versioned-installer-review.md": {
       "path": "docs/validation/versioned-installer-review.md",

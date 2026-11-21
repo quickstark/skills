@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
-import { PS_INTERNAL_CAPABILITIES } from "../scripts/ps-skill-catalog.mjs";
+import { PS_INTERNAL_CAPABILITIES } from "../tooling/catalog/ps-skill-catalog.mjs";
 
 const requiredHeadings = [
   "## Purpose",

@@ -48,7 +48,7 @@ and actionable P0/P1 findings prohibit completion regardless of percentages.
 Estimates never replace statuses or verification gates and do not promise a
 completion time. These are conversation estimates, not measured dashboard telemetry.
 
-The shared estimator text lives in `scripts/progress-reporting-contract.mjs` and
+The shared estimator text lives in `tooling/generation/progress-reporting-contract.mjs` and
 is embedded in both public instructions and rendered goal prompts. Generated
 execution prompts must carry all these rules so a fresh task does not need the
 generating conversation. Generation reaching 100% proves only generation finished:

@@ -80,7 +80,7 @@ contains per-agent skill examples and machine-specific rollout history. GitHub r
 | `qs-video` | 1 | Video operations backed by 21 private modules and workflows |
 | `qs-execution` | 1 | Substantial-work gates through `qs-unlazy` |
 
-The [collection registry](./scripts/skill-collection-registry.mjs) and its catalogs
+The [collection registry](./tooling/catalog/skill-collection-registry.mjs) and its catalogs
 own package membership; 39 is the current total, not a policy cap. Every public
 root has one package owner; private references are not extra dropdown commands.
 Help can explain optional capabilities,
@@ -482,7 +482,7 @@ Open the repository root in your editor. To change a command, edit `skills/<comm
 For example, the cleanup command lives in
 [`skills/qs-repo-cleanup/SKILL.md`](./skills/qs-repo-cleanup/SKILL.md).
 
-The catalogs in [scripts](./scripts/) control command names and package membership.
+The [collection catalogs](./tooling/catalog/) control command names and package membership. The [tooling guide](./tooling/README.md) lists the generators, checks and installer entry points.
 The sync command builds `packages/` for Claude Code, `codex/plugins/` for Codex,
 and `pi/packages/` for Pi. See the [contributor guide](./docs/contributing.md)
 for metadata changes and the [architecture guide](./docs/architecture.md) for ownership.

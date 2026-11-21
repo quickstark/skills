@@ -4,7 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { V3_INTERNAL_CAPABILITIES, V3_SKILL_DISPOSITIONS_BY_NAME } from "../scripts/qs-skill-catalog.mjs";
+import { V3_INTERNAL_CAPABILITIES, V3_SKILL_DISPOSITIONS_BY_NAME } from "../tooling/catalog/qs-skill-catalog.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFile(join(root, path), "utf8");

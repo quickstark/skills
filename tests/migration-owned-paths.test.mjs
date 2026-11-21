@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { chmod, mkdir, mkdtemp, readFile, readlink, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { createOwnedPathAdapter, ownedPathState, ownedFileState } from '../scripts/migration-owned-paths.mjs';
-import { runMigrationTransaction } from '../scripts/migration-transaction.mjs';
+import { captureMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { createOwnedPathAdapter, ownedPathState, ownedFileState } from '../tooling/install/migration-owned-paths.mjs';
+import { runMigrationTransaction } from '../tooling/install/migration-transaction.mjs';
 
 async function fixture(t) {
   const root = await mkdtemp(join(tmpdir(), 'qs-owned-adapter-'));

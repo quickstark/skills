@@ -83,8 +83,8 @@ failed checks and completion in the root; move examples and uncommon branches
 behind explicit pointers. Do not remove an instruction solely because a capable
 model sometimes follows it without prompting.
 
-The relevant generators are [progress reporting](../../scripts/progress-reporting-contract.mjs)
-and [completion contracts](../../scripts/sync-skill-output-contracts.mjs).
+The relevant generators are [progress reporting](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/progress-reporting-contract.mjs)
+and [completion contracts](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/sync-skill-output-contracts.mjs).
 [Deployment-prompt tests](../../tests/deploy-prompt.test.mjs) bind actual recorded
 generation/execution responses to source hashes. Updating hashes without fresh
 responses would discard that evidence. Preserve cancellation, weighted progress,
@@ -136,7 +136,7 @@ modified bytes as an unchanged upstream pin. For each adopted change, record:
 | Source digest and derived-content identity | Distinguish upstream integrity from local adaptation |
 | Compatibility and verification evidence | Supported runtime/host and demonstrated preservation |
 
-The [current reconciler](../../scripts/personal-skills/reconcile.mjs) plans desired
+The [current reconciler](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/personal-skills/reconcile.mjs) plans desired
 names but has no general retirement operation for removed names. A simple rename
 can leave both old and new commands installed. Migration must detect owned,
 unchanged old copies; preserve locally modified or independently managed copies;
@@ -291,7 +291,7 @@ No source synchronization needed. Make failure report distinguish pre-publicatio
 
 **Acceptance:** Queued job/success exit cannot count as healthy deploy; staging request cannot authorize production; partial publish reports actual state.
 
-Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-deploy-release/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — upstreamName null and no continuations; repository-authored identity.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-deploy-release/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/qs-skill-catalog.mjs) — upstreamName null and no continuations; repository-authored identity.
 
 
 #### qs-flow-triage
@@ -346,7 +346,7 @@ Use centralized provenance index as authoritative origin map, distinguish curren
 
 **Acceptance:** Command/link checks cover edited docs; planned behavior labeled; source origin includes multiple contributors when guidance was merged.
 
-Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-code-document/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — Repository-authored identity, upstreamName null.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-code-document/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/qs-skill-catalog.mjs) — Repository-authored identity, upstreamName null.
 
 
 #### qs-test-author
@@ -368,7 +368,7 @@ Current matrix, bounded retry and real-artifact proof are already strong. Add ev
 
 **Acceptance:** Changed artifact invalidates prior pass; unavailable required check blocks completion; retry cannot erase first failure; source state preserved.
 
-Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-test-verify/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — V3-only repository authored identity.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-test-verify/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/qs-skill-catalog.mjs) — V3-only repository authored identity.
 
 
 #### qs-learn-teach
@@ -401,7 +401,7 @@ Keep exact generation-versus-execution distinction. Compression must separate ro
 
 **Acceptance:** Rerun generation/execution and estimation cases using actual agents; missing goals/skills or target yields blocker not executable placeholder; no hashes-only fixture updates.
 
-Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-deploy-prompt/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — V3-only authoring identity and goal-workflow-prompt output kind.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-deploy-prompt/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/qs-skill-catalog.mjs) — V3-only authoring identity and goal-workflow-prompt output kind.
 
 
 #### internal:domain-modeling
@@ -491,7 +491,7 @@ Use the shared collection registry for one outcome-to-command index; retain form
 
 **Acceptance:** Route a parity request, rationale question, verification authoring request and ordinary QS build request; assert one appropriate root and no mutations.
 
-Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-help/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [ps-skill-catalog.mjs](../../scripts/ps-skill-catalog.mjs) — Repository-authored candidateId null; currently overlaps QS help and searches both catalogs.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-help/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [ps-skill-catalog.mjs](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/scripts/ps-skill-catalog.mjs) — Repository-authored candidateId null; currently overlaps QS help and searches both catalogs.
 
 
 #### ps-how

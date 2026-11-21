@@ -7,7 +7,7 @@ import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
-import { runMigrationTransaction, readMigrationJournal, readMigrationTransactionLock, unlockAbandonedMigrationTransaction, validateMigrationTransactionPlan } from '../scripts/migration-transaction.mjs';
+import { runMigrationTransaction, readMigrationJournal, readMigrationTransactionLock, unlockAbandonedMigrationTransaction, validateMigrationTransactionPlan } from '../tooling/install/migration-transaction.mjs';
 
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 const jsonFile = async (file) => JSON.parse(await readFile(file, 'utf8'));
@@ -207,7 +207,7 @@ test('exclusive lock refuses a live concurrent owner and cannot be stolen', asyn
 
 test('terminated owners unlock only with verified namespace identity; unsupported hosts retain the lock', async (t) => {
   const args = await fixture(t);
-  const modulePath = fileURLToPath(new URL('../scripts/migration-transaction.mjs', import.meta.url));
+  const modulePath = fileURLToPath(new URL('../tooling/install/migration-transaction.mjs', import.meta.url));
   const script = `import {runMigrationTransaction} from ${JSON.stringify('file://' + modulePath)};const input=JSON.parse(process.argv[1]);const adapter={inspect:async()=>{console.log('locked');await new Promise(()=>setInterval(()=>{},1000));},prepare(){},inspectBackup(){},apply(){},recover(){}};await runMigrationTransaction({...input,adapters:{fixture:adapter}});`;
   const child = spawn(process.execPath, ['--input-type=module', '-e', script, JSON.stringify({ journalPath: args.journalPath, plan: args.plan, ownerId: 'child-fixture' })], { stdio: ['ignore', 'pipe', 'pipe'] });
   t.after(() => { if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); });

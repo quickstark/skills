@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseResponse, promptFor, referenceNames } from '../scripts/prototype-platform-trials.mjs';
+import { parseResponse, promptFor, referenceNames } from '../tooling/trials/prototype-platform-trials.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');

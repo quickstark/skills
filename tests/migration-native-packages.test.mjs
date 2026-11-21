@@ -2,13 +2,13 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { runMigrationTransaction, readMigrationJournal } from '../scripts/migration-transaction.mjs';
+import { runMigrationTransaction, readMigrationJournal } from '../tooling/install/migration-transaction.mjs';
 import { mkdtemp, mkdir, writeFile, readFile, rm, appendFile, symlink, chmod } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { captureNativeConfiguration, codexConfig, createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../scripts/migration-native-packages.mjs';
+import { captureMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { captureNativeConfiguration, codexConfig, createNativePackageAdapter, observeNativePackages, predictNativePackageTransition, runNativePackageCommand, nativePackageOwnedTargets, nativePayloadSha256 } from '../tooling/install/migration-native-packages.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 
@@ -570,7 +570,7 @@ async function claudeDiscoveredCommands({homeDirectory,cwd}) {
 }
 
 test('real isolated Claude installs every maintained projection with exactly the registered public names', {skip:!available('claude')}, async t=>{
-  const {TARGET_SKILL_COLLECTIONS}=await import('../scripts/skill-collection-registry.mjs');
+  const {TARGET_SKILL_COLLECTIONS}=await import('../tooling/catalog/skill-collection-registry.mjs');
   const repositoryRoot=path.resolve(import.meta.dirname,'..');
   const homeDirectory=await mkdtemp(path.join(tmpdir(),'qs-maintained-claude-'));t.after(()=>rm(homeDirectory,{recursive:true,force:true}));
   const options={host:'claude-code',homeDirectory,cwd:repositoryRoot};
@@ -620,8 +620,8 @@ test('Claude recovery preserves a concurrent settings edit made during native in
 async function interruptClaudeRecovery(args, recovery, cache = null) {
   // A separate process loses all adapter memory after the selected filesystem effect.
   const program=`import fs from 'node:fs';import path from 'node:path';import {syncBuiltinESMExports} from 'node:module';
-    import {runMigrationTransaction} from ${JSON.stringify(new URL('../scripts/migration-transaction.mjs',import.meta.url).href)};
-    import {createNativePackageAdapter} from ${JSON.stringify(new URL('../scripts/migration-native-packages.mjs',import.meta.url).href)};
+    import {runMigrationTransaction} from ${JSON.stringify(new URL('../tooling/install/migration-transaction.mjs',import.meta.url).href)};
+    import {createNativePackageAdapter} from ${JSON.stringify(new URL('../tooling/install/migration-native-packages.mjs',import.meta.url).href)};
     const {input,options,settings,cache}=JSON.parse(process.argv[1]);const rename=fs.promises.rename;const unlink=fs.promises.unlink;
     fs.promises.rename=async(from,to)=>{const result=await rename(from,to);if(!cache&&to===settings)throw new Error('Interrupted after atomic settings restore.');return result;};
     fs.promises.unlink=async(file)=>{const result=await unlink(file);if(cache&&file.startsWith(cache+path.sep))throw new Error('Interrupted during owned cache removal.');return result;};syncBuiltinESMExports();

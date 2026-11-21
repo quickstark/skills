@@ -4,8 +4,8 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import test from 'node:test';
-import { ADVANCED_PUBLIC_COMMANDS, ADVANCED_INTERNAL_CAPABILITIES } from '../scripts/advanced-skill-catalog.mjs';
-import { PS_PUBLIC_COMMANDS, PS_INTERNAL_CAPABILITIES } from '../scripts/ps-skill-catalog.mjs';
+import { ADVANCED_PUBLIC_COMMANDS, ADVANCED_INTERNAL_CAPABILITIES } from '../tooling/catalog/advanced-skill-catalog.mjs';
+import { PS_PUBLIC_COMMANDS, PS_INTERNAL_CAPABILITIES } from '../tooling/catalog/ps-skill-catalog.mjs';
 import { freezeParityContract, evaluateParity } from '../skills/_shared/advanced/tools/visual-parity.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));

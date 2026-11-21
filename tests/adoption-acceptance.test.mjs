@@ -4,8 +4,8 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, writeFile, readFile, rm, symlink, chmod, rename, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
-import { verifyAdoptionAcceptance } from '../scripts/adoption-acceptance.mjs';
-import { captureMigrationPath, revalidateMigrationPath } from '../scripts/migration-filesystem.mjs';
+import { verifyAdoptionAcceptance } from '../tooling/verification/adoption-acceptance.mjs';
+import { captureMigrationPath, revalidateMigrationPath } from '../tooling/install/migration-filesystem.mjs';
 
 const sha = (text) => createHash('sha256').update(text).digest('hex');
 async function fixture(t) {

@@ -14,11 +14,11 @@ Use the installation guide for current update and restart commands.
 
 QuickStark canonical roots and private dependencies live in this repository;
 generated host packages are projections. Approved third-party resources are pinned
-in [the contributor manifest](../config/personal-skills.manifest.json). Installed
+in [the contributor manifest](../tooling/install/personal-skills/personal-skills.manifest.json). Installed
 machine inventory is evidence, never upstream approval or authority to adopt.
 
-[Profiles](../config/skill-profiles.json) define fresh core-only selection.
-[Migrations](../config/skill-migrations.json) preserve stable original capability IDs
+[Profiles](../tooling/install/skill-profiles.json) define fresh core-only selection.
+[Migrations](../tooling/install/skill-migrations.json) preserve stable original capability IDs
 and map accepted replacements. Machine selection lives at
 `~/.config/quickstark/skills-selection.json`. Ordinary updates preserve it;
 `--with <package-id>` adds explicitly and `--profile core` starts a new desired
@@ -78,7 +78,7 @@ bind immutable revision, license evidence, upstream tree and independent content
 SHA256. Pi packages bind an exact npm version plus SHA512 integrity, or an exact
 Git commit, together with license and contributed-skill path/hash evidence.
 Schema 1 is accepted through lossless in-memory migration. The separate Skills CLI
-installer remains integrity-pinned by [its lock](../config/personal-skills-installer-lock.json).
+installer remains integrity-pinned by [its lock](../tooling/install/personal-skills/personal-skills-installer-lock.json).
 
 Inventory is read-only and reports managed, candidate, alias, conflict, ignored,
 separately-managed or unresolved state. It scans supported discovery/configured
