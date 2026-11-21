@@ -9,7 +9,7 @@ import { buildResponsePrompt } from './skill-efficiency-trials.mjs';
 
 const repository = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const fixture = join(repository, 'tests/fixtures/prototype-platform');
-export const source = 'skills/engineering/qs-design-prototype/SKILL.md';
+export const source = 'skills/qs-design-prototype/SKILL.md';
 export const referenceNames = ['UI.md', 'LOGIC.md', 'WEB.md', 'MACOS.md'];
 const json = (path, value) => writeFile(path, JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
 
@@ -34,7 +34,7 @@ export function parseResponse(text) {
 
 export async function sources() {
   const scenario = { source, skill: 'qs-design-prototype' };
-  return Promise.all([source, ...referenceNames.map((name) => `skills/engineering/qs-design-prototype/${name}`)]
+  return Promise.all([source, ...referenceNames.map((name) => `skills/qs-design-prototype/${name}`)]
     .map((path) => instruction(scenario, path)));
 }
 

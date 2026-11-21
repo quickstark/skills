@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-frontend@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-frontend/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-design-frontend/SKILL.md)
 
 ## What it does
 
-`/qs-design-frontend` build or revise a frontend within its existing constraints. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-design-frontend/SKILL.md).
+`/qs-design-frontend` build or revise a frontend within its existing constraints. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-design-frontend/SKILL.md).
 
 ## When to reach for it
 

@@ -68,10 +68,10 @@ The caption helper preflights the exact ONNX cache/model rather than downloading
 missing resources. Denied runtime freshness/font fetch attempts remain recorded;
 successful local output does not mean zero attempted requests.
 
-The [video runtime profile](../../skills/video/qs-video/references/runtime-compatibility.md)
+The [video runtime profile](../../skills/qs-video/references/runtime-compatibility.md)
 also records the unavailable named animate-text dependency and unpinned local voice
 resolver branch. A missing selected capability blocks that outcome. The
-[execution profile](../../skills/engineering/qs-unlazy/references/runtime-compatibility.md)
+[execution profile](../../skills/qs-unlazy/references/runtime-compatibility.md)
 records Linux Node 16.20.2/24.21.0 checks against an unreleased upstream target,
 definition-hash limits, process-group containment limits and opt-in hooks.
 Windows integration is unverified. Definition hashes do not fingerprint every

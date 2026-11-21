@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-setup/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/setup-matt-pocock-skills)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-setup/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/setup-matt-pocock-skills)
 
 ## What it does
 
-`/qs-setup` configure project trackers, labels, and docs. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-setup/SKILL.md).
+`/qs-setup` configure project trackers, labels, and docs. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-setup/SKILL.md).
 
 ## When to reach for it
 

@@ -1,3 +1,4 @@
+import { listPublicSources } from "./sync-v3-docs.mjs";
 import {
   cp,
   mkdir,
@@ -52,7 +53,7 @@ const legacyPackages = Object.freeze([
     projection: commandsFor("qs-skills"),
     codexRoot: join(repositoryRoot, "codex", "plugins", "qs-skills"),
     piRoot: join(repositoryRoot, "pi", "packages", "qs-skills"),
-    capabilitySourceRoot: join(repositoryRoot, "skills", "internal"),
+    capabilitySourceRoot: join(repositoryRoot, "skills", "_shared", "core"),
     capabilityFiles: qsCapabilityFiles,
     claudeRoot: join(repositoryRoot, "packages", "qs-skills"),
     claudeMarketplaceSource: "./packages/qs-skills",
@@ -80,7 +81,7 @@ const legacyPackages = Object.freeze([
     codexRoot: join(repositoryRoot, "codex", "plugins", "ps-skills"),
     piRoot: join(repositoryRoot, "pi", "packages", "ps-skills"),
     claudeRoot: join(repositoryRoot, "packages", "ps-skills"),
-    capabilitySourceRoot: join(repositoryRoot, "skills", "pstack", "internal"),
+    capabilitySourceRoot: join(repositoryRoot, "docs", "reference", "skills", "pstack", "internal"),
     capabilityFiles: psCapabilityFiles,
     noticeFiles: ["THIRD_PARTY_NOTICES.md"],
     claudeMarketplaceSource: "./packages/ps-skills",
@@ -111,9 +112,9 @@ if (candidate) {
 const cliArguments = originalArguments.filter((argument, index) => argument !== "--candidate" && argument !== "--output-root" && originalArguments[index - 1] !== "--output-root");
 const optionalMetadata = [
   {name:"qs-advanced",displayName:"QuickStark Advanced",description:"Optional focused analysis, verification, evaluation and operations workflows.",
-    privateTrees:[{source:"skills/advanced",target:"advanced",canonical:"../../advanced/"}],noticeSource:"skills/advanced/THIRD_PARTY_NOTICES.md"},
+    privateTrees:[{source:"skills/_shared/advanced",target:"advanced",canonical:"../_shared/advanced/"}],noticeSource:"skills/_shared/advanced/THIRD_PARTY_NOTICES.md"},
   {name:"qs-frontend",displayName:"QuickStark Frontend",description:"Optional frontend implementation, reference images and prompt construction.",
-    privateTrees:[{source:"skills/frontend",target:"frontend",canonical:"../../frontend/"}],noticeSource:"skills/frontend/THIRD_PARTY_NOTICES.md"},
+    privateTrees:[{source:"skills/_shared/frontend",target:"frontend",canonical:"../_shared/frontend/"}],noticeSource:"skills/_shared/frontend/THIRD_PARTY_NOTICES.md"},
   {name:"qs-video",displayName:"QuickStark Video",description:"Optional scoped video creation, editing and rendering with private HyperFrames modules.",privateTrees:[]},
   {name:"qs-execution",displayName:"QuickStark Execution",description:"Optional substantial-work acceptance gates and completion discipline.",privateTrees:[]},
 ];
@@ -130,6 +131,7 @@ const packages = Object.freeze(selectedPackages.map((pkg) => candidate ? {
   claudeRoot:join(outputRoot,"packages",pkg.name),claudeMarketplaceSource:`./packages/${pkg.name}`,
 } : pkg));
 
+if (targetRegistry) await listPublicSources(repositoryRoot);
 if (cliArguments.includes("--check")) await verifyAll(parseCheckSelection(cliArguments));
 else {
   if (cliArguments.length > 0) throw new Error(`Unknown projector option: ${cliArguments[0]}`);
@@ -232,7 +234,7 @@ function claudeManifest(pkg, generated = false) {
     keywords: pkg.keywords,
     skills: pkg.projection.map((skill) => generated
       ? `./skills/${skill.name}`
-      : `./${skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`}`),
+      : `./${skill.sourcePath}`),
   };
 }
 
@@ -279,7 +281,7 @@ function codexMarketplace() {
 }
 
 async function projectedSkillContent(pkg, skill, file, { codex }) {
-  const source = await readFile(join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`, file));
+  const source = await readFile(join(repositoryRoot, skill.sourcePath, file));
   let content = source;
   if (file.endsWith(".md")) {
     let text = source.toString("utf8");
@@ -327,7 +329,7 @@ async function verifyCapabilities(pkg, root) {
   }
 }
 async function writeSkill(pkg, root, skill, { codex }) {
-  const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+  const source = join(repositoryRoot, skill.sourcePath);
   if (!(await exists(join(source, "SKILL.md")))) throw new Error(`Cannot package missing promoted skill /${skill.name}.`);
   const files = await fileList(source); // Reject links before copying any source payload.
   const destination = join(root, "skills", skill.name);
@@ -406,7 +408,7 @@ async function syncAll() {
 async function expectedSkillFiles(pkg, { codex }) {
   const expected = [];
   for (const skill of pkg.projection) {
-    const source = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+    const source = join(repositoryRoot, skill.sourcePath);
     for (const file of await fileList(source)) expected.push(`${skill.name}/${file}`);
   }
   return expected.sort();
@@ -425,7 +427,7 @@ async function verifyProjection(pkg, root, { codex }) {
   }
 
   for (const skill of pkg.projection) {
-    const sourceRoot = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+    const sourceRoot = join(repositoryRoot, skill.sourcePath);
     const targetRoot = join(root, "skills", skill.name);
     for (const file of await fileList(sourceRoot)) {
       const expectedContent = await projectedSkillContent(pkg, skill, file, { codex });
@@ -463,7 +465,7 @@ async function verifyPiProjection(pkg, root) {
     throw new Error(`${pkg.name} has missing, extra, or stale projected Pi skill files.`);
   }
   for (const skill of pkg.projection) {
-    const sourceRoot = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+    const sourceRoot = join(repositoryRoot, skill.sourcePath);
     const targetRoot = join(root, "skills", skill.name);
     for (const file of await fileList(sourceRoot)) {
       const [source, actual] = await Promise.all([

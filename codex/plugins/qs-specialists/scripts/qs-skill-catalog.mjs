@@ -481,6 +481,7 @@ function defineV3PublicCommand([name, group, position], distribution) {
   return Object.freeze({
     ...skill,
     ...metadata,
+    sourcePath: `skills/${name}`,
     distribution,
     codexPlugin: V3_CODEX_PLUGIN_BY_DISTRIBUTION[distribution],
     lifecycle: Object.freeze({ group, position }),

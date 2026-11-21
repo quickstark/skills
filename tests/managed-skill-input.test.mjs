@@ -792,7 +792,7 @@ test('a linked Pi settings transaction resumes its frozen target after an interr
 nativeTest('unresolved or stale criterion audit blocks native update before effects',async t=>{
   const args=await fixture(t); const auditPath=path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'); args.audit.criteria['AC-09'].status='failed'; await writeJSON(auditPath,args.audit);
   const before=await fixtureHomeState(args.homeDirectory); await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Unresolved acceptance criterion/); assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
-  args.audit.criteria['AC-09'].status='passed'; await writeJSON(auditPath,args.audit); await appendFile(path.join(args.repositoryRoot,'skills/engineering/qs-help/fixture.txt'),'new unreviewed source');
+  args.audit.criteria['AC-09'].status='passed'; await writeJSON(auditPath,args.audit); await appendFile(path.join(args.repositoryRoot,'skills/qs-help/fixture.txt'),'new unreviewed source');
   await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Acceptance source changed/);
 });
 
@@ -1058,6 +1058,9 @@ async function priorRootClaudeCore(t) {
   const catalog=await readJSON(catalogFile);catalog.plugins.find(item=>item.name==='qs-skills').source='./';await writeJSON(catalogFile,catalog);
   const skills=core.publicCommands.map(name=>`./skills/${name==='qs-flow-handoff'?'productivity':'engineering'}/${name}`);
   await writeJSON(path.join(args.repositoryRoot,'.claude-plugin/plugin.json'),{name:'qs-skills',version:'4.0.0',skills});
+  const privateRoot = path.join(args.repositoryRoot, 'skills/internal');
+  await mkdir(privateRoot, { recursive: true });
+  await writeFile(path.join(privateRoot, 'fixture.txt'), 'Historical root-based private capability.');
   for(const relative of skills){const root=path.join(args.repositoryRoot,relative);await mkdir(root,{recursive:true});await writeFile(path.join(root,'SKILL.md'),`---\nname: ${path.basename(root)}\ndescription: Known prior root-based core fixture.\n---\nFixture only.\n`);}
   await refreshFixtureAudit(args);const priorRevision=args.revision;
   await runNativePackageCommand('claude',['plugin','install','qs-skills@quickstark','--scope','user'],args.nativeOptions);

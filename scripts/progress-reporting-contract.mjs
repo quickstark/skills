@@ -47,10 +47,10 @@ export const STANDALONE_PROGRESS_PATHS = Object.freeze([
   "in-progress/wizard", "in-progress/writing-beats", "in-progress/writing-fragments",
   "in-progress/writing-shape", "misc/git-guardrails-claude-code", "misc/migrate-to-shoehorn",
   "misc/scaffold-exercises", "misc/setup-pre-commit", "personal/edit-article", "personal/obsidian-vault",
-].map((path) => `skills/${path}/SKILL.md`));
+].map((path) => `docs/reference/skills/${path}/SKILL.md`));
 
 export function progressInventory() {
-  const pathFor = (skill) => `${skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`}/SKILL.md`;
+  const pathFor = (skill) => `${skill.sourcePath}/SKILL.md`;
   const active = new Set(PUBLIC_COMMANDS.map(pathFor));
   const known = new Set([...LEGACY_PUBLIC_COMMANDS, ...TARGET_PUBLIC_COMMANDS].map(pathFor));
   return {
@@ -60,7 +60,7 @@ export function progressInventory() {
     inactiveSkills: [...known].filter((path) => !active.has(path)).sort(),
     standaloneSkills: [...STANDALONE_PROGRESS_PATHS].sort(),
     internalReferences: [
-      ...V3_INTERNAL_CAPABILITIES.map((capability) => `skills/internal/${capability.name}.md`),
+      ...V3_INTERNAL_CAPABILITIES.map((capability) => `skills/_shared/core/${capability.name}.md`),
       ...PS_INTERNAL_CAPABILITIES.map((capability) => capability.sourcePath),
     ].sort(),
   };
@@ -82,8 +82,8 @@ export async function validateProgressInventory({ root = repositoryRoot } = {}) 
   const inventory = progressInventory();
   const expected = Object.values(inventory).flat();
   if (new Set(expected).size !== expected.length) throw new Error("Progress inventory contains duplicate source ownership.");
-  const actual = (await walk(root, "skills")).filter((path) => path.endsWith("/SKILL.md")
-    || (/^skills\/(?:pstack\/)?internal\//.test(path) && path.endsWith(".md")));
+  const actual = [...await walk(root, "skills"), ...await walk(root, "docs/reference/skills")].filter((path) => path.endsWith("/SKILL.md")
+    || (/^(?:skills\/_shared\/core|docs\/reference\/skills\/pstack\/internal)\//.test(path) && path.endsWith(".md")));
   const unknown = actual.filter((path) => !expected.includes(path));
   const missing = expected.filter((path) => !actual.includes(path));
   if (unknown.length || missing.length) {

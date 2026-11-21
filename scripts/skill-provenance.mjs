@@ -1,3 +1,4 @@
+import { currentSourcePath, recordedPublicRoot } from "./historical-source-path.mjs";
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, realpathSync, statSync, readdirSync, lstatSync } from 'node:fs';
 import path from 'node:path';
@@ -37,10 +38,10 @@ function readBaselineManifest(root) {
 export function getProvenanceInventory(root = repositoryRoot) {
   const manifest = readBaselineManifest(root);
   return [
-    ...SKILLS.map((entry) => ({ collection: 'qs', currentName: entry.name, role: 'public', path: `skills/${entry.bucket}/${entry.name}/SKILL.md`, owners: [entry.name] })),
+    ...SKILLS.map((entry) => ({ collection: 'qs', currentName: entry.name, role: 'public', path: `${recordedPublicRoot(entry.name)}/SKILL.md`, owners: [entry.name] })),
     ...V3_INTERNAL_CAPABILITIES.map((entry) => ({ collection: 'qs', currentName: entry.name, role: 'private', path: `skills/internal/${entry.name}.md`, owners: [...entry.owners] })),
-    ...PS_PUBLIC_COMMANDS.map((entry) => ({ collection: 'ps', currentName: entry.name, role: 'public', path: `${entry.sourcePath}/SKILL.md`, owners: [entry.name] })),
-    ...PS_INTERNAL_CAPABILITIES.map((entry) => ({ collection: 'ps', currentName: entry.name, role: 'private', path: entry.sourcePath, owners: [...entry.owners] })),
+    ...PS_PUBLIC_COMMANDS.map((entry) => ({ collection: 'ps', currentName: entry.name, role: 'public', path: `skills/pstack/commands/${entry.name}/SKILL.md`, owners: [entry.name] })),
+    ...PS_INTERNAL_CAPABILITIES.map((entry) => ({ collection: 'ps', currentName: entry.name, role: 'private', path: `skills/pstack/internal/${entry.name}.md`, owners: [...entry.owners] })),
     ...manifest.resources.map((entry) => ({ collection: 'contributor', currentName: entry.name, role: 'public', path: `${manifest.canonicalDirectory}/${entry.name}/SKILL.md`, owners: [entry.name] })),
   ];
 }
@@ -49,10 +50,10 @@ export function getProvenanceInventory(root = repositoryRoot) {
 export function getTargetProvenanceInventory() {
   const publicEntries = [...SKILLS, ...ADVANCED_PUBLIC_COMMANDS, ...FRONTEND_PUBLIC_COMMANDS, ...VIDEO_PUBLIC_COMMANDS, ...EXECUTION_PUBLIC_COMMANDS].map(entry => ({
     id: `target:public:${entry.name}`, package: entry.packageName ?? entry.codexPlugin,
-    name: entry.name, role: 'public', path: `${entry.sourcePath ?? `skills/${entry.bucket}/${entry.name}`}/SKILL.md`, owners: [entry.name],
+    name: entry.name, role: 'public', path: `${entry.sourcePath}/SKILL.md`, owners: [entry.name],
   }));
   const privateEntries = [
-    ...V3_INTERNAL_CAPABILITIES.map(entry => ({ ...entry, packageName: 'qs-skills', sourcePath: `skills/internal/${entry.name}.md` })),
+    ...V3_INTERNAL_CAPABILITIES.map(entry => ({ ...entry, packageName: 'qs-skills', sourcePath: `skills/_shared/core/${entry.name}.md` })),
     ...ADVANCED_INTERNAL_CAPABILITIES.map(entry => ({ ...entry, packageName: 'qs-advanced' })),
     ...FRONTEND_INTERNAL_CAPABILITIES, ...VIDEO_INTERNAL_CAPABILITIES, ...EXECUTION_INTERNAL_CAPABILITIES,
   ].map(entry => ({ id: `target:private:${entry.packageName}:${entry.name}`, package: entry.packageName, name: entry.name, role: 'private', path: entry.sourcePath, owners: [...(entry.owners ?? [entry.owner])] }));
@@ -81,28 +82,28 @@ export function getTargetBaselineLinks(root = repositoryRoot) {
 }
 
 const closureDefinitions = [
-  { owner: 'qs-video', root: 'skills/video/qs-video', moduleRoot: 'modules', repository: 'https://github.com/heygen-com/hyperframes', revision: VIDEO_INTERNAL_CAPABILITIES[0].sourceRevision },
-  { owner: 'qs-unlazy', root: 'skills/engineering/qs-unlazy', moduleRoot: 'modules/unlazy', repository: 'https://github.com/Leonxlnx/unlazy', revision: EXECUTION_INTERNAL_CAPABILITIES[0].sourceRevision },
+  { owner: 'qs-video', root: 'skills/qs-video', moduleRoot: 'modules', repository: 'https://github.com/heygen-com/hyperframes', revision: VIDEO_INTERNAL_CAPABILITIES[0].sourceRevision },
+  { owner: 'qs-unlazy', root: 'skills/qs-unlazy', moduleRoot: 'modules/unlazy', repository: 'https://github.com/Leonxlnx/unlazy', revision: EXECUTION_INTERNAL_CAPABILITIES[0].sourceRevision },
 ];
 
 const targetNoticePaths = [
-  ['qs-advanced', 'skills/advanced/THIRD_PARTY_NOTICES.md'],
-  ['qs-frontend', 'skills/frontend/THIRD_PARTY_NOTICES.md'],
-  ['qs-video', 'skills/video/qs-video/LICENSE'],
-  ['qs-video', 'skills/video/qs-video/NOTICE'],
-  ['qs-execution', 'skills/engineering/qs-unlazy/modules/unlazy/LICENSE'],
+  ['qs-advanced', 'skills/_shared/advanced/THIRD_PARTY_NOTICES.md'],
+  ['qs-frontend', 'skills/_shared/frontend/THIRD_PARTY_NOTICES.md'],
+  ['qs-video', 'skills/qs-video/LICENSE'],
+  ['qs-video', 'skills/qs-video/NOTICE'],
+  ['qs-execution', 'skills/qs-unlazy/modules/unlazy/LICENSE'],
 ];
 
 function validateTargetProvenance(document, { root, checkFiles, safeFile, require, stringArray }) {
   const frontendMetadata = document.target?.frontend;
-  require(isObject(frontendMetadata) && frontendMetadata.path === 'skills/frontend/dependency-index.json' && digest.test(frontendMetadata.sha256) && Array.isArray(frontendMetadata.sources) && frontendMetadata.sources.length === 8, 'frontend: explicit target source metadata required');
+  require(isObject(frontendMetadata) && frontendMetadata.path === 'skills/_shared/frontend/dependency-index.json' && digest.test(frontendMetadata.sha256) && Array.isArray(frontendMetadata.sources) && frontendMetadata.sources.length === 8, 'frontend: explicit target source metadata required');
 
-  if (checkFiles && safeFile('skills/frontend/dependency-index.json', 'frontend index')) {
-    const frontendIndex = readJson(root, 'skills/frontend/dependency-index.json');
-    const frontendResult = validateFrontendDependencies(frontendIndex, { root: path.join(root, 'skills/frontend'), checkFiles });
+  if (checkFiles && safeFile('skills/_shared/frontend/dependency-index.json', 'frontend index')) {
+    const frontendIndex = readJson(root, 'skills/_shared/frontend/dependency-index.json');
+    const frontendResult = validateFrontendDependencies(frontendIndex, { root: path.join(root, 'skills/_shared/frontend'), checkFiles });
     for (const error of frontendResult.errors) require(false, error);
     const summary = frontendIndex.sources.map(source => ({ identity: source.legacyName, repository: source.repository, reviewedRevision: source.reviewedRevision, state: source.state, adoptedRevision: source.adoptedRevision ?? null, evidence: source.evidence ?? [], files: (source.files ?? [{ path: source.sourcePath, sha256: source.sourceFileSha256 }]).map(file => ({ path: file.path, sha256: file.sha256 })) }));
-    require(document.target?.frontend?.path === 'skills/frontend/dependency-index.json' && document.target.frontend.sha256 === sha256(readFileSync(path.join(root, document.target.frontend.path))) && JSON.stringify(document.target.frontend.sources) === JSON.stringify(summary), 'frontend: target source summary/index digest mismatch');
+    require(document.target?.frontend?.path === 'skills/_shared/frontend/dependency-index.json' && document.target.frontend.sha256 === sha256(readFileSync(path.join(root, document.target.frontend.path))) && JSON.stringify(document.target.frontend.sources) === JSON.stringify(summary), 'frontend: target source summary/index digest mismatch');
     for (const source of frontendIndex.sources ?? []) if (source.repository === 'https://github.com/Motionsites-AI/claude-skill') {
       for (const original of source.files ?? []) {
         const archive = `tests/fixtures/ms-fe-01/sources/${original.path}`;
@@ -134,7 +135,7 @@ function validateTargetProvenance(document, { root, checkFiles, safeFile, requir
     const decision = entry.decision;
     require(isObject(decision) && ['pending', 'reviewed', 'retained-baseline', 'adopted', 'unknown'].includes(decision.status) && isText(decision.note), `${label}: explicit target decision required`);
     if (isObject(decision)) {
-      if (stringArray(decision.evidence, `${label} decision evidence`, { empty: ['pending', 'unknown'].includes(decision.status) })) for (const evidence of decision.evidence) safeFile(evidence, `${label} evidence`);
+      if (stringArray(decision.evidence, `${label} decision evidence`, { empty: ['pending', 'unknown'].includes(decision.status) })) for (const evidence of decision.evidence) safeFile(currentSourcePath(evidence), `${label} evidence`);
       require(['pending', 'unknown'].includes(decision.status) ? decision.revision === null : sha.test(decision.revision), `${label}: decision revision must distinguish unknown from evidenced revision`);
     }
     const fileOK = safeFile(entry.path, label);
@@ -215,6 +216,7 @@ function validateTargetProvenance(document, { root, checkFiles, safeFile, requir
  */
 export function validateSkillProvenance(document, { root = repositoryRoot, inventory = getProvenanceInventory(root), checkFiles = true } = {}) {
   const errors = [];
+  let frozenSources;
   const require = (condition, message) => { if (!condition) errors.push(message); };
   const safeFile = (relative, label) => {
     if (!relativePath(relative)) { errors.push(`${label}: unsafe repository path`); return false; }
@@ -261,7 +263,7 @@ export function validateSkillProvenance(document, { root = repositoryRoot, inven
       if (entry.collection === 'contributor') require(canonical.location === 'managed-standalone', `${label}: baseline contributor location must remain historical managed standalone`);
       else {
         require(canonical.location === 'repository', `${label}: catalog capability must be repository-owned`);
-        safeFile(canonical.path, label);
+        safeFile(currentSourcePath(canonical.path), label);
         require(!/(^|\/)(misc|personal|in-progress|deprecated)(\/|$)/.test(canonical.path ?? ''), `${label}: dormant content cannot be promoted by provenance`);
       }
     }
@@ -319,7 +321,14 @@ export function validateSkillProvenance(document, { root = repositoryRoot, inven
       const claim = entry.derivedDigest;
       require(isObject(claim) && claim.algorithm === 'sha256' && claim.kind === 'file' && typeof claim.value === 'string' && digest.test(claim.value), `${label}: invalid derived digest`);
       require(canonical?.location === 'repository', `${label}: derived digests require repository-owned canonical content`);
-      if (isObject(claim) && checkFiles && canonical?.location === 'repository' && safeFile(canonical.path, label)) require(sha256(readFileSync(path.join(root, canonical.path))) === claim.value, `${label}: derived digest does not match current canonical bytes`);
+      if (isObject(claim) && checkFiles && canonical?.location === 'repository') {
+        const capture = 'tests/fixtures/lean-execution-adoption/candidate-sources.json';
+        if (safeFile(capture, label)) {
+          frozenSources ??= readJson(root, capture);
+          const body = frozenSources[canonical.path];
+          require(typeof body === 'string' && sha256(body) === claim.value, `${label}: derived digest does not match recorded canonical bytes`);
+        }
+      }
     }
   }
   for (const [key] of expected) require(seen.has(key), `coverage: missing ${key}`);
@@ -372,7 +381,7 @@ export function renderSkillProvenanceMarkdown(document) {
   lines.push('', '### Complete private dependency indexes', '', 'Indexes retain individual original and derived hashes, source paths, destination paths and runtime resources. Their digest binds the complete index; validation also hashes every retained resource and rejects unindexed private files. Reviewed source pins below are not adoption claims.', '', '| Owner | Index | Reviewed source revision | Index SHA-256 / source adoption |', '| --- | --- | --- | --- |');
   for (const closure of [...document.target.closures].sort((a, b) => a.owner.localeCompare(b.owner, 'en'))) lines.push(`| ${code(closure.owner)} | [Dependency index](../../${closure.path}) | ${code(closure.reviewedRevision)} | ${code(closure.sha256)} / ${closure.adoptionStatus}${closure.adoptedRevision ? ` ${code(closure.adoptedRevision)}` : ' (no revision claimed)'} |`);
   lines.push('', 'Target notices: ' + [...document.target.notices].sort((a, b) => a.path.localeCompare(b.path, 'en')).map(entry => `[${entry.package}](${'../../' + entry.path})`).join(', ') + '.');
-  lines.push('', '### Frontend source additions', '', 'The [schema v2 dependency index](../../skills/frontend/dependency-index.json) separates repository identities, original byte hashes, selected section mappings, derived hashes, exclusions and fresh evidence. Owner-context links do not make MotionSites a Taste origin. Historical target receipts do not adopt new source additions.', '', '| Source / repository | Reviewed revision | Source state / adopted revision | Original files (SHA-256) |', '| --- | --- | --- | --- |');
+  lines.push('', '### Frontend source additions', '', 'The [schema v2 dependency index](../../skills/_shared/frontend/dependency-index.json) separates repository identities, original byte hashes, selected section mappings, derived hashes, exclusions and fresh evidence. Owner-context links do not make MotionSites a Taste origin. Historical target receipts do not adopt new source additions.', '', '| Source / repository | Reviewed revision | Source state / adopted revision | Original files (SHA-256) |', '| --- | --- | --- | --- |');
   for (const source of [...(document.target.frontend?.sources ?? [])].sort((a,b) => a.identity.localeCompare(b.identity, 'en'))) lines.push(`| [${escapeCell(source.identity)}](${source.repository}) | ${code(source.reviewedRevision)} | ${escapeCell(source.state)} / ${source.adoptedRevision ? code(source.adoptedRevision) : 'none claimed'} | ${source.files.map(file => `${code(file.path)} ${code(file.sha256)}`).join('; ')} |`);
   lines.push('', '## Baseline identities', '', '| Stable capability | Baseline owners / role | Legacy identities |', '| --- | --- | --- |');
   for (const entry of sorted(document.capabilities)) lines.push(`| ${code(entry.id)} | ${entry.owners.map(code).join(', ')} / ${entry.role} | ${entry.legacyIdentities.map(code).join(', ')} |`);

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-test-author/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-test-author/SKILL.md)
 
 ## What it does
 
-`/qs-test-author` add focused tests for existing behavior. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-test-author/SKILL.md).
+`/qs-test-author` add focused tests for existing behavior. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-test-author/SKILL.md).
 
 ## When to reach for it
 

@@ -111,14 +111,14 @@ Indexes retain individual original and derived hashes, source paths, destination
 
 | Owner | Index | Reviewed source revision | Index SHA-256 / source adoption |
 | --- | --- | --- | --- |
-| `qs-unlazy` | [Dependency index](../../skills/engineering/qs-unlazy/references/dependency-index.json) | `16671491f6679ad9378f52604d3bc2415b4120c7` | `85dce1f85ee07d7091e4c3b237cca89ab20e4d7ed8680bc8169ebee66d9e9608` / adapted `16671491f6679ad9378f52604d3bc2415b4120c7` |
-| `qs-video` | [Dependency index](../../skills/video/qs-video/references/dependency-index.json) | `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` | `1facca3d3fec114209cadaf01712c6b614399ec6c19e95ae1fccfa7b41857bad` / adapted `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` |
+| `qs-unlazy` | [Dependency index](../../skills/qs-unlazy/references/dependency-index.json) | `16671491f6679ad9378f52604d3bc2415b4120c7` | `85dce1f85ee07d7091e4c3b237cca89ab20e4d7ed8680bc8169ebee66d9e9608` / adapted `16671491f6679ad9378f52604d3bc2415b4120c7` |
+| `qs-video` | [Dependency index](../../skills/qs-video/references/dependency-index.json) | `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` | `1facca3d3fec114209cadaf01712c6b614399ec6c19e95ae1fccfa7b41857bad` / adapted `2734ee2c02ef858f3c877c18b56ebcfbb846cb4c` |
 
-Target notices: [qs-advanced](../../skills/advanced/THIRD_PARTY_NOTICES.md), [qs-execution](../../skills/engineering/qs-unlazy/modules/unlazy/LICENSE), [qs-frontend](../../skills/frontend/THIRD_PARTY_NOTICES.md), [qs-video](../../skills/video/qs-video/LICENSE), [qs-video](../../skills/video/qs-video/NOTICE).
+Target notices: [qs-advanced](../../skills/_shared/advanced/THIRD_PARTY_NOTICES.md), [qs-frontend](../../skills/_shared/frontend/THIRD_PARTY_NOTICES.md), [qs-execution](../../skills/qs-unlazy/modules/unlazy/LICENSE), [qs-video](../../skills/qs-video/LICENSE), [qs-video](../../skills/qs-video/NOTICE).
 
 ### Frontend source additions
 
-The [schema v2 dependency index](../../skills/frontend/dependency-index.json) separates repository identities, original byte hashes, selected section mappings, derived hashes, exclusions and fresh evidence. Owner-context links do not make MotionSites a Taste origin. Historical target receipts do not adopt new source additions.
+The [schema v2 dependency index](../../skills/_shared/frontend/dependency-index.json) separates repository identities, original byte hashes, selected section mappings, derived hashes, exclusions and fresh evidence. Owner-context links do not make MotionSites a Taste origin. Historical target receipts do not adopt new source additions.
 
 | Source / repository | Reviewed revision | Source state / adopted revision | Original files (SHA-256) |
 | --- | --- | --- | --- |

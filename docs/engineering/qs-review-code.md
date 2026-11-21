@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-review-code/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-review-code/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review)
 
 ## What it does
 
-`/qs-review-code` review, improve, or refactor selected code safely. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-review-code/SKILL.md).
+`/qs-review-code` review, improve, or refactor selected code safely. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-review-code/SKILL.md).
 
 ## When to reach for it
 

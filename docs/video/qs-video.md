@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-video@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/video/qs-video/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-video/SKILL.md)
 
 ## What it does
 
-`/qs-video` create, edit, inspect, or render a selected video. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/video/qs-video/SKILL.md).
+`/qs-video` create, edit, inspect, or render a selected video. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-video/SKILL.md).
 
 ## When to reach for it
 

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-learn-teach/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/productivity/teach)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-learn-teach/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/productivity/teach)
 
 ## What it does
 
-`/qs-learn-teach` learn a subject through a guided study plan. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/productivity/qs-learn-teach/SKILL.md).
+`/qs-learn-teach` learn a subject through a guided study plan. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-learn-teach/SKILL.md).
 
 ## When to reach for it
 

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add ps-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/pstack/commands/ps-why/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/docs/reference/skills/pstack/commands/ps-why/SKILL.md)
 
 ## What it does
 
-`/ps-why` explain why a behavior or design exists. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/pstack/commands/ps-why/SKILL.md).
+`/ps-why` explain why a behavior or design exists. Its detailed scope and safety behavior live in the canonical [skill instructions](../../docs/reference/skills/pstack/commands/ps-why/SKILL.md).
 
 ## When to reach for it
 

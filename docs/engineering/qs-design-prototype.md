@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-prototype/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/prototype)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-design-prototype/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/prototype)
 
 ## What it does
 
-`/qs-design-prototype` prototype an interface or design decision. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-design-prototype/SKILL.md).
+`/qs-design-prototype` prototype an interface or design decision. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-design-prototype/SKILL.md).
 
 ## When to reach for it
 

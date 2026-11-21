@@ -1,3 +1,4 @@
+import { currentSourcePath } from "./historical-source-path.mjs";
 // Actual bounded behavior capture. Model responses are evidence, never auto-scored.
 import { readFile, writeFile, mkdir, mkdtemp, cp } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
@@ -25,9 +26,9 @@ function host(){
  return {cli:version.stdout.trim(),configured:JSON.parse(settings.stdout),platform:process.platform,node:process.version,overrides:[]};
 }
 export async function instruction(c,path){
- const raw=await readFile(join(repository,path),'utf8'); let text=raw;
+ const raw=await readFile(join(repository,currentSourcePath(path)),'utf8'); let text=raw;
  if(path===c.source){const skill=TARGET_PUBLIC_COMMANDS_BY_NAME.get(c.skill);if(!skill)throw Error('Unknown target root');const marker='## Completion report and next steps';if(!raw.includes(marker))throw Error('Missing completion contract');text=raw.slice(0,raw.indexOf(marker))+renderSkillOutputContract(skill,{commandsByName:TARGET_PUBLIC_COMMANDS_BY_NAME});}
- if(path==='skills/engineering/qs-help/ROUTING.md')text=renderHelpRoutingReference(TARGET_PUBLIC_COMMANDS);
+ if(currentSourcePath(path)==='skills/qs-help/ROUTING.md')text=renderHelpRoutingReference(TARGET_PUBLIC_COMMANDS);
  return {path,sourceSHA256:sha(raw),derivedSHA256:sha(text),text,bytes:Buffer.byteLength(text)};
 }
 export async function freeze(){

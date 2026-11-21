@@ -21,7 +21,7 @@ export async function captureLegacyClaudeCore(root) {
   let manifest;
   try { manifest = JSON.parse(await readFile(manifestPath)); } catch { throw new Error('Legacy Claude core manifest is invalid; contents withheld.'); }
   await revalidateMigrationPath(manifestSnapshot);
-  const skillPaths = V3_CORE_SKILLS.map((skill) => skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+  const skillPaths = V3_CORE_SKILLS.map((skill) => `skills/${skill.bucket}/${skill.name}`);
   check(manifest.name === 'qs-skills' && /^\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(manifest.version ?? '')
     && Array.isArray(manifest.skills) && sameNames(manifest.skills, skillPaths.map((relative) => `./${relative}`))
     && !['hooks', 'mcpServers', 'commands', 'agents', 'dependencies'].some((key) => manifest[key]), 'Unsupported legacy Claude core manifest or public layout.');

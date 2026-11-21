@@ -79,7 +79,7 @@ test("PS-01 defines one pinned optional PS collection and thirteen explicit comm
     codexPlugin: "ps-skills",
     claudePackageRoot: "packages/ps-skills",
     codexPackageRoot: "codex/plugins/ps-skills",
-    canonicalRoot: "skills/pstack/commands",
+    canonicalRoot: "docs/reference/skills/pstack/commands",
     documentationRoot: "docs/pstack",
   });
   assert.deepEqual(PS_PUBLIC_COMMANDS.map((command) => command.name), publicNames);

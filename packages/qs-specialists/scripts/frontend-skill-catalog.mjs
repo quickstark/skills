@@ -15,6 +15,6 @@ export const FRONTEND_PUBLIC_COMMANDS = Object.freeze(definitions.map(([name, di
 })));
 
 export const FRONTEND_INTERNAL_CAPABILITIES = Object.freeze([...new Set(definitions.flatMap((entry) => entry[4]))].map((name) => Object.freeze({
-  id: name, name, packageName: "qs-frontend", sourcePath: `skills/frontend/internal/${name}.md`,
+  id: name, name, packageName: "qs-frontend", sourcePath: `skills/_shared/frontend/internal/${name}.md`,
   owners: Object.freeze(definitions.filter((entry) => entry[4].includes(name)).map((entry) => entry[0])),
 })));

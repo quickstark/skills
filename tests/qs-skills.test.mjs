@@ -33,7 +33,7 @@ async function filesRecursively(path) {
 test("every public command has matching source, metadata, documentation, and package projection", async () => {
   assert.equal(PUBLIC_COMMANDS.length, REGISTRY_STATE === "target" ? 39 : 34);
   for (const command of PUBLIC_COMMANDS) {
-    const sourceRoot = join(root, command.sourcePath ?? `skills/${command.bucket}/${command.name}`);
+    const sourceRoot = join(root, command.sourcePath);
     const documentation = join(root, command.documentationPath ?? `docs/${command.bucket}/${command.name}.md`);
     const source = await readFile(join(sourceRoot, "SKILL.md"), "utf8");
     const metadata = await readFile(join(sourceRoot, "agents", "openai.yaml"), "utf8");

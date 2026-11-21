@@ -34,7 +34,7 @@ export function validatePublicSkillText(text, name) {
 export async function validateV3Skills() {
   for (const skill of SKILLS) {
     const text = await readFile(
-      join(repositoryRoot, "skills", skill.bucket, skill.name, "SKILL.md"),
+      join(repositoryRoot, skill.sourcePath, "SKILL.md"),
       "utf8",
     );
     validatePublicSkillText(text, skill.name);

@@ -43,12 +43,12 @@ test("Pi manifest projects canonical skill contents and required notices without
     const root = join(repositoryRoot, collection.piPackageRoot);
     for (const name of collection.publicCommands) {
       const sourceCommand = resolvePublicCommand(name);
-      const sourceRoot = join(repositoryRoot, sourceCommand.sourcePath ?? `skills/${sourceCommand.bucket}/${name}`);
+      const sourceRoot = join(repositoryRoot, sourceCommand.sourcePath);
       assert.equal(
         await readFile(join(root, "skills", name, "SKILL.md"), "utf8"),
         (await readFile(join(sourceRoot, "SKILL.md"), "utf8"))
-          .replaceAll("../../advanced/", "../../capabilities/advanced/")
-          .replaceAll("../../frontend/", "../../capabilities/frontend/"),
+          .replaceAll("../_shared/advanced/", "../../capabilities/advanced/")
+          .replaceAll("../_shared/frontend/", "../../capabilities/frontend/"),
         name,
       );
     }
@@ -101,7 +101,7 @@ test("target private references remain packaged and byte-identical without becom
     }
     return result.sort();
   };
-  for(const [source,projected,required] of [["skills/advanced","pi/packages/qs-advanced/capabilities/advanced",16],["skills/frontend","pi/packages/qs-frontend/capabilities/frontend",12]]) {
+  for(const [source,projected,required] of [["skills/_shared/advanced","pi/packages/qs-advanced/capabilities/advanced",16],["skills/_shared/frontend","pi/packages/qs-frontend/capabilities/frontend",12]]) {
     const sources=await walk(join(repositoryRoot,source)), copies=await walk(join(repositoryRoot,projected)); assert.deepEqual(copies,sources);
     assert.equal(sources.filter(file=>file.startsWith("internal/") && file.endsWith(".md")).length,required);
     for(const file of sources) assert.deepEqual(await readFile(join(repositoryRoot,projected,file)),await readFile(join(repositoryRoot,source,file)),file);

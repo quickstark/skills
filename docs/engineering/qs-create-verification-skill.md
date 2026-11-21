@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-create-verification-skill/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-create-verification-skill/SKILL.md)
 
 ## What it does
 
-`/qs-create-verification-skill` create a rerunnable verification workflow. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-create-verification-skill/SKILL.md).
+`/qs-create-verification-skill` create a rerunnable verification workflow. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-create-verification-skill/SKILL.md).
 
 ## When to reach for it
 

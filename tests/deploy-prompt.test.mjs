@@ -34,7 +34,7 @@ test('registry refuses output-kind widening, omission and unknown values', () =>
   assert.equal(validateSkillCollectionRegistryModel(COLLECTION_REGISTRY),true);
 });
 test('canonical generator includes executable-prompt boundaries rather than side effects', async () => {
-  const source = await readFile(new URL('../skills/engineering/qs-deploy-prompt/SKILL.md', import.meta.url),'utf8');
+  const source = await readFile(new URL('../skills/qs-deploy-prompt/SKILL.md', import.meta.url),'utf8');
   for (const required of [/Do not create or update a goal/, /standing authorization/, /Missing material scope/, /one fenced text execution prompt/, /Never replace an unrelated goal/, /sixty seconds/, /selected target, and health/, /same artifact|artifact or revision/, /separate recovery root must already be authorized/, /rollback procedure/]) assert.match(source, required);
   // This checks source instructions only; actual model responses are recorded separately.
 });
@@ -45,7 +45,7 @@ test('recorded model responses are bound to the current skill and rendered execu
   const read = async (name) => JSON.parse(await readFile(new URL(`./fixtures/progress-deploy-agent-trials/${name}.json`, import.meta.url), 'utf8'));
   const sha = (value) => createHash('sha256').update(value).digest('hex');
   const generation = await read('generation-percentage');
-  const source = await readFile(new URL('../skills/engineering/qs-deploy-prompt/SKILL.md', import.meta.url));
+  const source = await readFile(new URL('../skills/qs-deploy-prompt/SKILL.md', import.meta.url));
   assert.equal(generation.kind, 'recorded-agent-responses');
   assert.equal(generation.sourceSHA256, sha(source), 'Rerun generation trials after changing tested instructions');
   assert.deepEqual(generation.scenarios.map(s => s.id), ['G1','G2','G3','G4','G5','G6']);

@@ -10,7 +10,7 @@ Turn confirmed requirements into an actionable specification, dependency-aware t
 
 ## Internal capabilities
 
-Load the relevant non-command references from `skills/internal/` in the canonical repository or `capabilities/` in a packaged plugin:
+Load the relevant non-command references from `skills/_shared/core/` in the canonical repository or `capabilities/` in a packaged plugin:
 
 - Domain modeling when precise vocabulary changes requirements or interfaces.
 - Module decomposition when ownership, interfaces, or test seams need design.

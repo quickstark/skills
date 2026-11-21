@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
-const root = fileURLToPath(new URL('../skills/pstack/', import.meta.url));
+const root = fileURLToPath(new URL('../docs/reference/skills/pstack/', import.meta.url));
 const read = (path) => readFileSync(`${root}${path}`, 'utf8').split(/## Completion report and next steps|<!-- qs-progress:start -->/)[0];
 const command = (name) => read(`commands/${name}/SKILL.md`);
 const capability = (name) => read(`internal/${name}.md`);

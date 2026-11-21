@@ -12,7 +12,7 @@ import { LEGACY_PUBLIC_COMMANDS, REGISTRY_STATE } from "../scripts/skill-collect
 import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const commandRoot = join(root, "skills", "pstack", "commands");
+const commandRoot = join(root, "docs", "reference", "skills", "pstack", "commands");
 const publicNames = [
   "ps-help", "ps-how", "ps-why", "ps-blast-radius", "ps-runtime-forensics",
   "ps-trace-forensics", "ps-create-verification-skill", "ps-maintain-verification-skill",

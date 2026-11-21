@@ -38,10 +38,10 @@ export function derivePackageAcceptanceObligations(packageId, document) {
   const replacementIds = replacements.map((replacement) => replacement.capabilityId);
   const commandId = (command) => command.provenance?.legacyName ? `ps:${command.provenance.legacyName}` : `qs:${command.name}`;
   const selectionCapabilityIds = unique([...replacementIds, ...commands.filter((command) => !replacements.some((replacement) => replacement.command === command.name)).map(commandId)]);
-  const sourcePaths = commands.map((command) => command.sourcePath ?? `skills/${command.bucket}/${command.name}`);
-  if (packageId === 'qs-skills') sourcePaths.push('skills/internal');
-  if (packageId === 'qs-advanced') sourcePaths.push('skills/advanced');
-  if (packageId === 'qs-frontend') sourcePaths.push('skills/frontend');
+  const sourcePaths = commands.map((command) => command.sourcePath);
+  if (packageId === 'qs-skills') sourcePaths.push('skills/_shared/core');
+  if (packageId === 'qs-advanced') sourcePaths.push('skills/_shared/advanced');
+  if (packageId === 'qs-frontend') sourcePaths.push('skills/_shared/frontend');
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, collection.codexPackageRoot, collection.piPackageRoot, collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
       'config/skill-migrations.json', 'config/skill-provenance.json', 'config/skill-profiles.json', 'docs/skill-run-contract.md',

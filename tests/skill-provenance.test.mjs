@@ -1,3 +1,4 @@
+import { currentSourcePath } from "../scripts/historical-source-path.mjs";
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, mkdtempSync, mkdirSync, cpSync, writeFileSync, unlinkSync, rmSync } from 'node:fs';
@@ -65,13 +66,13 @@ test('a source digest cannot prove an adapted repository file is byte-identical'
   rejects((doc) => { doc.capabilities[0].sources.push(structuredClone(record(doc, 'contributor:unlazy').sources[0])); }, /byte identity is only established for the matching managed contributor/);
 });
 
-test('derived content digest is independently verified against current file bytes', () => {
+test('baseline derived digest is independently verified against recorded file bytes', () => {
   const document = structuredClone(baseline);
   const entry = record(document, 'qs:qs-help');
-  entry.derivedDigest = { algorithm: 'sha256', kind: 'file', value: createHash('sha256').update(readFileSync(root + entry.canonical.path)).digest('hex') };
+  entry.derivedDigest = { algorithm: 'sha256', kind: 'file', value: createHash('sha256').update(readFileSync(root + currentSourcePath(entry.canonical.path))).digest('hex') };
   assert.equal(validateSkillProvenance(document).valid, true);
   entry.derivedDigest.value = 'c'.repeat(64);
-  assert.match(validateSkillProvenance(document).errors.join('\n'), /derived digest does not match current canonical bytes/);
+  assert.match(validateSkillProvenance(document).errors.join('\n'), /derived digest does not match recorded canonical bytes/);
 });
 
 test('repository-authored records are allowed without invented upstream origin', () => {
@@ -115,6 +116,7 @@ test('directories cannot stand in for canonical files, evidence or historical sn
 test('malformed records return diagnostic failures rather than throwing TypeError', () => {
   for (const change of [
     (doc) => { doc.capabilities[0].owners = {}; },
+    (doc) => { doc.capabilities[0].canonical.path = null; },
     (doc) => { doc.capabilities[0].sources = [null]; },
     (doc) => { doc.capabilities[0].canonical = null; },
     (doc) => { doc.historicalSnapshots[0].dispositions[0] = null; },
@@ -205,7 +207,7 @@ test('malformed target records return diagnostics', () => {
 test('complete private closure rejects missing, duplicate, changed and unindexed resources', () => {
   const temporary = mkdtempSync(path.join(tmpdir(), 'qs-provenance-'));
   try {
-    for (const relative of ['config/personal-skills.manifest.json', 'config/skill-migrations.json', 'skills/engineering/qs-unlazy', 'skills/video/qs-video']) {
+    for (const relative of ['config/personal-skills.manifest.json', 'config/skill-migrations.json', 'skills/qs-unlazy', 'skills/qs-video']) {
       mkdirSync(path.dirname(path.join(temporary, relative)), { recursive: true });
       cpSync(path.join(root, relative), path.join(temporary, relative), { recursive: true });
     }
@@ -216,7 +218,7 @@ test('complete private closure rejects missing, duplicate, changed and unindexed
     assert.equal(validateSkillProvenance(baseline, { root: temporary, checkFiles: false }).valid, true, 'historical source digest authority survives live manifest retirement');
     const initialErrors = validateSkillProvenance(baseline, { root: temporary }).errors;
     assert.equal(initialErrors.filter(error => error.startsWith('qs-unlazy:') || error.startsWith('qs-video:')).length, 0, 'copied closure starts valid before controls');
-    const indexPath = 'skills/engineering/qs-unlazy/references/dependency-index.json';
+    const indexPath = 'skills/qs-unlazy/references/dependency-index.json';
     const original = readFileSync(path.join(temporary, indexPath));
     const rewrite = change => {
       const doc = structuredClone(baseline), index = JSON.parse(original); change(index);
@@ -231,7 +233,7 @@ test('complete private closure rejects missing, duplicate, changed and unindexed
     assert.match(rewrite(index => { index.files[0].sourceSha256 = 'invalid'; }), /original source digest record/);
     assert.match(rewrite(index => { index.files[0].derivedSha256 = 'e'.repeat(64); }), /closure derived digest mismatch/);
     writeFileSync(path.join(temporary, indexPath), original);
-    const entry = path.join(temporary, 'skills/engineering/qs-unlazy/modules/unlazy/instructions.md');
+    const entry = path.join(temporary, 'skills/qs-unlazy/modules/unlazy/instructions.md');
     writeFileSync(entry, 'changed private bytes');
     assert.match(validateSkillProvenance(baseline, { root: temporary }).errors.join('\n'), /closure derived digest mismatch instructions.md|closure derived digest mismatch modules\/unlazy\/instructions.md/);
     unlinkSync(entry);

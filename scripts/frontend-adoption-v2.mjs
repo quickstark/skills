@@ -1,3 +1,4 @@
+import { currentSourcePath } from "./historical-source-path.mjs";
 import { spawnSync } from 'node:child_process';
 import { readFile, writeFile, mkdir, mkdtemp, lstat, realpath, cp } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
@@ -25,10 +26,10 @@ export async function prepare({ root = fixtureRoot } = {}) {
   await mkdir(join(root, 'sources'));
   const original = await readJson(join(previousRoot, 'sources/index.json')); const sources = {};
   for (const [key, source] of Object.entries(original)) {
-    const bytes = await readFile(source.canonicalPath ? join(repository, source.canonicalPath) : join(previousRoot, source.path));
+    const bytes = await readFile(source.canonicalPath ? join(repository, currentSourcePath(source.canonicalPath)) : join(previousRoot, source.path));
     if (!source.canonicalPath) check(sha(bytes) === source.sha256, 'Original contributor snapshot changed.');
     await writeFile(join(root, source.path), bytes, { flag: 'wx' });
-    sources[key] = { ...source, sha256: sha(bytes), ...(source.canonicalPath ? { priorExperimentSHA256: source.sha256 } : {}) };
+    sources[key] = { ...source, ...(source.canonicalPath ? { canonicalPath: currentSourcePath(source.canonicalPath) } : {}), sha256: sha(bytes), ...(source.canonicalPath ? { priorExperimentSHA256: source.sha256 } : {}) };
   }
   await json(join(root, 'sources/index.json'), sources);
   return sources;
@@ -82,7 +83,7 @@ export async function verify(root = fixtureRoot) {
   const { sources, cases } = await closure(root);
   for (const source of Object.values(sources)) {
     check(sha(await readFile(join(root, source.path))) === source.sha256, 'Frozen guidance body changed.');
-    if (source.canonicalPath) check(sha(await readFile(join(repository, source.canonicalPath))) === source.sha256, 'Parent candidate changed after freeze.');
+    if (source.canonicalPath) check(sha(await readFile(join(repository, currentSourcePath(source.canonicalPath)))) === source.sha256, 'Parent candidate changed after freeze.');
   }
   const schedule = await readJson(join(root, 'schedule.json')); validateSchedule(cases, schedule);
   return { plan, planSHA256: sha(bytes), sources, cases, schedule, common: await readJson(join(root, 'common-scope.json')) };
@@ -93,7 +94,7 @@ export async function materializeGuidance({ root, sources, scenario, variant, cw
   const keys = variant === 'v31' ? [scenario.originalSource] : [scenario.localRoot, ...scenario.references];
   const instructions = [];
   for (const key of keys) { const source = sources[key]; check(source, `Missing guidance: ${key}`); const body = await readFile(join(root, source.path), 'utf8'); check(sha(body) === source.sha256, 'Guidance changed.'); instructions.push({ key, body, sha256: source.sha256 }); }
-  const referenceMap = Object.fromEntries(Object.entries(sources).filter(([, source]) => source.canonicalPath?.startsWith('skills/frontend/internal/')).map(([key, source]) => [source.canonicalPath, keys.includes(key) ? `Embedded section ${keys.indexOf(key) + 1}` : 'Not applicable to the selected scenario; do not load or search for it.']));
+  const referenceMap = Object.fromEntries(Object.entries(sources).filter(([, source]) => source.canonicalPath && currentSourcePath(source.canonicalPath).startsWith('skills/_shared/frontend/internal/')).map(([key, source]) => [source.canonicalPath, keys.includes(key) ? `Embedded section ${keys.indexOf(key) + 1}` : 'Not applicable to the selected scenario; do not load or search for it.']));
   const body = ['# Bound task guidance', 'The following source bodies are supplied verbatim as guidance, not invocations. Relative links are historical labels, NOT paths to open from this copied file. Resolve applicable private references only to the embedded sections below. Do not traverse parent directories, search installed skills, or read other public skill bodies. All scenario-required private guidance is included. The user task and explicit authority remain controlling.', JSON.stringify(referenceMap, null, 2), ...instructions.flatMap((item, index) => [`\n## Embedded section ${index + 1}\n`, item.body])].join('\n\n');
   const guidancePath = join(cwd, 'trial-guidance.md'); await writeFile(guidancePath, body, { flag: 'wx', mode: 0o444 });
   return { guidancePath, body, sha256: sha(body), instructions: instructions.map(({ body, ...binding }) => binding), referenceMap, readCommand: `cat -- ${quote(guidancePath)}` };

@@ -4,4 +4,7 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 
 cd "$REPO"
-find . -name SKILL.md -not -path '*/node_modules/*' | sed 's|^\./||' | sort
+exec node --input-type=module - <<'JS'
+import { listPublicSources } from './scripts/sync-v3-docs.mjs';
+console.log((await listPublicSources()).join('\n'));
+JS

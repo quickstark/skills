@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-why/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-why/SKILL.md)
 
 ## What it does
 
-`/qs-why` explain why a behavior or design exists. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-why/SKILL.md).
+`/qs-why` explain why a behavior or design exists. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-why/SKILL.md).
 
 ## When to reach for it
 

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-flow-handoff/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/productivity/handoff)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-flow-handoff/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/productivity/handoff)
 
 ## What it does
 
-`/qs-flow-handoff` prepare a concise handoff for another session. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/productivity/qs-flow-handoff/SKILL.md).
+`/qs-flow-handoff` prepare a concise handoff for another session. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-flow-handoff/SKILL.md).
 
 ## When to reach for it
 

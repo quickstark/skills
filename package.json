@@ -13,7 +13,7 @@
     "version": "changeset version",
     "sync:outputs": "node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-upstream-docs.mjs",
     "check:outputs": "node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-upstream-docs.mjs --check",
-    "sync:codex": "node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs && node scripts/sync-upstream-docs.mjs",
+    "sync:codex": "node scripts/sync-v3-docs.mjs && node scripts/sync-skill-output-contracts.mjs && node scripts/sync-codex-plugin.mjs && node scripts/sync-upstream-docs.mjs --refresh-public-digests",
     "check:codex": "node scripts/sync-v3-docs.mjs --check && node scripts/sync-skill-output-contracts.mjs --check && node scripts/sync-codex-plugin.mjs --check && node scripts/sync-upstream-docs.mjs --check",
     "test": "node scripts/qs-test-runner.mjs",
     "test:preflight": "node scripts/qs-test-preflight.mjs",

@@ -6,7 +6,7 @@ import { promisify } from 'node:util';
 import { tmpdir } from 'node:os';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderTargetIndexDocuments, syncV3Documentation } from '../scripts/sync-v3-docs.mjs';
+import { listPublicSources, renderTargetIndexDocuments, syncV3Documentation } from '../scripts/sync-v3-docs.mjs';
 import { TARGET_PUBLIC_COMMANDS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -20,11 +20,11 @@ const engineering = [
 const productivity = ['qs-flow-handoff','qs-learn-teach','qs-skill-write'];
 const video = ['qs-video'];
 const psOriginals = ['ps-help','ps-how','ps-why','ps-blast-radius','ps-runtime-forensics','ps-trace-forensics','ps-create-verification-skill','ps-maintain-verification-skill','ps-skill-eval','ps-hillclimb','ps-visual-parity','ps-pr-babysit','ps-worktree-cleanup'];
-const indexPaths=['skills/engineering/README.md','skills/productivity/README.md','skills/video/README.md','docs/pstack/index.md','docs/pstack/using-ps-skills.md'];
+const indexPaths=['skills/README.md','docs/pstack/index.md','docs/pstack/using-ps-skills.md'];
 async function fixture(t) {
   const root=await mkdtemp(join(tmpdir(),'qs-target-index-')); t.after(()=>rm(root,{recursive:true,force:true}));
-  for(const [bucket,names] of [['engineering',engineering],['productivity',productivity],['video',video]]) for(const name of names) {
-    const directory=join(root,'skills',bucket,name); await mkdir(directory,{recursive:true}); await writeFile(join(directory,'SKILL.md'),`---\nname: ${name}\ndescription: Isolated fixture.\n---\n`);
+  for(const name of [...engineering, ...productivity, ...video]) {
+    const directory=join(root,'skills',name); await mkdir(directory,{recursive:true}); await writeFile(join(directory,'SKILL.md'),`---\nname: ${name}\ndescription: Isolated fixture.\n---\n`);
   }
   return root;
 }
@@ -37,13 +37,13 @@ async function snapshot(root) {
 
 test('target indexes expose exactly the independently expected 39 names in their lifecycle buckets',()=>{
   const documents=renderTargetIndexDocuments(); assert.deepEqual([...documents.keys()],indexPaths);
-  const actual=[...namesIn(documents.get(indexPaths[0])),...namesIn(documents.get(indexPaths[1])),...namesIn(documents.get(indexPaths[2]))];
-  assert.equal(actual.length,39); assert.equal(new Set(actual).size,39);
-  assert.deepEqual(namesIn(documents.get(indexPaths[0])),engineering); assert.deepEqual(namesIn(documents.get(indexPaths[1])),productivity); assert.deepEqual(namesIn(documents.get(indexPaths[2])),video);
-  for(const path of indexPaths.slice(0,3)) {
-    const text=documents.get(path); assert.doesNotMatch(text,/\]\([^)]*(?:internal|modules|pstack\/commands|personal|deprecated|in-progress)[^)]*SKILL\.md\)/);
-    assert.doesNotMatch(text,/^- \[ps-/m); assert.match(text,/default selection is the core package/); assert.match(text,/Optional packages are explicit choices/); assert.match(text,/not commands or additional picker entries/);
+  const index = documents.get("skills/README.md");
+  const actual = namesIn(index);
+  assert.deepEqual([...actual].sort(), [...engineering, ...productivity, ...video].sort());
+  for (const [bucket, names] of Object.entries({engineering, productivity, video})) {
+    for (const name of names) assert.ok(index.split("\n").some(line => line.startsWith(`- [${name}]`) && line.endsWith(`(${bucket})`)));
   }
+  assert.doesNotMatch(index, /^- \[ps-/m);
   assert.equal(actual.filter(name=>name==='qs-deploy-prompt').length,1); assert.equal(actual.filter(name=>name==='qs-visual-parity').length,1);
   assert.deepEqual(renderTargetIndexDocuments({commands:[...TARGET_PUBLIC_COMMANDS].reverse()}),documents,'Lifecycle grouping must not inherit caller array order');
 });
@@ -60,25 +60,25 @@ test('historical PS pages map every original identity to exact QS successor with
   assert.match(using,/live symptom.*existing artifact/);assert.match(using,/creates a missing.*reconciles an existing/);assert.match(using,/immutable visual baseline/);assert.match(using,/sixteen advanced private capabilities/);assert.match(using,/qs-deploy-prompt/);assert.match(using,/qs-skill-write/);assert.match(using,/deployment goal prompt without executing it/);assert.match(using,/reusable skill\/prompt writing/);assert.match(index,/qs-skill-write/);
 });
 test('target generation checks real local identity and every index link, preserves completion tails, and detects missing or wrong links without writes',async t=>{
-  const root=await fixture(t);const result=await syncV3Documentation({root,registryState:'target'});assert.equal(result.commands,39);assert.equal(result.indexes,5);assert.equal(result.updated,44);
-  for(const path of indexPaths.slice(0,3)) for(const name of namesIn(await readFile(join(root,path),'utf8'))) assert.match(await readFile(join(dirname(join(root,path)),name,'SKILL.md'),'utf8'),new RegExp(`^name: ${name}$`,'m'));
+  const root=await fixture(t);const result=await syncV3Documentation({root,registryState:'target'});assert.equal(result.commands,39);assert.equal(result.indexes,3);assert.equal(result.updated,42);
+  for(const path of indexPaths.slice(0,1)) for(const name of namesIn(await readFile(join(root,path),'utf8'))) assert.match(await readFile(join(dirname(join(root,path)),name,'SKILL.md'),'utf8'),new RegExp(`^name: ${name}$`,'m'));
   const commandDoc=join(root,'docs/engineering/qs-code-build.md');await writeFile(commandDoc,(await readFile(commandDoc,'utf8'))+'retained generated completion contract\n');
   const stable=await snapshot(root);assert.equal((await syncV3Documentation({root,registryState:'target',check:true})).updated,0);assert.deepEqual(await snapshot(root),stable);
-  const index=join(root,'skills/engineering/README.md');const original=await readFile(index,'utf8');
+  const index=join(root,'skills/README.md');const original=await readFile(index,'utf8');
   for(const mutated of [original.replace('./qs-code-build/SKILL.md','./qs-code-debug/SKILL.md'),original.replace(/^- \[qs-deploy-prompt\].*\n/m,''),original+'\n- [ps-how](../../pstack/commands/ps-how/SKILL.md)\n']) {
-    await writeFile(index,mutated);const before=await snapshot(root);await assert.rejects(syncV3Documentation({root,registryState:'target',check:true}),/skills\/engineering\/README.md/);assert.deepEqual(await snapshot(root),before);
+    await writeFile(index,mutated);const before=await snapshot(root);await assert.rejects(syncV3Documentation({root,registryState:'target',check:true}),/skills\/README.md/);assert.deepEqual(await snapshot(root),before);
   }
-  await writeFile(index,original);await rm(join(root,'skills/video/README.md'));await assert.rejects(syncV3Documentation({root,registryState:'target',check:true}),/skills\/video\/README.md/);
+  await writeFile(index,original);await rm(join(root,'skills/README.md'));await assert.rejects(syncV3Documentation({root,registryState:'target',check:true}),/skills\/README.md/);
 });
 test('missing, mismatched, linked canonical sources and unsafe output paths block before any generated writes',async t=>{
-  const root=await fixture(t), file=join(root,'skills/engineering/qs-visual-parity/SKILL.md'), original=await readFile(file,'utf8');
+  const root=await fixture(t), file=join(root,'skills/qs-visual-parity/SKILL.md'), original=await readFile(file,'utf8');
   await rm(file);let before=await snapshot(root);await assert.rejects(syncV3Documentation({root,registryState:'target'}),/Missing canonical public source: qs-visual-parity/);assert.deepEqual(await snapshot(root),before);
   await writeFile(file,original.replace('name: qs-visual-parity','name: ps-visual-parity'));before=await snapshot(root);await assert.rejects(syncV3Documentation({root,registryState:'target'}),/Wrong canonical public identity/);assert.deepEqual(await snapshot(root),before);
-  await rm(file);await symlink(join(root,'skills/engineering/qs-how/SKILL.md'),file);await assert.rejects(syncV3Documentation({root,registryState:'target'}),/regular local file/);await rm(file);await writeFile(file,original);
-  await mkdir(join(root,'docs'));await symlink(join(root,'skills/engineering'),join(root,'docs/engineering'));before=await snapshot(root);await assert.rejects(syncV3Documentation({root,registryState:'target'}),/regular local entries/);assert.deepEqual(await snapshot(root),before);
+  await rm(file);await symlink(join(root,'skills/qs-how/SKILL.md'),file);await assert.rejects(syncV3Documentation({root,registryState:'target'}),/regular local file/);await rm(file);await writeFile(file,original);
+  await mkdir(join(root,'docs'));await symlink(join(root,'skills'),join(root,'docs/engineering'));before=await snapshot(root);await assert.rejects(syncV3Documentation({root,registryState:'target'}),/regular local entries/);assert.deepEqual(await snapshot(root),before);
 });
 test('malformed catalog identity and path controls reject rather than publish a private or misrouted root',()=>{
-  for(const mutate of [commands=>commands.pop(),commands=>commands[0].name='domain-modeling',commands=>commands[0].name='qs-private-context',commands=>commands[0].name=commands[1].name,commands=>commands[0].sourcePath='skills/engineering/qs-how',commands=>commands[0].documentationPath='../outside.md',commands=>commands[0].bucket='video']) {
+  for(const mutate of [commands=>commands.pop(),commands=>commands[0].name='domain-modeling',commands=>commands[0].name='qs-private-context',commands=>commands[0].name=commands[1].name,commands=>commands[0].sourcePath='skills/qs-how',commands=>commands[0].documentationPath='../outside.md',commands=>commands[0].bucket='video']) {
     const commands=structuredClone(TARGET_PUBLIC_COMMANDS);mutate(commands);assert.throws(()=>renderTargetIndexDocuments({commands}),/public|canonical|documentation|identit/);
   }
 });
@@ -93,4 +93,15 @@ test('legacy generation leaves its existing indexes and PS guides unchanged; imp
   // The executable follows its repository's actual state, independently of the legacy helper probe above.
   await syncV3Documentation({root,registryState:REGISTRY_STATE});
   assert.equal((await run(process.execPath,[join(repositoryRoot,'scripts/sync-v3-docs.mjs'),'--root',root,'--check'],{cwd:root})).stderr,'');
+});
+
+test('public listing ignores unregistered private, historical and projected instructions', async t => {
+  const root = await fixture(t);
+  for (const path of ['skills/_shared/demo', 'docs/reference/skills/misc/demo', 'packages/demo/skills/demo', 'tests/fixtures/demo']) {
+    await mkdir(join(root, path), { recursive: true });
+    await writeFile(join(root, path, 'SKILL.md'), 'fixture');
+  }
+  const paths = [...engineering, ...productivity, ...video].map(name => `skills/${name}/SKILL.md`).sort();
+  assert.deepEqual(await listPublicSources(root), paths);
+  assert.deepEqual((await run(join(repositoryRoot, 'scripts/list-skills.sh'), [], { cwd: root })).stdout.trim().split('\n'), paths);
 });

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/productivity/qs-skill-write/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-skill-write/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills)
 
 ## What it does
 
-`/qs-skill-write` create and improve focused, reliable AI skills. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/productivity/qs-skill-write/SKILL.md).
+`/qs-skill-write` create and improve focused, reliable AI skills. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-skill-write/SKILL.md).
 
 ## When to reach for it
 

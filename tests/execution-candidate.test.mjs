@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { EXECUTION_PUBLIC_COMMANDS } from '../scripts/execution-skill-catalog.mjs';
-const rootSource=fileURLToPath(new URL('../skills/engineering/qs-unlazy/',import.meta.url));
+const rootSource=fileURLToPath(new URL('../skills/qs-unlazy/',import.meta.url));
 const privateRoot=join(rootSource,'modules/unlazy');
 const index=JSON.parse(readFileSync(join(rootSource,'references/dependency-index.json')));
 const hash=(bytes)=>createHash('sha256').update(bytes).digest('hex');

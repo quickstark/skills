@@ -16,6 +16,6 @@ export const VIDEO_PUBLIC_COMMANDS = Object.freeze([defineOptionalCommand({
 })]);
 export const VIDEO_INTERNAL_CAPABILITIES = Object.freeze(VIDEO_MODULE_NAMES.map((name) => Object.freeze({
   id: name, name, owner: "qs-video", packageName: "qs-video",
-  sourcePath: `skills/video/qs-video/modules/${name}/instructions.md`,
+  sourcePath: `skills/qs-video/modules/${name}/instructions.md`,
   sourceRevision: "2734ee2c02ef858f3c877c18b56ebcfbb846cb4c",
 })));

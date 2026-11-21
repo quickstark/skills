@@ -220,7 +220,7 @@ export const TARGET_SKILL_COLLECTIONS = Object.freeze([
   ...OPTIONAL_TARGETS.map(([id, displayName, bucket, publicCommands]) => defineCollection({
     id, displayName, packageName: id, codexPlugin: id,
     claudePackageRoot: `packages/${id}`, codexPackageRoot: `codex/plugins/${id}`,
-    piPackageRoot: `pi/packages/${id}`, canonicalRoot: `skills/${bucket}`,
+    piPackageRoot: `pi/packages/${id}`, canonicalRoot: "skills",
     documentationRoot: `docs/${bucket}`, publicCommands,
   })),
 ]);

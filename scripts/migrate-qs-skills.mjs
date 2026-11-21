@@ -110,7 +110,7 @@ function updateDocumentation(content, skill) {
 async function migrate() {
   for (const skill of UPSTREAM_SKILLS) {
     const original = join(repositoryRoot, "skills", skill.bucket, skill.upstreamName);
-    const destination = join(repositoryRoot, "skills", skill.bucket, skill.name);
+    const destination = join(repositoryRoot, skill.sourcePath);
     const oldExists = await exists(original);
     const newExists = await exists(destination);
 
@@ -138,7 +138,7 @@ async function migrate() {
 
   for (const skill of UPSTREAM_SKILLS) {
     const original = join(repositoryRoot, "skills", skill.bucket, skill.upstreamName);
-    const destination = join(repositoryRoot, "skills", skill.bucket, skill.name);
+    const destination = join(repositoryRoot, skill.sourcePath);
     if (await exists(original)) await rename(original, destination);
 
     const originalDoc = join(repositoryRoot, "docs", skill.bucket, `${skill.upstreamName}.md`);
@@ -147,7 +147,7 @@ async function migrate() {
   }
 
   for (const skill of SKILLS) {
-    const directory = join(repositoryRoot, "skills", skill.bucket, skill.name);
+    const directory = join(repositoryRoot, skill.sourcePath);
     const skillFile = join(directory, "SKILL.md");
     let content = updateSkillReferences(await readFile(skillFile, "utf8"));
 

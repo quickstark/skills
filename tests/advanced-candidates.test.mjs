@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import test from 'node:test';
 import { ADVANCED_PUBLIC_COMMANDS, ADVANCED_INTERNAL_CAPABILITIES } from '../scripts/advanced-skill-catalog.mjs';
 import { PS_PUBLIC_COMMANDS, PS_INTERNAL_CAPABILITIES } from '../scripts/ps-skill-catalog.mjs';
-import { freezeParityContract, evaluateParity } from '../skills/advanced/tools/visual-parity.mjs';
+import { freezeParityContract, evaluateParity } from '../skills/_shared/advanced/tools/visual-parity.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (relative) => readFileSync(path.join(root, relative), 'utf8');
@@ -56,8 +56,8 @@ test('all sixteen private capabilities have current local owners and no discover
     assert.doesNotMatch(read(capability.sourcePath), /`ps-/);
     assert.equal(path.basename(capability.sourcePath) === 'SKILL.md', false);
   }
-  assert.equal(readdirSync(path.join(root, 'skills/advanced/internal')).length, 16);
-  const notices = read('skills/advanced/THIRD_PARTY_NOTICES.md');
+  assert.equal(readdirSync(path.join(root, 'skills/_shared/advanced/internal')).length, 16);
+  const notices = read('skills/_shared/advanced/THIRD_PARTY_NOTICES.md');
   assert.match(notices, /Copyright \(c\) 2026 Lauren Tan/);
   assert.match(notices, /Copyright \(c\) 2026 Matt Pocock/);
 });
@@ -68,10 +68,10 @@ test('conditional root links resolve within the new independently owned private 
     const links = [...body.matchAll(/\]\((\.\.\/[^)]+)\)/g)].map((match) => match[1]);
     for (const link of links) {
       const target = path.resolve(root, entry.sourcePath, link);
-      assert.ok(target.startsWith(path.join(root, 'skills/advanced') + path.sep));
+      assert.ok(target.startsWith(path.join(root, 'skills/_shared/advanced') + path.sep));
       assert.ok(readFileSync(target).length > 0);
     }
-    for (const name of entry.privateCapabilities) assert.ok(links.includes(`../../advanced/internal/${name}.md`));
+    for (const name of entry.privateCapabilities) assert.ok(links.includes(`../_shared/advanced/internal/${name}.md`));
   }
 });
 
@@ -100,7 +100,7 @@ test('exact matching is complete and a known mismatch detects an insensitive-com
 test('a constant-zero comparator mutation fails the independent known-mismatch oracle', async () => {
   const directory = mkdtempSync(path.join(tmpdir(), 'qs-parity-insensitive-'));
   try {
-    const source = read('skills/advanced/tools/visual-parity.mjs');
+    const source = read('skills/_shared/advanced/tools/visual-parity.mjs');
     const mutant = source.replace('residual: differentBytes / original.length', 'residual: 0');
     assert.notEqual(mutant, source);
     const modulePath = path.join(directory, 'insensitive.mjs'); writeFileSync(modulePath, mutant);
@@ -143,7 +143,7 @@ test('the private parity helper runs in isolation with no repository or public s
   const directory = mkdtempSync(path.join(tmpdir(), 'qs-parity-isolated-'));
   try {
     const modulePath = path.join(directory, 'visual-parity.mjs');
-    copyFileSync(path.join(root, 'skills/advanced/tools/visual-parity.mjs'), modulePath);
+    copyFileSync(path.join(root, 'skills/_shared/advanced/tools/visual-parity.mjs'), modulePath);
     const isolated = await import(pathToFileURL(modulePath));
     const args = fixture();
     assert.equal(isolated.evaluateParity(args).status, 'complete');

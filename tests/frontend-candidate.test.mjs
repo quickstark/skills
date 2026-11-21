@@ -8,7 +8,7 @@ import test from "node:test";
 import { FRONTEND_PUBLIC_COMMANDS, FRONTEND_INTERNAL_CAPABILITIES } from "../scripts/frontend-skill-catalog.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const privateRoot = join(root, "skills/frontend");
+const privateRoot = join(root, "skills/_shared/frontend");
 const index = JSON.parse(readFileSync(join(privateRoot, "dependency-index.json")));
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 

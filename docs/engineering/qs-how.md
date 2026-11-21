@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-how/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-how/SKILL.md)
 
 ## What it does
 
-`/qs-how` explain how a selected subsystem works. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-how/SKILL.md).
+`/qs-how` explain how a selected subsystem works. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-how/SKILL.md).
 
 ## When to reach for it
 

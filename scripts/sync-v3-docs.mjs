@@ -11,7 +11,7 @@ const requireCondition = (value, message) => { if (!value) throw new Error(messa
 export function renderCommandDocumentation(skill) {
   const packageName = skill.collectionId;
   const install = `codex plugin add ${packageName}@quickstark`;
-  const sourcePath = skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`;
+  const sourcePath = skill.sourcePath;
   const source = `https://github.com/quickstark/skills/blob/main/${sourcePath}/SKILL.md`;
   const upstream = skill.upstreamName
     ? ` · [Upstream inspiration](${UPSTREAM_REPOSITORY}/tree/main/skills/${skill.bucket}/${skill.upstreamName})`
@@ -77,7 +77,7 @@ function validateIndexCommands(commands) {
     requireCondition(expected.get(command.name)?.bucket === command.bucket && expected.get(command.name)?.collectionId === command.collectionId, `Wrong registered public bucket or package: ${command.name}.`);
     requireCondition(["engineering", "productivity", "video"].includes(command.bucket), `Unknown public index bucket: ${command.bucket}.`);
     requireCondition(packageLabels.some(([id]) => id === command.collectionId), `Unknown public index package: ${command.collectionId}.`);
-    requireCondition((command.sourcePath ?? `skills/${command.bucket}/${command.name}`) === `skills/${command.bucket}/${command.name}`, `Wrong canonical public path: ${command.name}.`);
+    requireCondition(command.sourcePath === `skills/${command.name}`, `Wrong canonical public path: ${command.name}.`);
     requireCondition((command.documentationPath ?? `docs/${command.bucket}/${command.name}.md`) === `docs/${command.bucket}/${command.name}.md`, `Wrong public documentation path: ${command.name}.`);
     requireCondition(Number.isFinite(command.lifecycle?.position), `Missing public lifecycle position: ${command.name}.`);
   }
@@ -87,16 +87,16 @@ export function renderTargetIndexDocuments({ commands = TARGET_PUBLIC_COMMANDS }
   validateIndexCommands(commands);
   const byName = new Map(commands.map(command => [command.name, command]));
   const documents = new Map();
-  for (const [bucket, title] of [["engineering", "Engineering"], ["productivity", "Productivity"], ["video", "Video"]]) {
-    const lines = [`# ${title} commands`, "", "The default selection is the core package. Optional packages are explicit choices; their presence here does not establish installation or authorize adding them.", ""];
-    for (const [packageName, heading] of packageLabels) {
-      const entries = commands.filter(command => command.bucket === bucket && command.collectionId === packageName).sort((a, b) => a.lifecycle.position - b.lifecycle.position || a.name.localeCompare(b.name));
-      if (!entries.length) continue;
-      lines.push(`## ${heading} (\`${packageName}\`)`, "", ...entries.map(command => `- [${command.name}](./${command.name}/SKILL.md) — ${command.shortDescription}.`), "");
-    }
-    lines.push("Private capabilities and bundled modules support these roots. They are not commands or additional picker entries. Historical PS identities are documented only in the [migration guide](../../docs/pstack/index.md).", "", "See [skill provenance](../../docs/upstream/provenance.md) for original sources, reviewed and adopted revisions, and attribution.", "");
-    documents.set(`skills/${bucket}/README.md`, lines.join("\n"));
+  const lines = ["# Public skills", "", "Edit a command in its named directory. The default selection is the core package. Optional packages are explicit choices.", ""];
+  for (const [packageName, heading] of packageLabels) {
+    lines.push(`## ${heading} (\`${packageName}\`)`, "");
+    const entries = commands.filter(command => command.collectionId === packageName)
+      .sort((a, b) => a.lifecycle.position - b.lifecycle.position || a.name.localeCompare(b.name));
+    for (const command of entries) lines.push(`- [${command.name}](./${command.name}/SKILL.md) — ${command.shortDescription}. (${command.bucket})`);
+    lines.push("");
   }
+  lines.push("Shared resources in [_shared](./_shared/) support these commands. See the [historical PS migration guide](../docs/pstack/index.md) and [skill provenance](../docs/upstream/provenance.md).", "");
+  documents.set("skills/README.md", lines.join("\n"));
   const rows = psSuccessors.map(([original, name]) => {
     const current = byName.get(name); requireCondition(current, `Missing historical PS successor: ${name}.`);
     requireCondition(current.collectionId === (name === "qs-help" ? "qs-skills" : "qs-advanced"), `Wrong historical PS successor package: ${name}.`);
@@ -134,16 +134,21 @@ export function renderTargetIndexDocuments({ commands = TARGET_PUBLIC_COMMANDS }
   return documents;
 }
 
-async function validateCanonicalSources(root, commands) {
+export async function listPublicSources(root = repositoryRoot, commands = TARGET_PUBLIC_COMMANDS) {
   validateIndexCommands(commands);
   const canonicalRoot = await realpath(root);
+  const paths = [];
   for (const command of commands) {
-    const file = join(root, command.sourcePath ?? `skills/${command.bucket}/${command.name}`, "SKILL.md");
+    const file = join(canonicalRoot, command.sourcePath, "SKILL.md");
     const stat = await lstat(file).catch(error => { if (error.code === "ENOENT") throw new Error(`Missing canonical public source: ${command.name}.`); throw error; });
-    requireCondition(stat.isFile() && !stat.isSymbolicLink() && (await realpath(file)) === file && relative(canonicalRoot, file).split(sep)[0] !== "..", `Canonical public source must be a regular local file: ${command.name}.`);
+    requireCondition(stat.isFile() && stat.nlink === 1 && (await realpath(file)) === file && relative(canonicalRoot, file).split(sep)[0] !== "..", `Canonical public source must be a regular local file: ${command.name}.`);
     const content = await readFile(file, "utf8");
-    requireCondition(content.startsWith("---\n") && content.slice(4, content.indexOf("\n---", 4)).split("\n").includes(`name: ${command.name}`), `Wrong canonical public identity: ${command.name}.`);
+    const header = content.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+    const names = header?.[1].split(/\r?\n/).filter(line => /^name:/.test(line)) ?? [];
+    requireCondition(names.length === 1 && names[0] === `name: ${command.name}`, `Wrong canonical public identity: ${command.name}.`);
+    paths.push(relative(canonicalRoot, file));
   }
+  return paths.sort();
 }
 
 async function validateOutputPath(root, path) {
@@ -159,7 +164,7 @@ export async function syncV3Documentation({ root = repositoryRoot, check = false
   requireCondition(["legacy", "target"].includes(registryState), "Unknown documentation registry state.");
   root = resolve(root);
   const commands = registryState === "target" ? TARGET_PUBLIC_COMMANDS : LEGACY_PUBLIC_COMMANDS;
-  if (registryState === "target") await validateCanonicalSources(root, commands);
+  if (registryState === "target") await listPublicSources(root, commands);
   const documents = new Map(commands.map(skill => [skill.documentationPath ?? `docs/${skill.bucket}/${skill.name}.md`, { text: renderCommandDocumentation(skill), command: skill.name }]));
   if (registryState === "target") for (const [path, text] of renderTargetIndexDocuments({ commands })) documents.set(path, { text });
   // Preflight every target before writing: check mode and invalid sources are read-only.
@@ -174,7 +179,7 @@ export async function syncV3Documentation({ root = repositoryRoot, check = false
   }
   if (check && changes.length) throw new Error(`v3 documentation is stale: ${changes.map(change => change.path).join(", ")}.`);
   for (const change of changes) { await mkdir(dirname(join(root, change.path)), { recursive: true }); await writeFile(join(root, change.path), change.text); }
-  return { updated: changes.length, commands: commands.length, indexes: registryState === "target" ? 5 : 0, registryState };
+  return { updated: changes.length, commands: commands.length, indexes: registryState === "target" ? 3 : 0, registryState };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
@@ -185,5 +190,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     else throw new Error(`Unknown documentation argument: ${args[index]}.`);
   }
   const result = await syncV3Documentation({ root, check });
-  console.log(check ? `Verified concise v3 documentation for ${result.commands} commands${result.indexes ? " and 5 target indexes" : ""}.` : result.indexes ? `Synchronized ${result.updated} concise v3 documentation pages and indexes.` : `Synchronized ${result.updated} concise v3 command documentation pages.`);
+  console.log(check ? `Verified concise v3 documentation for ${result.commands} commands${result.indexes ? " and 3 target indexes" : ""}.` : result.indexes ? `Synchronized ${result.updated} concise v3 documentation pages and indexes.` : `Synchronized ${result.updated} concise v3 command documentation pages.`);
 }

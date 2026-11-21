@@ -192,7 +192,7 @@ Remove instruction to emit three copy-ready prompts. Also distinguish the primar
 
 **Acceptance:** Trials: prompt-authoring request routes to qs-deploy-prompt or qs-skill-write; parity remains discoverable; ordinary route emits at most one actionable prompt.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-help/SKILL.md) — Reviewed current canonical behavior and completion contract.; [PHASE-BOUNDARIES.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/ask-matt/PHASE-BOUNDARIES.md) — New continuity decision tree includes host-specific commands and context threshold.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-help/SKILL.md) — Reviewed current canonical behavior and completion contract.; [PHASE-BOUNDARIES.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/ask-matt/PHASE-BOUNDARIES.md) — New continuity decision tree includes host-specific commands and context threshold.
 
 
 #### qs-setup
@@ -203,7 +203,7 @@ No substantive upstream workflow refresh required; latest changes mainly punctua
 
 **Acceptance:** Existing-project rerun makes no duplicate blocks; GitHub/GitLab/local layouts stay intact; migration dry run identifies aliases and preserves unrelated installed skills.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-setup/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/setup-matt-pocock-skills/SKILL.md) — Reviewed baseline diff; no new material configuration behavior.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-setup/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/setup-matt-pocock-skills/SKILL.md) — Reviewed baseline diff; no new material configuration behavior.
 
 
 #### qs-plan-clarify
@@ -214,7 +214,7 @@ Keep evidence-before-question behavior. Fresh grilling changes one question into
 
 **Acceptance:** Cases with answered questions, missing facts, independent decisions and authority ambiguity; count unnecessary questions and confirm no inferred permission.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-plan-clarify/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/grilling/SKILL.md) — New frontier rounds and subagent lookups are real semantic change.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-plan-clarify/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/grilling/SKILL.md) — New frontier rounds and subagent lookups are real semantic change.
 
 
 #### qs-plan-roadmap
@@ -225,7 +225,7 @@ No new Matt roadmap policy to adopt beyond source terminology and explicit Skill
 
 **Acceptance:** Large initiative with unknown dependencies produces honest decision gates; small task does not acquire artificial phases or ticket side effects.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-plan-roadmap/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/wayfinder/SKILL.md) — Reviewed changed lines: mainly typography and explicit public Skill invocations; map/fog distinction predates baseline.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-plan-roadmap/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/wayfinder/SKILL.md) — Reviewed changed lines: mainly typography and explicit public Skill invocations; map/fog distinction predates baseline.
 
 
 #### qs-plan-spec
@@ -236,7 +236,7 @@ Adopt newly explicit expand-contract ticket sequencing through internal referenc
 
 **Acceptance:** Migration scenario produces dependency-correct expand/migrate/contract graph; isolated-green and integration-only variants state distinct completion gates.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-plan-spec/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/to-tickets/SKILL.md) — New wide-refactor exception describes expand-contract and integration-branch final ticket.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-plan-spec/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/to-tickets/SKILL.md) — New wide-refactor exception describes expand-contract and integration-branch final ticket.
 
 
 #### qs-code-build
@@ -247,7 +247,7 @@ No new Matt implement delta; retain local stronger full-outcome ownership. Add c
 
 **Acceptance:** Known bug cannot pass via no-op test; user-authorized scope completes without skill hopping; unrelated dirty file remains unstaged.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-code-build/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/implement/SKILL.md) — Current upstream still invokes public TDD/review and commits current branch; no baseline-to-head file changes.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-code-build/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/implement/SKILL.md) — Current upstream still invokes public TDD/review and commits current branch; no baseline-to-head file changes.
 
 
 #### qs-code-debug
@@ -258,7 +258,7 @@ Adopt upstream new redaction of commands, outputs, auth-bearing traces and artif
 
 **Acceptance:** Synthetic auth-bearing HAR/output remains redacted; helper does not request secret capture; original reproducer and stable regression both prove fix.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-code-debug/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/diagnosing-bugs/SKILL.md) — New Redact section and artifact redaction in baseline diff.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-code-debug/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/diagnosing-bugs/SKILL.md) — New Redact section and artifact redaction in baseline diff.
 
 
 #### qs-review-code
@@ -269,7 +269,7 @@ Move host-specific inline-comment smoke-testing detail behind a strong condition
 
 **Acceptance:** Same grounded findings across brief/full and inline/non-inline hosts; no missing actionable finding when anchor unavailable; empty/clean diff does not manufacture comment.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-review-code/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/code-review/SKILL.md) — Baseline diff largely punctuation; removes host-specific Agent-call mechanics, retains two-agent model.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-review-code/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/code-review/SKILL.md) — Baseline diff largely punctuation; removes host-specific Agent-call mechanics, retains two-agent model.
 
 
 #### qs-git-merge
@@ -280,7 +280,7 @@ Borrow concise observable before/after proof, risks and rollback impact from new
 
 **Acceptance:** Dirty-worktree conflict scenario stages only selected changes; already-published retry is idempotent; description proof refers to actual changed artifact.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-git-merge/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/in-progress/pr/SKILL.md) — New PR guidance focuses on motivating bug, proof and risk.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-git-merge/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/in-progress/pr/SKILL.md) — New PR guidance focuses on motivating bug, proof and risk.
 
 
 #### qs-deploy-release
@@ -291,7 +291,7 @@ No source synchronization needed. Make failure report distinguish pre-publicatio
 
 **Acceptance:** Queued job/success exit cannot count as healthy deploy; staging request cannot authorize production; partial publish reports actual state.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-deploy-release/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — upstreamName null and no continuations; repository-authored identity.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-deploy-release/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — upstreamName null and no continuations; repository-authored identity.
 
 
 #### qs-flow-triage
@@ -302,7 +302,7 @@ Add conditional pointers to existing brief/prior-rejection references, scoped by
 
 **Acceptance:** Already-implemented feature is not recorded as rejected; prior decision surfaced without automatic close/reopen; PR triage respects configured request surface.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-flow-triage/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/triage/SKILL.md) — Changed upstream grilling now invokes two skills and question rounds; keep internal/root boundary.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-flow-triage/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/triage/SKILL.md) — Changed upstream grilling now invokes two skills and question rounds; keep internal/root boundary.
 
 
 #### qs-flow-handoff
@@ -313,7 +313,7 @@ Remove stale preferred-plus-two-alternatives instruction in favor of current at-
 
 **Acceptance:** Fresh task can resume with scope/authority/evidence intact; no redundant checks or duplicate side effects; at most one eligible prompt.
 
-Evidence: [SKILL.md](../../skills/productivity/qs-flow-handoff/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/handoff/SKILL.md) — Latest delta only explicit Skill-tool wording.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/productivity/qs-flow-handoff/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/handoff/SKILL.md) — Latest delta only explicit Skill-tool wording.
 
 
 #### qs-plan-research
@@ -324,7 +324,7 @@ Keep current bounded evidence standard; add revision/date specificity when compa
 
 **Acceptance:** Conflicting sources remain distinguished; obsolete release versus newer unreleased code accurately labeled; research can finish without file artifact or subagent.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-plan-research/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/research/SKILL.md) — Only punctuation changed; upstream background agent and Markdown output are preexisting differences.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-plan-research/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/research/SKILL.md) — Only punctuation changed; upstream background agent and Markdown output are preexisting differences.
 
 
 #### qs-design-prototype
@@ -335,7 +335,7 @@ Adopt self-contained HTML logic demos as an option for nontechnical reviewers, r
 
 **Acceptance:** Logic demo tests invalid and valid state transitions; UI alternative answers same question; code remains isolated; no branch or production promotion without authority.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-design-prototype/SKILL.md) — Reviewed current canonical behavior and completion contract.; [LOGIC.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/prototype/LOGIC.md) — Real new upstream change replaces TUI with shareable single-file HTML and guided scenarios.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-design-prototype/SKILL.md) — Reviewed current canonical behavior and completion contract.; [LOGIC.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/prototype/LOGIC.md) — Real new upstream change replaces TUI with shareable single-file HTML and guided scenarios.
 
 
 #### qs-code-document
@@ -346,7 +346,7 @@ Use centralized provenance index as authoritative origin map, distinguish curren
 
 **Acceptance:** Command/link checks cover edited docs; planned behavior labeled; source origin includes multiple contributors when guidance was merged.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-code-document/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — Repository-authored identity, upstreamName null.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-code-document/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — Repository-authored identity, upstreamName null.
 
 
 #### qs-test-author
@@ -357,7 +357,7 @@ Add independent oracle/negative-control criterion when a test could be tautologi
 
 **Acceptance:** Representative known-bad or empty implementation fails relevant behavior test; configuration/absence contract test retained; production diff remains empty.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-test-author/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/tdd/SKILL.md) — Independent expected values predate current delta; useful existing principle, not a new Matt update.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-test-author/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/tdd/SKILL.md) — Independent expected values predate current delta; useful existing principle, not a new Matt update.
 
 
 #### qs-test-verify
@@ -368,7 +368,7 @@ Current matrix, bounded retry and real-artifact proof are already strong. Add ev
 
 **Acceptance:** Changed artifact invalidates prior pass; unavailable required check blocks completion; retry cannot erase first failure; source state preserved.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-test-verify/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — V3-only repository authored identity.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-test-verify/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — V3-only repository authored identity.
 
 
 #### qs-learn-teach
@@ -379,7 +379,7 @@ No substantive new upstream lesson behavior. Add conditional pointers only if re
 
 **Acceptance:** Brief question gives explanation and exercise without unsolicited files; multi-session course preserves progress when explicitly requested.
 
-Evidence: [SKILL.md](../../skills/productivity/qs-learn-teach/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/teach/SKILL.md) — Current changes are editorial; HTML lessons and persistent-course assumptions are preexisting.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/productivity/qs-learn-teach/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/teach/SKILL.md) — Current changes are editorial; HTML lessons and persistent-course assumptions are preexisting.
 
 
 #### qs-skill-write
@@ -390,7 +390,7 @@ Adopt successor context-pointer branches, progressive disclosure, co-location, e
 
 **Acceptance:** Routing test matrix and held-out task outcomes before/after; measure text/token cost separately from success; narrow edit does not weaken authorization or completion. Preserve historical source and successor mapping.
 
-Evidence: [SKILL.md](../../skills/productivity/qs-skill-write/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/writing-for-agents/SKILL.md) — New successor contains information hierarchy and source-of-truth pruning guidance.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/productivity/qs-skill-write/SKILL.md) — Reviewed current canonical behavior and completion contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/productivity/writing-for-agents/SKILL.md) — New successor contains information hierarchy and source-of-truth pruning guidance.
 
 
 #### qs-deploy-prompt
@@ -401,7 +401,7 @@ Keep exact generation-versus-execution distinction. Compression must separate ro
 
 **Acceptance:** Rerun generation/execution and estimation cases using actual agents; missing goals/skills or target yields blocker not executable placeholder; no hashes-only fixture updates.
 
-Evidence: [SKILL.md](../../skills/engineering/qs-deploy-prompt/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — V3-only authoring identity and goal-workflow-prompt output kind.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/engineering/qs-deploy-prompt/SKILL.md) — Reviewed current canonical behavior and completion contract.; [qs-skill-catalog.mjs](../../scripts/qs-skill-catalog.mjs) — V3-only authoring identity and goal-workflow-prompt output kind.
 
 
 #### internal:domain-modeling
@@ -412,7 +412,7 @@ No significant new context-map policy in reviewed delta: public trigger wording 
 
 **Acceptance:** Overloaded customer/account term resolved against evidence without renaming established terms or creating unauthorized glossary/ADR files.
 
-Evidence: [domain-modeling.md](../../skills/internal/domain-modeling.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/domain-modeling/SKILL.md) — Trigger changed to terminology/CONTEXT.md/ADR editing; context-map behavior existed at baseline.
+Evidence: [domain-modeling.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/internal/domain-modeling.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/domain-modeling/SKILL.md) — Trigger changed to terminology/CONTEXT.md/ADR editing; context-map behavior existed at baseline.
 
 
 #### internal:module-decomposition
@@ -423,7 +423,7 @@ Retain deep-module and migration reasoning without importing vocabulary bans or 
 
 **Acceptance:** Compare two real interface boundaries; chosen design accounts for error/configuration contract and migrations; small feature does not trigger architecture survey.
 
-Evidence: [module-decomposition.md](../../skills/internal/module-decomposition.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/codebase-design/SKILL.md) — Interface includes invariants, ordering, errors, config and performance; global terminology bans are preexisting choices to exclude.
+Evidence: [module-decomposition.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/internal/module-decomposition.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/codebase-design/SKILL.md) — Interface includes invariants, ordering, errors, config and performance; global terminology bans are preexisting choices to exclude.
 
 
 #### internal:ticket-decomposition
@@ -434,7 +434,7 @@ Add expand-contract plan pattern with dependency-correct caller batches and fina
 
 **Acceptance:** Graph verifier/scenario review checks delete depends on every caller batch; parent integration gate captures non-independently-green work.
 
-Evidence: [ticket-decomposition.md](../../skills/internal/ticket-decomposition.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/to-tickets/SKILL.md) — New wide mechanical refactor exception is substantive update, unlike surrounding punctuation.
+Evidence: [ticket-decomposition.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/internal/ticket-decomposition.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/to-tickets/SKILL.md) — New wide mechanical refactor exception is substantive update, unlike surrounding punctuation.
 
 
 #### internal:tdd-loop
@@ -445,7 +445,7 @@ Add independently grounded expected outcome/negative control when useful; otherw
 
 **Acceptance:** Known-bad behavior fails; implementation refactor leaves contract test green; lack of credible test seam does not manufacture failure or force unnecessary user approval.
 
-Evidence: [tdd-loop.md](../../skills/internal/tdd-loop.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/tdd/SKILL.md) — Baseline diff adds codebase-design reference; mandatory consent and red/green-only already existed.
+Evidence: [tdd-loop.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/internal/tdd-loop.md) — Reviewed current private capability and parent-only progress contract.; [SKILL.md](https://github.com/mattpocock/skills/blob/c55ee46073ed923f86ce59a5eb3b6d895095d1b7/skills/engineering/tdd/SKILL.md) — Baseline diff adds codebase-design reference; mandatory consent and red/green-only already existed.
 
 ### Batch 2 — Pstack / Lauren Tan
 
@@ -491,7 +491,7 @@ Use the shared collection registry for one outcome-to-command index; retain form
 
 **Acceptance:** Route a parity request, rationale question, verification authoring request and ordinary QS build request; assert one appropriate root and no mutations.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-help/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [ps-skill-catalog.mjs](../../scripts/ps-skill-catalog.mjs) — Repository-authored candidateId null; currently overlaps QS help and searches both catalogs.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-help/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [ps-skill-catalog.mjs](../../scripts/ps-skill-catalog.mjs) — Repository-authored candidateId null; currently overlaps QS help and searches both catalogs.
 
 
 #### ps-how
@@ -502,7 +502,7 @@ Local is already simpler than upstream, whose latest removes a critic stage but 
 
 **Acceptance:** Compare one-function and cross-service prompts for correct flow, cited claims and no unnecessary helpers; missing history must not block a code explanation.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-how/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/how/SKILL.md) — Latest how has simple/complex paths; baseline-to-latest deletes critic-prompt.md and critique-rubric.md. These were never required by the local abbreviated command.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-how/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/how/SKILL.md) — Latest how has simple/complex paths; baseline-to-latest deletes critic-prompt.md and critique-rubric.md. These were never required by the local abbreviated command.
 
 
 #### ps-why
@@ -513,7 +513,7 @@ Adopt a concise code anchor and Preserve / Change / Avoid / Risk conclusion when
 
 **Acceptance:** Use conflicting PR rationale and current code plus unavailable connector cases; explanation must retain uncertainty and identify exact missing evidence without unrelated-source scans.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-why/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/why/SKILL.md) — Latest why still defaults full parallel seven-category investigation, defines confidence framework, code anchor and final change constraints. Local already owns the valuable epistemic distinction.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-why/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/why/SKILL.md) — Latest why still defaults full parallel seven-category investigation, defines confidence framework, code anchor and final change constraints. Local already owns the valuable epistemic distinction.
 
 
 #### ps-blast-radius
@@ -524,7 +524,7 @@ Add pinned dependency versions/local patches and serialized cross-language or pe
 
 **Acceptance:** Fixture with an apparently unused symbol referenced through JSON or persisted data; analysis must find the contract and avoid declaring safety from zero text matches.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-blast-radius/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/blast-radius/SKILL.md) — Upstream steps explicitly inspect pinned library source, local patches, scheduling and wire/DB contracts beyond grep.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-blast-radius/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/blast-radius/SKILL.md) — Upstream steps explicitly inspect pinned library source, local patches, scheduling and wire/DB contracts beyond grep.
 
 
 #### ps-runtime-forensics
@@ -535,7 +535,7 @@ Retain artifact-to-source attribution (file, symbol, causal observation). Clarif
 
 **Acceptance:** Live-profile case must gather fresh signal and trace it to code; inaccessible instrumentation must yield bounded uncertainty, not an invented diagnosis or product edit.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-runtime-forensics/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [runtime-forensics.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/runtime-forensics.md) — Latest changes mostly wording; upstream allows CDP injection or live hotfix to prove mechanism, whereas canonical local deliberately narrows authority.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-runtime-forensics/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [runtime-forensics.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/runtime-forensics.md) — Latest changes mostly wording; upstream allows CDP injection or live hotfix to prove mechanism, whereas canonical local deliberately narrows authority.
 
 
 #### ps-trace-forensics
@@ -546,7 +546,7 @@ Add explicit source-symbol resolution and paired-capture comparison when availab
 
 **Acceptance:** Profile lacking symbols must expose that limit; paired before/after traces should discriminate regression from background cost; no live commands on artifact-only request.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-trace-forensics/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [trace-forensics.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/trace-forensics.md) — Latest upstream retains source-symbol and paired-capture requirements; local broad competing-hypothesis step can state this more concretely.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-trace-forensics/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [trace-forensics.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/trace-forensics.md) — Latest upstream retains source-symbol and paired-capture requirements; local broad competing-hypothesis step can state this more concretely.
 
 
 #### ps-create-verification-skill
@@ -557,7 +557,7 @@ Restore compact requirements for readiness/doctor, exact owned cleanup, stable u
 
 **Acceptance:** Create a fixture driver, run launch/doctor/drive/evidence/cleanup; verify second run safe, owned process gone and evidence still exists; unavailable real harness cannot produce a verified deliverable.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-create-verification-skill/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/create-verification-skill/SKILL.md) — Upstream creation owns executable helpers, launch/doctor/drive/evidence/cleanup and one feature end-to-end proof; no diff in this source since 0.14.1.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-create-verification-skill/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/create-verification-skill/SKILL.md) — Upstream creation owns executable helpers, launch/doctor/drive/evidence/cleanup and one feature end-to-end proof; no diff in this source since 0.14.1.
 
 
 #### ps-maintain-verification-skill
@@ -568,7 +568,7 @@ Add explicit feature-map coverage accounting: exercise each mapped feature or re
 
 **Acceptance:** Fixture with one unreachable feature, one stale selector and one real product regression; outcome must cover each, fix only harness/map drift and keep product defect visible.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-maintain-verification-skill/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/maintain-verification-skill/SKILL.md) — Upstream unchanged since 0.14.1; every-feature live coverage, doctor recovery and evidence-survival are materially more concrete than current local six-step summary.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-maintain-verification-skill/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/maintain-verification-skill/SKILL.md) — Upstream unchanged since 0.14.1; every-feature live coverage, doctor recovery and evidence-survival are materially more concrete than current local six-step summary.
 
 
 #### ps-skill-eval
@@ -579,7 +579,7 @@ Strengthen blinding detail: natural task prompts, sanitized labels and working p
 
 **Acceptance:** Leakage fixture with variant-identifying directory names, failed candidates and model mismatch must be rejected or disclosed; repeated matched trials before any efficacy claim.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-skill-eval/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [eval.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/eval.md) — Upstream eval changes mostly wording. Existing blinding instructions are useful; do not import mandatory different models or automatic transcript scans.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-skill-eval/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [eval.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/eval.md) — Upstream eval changes mostly wording. Existing blinding instructions are useful; do not import mandatory different models or automatic transcript scans.
 
 
 #### ps-hillclimb
@@ -590,7 +590,7 @@ Require a representative workload, prove harness sensitivity with contrasting wo
 
 **Acceptance:** Insensitive harness negative control must fail setup; noisy apparent win must not count; real speedup with regression must revert; unchanged valid small code must be allowed without forced iteration floor.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-hillclimb/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [hillclimb.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/hillclimb.md) — Latest upstream mostly wording/model changes and still mandates delegation, commits and Opening a PR; local correctly excludes those publication and host assumptions.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-hillclimb/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [hillclimb.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/hillclimb.md) — Latest upstream mostly wording/model changes and still mandates delegation, commits and Opening a PR; local correctly excludes those publication and host assumptions.
 
 
 #### ps-visual-parity
@@ -601,7 +601,7 @@ Keep comparison implementation/settings fixed once baseline and metric are accep
 
 **Acceptance:** Baseline tamper, threshold relaxation, skipped UI state or renderer mismatch must fail; missing tolerance must block edits; genuine measured match across declared states can complete.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-visual-parity/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [visual-parity.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/visual-parity.md) — Upstream parity diff only wording; zero-pixel threshold upstream is intentionally adapted locally to declared tolerance. Upstream explicitly prohibits harness modification and baseline tampering.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-visual-parity/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [visual-parity.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/visual-parity.md) — Upstream parity diff only wording; zero-pixel threshold upstream is intentionally adapted locally to declared tolerance. Upstream explicitly prohibits harness modification and baseline tampering.
 
 
 #### ps-pr-babysit
@@ -612,7 +612,7 @@ Retain one authoritative forge snapshot and recheck review threads/mergeability 
 
 **Acceptance:** Cancelled duplicate check, stale head, new review blocker, malicious comment text, cancellation and simultaneous repair cases; no false ready and no merge action.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-pr-babysit/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [babysit.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/babysit.md) — Latest babysit resolves forge and separates Origin from GitHub watcher verdicts; retains single owner, conflicts-before-CI and untrusted review-comment handling. Local has no watcher dependency.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-pr-babysit/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [babysit.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/babysit.md) — Latest babysit resolves forge and separates Origin from GitHub watcher verdicts; retains single owner, conflicts-before-CI and untrusted review-comment handling. Local has no watcher dependency.
 
 
 #### ps-worktree-cleanup
@@ -623,7 +623,7 @@ Check active/pinned task ownership through available host metadata or selected u
 
 **Acceptance:** Clean merged but active/pinned worktree must be excluded; path moves or newly dirty state after audit invalidate removal; refusal cannot trigger rm -rf fallback.
 
-Evidence: [SKILL.md](../../skills/pstack/commands/ps-worktree-cleanup/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [worktree-cleanup.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/worktree-cleanup.md) — Latest upstream is wording-only here. Upstream acknowledges clean/merged can still be in use; its transcript scanning and force/cache deletions are deliberately absent locally.
+Evidence: [SKILL.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/commands/ps-worktree-cleanup/SKILL.md) — Canonical bounded behavior and authority reviewed before generated completion contract.; [worktree-cleanup.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/worktree-cleanup.md) — Latest upstream is wording-only here. Upstream acknowledges clean/merged can still be in use; its transcript scanning and force/cache deletions are deliberately absent locally.
 
 
 #### internal:multi-candidate-exploration
@@ -634,7 +634,7 @@ Keep optional bounded candidate exploration; freeze common grounding and selecti
 
 **Acceptance:** Divergent and dropped candidates must preserve coverage gaps; selection cannot start from partially written output.
 
-Evidence: [multi-candidate-exploration.md](../../skills/pstack/internal/multi-candidate-exploration.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/arena/SKILL.md) — Latest substantive changes configure model families; local model-neutral method already avoids that coupling.
+Evidence: [multi-candidate-exploration.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/multi-candidate-exploration.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/arena/SKILL.md) — Latest substantive changes configure model families; local model-neutral method already avoids that coupling.
 
 
 #### internal:decision-trail
@@ -645,7 +645,7 @@ Adopt append-only corrections and explicit run identity when a later chat/agent 
 
 **Acceptance:** Resume/interleaved-run fixture must preserve previous entries and append a correction with a resolvable evidence pointer rather than rewriting history.
 
-Evidence: [decision-trail.md](../../skills/pstack/internal/decision-trail.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/show-me-your-work/SKILL.md) — New start-phase run boundaries and append-only audit corrections are meaningful latest changes, unlike most prose edits.
+Evidence: [decision-trail.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/decision-trail.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/show-me-your-work/SKILL.md) — New start-phase run boundaries and append-only audit corrections are meaningful latest changes, unlike most prose edits.
 
 
 #### internal:parallel-coverage
@@ -656,7 +656,7 @@ Adopt exact revision bindings for verification workers and method bindings for m
 
 **Acceptance:** Stale SHA, wrong sample order and missing worker fixture must not pass coverage even when the worker reports success.
 
-Evidence: [parallel-coverage.md](../../skills/pstack/internal/parallel-coverage.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/swarm/SKILL.md) — New upstream worker SHA/method reporting and invalid-report gap handling are meaningful improvements; provider/cloud defaults are not portable.
+Evidence: [parallel-coverage.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/parallel-coverage.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/swarm/SKILL.md) — New upstream worker SHA/method reporting and invalid-report gap handling are meaningful improvements; provider/cloud defaults are not portable.
 
 
 #### internal:typescript-discipline
@@ -667,7 +667,7 @@ Prefer repository-owned runtime schemas before new hand-written property guards;
 
 **Acceptance:** Known schema should be reused; invalid input must fail runtime parse; repository without schema library must not gain a dependency reflexively.
 
-Evidence: [typescript-discipline.md](../../skills/pstack/internal/typescript-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/typescript-best-practices/SKILL.md) — Latest adds Schemas before guards and 21-line example in references/patterns.md, explicitly reuses existing library and forbids one-guard dependency addition.
+Evidence: [typescript-discipline.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/typescript-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/typescript-best-practices/SKILL.md) — Latest adds Schemas before guards and 21-line example in references/patterns.md, explicitly reuses existing library and forbids one-guard dependency addition.
 
 
 #### internal:plain-writing
@@ -678,7 +678,7 @@ Retain concise whole sentences: latest warns that overly abbreviated fragments/a
 
 **Acceptance:** Compare brief/full reports: both must keep qualifications and be readable once; shortening must not erase failed checks.
 
-Evidence: [plain-writing.md](../../skills/pstack/internal/plain-writing.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/unslop/SKILL.md) — Latest removes forced soul/voice section, adds mannered-prose and over-compression rules. Local already focuses on clarity and precision.
+Evidence: [plain-writing.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/plain-writing.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/unslop/SKILL.md) — Latest removes forced soul/voice section, adds mannered-prose and over-compression rules. Local already focuses on clarity and precision.
 
 
 #### internal:boundary-discipline
@@ -689,7 +689,7 @@ Clarify provenance as a substantial reinterpretation: upstream validates externa
 
 **Acceptance:** A selected asset edit must not authorize product/remote writes; separately verify invalid external values are parsed by data-boundary owner.
 
-Evidence: [boundary-discipline.md](../../skills/pstack/internal/boundary-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-boundary-discipline/SKILL.md) — Upstream is functional core/thin shell and boundary validation; local purpose is read/write/authority/external-effect scope. Latest diff mostly wording.
+Evidence: [boundary-discipline.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/boundary-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-boundary-discipline/SKILL.md) — Upstream is functional core/thin shell and boundary validation; local purpose is read/write/authority/external-effect scope. Latest diff mostly wording.
 
 
 #### internal:rerunnable-tooling
@@ -700,7 +700,7 @@ Retain cost-based tooling, and compare first automated result with a known corre
 
 **Acceptance:** One fixture transformed manually and mechanically must agree; second execution must preserve evidence and state.
 
-Evidence: [rerunnable-tooling.md](../../skills/pstack/internal/rerunnable-tooling.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-build-the-lever/SKILL.md) — Latest mostly wording; upstream mandates levers for almost every nontrivial task. Local deliberately uses a narrower repetition/cost trigger.
+Evidence: [rerunnable-tooling.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/rerunnable-tooling.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-build-the-lever/SKILL.md) — Latest mostly wording; upstream mandates levers for almost every nontrivial task. Local deliberately uses a narrower repetition/cost trigger.
 
 
 #### internal:structural-enforcement
@@ -711,7 +711,7 @@ Add the new behavior-testing principle selectively: independent expected outcome
 
 **Acceptance:** Mutated implementation must fail intended test while valid configuration pins and absence assertions remain when their contract is real.
 
-Evidence: [structural-enforcement.md](../../skills/pstack/internal/structural-enforcement.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-encode-lessons-in-structure/SKILL.md) — Structure principle changes mostly wording. New principle-test-behavior-not-implementation is useful but wrongly lists toBeDefined/toBeTruthy among assertions that pass undefined.
+Evidence: [structural-enforcement.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/structural-enforcement.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-encode-lessons-in-structure/SKILL.md) — Structure principle changes mostly wording. New principle-test-behavior-not-implementation is useful but wrongly lists toBeDefined/toBeTruthy among assertions that pass undefined.
 
 
 #### internal:experience-first
@@ -722,7 +722,7 @@ Keep workload/user-visible baseline and final path; include library caller/maint
 
 **Acceptance:** UI and API prompts must choose representative user/caller behavior; visual parity cannot redesign approved target for aesthetic reasons.
 
-Evidence: [experience-first.md](../../skills/pstack/internal/experience-first.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-experience-first/SKILL.md) — Latest mostly wording; upstream explicitly counts maintainers/library consumers as users.
+Evidence: [experience-first.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/experience-first.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-experience-first/SKILL.md) — Latest mostly wording; upstream explicitly counts maintainers/library consumers as users.
 
 
 #### internal:context-discipline
@@ -733,7 +733,7 @@ Use bounded excerpts and source pointers with uncertainty intact; record source 
 
 **Acceptance:** Large trace reduction must retain source/capture identity and contradictory evidence; summary alone cannot prove a causal claim.
 
-Evidence: [context-discipline.md](../../skills/pstack/internal/context-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-guard-the-context-window/SKILL.md) — Latest prose removes redundant selective-read line; local bounded evidence reduction already captures useful intent without host-specific context assumptions.
+Evidence: [context-discipline.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/context-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-guard-the-context-window/SKILL.md) — Latest prose removes redundant selective-read line; local bounded evidence reduction already captures useful intent without host-specific context assumptions.
 
 
 #### internal:minimal-change
@@ -744,7 +744,7 @@ Keep causal minimality; after repeated failures question the shared premise befo
 
 **Acceptance:** Two failed tweaks must trigger premise review and discriminating evidence, not automatic architectural rewrite.
 
-Evidence: [minimal-change.md](../../skills/pstack/internal/minimal-change.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-laziness-protocol/SKILL.md) — Latest laziness diff mostly wording. New principle-attack-the-premise suggests repeated-failure trigger, but per-actor census and even-census exclusion are domain-specific and not generally sound.
+Evidence: [minimal-change.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/minimal-change.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-laziness-protocol/SKILL.md) — Latest laziness diff mostly wording. New principle-attack-the-premise suggests repeated-failure trigger, but per-actor census and even-census exclusion are domain-specific and not generally sound.
 
 
 #### internal:idempotent-operations
@@ -755,7 +755,7 @@ Keep unchanged; concise local module already states the practical retry contract
 
 **Acceptance:** Successful repeat and interrupted retry must converge without deleting evidence or unrelated state.
 
-Evidence: [idempotent-operations.md](../../skills/pstack/internal/idempotent-operations.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-make-operations-idempotent/SKILL.md) — No upstream change to this source since pinned 0.14.1; no update needed merely because package version changed.
+Evidence: [idempotent-operations.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/idempotent-operations.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-make-operations-idempotent/SKILL.md) — No upstream change to this source since pinned 0.14.1; no update needed merely because package version changed.
 
 
 #### internal:outcome-oriented-execution
@@ -766,7 +766,7 @@ Keep final verification requirement even though upstream deleted its redundant r
 
 **Acceptance:** Completed actions with unmet predicate must not produce complete; cancellation must halt the next operation.
 
-Evidence: [outcome-oriented-execution.md](../../skills/pstack/internal/outcome-oriented-execution.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-outcome-oriented-execution/SKILL.md) — Latest removes always-run-final-verification prose; local still requires final predicate evidence in the owning root.
+Evidence: [outcome-oriented-execution.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/outcome-oriented-execution.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-outcome-oriented-execution/SKILL.md) — Latest removes always-run-final-verification prose; local still requires final predicate evidence in the owning root.
 
 
 #### internal:concurrency-ownership
@@ -777,7 +777,7 @@ Make writable ownership concrete through isolated artifacts or structural lock/s
 
 **Acceptance:** Overlapping output paths must prevent concurrent writes; stale accepted results require reconciliation rather than blind merge.
 
-Evidence: [concurrency-ownership.md](../../skills/pstack/internal/concurrency-ownership.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md) — Latest wording-only; retained upstream says instructions/conventions alone are not concurrency control, stronger than a verbal owner assignment.
+Evidence: [concurrency-ownership.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/concurrency-ownership.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md) — Latest wording-only; retained upstream says instructions/conventions alone are not concurrency control, stronger than a verbal owner assignment.
 
 
 #### internal:type-system-discipline
@@ -788,7 +788,7 @@ Retain language-neutral domain invariants; include deriving types from authorita
 
 **Acceptance:** Empty total operation stays simple while partial head operation represents empty case; schema change propagates to boundary type without duplicate interface drift.
 
-Evidence: [type-system-discipline.md](../../skills/pstack/internal/type-system-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-type-system-discipline/SKILL.md) — Latest mostly prose; existing upstream simplest-total-type and authoritative-schema principles remain useful omissions from compact local method.
+Evidence: [type-system-discipline.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/type-system-discipline.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [SKILL.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/principle-type-system-discipline/SKILL.md) — Latest mostly prose; existing upstream simplest-total-type and authoritative-schema principles remain useful omissions from compact local method.
 
 
 #### internal:bounded-autonomous-loop
@@ -799,7 +799,7 @@ Keep explicit budget and stop reason; prefer event-driven waits when host suppor
 
 **Acceptance:** Budget exhaustion, canceled authority and unrelated discovered defect cases must stop or report correctly; no automatic commit/publication.
 
-Evidence: [bounded-autonomous-loop.md](../../skills/pstack/internal/bounded-autonomous-loop.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [autonomous-run.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/autonomous-run.md) — Latest autonomous-run diff wording-only; upstream unrestricted mid-run side-fix and commit semantics deliberately exceed local scope.
+Evidence: [bounded-autonomous-loop.md](https://github.com/quickstark/skills/blob/d9089350eaa910c4d1924c5dfb845bd956d62262/skills/pstack/internal/bounded-autonomous-loop.md) — Canonical purpose, entry/stop conditions, method and explicit owners reviewed; [autonomous-run.md](https://github.com/cursor/plugins/blob/12d587dfb20741cafc376c42c696c5f6e2a64487/pstack/skills/poteto-mode/playbooks/autonomous-run.md) — Latest autonomous-run diff wording-only; upstream unrestricted mid-run side-fix and commit semantics deliberately exceed local scope.
 
 ### Batch 3 — Taste frontend and image direction
 

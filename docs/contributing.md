@@ -4,7 +4,7 @@
 
 Read [repository guidance](../AGENTS.md) (`.claude/CLAUDE.md`), `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `scripts/ps-skill-catalog.mjs` retains historical PS dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
 
-Canonical public QS files live in `skills/engineering/`, `skills/productivity/` and `skills/video/`; historical PS sources remain in `skills/pstack/commands/`. Internal capabilities live in `skills/internal/` and `skills/pstack/internal/`. All generated package trees are projections, not independent sources.
+Edit `skills/<command-name>/SKILL.md` and its command-local resources. The [public index](../skills/README.md) lists package membership and editorial categories. Shared core, advanced and frontend resources live under `skills/_shared/`. Historical PS and dormant sources live under `docs/reference/skills/`. The sync command regenerates all three host packages.
 
 ## Install and verify
 
@@ -50,6 +50,10 @@ claude plugin validate ./packages/qs-execution --strict
 ```
 
 Do not claim that a Claude validation ran if the CLI is unavailable.
+
+The sync command refreshes the live public file hashes in `config/skill-provenance.json`. The current release acceptance audit is reviewed separately. A trial edit should change the source, its three host copies and the live digest. Restore the source and sync again to discard the trial.
+
+Historical tests read original source bytes from recorded fixtures and pinned local Git objects. A full clone supplies these objects offline. The target catalog resolves current files by name. Original evidence records retain the paths and hashes used at their recorded revision.
 
 ## Document behavior from evidence
 

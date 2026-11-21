@@ -10,7 +10,7 @@ import { TARGET_COLLECTION_REGISTRY, TARGET_PUBLIC_COMMANDS, TARGET_SKILL_COLLEC
 
 const run = promisify(execFile);
 const repository = fileURLToPath(new URL('..', import.meta.url));
-const source = (skill) => join(repository, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+const source = (skill) => join(repository, skill.sourcePath);
 const projector = join(repository, 'scripts/sync-codex-plugin.mjs');
 const json = async (path) => JSON.parse(await readFile(path, 'utf8'));
 async function temporary(t) {
@@ -121,9 +121,9 @@ test('a linked canonical root cannot cause Codex formatting to mutate source byt
   const skill = TARGET_PUBLIC_COMMANDS[0];
   const external = join(base, 'external-skill'); await cp(source(skill), external, { recursive: true });
   const before = await readFile(join(external, 'SKILL.md'));
-  const canonical = join(fixture, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+  const canonical = join(fixture, skill.sourcePath);
   await mkdir(dirname(canonical), { recursive: true }); await symlink(external, canonical);
-  await assert.rejects(invoke(join(base, 'candidate'), [], join(fixture, 'scripts/sync-codex-plugin.mjs')), /real directory, not a symlink/);
+  await assert.rejects(invoke(join(base, 'candidate'), [], join(fixture, 'scripts/sync-codex-plugin.mjs')), /regular local file/);
   assert.deepEqual(await readFile(join(external, 'SKILL.md')), before);
 });
 
@@ -132,15 +132,15 @@ test('a linked private source tree is rejected instead of silently copied', asyn
   await mkdir(fixture);
   await cp(join(repository, 'scripts'), join(fixture, 'scripts'), { recursive: true });
   await cp(join(repository, 'package.json'), join(fixture, 'package.json'));
-  for (const skill of TARGET_PUBLIC_COMMANDS.filter((item) => ['qs-skills', 'qs-specialists', 'qs-advanced'].includes(item.collectionId))) {
-    const target = join(fixture, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`);
+  for (const skill of TARGET_PUBLIC_COMMANDS) {
+    const target = join(fixture, skill.sourcePath);
     await mkdir(dirname(target), { recursive: true }); await cp(source(skill), target, { recursive: true });
   }
-  await cp(join(repository, 'skills/internal'), join(fixture, 'skills/internal'), { recursive: true });
+  await cp(join(repository, 'skills/_shared/core'), join(fixture, 'skills/_shared/core'), { recursive: true });
   const external = join(base, 'external-private');
-  await cp(join(repository, 'skills/advanced'), external, { recursive: true });
+  await cp(join(repository, 'skills/_shared/advanced'), external, { recursive: true });
   const before = await readFile(join(external, 'THIRD_PARTY_NOTICES.md'));
-  await symlink(external, join(fixture, 'skills/advanced'));
+  await symlink(external, join(fixture, 'skills/_shared/advanced'));
   await assert.rejects(invoke(join(base, 'candidate'), [], join(fixture, 'scripts/sync-codex-plugin.mjs')), /real directory, not a symlink/);
   assert.deepEqual(await readFile(join(external, 'THIRD_PARTY_NOTICES.md')), before);
 });

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-execution@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-unlazy/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-unlazy/SKILL.md)
 
 ## What it does
 
-`/qs-unlazy` complete substantial work against explicit acceptance gates. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-unlazy/SKILL.md).
+`/qs-unlazy` complete substantial work against explicit acceptance gates. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-unlazy/SKILL.md).
 
 ## When to reach for it
 

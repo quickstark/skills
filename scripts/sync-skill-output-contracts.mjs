@@ -1,3 +1,4 @@
+import { listPublicSources } from "./sync-v3-docs.mjs";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -5,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   PUBLIC_COMMANDS,
   PUBLIC_COMMANDS_BY_NAME,
+  REGISTRY_STATE,
   codexPublicSkillLiteral,
   piPublicSkillLiteral,
 } from "./skill-collection-registry.mjs";
@@ -160,10 +162,11 @@ export function withDocumentationOutputContract(content, skill) {
 }
 
 export async function syncSkillOutputContracts({ check = false } = {}) {
+  if (REGISTRY_STATE === "target") await listPublicSources(repositoryRoot);
   await syncProgressContracts({ check });
   let updated = 0;
   for (const skill of PUBLIC_COMMANDS) {
-    const skillPath = join(repositoryRoot, skill.sourcePath ?? `skills/${skill.bucket}/${skill.name}`, "SKILL.md");
+    const skillPath = join(repositoryRoot, skill.sourcePath, "SKILL.md");
     const documentationPath = join(repositoryRoot, skill.documentationPath ?? `docs/${skill.bucket}/${skill.name}.md`);
     const [skillContent, documentation] = await Promise.all([
       readFile(skillPath, "utf8"),
@@ -184,7 +187,7 @@ export async function syncSkillOutputContracts({ check = false } = {}) {
   }
   const help = PUBLIC_COMMANDS_BY_NAME.get("qs-help");
   if (help?.primaryRouting) {
-    const referencePath = join(repositoryRoot, help.sourcePath ?? `skills/${help.bucket}/${help.name}`, help.primaryRouting.referenceFile);
+    const referencePath = join(repositoryRoot, help.sourcePath, help.primaryRouting.referenceFile);
     const expectedReference = renderHelpRoutingReference();
     const currentReference = await readFile(referencePath, "utf8").catch((error) => {
       if (error.code === "ENOENT") return null;

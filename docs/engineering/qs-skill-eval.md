@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-skill-eval/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-skill-eval/SKILL.md)
 
 ## What it does
 
-`/qs-skill-eval` compare skill variants through blinded trials. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-skill-eval/SKILL.md).
+`/qs-skill-eval` compare skill variants through blinded trials. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-skill-eval/SKILL.md).
 
 ## When to reach for it
 

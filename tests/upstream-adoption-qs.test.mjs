@@ -9,7 +9,7 @@ import { parseResponse, promptFor, referenceNames } from '../scripts/prototype-p
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const body = async (path) => (await read(path)).split('## Completion report and next steps')[0];
-const capturePath = resolve(root, 'skills/engineering/qs-code-debug/scripts/hitl-loop.template.sh');
+const capturePath = resolve(root, 'skills/qs-code-debug/scripts/hitl-loop.template.sh');
 const capture = (input) => spawnSync('bash', [capturePath], { input, encoding: 'utf8' });
 
 test('reproduction capture returns diagnostic categories and has a valid Bash program', () => {
@@ -51,9 +51,9 @@ test('an incomplete human reproduction cannot produce a successful captured repo
 
 test('new conditional references resolve inside their owning skill and are not public commands', async () => {
   const skills = [
-    'engineering/qs-setup', 'engineering/qs-design-prototype',
-    'engineering/qs-flow-triage', 'engineering/qs-review-code',
-    'engineering/qs-code-debug', 'productivity/qs-learn-teach', 'productivity/qs-skill-write',
+    'qs-setup', 'qs-design-prototype',
+    'qs-flow-triage', 'qs-review-code',
+    'qs-code-debug', 'qs-learn-teach', 'qs-skill-write',
   ];
   for (const skill of skills) {
     const path = `skills/${skill}/SKILL.md`;
@@ -70,7 +70,7 @@ test('new conditional references resolve inside their owning skill and are not p
 });
 
 test('prototype subject and platform references stay private and reach every owning host package', async () => {
-  const source = 'skills/engineering/qs-design-prototype';
+  const source = 'skills/qs-design-prototype';
   const expected = ['LOGIC.md', 'MACOS.md', 'UI.md', 'WEB.md'];
   const references = (text) => [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]).sort();
   const canonical = await body(`${source}/SKILL.md`);
@@ -106,25 +106,25 @@ test('prototype trials withhold review criteria and reject premature or unknown 
 });
 
 test('retained helper text cannot reintroduce the known authority and routing contradictions', async () => {
-  const help = await body('skills/engineering/qs-help/SKILL.md');
-  const handoff = await body('skills/productivity/qs-flow-handoff/SKILL.md');
-  const glossary = await read('skills/productivity/qs-skill-write/GLOSSARY.md');
+  const help = await body('skills/qs-help/SKILL.md');
+  const handoff = await body('skills/qs-flow-handoff/SKILL.md');
+  const glossary = await read('skills/qs-skill-write/GLOSSARY.md');
   assert.doesNotMatch(`${help}\n${handoff}\n${glossary}`, /three (?:ranked copy-ready continuations|commands)|two (?:concise|useful) alternatives|description\*\* stripped/);
   for (const name of ['UI.md', 'LOGIC.md', 'WEB.md', 'MACOS.md']) {
-    const content = await read(`skills/engineering/qs-design-prototype/${name}`);
+    const content = await read(`skills/qs-design-prototype/${name}`);
     assert.doesNotMatch(content, /Fold the winner into the real code|promote the winning variant to a real route|logic module shouldn't be|Don't add tests/);
   }
-  const triage = await read('skills/engineering/qs-flow-triage/OUT-OF-SCOPE.md');
+  const triage = await read('skills/qs-flow-triage/OUT-OF-SCOPE.md');
   assert.doesNotMatch(triage, /^- Delete the `.out-of-scope\/` file$/m);
 });
 
 // These are source-contract regressions, not substitutes for model behavior trials.
 test('source contracts preserve migration ordering and independent oracles without blanket bans', async () => {
-  const decomposition = await read('skills/internal/ticket-decomposition.md');
+  const decomposition = await read('skills/_shared/core/ticket-decomposition.md');
   assert.match(decomposition, /Every caller-migration batch depends on that expansion/);
   assert.match(decomposition, /only after every migration batch and a no-remaining-callers check pass/);
   assert.match(decomposition, /Every batch blocks one final integrate-and-verify outcome/);
-  for (const path of ['skills/internal/tdd-loop.md', 'skills/engineering/qs-test-author/SKILL.md']) {
+  for (const path of ['skills/_shared/core/tdd-loop.md', 'skills/qs-test-author/SKILL.md']) {
     const content = await read(path);
     assert.match(content, /independently/);
     assert.match(content, /known-bad control/);

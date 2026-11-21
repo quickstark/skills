@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-debug/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnosing-bugs)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-code-debug/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnosing-bugs)
 
 ## What it does
 
-`/qs-code-debug` reproduce and diagnose a bug or regression. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-code-debug/SKILL.md).
+`/qs-code-debug` reproduce and diagnose a bug or regression. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-code-debug/SKILL.md).
 
 ## When to reach for it
 

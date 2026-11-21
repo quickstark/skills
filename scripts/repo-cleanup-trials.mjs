@@ -25,7 +25,7 @@ export async function capture(output, only) {
   const scenariosText = await readFile(join(fixtures, 'scenarios.json'), 'utf8');
   const cases = JSON.parse(scenariosText).filter(c => !only || c.id === only);
   if (!cases.length) throw Error('No matching trial');
-  const source = await readFile(join(root, 'skills/engineering/qs-repo-cleanup/SKILL.md'), 'utf8');
+  const source = await readFile(join(root, 'skills/qs-repo-cleanup/SKILL.md'), 'utf8');
   await mkdir(output);
   await json(join(output, 'binding.json'), { sourceSHA256: sha(source), scenariosSHA256: sha(scenariosText), runnerSHA256: sha(await readFile(fileURLToPath(import.meta.url))), supervisorSHA256: sha(await readFile(join(root, 'scripts/frontend-adoption-trials.mjs'))), startedAt: new Date().toISOString(), modelOverrides: [], selection: only ?? 'all', evidenceScope: 'Fresh single-sample synthetic-fixture trials; no universal reliability or performance claim. Git observations are simulated, filesystem changes are real. No installation, commits, or publication.' });
   await writeFile(join(output, 'SKILL.md'), source);

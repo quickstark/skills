@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-clarify/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-plan-clarify/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs)
 
 ## What it does
 
-`/qs-plan-clarify` clarify a plan and capture durable decisions. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-plan-clarify/SKILL.md).
+`/qs-plan-clarify` clarify a plan and capture durable decisions. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-plan-clarify/SKILL.md).
 
 ## When to reach for it
 

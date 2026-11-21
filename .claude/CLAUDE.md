@@ -5,8 +5,8 @@ specialists 9, advanced 12, frontend 4, video 1 and execution 1. Core and
 specialist names and membership are retained. Catalog membership is authoritative;
 the total is a checked consequence, not a policy cap.
 
-Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`
-and `skills/deprecated/` is never promoted or packaged by implication.
+Reference material under `docs/reference/skills/misc/`, `docs/reference/skills/personal/`, `docs/reference/skills/in-progress/`
+and `docs/reference/skills/deprecated/` is never promoted or packaged by implication.
 
 ## Source of truth
 
@@ -83,7 +83,7 @@ rollout remain separate. See docs/specs/quickstark-versioned-installation.md.
 
 ## Root-run contract
 
-`skills/engineering/qs-help/SKILL.md` is the target collection router. The retained PS Help source is historical compatibility material, not a target alias. `docs/skill-run-contract.md` owns shared execution and presentation policy.
+`skills/qs-help/SKILL.md` is the target collection router. The retained PS Help source is historical compatibility material, not a target alias. `docs/skill-run-contract.md` owns shared execution and presentation policy.
 
 Every invocation has one public root and one bounded result presented directly in chat. Public skills never automatically execute other public skills. A user-submitted explicit goal workflow may coordinate successive authorized roots under the narrow exception in docs/skill-run-contract.md; generation alone never executes it. Internal capabilities and bounded helpers remain inside the root run and do not produce their own result, status, skill-used entry, or continuation.
 
