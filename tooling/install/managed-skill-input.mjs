@@ -1,4 +1,5 @@
 import { claudePackagePath, resolveClaudeLayout, verifyClaudeMarketplace, codexPackagePath, resolveCodexLayout, verifyCodexMarketplace } from './distribution-layout.mjs';
+import { matchPiPackageSource, piPackagePath, resolvePiLayout, verifyPriorPiPackage } from './distribution-layout.mjs';
 import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -14,7 +15,7 @@ import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { captureManagedSkillPayload } from './managed-skill-migration.mjs';
 import { captureMigrationPath, revalidateMigrationPath } from './migration-filesystem.mjs';
 import { captureNativeConfiguration, observeNativePackages, runNativePackageCommand, nativePayloadSha256, listCodexPlugins } from './migration-native-packages.mjs';
-import { verifyAdoptionAcceptance } from '../verification/adoption-acceptance.mjs';
+import { adoptionSourceContentSha256, verifyAdoptionAcceptance } from '../verification/adoption-acceptance.mjs';
 import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from './skill-selection.mjs';
 import { validateSkillMigrations } from './skill-migrations.mjs';
 import { lockEntryMatches } from './personal-skills/lock.mjs';
@@ -32,7 +33,7 @@ const privateCapabilities = { 'qs-skills': V3_INTERNAL_CAPABILITIES, 'qs-special
 const privatePrefixes = { 'qs-skills': 'qs-internal', 'qs-advanced': 'ps-internal', 'qs-frontend': 'frontend-internal', 'qs-video': 'video-internal', 'qs-execution': 'execution-internal' };
 
 /** Pure catalog-derived audit obligations. No criterion is passed here. */
-export function derivePackageAcceptanceObligations(packageId, document, { codexLayout = 'original', claudeLayout = 'original' } = {}) {
+export function derivePackageAcceptanceObligations(packageId, document, { codexLayout = 'original', claudeLayout = 'original', piLayout = 'original' } = {}) {
   const collection = TARGET_SKILL_COLLECTIONS.find((entry) => entry.id === packageId); check(collection, 'Unknown target package.');
   const commands = TARGET_PUBLIC_COMMANDS.filter((entry) => entry.collectionId === packageId);
   const replacements = document.migrations.flatMap((migration) => migration.legacy.flatMap((entry) => entry.replacements.filter((replacement) => replacement.packageId === packageId)));
@@ -44,7 +45,8 @@ export function derivePackageAcceptanceObligations(packageId, document, { codexL
   if (packageId === 'qs-advanced') sourcePaths.push('skills/_shared/advanced');
   if (packageId === 'qs-frontend') sourcePaths.push('skills/_shared/frontend');
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
-    sourcePaths: unique([...sourcePaths, codexPackagePath(packageId, codexLayout), collection.piPackageRoot,
+    sourcePaths: unique([...sourcePaths, codexPackagePath(packageId, codexLayout), piPackagePath(packageId, piLayout),
+      ...(piLayout === 'dist' ? ['tooling/install/distribution-layout.mjs'] : []),
       ...(codexLayout === 'dist' ? ['.agents/plugins/marketplace.json', 'tooling/install/distribution-layout.mjs'] : []), claudePackagePath(packageId, claudeLayout),
       ...(claudeLayout === 'dist' ? ['.claude-plugin/marketplace.json', '.claude-plugin/plugin.json', 'tooling/install/distribution-layout.mjs'] : []),
       'tooling/install/skill-migrations.json', 'tooling/catalog/skill-provenance.json', 'tooling/install/skill-profiles.json', 'docs/skill-run-contract.md',
@@ -149,11 +151,12 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
   if (codexLayout.name === 'dist') await verifyCodexMarketplace(repositoryRoot, revision, codexLayout);
   const claudeLayout = await resolveClaudeLayout(repositoryRoot);
   if (claudeLayout.name === 'dist') await verifyClaudeMarketplace(repositoryRoot, revision, claudeLayout);
+  const piLayout = await resolvePiLayout(repositoryRoot);
   const packages = []; const native = {}; const observations = []; const verifiedOwnership = new Map(); const configs = {}; const unrelatedNames = {};
   for (const collection of TARGET_SKILL_COLLECTIONS) {
-    const obligations = derivePackageAcceptanceObligations(collection.id, document, { codexLayout: codexLayout.name, claudeLayout: claudeLayout.name }); const artifacts = {};
+    const obligations = derivePackageAcceptanceObligations(collection.id, document, { codexLayout: codexLayout.name, claudeLayout: claudeLayout.name, piLayout }); const artifacts = {};
     for (const agent of agents) {
-      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : collection.piPackageRoot);
+      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : piPackagePath(collection.id, piLayout));
       const payload = await captureManagedSkillPayload(source); const manifest = await jsonFile(path.join(source, agent === 'codex' ? '.codex-plugin/plugin.json' : agent === 'claude-code' ? '.claude-plugin/plugin.json' : 'package.json'));
       check(manifest.value.name === collection.id && manifest.value.version === version, 'Target projection manifest differs from release version/identity.');
       artifacts[agent] = { source, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256, nativePayloadSha256: nativePayloadSha256(agent,payload.snapshot) };
@@ -193,10 +196,16 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       for (const entry of settings.value.packages ?? []) {
         const value = typeof entry === 'string' ? entry : entry?.source;
         if (typeof value !== 'string' || !path.isAbsolute(value) && !value.startsWith('.')) continue;
-        const source = path.resolve(path.dirname(configPath), value); const collection = allCollections.find((candidate) => source === path.join(repositoryRoot, candidate.piPackageRoot));
-        if (!collection) { check(!allCollections.some((candidate) => source.endsWith('/' + candidate.piPackageRoot)), 'Pi has a stale QuickStark checkout path; preserve and explicitly reconcile it.'); continue; }
+        const source = path.resolve(path.dirname(configPath), value);
+        const match = matchPiPackageSource(source);
+        if (!match || piLayout === 'original' && match.relative !== piPackagePath(match.id)) continue;
         check(typeof entry === 'string', 'Filtered Pi QuickStark entry requires an explicit filter-preserving migration.');
-        const manifest = await jsonFile(path.join(source, 'package.json')); installed.push({ name: collection.id, version: manifest.value.version, source: { source: 'local', path: source }, installed: true, enabled: true });
+        check(!installed.some(pkg => pkg.name === match.id), 'Duplicate Pi package registration.');
+        if (piLayout === 'original') check(match.repositoryRoot === repositoryRoot, 'Pi has a stale QuickStark checkout path; preserve and explicitly reconcile it.');
+        if (configuration.binding) check(!configuration.binding.target.startsWith(match.repositoryRoot + path.sep), 'Linked Pi settings must remain separate from release sources.');
+        const priorPi = piLayout === 'dist' ? await verifyPriorPiPackage(match, repositoryRoot) : null;
+        const manifest = await jsonFile(path.join(source, 'package.json'));
+        installed.push({ name: match.id, version: manifest.value.version, priorPi, source: { source: 'local', path: source }, installed: true, enabled: true });
       }
     }
     const bindings = [];
@@ -208,9 +217,10 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       const canonicalPath = agent !== 'pi' ? path.join(agent === 'codex' ? codexHomeDirectory : claudeHomeDirectory, 'plugins/cache/quickstark', name, item.version) : item.source.path;
       const cachedManifest = agent === 'claude-code' && name === 'qs-skills' ? await jsonFile(path.join(canonicalPath,'.claude-plugin/plugin.json')) : null;
       const legacyRootCore = cachedManifest && Array.isArray(cachedManifest.value.skills) && cachedManifest.value.skills.some((skill) => typeof skill === 'string' && /^\.\/skills\/(engineering|productivity)\//.test(skill));
-      const expectedSource = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : collection.piPackageRoot);
-      check(item.source.path === expectedSource || legacyRootCore && item.source.path === repositoryRoot, 'Native ownership requires enabled exact local package registration.');
+      const expectedSource = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : piPackagePath(collection.id, piLayout));
+      check(item.priorPi || item.source.path === expectedSource || legacyRootCore && item.source.path === repositoryRoot, 'Native ownership requires enabled exact local package registration.');
       const payload = legacyRootCore ? await captureLegacyClaudeCore(canonicalPath) : await captureManagedSkillPayload(canonicalPath);
+      if (item.priorPi) check(item.priorPi.version === item.version && item.priorPi.contentSha256 === adoptionSourceContentSha256(payload.snapshot), 'Pi installed source changed during inspection.');
       check(!legacyRootCore || payload.version === item.version, 'Legacy Claude core cache version differs from registration.');
       const observedNames = legacyRootCore ? payload.publicNames : await publicNames(canonicalPath, payload);
       // An older active package may lack newly added commands. It must still
@@ -231,14 +241,14 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
         const history = await git(['log','-n','32','--format=%H','HEAD','--','.claude-plugin/plugin.json'],repositoryRoot);
         revisions.push(...history.stdout.trim().split(/\s+/).filter((value) => /^[a-f0-9]{40}$/.test(value)));
       }
-      const relative = legacyRootCore ? '.' : agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : collection.piPackageRoot;
-      if (!legacy && !legacyRootCore) {
+      const relative = legacyRootCore ? '.' : agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : piPackagePath(collection.id, piLayout);
+      if (!legacy && !legacyRootCore && !item.priorPi) {
         const history = await git(['log', '-n', '32', '--format=%H', 'HEAD', '--', path.posix.join(relative, agent === 'codex' ? '.codex-plugin/plugin.json' : agent === 'claude-code' ? '.claude-plugin/plugin.json' : 'package.json')], repositoryRoot);
         revisions.push(...history.stdout.trim().split(/\s+/).filter(value => /^[a-f0-9]{40}$/.test(value)));
       }
       let priorRevision;
       try {
-        try { priorRevision = await verifyPackageGitTree(payload, relative, unique(revisions), repositoryRoot, git); }
+        try { priorRevision = item.priorPi && !legacy ? item.priorPi.revision : await verifyPackageGitTree(payload, relative, unique(revisions), repositoryRoot, git); }
         catch (error) {
           if (agent !== 'claude-code' || claudeLayout.name !== 'dist' || legacy || legacyRootCore || item.version === version) throw error;
           // An installed older cache can outlive a marketplace manifest at the
@@ -256,7 +266,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       bindings.push({ id: `observed-${name}`, name, version: item.version, source: legacyRootCore ? expectedSource : item.source.path, ...(legacyRootCore ? {legacyRootCore:true} : {}), payloadSha256: nativePayloadSha256(agent,payload.snapshot), publicNames: observedNames, ownershipRecord: observed.ownership.recordId, ...(agent !== 'pi' ? { marketplace: 'quickstark', marketplaceRoot: agent === 'codex' ? codexLayout.marketplaceRoot : repositoryRoot, installedOnly: Boolean(legacyRootCore) || item.version !== version || name === 'ps-skills' } : {}) });
     }
     for (const pkg of packages) {
-      const artifact = pkg.artifacts[agent]; const existing = bindings.find((binding) => binding.name === pkg.id && binding.version === pkg.version);
+      const artifact = pkg.artifacts[agent]; const existing = bindings.find((binding) => binding.name === pkg.id && binding.version === pkg.version && (agent !== 'pi' || binding.source === artifact.source));
       if (existing) {
         if (existing.legacyRootCore || existing.payloadSha256 !== artifact.nativePayloadSha256) {
           const error = new Error(existing.legacyRootCore ? 'Replacing a root-based Claude core requires a new release version; preserve its existing cache.' : 'Same-version installed package differs from current release; a new version is required.');

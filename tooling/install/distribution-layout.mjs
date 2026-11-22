@@ -3,10 +3,11 @@ import { lstat, readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { TARGET_SKILL_COLLECTIONS } from '../catalog/skill-collection-registry.mjs';
+import { verifyTransitionPayloads } from '../generation/skill-transition-packages.mjs';
 import { adoptionSourceContentSha256 } from '../verification/adoption-acceptance.mjs';
 import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { verifyPackageGitTree } from './managed-skill-input.mjs';
-import { assertMigrationParents, captureMigrationPath } from './migration-filesystem.mjs';
+import { assertMigrationParents, captureMigrationPath, revalidateMigrationPath } from './migration-filesystem.mjs';
 import { inspectNativePayload } from './migration-native-packages.mjs';
 
 const exec = promisify(execFile);
@@ -197,4 +198,42 @@ export async function resolvePriorClaudeCheckout(repositoryRoot, replacementRoot
   await verifyPriorRelease(revision, replacementRoot, 'Claude');
   const rootCore = market.plugins.some(pkg => pkg.name === 'qs-skills' && pkg.source === './');
   return { repositoryRoot, revision, layout, rootCore };
+}
+
+export async function resolvePiLayout(repositoryRoot) {
+  const dist = path.join(repositoryRoot, 'dist/pi');
+  const candidate = await optional(dist);
+  if (!candidate) return 'original';
+  await assertMigrationParents(dist);
+  if (!candidate.isDirectory()) throw new Error('Pi distribution root must be a real directory.');
+  return 'dist';
+}
+
+export function piPackagePath(packageId, layout = 'original') {
+  return packageId === 'ps-skills' ? 'pi/packages/ps-skills' : distributionPaths('pi', packageId)[layout];
+}
+
+export function matchPiPackageSource(source) {
+  const id = path.basename(source);
+  if (id !== 'ps-skills' && !TARGET_SKILL_COLLECTIONS.some(pkg => pkg.id === id)) return null;
+  for (const relative of new Set([piPackagePath(id), piPackagePath(id, 'dist')])) {
+    if (source.endsWith(path.sep + relative)) {
+      return { id, relative, repositoryRoot: source.slice(0, -(relative.length + 1)), source };
+    }
+  }
+  return null;
+}
+
+export async function verifyPriorPiPackage(binding, replacementRoot) {
+  const { id, source, repositoryRoot } = binding;
+  const revision = (await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trimEnd();
+  await checkCheckout(repositoryRoot, revision);
+  await verifyPriorRelease(revision, replacementRoot, 'Pi');
+  if (id !== 'ps-skills') {
+    return recognizeDistributionSource({ repositoryRoot, revision, host: 'pi', packageId: id, source });
+  }
+  const snapshot = await captureMigrationPath(source);
+  const [retained] = await verifyTransitionPayloads(replacementRoot, repositoryRoot);
+  await revalidateMigrationPath(snapshot);
+  return { revision, version: retained.version, contentSha256: adoptionSourceContentSha256(snapshot) };
 }

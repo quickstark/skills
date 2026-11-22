@@ -1,5 +1,6 @@
 import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
 import { claudePackagePath, resolveClaudeLayout, resolvePriorClaudeCheckout, codexPackagePath, recognizeDistributionSource, resolveCodexLayout, resolvePriorCodexCheckout } from './distribution-layout.mjs';
+import { matchPiPackageSource, piPackagePath, resolvePiLayout, verifyPriorPiPackage } from './distribution-layout.mjs';
 import { verifyTransitionPayloads } from '../generation/skill-transition-packages.mjs';
 import { execFile } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
@@ -97,11 +98,16 @@ async function inventory(agent, options, run) {
       const source = typeof entry === 'string' ? entry : entry?.source;
       if (typeof source !== 'string' || !path.isAbsolute(source) && !source.startsWith('.')) continue;
       const absolute = path.resolve(path.dirname(config), source);
-      const collection = [...ids].find(id => absolute.endsWith(`/pi/packages/${id}`));
-      if (!collection) continue;
-      await officialSource(absolute.slice(0, -`/pi/packages/${collection}`.length), options.cwd);
+      const binding = matchPiPackageSource(absolute);
+      if (!binding || options.piLayout !== 'dist' && binding.relative !== piPackagePath(binding.id)) continue;
       check(typeof entry === 'string', 'Filtered Pi registrations are preserved; reconcile their filters before a clean install.');
-      packages.push({ name: collection, source: absolute });
+      if (options.piLayout === 'dist') {
+        check(!packages.some(pkg => pkg.name === binding.id), 'Duplicate Pi package registration; reconcile before a clean install.');
+        await verifyPriorPiPackage(binding, options.cwd);
+      } else {
+        await officialSource(binding.repositoryRoot, options.cwd);
+      }
+      packages.push({ name: binding.id, source: absolute, repositoryRoot: binding.repositoryRoot });
     }
     return { packages, config };
   }
@@ -204,7 +210,8 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
     if (verifyRepositoryFreshness) await verifyRepositoryFreshness({ repositoryRoot, agents });
     const codexLayout = agent === 'codex' ? await resolveCodexLayout(repositoryRoot) : null;
     const claudeLayout = agent === 'claude-code' ? await resolveClaudeLayout(repositoryRoot) : null;
-    const options = { ...paths, codexLayout, claudeLayout, host: agent, cwd: repositoryRoot, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
+    const piLayout = agent === 'pi' ? await resolvePiLayout(repositoryRoot) : null;
+    const options = { ...paths, codexLayout, claudeLayout, piLayout, host: agent, cwd: repositoryRoot, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
     const run = runtime.runCommand ?? runNativePackageCommand;
     const saved = await readSelectionRecord(paths.selectionPath);
     const record = saved.record ?? { schemaVersion: 1, targets: {}, templateRevision: null, lastSuccessfulTransaction: null };
@@ -225,7 +232,7 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
         check(!within(await realpath(sourceRoot), physical), 'Client settings must remain outside retained source checkouts.');
       }
       if (agent === 'pi') for (const pkg of observed.packages) {
-        check(!within(await realpath(path.resolve(pkg.source, '../../..')), physical), 'Pi settings must remain outside retained source checkouts.');
+        check(!within(await realpath(pkg.repositoryRoot), physical), 'Pi settings must remain outside retained source checkouts.');
       }
     }
     const hostHome = agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory;
@@ -240,8 +247,7 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
     const release = await (runtime.validateRepairRelease ?? validateSkillRelease)({ repositoryRoot, agents, packageIds: desired.packages });
     const accepted = new Map();
     for (const id of desired.packages) {
-      const collection = TARGET_SKILL_COLLECTIONS.find(c => c.id === id);
-      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(id, claudeLayout.name) : collection.piPackageRoot);
+      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(id, claudeLayout.name) : piPackagePath(id, piLayout));
       accepted.set(id, { source, payload: await inspectNativePayload(agent, source) });
     }
     record.targets[agent] = desired;
@@ -270,8 +276,7 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
       await run(options.command, ['plugin', 'marketplace', 'add', agent === 'codex' ? codexLayout.marketplaceRoot : repositoryRoot], options);
     }
     for (const id of desired.packages) {
-      const collection = TARGET_SKILL_COLLECTIONS.find(c => c.id === id);
-      await run(options.command, agent === 'pi' ? ['install', path.join(repositoryRoot, collection.piPackageRoot)]
+      await run(options.command, agent === 'pi' ? ['install', accepted.get(id).source]
         : agent === 'codex' ? ['plugin', 'add', `${id}@quickstark`, '--json'] : ['plugin', 'install', `${id}@quickstark`, '--scope', 'user'], options);
     }
     const installed = await inventory(agent, options, run);

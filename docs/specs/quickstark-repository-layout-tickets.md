@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is verified with the staged Claude packages in isolated homes. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is verified with the staged Pi packages in isolated homes. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -372,7 +372,7 @@ The original-layout sync and projection checks passed. The isolated repository s
 
 ## LAY-17C — Qualify Pi upgrades across package layouts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-14, LAY-16
 
@@ -382,9 +382,17 @@ Prerequisite evidence. LAY-14 supplies relocated production installer. LAY-16 su
 
 **Outcome and scope.** Exercise old pi/packages and new dist/pi through native fresh install, upgrade, interrupted repair and rollback. Cover linked settings, saved selection, alternate homes and immutable direct-checkout identity.
 
-**Starting points.** `scripts/clean-install-skills.mjs`, `tests/pi-package-projection.test.mjs`, `tests/managed-skill-input.test.mjs`.
+**Starting points.** `tooling/install/clean-install-skills.mjs`, `tests/pi-package-projection.test.mjs`, `tests/qualify-pi-layout-upgrade.mjs`.
 
 **Verify.** In isolated Pi homes preserve the settings link and original target, unrelated packages, backup and frozen journal bindings after recovery. Prove a same-name foreign suffix or modified old source cannot authorize removal.
+
+**Verification.** Pi fixture `39975cb` matched all 1,088 active Pi package entries from staged commit `eb51826` by Git blob ID and mode. All three retained PS trees matched the same commit. Release validation passed in both layouts. Historical acceptance records, criteria and package checks matched `a472093`.
+
+Pi 1.5.2 passed a fresh core-only install in a default home and an interrupted v4.4.7 upgrade in a custom home with linked settings. The updater retried using the saved optional selection and preserved the original settings backup, the symlink and its target, and an unrelated package and theme. Both installer paths refused the edited source and the same package path under a foreign origin before any native install or remove command.
+
+The frozen journal bound the old and staged direct paths and the physical settings target. It rejected a changed resume selection, retried after withdrawal, and rolled back to the old core, specialists and PS 3.8.0 registrations. The original backup and saved selection matched byte for byte. Pi can reorder the managed entries when restoring those registrations.
+
+Original-layout projection and strict Claude manifest checks passed. The isolated regression suite passed 808 tests, with one non-Linux control skipped.
 
 **Excludes.** Real client rollout, publication or updating original PS digests.
 

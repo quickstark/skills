@@ -74,3 +74,15 @@ node tests/qualify-claude-layout-upgrade.mjs "$candidate" journal
 ```
 
 The upgrade probes exercise the updater from the v4.4.7 package directory and the v4.0.0 repository-root core. The journal probe advances the disposable v4.0.0 checkout to the candidate at the same marketplace path, then tests retry and rollback of the frozen package transaction.
+
+## Qualify Pi against the staged layout
+
+Use a disposable checkout with the staged `dist/pi/` packages checked in. Keep `pi/packages/ps-skills` at its original path and bind the candidate release audit to the staged paths. The checkout must contain the trusted v4.4.7 release. Run with the native `pi` CLI available.
+
+```sh
+node tests/qualify-pi-layout-upgrade.mjs "$candidate" fresh
+node tests/qualify-pi-layout-upgrade.mjs "$candidate" upgrade
+node tests/qualify-pi-layout-upgrade.mjs "$candidate" journal
+```
+
+The upgrade probe tests a clean reinstall and retry from the original Pi package paths. The journal probe tests retry and rollback with both checkouts available and the target of a settings symlink bound to the transaction.
