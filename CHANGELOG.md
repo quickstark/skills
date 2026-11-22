@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.4.8
+
+### Patch Changes
+
+- Flatten skill authoring paths and organize repository tooling for catalog generation, verification, installation, and release. Preserve the standalone installer entry points, versioned update behavior, and historical acceptance evidence.
+
 ## 4.4.7
 
 ### Patch Changes
