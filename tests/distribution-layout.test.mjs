@@ -7,6 +7,8 @@ import test from 'node:test';
 import { stageDistributionLayout } from '../tooling/generation/stage-distribution-layout.mjs';
 import { verifyTransitionPayloads } from '../tooling/generation/skill-transition-packages.mjs';
 import { repositoryRoot } from '../tooling/repository-root.mjs';
+import { captureMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { adoptionSourceContentSha256 } from '../tooling/verification/adoption-acceptance.mjs';
 import { distributionPaths, recognizeDistributionSource } from '../tooling/install/distribution-layout.mjs';
 import { TARGET_SKILL_COLLECTIONS } from '../tooling/catalog/skill-collection-registry.mjs';
 
@@ -162,4 +164,45 @@ test('stage the published package trees under dist and retain all three pinned P
   }
   assert.equal((await verifyTransitionPayloads(repositoryRoot, output))[0].version, '3.8.0');
   assert.equal(git(root, 'status', '--porcelain'), '');
+});
+
+
+test('dist projection changes only package paths and marketplace discovery', async t => {
+  const base = await mkdtemp(path.join(await realpath(tmpdir()), 'qs-dist-projection-'));
+  t.after(() => rm(base, { recursive: true, force: true }));
+  const candidate = path.join(base, 'candidate');
+  const args = ['--candidate', '--layout', 'dist', '--output-root', candidate];
+  const generate = (...flags) => execFileSync(process.execPath, [
+    path.join(repositoryRoot, 'tooling/generation/sync-codex-plugin.mjs'), ...flags,
+  ], { cwd: base, stdio: 'pipe' });
+  const json = async file => JSON.parse(await readFile(path.join(candidate, file)));
+  generate(...args);
+  generate(...args, '--check');
+  for (const host of hosts) {
+    for (const pkg of TARGET_SKILL_COLLECTIONS) {
+      const roots = distributionPaths(host, pkg.id);
+      const before = await captureMigrationPath(path.join(repositoryRoot, roots.original));
+      const after = await captureMigrationPath(path.join(candidate, roots.dist));
+      assert.equal(adoptionSourceContentSha256(after), adoptionSourceContentSha256(before), host + '/' + pkg.id);
+    }
+  }
+  const claude = await json('.claude-plugin/marketplace.json');
+  const codex = await json('.agents/plugins/marketplace.json');
+  const active = TARGET_SKILL_COLLECTIONS.map(pkg => pkg.id);
+  for (const market of [claude, codex]) {
+    assert.deepEqual(market.plugins.map(plugin => plugin.name), [...active, 'ps-skills']);
+  }
+  for (const plugin of claude.plugins) {
+    assert.equal(plugin.source, plugin.name === 'ps-skills' ? './packages/ps-skills' : './dist/claude/' + plugin.name);
+  }
+  for (const plugin of codex.plugins) {
+    assert.deepEqual(plugin.source, { source: 'local', path: plugin.name === 'ps-skills' ? './codex/plugins/ps-skills' : './dist/codex/' + plugin.name });
+  }
+  const core = await json('.claude-plugin/plugin.json');
+  assert.deepEqual(core.skills, TARGET_SKILL_COLLECTIONS.find(pkg => pkg.id === 'qs-skills').publicCommands
+    .map(name => './dist/claude/qs-skills/skills/' + name));
+  await verifyTransitionPayloads(repositoryRoot, candidate);
+  await mkdir(path.join(candidate, 'dist/pi/foreign'));
+  assert.throws(() => generate(...args, '--check'), /unexpected package/i);
+  assert.throws(() => generate('--layout', 'dist'), /candidate/i);
 });

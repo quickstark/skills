@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is verified in the working tree. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 is verified in a disposable candidate checkout. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -302,7 +302,7 @@ Prerequisite evidence. LAY-01 supplies active package identity baseline.
 
 ## LAY-16 — Stage the new active distributions and marketplace entries
 
-Status: open
+Status: verified
 
 Blocked by: LAY-15
 
@@ -315,6 +315,8 @@ Prerequisite evidence. LAY-15 supplies old/new host layout and ownership rules.
 **Starting points.** `scripts/sync-codex-plugin.mjs`, `scripts/skill-package-projection.mjs`, `.claude-plugin/marketplace.json`, `codex/.agents/plugins/marketplace.json`, `tests/pi-package-projection.test.mjs`.
 
 **Verify.** Verify 18 candidate package trees, disjoint package membership, host invocation differences, notices and checked-in files/modes in a fresh clone. Strictly validate actual Claude roots and test Codex/Pi discovery. A second generation is byte-stable.
+
+**Verification.** The candidate checkout staged all 18 packages and both marketplace manifests. Its fresh clone matched all 3,360 active file blobs and Git modes at base `0ae51ef` by package-relative path and preserved all three retained PS trees. Two independent generations matched. Strict Claude validation passed at the root and all six package roots. Native Codex and Pi each discovered all 39 public skills in isolated homes. The original-layout release validator passed in the code checkout, and its full suite passed 808 tests with one platform-specific Linux skip.
 
 **Excludes.** Making dist the default for ordinary users or relocating PS 3.8.0.
 

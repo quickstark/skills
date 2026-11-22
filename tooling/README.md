@@ -36,3 +36,16 @@ node tooling/generation/stage-distribution-layout.mjs <physical-checkout> <trust
 ```
 
 The staging command checks each package’s native manifest, bytes and executable bits at that revision. Ordinary package generation and installation still use the existing layout.
+
+## Generate a candidate with marketplace entries
+
+Generate into a new directory under the system temporary directory. This mode uses the canonical skill sources and writes all 18 packages plus the candidate marketplace files.
+
+```sh
+node tooling/generation/sync-codex-plugin.mjs --candidate --layout dist --output-root "$candidate"
+node tooling/generation/sync-codex-plugin.mjs --candidate --layout dist --output-root "$candidate" --check
+```
+
+In the candidate checkout, register its root as the Claude or Codex marketplace. Codex reads `.agents/plugins/marketplace.json`, Claude reads `.claude-plugin/marketplace.json`, and Pi takes each `dist/pi/<package>` as a local package source. The marketplace entries for PS still point to the retained original paths.
+
+For a candidate Git snapshot, force-add the generated `dist/` directory and both root marketplace manifests if ignore rules apply. Generate a second fresh directory to compare output. Ordinary sync commands continue to use the original paths.
