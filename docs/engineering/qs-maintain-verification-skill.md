@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-maintain-verification-skill/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-maintain-verification-skill/SKILL.md)
 
 ## What it does
 
-`/qs-maintain-verification-skill` reconcile a verification workflow with reality. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-maintain-verification-skill/SKILL.md).
+`/qs-maintain-verification-skill` reconcile a verification workflow with reality. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-maintain-verification-skill/SKILL.md).
 
 ## When to reach for it
 

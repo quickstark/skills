@@ -23,20 +23,22 @@ flowchart LR
 
 | Component | Authoritative source | Responsibility |
 | --- | --- | --- |
-| QS identity and behavior | `scripts/qs-skill-catalog.mjs` | Core and specialist membership, fixed v2 migration inventory, lifecycle order, invocation policy, effort/report modes, and ranked continuations. |
-| PS identity and provenance | `scripts/ps-skill-catalog.mjs` | Thirteen commands, sixteen private capabilities, pinned pstack provenance, fixed dispositions, completion evidence, and continuations. |
-| Shared collection identity | `scripts/skill-collection-registry.mjs` | Unique public command identity, package ownership, and exact Codex, Claude, and Pi literals. |
-| Canonical QS sources | `skills/engineering/`, `skills/productivity/` | Public QS instructions and matching `agents/openai.yaml` metadata. |
-| Historical PS sources | `skills/pstack/commands/`, `skills/pstack/internal/` | Public PS instructions and private host-neutral capabilities. |
-| Shared output policy | `docs/skill-run-contract.md`, `scripts/sync-skill-output-contracts.mjs` | Direct chat presentation, completion states, internal clear-writing pass, and exact next-prompt format. |
-| Documentation generator | `scripts/sync-v3-docs.mjs` | Concise command pages generated from registered metadata. |
-| Package projector | `scripts/sync-codex-plugin.mjs` | Deterministic Claude, Codex, and Pi packages, manifests, capabilities, notices, and shared catalog metadata. |
+| QS identity and behavior | `tooling/catalog/qs-skill-catalog.mjs` | Core and specialist membership, fixed v2 migration inventory, lifecycle order, invocation policy, effort/report modes, and ranked continuations. |
+| PS identity and provenance | `tooling/catalog/ps-skill-catalog.mjs` | Thirteen commands, sixteen private capabilities, pinned pstack provenance, fixed dispositions, completion evidence, and continuations. |
+| Shared collection identity | `tooling/catalog/skill-collection-registry.mjs` | Unique public command identity, package ownership, and exact Codex, Claude, and Pi literals. |
+| Canonical QS sources | [Public skill index](../skills/README.md) | Public QS instructions and matching `agents/openai.yaml` metadata. |
+| Historical PS sources | `docs/reference/skills/pstack/commands/`, `docs/reference/skills/pstack/internal/` | Public PS instructions and private host-neutral capabilities. |
+| Shared output policy | `docs/skill-run-contract.md`, `tooling/generation/sync-skill-output-contracts.mjs` | Direct chat presentation, completion states, internal clear-writing pass, and exact next-prompt format. |
+| Documentation generator | `tooling/generation/sync-v3-docs.mjs` | Concise command pages generated from registered metadata. |
+| Package projector | `tooling/generation/sync-codex-plugin.mjs` | Deterministic Claude, Codex, and Pi packages, manifests, capabilities, notices, and shared catalog metadata. |
 | Published-version installer | `install.sh`, `scripts/install-skills.mjs` | Resolve a stable published tag, pin its commit, validate packages locally and retain versioned source checkouts. |
-| Ordinary client update | `scripts/update-skills.mjs`, `scripts/clean-install-skills.mjs` | Save package choices, back up originals, clean-reinstall known packages and verify each client independently. |
-| Historical migration and recovery | `scripts/managed-skills.mjs` and migration modules | Read-only plan/verify, explicitly authorized resource migration and frozen-journal recovery; old journals do not drive ordinary installation. |
+| Ordinary client update | `tooling/install/update-skills.mjs`, `tooling/install/clean-install-skills.mjs` | Save package choices, back up originals, clean-reinstall known packages and verify each client independently. |
+| Historical migration and recovery | `tooling/install/managed-skills.mjs` and migration modules | Read-only plan/verify, explicitly authorized resource migration and frozen-journal recovery; old journals do not drive ordinary installation. |
 | Behavioral verification | `tests/` | Public surface, routing, safety, direct-chat contracts, clear writing, and projection integrity. |
 
-Reference material under `skills/misc/`, `skills/personal/`, `skills/in-progress/`, and `skills/deprecated/` is never promoted or packaged.
+Reference material under `docs/reference/skills/misc/`, `docs/reference/skills/personal/`, `docs/reference/skills/in-progress/`, and `docs/reference/skills/deprecated/` is never promoted or packaged.
+
+The [decision and stewardship index](./adr/README.md) records earlier locations and their current owners. Shared private sources live under `skills/_shared/` by owner.
 
 ## Package boundaries
 

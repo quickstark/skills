@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-frontend@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-image-mobile/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-design-image-mobile/SKILL.md)
 
 ## What it does
 
-`/qs-design-image-mobile` create platform-aware mobile images or design prompts. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-design-image-mobile/SKILL.md).
+`/qs-design-image-mobile` create platform-aware mobile images or design prompts. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-design-image-mobile/SKILL.md).
 
 ## When to reach for it
 

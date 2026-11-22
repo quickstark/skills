@@ -9,9 +9,9 @@
 
 `qs-design-prototype` answers one design question through disposable experiments. Its hypothesis, candidate comparison, isolation, and decision-evidence requirements apply across platforms. At specification time, its private references provided incomplete platform coverage:
 
-- [SKILL.md](../../skills/engineering/qs-design-prototype/SKILL.md) conditionally loads UI or logic guidance, with no explicit platform selection.
-- [UI.md](../../skills/engineering/qs-design-prototype/UI.md) discusses routes, responsive layouts, and `?variant=` selection.
-- [LOGIC.md](../../skills/engineering/qs-design-prototype/LOGIC.md) prefers a local HTML demo for non-developers or an existing-language CLI/TUI for runtime-specific work.
+- [SKILL.md](../../skills/qs-design-prototype/SKILL.md) conditionally loads UI or logic guidance, with no explicit platform selection.
+- [UI.md](../../skills/qs-design-prototype/UI.md) discusses routes, responsive layouts, and `?variant=` selection.
+- [LOGIC.md](../../skills/qs-design-prototype/LOGIC.md) prefers a local HTML demo for non-developers or an existing-language CLI/TUI for runtime-specific work.
 - [The projector](../../scripts/sync-codex-plugin.mjs) copies each skill's private files into its owning package. [Existing reference tests](../../tests/upstream-adoption-qs.test.mjs) verify local reference resolution and authority boundaries.
 
 Source inspected at `c99c906dc4e1ca768ac04e6b4f1a8c735e497aed` (November 4, 2026). The installed 4.4.3 UI/Logic references match that checkout. This is current-source evidence, not a claim that the checkout's package version has been published or installed.

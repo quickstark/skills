@@ -4,7 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { V3_INTERNAL_CAPABILITIES, V3_SKILL_DISPOSITIONS_BY_NAME } from "../scripts/qs-skill-catalog.mjs";
+import { V3_INTERNAL_CAPABILITIES, V3_SKILL_DISPOSITIONS_BY_NAME } from "../tooling/catalog/qs-skill-catalog.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFile(join(root, path), "utf8");
@@ -34,7 +34,7 @@ test("delegation is a v3-native core capability projected into every core host p
   assert.equal(capability.legacySkillName, null);
   assert.equal(Object.values(V3_SKILL_DISPOSITIONS_BY_NAME).some((entry) => entry.target === "delegation"), false);
 
-  const source = await read("skills/internal/delegation.md");
+  const source = await read("skills/_shared/core/delegation.md");
   assert.match(source, FRESH_CONTEXT);
   assert.match(source, /Without subagent support, run the same units serially/);
   assert.match(source, /never expand mutation, Git, publication or installation authority/);
@@ -46,7 +46,7 @@ test("delegation is a v3-native core capability projected into every core host p
 });
 
 test("review runs separate axes in parallel fresh-context reviewers without reranking", async () => {
-  const review = await body("skills/engineering/qs-review-code/SKILL.md");
+  const review = await body("skills/qs-review-code/SKILL.md");
   const parallel = review.indexOf("## Parallel review axes");
   assert.ok(parallel > 0);
   assert.ok(review.indexOf("validate the target") > parallel, "target validation must precede fan-out");
@@ -62,7 +62,7 @@ test("review runs separate axes in parallel fresh-context reviewers without rera
 });
 
 test("tickets form a frontier graph sized to one fresh context window", async () => {
-  const decomposition = await read("skills/internal/ticket-decomposition.md");
+  const decomposition = await read("skills/_shared/core/ticket-decomposition.md");
   assert.match(decomposition, /explicit `Blocked by` edges/);
   assert.match(decomposition, /frontier is every open ticket whose blockers are all done/);
   assert.match(decomposition, /fit one fresh context window/);
@@ -70,14 +70,14 @@ test("tickets form a frontier graph sized to one fresh context window", async ()
   assert.match(decomposition, /tracker's native blocking relationship/);
   assert.match(decomposition, /expand first/, "wide-refactor exception must remain");
 
-  const spec = await body("skills/engineering/qs-plan-spec/SKILL.md");
+  const spec = await body("skills/qs-plan-spec/SKILL.md");
   assert.match(spec, /explicit `Blocked by` edges/);
   assert.match(spec, /fit one fresh context window/);
   assert.match(spec, /Delegation when independent current-state evidence surfaces/);
 });
 
 test("research delegates reading to one background fresh-context helper and verifies sources", async () => {
-  const research = await body("skills/engineering/qs-plan-research/SKILL.md");
+  const research = await body("skills/qs-plan-research/SKILL.md");
   assert.match(research, /one background helper started with a fresh context window/);
   assert.match(research, /write its notes and claim-to-source mapping to one file/);
   assert.match(research, /returning only the file path/);
@@ -87,7 +87,7 @@ test("research delegates reading to one background fresh-context helper and veri
 
 test("advanced parallel capabilities direct fresh-context helpers instead of merely permitting them", async () => {
   for (const name of ["parallel-coverage", "concurrency-ownership"]) {
-    const content = await read(`skills/advanced/internal/${name}.md`);
+    const content = await read(`skills/_shared/advanced/internal/${name}.md`);
     assert.doesNotMatch(content, /Optional helpers may/, name);
     assert.match(content, /When the host provides subagents/, name);
     assert.match(content, FRESH_CONTEXT, name);
@@ -98,7 +98,7 @@ test("advanced parallel capabilities direct fresh-context helpers instead of mer
 });
 
 test("qs-code-build graph mode walks a ticket frontier inside one authorized root", async () => {
-  const build = await body("skills/engineering/qs-code-build/SKILL.md");
+  const build = await body("skills/qs-code-build/SKILL.md");
   assert.match(build, /`mode=single\|graph` defaults to `single`/);
   assert.match(build, /end `input-required` and route to `qs-plan-spec`/);
   assert.match(build, /do not invent edges/);
@@ -121,7 +121,7 @@ test("qs-code-build graph mode walks a ticket frontier inside one authorized roo
   assert.match(build, /does not create gate ledgers or claims/);
   assert.doesNotMatch(build, /gate-check|\.unlazy\//, "graph mode must not reuse qs-unlazy machinery");
 
-  const metadata = await read("skills/engineering/qs-code-build/agents/openai.yaml");
+  const metadata = await read("skills/qs-code-build/agents/openai.yaml");
   assert.match(metadata, /mode=single\|graph/);
   for (const projection of ["codex/plugins/qs-skills", "packages/qs-skills", "pi/packages/qs-skills"]) {
     assert.match(await read(`${projection}/skills/qs-code-build/SKILL.md`), /## Graph mode/, projection);
@@ -129,7 +129,7 @@ test("qs-code-build graph mode walks a ticket frontier inside one authorized roo
 });
 
 test("help routing separates graph mode from qs-unlazy and keeps delegation internal", async () => {
-  const help = await body("skills/engineering/qs-help/SKILL.md");
+  const help = await body("skills/qs-help/SKILL.md");
   assert.match(help, /belongs to `\/qs-code-build` with `mode=graph`/);
   assert.match(help, /belongs to `\/qs-unlazy` in the optional `qs-execution` package/);
   assert.match(help, /Delegation is an internal capability, not a command/);
@@ -145,9 +145,9 @@ test("packages stay skills-only and ship no host agent declarations", async () =
 });
 
 test("skills use generic subagents and documentation covers every host", async () => {
-  const delegation = await read("skills/internal/delegation.md");
+  const delegation = await read("skills/_shared/core/delegation.md");
   assert.match(delegation, /Use the host's generic subagents; QuickStark ships no host-specific agent declarations/);
-  for (const path of ["skills/internal/delegation.md", "skills/engineering/qs-code-build/SKILL.md", "skills/engineering/qs-review-code/SKILL.md", "skills/engineering/qs-plan-spec/SKILL.md", "skills/engineering/qs-setup/SKILL.md"]) {
+  for (const path of ["skills/_shared/core/delegation.md", "skills/qs-code-build/SKILL.md", "skills/qs-review-code/SKILL.md", "skills/qs-plan-spec/SKILL.md", "skills/qs-setup/SKILL.md"]) {
     assert.doesNotMatch(await body(path), /qs-implementer|qs-explorer|qs-reviewer|agent-roles/, `${path} must not name a declared role`);
   }
   const docs = await read("docs/multi-agent.md");

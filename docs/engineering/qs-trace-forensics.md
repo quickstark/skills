@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-trace-forensics/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-trace-forensics/SKILL.md)
 
 ## What it does
 
-`/qs-trace-forensics` diagnose one supplied trace artifact. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-trace-forensics/SKILL.md).
+`/qs-trace-forensics` diagnose one supplied trace artifact. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-trace-forensics/SKILL.md).
 
 ## When to reach for it
 

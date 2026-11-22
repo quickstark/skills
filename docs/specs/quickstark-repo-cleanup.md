@@ -17,7 +17,7 @@ Comprehensive means every applicable hygiene category is accounted for, not that
 ## Governing decisions and evidence
 
 - The user selected **repository hygiene only; no refactoring**. Unused-code deletion is included; simplification of live code is excluded.
-- Existing [code review](../../skills/engineering/qs-review-code/SKILL.md) retains ownership of selected improvement/refactoring targets. Existing [worktree cleanup](../../skills/engineering/qs-worktree-cleanup/SKILL.md) retains its exact-target removal boundary. Neither is invoked automatically.
+- Existing [code review](../../skills/qs-review-code/SKILL.md) retains ownership of selected improvement/refactoring targets. Existing [worktree cleanup](../../skills/qs-worktree-cleanup/SKILL.md) retains its exact-target removal boundary. Neither is invoked automatically.
 - At the recorded baseline, the [catalog](../../scripts/qs-skill-catalog.mjs) defined 12 core and 8 specialist commands, and the [registry](../../scripts/skill-collection-registry.mjs) exposed 38 active commands across six packages. This addition yields 9 specialists and 39 active commands; it does not add a package or alter existing identities.
 - [AGENTS.md](../../AGENTS.md), [contributing guidance](../contributing.md), and the [run contract](../skill-run-contract.md) govern source ownership, generated projections, reporting, and validation. Current policy takes precedence over historical counts and superseded reporting requirements in older specifications.
 - The existing [consolidation specification](./quickstark-v3-skill-consolidation.md) supplies the one-root and optional-package boundaries. This specification authorizes the additive membership change only when implementation is requested.

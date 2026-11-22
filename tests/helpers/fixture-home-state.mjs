@@ -1,6 +1,6 @@
 import { lstat, readdir } from 'node:fs/promises';
 import path from 'node:path';
-import { captureMigrationPath } from '../../scripts/migration-filesystem.mjs';
+import { captureMigrationPath } from '../../tooling/install/migration-filesystem.mjs';
 
 // Test-only nonmutation oracle for a heterogeneous HOME, not a package payload
 // validator. Observe symlink targets without traversing them. Production payload

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-flow-triage/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/triage)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-flow-triage/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/triage)
 
 ## What it does
 
-`/qs-flow-triage` triage incoming issues into actionable work. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-flow-triage/SKILL.md).
+`/qs-flow-triage` triage incoming issues into actionable work. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-flow-triage/SKILL.md).
 
 ## When to reach for it
 

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add ps-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/pstack/commands/ps-help/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/docs/reference/skills/pstack/commands/ps-help/SKILL.md)
 
 ## What it does
 
-`/ps-help` choose the right PS or QS workflow. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/pstack/commands/ps-help/SKILL.md).
+`/ps-help` choose the right PS or QS workflow. Its detailed scope and safety behavior live in the canonical [skill instructions](../../docs/reference/skills/pstack/commands/ps-help/SKILL.md).
 
 ## When to reach for it
 

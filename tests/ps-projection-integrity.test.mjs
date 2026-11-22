@@ -7,8 +7,8 @@ import test from "node:test";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
-import { REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
-import { assertGeneratedPackageRoot } from "../scripts/skill-package-projection.mjs";
+import { REGISTRY_STATE } from "../tooling/catalog/skill-collection-registry.mjs";
+import { assertGeneratedPackageRoot } from "../tooling/generation/skill-package-projection.mjs";
 
 const execFileAsync = promisify(execFile);
 const repositoryRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -69,13 +69,13 @@ test("PS-03 projector entry point rejects corrupt active analysis packages and e
   await cp(join(repositoryRoot, "packages", packageName), projection, { recursive: true });
   await writeFile(join(projection, "unexpected.txt"), "not projected\n");
   if (REGISTRY_STATE === "target") await assert.rejects(
-    execFileAsync(process.execPath, ["scripts/sync-codex-plugin.mjs", "--check", "--package", "ps-skills", "--root", join(repositoryRoot, "packages", "ps-skills"), "--format", "claude"], { cwd: repositoryRoot }),
+    execFileAsync(process.execPath, ["tooling/generation/sync-codex-plugin.mjs", "--check", "--package", "ps-skills", "--root", join(repositoryRoot, "packages", "ps-skills"), "--format", "claude"], { cwd: repositoryRoot }),
     /Unknown generated package: ps-skills/,
   );
 
   await assert.rejects(
     execFileAsync(process.execPath, [
-      "scripts/sync-codex-plugin.mjs",
+      "tooling/generation/sync-codex-plugin.mjs",
       "--check",
       "--package",
       packageName,

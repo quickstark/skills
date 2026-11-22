@@ -9,18 +9,18 @@ import path from 'node:path';
 import { hostname, tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
 import test from 'node:test';
-import { derivePackageAcceptanceObligations, buildManagedSkillInput } from '../scripts/managed-skill-input.mjs';
-import { executeManagedSkills, parseManagedSkillsArguments } from '../scripts/managed-skills.mjs';
-import { previewManagedSkillMigration, captureManagedSkillPayload, restoreManagedSkillMigration, executeManagedSkillMigration } from '../scripts/managed-skill-migration.mjs';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { TARGET_SKILL_COLLECTIONS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
-import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
-import { readMigrationJournal } from '../scripts/migration-transaction.mjs';
-import { desiredLockFields } from '../scripts/personal-skills/lock.mjs';
-import { resolveManagedSkillPaths } from '../scripts/managed-skill-paths.mjs';
+import { derivePackageAcceptanceObligations, buildManagedSkillInput } from '../tooling/install/managed-skill-input.mjs';
+import { executeManagedSkills, parseManagedSkillsArguments } from '../tooling/install/managed-skills.mjs';
+import { previewManagedSkillMigration, captureManagedSkillPayload, restoreManagedSkillMigration, executeManagedSkillMigration } from '../tooling/install/managed-skill-migration.mjs';
+import { captureMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { TARGET_SKILL_COLLECTIONS, REGISTRY_STATE } from '../tooling/catalog/skill-collection-registry.mjs';
+import { runNativePackageCommand } from '../tooling/install/migration-native-packages.mjs';
+import { readMigrationJournal } from '../tooling/install/migration-transaction.mjs';
+import { desiredLockFields } from '../tooling/install/personal-skills/lock.mjs';
+import { resolveManagedSkillPaths } from '../tooling/install/managed-skill-paths.mjs';
 import { fixtureHomeState } from './helpers/fixture-home-state.mjs';
-import { updateInstalledHarnesses } from '../scripts/update-skills.mjs';
-import { pendingManagedRepair, repairManagedPackages } from '../scripts/managed-package-repair.mjs';
+import { updateInstalledHarnesses } from '../tooling/install/update-skills.mjs';
+import { pendingManagedRepair, repairManagedPackages } from '../tooling/install/managed-package-repair.mjs';
 
 const available = (host) => (process.env.PATH ?? '').split(path.delimiter).some((root) => existsSync(path.join(root, host)));
 const nativeTest = (name, callback) => test(name, { skip: !available('codex') || name.startsWith('actual Pi') && !available('pi') ? 'Required native executable unavailable; no host support claimed.' : false }, callback);
@@ -95,7 +95,7 @@ test('ordinary clean installation replaces a failed older release without resumi
 test('clean installation retries a killed owner but preserves live and unknown locks', {skip:!['codex','pi'].every(available),timeout:30000},async t=>{
   const f=await fixture(t,{host:'pi',bootstrap:false});
   const paths=resolveManagedSkillPaths({...f.options,environment:{}});
-  const source=`import {cleanInstallSkills} from ${JSON.stringify(pathToFileURL(path.join(actualRoot,'scripts/clean-install-skills.mjs')).href)};
+  const source=`import {cleanInstallSkills} from ${JSON.stringify(pathToFileURL(path.join(actualRoot,'tooling/install/clean-install-skills.mjs')).href)};
     await cleanInstallSkills({...${JSON.stringify(f.options)},runtime:{validateRepairRelease:async()=>{process.stdout.write('locked');await new Promise(()=>setInterval(()=>{},1000));}}});`;
   const child=spawn(process.execPath,['--input-type=module','-e',source],{cwd:f.repositoryRoot,stdio:['ignore','pipe','pipe']});t.after(()=>child.kill('SIGKILL'));
   assert.equal(String((await once(child.stdout,'data'))[0]),'locked');
@@ -135,10 +135,10 @@ async function git(root, args) { return run('git', ['-c','core.hooksPath=/dev/nu
 async function fixture(t, {bootstrap = true, host = 'codex', version = '4.0.0'} = {}) {
   const base = await mkdtemp(path.join(tmpdir(),'qs-selected-caller-')); t.after(()=>rm(base,{recursive:true,force:true}));
   const repositoryRoot = path.join(base,'repo'); const homeDirectory = path.join(base,'home'); await mkdir(repositoryRoot); await mkdir(path.join(homeDirectory,'.codex'),{recursive:true}); await mkdir(path.join(homeDirectory,'.pi/agent'),{recursive:true});
-  const document = await readJSON(path.join(actualRoot,'config/skill-migrations.json'));
-  await writeJSON(path.join(repositoryRoot,'config/skill-migrations.json'),document);
-  await writeJSON(path.join(repositoryRoot,'config/skill-profiles.json'),{schemaVersion:1,defaultProfile:'core',profiles:{core:{packages:['qs-skills'],resources:[]},advanced:{packages:['qs-skills','qs-advanced'],resources:[]}}});
-  await writeJSON(path.join(repositoryRoot,'config/skill-provenance.json'),{fixture:'Synthetic test evidence only; never production acceptance.'});
+  const document = await readJSON(path.join(actualRoot,'tooling/install/skill-migrations.json'));
+  await writeJSON(path.join(repositoryRoot,'tooling/install/skill-migrations.json'),document);
+  await writeJSON(path.join(repositoryRoot,'tooling/install/skill-profiles.json'),{schemaVersion:1,defaultProfile:'core',profiles:{core:{packages:['qs-skills'],resources:[]},advanced:{packages:['qs-skills','qs-advanced'],resources:[]}}});
+  await writeJSON(path.join(repositoryRoot,'tooling/catalog/skill-provenance.json'),{fixture:'Synthetic test evidence only; never production acceptance.'});
   await writeJSON(path.join(repositoryRoot,'package.json'),{name:'isolated-selected-test',version});
   for(const collection of TARGET_SKILL_COLLECTIONS) for(const [agent,relative] of [['codex',collection.codexPackageRoot],['pi',collection.piPackageRoot],['claude-code',collection.claudePackageRoot]]) {
     const root=path.join(repositoryRoot,relative);
@@ -150,7 +150,7 @@ async function fixture(t, {bootstrap = true, host = 'codex', version = '4.0.0'} 
   await writeJSON(path.join(repositoryRoot,'codex/.agents/plugins/marketplace.json'),{name:'quickstark',plugins:definitions});
   const obligations=TARGET_SKILL_COLLECTIONS.map(collection=>derivePackageAcceptanceObligations(collection.id,document));
   for(const file of new Set(obligations.flatMap(entry=>entry.sourcePaths))) {
-    if(file.startsWith('config/')) continue;
+    if (['tooling/install/skill-migrations.json', 'tooling/install/skill-profiles.json', 'tooling/catalog/skill-provenance.json'].includes(file)) continue;
     if(!path.extname(file)) { await mkdir(path.join(repositoryRoot,file),{recursive:true}); await writeFile(path.join(repositoryRoot,file,'fixture.txt'),'Synthetic canonical criterion input.\n'); }
     else { await mkdir(path.dirname(path.join(repositoryRoot,file)),{recursive:true}); await writeFile(path.join(repositoryRoot,file),'Synthetic criterion input.\n'); }
   }
@@ -383,7 +383,7 @@ test('a large original-cache recovery record remains readable for ordinary repai
 });
 
 test('catalog obligations retain prompt, parity, all video modules and measured efficiency decisions',async()=>{
-  const document=await readJSON(path.join(actualRoot,'config/skill-migrations.json'));
+  const document=await readJSON(path.join(actualRoot,'tooling/install/skill-migrations.json'));
   const advanced=derivePackageAcceptanceObligations('qs-advanced',document); assert.ok(advanced.capabilityIds.includes('ps:ps-visual-parity')); assert.equal(advanced.capabilityIds.filter(id=>id.startsWith('ps-internal:')).length,16);
   const video=derivePackageAcceptanceObligations('qs-video',document); assert.equal(video.capabilityIds.filter(id=>id.startsWith('video-internal:')).length,21); assert.ok(video.requiredChecks.includes('video-runtime'));
   assert.ok(derivePackageAcceptanceObligations('qs-specialists',document).capabilityIds.includes('qs:qs-deploy-prompt'));
@@ -727,7 +727,7 @@ nativeTest('custom Codex home update isolates native and updater state from the 
   const sharedResource=path.join(args.homeDirectory,'.agents/skills/unlazy');await mkdir(sharedResource,{recursive:true});await writeFile(path.join(sharedResource,'SKILL.md'),'---\nname: unlazy\ndescription: Default-profile contributor fixture.\n---\nPreserve.\n');
   const digest=(await captureManagedSkillPayload(sharedResource)).payloadDigest;const legacy=args.document.migrations.flatMap(entry=>entry.legacy).find(entry=>entry.identity==='unlazy');legacy.acceptedPrior[0].digest=digest;
   const baseline=args.document.sourceManifestSnapshot.resources.find(entry=>entry.name==='unlazy');baseline.source.contentSha256=digest.value;args.document.sourceManifestSnapshot.sha256=sha(JSON.stringify(args.document.sourceManifestSnapshot.resources));
-  await writeJSON(path.join(args.repositoryRoot,'config/skill-migrations.json'),args.document);const lockPath=path.join(args.homeDirectory,'.agents/.skill-lock.json');await writeJSON(lockPath,{version:3,skills:{unlazy:desiredLockFields({type:'agent-skill',source:baseline.source})}});await refreshFixtureAudit(args);
+  await writeJSON(path.join(args.repositoryRoot,'tooling/install/skill-migrations.json'),args.document);const lockPath=path.join(args.homeDirectory,'.agents/.skill-lock.json');await writeJSON(lockPath,{version:3,skills:{unlazy:desiredLockFields({type:'agent-skill',source:baseline.source})}});await refreshFixtureAudit(args);
   const nativeOptions={...args.nativeOptions,codexHomeDirectory};
   await runNativePackageCommand('codex',['plugin','marketplace','add',path.join(args.repositoryRoot,'codex')],nativeOptions);
   const defaultSelectionPath=path.join(args.homeDirectory,'.config/quickstark/skills-selection.json');
@@ -792,7 +792,7 @@ test('a linked Pi settings transaction resumes its frozen target after an interr
 nativeTest('unresolved or stale criterion audit blocks native update before effects',async t=>{
   const args=await fixture(t); const auditPath=path.join(args.repositoryRoot,'docs/validation/upstream-adoption-acceptance.json'); args.audit.criteria['AC-09'].status='failed'; await writeJSON(auditPath,args.audit);
   const before=await fixtureHomeState(args.homeDirectory); await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Unresolved acceptance criterion/); assert.deepEqual(await fixtureHomeState(args.homeDirectory),before);
-  args.audit.criteria['AC-09'].status='passed'; await writeJSON(auditPath,args.audit); await appendFile(path.join(args.repositoryRoot,'skills/engineering/qs-help/fixture.txt'),'new unreviewed source');
+  args.audit.criteria['AC-09'].status='passed'; await writeJSON(auditPath,args.audit); await appendFile(path.join(args.repositoryRoot,'skills/qs-help/fixture.txt'),'new unreviewed source');
   await assert.rejects(executeManagedSkills({...args.options,action:'update'}),/Acceptance source changed/);
 });
 
@@ -871,7 +871,7 @@ nativeTest('original contributor lock and exact per-host alias derive ownership;
   const legacy=args.document.migrations.flatMap(entry=>entry.legacy).find(entry=>entry.identity==='unlazy'); legacy.acceptedPrior[0].digest=digest;
   const baseline=args.document.sourceManifestSnapshot.resources.find(entry=>entry.name==='unlazy'); baseline.source.contentSha256=digest.value;
   args.document.sourceManifestSnapshot.sha256=sha(JSON.stringify(args.document.sourceManifestSnapshot.resources));
-  await writeJSON(path.join(args.repositoryRoot,'config/skill-migrations.json'),args.document); await refreshFixtureAudit(args);
+  await writeJSON(path.join(args.repositoryRoot,'tooling/install/skill-migrations.json'),args.document); await refreshFixtureAudit(args);
   const lockPath=path.join(args.homeDirectory,'.agents/.skill-lock.json'); const lock={version:3,skills:{unlazy:desiredLockFields({type:'agent-skill',source:baseline.source})}}; await writeJSON(lockPath,lock);
   const alias=path.join(args.homeDirectory,'.pi/agent/skills/unlazy'); await mkdir(path.dirname(alias),{recursive:true});await symlink('../../../.agents/skills/unlazy',alias);
   const input=await buildManagedSkillInput({...args.options,agents:['codex','pi']}); const owned=input.observations.filter(entry=>entry.identity==='unlazy');assert.equal(owned.length,2);assert.equal(owned.find(entry=>entry.agent==='pi').path,alias);
@@ -1058,6 +1058,9 @@ async function priorRootClaudeCore(t) {
   const catalog=await readJSON(catalogFile);catalog.plugins.find(item=>item.name==='qs-skills').source='./';await writeJSON(catalogFile,catalog);
   const skills=core.publicCommands.map(name=>`./skills/${name==='qs-flow-handoff'?'productivity':'engineering'}/${name}`);
   await writeJSON(path.join(args.repositoryRoot,'.claude-plugin/plugin.json'),{name:'qs-skills',version:'4.0.0',skills});
+  const privateRoot = path.join(args.repositoryRoot, 'skills/internal');
+  await mkdir(privateRoot, { recursive: true });
+  await writeFile(path.join(privateRoot, 'fixture.txt'), 'Historical root-based private capability.');
   for(const relative of skills){const root=path.join(args.repositoryRoot,relative);await mkdir(root,{recursive:true});await writeFile(path.join(root,'SKILL.md'),`---\nname: ${path.basename(root)}\ndescription: Known prior root-based core fixture.\n---\nFixture only.\n`);}
   await refreshFixtureAudit(args);const priorRevision=args.revision;
   await runNativePackageCommand('claude',['plugin','install','qs-skills@quickstark','--scope','user'],args.nativeOptions);

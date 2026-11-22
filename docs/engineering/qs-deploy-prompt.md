@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-deploy-prompt/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-deploy-prompt/SKILL.md)
 
 ## What it does
 
-`/qs-deploy-prompt` generate a scoped autonomous deployment prompt. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-deploy-prompt/SKILL.md).
+`/qs-deploy-prompt` generate a scoped autonomous deployment prompt. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-deploy-prompt/SKILL.md).
 
 ## When to reach for it
 

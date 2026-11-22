@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add ps-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/pstack/commands/ps-hillclimb/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/docs/reference/skills/pstack/commands/ps-hillclimb/SKILL.md)
 
 ## What it does
 
-`/ps-hillclimb` improve one metric through bounded experiments. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/pstack/commands/ps-hillclimb/SKILL.md).
+`/ps-hillclimb` improve one metric through bounded experiments. Its detailed scope and safety behavior live in the canonical [skill instructions](../../docs/reference/skills/pstack/commands/ps-hillclimb/SKILL.md).
 
 ## When to reach for it
 

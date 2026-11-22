@@ -5,10 +5,10 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { FRONTEND_PUBLIC_COMMANDS, FRONTEND_INTERNAL_CAPABILITIES } from "../scripts/frontend-skill-catalog.mjs";
+import { FRONTEND_PUBLIC_COMMANDS, FRONTEND_INTERNAL_CAPABILITIES } from "../tooling/catalog/frontend-skill-catalog.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const privateRoot = join(root, "skills/frontend");
+const privateRoot = join(root, "skills/_shared/frontend");
 const index = JSON.parse(readFileSync(join(privateRoot, "dependency-index.json")));
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
@@ -69,7 +69,7 @@ test("isolated private package resources remain complete and changes or omission
   } finally { rmSync(fixture, { recursive: true, force: true }); }
 });
 
-import { validateFrontendDependencies } from "../scripts/frontend-dependencies.mjs";
+import { validateFrontendDependencies } from "../tooling/catalog/frontend-dependencies.mjs";
 test("MotionSites schema rejects missing/ambiguous origins, altered bytes, mappings and adoption claims", () => {
   assert.equal(validateFrontendDependencies(index, { root: privateRoot }).valid, true);
   for (const change of [

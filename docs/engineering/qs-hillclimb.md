@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-hillclimb/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-hillclimb/SKILL.md)
 
 ## What it does
 
-`/qs-hillclimb` improve one metric through bounded experiments. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-hillclimb/SKILL.md).
+`/qs-hillclimb` improve one metric through bounded experiments. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-hillclimb/SKILL.md).
 
 ## When to reach for it
 

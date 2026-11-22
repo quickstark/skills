@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-frontend@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-design-image-to-code/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-design-image-to-code/SKILL.md)
 
 ## What it does
 
-`/qs-design-image-to-code` implement a selected design reference as responsive code. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-design-image-to-code/SKILL.md).
+`/qs-design-image-to-code` implement a selected design reference as responsive code. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-design-image-to-code/SKILL.md).
 
 ## When to reach for it
 

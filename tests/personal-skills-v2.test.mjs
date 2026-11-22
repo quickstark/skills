@@ -22,25 +22,25 @@ import {
   addManifestResource,
   migrateManifestV1,
   normalizeManifest,
-} from "../scripts/personal-skills/manifest.mjs";
+} from "../tooling/install/personal-skills/manifest.mjs";
 import {
   calculatePortableDirectoryHash,
   calculatePortableGitTreeHash,
   inspectPortableDirectory,
-} from "../scripts/personal-skills/filesystem.mjs";
-import { inventoryMachine } from "../scripts/personal-skills/inventory.mjs";
-import { matchesPiGlob } from "../scripts/personal-skills/pi-discovery.mjs";
-import { adoptInventoryCandidate } from "../scripts/personal-skills/adopt.mjs";
+} from "../tooling/install/personal-skills/filesystem.mjs";
+import { inventoryMachine } from "../tooling/install/personal-skills/inventory.mjs";
+import { matchesPiGlob } from "../tooling/install/personal-skills/pi-discovery.mjs";
+import { adoptInventoryCandidate } from "../tooling/install/personal-skills/adopt.mjs";
 import {
   applyHarnessProjections,
   buildPiPackageAction,
   buildReconciliationPlan,
-} from "../scripts/personal-skills/reconcile.mjs";
-import { validateInstallerLock, verifyInstallerArchiveIntegrity } from "../scripts/sync-personal-skills.mjs";
+} from "../tooling/install/personal-skills/reconcile.mjs";
+import { validateInstallerLock, verifyInstallerArchiveIntegrity } from "../tooling/install/sync-personal-skills.mjs";
 
 const runFile = promisify(execFile);
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const v1ManifestPath = join(repositoryRoot, "config", "personal-skills.manifest.json");
+const v1ManifestPath = join(repositoryRoot, "tooling/install/personal-skills/personal-skills.manifest.json");
 
 async function fixtureRoot() {
   return mkdtemp(join(tmpdir(), "qs-personal-v2-"));
@@ -1307,12 +1307,11 @@ test("inventory ignores an installed mutable Pi package that contributes no skil
   }
 });
 
-test("package commands expose inventory and adopt while aggregate verification stays read-only", async () => {
+test("package commands expose the standalone updater, inventory and adoption entry points", async () => {
   const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
   assert.equal(project.scripts["skills:update"], "node scripts/install-skills.mjs");
-  assert.equal(project.scripts["personal-skills:inventory"], "node scripts/sync-personal-skills.mjs inventory");
-  assert.equal(project.scripts["personal-skills:adopt"], "node scripts/sync-personal-skills.mjs adopt");
-  assert.doesNotMatch(project.scripts["skills:verify"], /sync|adopt|install|add/);
+  assert.equal(project.scripts["personal-skills:inventory"], "node tooling/install/sync-personal-skills.mjs inventory");
+  assert.equal(project.scripts["personal-skills:adopt"], "node tooling/install/sync-personal-skills.mjs adopt");
 });
 
 test("inventory and plan CLI paths are machine-readable and do not mutate the selected home", async () => {
@@ -1321,7 +1320,7 @@ test("inventory and plan CLI paths are machine-readable and do not mutate the se
     const manifestPath = join(root, "manifest.json");
     const original = `${JSON.stringify(manifest(), null, 2)}\n`;
     await writeFile(manifestPath, original);
-    const executable = join(repositoryRoot, "scripts", "sync-personal-skills.mjs");
+    const executable = join(repositoryRoot, "tooling/install/sync-personal-skills.mjs");
     const inventory = await runFile(process.execPath, [executable, "inventory", "--json", "--manifest", manifestPath, "--home", root]);
     const report = JSON.parse(inventory.stdout);
     assert.equal(report.action, "inventory");
@@ -1348,7 +1347,7 @@ test("sync CLI repairs metadata and creates a Claude projection without duplicat
     await mkdir(join(root, ".claude"), { recursive: true });
     const manifestPath = join(root, "manifest.json");
     await writeFile(manifestPath, `${JSON.stringify(manifest([agentResource("managed", hash)]), null, 2)}\n`);
-    const executable = join(repositoryRoot, "scripts", "sync-personal-skills.mjs");
+    const executable = join(repositoryRoot, "tooling/install/sync-personal-skills.mjs");
     const synced = await runFile(process.execPath, [
       executable, "sync", "--json", "--manifest", manifestPath, "--home", root,
       "--agent", "codex", "--agent", "claude-code",
@@ -1379,7 +1378,7 @@ test("installer integrity verification has a working positive and negative contr
 
 test("installer dependency lock pins every downloaded archive by exact version and integrity", async () => {
   const desired = normalizeManifest(JSON.parse(await readFile(v1ManifestPath, "utf8")));
-  const lock = JSON.parse(await readFile(join(repositoryRoot, "config", "personal-skills-installer-lock.json"), "utf8"));
+  const lock = JSON.parse(await readFile(join(repositoryRoot, "tooling/install/personal-skills/personal-skills-installer-lock.json"), "utf8"));
   assert.equal(lock.packages[""].name, lock.name);
   assert.equal(lock.packages[""].version, lock.version);
   assert.equal(validateInstallerLock(lock, desired), lock);
@@ -1392,7 +1391,7 @@ test("installer dependency lock pins every downloaded archive by exact version a
 });
 
 test("extensible adoption remains manifest-driven instead of requiring a source-code allowlist", async () => {
-  const syncModule = await import("../scripts/sync-personal-skills.mjs");
+  const syncModule = await import("../tooling/install/sync-personal-skills.mjs");
   assert.equal(Object.hasOwn(syncModule, "APPROVED_SOURCES"), false);
   const current = normalizeManifest(JSON.parse(await readFile(v1ManifestPath, "utf8")));
   const added = addManifestResource(current, agentResource("new-third-party", "c".repeat(64), {
@@ -1408,7 +1407,7 @@ test("extensible adoption remains manifest-driven instead of requiring a source-
 });
 
 test("safe npm archive extraction rejects links special entries traversal and expanded-byte overflow", async () => {
-  const { extractSafeNpmArchive } = await import("../scripts/personal-skills/npm-archive.mjs");
+  const { extractSafeNpmArchive } = await import("../tooling/install/personal-skills/npm-archive.mjs");
   const root = await fixtureRoot();
   try {
     const unsafe = [

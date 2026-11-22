@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, mkdir, writeFile, readFile, rm, symlink, chmod } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm, symlink, chmod, rename, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
-import { verifyAdoptionAcceptance } from '../scripts/adoption-acceptance.mjs';
-import { captureMigrationPath, revalidateMigrationPath } from '../scripts/migration-filesystem.mjs';
+import { verifyAdoptionAcceptance } from '../tooling/verification/adoption-acceptance.mjs';
+import { captureMigrationPath, revalidateMigrationPath } from '../tooling/install/migration-filesystem.mjs';
 
 const sha = (text) => createHash('sha256').update(text).digest('hex');
 async function fixture(t) {
@@ -35,6 +35,28 @@ test('repository acceptance evidence stays synchronized, including the reviewed 
   for (const [id, evidence] of Object.entries(audit.evidence)) {
     assert.equal(sha(await readFile(new URL(evidence.path, root))), evidence.sha256, `Acceptance evidence changed: ${id}`);
   }
+});
+
+test('relocating a reviewed source keeps the original binding and verifies the new location separately', async t => {
+  const { root, document, save, options } = await fixture(t);
+  const original = structuredClone(document.sources.source);
+  const destination = 'skills/qs-design-frontend';
+  await mkdir(path.join(root, 'skills'));
+  await rename(path.join(root, 'source'), path.join(root, destination));
+  await assert.rejects(verifyAdoptionAcceptance(options), /Acceptance source changed/);
+  document.sources = { [destination]: original };
+  document.packages['qs-frontend'].sourcePaths = [destination];
+  await save();
+  const relocated = { ...options, sourcePaths: [destination] };
+  await verifyAdoptionAcceptance(relocated);
+  const file = path.join(root, destination, 'skill.md');
+  const originalMode = (await stat(file)).mode & 0o777;
+  await chmod(file, originalMode | 0o100);
+  await assert.rejects(verifyAdoptionAcceptance(relocated), /Acceptance source changed/);
+  await chmod(file, originalMode);
+  await verifyAdoptionAcceptance(relocated);
+  await writeFile(file, 'changed instruction');
+  await assert.rejects(verifyAdoptionAcceptance(relocated), /Acceptance source changed/);
 });
 
 test('README evidence changes fail until reviewed and still bind strict local snapshots', async (t) => {

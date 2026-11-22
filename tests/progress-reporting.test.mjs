@@ -7,9 +7,9 @@ import test from "node:test";
 import {
   ESTIMATED_PROGRESS_CONTRACT, HELPER_PROGRESS_CONTRACT, PUBLIC_PROGRESS_CONTRACT, progressInventory,
   syncProgressContracts, validateProgressInventory, withProgressContract,
-} from "../scripts/progress-reporting-contract.mjs";
-import { PUBLIC_COMMANDS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
-import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
+} from "../tooling/generation/progress-reporting-contract.mjs";
+import { PUBLIC_COMMANDS, REGISTRY_STATE } from "../tooling/catalog/skill-collection-registry.mjs";
+import { renderSkillOutputContract } from "../tooling/generation/sync-skill-output-contracts.mjs";
 
 const original = '---\nname: preserved\ndescription: "Keep literal $HOME and `code`."\n---\n\n# Original\n\nText with trailing spaces.  \n\n## Completion report and next steps\n\nOriginal completion policy.\n';
 
@@ -114,8 +114,8 @@ test("check mode reports drift without writing and catches a later removed contr
 
 test("unknown public, standalone, internal, and new bucket sources cannot disappear from coverage", async (t) => {
   for (const unknown of [
-    "skills/engineering/qs-unknown/SKILL.md", "skills/personal/unknown/SKILL.md",
-    "skills/internal/unknown.md", "skills/pstack/internal/unknown.md", "skills/new-bucket/unknown/SKILL.md",
+    "skills/engineering/qs-unknown/SKILL.md", "docs/reference/skills/personal/unknown/SKILL.md",
+    "skills/_shared/core/unknown.md", "docs/reference/skills/pstack/internal/unknown.md", "skills/new-bucket/unknown/SKILL.md",
   ]) {
     await t.test(unknown, async (t) => {
       const root = await fixture(t);

@@ -13,10 +13,10 @@ import {
   ensureRequestedAgentLinks,
   reconcileSkillLock,
   validateManifest,
-} from "../scripts/sync-personal-skills.mjs";
+} from "../tooling/install/sync-personal-skills.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const manifestPath = join(repositoryRoot, "config", "personal-skills.manifest.json");
+const manifestPath = join(repositoryRoot, "tooling/install/personal-skills/personal-skills.manifest.json");
 
 async function manifestFixture() {
   return JSON.parse(await readFile(manifestPath, "utf8"));
@@ -47,11 +47,10 @@ test("the aggregate skill gate remains verification-only", async () => {
   const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
   assert.equal(
     project.scripts["skills:verify"],
-    "npm run check:codex && npm test && node scripts/managed-skills.mjs verify --json",
+    "npm run check:codex && npm test && node tooling/install/managed-skills.mjs verify --json",
   );
-  assert.doesNotMatch(project.scripts["skills:verify"], /sync|install|add/);
-  assert.equal(project.scripts["skills:plan"], "node scripts/managed-skills.mjs plan");
-  assert.equal(project.scripts["skills:sync"], "node scripts/managed-skills.mjs sync");
+  assert.equal(project.scripts["skills:plan"], "node tooling/install/managed-skills.mjs plan");
+  assert.equal(project.scripts["skills:sync"], "node tooling/install/managed-skills.mjs sync");
 });
 
 test("manifest validation rejects duplicate identities, mutable revisions, unsafe placement, and hash drift", async () => {

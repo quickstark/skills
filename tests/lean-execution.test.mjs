@@ -1,20 +1,44 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { currentSourcePath } from '../tooling/catalog/historical-source-path.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile, cp, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
-import { fixtureRoot, verifyPlan, verifyCandidateSources, assertPhaseBinding, phaseReportBinding, responsePrompt } from '../scripts/lean-execution-trials.mjs';
-import { PUBLIC_COMMANDS, TARGET_SKILL_COLLECTIONS, codexPublicSkillLiteral, claudePublicSkillLiteral, piPublicSkillLiteral } from '../scripts/skill-collection-registry.mjs';
-import { captureMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { adoptionSourceContentSha256, verifyAdoptionAcceptance } from '../scripts/adoption-acceptance.mjs';
-import { derivePackageAcceptanceObligations } from '../scripts/managed-skill-input.mjs';
-import { captureManagedSkillPayload } from '../scripts/managed-skill-migration.mjs';
-import { checkMobileReport } from '../scripts/lean-mobile-report.mjs';
+import { fixtureRoot, verifyPlan, verifyCandidateSources, assertPhaseBinding, phaseReportBinding, responsePrompt } from '../tooling/trials/lean-execution-trials.mjs';
+import { PUBLIC_COMMANDS, TARGET_SKILL_COLLECTIONS, codexPublicSkillLiteral, claudePublicSkillLiteral, piPublicSkillLiteral } from '../tooling/catalog/skill-collection-registry.mjs';
+import { captureMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { adoptionSourceContentSha256, verifyAdoptionAcceptance } from '../tooling/verification/adoption-acceptance.mjs';
+import { derivePackageAcceptanceObligations } from '../tooling/install/managed-skill-input.mjs';
+import { captureManagedSkillPayload } from '../tooling/install/managed-skill-migration.mjs';
+import { checkMobileReport } from '../tooling/trials/lean-mobile-report.mjs';
+
+// Historical trials retain their original paths and bytes, including Git executable bits.
+const repository = new URL('../', import.meta.url).pathname;
+const git = promisify(execFile);
+async function historicalFile(revision, path) {
+  assert.match(revision, /^[a-f0-9]{40}$/);
+  return (await git('git', ['show', `${revision}:${path}`], { cwd: repository, encoding: 'buffer' })).stdout;
+}
+async function historicalTree(t, revision, paths) {
+  const root = await mkdtemp(join(tmpdir(), 'qs-recorded-source-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const archive = join(root, 'sources.tar');
+  await git('git', ['archive', '--format=tar', '-o', archive, revision, '--', ...paths], { cwd: repository });
+  await git('tar', ['-xf', archive, '-C', root]);
+  return root;
+}
+function currentObligations(historical) {
+  return { ...historical, sourcePaths: [...historical.sourcePaths.map(currentSourcePath),
+    // The retained entry points and their new runtime dependencies are also reviewed.
+    'tooling/repository-root.mjs', 'scripts/managed-skills.mjs', 'scripts/update-skills.mjs', 'scripts/validate-skill-release.mjs', 'scripts/sync-codex-plugin.mjs', 'tooling/generation/sync-codex-plugin.mjs'].sort() };
+}
 
 test('the frozen LEX control preserves every command identity, host literal and historical scenario', async () => {
   const { baseline, scenarios, schedule } = await verifyPlan();
-  assert.deepEqual(baseline.commands, PUBLIC_COMMANDS.map(c => ({ name: c.name, package: c.packageName, path: c.sourcePath ?? `skills/${c.bucket}/${c.name}`, codex: codexPublicSkillLiteral(c.name), claude: claudePublicSkillLiteral(c.name), pi: piPublicSkillLiteral(c.name), invocationPolicy: c.invocationPolicy })));
+  assert.deepEqual(baseline.commands, PUBLIC_COMMANDS.map(c => ({ name: c.name, package: c.packageName, path: `skills/${c.bucket}/${c.name}`, codex: codexPublicSkillLiteral(c.name), claude: claudePublicSkillLiteral(c.name), pi: piPublicSkillLiteral(c.name), invocationPolicy: c.invocationPolicy })));
   const historical = JSON.parse(await readFile(new URL('./fixtures/upstream-adoption-efficiency/scenarios.json', import.meta.url), 'utf8'));
   for (const scenario of historical) assert.deepEqual(scenarios.find(s => s.id === scenario.id), scenario);
   assert.equal(schedule.length, scenarios.length * 3 * 2);
@@ -63,28 +87,28 @@ test('candidate drift is rejected against its declared freeze before capture', a
 test('LEX adaptations preserve original provenance and complete private source identities', async () => {
   const json = async path => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
   const before = await json('./fixtures/lean-execution-adoption/original-provenance.json');
-  const after = await json('../config/skill-provenance.json');
+  const after = await json('../tooling/catalog/skill-provenance.json');
   const bindings = await json('./fixtures/lean-execution-adoption/original-source-bindings.json');
   for (const [path, digest] of Object.entries(bindings.files)) assert.equal(createHash('sha256').update(await readFile(join(fixtureRoot, path))).digest('hex'), digest);
   assert.deepEqual(after.historicalSnapshots, before.historicalSnapshots);
-  assert.deepEqual(after.target.notices, before.target.notices);
+  assert.deepEqual(after.target.notices, before.target.notices.map(entry => ({ ...entry, path: currentSourcePath(entry.path) })));
   for (const original of before.capabilities) {
     const current = after.capabilities.find(c => c.id === original.id);
     for (const key of ['id', 'collection', 'currentName', 'canonical', 'owners', 'role', 'legacyIdentities', 'sources']) assert.deepEqual(current[key], original[key], `${original.id}: ${key}`);
   }
   for (const original of before.target.capabilities) {
     const current = after.target.capabilities.find(c => c.id === original.id);
-    for (const key of ['id', 'name', 'package', 'role', 'path', 'owners', 'baselineIds', 'originScope']) assert.deepEqual(current[key], original[key], `${original.id}: ${key}`);
+    for (const key of ['id', 'name', 'package', 'role', 'path', 'owners', 'baselineIds', 'originScope']) assert.deepEqual(current[key], key === "path" ? currentSourcePath(original[key]) : original[key], `${original.id}: ${key}`);
     let decision = current.decision;
     while (decision && JSON.stringify(decision) !== JSON.stringify(original.decision)) decision = decision.previous;
     assert.ok(decision, `${original.id}: original adoption decision lost`);
   }
-  const frontend = await json('../skills/frontend/dependency-index.json');
+  const frontend = await json('../skills/_shared/frontend/dependency-index.json');
   const oldFrontend = await json('./fixtures/lean-execution-adoption/original-frontend-index.json');
   assert.deepEqual(frontend.sources, oldFrontend.sources);
   assert.deepEqual(frontend.derivedFiles.map(f => f.path), oldFrontend.derivedFiles.map(f => f.path));
   assert.deepEqual(frontend.derivedHistory.find(h => h.revision === bindings.revision).derivedFiles, oldFrontend.derivedFiles);
-  const execution = await json('../skills/engineering/qs-unlazy/references/dependency-index.json');
+  const execution = await json('../skills/qs-unlazy/references/dependency-index.json');
   const oldExecution = await json('./fixtures/lean-execution-adoption/original-execution-index.json');
   assert.equal(execution.sourceRevision, oldExecution.sourceRevision);
   assert.deepEqual(execution.files.map(({ derivedSha256, ...source }) => source), oldExecution.files.map(({ derivedSha256, ...source }) => source));
@@ -105,7 +129,7 @@ test('a changed operational plan cannot resume a phase under its earlier binding
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('LEX-12 records scoped reviews without adopting sources or upgrading historical acceptance', async () => {
+test('LEX-12 records scoped reviews without adopting sources or upgrading historical acceptance', async t => {
   const root = new URL('../', import.meta.url).pathname;
   const json = async path => JSON.parse(await readFile(join(root, path)));
   const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -116,7 +140,7 @@ test('LEX-12 records scoped reviews without adopting sources or upgrading histor
   assert.equal(sha(provenanceBytes), 'ca40c293b9781090f63e4c797ef8cb9f97936afbc6b06efde175b8033a9a74ed');
   assert.equal(sha(auditBytes), 'a63bfba29ccde5cbebe3b50f187112d5ee02eb062ebe6a28cd8eafd0e387aa53');
   const provenance = JSON.parse(provenanceBytes), audit = JSON.parse(auditBytes);
-  const currentProvenance = await json('config/skill-provenance.json');
+  const currentProvenance = await json('tooling/catalog/skill-provenance.json');
   for (const historical of provenance.target.capabilities) {
     let decision = currentProvenance.target.capabilities.find(c => c.id === historical.id)?.decision;
     while (decision && sha(JSON.stringify(decision)) !== sha(JSON.stringify(historical.decision))) decision = decision.previous;
@@ -136,8 +160,8 @@ test('LEX-12 records scoped reviews without adopting sources or upgrading histor
     assert.equal(current.decision.revision, record.revision);
     assert.equal(assessment.adoptionStatus, 'pending');
     assert.equal(sha(JSON.stringify(current.decision.previous)), assessment.previousDecisionSHA256);
-    assert.equal(sha(await readFile(join(root, assessment.path))), assessment.sourceSHA256);
-    assert.equal(sha(await readFile(join(root, assessment.reviewedPath))), assessment.reviewedSHA256);
+    assert.equal(sha(await historicalFile(record.revision, assessment.path)), assessment.sourceSHA256);
+    assert.equal(sha(await historicalFile(record.revision, assessment.reviewedPath)), assessment.reviewedSHA256);
     assert.match(current.decision.note, /Source adoption and full package acceptance remain pending/);
   }
   for (const [id, digest] of Object.entries(record.untouchedDecisions)) assert.equal(sha(JSON.stringify(provenance.target.capabilities.find(c => c.id === id).decision)), digest, id);
@@ -147,32 +171,35 @@ test('LEX-12 records scoped reviews without adopting sources or upgrading histor
   const observed = record.observedHistoricalAudit;
   assert.deepEqual(observed.mismatchedPaths, Object.entries(observed.sourceInputs).filter(([, s]) => s.contentSha256 !== s.expectedSHA256).map(([path]) => path));
   assert.equal(observed.mismatchedPaths.length, 34);
+  const boundTree = await historicalTree(t, record.revision, Object.keys(observed.sourceInputs));
   for (const [path, expected] of Object.entries(observed.sourceInputs)) {
     const current = path === 'config/skill-provenance.json'
       ? { kind: 'file', entries: [{ path: '', kind: 'file', mode: 0o644, bytes: provenanceBytes.length, sha256: sha(provenanceBytes) }] }
-      : await captureMigrationPath(join(root, path));
+      : await captureMigrationPath(join(boundTree, path));
     assert.equal(current.kind, expected.kind, path);
     assert.equal(adoptionSourceContentSha256(current), (record.qualificationOverlay[path] ?? expected).contentSha256, path);
   }
   assert.equal(record.remaining.efficiency, 'inconclusive; unchanged evaluation-disposition.json');
 });
 
-test('all six packages retain exact historical obligations and reject historical stale receipts for all three hosts', async () => {
+test('all six packages retain exact historical obligations and reject historical stale receipts for all three hosts', async t => {
   const root = new URL('../', import.meta.url).pathname;
   const record = JSON.parse(await readFile(join(fixtureRoot, 'lex12-acceptance.json')));
-  const migrations = JSON.parse(await readFile(join(root, 'config/skill-migrations.json')));
+  const migrations = JSON.parse(await readFile(join(root, 'tooling/install/skill-migrations.json')));
   assert.deepEqual(Object.keys(record.packages), TARGET_SKILL_COLLECTIONS.map(c => c.id));
+  const historical = await historicalTree(t, record.revision, Object.keys(record.observedHistoricalAudit.sourceInputs));
+  await cp(join(fixtureRoot, 'pre-release-447-acceptance.json'), join(historical, 'audit.json'));
   for (const collection of TARGET_SKILL_COLLECTIONS) {
     const qualified = record.packages[collection.id];
     const obligations = derivePackageAcceptanceObligations(collection.id, migrations);
-    assert.deepEqual(qualified.obligations, obligations, collection.id);
+    assert.deepEqual(currentObligations(qualified.obligations), obligations, collection.id);
     assert.equal(qualified.status, 'pending');
     for (const agent of ['codex', 'claude-code', 'pi']) {
       const failure = qualified.hostResults[agent];
       assert.equal(failure.status, 'pending');
       const packagePath = agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
-      const payload = await captureManagedSkillPayload(join(root, packagePath));
-      await assert.rejects(verifyAdoptionAcceptance({ repositoryRoot: root, auditPath: 'tests/fixtures/lean-execution-adoption/pre-release-447-acceptance.json', packageId: collection.id, agent, ...obligations, revision: record.revision, version: record.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 }), error => error.message === failure.observedRejection, `${collection.id}/${agent}`);
+      const payload = await captureManagedSkillPayload(join(historical, packagePath));
+      await assert.rejects(verifyAdoptionAcceptance({ repositoryRoot: historical, auditPath: 'audit.json', packageId: collection.id, agent, ...qualified.obligations, revision: record.revision, version: record.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 }), error => error.message === failure.observedRejection, `${collection.id}/${agent}`);
     }
   }
 });
@@ -182,7 +209,8 @@ test('new response evidence keeps controls, frozen inputs and the mobile contrac
   const json = async p => JSON.parse(await readFile(join(fixtureRoot, p)));
   const sha = b => createHash('sha256').update(b).digest('hex');
   const evidence = await json('lex12-noninstall-evidence.json');
-  for (const [p, h] of Object.entries({ ...evidence.sourceSHA256, ...evidence.evidenceSHA256 })) assert.equal(sha(await readFile(join(root, p))), h, p);
+  for (const [p, h] of Object.entries(evidence.sourceSHA256)) assert.equal(sha(await historicalFile(evidence.revision, p)), h, p);
+  for (const [p, h] of Object.entries(evidence.evidenceSHA256)) assert.equal(sha(await readFile(join(root, p))), h, p);
   const protocol = await json('qualification-extra-protocol.json');
   const manifestBytes = await readFile(join(fixtureRoot, 'qualification-extra-inputs.json'));
   assert.equal(sha(manifestBytes), protocol.manifestSHA256);
@@ -191,7 +219,7 @@ test('new response evidence keeps controls, frozen inputs and the mobile contrac
   assert.equal(binding.manifestSHA256, protocol.manifestSHA256);
   assert.deepEqual(binding.configuredControls, protocol.controls);
   assert.equal(protocol.tokenBudget, null);
-  for (const [p, h] of Object.entries(manifest.sourceSHA256)) assert.equal(sha(await readFile(join(root, p))), h, p);
+  for (const [p, h] of Object.entries(manifest.sourceSHA256)) assert.equal(sha(await historicalFile(manifest.sourceRevision, p)), h, p);
   for (const scenario of manifest.cases) {
     const base = `qualification-extra-captures/${scenario.id}`;
     const result = await json(`${base}/result.json`), telemetry = await json(`${base}/telemetry.json`);
@@ -265,9 +293,9 @@ test('fresh bounded engine probes retain failed attempts and never become a fres
   const json = async p => JSON.parse(await readFile(join(fixtureRoot, base, p)));
   const sha = b => createHash('sha256').update(b).digest('hex');
   const identity = await json('source-identities.json');
-  for (const f of identity.sourceFiles) assert.equal(sha(await readFile(join(root, f.path))), f.sha256, f.path);
+  for (const f of identity.sourceFiles) assert.equal(sha(await historicalFile(identity.commit, f.path)), f.sha256, f.path);
   assert.equal(identity.unlazyClosureEntriesVerified, 23);
-  for (const f of identity.unlazyFiles) assert.equal(sha(await readFile(join(root, 'skills/engineering/qs-unlazy/modules/unlazy', f.path))), f.derivedSHA256, f.path);
+  for (const f of identity.unlazyFiles) assert.equal(sha(await historicalFile(identity.commit, 'skills/engineering/qs-unlazy/modules/unlazy/' + f.path)), f.derivedSHA256, f.path);
   const results = await json('fresh-run/unlazy-results.json'), summary = await json('fresh-run/unlazy-summary.json');
   assert.deepEqual(results.map(r => r.status), [1, 0, 1, 0, 0, 1, 0, 1]);
   assert.ok(results.every(r => r.status === r.expected));
@@ -326,7 +354,7 @@ test('phase report qualification binds checker bytes and effective policy before
   assert.deepEqual(await phaseReportBinding(undefined), {});
   await assert.rejects(phaseReportBinding('unknown'), /Unknown phase report qualification/);
   const binding = await phaseReportBinding('mobile-root-and-route');
-  assert.equal(binding.reportQualification.checkerSHA256, createHash('sha256').update(await readFile(new URL('../scripts/lean-mobile-report.mjs', import.meta.url))).digest('hex'));
+  assert.equal(binding.reportQualification.checkerSHA256, createHash('sha256').update(await readFile(new URL('../tooling/trials/lean-mobile-report.mjs', import.meta.url))).digest('hex'));
   assert.deepEqual(binding.reportQualification.policy, { host: 'codex', root: '/qs-design-image-mobile', allowedContinuations: ['$qs-skills:qs-flow-handoff'], maximumPrompts: 1 });
   assert.throws(() => assertPhaseBinding(binding, { reportQualification: { ...binding.reportQualification, checkerSHA256: 'changed' } }), /Phase binding changed/);
   assert.throws(() => assertPhaseBinding(binding, { reportQualification: { ...binding.reportQualification, policy: { ...binding.reportQualification.policy, allowedContinuations: ['$qs-skills:qs-plan-clarify'] } } }), /Phase binding changed/);
@@ -350,7 +378,13 @@ test('mobile transport qualification retains failed originals and independently 
   const json = async path => JSON.parse(await readFile(join(fixtureRoot, path)));
   const sha = bytes => createHash('sha256').update(bytes).digest('hex');
   const record = await json('lex12-mobile-report-resolution.json');
-  for (const [p, h] of Object.entries({ ...record.sourceSHA256, ...record.evidenceSHA256 })) assert.equal(sha(await readFile(join(root, p))), h, p);
+  // The transport tools were committed alongside this observation after the source revision.
+  const transportRevision = '85b2e1b8ae1a1da43d78c67416f26a012a4bad0c';
+  for (const [p, h] of Object.entries(record.sourceSHA256)) {
+    const revision = ['scripts/lean-mobile-report.mjs', 'scripts/lean-execution-trials.mjs'].includes(p) ? transportRevision : record.revision;
+    assert.equal(sha(await historicalFile(revision, p)), h, p);
+  }
+  for (const [p, h] of Object.entries(record.evidenceSHA256)) assert.equal(sha(await readFile(join(root, p))), h, p);
   assert.equal(record.boundaries.sourceAdoption, 'pending');
   assert.equal(record.boundaries.fullPackageAcceptance, 'pending for all six');
   assert.equal(record.boundaries.closureAcceptance, 'unknown');
@@ -358,7 +392,7 @@ test('mobile transport qualification retains failed originals and independently 
   assert.equal(record.nativeMechanism.actualInjection, 'inferred; assembled model context not captured');
   const legacy = await json('mobile-report-followup-inputs.json');
   const capturedPipeline = await json('mobile-report-capture-pipeline.json');
-  for (const [p, h] of Object.entries(legacy.sourceSHA256)) assert.equal(sha(capturedPipeline[p] ?? await readFile(join(root, p))), h, p);
+  for (const [p, h] of Object.entries(legacy.sourceSHA256)) assert.equal(sha(capturedPipeline[p] ?? await historicalFile(legacy.revision, p)), h, p);
   const original = await json('mobile-report-followup-review.json');
   assert.ok(original.cases.every(c => c.qualified === false));
   const requalified = await json('mobile-report-requalification.json');
@@ -373,8 +407,9 @@ test('mobile transport qualification retains failed originals and independently 
   assert.equal(sha(await readFile(join(fixtureRoot, 'mobile-report-transport-inputs.json'))), protocol.manifestSHA256);
   assert.equal(protocol.tokenBudget, null);
   const binding = await json('mobile-report-transport-captures/binding.json');
-  assert.deepEqual(binding.reportQualification, (await phaseReportBinding('mobile-root-and-route')).reportQualification);
-  assert.equal(binding.runnerSHA256, sha(await readFile(join(root, 'scripts/lean-execution-trials.mjs'))));
+  const current = (await phaseReportBinding('mobile-root-and-route')).reportQualification;
+  assert.deepEqual(binding.reportQualification, { ...current, checkerSHA256: sha(await historicalFile(transportRevision, 'scripts/lean-mobile-report.mjs')) });
+  assert.equal(binding.runnerSHA256, sha(await historicalFile(transportRevision, 'scripts/lean-execution-trials.mjs')));
   const review = await json('mobile-report-transport-review.json');
   assert.deepEqual(review.cases.map(c => c.id), manifest.cases.map(c => c.id));
   assert.ok(review.cases.every(c => c.qualified));
@@ -440,11 +475,11 @@ test('v4.4.7 acceptance separately qualifies current packages while retaining fa
   const video = await json(`${base}/runtime-discovery/video-fresh-run-attempt-2/results.json`);
   assert.equal(video.outcomes.length, 6);
   assert.ok(video.outcomes.every(c => c.status === 'passed'));
-  const migrations = await json('config/skill-migrations.json');
+  const migrations = await json('tooling/install/skill-migrations.json');
   assert.deepEqual(qualification.packages.map(p => p.id), TARGET_SKILL_COLLECTIONS.map(c => c.id));
   for (const collection of TARGET_SKILL_COLLECTIONS) {
     const obligations = derivePackageAcceptanceObligations(collection.id, migrations);
-    assert.deepEqual(qualification.packages.find(p => p.id === collection.id).obligations, obligations);
+    assert.deepEqual(currentObligations(qualification.packages.find(p => p.id === collection.id).obligations), obligations);
     for (const agent of ['codex', 'claude-code', 'pi']) {
       const packagePath = agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
       const payload = await captureManagedSkillPayload(join(root, packagePath));

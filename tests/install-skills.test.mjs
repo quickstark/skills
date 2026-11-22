@@ -7,8 +7,8 @@ import path from 'node:path';
 import test from 'node:test';
 import { promisify } from 'node:util';
 import { prepareSkillsCheckout, resolvePublishedVersion } from '../scripts/install-skills.mjs';
-import { parseReleaseContext, verifyPublishedReleaseFreshness } from '../scripts/update-skills.mjs';
-import { runMigrationTransaction, readMigrationJournal } from '../scripts/migration-transaction.mjs';
+import { parseReleaseContext, verifyPublishedReleaseFreshness } from '../tooling/install/update-skills.mjs';
+import { runMigrationTransaction, readMigrationJournal } from '../tooling/install/migration-transaction.mjs';
 
 const exec = promisify(execFile);
 async function fixture(t) {
@@ -263,4 +263,62 @@ test('a bootstrap launched through an aliased temporary path still runs its entr
   await symlink(path.resolve(import.meta.dirname,'../scripts/install-skills.mjs'),alias);
   const result=await exec(process.execPath,[alias,'--help'],{encoding:'utf8'});
   assert.match(result.stdout,/QuickStark installer/);
+});
+
+test('downloaded bootstraps dispatch against both layouts from an empty working directory', async t => {
+  const f = await fixture(t);
+  const repository = path.resolve(import.meta.dirname, '..');
+  const empty = path.join(f.base, 'empty');
+  await mkdir(empty);
+  const published = (await exec('git', ['show', 'v4.4.7:scripts/install-skills.mjs'], { cwd: repository })).stdout;
+  const current = await readFile(path.join(repository, 'scripts/install-skills.mjs'), 'utf8');
+  const entries = [
+    ['sync-codex-plugin', 'generation'],
+    ['validate-skill-release', 'release'],
+    ['update-skills', 'install'],
+  ];
+  await mkdir(path.join(f.origin, 'scripts'));
+  const recordImport = "import { appendFileSync } from 'node:fs';\n";
+  const recordCall = "appendFileSync(process.env.QS_DISPATCH_LOG, JSON.stringify([process.cwd(), ...process.argv.slice(2)]) + '\\n');\n";
+  for (const [name] of entries) await writeFile(path.join(f.origin, 'scripts', name + '.mjs'), recordImport + recordCall);
+  await writeFile(path.join(f.origin, 'package.json'), '{"version":"4.4.2"}');
+  await f.git('add', '.');
+  await f.git('commit', '-qm', 'Original release entry points');
+  await f.git('tag', 'v4.4.2');
+  for (const [name, owner] of entries) {
+    const directory = path.join(f.origin, 'tooling', owner);
+    await mkdir(directory, { recursive: true });
+    const target = path.join(directory, name + '.mjs');
+    await writeFile(target, recordImport + (name === 'sync-codex-plugin' ? recordCall : 'export function runCli() {\n' + recordCall + '}\n'));
+    await writeFile(path.join(f.origin, 'scripts', name + '.mjs'), await readFile(path.join(repository, 'scripts', name + '.mjs')));
+  }
+  await writeFile(path.join(f.origin, 'package.json'), '{"version":"4.4.3"}');
+  await f.git('add', '.');
+  await f.git('commit', '-qm', 'Relocated release entry points');
+  await f.git('tag', 'v4.4.3');
+
+  for (const [caller, source] of [['published', published], ['current', current]]) {
+    const download = path.join(f.base, caller + '.mjs');
+    await writeFile(download, source);
+    for (const version of ['4.4.2', '4.4.3']) {
+      const home = path.join(f.base, caller + '-' + version);
+      await mkdir(home);
+      const log = path.join(home, 'dispatch.jsonl');
+      await writeFile(path.join(home, '.gitconfig'), '[url "file://' + f.origin + '"]\n  insteadOf = https://github.com/quickstark/skills.git\n');
+      const options = { cwd: empty, env: { ...process.env, HOME: home, QS_DISPATCH_LOG: log } };
+      const args = [download, '--version', version, '--json'];
+      await exec(process.execPath, args, options);
+      const calls = async () => (await readFile(log, 'utf8')).trim().split('\n').map(line => JSON.parse(line));
+      const [projection, validation, update] = await calls();
+      const physical = projection[0];
+      assert.equal(path.dirname(physical), path.join(home, '.local/share/quickstark/releases'));
+      const revision = await f.git('rev-parse', 'v' + version);
+      assert.deepEqual(projection, [physical, '--check']);
+      assert.deepEqual(validation, [physical, physical]);
+      assert.deepEqual(update, [physical, '--release', 'v' + version + '@' + revision, '--json']);
+      await exec(process.execPath, args, options);
+      assert.deepEqual(await calls(), [projection, validation, update, update]);
+    }
+  }
+  assert.deepEqual(await readdir(empty), []);
 });

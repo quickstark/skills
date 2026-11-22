@@ -1,0 +1,114 @@
+{
+  "host": "claude-code",
+  "hostVersion": "2.1.322 (Claude Code)",
+  "packageVersion": "4.4.8",
+  "publicRoots": 39,
+  "modelRequests": 0,
+  "registrations": {
+    "qs-skills": {
+      "manifestSha256": "c1d86f9126f6209030129eefdb014e170112e38f85805fdfc3acc31265b76278",
+      "skillSha256": {
+        "qs-code-build": "a33f7ade92fed42eaa9afefb78e7e7b55f3cc01b385c86713b816522bc25641e",
+        "qs-code-debug": "8d11272519b99e502e7e2348d086e3a58869cccfabf8c959f9baa905d6755e2a",
+        "qs-deploy-release": "555fa341aa92685db3e10527301b67a2ffcb279c5a721d08e8a00ee39a1fbec6",
+        "qs-flow-handoff": "fc0dacf3623229441101944ab22539b99498e2eee4a0e375825453a38da22cda",
+        "qs-flow-triage": "c7156578130413a30919e8293a5010da8edbb7d59f892edc873297b6651b214c",
+        "qs-git-merge": "005db639a8c79e7d1beacdacd28cbeb0db86c3dcee2b2b428142cd191c4023e1",
+        "qs-help": "d5940a0cb580796f38a752044aa5a0f4e6be21b653d5bdb8550d849559744cb3",
+        "qs-plan-clarify": "3c4f852074ea24094b915b0ebf3e1f4a35b4726f0d9244672c1e1326cc1fdb59",
+        "qs-plan-roadmap": "297ae556099ed823dc96320c6bea88a922cda96af0c019d899554a082d951ce9",
+        "qs-plan-spec": "ccc95f89c7ceb9fce9625c1c587e8115380dfbb885598f4424ac86136ae2ca41",
+        "qs-review-code": "a84ac28ad6c8551dfbf5b9cec8bbb51af277344992a759cc9cde1669023f5b88",
+        "qs-setup": "75adcdbd2819030d47f36444fbdb3b17eb0e99b5e4ef3ae94a0944473e65aa25"
+      },
+      "projectedSource": "packages/qs-skills",
+      "portablePayloadDigest": {
+        "kind": "portable-directory-sha256",
+        "value": "4b31eda5ff5049251758b3046882211ef5bbaf3be5faa39e16ac93a69e7033fe"
+      },
+      "nativePayloadSha256": "83eaae6ad12139843d89b5b4604ebd5dfd5053b9fc15ea0fa1486ac5e6af448c"
+    },
+    "qs-specialists": {
+      "manifestSha256": "b1b393968f1df04140ecee82646c8aa3eec06312ec27424662e3338ad6401a19",
+      "skillSha256": {
+        "qs-code-document": "93c09e3101520d7510040d26b36abb9d7d21dbd47f1aaa666f4c0c8271094e08",
+        "qs-deploy-prompt": "01bfb51f209aec81452d31821b6f9f14063451ccfbd0da8495f129325e98f471",
+        "qs-design-prototype": "910228c81a00194345a014174820cc4ce31ceef3429597707d9035c2ebf82dbf",
+        "qs-learn-teach": "895e87a75411e308fbb30595bcc73b06de94731587862de8c4ff86c8e644e786",
+        "qs-plan-research": "d5843fe2032ad13a8b29ff7ea2e2905683f7115d2c622463906040b6bc855cbc",
+        "qs-repo-cleanup": "0b03d6d92c1820c780b4fd2d648cf022853f0d11dc6fa0b7be3f83adc65a07a4",
+        "qs-skill-write": "f12cc8a7a329d1ada1f9b47e28b6419d6b7f41e444d25ac8da3cfd617ef37572",
+        "qs-test-author": "5cd7f5b58b71b858b701a673fa275a7869974c69d0dd61e0254a82f2d1ec6632",
+        "qs-test-verify": "c0b61ff9b05dbf15c31b3954d031ca6e76dfb86a03a14c3d519fda93ac63a252"
+      },
+      "projectedSource": "packages/qs-specialists",
+      "portablePayloadDigest": {
+        "kind": "portable-directory-sha256",
+        "value": "ea31ea5609d5ab47ba4fdb38cb02e9c3139865899fa00c7f568ab71878aa5a48"
+      },
+      "nativePayloadSha256": "6d6af9c53de5ef68668cd60e7d67c9b7a25a5930e4225a747f78a912ca1ae185"
+    },
+    "qs-advanced": {
+      "manifestSha256": "a8ba39a64196ba3ba9a2d328fce753c7577d72279fd7476b14de1d87c4c14ea3",
+      "skillSha256": {
+        "qs-blast-radius": "df7eb740b351a1ab6071d0bf7b3cb7c32d45e9f5477e051bb76eddf120728a2a",
+        "qs-create-verification-skill": "e9f70d5c64e234ffef260d42595966ad2f6e96f819963fb4d6ae01d647759b0f",
+        "qs-hillclimb": "3d0e27d4a2ec3b32f9a21d3d7b0180c69966574781d772beb16a3e75903674c2",
+        "qs-how": "6b6636f12e540b73368c3e486b90208da0e87d2bfd829a10c174a755d9257b47",
+        "qs-maintain-verification-skill": "d5d6301ecf432c4916ec0a9439026bb309aa620149e4ba3c1768fdf1ced5dd52",
+        "qs-pr-babysit": "fabb207499b94569c5753d9b53f40b97259e70dbe4765db7a6a9a4f58849ce65",
+        "qs-runtime-forensics": "f00212344e02cac1a47e657f69072039e854754da716a4261daeb82f63b4faaa",
+        "qs-skill-eval": "e8fc570e8f16f005f96377d06d749984d0183bf9010e36d8a41f345817909c7d",
+        "qs-trace-forensics": "4b2f0e82ac3ace823d0912c63fb15a5c36c85989281b38966444cffa4c059f59",
+        "qs-visual-parity": "7d371531587a2433ec7d5186e8fc1b86bd21b0d43d1d09132bc2c37b22ef5f06",
+        "qs-why": "bdbf9076c407aa817a38cd77b8ffe03ead7fde2df0e30db1178bd79431271fd0",
+        "qs-worktree-cleanup": "b2276f0592ee6668a6f51a09d7363a3e1890298311691593049853823101a9e5"
+      },
+      "projectedSource": "packages/qs-advanced",
+      "portablePayloadDigest": {
+        "kind": "portable-directory-sha256",
+        "value": "fea3e7f56c595e25ac552678e7d772ed9fbd73c104e1330a602f932078ee3913"
+      },
+      "nativePayloadSha256": "c8b655b267cb633dba36cba6c17226c40f5030496c065c247942cf8253be297d"
+    },
+    "qs-frontend": {
+      "manifestSha256": "eae9b0adc2339e645b729cbc496e627c5225b493df1a243b2cb532b4797a1da6",
+      "skillSha256": {
+        "qs-design-frontend": "5c0361fe1dd9cff59f5dc3222bc3121f226c1ab90e34cf5d4ad4107dc98f2de2",
+        "qs-design-image-mobile": "c43e84ca98f2117d84cfbd10843f37c9c2be86eaf20e58c28d0983fef2bc966e",
+        "qs-design-image-to-code": "00dd3778b4971898b66edb892aa65798aac16c24831c92fa7c2e50f79c9255ad",
+        "qs-design-image-web": "6ddf030e2c69a8566b0a6423a8e235c497d9b2afb7f148976bd800d918ce2b5c"
+      },
+      "projectedSource": "packages/qs-frontend",
+      "portablePayloadDigest": {
+        "kind": "portable-directory-sha256",
+        "value": "5c2f690dc2998172f0977abf0c49b5806f184c508c7ddfe9081e0f4831be2bb9"
+      },
+      "nativePayloadSha256": "7188651ae7de7708ad67e78b80121b05c94cd733c57e6eceec4b228714c17d9e"
+    },
+    "qs-video": {
+      "manifestSha256": "2926a3b5ee121c74b578a6da506ec1acddfe368fc14d8de431b470ae3659cf8d",
+      "skillSha256": {
+        "qs-video": "51cbec497d9b0c89e2f332536bfc7c6d66cc4a56be57251aed7f433c8937a97b"
+      },
+      "projectedSource": "packages/qs-video",
+      "portablePayloadDigest": {
+        "kind": "portable-directory-sha256",
+        "value": "a4ac804df6bf3a1a49e5a0790226f292dfd159efae3645d89a8ebb08cbdf79ff"
+      },
+      "nativePayloadSha256": "f62ddc1ed8f6a353ecd3e3809dcd26d656dc89b0069dcf2782c7b9674c4fdf0b"
+    },
+    "qs-execution": {
+      "manifestSha256": "c188b812de46a6f90643bce63d6143d9a11c4fde6eacad6fa0cf889c13e73041",
+      "skillSha256": {
+        "qs-unlazy": "6fc749aeb04a3dc5e3e8b565363cc74be63fda4bed96a50487979e1667834112"
+      },
+      "projectedSource": "packages/qs-execution",
+      "portablePayloadDigest": {
+        "kind": "portable-directory-sha256",
+        "value": "fbdb9b0e06dc72bf6b3d7264aa950ab701e195300ce2514bc4648f6f99784d05"
+      },
+      "nativePayloadSha256": "f0af26dcde6827ecf6f5b2502bf9995e2c1ad5898548cad1a5cad7561a952b15"
+    }
+  }
+}

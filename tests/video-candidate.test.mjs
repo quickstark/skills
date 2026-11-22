@@ -6,12 +6,12 @@ import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { VIDEO_MODULE_NAMES } from '../scripts/video-skill-catalog.mjs';
-import { TARGET_PUBLIC_COMMANDS_BY_NAME } from '../scripts/skill-collection-registry.mjs';
-import { renderSkillOutputContract, SKILL_OUTPUT_HEADING } from '../scripts/sync-skill-output-contracts.mjs';
-import { verifyClosure } from '../skills/video/qs-video/scripts/verify-closure.mjs';
-import { scaffold } from '../skills/video/qs-video/scripts/scaffold.mjs';
-const root=resolve(dirname(fileURLToPath(import.meta.url)),'../skills/video/qs-video');
+import { VIDEO_MODULE_NAMES } from '../tooling/catalog/video-skill-catalog.mjs';
+import { TARGET_PUBLIC_COMMANDS_BY_NAME } from '../tooling/catalog/skill-collection-registry.mjs';
+import { renderSkillOutputContract, SKILL_OUTPUT_HEADING } from '../tooling/generation/sync-skill-output-contracts.mjs';
+import { verifyClosure } from '../skills/qs-video/scripts/verify-closure.mjs';
+import { scaffold } from '../skills/qs-video/scripts/scaffold.mjs';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'../skills/qs-video');
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const fixture=fn=>{const dir=mkdtempSync(join(tmpdir(),'qs-video-test-'));try{return fn(dir);}finally{rmSync(dir,{recursive:true,force:true});}};
 

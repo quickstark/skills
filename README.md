@@ -1,5 +1,7 @@
 # QuickStark Skills
 
+[Edit a skill](#development-and-release) · [Browse commands](#core-commands) · [Install or update](#install-and-update)
+
 ## Restart Codex after an update
 
 <!-- quickstark-codex-restart:start -->
@@ -78,7 +80,7 @@ contains per-agent skill examples and machine-specific rollout history. GitHub r
 | `qs-video` | 1 | Video operations backed by 21 private modules and workflows |
 | `qs-execution` | 1 | Substantial-work gates through `qs-unlazy` |
 
-The [collection registry](./scripts/skill-collection-registry.mjs) and its catalogs
+The [collection registry](./tooling/catalog/skill-collection-registry.mjs) and its catalogs
 own package membership; 39 is the current total, not a policy cap. Every public
 root has one package owner; private references are not extra dropdown commands.
 Help can explain optional capabilities,
@@ -313,32 +315,32 @@ per-leaf acceptance gates and ledgers. See the
 
 | Order | Command | Purpose |
 | ---: | --- | --- |
-| 10 | [`qs-help`](./skills/engineering/qs-help/SKILL.md) | Choose one workflow. |
-| 20 | [`qs-setup`](./skills/engineering/qs-setup/SKILL.md) | Prepare or verify a project. |
-| 30 | [`qs-plan-clarify`](./skills/engineering/qs-plan-clarify/SKILL.md) | Resolve scope and material decisions. |
-| 40 | [`qs-plan-roadmap`](./skills/engineering/qs-plan-roadmap/SKILL.md) | Sequence confirmed outcomes. |
-| 50 | [`qs-plan-spec`](./skills/engineering/qs-plan-spec/SKILL.md) | Write actionable specifications or dependency-aware tickets. |
-| 60 | [`qs-code-build`](./skills/engineering/qs-code-build/SKILL.md) | Implement one scoped change. |
-| 70 | [`qs-code-debug`](./skills/engineering/qs-code-debug/SKILL.md) | Diagnose and repair a defect. |
-| 80 | [`qs-review-code`](./skills/engineering/qs-review-code/SKILL.md) | Review, improve, or refactor selected code. |
-| 90 | [`qs-git-merge`](./skills/engineering/qs-git-merge/SKILL.md) | Integrate selected Git changes safely. |
-| 100 | [`qs-deploy-release`](./skills/engineering/qs-deploy-release/SKILL.md) | Validate and execute an approved release. |
-| 110 | [`qs-flow-triage`](./skills/engineering/qs-flow-triage/SKILL.md) | Route incoming work. |
-| 120 | [`qs-flow-handoff`](./skills/productivity/qs-flow-handoff/SKILL.md) | Preserve verified continuation state. |
+| 10 | [`qs-help`](./skills/qs-help/SKILL.md) | Choose one workflow. |
+| 20 | [`qs-setup`](./skills/qs-setup/SKILL.md) | Prepare or verify a project. |
+| 30 | [`qs-plan-clarify`](./skills/qs-plan-clarify/SKILL.md) | Resolve scope and material decisions. |
+| 40 | [`qs-plan-roadmap`](./skills/qs-plan-roadmap/SKILL.md) | Sequence confirmed outcomes. |
+| 50 | [`qs-plan-spec`](./skills/qs-plan-spec/SKILL.md) | Write actionable specifications or dependency-aware tickets. |
+| 60 | [`qs-code-build`](./skills/qs-code-build/SKILL.md) | Implement one scoped change. |
+| 70 | [`qs-code-debug`](./skills/qs-code-debug/SKILL.md) | Diagnose and repair a defect. |
+| 80 | [`qs-review-code`](./skills/qs-review-code/SKILL.md) | Review, improve, or refactor selected code. |
+| 90 | [`qs-git-merge`](./skills/qs-git-merge/SKILL.md) | Integrate selected Git changes safely. |
+| 100 | [`qs-deploy-release`](./skills/qs-deploy-release/SKILL.md) | Validate and execute an approved release. |
+| 110 | [`qs-flow-triage`](./skills/qs-flow-triage/SKILL.md) | Route incoming work. |
+| 120 | [`qs-flow-handoff`](./skills/qs-flow-handoff/SKILL.md) | Preserve verified continuation state. |
 
 ## Optional specialists
 
 | Command | Purpose |
 | --- | --- |
-| [`qs-plan-research`](./skills/engineering/qs-plan-research/SKILL.md) | Answer one evidence-backed question. |
-| [`qs-design-prototype`](./skills/engineering/qs-design-prototype/SKILL.md) | Test one design hypothesis. |
-| [`qs-code-document`](./skills/engineering/qs-code-document/SKILL.md) | Document verified behavior. |
-| [`qs-test-author`](./skills/engineering/qs-test-author/SKILL.md) | Add focused tests for existing behavior. |
-| [`qs-test-verify`](./skills/engineering/qs-test-verify/SKILL.md) | Run and report selected software verification. |
-| [`qs-learn-teach`](./skills/productivity/qs-learn-teach/SKILL.md) | Teach one bounded subject. |
-| [`qs-skill-write`](./skills/productivity/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
-| [`qs-deploy-prompt`](./skills/engineering/qs-deploy-prompt/SKILL.md) | Generate a scoped autonomous deployment prompt. |
-| [`qs-repo-cleanup`](./skills/engineering/qs-repo-cleanup/SKILL.md) | Audit or clean verified repository clutter while preserving user work. |
+| [`qs-plan-research`](./skills/qs-plan-research/SKILL.md) | Answer one evidence-backed question. |
+| [`qs-design-prototype`](./skills/qs-design-prototype/SKILL.md) | Test one design hypothesis. |
+| [`qs-code-document`](./skills/qs-code-document/SKILL.md) | Document verified behavior. |
+| [`qs-test-author`](./skills/qs-test-author/SKILL.md) | Add focused tests for existing behavior. |
+| [`qs-test-verify`](./skills/qs-test-verify/SKILL.md) | Run and report selected software verification. |
+| [`qs-learn-teach`](./skills/qs-learn-teach/SKILL.md) | Teach one bounded subject. |
+| [`qs-skill-write`](./skills/qs-skill-write/SKILL.md) | Create or improve one agent skill. |
+| [`qs-deploy-prompt`](./skills/qs-deploy-prompt/SKILL.md) | Generate a scoped autonomous deployment prompt. |
+| [`qs-repo-cleanup`](./skills/qs-repo-cleanup/SKILL.md) | Audit or clean verified repository clutter while preserving user work. |
 
 ## Advanced and creative outcomes
 
@@ -356,9 +358,9 @@ the selected visual authority. `qs-deploy-prompt` remains the separate
 goal-workflow-prompt author; generating a prompt never executes it.
 
 `qs-video` retains 21 private resources, including ten specialized workflows,
-Figma input and Studio guidance. Its [runtime profile](./skills/video/qs-video/references/runtime-compatibility.md)
+Figma input and Studio guidance. Its [runtime profile](./skills/qs-video/references/runtime-compatibility.md)
 documents exact tested local paths and unavailable provider routes. `qs-unlazy`
-has a separate [runtime profile](./skills/engineering/qs-unlazy/references/runtime-compatibility.md);
+has a separate [runtime profile](./skills/qs-unlazy/references/runtime-compatibility.md);
 optional hooks require their own authorization.
 
 The retained `ps-skills` 3.8.0 payload is a [migration compatibility artifact](./docs/upstream/package-transition.md).
@@ -476,21 +478,17 @@ separate results or expand authority.
 
 ## Development and release
 
-Edit canonical sources and collection catalogs; regenerate package projections,
-command pages, output contracts and provenance instead of editing generated copies.
-The [architecture guide](./docs/architecture.md) maps catalogs and canonical
-sources through the shared registry to each package's self-contained projection.
+Open the repository root in your editor. To change a command, edit `skills/<command-name>/SKILL.md`. Browse the [public skill index](./skills/README.md) or run `scripts/list-skills.sh`.
+For example, the cleanup command lives in
+[`skills/qs-repo-cleanup/SKILL.md`](./skills/qs-repo-cleanup/SKILL.md).
 
-Use your authoring checkout for development. Replace the example path, inspect
-local work before changing branches, and install development dependencies:
+The [collection catalogs](./tooling/catalog/) control command names and package membership. The [tooling guide](./tooling/README.md) lists the generators, checks and installer entry points.
+The sync command builds `packages/` for Claude Code, `codex/plugins/` for Codex,
+and `pi/packages/` for Pi. See the [contributor guide](./docs/contributing.md)
+for metadata changes and the [architecture guide](./docs/architecture.md) for ownership.
 
-```bash
-cd /path/to/your/skills
-git status --short --branch
-git rev-parse --short HEAD
-node -p "require('./package.json').version"
-npm ci
-```
+From the repository root, install dependencies with `npm ci` on first setup.
+After editing a skill, regenerate its package copies and run the checks:
 
 ```bash
 npm run sync:codex

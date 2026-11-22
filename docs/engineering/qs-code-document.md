@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-code-document/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-code-document/SKILL.md)
 
 ## What it does
 
-`/qs-code-document` write accurate, verified project documentation. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-code-document/SKILL.md).
+`/qs-code-document` write accurate, verified project documentation. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-code-document/SKILL.md).
 
 ## When to reach for it
 

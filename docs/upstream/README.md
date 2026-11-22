@@ -1,6 +1,6 @@
 # Upstream sources and review log
 
-The generated [capability provenance index](provenance.md) preserves every baseline identity and tabulates target public and private owners, original source identities, reviewed and adopted revisions, licenses, and planned replacements. Its source is [`config/skill-provenance.json`](../../config/skill-provenance.json); `npm run check:upstream` checks the record and generated document. Planned replacements do not activate packages.
+The generated [capability provenance index](provenance.md) preserves every baseline identity and tabulates target public and private owners, original source identities, reviewed and adopted revisions, licenses, and planned replacements. Its source is [`tooling/catalog/skill-provenance.json`](../../tooling/catalog/skill-provenance.json); `npm run check:upstream` checks the record and generated document. Planned replacements do not activate packages.
 
 
 QuickStark keeps abbreviated, host-neutral workflows. Upstream changes are
@@ -18,10 +18,10 @@ source inventory. Ordinary npm dependencies remain in the package lockfile.
 
 | Record | What it owns |
 | --- | --- |
-| [QS catalog](../../scripts/qs-skill-catalog.mjs) | Original Matt Pocock names and their QuickStark identities |
-| [PS catalog](../../scripts/ps-skill-catalog.mjs) | Pstack revision, version, attribution, and candidate dispositions |
-| [Contributor manifest](../../config/personal-skills.manifest.json) | Approved repository, immutable revision, upstream path, license, tree identity, and content digest for every contributor skill |
-| [Installer lock](../../config/personal-skills-installer-lock.json) | Integrity-pinned Skills CLI installer |
+| [QS catalog](../../tooling/catalog/qs-skill-catalog.mjs) | Original Matt Pocock names and their QuickStark identities |
+| [PS catalog](../../tooling/catalog/ps-skill-catalog.mjs) | Pstack revision, version, attribution, and candidate dispositions |
+| [Contributor manifest](../../tooling/install/personal-skills/personal-skills.manifest.json) | Approved repository, immutable revision, upstream path, license, tree identity, and content digest for every contributor skill |
+| [Installer lock](../../tooling/install/personal-skills/personal-skills-installer-lock.json) | Integrity-pinned Skills CLI installer |
 | [Third-party notices](../../THIRD_PARTY_NOTICES.md) | Preserved notices for adapted Matt Pocock and Lauren Tan material |
 
 The tables below are a dated review snapshot, not another configuration source.
@@ -68,10 +68,10 @@ The caption helper preflights the exact ONNX cache/model rather than downloading
 missing resources. Denied runtime freshness/font fetch attempts remain recorded;
 successful local output does not mean zero attempted requests.
 
-The [video runtime profile](../../skills/video/qs-video/references/runtime-compatibility.md)
+The [video runtime profile](../../skills/qs-video/references/runtime-compatibility.md)
 also records the unavailable named animate-text dependency and unpinned local voice
 resolver branch. A missing selected capability blocks that outcome. The
-[execution profile](../../skills/engineering/qs-unlazy/references/runtime-compatibility.md)
+[execution profile](../../skills/qs-unlazy/references/runtime-compatibility.md)
 records Linux Node 16.20.2/24.21.0 checks against an unreleased upstream target,
 definition-hash limits, process-group containment limits and opt-in hooks.
 Windows integration is unverified. Definition hashes do not fingerprint every
@@ -79,7 +79,7 @@ transitive artifact used by a check, and detached processes can escape a process
 group. Video browser launches retain the sandbox; the explicit isolated-fixture
 opt-in never becomes an automatic fallback for ordinary users.
 
-[PS transition metadata](../../config/skill-transition-packages.json) preserves
+[PS transition metadata](../../tooling/generation/skill-transition-packages.json) preserves
 the observed legacy 3.8.0 package while registrations are safely withdrawn.
 Its retained presence is not a seventh target package or an alias. Supported target
 native transactions are Codex, Claude Code and Pi. Native state, owned payloads

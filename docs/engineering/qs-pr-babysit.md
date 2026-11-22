@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-pr-babysit/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-pr-babysit/SKILL.md)
 
 ## What it does
 
-`/qs-pr-babysit` drive one PR toward merge readiness. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-pr-babysit/SKILL.md).
+`/qs-pr-babysit` drive one PR toward merge readiness. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-pr-babysit/SKILL.md).
 
 ## When to reach for it
 

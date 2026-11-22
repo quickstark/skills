@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-advanced@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-worktree-cleanup/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-worktree-cleanup/SKILL.md)
 
 ## What it does
 
-`/qs-worktree-cleanup` audit and remove confirmed worktrees. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-worktree-cleanup/SKILL.md).
+`/qs-worktree-cleanup` audit and remove confirmed worktrees. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-worktree-cleanup/SKILL.md).
 
 ## When to reach for it
 

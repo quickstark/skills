@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-repo-cleanup/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-repo-cleanup/SKILL.md)
 
 ## What it does
 
-`/qs-repo-cleanup` audit and clean repository hygiene without refactoring. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-repo-cleanup/SKILL.md).
+`/qs-repo-cleanup` audit and clean repository hygiene without refactoring. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-repo-cleanup/SKILL.md).
 
 ## When to reach for it
 

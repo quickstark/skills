@@ -49,7 +49,7 @@ The in-chat specification for this local change defines AC1–AC8: exhaustive
 coverage; stage and overall estimates with update cadence; effort weighting;
 truthful waiting, reopening and completion; resumption; self-contained generated
 prompts; existing boundary preservation; and synchronized, verified local output.
-`GATES.md` records the acceptance audit. Publication and installed-plugin updates
+[The completed gate ledger](./progress-deploy-gates.md) records the acceptance audit. Publication and installed-plugin updates
 are outside this task. Package versions remain 3.7.1.
 
 The shared `ESTIMATED_PROGRESS_CONTRACT` is embedded in canonical public skills

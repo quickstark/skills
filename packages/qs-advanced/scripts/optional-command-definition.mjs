@@ -6,7 +6,7 @@ export function defineOptionalCommand({ name, packageName, bucket = "engineering
   return Object.freeze({
     name, packageName, codexPlugin: packageName, collectionId: packageName,
     collection: "qs", distribution: "optional", bucket, displayName, shortDescription,
-    prompt, outcome, mutationBoundary, sourcePath: `skills/${bucket}/${name}`,
+    prompt, outcome, mutationBoundary, sourcePath: `skills/${name}`,
     documentationPath: `docs/${bucket}/${name}.md`,
     lifecycle: Object.freeze({ group: bucket, position }),
     invocationPolicy: "explicit", disableModelInvocation: true, allowImplicitInvocation: false,

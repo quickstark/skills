@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-specialists@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-research/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/research)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-plan-research/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/research)
 
 ## What it does
 
-`/qs-plan-research` research a question using reliable sources. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-plan-research/SKILL.md).
+`/qs-plan-research` research a question using reliable sources. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-plan-research/SKILL.md).
 
 ## When to reach for it
 

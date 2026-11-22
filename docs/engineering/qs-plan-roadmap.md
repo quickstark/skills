@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-plan-roadmap/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-plan-roadmap/SKILL.md) · [Upstream inspiration](https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder)
 
 ## What it does
 
-`/qs-plan-roadmap` map large projects into manageable decisions. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-plan-roadmap/SKILL.md).
+`/qs-plan-roadmap` map large projects into manageable decisions. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-plan-roadmap/SKILL.md).
 
 ## When to reach for it
 

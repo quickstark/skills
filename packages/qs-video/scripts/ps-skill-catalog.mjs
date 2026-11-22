@@ -5,7 +5,7 @@ export const PS_COLLECTION = Object.freeze({
   codexPlugin: "ps-skills",
   claudePackageRoot: "packages/ps-skills",
   codexPackageRoot: "codex/plugins/ps-skills",
-  canonicalRoot: "skills/pstack/commands",
+  canonicalRoot: "docs/reference/skills/pstack/commands",
   documentationRoot: "docs/pstack",
 });
 
@@ -328,7 +328,7 @@ export const PS_INTERNAL_CAPABILITIES = Object.freeze(
   INTERNAL_CAPABILITY_DEFINITIONS.map(([name, candidateId, owners]) => Object.freeze({
     name,
     candidateId,
-    sourcePath: `skills/pstack/internal/${name}.md`,
+    sourcePath: `docs/reference/skills/pstack/internal/${name}.md`,
     owners: Object.freeze([...owners]),
   })),
 );

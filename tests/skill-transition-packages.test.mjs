@@ -6,17 +6,17 @@ import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { copyTransitionPayloads, readTransitionPackages, verifyTransitionPayloads } from '../scripts/skill-transition-packages.mjs';
-import { captureMigrationPath, revalidateMigrationPath } from '../scripts/migration-filesystem.mjs';
-import { runNativePackageCommand } from '../scripts/migration-native-packages.mjs';
-import { TARGET_SKILL_COLLECTIONS } from '../scripts/skill-collection-registry.mjs';
+import { copyTransitionPayloads, readTransitionPackages, verifyTransitionPayloads } from '../tooling/generation/skill-transition-packages.mjs';
+import { captureMigrationPath, revalidateMigrationPath } from '../tooling/install/migration-filesystem.mjs';
+import { runNativePackageCommand } from '../tooling/install/migration-native-packages.mjs';
+import { TARGET_SKILL_COLLECTIONS } from '../tooling/catalog/skill-collection-registry.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const temporary = async (t) => { const dir = await mkdtemp(path.join(tmpdir(), 'qs-transition-')); t.after(() => rm(dir, { recursive: true, force: true })); return dir; };
 
 test('retained projection copies preserve all three historical payloads outside target membership', async (t) => {
-  const target = await temporary(t); await mkdir(path.join(target, 'config'));
-  await cp(path.join(root, 'config/skill-transition-packages.json'), path.join(target, 'config/skill-transition-packages.json'));
+  const target = await temporary(t); await mkdir(path.join(target, 'tooling/generation'), { recursive: true });
+  await cp(path.join(root, 'tooling/generation/skill-transition-packages.json'), path.join(target, 'tooling/generation/skill-transition-packages.json'));
   await copyTransitionPayloads(root, target);
   const packages = await verifyTransitionPayloads(target);
   assert.deepEqual(packages.map((pkg) => pkg.id), ['ps-skills']);
@@ -26,8 +26,8 @@ test('retained projection copies preserve all three historical payloads outside 
 });
 
 test('changed, missing and unrecognized retained payloads fail without overwriting the prior state', async (t) => {
-  const target = await temporary(t); await mkdir(path.join(target, 'config'));
-  const file = path.join(target, 'config/skill-transition-packages.json'); await cp(path.join(root, 'config/skill-transition-packages.json'), file);
+  const target = await temporary(t); await mkdir(path.join(target, 'tooling/generation'), { recursive: true });
+  const file = path.join(target, 'tooling/generation/skill-transition-packages.json'); await cp(path.join(root, 'tooling/generation/skill-transition-packages.json'), file);
   await copyTransitionPayloads(root, target);
   const changed = path.join(target, 'pi/packages/ps-skills/skills/ps-help/SKILL.md');
   await writeFile(changed, 'local modification');
@@ -39,9 +39,9 @@ test('changed, missing and unrecognized retained payloads fail without overwriti
 });
 
 async function copiedFixture(t) {
-  const target = await temporary(t); await mkdir(path.join(target, 'config'));
-  const file = path.join(target, 'config/skill-transition-packages.json');
-  await cp(path.join(root, 'config/skill-transition-packages.json'), file);
+  const target = await temporary(t); await mkdir(path.join(target, 'tooling/generation'), { recursive: true });
+  const file = path.join(target, 'tooling/generation/skill-transition-packages.json');
+  await cp(path.join(root, 'tooling/generation/skill-transition-packages.json'), file);
   await copyTransitionPayloads(root, target);
   return { target, file, document: JSON.parse(await readFile(file)) };
 }

@@ -7,11 +7,11 @@ codex plugin marketplace add ./codex
 codex plugin add qs-skills@quickstark
 ```
 
-[Source](https://github.com/quickstark/skills/blob/main/skills/engineering/qs-deploy-release/SKILL.md)
+[Source](https://github.com/quickstark/skills/blob/main/skills/qs-deploy-release/SKILL.md)
 
 ## What it does
 
-`/qs-deploy-release` safely verify and run a documented deployment. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/engineering/qs-deploy-release/SKILL.md).
+`/qs-deploy-release` safely verify and run a documented deployment. Its detailed scope and safety behavior live in the canonical [skill instructions](../../skills/qs-deploy-release/SKILL.md).
 
 ## When to reach for it
 
