@@ -49,3 +49,15 @@ node tooling/generation/sync-codex-plugin.mjs --candidate --layout dist --output
 In the candidate checkout, register its root as the Claude or Codex marketplace. Codex reads `.agents/plugins/marketplace.json`, Claude reads `.claude-plugin/marketplace.json`, and Pi takes each `dist/pi/<package>` as a local package source. The marketplace entries for PS still point to the retained original paths.
 
 For a candidate Git snapshot, force-add the generated `dist/` directory and both root marketplace manifests if ignore rules apply. Generate a second fresh directory to compare output. Ordinary sync commands continue to use the original paths.
+
+## Qualify the Codex upgrade
+
+Use a disposable Codex candidate with the staged root marketplace and `dist/codex/` payloads, and bind its release audit to those checked-in paths. The candidate must contain the trusted prior release in its Git history. Keep the retained PS package at `codex/plugins/ps-skills`. The qualifier binds a private local tag to the candidate commit and exercises the production updater in disposable Codex homes.
+
+```sh
+node tests/qualify-codex-layout-upgrade.mjs "$candidate" "$prior" fresh
+node tests/qualify-codex-layout-upgrade.mjs "$candidate" "$prior" upgrade
+node tests/qualify-codex-layout-upgrade.mjs "$candidate" "$prior" journal
+```
+
+The fresh and upgrade probes exercise the ordinary updater entry point. The journal probe tests the frozen transaction for the retained PS package under the candidate marketplace. The prior checkout supplies the v4.4.7 release.

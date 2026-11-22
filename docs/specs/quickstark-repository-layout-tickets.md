@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 is verified in a disposable candidate checkout. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is verified with the staged Codex packages in isolated homes. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -322,7 +322,7 @@ Prerequisite evidence. LAY-15 supplies old/new host layout and ownership rules.
 
 ## LAY-17 — Qualify Codex upgrades across package layouts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-14, LAY-16
 
@@ -335,6 +335,12 @@ Prerequisite evidence. LAY-14 supplies relocated production installer. LAY-16 su
 **Starting points.** `tests/install-skills.test.mjs`, `tests/managed-skill-input.test.mjs`, `tests/skill-transition-packages.test.mjs`, `scripts/migration-native-packages.mjs`.
 
 **Verify.** In isolated default and custom Codex homes, compare old/new marketplace roots and retained PS registration. Interrupt after withdrawal and prove retry and rollback preserve selections, backups and unrelated marketplaces. Reject edited or foreign source before native effects.
+
+**Verification.** Codex fixture `77915ab` used all 1,137 Codex package and marketplace files from the staged LAY-16 tree at `eb51826`, with identical Git blob IDs and modes. Its release validator passed. The production updater used a private pinned tag and isolated homes for core-only setup and an upgrade from the original v4.4.7 marketplace. The custom home retained its optional selection and unrelated marketplace and cache. Edited and foreign prior sources were rejected before withdrawal. An interrupted upgrade retried with its saved selection and original settings backup.
+
+A separate native retained-PS transaction bound its journal to the candidate marketplace and exact source paths. The updater rejected a changed selection on resume, recovered the interrupted withdrawal, and rolled back to the retained PS registration with its backup and unrelated marketplace intact. That rollback exercised the frozen package transaction within the candidate marketplace. The ordinary marketplace upgrade exercised retry.
+
+The audited skill and generator edits also projected successfully into a separate preview. All public references resolved to the expected shared contract, and the installed Codex paths and strict Claude validation passed. The preview remains separate from the layout qualification and the live Claude behavior trial. The isolated regression suite passed 808 tests, with one platform-specific skip.
 
 **Excludes.** Real user profiles, release publication or upgrading historical acceptance decisions.
 

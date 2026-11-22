@@ -95,3 +95,58 @@ export async function recognizeDistributionSource({ repositoryRoot, revision, ho
   await checkCheckout(repositoryRoot, revision);
   return { repositoryRoot, revision, host, packageId, source, version, layout, contentSha256: adoptionSourceContentSha256(payload.snapshot) };
 }
+
+
+const codexManifest = '.agents/plugins/marketplace.json';
+const optional = file => lstat(file).catch(error => {
+  if (error.code === 'ENOENT') return null;
+  throw error;
+});
+
+export async function resolveCodexLayout(repositoryRoot) {
+  const traditional = path.join(repositoryRoot, 'codex');
+  const candidate = await optional(path.join(repositoryRoot, codexManifest));
+  if (!candidate) return { name: 'original', marketplaceRoot: traditional };
+  if (!candidate.isFile() || await optional(path.join(traditional, codexManifest))) {
+    throw new Error('Ambiguous or non-regular Codex marketplace layout.');
+  }
+  return { name: 'dist', marketplaceRoot: repositoryRoot };
+}
+
+export function codexPackagePath(packageId, layout = 'original') {
+  return packageId === 'ps-skills' ? 'codex/plugins/ps-skills' : distributionPaths('codex', packageId)[layout];
+}
+
+export async function verifyCodexMarketplace(repositoryRoot, revision, layout) {
+  await checkCheckout(repositoryRoot, revision);
+  const file = path.posix.join(layout.name === 'original' ? 'codex' : '', codexManifest);
+  const snapshot = await captureMigrationPath(path.join(repositoryRoot, file));
+  if (snapshot.kind !== 'file') throw new Error('Expected a regular Codex marketplace manifest.');
+  const committed = (await git(['show', revision + ':' + file], repositoryRoot)).stdout;
+  if (await readFile(snapshot.path, 'utf8') !== committed) throw new Error('Codex marketplace manifest changed from the pinned source.');
+  await git(['diff-index', '--cached', '--quiet', revision, '--', file], repositoryRoot);
+  const market = JSON.parse(committed);
+  const names = market.plugins?.map(p => p.name);
+  const allowed = [...TARGET_SKILL_COLLECTIONS.map(pkg => pkg.id), 'ps-skills'];
+  if (market.name !== 'quickstark' || !names?.length || names.length !== new Set(names).size
+    || names.some(name => !allowed.includes(name)) || layout.name === 'dist' && names.length !== allowed.length) {
+    throw new Error('Codex marketplace has an unexpected package inventory.');
+  }
+  for (const plugin of market.plugins) {
+    const packagePath = codexPackagePath(plugin.name, layout.name);
+    const expected = './' + (layout.name === 'original' ? packagePath.slice('codex/'.length) : packagePath);
+    if (plugin.source?.source !== 'local' || plugin.source.path !== expected) throw new Error('Codex marketplace package mapping differs from the declared layout.');
+  }
+}
+
+export async function resolvePriorCodexCheckout(marketplaceRoot, replacementRoot) {
+  const { stdout } = await git(['rev-parse', '--show-toplevel'], marketplaceRoot);
+  const repositoryRoot = stdout.trimEnd();
+  const revision = (await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trimEnd();
+  const layout = await resolveCodexLayout(repositoryRoot);
+  if (marketplaceRoot !== layout.marketplaceRoot) throw new Error('Existing Codex marketplace is not at its declared checkout root.');
+  await verifyCodexMarketplace(repositoryRoot, revision, layout);
+  try { await git(['merge-base', '--is-ancestor', revision, 'HEAD'], replacementRoot); }
+  catch { throw new Error('Existing Codex checkout revision is not in the accepted release history.'); }
+  return { repositoryRoot, revision, layout };
+}

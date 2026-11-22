@@ -1,3 +1,5 @@
+import { validateSkillRelease } from "../release/validate-skill-release.mjs";
+import { codexPackagePath, resolveCodexLayout } from './distribution-layout.mjs';
 import { execFile } from 'node:child_process';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -49,7 +51,8 @@ export async function bootstrapManagedMarketplaces({ repositoryRoot, agents, run
       check(Array.isArray(markets) && markets.every(market => object(market) && typeof market.name === 'string' && market.name.length > 0), `${agent} marketplace inventory is unsupported.`);
       return markets.filter(market => market.name === 'quickstark');
     };
-    const root = agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot;
+    const codexLayout = agent === 'codex' ? await resolveCodexLayout(repositoryRoot) : null;
+    const root = codexLayout?.marketplaceRoot ?? repositoryRoot;
     const existing = await inspect();
     check(existing.length <= 1, `${agent} has duplicate QuickStark marketplace registrations.`);
     if (existing.length) {
@@ -58,6 +61,9 @@ export async function bootstrapManagedMarketplaces({ repositoryRoot, agents, run
         error.code = 'QS_MARKETPLACE_MISMATCH'; error.agent = agent; throw error;
       }
       continue;
+    }
+    if (codexLayout?.name === 'dist') {
+      await validateSkillRelease({ repositoryRoot, agents: ['codex'] });
     }
     const config = await metadata(configPath);
     if (agent === 'claude-code') {
@@ -96,7 +102,7 @@ export async function bootstrapManagedMarketplaces({ repositoryRoot, agents, run
       const collection = collections.find(item => item.id === plugin.name);
       const source = agent === 'codex' ? plugin.source?.path : plugin.source;
       check(collection && typeof source === 'string' && (agent !== 'codex' || plugin.source.source === 'local')
-        && path.resolve(root, source) === path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : collection.claudePackageRoot), 'Local marketplace package mapping is unsupported.');
+        && path.resolve(root, source) === path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(plugin.name, codexLayout.name) : collection.claudePackageRoot), 'Local marketplace package mapping is unsupported.');
       sources.push(source);
     }
     const paths = [path.relative(repositoryRoot, definitionPath), ...sources.map(source => path.relative(repositoryRoot, path.resolve(root, source)))];
