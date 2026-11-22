@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is verified with the staged Pi packages in isolated homes. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is committed at `cbb159c`. LAY-18 is verified with `dist/` active in the working tree. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -398,7 +398,7 @@ Original-layout projection and strict Claude manifest checks passed. The isolate
 
 ## LAY-18 — Switch active distribution and verify the repository layout
 
-Status: open
+Status: verified
 
 Blocked by: LAY-13, LAY-17, LAY-17B, LAY-17C
 
@@ -411,6 +411,14 @@ Prerequisite evidence. LAY-13 supplies relocated authoring/build tooling. LAY-17
 **Starting points.** `README.md`, `AGENTS.md`, `docs/architecture.md`, `scripts/sync-codex-plugin.mjs`, `scripts/validate-skill-release.mjs`, `tests/adoption-projection.test.mjs`.
 
 **Verify.** From a clean candidate checkout run the integration gates in the spec, including the full host matrix. Compare actual root tree to the documented five active roots plus compatibility exceptions. Exercise prior-tag fallback and rollback. Show that publication/install into real homes did not occur. Interrupt one combined multi-host attempt and prove safe per-host retry.
+
+**Verification.** The integrated checkout `9f13216` matched all 3,360 staged package files and three discovery manifests from `eb51826` by Git blob ID and mode. All three PS 3.8.0 trees matched the staged baseline. The [root inventory](../architecture.md#repository-roots) accounts for the five active roots and four compatibility roots. The old active package paths and nested Codex marketplace were removed.
+
+The standalone v4.4.7 bootstrap installed the integrated checkout from an empty working directory. The current standalone bootstrap installed the original tag in a separate empty home. Each used an isolated local origin with its own pinned tag. In a combined upgrade from v4.4.7, Codex and Claude completed and Pi failed after a native install. Retrying only Pi finished its saved selection and left the other client settings and caches intact.
+
+The package bytes and frozen recovery implementations matched the inputs qualified by LAY-17, LAY-17B and LAY-17C. Their rollback results apply to the same package transactions. The integrated check independently covered the new root registration and combined retry. Release validation, the second generation without a diff, seven strict Claude checks and the public entry-point checks passed.
+
+The integrated suite passed 804 tests and skipped one non-Linux control. Four assertions still used the prior layout. The historical assertion passed against its pinned release, and the three active-layout assertions passed after updating their fixture paths. Only the affected tests were rerun. Native verification used disposable homes and local tag fixtures.
 
 **Excludes.** Removing legacy migration payloads or waiting on optional evidence storage.
 

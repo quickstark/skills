@@ -59,7 +59,7 @@ recorded payload while old registrations need observation and safe withdrawal.
 It is excluded from target selection and active-version synchronization. Do not
 regenerate, remove or rename it as if it were a current QS package.
 
-Codex, Claude and Pi package snapshots and generated documentation are outputs.
+The active packages under `dist/{claude,codex,pi}/` and generated documentation are outputs.
 Never edit them independently. Root package and lockfile versions must match all
 active generated manifests. After source/catalog/documentation/plugin changes run:
 
@@ -69,9 +69,8 @@ npm run check:codex
 npm test
 ```
 
-When Claude is available, validate `.`, `packages/qs-specialists`,
-`packages/qs-advanced`, `packages/qs-frontend`, `packages/qs-video` and
-`packages/qs-execution` using `claude plugin validate <root> --strict`.
+When Claude is available, use `claude plugin validate <root> --strict` on
+the repository root and all six package roots under `dist/claude/`.
 Packaging validation is separate from native install/migration acceptance.
 
 The release workflow is manually dispatched on main after version preparation.

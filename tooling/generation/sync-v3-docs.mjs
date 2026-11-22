@@ -23,7 +23,7 @@ export function renderCommandDocumentation(skill) {
     "Quickstart:",
     "",
     "```bash",
-    "codex plugin marketplace add ./codex",
+    "codex plugin marketplace add .",
     install,
     "```",
     "",

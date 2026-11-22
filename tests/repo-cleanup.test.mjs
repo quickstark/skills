@@ -1,3 +1,4 @@
+import { claudePackagePath, codexPackagePath, piPackagePath } from '../tooling/install/distribution-layout.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, writeFileSync, rmSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -176,10 +177,10 @@ test('cleanup source, metadata and isolated package copies preserve the explicit
   assert.match(metadata, /\$qs-specialists:qs-repo-cleanup/);
   for (const collection of SKILL_COLLECTIONS) {
     if (collection.id !== 'qs-specialists') continue;
-    for (const root of [collection.claudePackageRoot, collection.piPackageRoot]) {
+    for (const root of [claudePackagePath(collection.id, 'dist'), piPackagePath(collection.id, 'dist')]) {
       assert.equal(readFileSync(new URL(`../${root}/skills/qs-repo-cleanup/SKILL.md`, import.meta.url), 'utf8'), source);
     }
-    const codex = readFileSync(new URL(`../${collection.codexPackageRoot}/skills/qs-repo-cleanup/SKILL.md`, import.meta.url), 'utf8');
+    const codex = readFileSync(new URL(`../${codexPackagePath(collection.id, 'dist')}/skills/qs-repo-cleanup/SKILL.md`, import.meta.url), 'utf8');
     assert.equal(codex, source.replace(/^disable-model-invocation: true\n/m, ''));
   }
 });

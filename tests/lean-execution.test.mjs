@@ -435,7 +435,7 @@ test('mobile transport qualification retains failed originals and independently 
   }
 });
 
-test('v4.4.7 acceptance separately qualifies current packages while retaining failed and pending history', async () => {
+test('v4.4.7 acceptance qualifies the recorded release and retains failed and pending history', async t => {
   const root = new URL('../', import.meta.url).pathname;
   const base = 'tests/fixtures/lean-execution-adoption/release-447';
   const json = async p => JSON.parse(await readFile(join(root, p)));
@@ -475,15 +475,23 @@ test('v4.4.7 acceptance separately qualifies current packages while retaining fa
   const video = await json(`${base}/runtime-discovery/video-fresh-run-attempt-2/results.json`);
   assert.equal(video.outcomes.length, 6);
   assert.ok(video.outcomes.every(c => c.status === 'passed'));
+  const releasedRevision = 'f1324e8b81311f2ee3209ab35808011db29a5d52';
+  const auditPath = 'docs/validation/upstream-adoption-acceptance.json';
+  const audit = JSON.parse(await historicalFile(releasedRevision, auditPath));
+  const releaseRoot = await historicalTree(t, releasedRevision, [...new Set([
+    auditPath, 'config/skill-migrations.json', ...Object.keys(audit.sources),
+    ...Object.values(audit.evidence).map(({ path }) => path),
+  ])]);
   const migrations = await json('tooling/install/skill-migrations.json');
   assert.deepEqual(qualification.packages.map(p => p.id), TARGET_SKILL_COLLECTIONS.map(c => c.id));
   for (const collection of TARGET_SKILL_COLLECTIONS) {
     const obligations = derivePackageAcceptanceObligations(collection.id, migrations);
-    assert.deepEqual(currentObligations(qualification.packages.find(p => p.id === collection.id).obligations), obligations);
+    const recorded = qualification.packages.find(p => p.id === collection.id).obligations;
+    assert.deepEqual(currentObligations(recorded), obligations);
     for (const agent of ['codex', 'claude-code', 'pi']) {
       const packagePath = agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
-      const payload = await captureManagedSkillPayload(join(root, packagePath));
-      const verified = await verifyAdoptionAcceptance({ repositoryRoot: root, auditPath: 'docs/validation/upstream-adoption-acceptance.json', packageId: collection.id, agent, ...obligations, revision: qualification.sourceRevision, version: qualification.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 });
+      const payload = await captureManagedSkillPayload(join(releaseRoot, packagePath));
+      const verified = await verifyAdoptionAcceptance({ repositoryRoot: releaseRoot, auditPath, packageId: collection.id, agent, ...recorded, revision: qualification.sourceRevision, version: qualification.version, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256 });
       assert.deepEqual(verified.receipt.verifiedCapabilities, obligations.capabilityIds);
       assert.deepEqual(verified.receipt.checks, Object.fromEntries(obligations.requiredChecks.map(c => [c, 'passed'])));
     }

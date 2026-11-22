@@ -181,7 +181,7 @@ test('dist projection changes only package paths and marketplace discovery', asy
   for (const host of hosts) {
     for (const pkg of TARGET_SKILL_COLLECTIONS) {
       const roots = distributionPaths(host, pkg.id);
-      const before = await captureMigrationPath(path.join(repositoryRoot, roots.original));
+      const before = await captureMigrationPath(path.join(repositoryRoot, roots.dist));
       const after = await captureMigrationPath(path.join(candidate, roots.dist));
       assert.equal(adoptionSourceContentSha256(after), adoptionSourceContentSha256(before), host + '/' + pkg.id);
     }

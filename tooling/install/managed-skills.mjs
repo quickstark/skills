@@ -9,6 +9,7 @@ import { promisify } from "node:util";
 
 import { agentSkillResources } from "./personal-skills/manifest.mjs";
 import { inventoryMachine } from "./personal-skills/inventory.mjs";
+import { claudePackagePath, codexPackagePath, piPackagePath, resolveClaudeLayout, resolveCodexLayout, resolvePiLayout } from "./distribution-layout.mjs";
 import { inferManagedSelection } from "./managed-skill-selection.mjs";
 import { readSelectionRecord, resolveTargetSelection, selectionRecordPath } from "./skill-selection.mjs";
 import { piSkillFilterAllows } from "./personal-skills/pi-discovery.mjs";
@@ -110,21 +111,22 @@ async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
 }
 
-function packageManifestPaths(repositoryRoot, collection) {
-  return {
-    claude: join(repositoryRoot, collection.claudePackageRoot, ".claude-plugin", "plugin.json"),
-    codex: join(repositoryRoot, collection.codexPackageRoot, ".codex-plugin", "plugin.json"),
-    pi: join(repositoryRoot, collection.piPackageRoot, "package.json"),
-  };
-}
-
 export async function validateMaintainedPackages({ repositoryRoot = defaultRepositoryRoot } = {}) {
   const repositoryPackage = await readJson(join(repositoryRoot, "package.json"));
   assertCondition(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(repositoryPackage.version ?? ""), "Repository package requires an exact semantic version.");
+  const [claudeLayout, codexLayout, piLayout] = await Promise.all([
+    resolveClaudeLayout(repositoryRoot), resolveCodexLayout(repositoryRoot), resolvePiLayout(repositoryRoot),
+  ]);
   const packages = [];
   for (const collection of SKILL_COLLECTIONS) {
-    const paths = packageManifestPaths(repositoryRoot, collection);
-    const [claude, codex, pi] = await Promise.all([readJson(paths.claude), readJson(paths.codex), readJson(paths.pi)]);
+    const claudePackageRoot = claudePackagePath(collection.id, claudeLayout.name);
+    const codexPackageRoot = codexPackagePath(collection.id, codexLayout.name);
+    const piPackageRoot = piPackagePath(collection.id, piLayout);
+    const [claude, codex, pi] = await Promise.all([
+      readJson(join(repositoryRoot, claudePackageRoot, ".claude-plugin", "plugin.json")),
+      readJson(join(repositoryRoot, codexPackageRoot, ".codex-plugin", "plugin.json")),
+      readJson(join(repositoryRoot, piPackageRoot, "package.json")),
+    ]);
     for (const [harness, manifest] of [["Claude", claude], ["Codex", codex]]) {
       assertCondition(manifest.name === collection.packageName, `${harness} package identity differs for ${collection.id}.`);
       assertCondition(
@@ -143,23 +145,23 @@ export async function validateMaintainedPackages({ repositoryRoot = defaultRepos
       version: repositoryPackage.version,
       publicCommandCount: collection.publicCommands.length,
       publicCommands: Object.freeze([...collection.publicCommands]),
-      claudePackageRoot: collection.claudePackageRoot,
-      codexPackageRoot: collection.codexPackageRoot,
-      piPackageRoot: collection.piPackageRoot,
+      claudePackageRoot,
+      codexPackageRoot,
+      piPackageRoot,
       supportedAgents: Object.freeze(["codex", "claude-code", "pi"]),
     }));
   }
-  return Object.freeze({ version: repositoryPackage.version, packages: Object.freeze(packages) });
+  return Object.freeze({ version: repositoryPackage.version, packages: Object.freeze(packages), codexMarketplaceRoot: codexLayout.marketplaceRoot });
 }
 
-function managerActions(repositoryRoot, agents, packages) {
+function managerActions(repositoryRoot, codexMarketplaceRoot, agents, packages) {
   const actions = [];
   if (agents.includes("codex")) {
     actions.push({
       agent: "codex",
       kind: "add-marketplace",
       command: "codex",
-      arguments: ["plugin", "marketplace", "add", join(repositoryRoot, "codex")],
+      arguments: ["plugin", "marketplace", "add", codexMarketplaceRoot],
     });
     for (const package_ of packages) actions.push({
       agent: "codex",
@@ -248,7 +250,7 @@ export async function buildManagedSelectionPlan({
     selections[agent] = result;
     const selectedManifest = { ...manifest, resources: manifest.resources.filter((item) => result.selection.resources.includes(item.name)) };
     personalPlans[agent] = summarizePersonalPlan(await buildReconciliationPlan({ manifest: selectedManifest, homeDirectory, targets: [agent] }));
-    actions.push(...managerActions(repositoryRoot, [agent], maintained.packages.filter((item) => result.selection.packages.includes(item.name))));
+    actions.push(...managerActions(repositoryRoot, maintained.codexMarketplaceRoot, [agent], maintained.packages.filter((item) => result.selection.packages.includes(item.name))));
   }
   return {
     schemaVersion: 1, repositoryVersion: maintained.version, targets, selections,
@@ -276,7 +278,7 @@ export async function buildManagedSkillsPlan({
     targets,
     maintainedPackages: maintained.packages,
     approvedResourceCount: agentSkillResources(manifest).length,
-    managerActions: managerActions(repositoryRoot, targets, maintained.packages),
+    managerActions: managerActions(repositoryRoot, maintained.codexMarketplaceRoot, targets, maintained.packages),
     maintainedPackageBoundaries: {
       codex: "Repository-maintained packages use the local Codex marketplace projection.",
       "claude-code": "Repository-maintained packages use the local Claude marketplace projection.",
@@ -339,9 +341,9 @@ function marketplaceMatchesLocalRoot(marketplace, expectedRoot) {
     .some((value) => resolve(value) === resolve(expectedRoot));
 }
 
-function verifyManagedMarketplace(agent, inventory, repositoryRoot) {
+async function verifyManagedMarketplace(agent, inventory, repositoryRoot) {
   if (agent !== "codex" || !Array.isArray(inventory?.marketplaces)) return;
-  const expectedRoot = join(repositoryRoot, "codex");
+  const { marketplaceRoot: expectedRoot } = await resolveCodexLayout(repositoryRoot);
   const registration = findMarketplace(inventory, "quickstark");
   const actualSource = marketplaceSource(registration) ?? "missing";
   assertCondition(
@@ -553,7 +555,8 @@ async function executeSelectedManagedSkillsUnlocked(options = {}) {
           const pkg = preview.packages[agent].find((entry) => entry.id === packageId);
           assertCondition(preview.native[agent].state.native.packages.some((actual) => {
             const binding = bindings.find((entry) => entry.id === actual.id);
-            return binding.name === packageId && actual.version === pkg.version && !binding.installedOnly;
+            return binding.name === packageId && actual.version === pkg.version && !binding.installedOnly
+              && (agent !== "pi" || binding.source === pkg.artifact.source);
           }), `${agent} is missing selected package ${packageId} at the verified release.`);
         }
       }
@@ -628,7 +631,7 @@ export async function executeManagedSkills({
     const installedPackageVerification = [];
     for (const agent of agents) {
       const inventory = await inspectPackages(agent, { homeDirectory, repositoryRoot, packages: plan.maintainedPackages }, inspectManagedPackages);
-      verifyManagedMarketplace(agent, inventory, repositoryRoot);
+      await verifyManagedMarketplace(agent, inventory, repositoryRoot);
       installedPackageVerification.push(verifyManagedPackageInventory(agent, inventory, plan.maintainedPackages));
     }
     return { action, ...plan, personalVerification, installedPackageVerification };
@@ -794,7 +797,7 @@ export async function executeManagedSkills({
   const installedPackageVerification = [];
   for (const agent of agents) {
     const inventory = await inspectPackages(agent, { homeDirectory, repositoryRoot, packages: plan.maintainedPackages }, inspectManagedPackages);
-    verifyManagedMarketplace(agent, inventory, repositoryRoot);
+    await verifyManagedMarketplace(agent, inventory, repositoryRoot);
     installedPackageVerification.push(verifyManagedPackageInventory(agent, inventory, plan.maintainedPackages));
   }
   const personalSync = await runPersonalAction({ ...basePersonalOptions, action: "sync" });

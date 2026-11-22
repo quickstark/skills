@@ -255,14 +255,16 @@ cd "$HOME/.local/share/quickstark/current"
 
 For an optional read-only preview, use `npm run skills:plan -- --json --agent codex`
 (or another explicit host). Direct plan/verify do not register marketplaces; on a
-fresh host they require `codex plugin marketplace add ./codex` or
-`claude plugin marketplace add .` first. Normal installation needs only update.
+fresh host run `codex plugin marketplace add .` or `claude plugin marketplace add .`
+from the checkout root. An older checkout with its Codex marketplace under
+`codex/` requires `codex plugin marketplace add ./codex`. Normal installation
+needs only update.
 
 ## Claude setup and legacy migration
 
 Use the automatic updater, or select Claude explicitly. Claude packages use user
 scope; existing project/local QuickStark registrations require explicit reconciliation. The core marketplace
-entry points to the generated `packages/qs-skills` package, so the plugin cache
+entry points to the generated `dist/claude/qs-skills` package, so the plugin cache
 contains the public roots and private closure without copying the whole repository.
 
 ```bash

@@ -15,17 +15,17 @@
     "workflow"
   ],
   "skills": [
-    "./skills/qs-help",
-    "./skills/qs-setup",
-    "./skills/qs-plan-clarify",
-    "./skills/qs-plan-roadmap",
-    "./skills/qs-plan-spec",
-    "./skills/qs-code-build",
-    "./skills/qs-code-debug",
-    "./skills/qs-review-code",
-    "./skills/qs-git-merge",
-    "./skills/qs-deploy-release",
-    "./skills/qs-flow-triage",
-    "./skills/qs-flow-handoff"
+    "./dist/claude/qs-skills/skills/qs-help",
+    "./dist/claude/qs-skills/skills/qs-setup",
+    "./dist/claude/qs-skills/skills/qs-plan-clarify",
+    "./dist/claude/qs-skills/skills/qs-plan-roadmap",
+    "./dist/claude/qs-skills/skills/qs-plan-spec",
+    "./dist/claude/qs-skills/skills/qs-code-build",
+    "./dist/claude/qs-skills/skills/qs-code-debug",
+    "./dist/claude/qs-skills/skills/qs-review-code",
+    "./dist/claude/qs-skills/skills/qs-git-merge",
+    "./dist/claude/qs-skills/skills/qs-deploy-release",
+    "./dist/claude/qs-skills/skills/qs-flow-triage",
+    "./dist/claude/qs-skills/skills/qs-flow-handoff"
   ]
 }

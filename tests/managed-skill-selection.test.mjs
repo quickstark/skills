@@ -17,8 +17,8 @@ const optionalPackage = packages.find((entry) => !["qs-skills", "qs-specialists"
 const packageEntry = (name, agent = "codex", overrides = {}) => ({
   name, pluginId: `${name}@quickstark`, marketplaceName: "quickstark", installed: true, enabled: true,
   version: maintained.version,
-  source: agent === "pi" ? join(repositoryRoot, `pi/packages/${name}`)
-    : { source: "local", path: join(repositoryRoot, `codex/plugins/${name}`) },
+  source: agent === "pi" ? join(repositoryRoot, "dist", "pi", name)
+    : { source: "local", path: join(repositoryRoot, "dist", "codex", name) },
   ...overrides,
 });
 const selected = (names, resources = []) => ({ packages: names, resources, profile: null, additions: [] });

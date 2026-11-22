@@ -19,7 +19,7 @@ The root install.sh downloads scripts/install-skills.mjs on its own. That file m
 2. scripts/validate-skill-release.mjs followed by the checkout path
 3. scripts/update-skills.mjs --release followed by the tag and revision
 
-Published bootstraps dating back to v4.4.1 use those filenames. The direct scripts/managed-skills.mjs CLI and scripts/list-skills.sh remain available to existing callers. The restart command in the installation guide downloads a specific historical Git blob.
+Published bootstraps dating back to v4.4.1 use those filenames. The installation guide invokes `scripts/managed-skills.mjs` and the root README invokes `scripts/list-skills.sh`. Keep the bootstrap and its dispatch files while their published URLs or supported callers reference them. Retire a compatibility entry only after its remaining callers have migrated. The restart command in the installation guide downloads a specific historical Git blob.
 
 The manual validation workflow uses the root npm aliases. Release automation reads the root package version and tags the selected revision. Changesets uses npm run changeset and npm run version. Catalog support modules shipped inside the host packages retain their package-local scripts directory.
 
@@ -29,13 +29,13 @@ Match the runner and input hashes recorded with the trial before replaying it. T
 
 ## Stage the distribution layout
 
-Run the following command with the physical path to an official QuickStark checkout containing all six active packages and an independently trusted full release commit. It prints a new temporary directory containing the six active packages under each of `dist/claude/`, `dist/codex/` and `dist/pi/`. The three PS 3.8.0 packages keep their original paths.
+Run the following command with the physical path to an official pre-cutover QuickStark checkout and its independently trusted full release commit. It prints a new temporary directory containing the six active packages under each of `dist/claude/`, `dist/codex/` and `dist/pi/`. The three PS 3.8.0 packages keep their original paths.
 
 ```sh
 node tooling/generation/stage-distribution-layout.mjs <physical-checkout> <trusted-commit>
 ```
 
-The staging command checks each package’s native manifest, bytes and executable bits at that revision. Ordinary package generation and installation still use the existing layout.
+The staging command checks each package’s native manifest, bytes and executable bits at that revision. Ordinary package generation now writes `dist/`. Tagged installers still resolve the layout shipped in their selected release.
 
 ## Generate a candidate with marketplace entries
 
@@ -48,7 +48,7 @@ node tooling/generation/sync-codex-plugin.mjs --candidate --layout dist --output
 
 In the candidate checkout, register its root as the Claude or Codex marketplace. Codex reads `.agents/plugins/marketplace.json`, Claude reads `.claude-plugin/marketplace.json`, and Pi takes each `dist/pi/<package>` as a local package source. The marketplace entries for PS still point to the retained original paths.
 
-For a candidate Git snapshot, force-add the generated `dist/` directory and both root marketplace manifests if ignore rules apply. Generate a second fresh directory to compare output. Ordinary sync commands continue to use the original paths.
+For a candidate Git snapshot, force-add the generated `dist/` directory and both root marketplace manifests if ignore rules apply. Generate a second fresh directory to compare output. Pass `--layout original` to reproduce the historical package layout in a disposable directory.
 
 ## Qualify the Codex upgrade
 

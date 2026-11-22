@@ -10,9 +10,9 @@ flowchart LR
     optional["Advanced / frontend / video / execution catalogs"] --> registry
     registry --> contracts["Generated chat-output contracts"]
     registry --> docs["Generated command documentation"]
-    registry --> claude["Six isolated Claude packages"]
-    registry --> codex["Six isolated Codex packages"]
-    registry --> pi["Six isolated Pi packages"]
+    registry --> claude["dist/claude"]
+    registry --> codex["dist/codex"]
+    registry --> pi["dist/pi"]
     contracts --> sources["Canonical skill sources"]
     sources --> claude
     sources --> codex
@@ -39,6 +39,24 @@ flowchart LR
 Reference material under `docs/reference/skills/misc/`, `docs/reference/skills/personal/`, `docs/reference/skills/in-progress/`, and `docs/reference/skills/deprecated/` is never promoted or packaged.
 
 The [decision and stewardship index](./adr/README.md) records earlier locations and their current owners. Shared private sources live under `skills/_shared/` by owner.
+
+## Repository roots
+
+| Tracked root | Contents |
+| --- | --- |
+| `skills/` | Canonical command instructions, metadata and shared private resources. |
+| `tooling/` | Catalogs, generators, installer, release checks and verification tools. |
+| `tests/` | Regression tests and their offline fixtures. |
+| `docs/` | Developer guides, specs, reference material and verification history. |
+| `dist/` | The six active packages per host. |
+| `packages/`, `codex/`, `pi/` | The exact PS 3.8.0 payloads at `packages/ps-skills`, `codex/plugins/ps-skills` and `pi/packages/ps-skills`. Keep these paths while supported installations or frozen recovery records reference them. Retirement requires verified migration and separate authorization. |
+| `scripts/` | Published installer files and public CLI entry points. See [published entry points](../tooling/README.md#published-entry-points) for the consumers of each file. |
+
+The root `.agents/plugins/marketplace.json` and `.claude-plugin/` are native
+host entry points. `.claude/CLAUDE.md` is repository guidance reached through
+the root `AGENTS.md` symlink. `.github/` and `.changeset/` own the CI and
+release workflows. Root build, version and license files apply to the whole
+project.
 
 ## Package boundaries
 

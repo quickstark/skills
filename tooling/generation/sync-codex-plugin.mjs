@@ -99,7 +99,7 @@ const layoutOption = optionValue(originalArguments, "--layout");
 if (layoutOption !== undefined && (!candidate || !["original", "dist"].includes(layoutOption))) {
   throw new Error("Projector layout must be original or dist and requires --candidate.");
 }
-const layout = layoutOption ?? "original";
+const layout = layoutOption ?? (candidate || REGISTRY_STATE !== "target" ? "original" : "dist");
 const outputRoot = candidate ? resolve(output) : repositoryRoot;
 const codexMarketRoot = layout === "dist" ? outputRoot : join(outputRoot, "codex");
 const codexMarketFile = join(codexMarketRoot, ".agents", "plugins", "marketplace.json");
@@ -137,8 +137,8 @@ const selectedPackages = targetRegistry ? [
     defaultPrompt:[pkg.description],keywords:["quickstark","optional"],claudeMarketplaceSource:`./packages/${pkg.name}`,
     ...(pkg.noticeSource ? {noticeFiles:["THIRD_PARTY_NOTICES.md"]} : {})})),
 ] : legacyPackages;
-const packages = Object.freeze(selectedPackages.map((pkg) => candidate ? {
-  ...pkg, ...candidateRoots(pkg.name),
+const packages = Object.freeze(selectedPackages.map((pkg) => candidate || layout === "dist" ? {
+  ...pkg, ...projectionRoots(pkg.name),
 } : pkg));
 
 if (targetRegistry) await listPublicSources(repositoryRoot);
@@ -149,7 +149,7 @@ else {
   await syncAll();
 }
 
-function candidateRoots(name) {
+function projectionRoots(name) {
   const claude = distributionPaths("claude-code", name)[layout];
   return {
     claudeRoot: join(outputRoot, claude),
@@ -401,7 +401,7 @@ async function writePiProjection(pkg) {
 }
 
 function coreClaudeManifest() {
-  if (!candidate) return claudeManifest(packages[0]);
+  if (!candidate && layout === "original") return claudeManifest(packages[0]);
   const manifest = claudeManifest(packages[0], true);
   return { ...manifest, skills: manifest.skills.map((path) => `${packages[0].claudeMarketplaceSource}/${path.slice(2)}`) };
 }
@@ -528,6 +528,13 @@ async function verifyDistributionRoots() {
   const hostRoots = distributionHosts.map(host => dirname(distributionPaths(host, expected[0]).dist));
   await verifyPackageDirectories(join(outputRoot, "dist"), hostRoots.map(root => root.split("/").at(-1)));
   for (const root of hostRoots) await verifyPackageDirectories(join(outputRoot, root), expected);
+  for (const host of distributionHosts) {
+    const originalRoot = dirname(distributionPaths(host, expected[0]).original);
+    await verifyPackageDirectories(join(outputRoot, originalRoot), ["ps-skills"]);
+  }
+  if (await exists(join(outputRoot, "codex/.agents/plugins/marketplace.json"))) {
+    throw new Error("The active Codex marketplace must only exist at the checkout root.");
+  }
 }
 
 async function verifyAll(selection = null) {

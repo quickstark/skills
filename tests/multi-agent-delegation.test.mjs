@@ -39,7 +39,7 @@ test("delegation is a v3-native core capability projected into every core host p
   assert.match(source, /Without subagent support, run the same units serially/);
   assert.match(source, /never expand mutation, Git, publication or installation authority/);
   assert.doesNotMatch(source, /qs-unlazy|unlazy\//, "core capability must not import the execution package");
-  for (const packageRoot of ["packages/qs-skills", "codex/plugins/qs-skills", "pi/packages/qs-skills"]) {
+  for (const packageRoot of ["dist/claude/qs-skills", "dist/codex/qs-skills", "dist/pi/qs-skills"]) {
     assert.ok((await readdir(join(root, packageRoot, "capabilities"))).includes("delegation.md"), packageRoot);
     assert.equal(await read(`${packageRoot}/capabilities/delegation.md`), source, packageRoot);
   }
@@ -123,7 +123,7 @@ test("qs-code-build graph mode walks a ticket frontier inside one authorized roo
 
   const metadata = await read("skills/qs-code-build/agents/openai.yaml");
   assert.match(metadata, /mode=single\|graph/);
-  for (const projection of ["codex/plugins/qs-skills", "packages/qs-skills", "pi/packages/qs-skills"]) {
+  for (const projection of ["dist/codex/qs-skills", "dist/claude/qs-skills", "dist/pi/qs-skills"]) {
     assert.match(await read(`${projection}/skills/qs-code-build/SKILL.md`), /## Graph mode/, projection);
   }
 });
@@ -136,10 +136,10 @@ test("help routing separates graph mode from qs-unlazy and keeps delegation inte
 });
 
 test("packages stay skills-only and ship no host agent declarations", async () => {
-  for (const manifest of [".claude-plugin/plugin.json", "packages/qs-skills/.claude-plugin/plugin.json"]) {
+  for (const manifest of [".claude-plugin/plugin.json", "dist/claude/qs-skills/.claude-plugin/plugin.json"]) {
     assert.equal(JSON.parse(await read(manifest)).agents, undefined, manifest);
   }
-  for (const absent of ["packages/qs-skills/agents", "codex/plugins/qs-skills/agents", "codex/plugins/qs-skills/agent-roles", "pi/packages/qs-skills/agents"]) {
+  for (const absent of ["dist/claude/qs-skills/agents", "dist/codex/qs-skills/agents", "dist/codex/qs-skills/agent-roles", "dist/pi/qs-skills/agents"]) {
     await assert.rejects(readdir(join(root, absent)), { code: "ENOENT" }, absent);
   }
 });
