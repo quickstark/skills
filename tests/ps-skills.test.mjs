@@ -7,9 +7,9 @@ import { fileURLToPath } from "node:url";
 import {
   PS_INTERNAL_CAPABILITIES,
   PS_PUBLIC_COMMANDS,
-} from "../scripts/ps-skill-catalog.mjs";
-import { LEGACY_PUBLIC_COMMANDS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
-import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
+} from "../tooling/catalog/ps-skill-catalog.mjs";
+import { LEGACY_PUBLIC_COMMANDS, REGISTRY_STATE } from "../tooling/catalog/skill-collection-registry.mjs";
+import { renderSkillOutputContract } from "../tooling/generation/sync-skill-output-contracts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const commandRoot = join(root, "docs", "reference", "skills", "pstack", "commands");

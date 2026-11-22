@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, writeFile, readFile, readlink, rename, cp, chmod, symli
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { captureMigrationPath, migrationSnapshotMatches, revalidateMigrationPath } from "../scripts/migration-filesystem.mjs";
+import { captureMigrationPath, migrationSnapshotMatches, revalidateMigrationPath } from "../tooling/install/migration-filesystem.mjs";
 
 async function fixture(t) {
   const root = await mkdtemp(join(tmpdir(), "qs-migration-snapshot-"));

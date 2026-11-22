@@ -200,7 +200,7 @@ export async function prepareSkillsCheckout({ homeDirectory = homedir(), remoteU
       onProgress('Validating generated packages and acceptance evidence…');
       if (validateCandidate) await validateCandidate({ repositoryRoot, revision });
       else {
-        for (const entry of ['scripts/update-skills.mjs', 'scripts/validate-skill-release.mjs']) check((await optional(path.join(repositoryRoot, entry)))?.isFile(), `Published ${release.tag} predates the versioned installer. Publish the next version containing this repair; installed skills are unchanged.`);
+        for (const entry of ['scripts/sync-codex-plugin.mjs', 'scripts/validate-skill-release.mjs', 'scripts/update-skills.mjs']) check((await optional(path.join(repositoryRoot, entry)))?.isFile(), `Published ${release.tag} predates the versioned installer. Publish the next version containing this repair; installed skills are unchanged.`);
         await runNode(path.join(repositoryRoot, 'scripts/sync-codex-plugin.mjs'), ['--check'], repositoryRoot);
         await runNode(path.join(repositoryRoot, 'scripts/validate-skill-release.mjs'), [repositoryRoot], repositoryRoot);
       }

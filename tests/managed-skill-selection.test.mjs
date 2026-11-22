@@ -3,12 +3,12 @@ import { mkdtemp, mkdir, readFile, writeFile, symlink, readdir, rm } from "node:
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import test from "node:test";
-import { buildManagedSelectionPlan, validateMaintainedPackages } from "../scripts/managed-skills.mjs";
-import { inferManagedSelection } from "../scripts/managed-skill-selection.mjs";
-import { saveSelectionRecord, selectionRecordPath } from "../scripts/skill-selection.mjs";
-import { calculatePortableDirectoryHash } from "../scripts/personal-skills/filesystem.mjs";
-import { writeAgentSkillLock } from "../scripts/personal-skills/lock.mjs";
-import { execute as executePersonalSkills, loadManifest, selectManifestResources } from "../scripts/sync-personal-skills.mjs";
+import { buildManagedSelectionPlan, validateMaintainedPackages } from "../tooling/install/managed-skills.mjs";
+import { inferManagedSelection } from "../tooling/install/managed-skill-selection.mjs";
+import { saveSelectionRecord, selectionRecordPath } from "../tooling/install/skill-selection.mjs";
+import { calculatePortableDirectoryHash } from "../tooling/install/personal-skills/filesystem.mjs";
+import { writeAgentSkillLock } from "../tooling/install/personal-skills/lock.mjs";
+import { execute as executePersonalSkills, loadManifest, selectManifestResources } from "../tooling/install/sync-personal-skills.mjs";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
 const maintained = await validateMaintainedPackages({ repositoryRoot });

@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** developer authoring through LAY-11 verified in the working tree. The remaining tickets are open. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. LAY-12 through LAY-14 are verified in an isolated checkout. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -18,13 +18,23 @@ Close a ticket against its acceptance evidence at its integration revision. Reco
 
 ## Developer-authoring verification
 
-The working tree on `codex/docs-446-restart` is based on `f1324e8b81311f2ee3209ab35808011db29a5d52`. The registered inventory has 39 canonical public roots, with the original package ownership, editorial categories, lifecycle positions and invocation policies.
+Developer-authoring commit `bb8ecfa` on `codex/docs-446-restart` was based on `f1324e8b81311f2ee3209ab35808011db29a5d52`. The registered inventory has 39 canonical public roots, with the original package ownership, editorial categories, lifecycle positions and invocation policies.
 
 The move retained 1,167 source files and their Git executable modes. Seventeen instruction files required path-only edits. All eight relocated governance records match their original Git blobs. The development linker reproduced its 67 original targets in each disposable home. The three retained PS distributions match the baseline.
 
 A disposable checkout propagated one edit to `skills/qs-repo-cleanup/SKILL.md` into its Claude, Codex and Pi copies and updated its current derived digest. Restoring the source and synchronizing twice reproduced the original candidate tree. Historical release checks read pinned Git objects or original captured fixtures.
 
 The integrated checkout passed `npm run sync:codex`, `npm run check:codex` and `git diff --check`. The full `npm test` run passed 799 tests, with one platform-specific skip on Linux and zero failures.
+
+## Tooling verification
+
+The [tooling directory guide](../../tooling/README.md) maps command names to their owners. Of the 72 tracked files originally under `scripts/` and `config/`, 65 scripts and all six config files moved into `tooling/`. The hosted bootstrap stays at its download URL. Five compatibility entry points cover published installers, the managed CLI and the public skill listing. All 19 npm scripts retain their names.
+
+The isolated candidate on base `bb8ecfa` preserved the six config files byte-for-byte, the Git executable modes, all host distributions and the manual release workflows. Both the current and published bootstrap ran from an empty working directory against both fixture layouts. Each pairing validated before dispatch and reused its retained checkout on retry.
+
+The published v4.4.7 bootstrap also validated the actual candidate, and the current bootstrap validated the actual v4.4.7 tree. Both reached the updater at the expected revision and rejected an intentionally unsupported target before any native operation. Disposable checkout `4c96d6c073317920b301fd2e40043bad94154d3c` passed the release validator for all 18 package and host combinations. Strict Claude validation passed for all six packages.
+
+After synchronization, `npm run check:codex` and `npm test` passed in the isolated checkout (800 tests passed and one non-Linux control skipped). A second synchronization reproduced the checked tree.
 
 ## LAY-01 — List the public authoring sources
 
@@ -220,7 +230,7 @@ Prerequisite evidence. LAY-02 supplies consolidated developer guidance. LAY-06 s
 
 ## LAY-12 — Define relocatable repository tooling and bootstrap entry points
 
-Status: open
+Status: verified
 
 Blocked by: none
 
@@ -236,7 +246,7 @@ Acceptance criteria: AC-05
 
 ## LAY-13 — Consolidate catalog, generator and verification tooling
 
-Status: open
+Status: verified
 
 Blocked by: LAY-12, LAY-11
 
@@ -254,7 +264,7 @@ Prerequisite evidence. LAY-12 supplies relocation and supported-entry contract. 
 
 ## LAY-14 — Consolidate installer and release tooling
 
-Status: open
+Status: verified
 
 Blocked by: LAY-12
 

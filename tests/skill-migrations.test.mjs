@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { V3_CORE_SKILLS } from '../scripts/qs-skill-catalog.mjs';
-import { planSkillMigrations, readSkillMigrations, validateSkillMigrations } from '../scripts/skill-migrations.mjs';
+import { V3_CORE_SKILLS } from '../tooling/catalog/qs-skill-catalog.mjs';
+import { planSkillMigrations, readSkillMigrations, validateSkillMigrations } from '../tooling/install/skill-migrations.mjs';
 
 const document = readSkillMigrations();
 const homeDirectory = '/home/migration-fixture';
@@ -39,7 +39,7 @@ const plan = (selection) => planSkillMigrations(input(selection));
 const conflicts = (result) => result.migrations.flatMap((migration) => migration.conflicts.map((conflict) => conflict.reason));
 
 test('five historical migration records account for all contributor and PS identities', () => {
-  const manifest = JSON.parse(readFileSync(new URL('../config/personal-skills.manifest.json', import.meta.url), 'utf8'));
+  const manifest = JSON.parse(readFileSync(new URL('../tooling/install/personal-skills/personal-skills.manifest.json', import.meta.url), 'utf8'));
   assert.deepEqual(validateSkillMigrations(document, { manifest }), { valid: true, errors: [] });
   assert.equal(document.migrations.length, 5);
   assert.equal(legacy.filter((entry) => entry.kind === 'resource').length, 18);

@@ -11,11 +11,11 @@ import {
   PS_UPSTREAM,
   psCodexSkillLiteral,
   validatePsCatalogModel,
-} from "../scripts/ps-skill-catalog.mjs";
+} from "../tooling/catalog/ps-skill-catalog.mjs";
 import {
   V3_CORE_SKILLS,
   V3_SPECIALIST_SKILLS,
-} from "../scripts/qs-skill-catalog.mjs";
+} from "../tooling/catalog/qs-skill-catalog.mjs";
 
 const inventoryUrl = new URL("./fixtures/pstack-0.14.1-inventory.json", import.meta.url);
 

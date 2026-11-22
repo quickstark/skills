@@ -1,8 +1,8 @@
 # Skill provenance
 
-Generated from [the provenance records](../../config/skill-provenance.json). Baseline installation history and target ownership are separate. Catalog mappings do not activate packages or adopt reviewed sources.
+Generated from [the provenance records](../../tooling/catalog/skill-provenance.json). Baseline installation history and target ownership are separate. Catalog mappings do not activate packages or adopt reviewed sources.
 
-73 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in config/skill-migrations.json even after live resources retire.
+73 baseline capabilities preserve 113 source mappings. Original paths, immutable revisions, license paths, local notices, adaptation notes and evidence remain in the records. Source directory digests measure upstream payloads; each is not a derived-content digest. Original manifest authority is preserved by the hashed contributor snapshot in tooling/install/skill-migrations.json even after live resources retire.
 
 ## Target ownership
 

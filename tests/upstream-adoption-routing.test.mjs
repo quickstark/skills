@@ -7,12 +7,12 @@ import {
   resolvePublicCommand,
   resolvePrimaryHelpRoute,
   validateSkillCollectionRegistryModel,
-} from '../scripts/skill-collection-registry.mjs';
+} from '../tooling/catalog/skill-collection-registry.mjs';
 import {
   renderHelpRoutingReference,
   renderSkillOutputContract,
   renderDocumentationOutputContract,
-} from '../scripts/sync-skill-output-contracts.mjs';
+} from '../tooling/generation/sync-skill-output-contracts.mjs';
 
 const target = REGISTRY_STATE === "target";
 const observed = target ? {

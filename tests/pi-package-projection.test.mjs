@@ -7,7 +7,7 @@ import test from "node:test";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
 
-import { resolvePublicCommand, SKILL_COLLECTIONS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
+import { resolvePublicCommand, SKILL_COLLECTIONS, REGISTRY_STATE } from "../tooling/catalog/skill-collection-registry.mjs";
 
 const runFile = promisify(execFile);
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -75,7 +75,7 @@ test("Pi projection corruption is rejected by the projector entry point", async 
   await writeFile(join(projection, "unexpected.txt"), "not projected\n");
   await assert.rejects(
     runFile(process.execPath, [
-      "scripts/sync-codex-plugin.mjs",
+      "tooling/generation/sync-codex-plugin.mjs",
       "--check",
       "--package",
       "qs-skills",

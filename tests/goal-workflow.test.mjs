@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { renderGoalWorkflowPrompt, selectGoalWorkflowStages, transitionGoalWorkflow } from "../scripts/goal-workflow.mjs";
-import { renderCompositeWorkflowPrompt } from "../scripts/skill-collection-registry.mjs";
-import { ESTIMATED_PROGRESS_CONTRACT } from "../scripts/progress-reporting-contract.mjs";
+import { renderGoalWorkflowPrompt, selectGoalWorkflowStages, transitionGoalWorkflow } from "../tooling/catalog/goal-workflow.mjs";
+import { renderCompositeWorkflowPrompt } from "../tooling/catalog/skill-collection-registry.mjs";
+import { ESTIMATED_PROGRESS_CONTRACT } from "../tooling/generation/progress-reporting-contract.mjs";
 
 const availableSkills = ["qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build", "qs-review-code", "qs-test-author", "qs-test-verify", "qs-git-merge", "qs-deploy-release"];
 const deploy = { operation: "deploy", target: "staging" };

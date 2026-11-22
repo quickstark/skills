@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, readFile, writeFile, readdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { acquireComparisonLock } from '../../../scripts/skill-efficiency-trials.mjs';
+import { acquireComparisonLock } from '../../../tooling/trials/skill-efficiency-trials.mjs';
 
 test('existing comparison lock fails closed for a PID invisible in this namespace', async () => {
   const root = await mkdtemp(join(tmpdir(), 'qs-lock-negative-'));

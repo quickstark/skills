@@ -10,9 +10,9 @@ import {
   verifyOriginMainFreshness,
   verifyManagedPackageInventory,
   validateMaintainedPackages,
-} from "../scripts/managed-skills.mjs";
-import { resolveManagedSkillPaths } from "../scripts/managed-skill-paths.mjs";
-import { SKILL_COLLECTIONS } from "../scripts/skill-collection-registry.mjs";
+} from "../tooling/install/managed-skills.mjs";
+import { resolveManagedSkillPaths } from "../tooling/install/managed-skill-paths.mjs";
+import { SKILL_COLLECTIONS } from "../tooling/catalog/skill-collection-registry.mjs";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
 const repositoryVersion = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8")).version;

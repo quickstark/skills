@@ -1,6 +1,6 @@
 # Specification — QuickStark repository layout
 
-**Status** Implementation-ready proposal, 2026-11-21. All implementation tickets are open. [Dependency graph](./quickstark-repository-layout-tickets.md).
+**Status** Implementation-ready proposal, 2026-11-21. The dependency graph tracks implementation and verification. [Dependency graph](./quickstark-repository-layout-tickets.md).
 
 **First developer task.** Given the command name `qs-repo-cleanup`, a new contributor opens `skills/qs-repo-cleanup/SKILL.md`, edits it once and uses the existing npm commands to rebuild and check every host copy. Package names and host-specific knowledge are unnecessary for this task.
 
@@ -8,7 +8,7 @@
 
 Baseline is `quickstark/skills@f1324e8b81311f2ee3209ab35808011db29a5d52`, also the local target of `v4.4.7`. The starting worktree has three prior documentation-cleanup edits. Their SHA-256 identities are recorded in the [ticket brief](./quickstark-repository-layout-tickets.md). Reconcile these edits when implementing the graph.
 
-There are eight visible tracked project directories. The 39 public commands are spread across engineering (35), productivity (3) and video (1). Six installable QS packages serve three hosts. Public name, editorial category, lifecycle order and package membership have independent meanings. The [registry](../../scripts/skill-collection-registry.mjs) owns identity. The [documentation generator](../../scripts/sync-v3-docs.mjs) currently enforces physical bucket paths, and the [root Claude manifest](../../.claude-plugin/plugin.json) names source directories directly. Recursive [listing](../../scripts/list-skills.sh) finds generated copies and fixtures. These are the first seams to change.
+At the planning baseline (`f1324e8`), there were eight visible tracked project directories. The 39 public commands are spread across engineering (35), productivity (3) and video (1). Six installable QS packages serve three hosts. Public name, editorial category, lifecycle order and package membership have independent meanings. The [registry](https://github.com/quickstark/skills/blob/f1324e8b81311f2ee3209ab35808011db29a5d52/scripts/skill-collection-registry.mjs) owns identity. The [documentation generator](https://github.com/quickstark/skills/blob/f1324e8b81311f2ee3209ab35808011db29a5d52/scripts/sync-v3-docs.mjs) currently enforces physical bucket paths, and the [root Claude manifest](https://github.com/quickstark/skills/blob/f1324e8b81311f2ee3209ab35808011db29a5d52/.claude-plugin/plugin.json) names source directories directly. Recursive [listing](https://github.com/quickstark/skills/blob/f1324e8b81311f2ee3209ab35808011db29a5d52/scripts/list-skills.sh) finds generated copies and fixtures. These are the first seams to change.
 
 | Responsibility | Target and disposition |
 |---|---|

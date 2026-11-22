@@ -4,8 +4,8 @@ import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { PUBLIC_COMMANDS, SKILL_COLLECTIONS, REGISTRY_STATE } from "../scripts/skill-collection-registry.mjs";
-import { renderSkillOutputContract } from "../scripts/sync-skill-output-contracts.mjs";
+import { PUBLIC_COMMANDS, SKILL_COLLECTIONS, REGISTRY_STATE } from "../tooling/catalog/skill-collection-registry.mjs";
+import { renderSkillOutputContract } from "../tooling/generation/sync-skill-output-contracts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -133,7 +133,7 @@ test("active packages share the release version while target marketplaces retain
     }
   }
   if (target) {
-    const transition = JSON.parse(await readFile(join(root, "config/skill-transition-packages.json"), "utf8"));
+    const transition = JSON.parse(await readFile(join(root, "tooling/generation/skill-transition-packages.json"), "utf8"));
     assert.deepEqual(transition.packages.map(pkg => [pkg.id, pkg.state, pkg.version, pkg.sourceRevision]), [["ps-skills", "retained-for-migration", "3.8.0", "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac"]]);
     assert.equal(claudeMarketplace.plugins.at(-1).source, "./packages/ps-skills");
     assert.deepEqual(codexMarketplace.plugins.at(-1).source, { source: "local", path: "./plugins/ps-skills" });

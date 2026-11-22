@@ -6,8 +6,8 @@ import { promisify } from 'node:util';
 import { tmpdir } from 'node:os';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { listPublicSources, renderTargetIndexDocuments, syncV3Documentation } from '../scripts/sync-v3-docs.mjs';
-import { TARGET_PUBLIC_COMMANDS, REGISTRY_STATE } from '../scripts/skill-collection-registry.mjs';
+import { listPublicSources, renderTargetIndexDocuments, syncV3Documentation } from '../tooling/generation/sync-v3-docs.mjs';
+import { TARGET_PUBLIC_COMMANDS, REGISTRY_STATE } from '../tooling/catalog/skill-collection-registry.mjs';
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const run = promisify(execFile);
@@ -89,10 +89,10 @@ test('legacy generation leaves its existing indexes and PS guides unchanged; imp
   const result=await syncV3Documentation({root,registryState:'legacy'});assert.equal(result.commands,34);assert.equal(result.indexes,0);assert.equal(result.updated,34);
   for(const path of indexPaths) assert.equal(await readFile(join(root,path),'utf8'),before[path]);
   assert.equal((await syncV3Documentation({root,registryState:'legacy',check:true})).updated,0);
-  const imported=await run(process.execPath,['--input-type=module','-e',`await import(${JSON.stringify(new URL('../scripts/sync-v3-docs.mjs',import.meta.url).href)})`],{cwd:root});assert.equal(imported.stdout,'');
+  const imported=await run(process.execPath,['--input-type=module','-e',`await import(${JSON.stringify(new URL('../tooling/generation/sync-v3-docs.mjs',import.meta.url).href)})`],{cwd:root});assert.equal(imported.stdout,'');
   // The executable follows its repository's actual state, independently of the legacy helper probe above.
   await syncV3Documentation({root,registryState:REGISTRY_STATE});
-  assert.equal((await run(process.execPath,[join(repositoryRoot,'scripts/sync-v3-docs.mjs'),'--root',root,'--check'],{cwd:root})).stderr,'');
+  assert.equal((await run(process.execPath,[join(repositoryRoot,'tooling/generation/sync-v3-docs.mjs'),'--root',root,'--check'],{cwd:root})).stderr,'');
 });
 
 test('public listing ignores unregistered private, historical and projected instructions', async t => {
@@ -103,5 +103,5 @@ test('public listing ignores unregistered private, historical and projected inst
   }
   const paths = [...engineering, ...productivity, ...video].map(name => `skills/${name}/SKILL.md`).sort();
   assert.deepEqual(await listPublicSources(root), paths);
-  assert.deepEqual((await run(join(repositoryRoot, 'scripts/list-skills.sh'), [], { cwd: root })).stdout.trim().split('\n'), paths);
+  assert.deepEqual((await run(join(repositoryRoot, 'tooling/generation/list-skills.sh'), [], { cwd: root })).stdout.trim().split('\n'), paths);
 });

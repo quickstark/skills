@@ -12,7 +12,7 @@ import {
   renderCompositeWorkflowPrompt,
   resolvePublicCommand,
   validateSkillCollectionRegistryModel,
-} from "../scripts/skill-collection-registry.mjs";
+} from "../tooling/catalog/skill-collection-registry.mjs";
 
 const target = REGISTRY_STATE === "target";
 const legacyCounts = [["qs-skills", 12], ["qs-specialists", 9], ["ps-skills", 13]];

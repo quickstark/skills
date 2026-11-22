@@ -13,9 +13,9 @@ state that the updater must verify and retire. Pi additionally reads its configu
 package directory directly, so deleting or regenerating that directory would
 change users' discovery before their update transaction.
 
-[Transition metadata](../../config/skill-transition-packages.json) records the
+[Transition metadata](../../tooling/generation/skill-transition-packages.json) records the
 exact retained directories, source revision, version and complete content hashes.
-[Migration records](../../config/skill-migrations.json) distinguish the original
+[Migration records](../../tooling/install/skill-migrations.json) distinguish the original
 released 3.8.0 baseline from the verified task-built transition snapshot at
 `86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac`. A direct checkout's changed bytes are
 never represented as the original release digest.

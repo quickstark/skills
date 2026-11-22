@@ -8,15 +8,15 @@ import {
   isStrippedTestEnvironmentKey,
   sanitizeTestEnvironment,
   TEST_FILES,
-} from "../scripts/qs-test-environment.mjs";
+} from "../tooling/verification/qs-test-environment.mjs";
 import {
   formatGitPreflightFailure,
   inspectGitBaseline,
-} from "../scripts/qs-test-preflight.mjs";
+} from "../tooling/verification/qs-test-preflight.mjs";
 import {
   runTestSuite,
   spawnNodeTests,
-} from "../scripts/qs-test-runner.mjs";
+} from "../tooling/verification/qs-test-runner.mjs";
 
 const expectedTestFiles = [
   "tests/repo-cleanup.test.mjs",

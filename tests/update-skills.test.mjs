@@ -5,11 +5,11 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { detectInstalledHarnesses, formatUpdateResult, updateInstalledHarnesses } from '../scripts/update-skills.mjs';
+import { detectInstalledHarnesses, formatUpdateResult, updateInstalledHarnesses } from '../tooling/install/update-skills.mjs';
 
 const agents = ['codex', 'claude-code', 'pi'];
 const repositoryRoot = path.resolve(import.meta.dirname, '..');
-const script = path.join(repositoryRoot, 'scripts/update-skills.mjs');
+const script = path.join(repositoryRoot, 'tooling/install/update-skills.mjs');
 const homeDirectory = '/users/update-skills-test';
 
 async function temporaryDirectory(t) {

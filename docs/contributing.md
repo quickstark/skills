@@ -2,9 +2,11 @@
 
 ## Start from the source of truth
 
-Read [repository guidance](../AGENTS.md) (`.claude/CLAUDE.md`), `CONTEXT.md`, and the root `README.md` before changing a skill. `scripts/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `scripts/ps-skill-catalog.mjs` retains historical PS dispositions, and `scripts/skill-collection-registry.mjs` owns shared package identity and literals.
+Read [repository guidance](../AGENTS.md) (`.claude/CLAUDE.md`), `CONTEXT.md`, and the root `README.md` before changing a skill. `tooling/catalog/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `tooling/catalog/ps-skill-catalog.mjs` retains historical PS dispositions, and `tooling/catalog/skill-collection-registry.mjs` owns shared package identity and literals.
 
 Edit `skills/<command-name>/SKILL.md` and its command-local resources. The [public index](../skills/README.md) lists package membership and editorial categories. Shared core, advanced and frontend resources live under `skills/_shared/`. Historical PS and dormant sources live under `docs/reference/skills/`. The sync command regenerates all three host packages.
+
+The [tooling directory guide](../tooling/README.md) lists each tool owner, npm command and published installer entry point.
 
 ## Install and verify
 
@@ -22,7 +24,7 @@ The project test suite checks all promoted skills, plugin versions, generated sn
 
 1. Update the owning collection catalog first when adding or renaming a skill, adjusting invocation mode, or changing its valid next steps.
 2. Edit its canonical QS `SKILL.md` and matching `agents/openai.yaml`.
-3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `scripts/sync-v3-docs.mjs` owns concise command pages.
+3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `tooling/generation/sync-v3-docs.mjs` owns concise command pages.
 4. Assign the command to one catalog package projection; generated manifests must not be hand-edited.
 5. Add behavior-focused tests to `tests/qs-skills.test.mjs`.
 6. Regenerate output contracts and the Codex snapshot:
@@ -51,7 +53,7 @@ claude plugin validate ./packages/qs-execution --strict
 
 Do not claim that a Claude validation ran if the CLI is unavailable.
 
-The sync command refreshes the live public file hashes in `config/skill-provenance.json`. The current release acceptance audit is reviewed separately. A trial edit should change the source, its three host copies and the live digest. Restore the source and sync again to discard the trial.
+The sync command refreshes the live public file hashes in `tooling/catalog/skill-provenance.json`. The current release acceptance audit is reviewed separately. A trial edit should change the source, its three host copies and the live digest. Restore the source and sync again to discard the trial.
 
 Historical tests read original source bytes from recorded fixtures and pinned local Git objects. A full clone supplies these objects offline. The target catalog resolves current files by name. Original evidence records retain the paths and hashes used at their recorded revision.
 
