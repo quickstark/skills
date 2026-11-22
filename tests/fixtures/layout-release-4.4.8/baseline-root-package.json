@@ -1,0 +1,37 @@
+{
+  "name": "qs-skills",
+  "version": "4.4.7",
+  "private": true,
+  "description": "QuickStark's grouped engineering, productivity, and deployment skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quickstark/skills"
+  },
+  "license": "MIT",
+  "scripts": {
+    "changeset": "changeset",
+    "version": "changeset version",
+    "sync:outputs": "node tooling/generation/sync-v3-docs.mjs && node tooling/generation/sync-skill-output-contracts.mjs && node tooling/generation/sync-upstream-docs.mjs",
+    "check:outputs": "node tooling/generation/sync-v3-docs.mjs --check && node tooling/generation/sync-skill-output-contracts.mjs --check && node tooling/generation/sync-upstream-docs.mjs --check",
+    "sync:codex": "node tooling/generation/sync-v3-docs.mjs && node tooling/generation/sync-skill-output-contracts.mjs && node tooling/generation/sync-codex-plugin.mjs && node tooling/generation/sync-upstream-docs.mjs --refresh-public-digests",
+    "check:codex": "node tooling/generation/sync-v3-docs.mjs --check && node tooling/generation/sync-skill-output-contracts.mjs --check && node tooling/generation/sync-codex-plugin.mjs --check && node tooling/generation/sync-upstream-docs.mjs --check",
+    "test": "node tooling/verification/qs-test-runner.mjs",
+    "test:preflight": "node tooling/verification/qs-test-preflight.mjs",
+    "skills:plan": "node tooling/install/managed-skills.mjs plan",
+    "skills:update": "node scripts/install-skills.mjs",
+    "skills:sync": "node tooling/install/managed-skills.mjs sync",
+    "skills:verify": "npm run check:codex && npm test && node tooling/install/managed-skills.mjs verify --json",
+    "personal-skills:inventory": "node tooling/install/sync-personal-skills.mjs inventory",
+    "personal-skills:adopt": "node tooling/install/sync-personal-skills.mjs adopt",
+    "personal-skills:plan": "node tooling/install/sync-personal-skills.mjs plan",
+    "personal-skills:sync": "node tooling/install/sync-personal-skills.mjs sync",
+    "personal-skills:verify": "node tooling/install/sync-personal-skills.mjs verify",
+    "sync:upstream": "node tooling/generation/sync-upstream-docs.mjs",
+    "check:upstream": "node tooling/generation/sync-upstream-docs.mjs --check"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.30.0"
+  },
+  "packageManager": "npm@10.9.4"
+}
