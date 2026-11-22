@@ -1,3 +1,4 @@
+import { claudePackagePath, codexPackagePath, piPackagePath } from '../tooling/install/distribution-layout.mjs';
 import assert from "node:assert/strict";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
@@ -50,12 +51,12 @@ test("every public command has matching source, metadata, documentation, and pac
     assert.match(docs, /produces one normalized root result directly in chat/i);
 
     const collection = SKILL_COLLECTIONS.find((item) => item.id === command.collectionId);
-    const codexCopy = join(root, collection.codexPackageRoot, "skills", command.name, "SKILL.md");
-    const piCopy = join(root, collection.piPackageRoot, "skills", command.name, "SKILL.md");
+    const codexCopy = join(root, codexPackagePath(collection.id, 'dist'), "skills", command.name, "SKILL.md");
+    const piCopy = join(root, piPackagePath(collection.id, 'dist'), "skills", command.name, "SKILL.md");
     assert.equal(await exists(codexCopy), true);
     assert.equal(await exists(piCopy), true);
-    if (collection.claudePackageRoot !== ".") {
-      assert.equal(await exists(join(root, collection.claudePackageRoot, "skills", command.name, "SKILL.md")), true);
+    if (claudePackagePath(collection.id, 'dist') !== ".") {
+      assert.equal(await exists(join(root, claudePackagePath(collection.id, 'dist'), "skills", command.name, "SKILL.md")), true);
     }
   }
 });
@@ -119,7 +120,7 @@ test("reporting runtime, deployment, operational API, and browser dependency are
 test("active packages share the release version while target marketplaces retain only the pinned PS transition exception", async () => {
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
   const claudeMarketplace = JSON.parse(await readFile(join(root, ".claude-plugin/marketplace.json"), "utf8"));
-  const codexMarketplace = JSON.parse(await readFile(join(root, "codex/.agents/plugins/marketplace.json"), "utf8"));
+  const codexMarketplace = JSON.parse(await readFile(join(root, ".agents/plugins/marketplace.json"), "utf8"));
   const target = REGISTRY_STATE === "target";
   const activeNames = target ? ["qs-skills", "qs-specialists", "qs-advanced", "qs-frontend", "qs-video", "qs-execution"] : ["qs-skills", "qs-specialists", "ps-skills"];
   const marketplaceNames = target ? [...activeNames, "ps-skills"] : activeNames;
@@ -128,7 +129,7 @@ test("active packages share the release version while target marketplaces retain
   assert.deepEqual(codexMarketplace.plugins.map(plugin => plugin.name), marketplaceNames);
   for (const name of marketplaceNames) {
     const expectedVersion = target && name === "ps-skills" ? "3.8.0" : project.version;
-    for (const manifestPath of [name === "qs-skills" ? ".claude-plugin/plugin.json" : `packages/${name}/.claude-plugin/plugin.json`, `codex/plugins/${name}/.codex-plugin/plugin.json`, `pi/packages/${name}/package.json`]) {
+    for (const manifestPath of [name === "qs-skills" ? ".claude-plugin/plugin.json" : `${claudePackagePath(name, "dist")}/.claude-plugin/plugin.json`, `${codexPackagePath(name, "dist")}/.codex-plugin/plugin.json`, `${piPackagePath(name, "dist")}/package.json`]) {
       const manifest = JSON.parse(await readFile(join(root, manifestPath), "utf8")); assert.equal(manifest.name, name, manifestPath); assert.equal(manifest.version, expectedVersion, manifestPath);
     }
   }
@@ -136,7 +137,7 @@ test("active packages share the release version while target marketplaces retain
     const transition = JSON.parse(await readFile(join(root, "tooling/generation/skill-transition-packages.json"), "utf8"));
     assert.deepEqual(transition.packages.map(pkg => [pkg.id, pkg.state, pkg.version, pkg.sourceRevision]), [["ps-skills", "retained-for-migration", "3.8.0", "86bac7dd82fe3812c9b459cc6bfa7454df9aa3ac"]]);
     assert.equal(claudeMarketplace.plugins.at(-1).source, "./packages/ps-skills");
-    assert.deepEqual(codexMarketplace.plugins.at(-1).source, { source: "local", path: "./plugins/ps-skills" });
+    assert.deepEqual(codexMarketplace.plugins.at(-1).source, { source: "local", path: "./codex/plugins/ps-skills" });
     assert.match(claudeMarketplace.plugins.at(-1).description, /Legacy migration compatibility only/);
     assert.ok(!PUBLIC_COMMANDS.some(command => command.collectionId === "ps-skills"));
   }

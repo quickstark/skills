@@ -1,3 +1,4 @@
+import { claudePackagePath, codexPackagePath, matchPiPackageSource, resolveClaudeLayout, resolveCodexLayout, resolvePiLayout, verifyPriorPiPackage } from "./distribution-layout.mjs";
 import { execFile } from 'node:child_process';
 import { randomUUID, createHash } from 'node:crypto';
 import { constants } from 'node:fs';
@@ -189,9 +190,11 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
   const selection = structuredClone(previous?.selection ?? saved.record ?? { schemaVersion: 1, targets: {}, templateRevision: null, lastSuccessfulTransaction: null });
   const profiles = json(await readFile(path.join(repositoryRoot, 'tooling/install/skill-profiles.json'), 'utf8'));
   const hosts = [];
+  const replacementCodex = agents.includes("codex") ? await resolveCodexLayout(repositoryRoot) : null;
+  const replacementPi = agents.includes("pi") ? await resolvePiLayout(repositoryRoot) : null;
   for (const agent of agents) {
     const options = { ...paths, homeDirectory: paths.homeDirectory, cwd: repositoryRoot, host: agent, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent), sources: [] };
-    let packages, market, root;
+    let packages, market, root, layout;
     const targets = [];
     if (agent === 'pi') {
       const config = path.join(paths.piHomeDirectory, 'settings.json');
@@ -204,11 +207,12 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
         const value = typeof entry === 'string' ? entry : entry?.source;
         if (typeof value !== 'string' || !path.isAbsolute(value) && !value.startsWith('.')) continue;
         const source = path.resolve(path.dirname(config), value);
-        const c = collections.find(c => source.endsWith('/' + c.piPackageRoot));
-        if (!c) continue;
+        const binding = matchPiPackageSource(source);
+        if (!binding) continue;
         check(typeof entry === 'string', 'Filtered Pi entries are preserved; automatic replacement cannot discard filters.');
-        const oldRoot = source.slice(0, -('/' + c.piPackageRoot).length); await trustedSource(oldRoot);
-        packages.push({ name: c.id, source }); options.sources.push(value); targets.push(source);
+        if (replacementPi === 'dist') await verifyPriorPiPackage(binding, repositoryRoot);
+        else await trustedSource(binding.repositoryRoot);
+        packages.push({ name: binding.id, source }); options.sources.push(value); targets.push(source);
       }
     } else {
       const result = json((await run(options.command, ['plugin', 'marketplace', 'list', '--json'], options)).stdout);
@@ -219,20 +223,21 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
       packages = (await inventory(agent, options, run)).filter(p => (agent === 'codex' ? p.pluginId : p.id)?.endsWith('@quickstark'));
       if (market) {
         check(agent === 'codex' ? market.marketplaceSource?.sourceType === 'local' && market.marketplaceSource.source === market.root : market.source === 'directory' && market.path === market.installLocation, 'Only verified local QuickStark marketplaces can be repaired automatically.');
-        root = agent === 'codex' ? path.dirname(market.root) : market.path;
+        root = agent === 'codex'
+          ? (await exec('git', ['rev-parse', '--show-toplevel'], { cwd: market.root, encoding: 'utf8' })).stdout.trimEnd()
+          : market.path;
         await trustedSource(root);
+        layout = agent === 'codex' ? await resolveCodexLayout(root) : await resolveClaudeLayout(root);
+        check(agent !== 'codex' || market.root === layout.marketplaceRoot, 'Codex marketplace differs from its declared checkout root.');
       }
       check(!packages.length || market, 'Installed packages lack a verifiable marketplace source.');
       for (const pkg of packages) {
         const id = agent === 'codex' ? pkg.pluginId : pkg.id; pkg.name = id.slice(0, -'@quickstark'.length);
         check(ids.has(pkg.name) && pkg.enabled === true && (agent === 'codex' ? pkg.installed === true && pkg.marketplaceName === 'quickstark' && pkg.source?.source === 'local' : pkg.scope === 'user'), 'Unknown, disabled or non-user QuickStark registrations remain untouched.');
-        const c = collections.find(c => c.id === pkg.name);
         const source = agent === 'codex' ? pkg.source?.path : pkg.readFromFolder;
-        const relative = agent === 'codex' ? c.codexPackageRoot : c.claudePackageRoot;
-        if (!(agent === 'claude-code' && pkg.name === 'qs-skills' && source === root)) {
-          check(typeof source === 'string' && source.endsWith('/' + relative), 'Installed source is outside the known QuickStark package path.');
-          await trustedSource(source.slice(0, -('/' + relative).length));
-        }
+        const relative = agent === 'codex' ? codexPackagePath(pkg.name, layout.name) : claudePackagePath(pkg.name, layout.name);
+        check(source === path.join(root, relative) || agent === 'claude-code' && pkg.name === 'qs-skills' && source === root,
+          'Installed source is outside the known QuickStark package path.');
         pkg.cacheSnapshot = await captureBackup(path.join(agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory, 'plugins/cache/quickstark', pkg.name));
       }
       if (agent === 'codex') {
@@ -327,7 +332,7 @@ export async function repairManagedPackages({ repositoryRoot, paths, agents, pro
         const cache = path.join(home, 'plugins/cache/quickstark');
         const remaining = await captureBackup(cache);
         if (remaining.kind !== 'absent') { await revalidateBackup(remaining); await rename(cache, path.join(backupRoot, `${agent}-retained-cache`)); }
-        const newRoot = agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot;
+        const newRoot = agent === 'codex' ? replacementCodex.marketplaceRoot : repositoryRoot;
         const oldRoot = agent === 'codex' ? host.market?.root : host.market?.path;
         if (host.market && oldRoot !== newRoot) {
           record.actions.push({ agent, operation: 'marketplace-remove', status: 'attempted' }); await save(recordPath, record);

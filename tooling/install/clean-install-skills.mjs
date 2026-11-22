@@ -1,3 +1,7 @@
+import { captureLegacyClaudeCore } from './claude-core-migration.mjs';
+import { claudePackagePath, resolveClaudeLayout, resolvePriorClaudeCheckout, codexPackagePath, recognizeDistributionSource, resolveCodexLayout, resolvePriorCodexCheckout } from './distribution-layout.mjs';
+import { matchPiPackageSource, piPackagePath, resolvePiLayout, verifyPriorPiPackage } from './distribution-layout.mjs';
+import { verifyTransitionPayloads } from '../generation/skill-transition-packages.mjs';
 import { execFile } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { constants } from 'node:fs';
@@ -94,11 +98,16 @@ async function inventory(agent, options, run) {
       const source = typeof entry === 'string' ? entry : entry?.source;
       if (typeof source !== 'string' || !path.isAbsolute(source) && !source.startsWith('.')) continue;
       const absolute = path.resolve(path.dirname(config), source);
-      const collection = [...ids].find(id => absolute.endsWith(`/pi/packages/${id}`));
-      if (!collection) continue;
-      await officialSource(absolute.slice(0, -`/pi/packages/${collection}`.length), options.cwd);
+      const binding = matchPiPackageSource(absolute);
+      if (!binding || options.piLayout !== 'dist' && binding.relative !== piPackagePath(binding.id)) continue;
       check(typeof entry === 'string', 'Filtered Pi registrations are preserved; reconcile their filters before a clean install.');
-      packages.push({ name: collection, source: absolute });
+      if (options.piLayout === 'dist') {
+        check(!packages.some(pkg => pkg.name === binding.id), 'Duplicate Pi package registration; reconcile before a clean install.');
+        await verifyPriorPiPackage(binding, options.cwd);
+      } else {
+        await officialSource(binding.repositoryRoot, options.cwd);
+      }
+      packages.push({ name: binding.id, source: absolute, repositoryRoot: binding.repositoryRoot });
     }
     return { packages, config };
   }
@@ -106,10 +115,17 @@ async function inventory(agent, options, run) {
   const matching = (agent === 'codex' ? markets.marketplaces : markets)?.filter(m => m.name === 'quickstark');
   check(Array.isArray(matching) && matching.length <= 1, 'QuickStark marketplace inventory is unsupported or ambiguous.');
   const market = matching[0];
+  let checkout;
   if (market) {
     check(agent === 'codex' ? market.marketplaceSource?.sourceType === 'local' && market.marketplaceSource.source === market.root
       : market.source === 'directory' && market.path === market.installLocation, 'Only a verified local QuickStark marketplace can be replaced.');
-    await officialSource(agent === 'codex' ? path.dirname(market.root) : market.path, options.cwd);
+    if (agent === 'codex' && options.codexLayout.name === 'dist') {
+      checkout = await resolvePriorCodexCheckout(market.root, options.cwd);
+    } else if (agent === 'claude-code' && options.claudeLayout.name === 'dist') {
+      checkout = await resolvePriorClaudeCheckout(market.path, options.cwd);
+    } else {
+      await officialSource(agent === 'codex' ? path.dirname(market.root) : market.path, options.cwd);
+    }
   }
   const value = market ? json((await run(options.command, agent === 'codex'
     ? ['plugin', 'list', '--marketplace', 'quickstark', '--json'] : ['plugin', 'list', '--json'], options)).stdout) : agent === 'codex' ? { installed: [] } : [];
@@ -130,10 +146,52 @@ async function inventory(agent, options, run) {
     }
   }
   check(market || names.length === 0, 'QuickStark registrations have no verifiable marketplace; they remain untouched.');
-  return { market, packages: [...new Set(names)].map(name => {
+  return { market, checkout, packages: [...new Set(names)].map(name => {
     const entry = owned.find(p => (agent === 'codex' ? p.pluginId : p.id) === `${name}@quickstark`);
-    return { name, enabled: entry?.enabled, version: entry?.version, source: agent === 'codex' ? entry?.source?.path : entry?.readFromFolder };
+    return { name, enabled: entry?.enabled, version: entry?.version, installPath: entry?.installPath, source: agent === 'codex' ? entry?.source?.path : entry?.readFromFolder };
   }), config };
+}
+
+async function verifyPreviousCodexPackages(observed, options) {
+  const { checkout, packages } = observed;
+  if (!checkout) return;
+  for (const pkg of packages.filter(item => item.source)) {
+    const { repositoryRoot, revision, layout } = checkout;
+    const source = path.join(repositoryRoot, codexPackagePath(pkg.name, layout.name));
+    check(pkg.source === source, 'Installed Codex package source does not match its pinned marketplace checkout.');
+    if (pkg.name === 'ps-skills') {
+      await verifyTransitionPayloads(options.cwd, repositoryRoot);
+    } else {
+      await recognizeDistributionSource({ repositoryRoot, revision, host: 'codex', packageId: pkg.name, source });
+    }
+    const expected = await inspectNativePayload('codex', source);
+    const installed = await inspectNativePayload('codex', path.join(options.codexHomeDirectory, 'plugins/cache/quickstark', pkg.name, expected.version));
+    check(pkg.version === expected.version && installed.payloadSha256 === expected.payloadSha256,
+      'Installed Codex package differs from the retained source; preserve the existing state.');
+  }
+}
+
+async function verifyPreviousClaudePackages(observed, options) {
+  const { checkout, packages } = observed;
+  if (!checkout) return;
+  const { repositoryRoot, revision, layout, rootCore } = checkout;
+  for (const pkg of packages.filter(item => item.installPath || item.source)) {
+    const legacyRoot = rootCore && pkg.name === 'qs-skills';
+    const source = legacyRoot ? repositoryRoot : path.join(repositoryRoot, claudePackagePath(pkg.name, layout.name));
+    check(pkg.source === source, 'Installed Claude package source does not match its pinned marketplace checkout.');
+    let proof;
+    if (pkg.name === 'ps-skills') {
+      await verifyTransitionPayloads(options.cwd, repositoryRoot);
+      const pinned = await inspectNativePayload('claude-code', source);
+      proof = { version: pinned.version, contentSha256: pinned.payloadSha256 };
+    } else {
+      proof = await recognizeDistributionSource({ repositoryRoot, revision, host: 'claude-code', packageId: pkg.name, source });
+    }
+    const cache = path.join(options.claudeHomeDirectory, 'plugins/cache/quickstark', pkg.name, proof.version);
+    check(pkg.installPath === cache && pkg.version === proof.version, 'Claude installed cache path/version differs from its pinned source.');
+    const actual = legacyRoot ? await captureLegacyClaudeCore(cache) : await inspectNativePayload('claude-code', cache);
+    check(actual.payloadSha256 === proof.contentSha256, 'Installed Claude cache differs from the retained source; preserve the existing state.');
+  }
 }
 
 /** Ordinary installation replaces only QuickStark registrations. Historical
@@ -150,7 +208,10 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
   let backupRoot;
   try {
     if (verifyRepositoryFreshness) await verifyRepositoryFreshness({ repositoryRoot, agents });
-    const options = { ...paths, host: agent, cwd: repositoryRoot, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
+    const codexLayout = agent === 'codex' ? await resolveCodexLayout(repositoryRoot) : null;
+    const claudeLayout = agent === 'claude-code' ? await resolveClaudeLayout(repositoryRoot) : null;
+    const piLayout = agent === 'pi' ? await resolvePiLayout(repositoryRoot) : null;
+    const options = { ...paths, codexLayout, claudeLayout, piLayout, host: agent, cwd: repositoryRoot, command: runtime.commands?.[agent] ?? (agent === 'claude-code' ? 'claude' : agent) };
     const run = runtime.runCommand ?? runNativePackageCommand;
     const saved = await readSelectionRecord(paths.selectionPath);
     const record = saved.record ?? { schemaVersion: 1, targets: {}, templateRevision: null, lastSuccessfulTransaction: null };
@@ -161,15 +222,17 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
     const requested = resolveTargetSelection(selectionOptions).selection;
     await mkdir(agent === 'codex' ? paths.codexHomeDirectory : agent === 'claude-code' ? paths.claudeHomeDirectory : paths.piHomeDirectory, { recursive: true });
     const observed = await inventory(agent, options, run);
+    if (codexLayout?.name === 'dist') await verifyPreviousCodexPackages(observed, options);
+    if (claudeLayout?.name === 'dist') await verifyPreviousClaudePackages(observed, options);
     if (await optionalStat(observed.config)) {
       const physical = await realpath(observed.config);
       check(!within(await realpath(repositoryRoot), physical), 'Client settings must remain outside the accepted release.');
       if (observed.market) {
-        const sourceRoot = agent === 'codex' ? path.dirname(observed.market.root) : observed.market.path;
+        const sourceRoot = observed.checkout?.repositoryRoot ?? (agent === 'codex' ? path.dirname(observed.market.root) : observed.market.path);
         check(!within(await realpath(sourceRoot), physical), 'Client settings must remain outside retained source checkouts.');
       }
       if (agent === 'pi') for (const pkg of observed.packages) {
-        check(!within(await realpath(path.resolve(pkg.source, '../../..')), physical), 'Pi settings must remain outside retained source checkouts.');
+        check(!within(await realpath(pkg.repositoryRoot), physical), 'Pi settings must remain outside retained source checkouts.');
       }
     }
     const hostHome = agent === 'codex' ? paths.codexHomeDirectory : paths.claudeHomeDirectory;
@@ -184,8 +247,7 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
     const release = await (runtime.validateRepairRelease ?? validateSkillRelease)({ repositoryRoot, agents, packageIds: desired.packages });
     const accepted = new Map();
     for (const id of desired.packages) {
-      const collection = TARGET_SKILL_COLLECTIONS.find(c => c.id === id);
-      const source = path.join(repositoryRoot, agent === 'codex' ? collection.codexPackageRoot : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot);
+      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(id, claudeLayout.name) : piPackagePath(id, piLayout));
       accepted.set(id, { source, payload: await inspectNativePayload(agent, source) });
     }
     record.targets[agent] = desired;
@@ -211,17 +273,16 @@ export async function cleanInstallSkills({ repositoryRoot, homeDirectory, agents
       // were copied above; remove only the finite, known QuickStark package IDs.
       for (const id of ids) await rm(path.join(hostHome, 'plugins/cache/quickstark', id), { recursive: true, force: true });
       if (observed.market) await run(options.command, ['plugin', 'marketplace', 'remove', 'quickstark', ...(agent === 'claude-code' ? ['--scope', 'user'] : [])], options);
-      await run(options.command, ['plugin', 'marketplace', 'add', agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot], options);
+      await run(options.command, ['plugin', 'marketplace', 'add', agent === 'codex' ? codexLayout.marketplaceRoot : repositoryRoot], options);
     }
     for (const id of desired.packages) {
-      const collection = TARGET_SKILL_COLLECTIONS.find(c => c.id === id);
-      await run(options.command, agent === 'pi' ? ['install', path.join(repositoryRoot, collection.piPackageRoot)]
+      await run(options.command, agent === 'pi' ? ['install', accepted.get(id).source]
         : agent === 'codex' ? ['plugin', 'add', `${id}@quickstark`, '--json'] : ['plugin', 'install', `${id}@quickstark`, '--scope', 'user'], options);
     }
     const installed = await inventory(agent, options, run);
     check(installed.packages.length === desired.packages.length && desired.packages.every(id => installed.packages.some(p => p.name === id)), 'Client did not register the selected QuickStark packages exactly; rerun the installer.');
     const version = json(await readFile(path.join(repositoryRoot, 'package.json'), 'utf8')).version;
-    if (agent !== 'pi') check((agent === 'codex' ? installed.market?.root : installed.market?.path) === (agent === 'codex' ? path.join(repositoryRoot, 'codex') : repositoryRoot), 'Client registered a different marketplace source.');
+    if (agent !== 'pi') check((agent === 'codex' ? installed.market?.root : installed.market?.path) === (agent === 'codex' ? codexLayout.marketplaceRoot : repositoryRoot), 'Client registered a different marketplace source.');
     for (const id of desired.packages) {
       const { source, payload: expected } = accepted.get(id);
       const registration = installed.packages.find(pkg => pkg.name === id);

@@ -75,7 +75,7 @@ test('prototype subject and platform references stay private and reach every own
   const references = (text) => [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]).sort();
   const canonical = await body(`${source}/SKILL.md`);
   assert.deepEqual(references(canonical), expected, 'The root must independently select subject and platform guidance');
-  for (const directory of [source, ...['packages', 'codex/plugins', 'pi/packages'].map((host) => `${host}/qs-specialists/skills/qs-design-prototype`)]) {
+  for (const directory of [source, ...['dist/claude', 'dist/codex', 'dist/pi'].map((host) => `${host}/qs-specialists/skills/qs-design-prototype`)]) {
     assert.deepEqual(references(await body(`${directory}/SKILL.md`)), expected, `${directory}: reference closure`);
     for (const name of expected) {
       const content = await read(`${directory}/${name}`);

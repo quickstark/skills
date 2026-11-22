@@ -284,10 +284,11 @@ export async function assembleManagedSkillMigration(preview, { transactionId, st
     for (const actual of native.state.native.packages) {
       const binding = native.options.packages.find((entry) => entry.id === actual.id); const expected = required.get(binding.name);
       const selectedBefore = preview.targets[agent].original.packages.includes(binding.name);
-      if (selectedBefore && (!expected || expected.version !== actual.version || binding.installedOnly)) steps.push(change(binding, 'withdraw'));
+      if (selectedBefore && (!expected || expected.version !== actual.version || binding.installedOnly
+        || agent === 'pi' && binding.source !== expected.artifact.source)) steps.push(change(binding, 'withdraw'));
     }
     for (const id of desired) {
-      const pkg = required.get(id); const binding = native.options.packages.find((entry) => entry.name === id && entry.version === pkg.version && !entry.installedOnly);
+      const pkg = required.get(id); const binding = native.options.packages.find((entry) => entry.name === id && entry.version === pkg.version && entry.source === pkg.artifact.source && !entry.installedOnly);
       if (!before.native.packages.some((entry) => entry.id === binding.id)) exposures.push(change(binding, 'expose'));
     }
   }

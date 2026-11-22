@@ -4,7 +4,7 @@
 
 Read [repository guidance](../AGENTS.md) (`.claude/CLAUDE.md`), `CONTEXT.md`, and the root `README.md` before changing a skill. `tooling/catalog/qs-skill-catalog.mjs` owns QS membership, the advanced/frontend/video/execution catalogs own optional membership, `tooling/catalog/ps-skill-catalog.mjs` retains historical PS dispositions, and `tooling/catalog/skill-collection-registry.mjs` owns shared package identity and literals.
 
-Edit `skills/<command-name>/SKILL.md` and its command-local resources. The [public index](../skills/README.md) lists package membership and editorial categories. Shared core, advanced and frontend resources live under `skills/_shared/`. Historical PS and dormant sources live under `docs/reference/skills/`. The sync command regenerates all three host packages.
+Edit `skills/<command-name>/SKILL.md` and its command-local resources. The [public index](../skills/README.md) lists package membership and editorial categories. Shared core, advanced and frontend resources live under `skills/_shared/`. Historical PS and dormant sources live under `docs/reference/skills/`. The sync command regenerates all three host distributions under `dist/`.
 
 The [tooling directory guide](../tooling/README.md) lists each tool owner, npm command and published installer entry point.
 
@@ -27,7 +27,7 @@ The project test suite checks all promoted skills, plugin versions, generated sn
 3. Update the bucket and root indexes and `qs-help` when discovery or workflow changes; `tooling/generation/sync-v3-docs.mjs` owns concise command pages.
 4. Assign the command to one catalog package projection; generated manifests must not be hand-edited.
 5. Add behavior-focused tests to `tests/qs-skills.test.mjs`.
-6. Regenerate output contracts and the Codex snapshot:
+6. Regenerate output contracts and all three host distributions:
 
 ```bash
 npm run sync:codex
@@ -40,15 +40,16 @@ npm run check:codex
 npm test
 ```
 
-When Claude Code is installed and manifests changed, validate all six active roots:
+When Claude Code is installed and manifests changed, validate the marketplace and all six active Claude packages:
 
 ```bash
 claude plugin validate . --strict
-claude plugin validate ./packages/qs-specialists --strict
-claude plugin validate ./packages/qs-advanced --strict
-claude plugin validate ./packages/qs-frontend --strict
-claude plugin validate ./packages/qs-video --strict
-claude plugin validate ./packages/qs-execution --strict
+claude plugin validate ./dist/claude/qs-skills --strict
+claude plugin validate ./dist/claude/qs-specialists --strict
+claude plugin validate ./dist/claude/qs-advanced --strict
+claude plugin validate ./dist/claude/qs-frontend --strict
+claude plugin validate ./dist/claude/qs-video --strict
+claude plugin validate ./dist/claude/qs-execution --strict
 ```
 
 Do not claim that a Claude validation ran if the CLI is unavailable.

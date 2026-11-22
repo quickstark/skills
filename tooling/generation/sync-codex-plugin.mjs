@@ -18,6 +18,7 @@ import { PS_INTERNAL_CAPABILITIES } from "../catalog/ps-skill-catalog.mjs";
 import { assertGeneratedPackageRoot, assertGeneratedPiPackageRoot } from "./skill-package-projection.mjs";
 import { PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS_BY_NAME, REGISTRY_STATE } from "../catalog/skill-collection-registry.mjs";
 import { renderSkillOutputContract, renderHelpRoutingReference } from "./sync-skill-output-contracts.mjs";
+import { distributionHosts, distributionPaths } from "../install/distribution-layout.mjs";
 import { copyTransitionPayloads, verifyTransitionPayloads } from "./skill-transition-packages.mjs";
 
 const project = JSON.parse(await readFile(join(repositoryRoot, "package.json"), "utf8"));
@@ -94,13 +95,20 @@ const candidate = originalArguments.includes("--candidate");
 if (originalArguments.filter((argument) => argument === "--candidate").length > 1) throw new Error("Duplicate --candidate option.");
 const output = optionValue(originalArguments, "--output-root");
 if (candidate !== Boolean(output)) throw new Error("Candidate projection requires --candidate and --output-root together.");
+const layoutOption = optionValue(originalArguments, "--layout");
+if (layoutOption !== undefined && (!candidate || !["original", "dist"].includes(layoutOption))) {
+  throw new Error("Projector layout must be original or dist and requires --candidate.");
+}
+const layout = layoutOption ?? (candidate || REGISTRY_STATE !== "target" ? "original" : "dist");
 const outputRoot = candidate ? resolve(output) : repositoryRoot;
+const codexMarketRoot = layout === "dist" ? outputRoot : join(outputRoot, "codex");
+const codexMarketFile = join(codexMarketRoot, ".agents", "plugins", "marketplace.json");
 if (candidate) {
   const temporaryRoot = resolve(tmpdir());
   if (!outputRoot.startsWith(temporaryRoot + sep) || outputRoot === repositoryRoot || outputRoot.startsWith(repositoryRoot + sep) || /(?:^|[\\/])\.(?:agents|codex|claude)(?:[\\/]|$)/.test(outputRoot)) {
     throw new Error("Candidate output must be a fresh directory under the system temporary directory, outside source and discovery roots.");
   }
-  let current = dirname(outputRoot);
+  let current = originalArguments.includes("--check") ? outputRoot : dirname(outputRoot);
   while (true) {
     const metadata = await lstat(current).catch((error) => error.code === "ENOENT" ? null : Promise.reject(error));
     if (metadata && (!metadata.isDirectory() || metadata.isSymbolicLink())) throw new Error("Candidate output has a linked/non-directory ancestor.");
@@ -108,7 +116,9 @@ if (candidate) {
   }
   if (!originalArguments.includes("--check") && await exists(outputRoot)) throw new Error("Candidate projection requires a new output directory; existing evidence is never overwritten.");
 }
-const cliArguments = originalArguments.filter((argument, index) => argument !== "--candidate" && argument !== "--output-root" && originalArguments[index - 1] !== "--output-root");
+const candidateOptions = new Set(["--output-root", "--layout"]);
+const cliArguments = originalArguments.filter((argument, index) =>
+  argument !== "--candidate" && !candidateOptions.has(argument) && !candidateOptions.has(originalArguments[index - 1]));
 const optionalMetadata = [
   {name:"qs-advanced",displayName:"QuickStark Advanced",description:"Optional focused analysis, verification, evaluation and operations workflows.",
     privateTrees:[{source:"skills/_shared/advanced",target:"advanced",canonical:"../_shared/advanced/"}],noticeSource:"skills/_shared/advanced/THIRD_PARTY_NOTICES.md"},
@@ -118,6 +128,8 @@ const optionalMetadata = [
   {name:"qs-execution",displayName:"QuickStark Execution",description:"Optional substantial-work acceptance gates and completion discipline.",privateTrees:[]},
 ];
 const targetRegistry = candidate || REGISTRY_STATE === "target";
+// The dist preview keeps the active projection byte-identical across locations.
+const renderCandidateContracts = candidate && (layout === "original" || REGISTRY_STATE !== "target");
 const selectedPackages = targetRegistry ? [
   ...legacyPackages.filter((pkg) => pkg.name !== "ps-skills"),
   ...optionalMetadata.map((pkg)=>({...pkg,projection:TARGET_PUBLIC_COMMANDS.filter((command)=>command.collectionId===pkg.name),capabilityFiles:[],
@@ -125,9 +137,8 @@ const selectedPackages = targetRegistry ? [
     defaultPrompt:[pkg.description],keywords:["quickstark","optional"],claudeMarketplaceSource:`./packages/${pkg.name}`,
     ...(pkg.noticeSource ? {noticeFiles:["THIRD_PARTY_NOTICES.md"]} : {})})),
 ] : legacyPackages;
-const packages = Object.freeze(selectedPackages.map((pkg) => candidate ? {
-  ...pkg,codexRoot:join(outputRoot,"codex/plugins",pkg.name),piRoot:join(outputRoot,"pi/packages",pkg.name),
-  claudeRoot:join(outputRoot,"packages",pkg.name),claudeMarketplaceSource:`./packages/${pkg.name}`,
+const packages = Object.freeze(selectedPackages.map((pkg) => candidate || layout === "dist" ? {
+  ...pkg, ...projectionRoots(pkg.name),
 } : pkg));
 
 if (targetRegistry) await listPublicSources(repositoryRoot);
@@ -136,6 +147,20 @@ else {
   if (cliArguments.length > 0) throw new Error(`Unknown projector option: ${cliArguments[0]}`);
   if (candidate) await mkdir(outputRoot);
   await syncAll();
+}
+
+function projectionRoots(name) {
+  const claude = distributionPaths("claude-code", name)[layout];
+  return {
+    claudeRoot: join(outputRoot, claude),
+    claudeMarketplaceSource: "./" + claude,
+    codexRoot: join(outputRoot, distributionPaths("codex", name)[layout]),
+    piRoot: join(outputRoot, distributionPaths("pi", name)[layout]),
+  };
+}
+
+function relativeSource(root, packageRoot) {
+  return "./" + relative(root, packageRoot).split(sep).join("/");
 }
 
 function optionValue(arguments_, name) {
@@ -272,10 +297,10 @@ function codexMarketplace() {
     interface: { displayName: "QuickStark Skills" },
     plugins: [...packages.map((pkg) => ({
       name: pkg.name,
-      source: { source: "local", path: `./plugins/${pkg.name}` },
+      source: { source: "local", path: relativeSource(codexMarketRoot, pkg.codexRoot) },
       policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" },
       category: "Coding",
-    })), ...(targetRegistry ? [{ name: "ps-skills", source: { source: "local", path: "./plugins/ps-skills" }, policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" }, category: "Coding" }] : [])],
+    })), ...(targetRegistry ? [{ name: "ps-skills", source: { source: "local", path: relativeSource(codexMarketRoot, join(outputRoot, "codex/plugins/ps-skills")) }, policy: { installation: "AVAILABLE", authentication: "ON_INSTALL" }, category: "Coding" }] : [])],
   };
 }
 
@@ -284,12 +309,12 @@ async function projectedSkillContent(pkg, skill, file, { codex }) {
   let content = source;
   if (file.endsWith(".md")) {
     let text = source.toString("utf8");
-    if (candidate && file === "SKILL.md") {
+    if (renderCandidateContracts && file === "SKILL.md") {
       const marker = "## Completion report and next steps";
       if (!text.includes(marker)) throw new Error(`Missing completion contract: ${skill.name}`);
       text = text.slice(0, text.indexOf(marker)) + renderSkillOutputContract(skill, { commandsByName: TARGET_PUBLIC_COMMANDS_BY_NAME });
     }
-    if (candidate && skill.name === "qs-help" && file === "ROUTING.md") text = renderHelpRoutingReference(TARGET_PUBLIC_COMMANDS);
+    if (renderCandidateContracts && skill.name === "qs-help" && file === "ROUTING.md") text = renderHelpRoutingReference(TARGET_PUBLIC_COMMANDS);
     for (const tree of pkg.privateTrees ?? []) text = text.replaceAll(tree.canonical, `../../capabilities/${tree.target}/`);
     if (codex && file === "SKILL.md") text = formatSkillForCodex(text, skill);
     content = Buffer.from(text);
@@ -376,15 +401,15 @@ async function writePiProjection(pkg) {
 }
 
 function coreClaudeManifest() {
-  if (!candidate) return claudeManifest(packages[0]);
+  if (!candidate && layout === "original") return claudeManifest(packages[0]);
   const manifest = claudeManifest(packages[0], true);
-  return { ...manifest, skills: manifest.skills.map((path) => `./packages/qs-skills/${path.slice(2)}`) };
+  return { ...manifest, skills: manifest.skills.map((path) => `${packages[0].claudeMarketplaceSource}/${path.slice(2)}`) };
 }
 
 async function syncAll() {
   if (targetRegistry && !candidate) await verifyTransitionPayloads(repositoryRoot);
   await mkdir(join(outputRoot, ".claude-plugin"), { recursive: true });
-  await mkdir(join(outputRoot, "codex", ".agents", "plugins"), { recursive: true });
+  await mkdir(dirname(codexMarketFile), { recursive: true });
   for (const pkg of packages) {
     await writeProjection(pkg, pkg.codexRoot, { codex: true });
     await mkdir(join(pkg.codexRoot, ".codex-plugin"), { recursive: true });
@@ -400,7 +425,7 @@ async function syncAll() {
   if (targetRegistry && candidate) await copyTransitionPayloads(repositoryRoot, outputRoot);
   await writeFile(join(outputRoot, ".claude-plugin", "plugin.json"), json(coreClaudeManifest()));
   await writeFile(join(outputRoot, ".claude-plugin", "marketplace.json"), json(marketplace()));
-  await writeFile(join(outputRoot, "codex", ".agents", "plugins", "marketplace.json"), json(codexMarketplace()));
+  await writeFile(codexMarketFile, json(codexMarketplace()));
   console.log(`Generated ${candidate ? "isolated candidate" : "active"} projections for ${packages.length} packages across Codex, Claude, and Pi.`);
 }
 
@@ -489,6 +514,29 @@ async function verifyJson(path, expected, label) {
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error(`${label} is stale.`);
 }
 
+async function verifyPackageDirectories(root, expected) {
+  if (!(await lstat(root)).isDirectory()) throw new Error("Distribution root must be a real directory: " + root);
+  const entries = await readdir(root, { withFileTypes: true });
+  if (entries.some(entry => !entry.isDirectory())
+    || JSON.stringify(entries.map(entry => entry.name).sort()) !== JSON.stringify([...expected].sort())) {
+    throw new Error("Unexpected package inventory in " + root);
+  }
+}
+
+async function verifyDistributionRoots() {
+  const expected = packages.map(pkg => pkg.name);
+  const hostRoots = distributionHosts.map(host => dirname(distributionPaths(host, expected[0]).dist));
+  await verifyPackageDirectories(join(outputRoot, "dist"), hostRoots.map(root => root.split("/").at(-1)));
+  for (const root of hostRoots) await verifyPackageDirectories(join(outputRoot, root), expected);
+  for (const host of distributionHosts) {
+    const originalRoot = dirname(distributionPaths(host, expected[0]).original);
+    await verifyPackageDirectories(join(outputRoot, originalRoot), ["ps-skills"]);
+  }
+  if (await exists(join(outputRoot, "codex/.agents/plugins/marketplace.json"))) {
+    throw new Error("The active Codex marketplace must only exist at the checkout root.");
+  }
+}
+
 async function verifyAll(selection = null) {
   if (selection) {
     const pkg = packages.find((candidate) => candidate.name === selection.packageName);
@@ -508,6 +556,7 @@ async function verifyAll(selection = null) {
     console.log(`Verified deterministic ${pkg.name} ${selection.format} package projection.`);
     return;
   }
+  if (layout === "dist") await verifyDistributionRoots();
   for (const pkg of packages) {
     await verifyProjection(pkg, pkg.codexRoot, { codex: true });
     await verifyJson(join(pkg.codexRoot, ".codex-plugin", "plugin.json"), codexManifest(pkg), `${pkg.name} Codex manifest`);
@@ -521,6 +570,6 @@ async function verifyAll(selection = null) {
   if (targetRegistry) await verifyTransitionPayloads(repositoryRoot, outputRoot);
   await verifyJson(join(outputRoot, ".claude-plugin", "plugin.json"), coreClaudeManifest(), "core Claude manifest");
   await verifyJson(join(outputRoot, ".claude-plugin", "marketplace.json"), marketplace(), "Claude marketplace");
-  await verifyJson(join(outputRoot, "codex", ".agents", "plugins", "marketplace.json"), codexMarketplace(), "Codex marketplace");
+  await verifyJson(codexMarketFile, codexMarketplace(), "Codex marketplace");
   console.log(`Verified deterministic ${candidate ? "candidate" : "active"} projections for ${packages.length} packages across Codex, Claude, and Pi.`);
 }

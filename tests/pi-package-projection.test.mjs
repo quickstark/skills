@@ -1,3 +1,4 @@
+import { piPackagePath } from '../tooling/install/distribution-layout.mjs';
 import assert from "node:assert/strict";
 import { cp, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
@@ -25,7 +26,7 @@ test("Pi package projection preserves exactly the active maintained collection b
     ? [["qs-skills",12],["qs-specialists",9],["qs-advanced",12],["qs-frontend",4],["qs-video",1],["qs-execution",1]]
     : [["qs-skills",12],["qs-specialists",9],["ps-skills",13]]);
   for (const collection of SKILL_COLLECTIONS) {
-    const root = join(repositoryRoot, collection.piPackageRoot);
+    const root = join(repositoryRoot, piPackagePath(collection.id, 'dist'));
     const manifest = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
     assert.equal(manifest.name, collection.packageName);
     assert.equal(manifest.version, project.version);
@@ -40,7 +41,7 @@ test("Pi package projection preserves exactly the active maintained collection b
 
 test("Pi manifest projects canonical skill contents and required notices without lifecycle code", async () => {
   for (const collection of SKILL_COLLECTIONS) {
-    const root = join(repositoryRoot, collection.piPackageRoot);
+    const root = join(repositoryRoot, piPackagePath(collection.id, 'dist'));
     for (const name of collection.publicCommands) {
       const sourceCommand = resolvePublicCommand(name);
       const sourceRoot = join(repositoryRoot, sourceCommand.sourcePath);
@@ -71,7 +72,7 @@ test("Pi projection corruption is rejected by the projector entry point", async 
   const directory = await mkdtemp(join(tmpdir(), "qs-pi-projection-test-"));
   const projection = join(directory, "qs-skills");
   context.after(() => rm(directory, { recursive: true, force: true }));
-  await cp(join(repositoryRoot, "pi", "packages", "qs-skills"), projection, { recursive: true });
+  await cp(join(repositoryRoot, "dist", "pi", "qs-skills"), projection, { recursive: true });
   await writeFile(join(projection, "unexpected.txt"), "not projected\n");
   await assert.rejects(
     runFile(process.execPath, [
@@ -101,11 +102,11 @@ test("target private references remain packaged and byte-identical without becom
     }
     return result.sort();
   };
-  for(const [source,projected,required] of [["skills/_shared/advanced","pi/packages/qs-advanced/capabilities/advanced",16],["skills/_shared/frontend","pi/packages/qs-frontend/capabilities/frontend",12]]) {
+  for(const [source,projected,required] of [["skills/_shared/advanced","dist/pi/qs-advanced/capabilities/advanced",16],["skills/_shared/frontend","dist/pi/qs-frontend/capabilities/frontend",12]]) {
     const sources=await walk(join(repositoryRoot,source)), copies=await walk(join(repositoryRoot,projected)); assert.deepEqual(copies,sources);
     assert.equal(sources.filter(file=>file.startsWith("internal/") && file.endsWith(".md")).length,required);
     for(const file of sources) assert.deepEqual(await readFile(join(repositoryRoot,projected,file)),await readFile(join(repositoryRoot,source,file)),file);
   }
-  assert.deepEqual((await readdir(join(repositoryRoot,"pi/packages/qs-skills/capabilities"))).sort(),["delegation.md","domain-modeling.md","module-decomposition.md","tdd-loop.md","ticket-decomposition.md"]);
-  assert.deepEqual((await readdir(join(repositoryRoot,"pi/packages/qs-video/skills/qs-video/modules"))).sort(),["embedded-captions","faceless-explainer","figma","general-video","hyperframes","hyperframes-animation","hyperframes-audio","hyperframes-cli","hyperframes-core","hyperframes-creative","hyperframes-keyframes","hyperframes-registry","hyperframes-studio","media-use","motion-graphics","music-to-video","pr-to-video","product-launch-video","remotion-to-hyperframes","slideshow","talking-head-recut"].sort());
+  assert.deepEqual((await readdir(join(repositoryRoot,"dist/pi/qs-skills/capabilities"))).sort(),["delegation.md","domain-modeling.md","module-decomposition.md","tdd-loop.md","ticket-decomposition.md"]);
+  assert.deepEqual((await readdir(join(repositoryRoot,"dist/pi/qs-video/skills/qs-video/modules"))).sort(),["embedded-captions","faceless-explainer","figma","general-video","hyperframes","hyperframes-animation","hyperframes-audio","hyperframes-cli","hyperframes-core","hyperframes-creative","hyperframes-keyframes","hyperframes-registry","hyperframes-studio","media-use","motion-graphics","music-to-video","pr-to-video","product-launch-video","remotion-to-hyperframes","slideshow","talking-head-recut"].sort());
 });

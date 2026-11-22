@@ -1,3 +1,4 @@
+import { claudePackagePath } from '../tooling/install/distribution-layout.mjs';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { spawn } from 'node:child_process';
@@ -577,7 +578,7 @@ test('real isolated Claude installs every maintained projection with exactly the
   await runNativePackageCommand('claude',['plugin','marketplace','add',repositoryRoot],options);
   const packages=[];
   for(const collection of TARGET_SKILL_COLLECTIONS) {
-    const source=path.join(repositoryRoot,collection.claudePackageRoot);
+    const source=path.join(repositoryRoot,claudePackagePath(collection.id, 'dist'));
     const manifest=JSON.parse(await readFile(path.join(source,'.claude-plugin/plugin.json')));
     packages.push({id:collection.id,name:collection.id,version:manifest.version,source,payloadSha256:nativePayloadSha256('claude-code',await captureMigrationPath(source)),
       publicNames:collection.publicCommands,ownershipRecord:'isolated-maintained-projection',marketplace:'quickstark',marketplaceRoot:repositoryRoot});

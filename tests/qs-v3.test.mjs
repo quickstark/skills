@@ -1,3 +1,4 @@
+import { claudePackagePath, codexPackagePath, piPackagePath } from '../tooling/install/distribution-layout.mjs';
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { readFile, readdir, stat, lstat, realpath } from "node:fs/promises";
@@ -127,21 +128,21 @@ test("Codex projections keep explicit commands visible without weakening other h
     const collection = SKILL_COLLECTIONS.find((candidate) => candidate.id === command.collectionId);
     assert.ok(collection, `${command.name} is missing its collection`);
     const codexMetadata = await readFile(
-      join(root, collection.codexPackageRoot, "skills", command.name, "agents", "openai.yaml"),
+      join(root, codexPackagePath(collection.id, 'dist'), "skills", command.name, "agents", "openai.yaml"),
       "utf8",
     );
     assert.doesNotMatch(codexMetadata, /allow_implicit_invocation/);
     assert.doesNotMatch(codexMetadata, /^policy:\s*$/m);
 
     const piMetadata = await readFile(
-      join(root, collection.piPackageRoot, "skills", command.name, "agents", "openai.yaml"),
+      join(root, piPackagePath(collection.id, 'dist'), "skills", command.name, "agents", "openai.yaml"),
       "utf8",
     );
     assert.match(piMetadata, /^policy:\s*\n\s+allow_implicit_invocation:\s*false\s*$/m);
 
-    if (collection.claudePackageRoot !== ".") {
+    if (claudePackagePath(collection.id, 'dist') !== ".") {
       const claudeMetadata = await readFile(
-        join(root, collection.claudePackageRoot, "skills", command.name, "agents", "openai.yaml"),
+        join(root, claudePackagePath(collection.id, 'dist'), "skills", command.name, "agents", "openai.yaml"),
         "utf8",
       );
       assert.match(claudeMetadata, /^policy:\s*\n\s+allow_implicit_invocation:\s*false\s*$/m);
@@ -153,9 +154,9 @@ test("generated packages are isolated, synchronized, and free of reporting runti
   const project = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
   const lock = JSON.parse(await readFile(join(root, "package-lock.json"), "utf8"));
   const manifestPaths = SKILL_COLLECTIONS.flatMap(collection => [
-    `${collection.claudePackageRoot}/.claude-plugin/plugin.json`,
-    `${collection.codexPackageRoot}/.codex-plugin/plugin.json`,
-    `${collection.piPackageRoot}/package.json`,
+    `${claudePackagePath(collection.id, 'dist')}/.claude-plugin/plugin.json`,
+    `${codexPackagePath(collection.id, 'dist')}/.codex-plugin/plugin.json`,
+    `${piPackagePath(collection.id, 'dist')}/package.json`,
   ]);
   const manifests = await Promise.all(manifestPaths.map(path => readFile(join(root, path), "utf8").then(JSON.parse)));
 
@@ -169,14 +170,14 @@ test("generated packages are isolated, synchronized, and free of reporting runti
       assert.equal(retained.version, "3.8.0", "retained transition must not follow active release version");
     }
   }
-  assert.deepEqual(await directories(join(root, "codex", "plugins", "qs-skills", "skills")), [...coreNames].sort());
-  assert.deepEqual(await directories(join(root, "codex", "plugins", "qs-specialists", "skills")), [...specialistNames].sort());
-  await assert.rejects(stat(join(root, "codex", "plugins", "qs-specialists", "capabilities")), /ENOENT/);
+  assert.deepEqual(await directories(join(root, "dist", "codex", "qs-skills", "skills")), [...coreNames].sort());
+  assert.deepEqual(await directories(join(root, "dist", "codex", "qs-specialists", "skills")), [...specialistNames].sort());
+  await assert.rejects(stat(join(root, "dist", "codex", "qs-specialists", "capabilities")), /ENOENT/);
 
   const expectedSupport = ["advanced-skill-catalog.mjs", "execution-skill-catalog.mjs", "frontend-skill-catalog.mjs", "optional-command-definition.mjs", "ps-skill-catalog.mjs", "qs-skill-catalog.mjs", "skill-collection-registry.mjs", "video-skill-catalog.mjs"];
   for (const packageRoot of [
-    "codex/plugins/qs-skills", "codex/plugins/qs-specialists", "codex/plugins/ps-skills",
-    "packages/qs-specialists", "packages/ps-skills",
+    "dist/codex/qs-skills", "dist/codex/qs-specialists", "codex/plugins/ps-skills",
+    "dist/claude/qs-specialists", "packages/ps-skills",
   ]) {
     assert.deepEqual((await readdir(join(root, packageRoot, "scripts"))).sort(), expectedSupport);
   }
@@ -383,10 +384,10 @@ test("catalog continuation routes remain valid, ranked, and package-safe", () =>
 test("canonical and generated skill files contain no retired or hosted-reporting references", async () => {
   const roots = [
     ...PUBLIC_COMMANDS.map((skill) => join(root, skill.sourcePath)),
-    join(root, "codex", "plugins", "qs-skills", "skills"),
-    join(root, "codex", "plugins", "qs-specialists", "skills"),
+    join(root, "dist", "codex", "qs-skills", "skills"),
+    join(root, "dist", "codex", "qs-specialists", "skills"),
     join(root, "codex", "plugins", "ps-skills", "skills"),
-    join(root, "packages", "qs-specialists", "skills"),
+    join(root, "dist", "claude", "qs-specialists", "skills"),
     join(root, "packages", "ps-skills", "skills"),
   ];
   for (const path of roots) {

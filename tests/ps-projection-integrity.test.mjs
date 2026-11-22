@@ -66,7 +66,8 @@ test("PS-03 projector entry point rejects corrupt active analysis packages and e
   const packageName = REGISTRY_STATE === "target" ? "qs-advanced" : "ps-skills";
   const projection = join(directory, packageName);
   context.after(() => rm(directory, { recursive: true, force: true }));
-  await cp(join(repositoryRoot, "packages", packageName), projection, { recursive: true });
+  const packageRoot = REGISTRY_STATE === "target" ? "dist/claude" : "packages";
+  await cp(join(repositoryRoot, packageRoot, packageName), projection, { recursive: true });
   await writeFile(join(projection, "unexpected.txt"), "not projected\n");
   if (REGISTRY_STATE === "target") await assert.rejects(
     execFileAsync(process.execPath, ["tooling/generation/sync-codex-plugin.mjs", "--check", "--package", "ps-skills", "--root", join(repositoryRoot, "packages", "ps-skills"), "--format", "claude"], { cwd: repositoryRoot }),

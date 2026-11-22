@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. LAY-12 through LAY-14 are verified in an isolated checkout. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is committed at `cbb159c`. LAY-18 is committed at `36c2ec9`. LAY-19 is committed at `6cec3f8`. LAY-20 verified both tracks together at `6cec3f8`. The merge with main at `1a8eaaf` carries its 4.4.8 release preparation forward. All 18 active packages under `dist/` match the package Git trees qualified on main, and the [4.4.8 qualification record](../../tests/fixtures/layout-release-4.4.8/qualification.json) retains its original paths and evidence. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -70,7 +70,7 @@ Acceptance criteria: AC-04
 
 ## LAY-03 — Prove independent archive retrieval
 
-Status: open
+Status: verified
 
 Blocked by: none
 
@@ -81,6 +81,8 @@ Acceptance criteria: AC-08
 **Starting points.** `tests/fixtures/frontend-adoption-v3-results/archive.json`, `tests/fixtures/frontend-mobile-repair-results/archive.json`, `docs/validation/frontend-adoption.md`.
 
 **Verify.** On a clean checkout without the four local parts or object cache, retrieve from the documented source and run both original verifiers. Reject missing, corrupt, swapped and truncated parts. Preserve existing files on failure. Record the restoration transcript and actual byte count.
+
+**Verification.** The official remote advertises the annotated `v4.4.7` tag at `f1324e8b81311f2ee3209ab35808011db29a5d52`. The [restoration procedure](../validation/frontend-adoption.md#restore-the-closed-capture-archives) retrieved all 196,849,834 compressed bytes from that commit in a temporary directory with the original manifests and verifiers and no local archive parts or Git object cache. Both verifiers passed fresh extraction and rehashing for all 3,955 files and 887 manifest directory entries. For each group, missing, corrupt, swapped, truncated and interrupted transfers failed without publishing a result. The verifiers refused to replace existing extraction directories, and the previously verified parts stayed byte-identical.
 
 **Excludes.** Deleting tracked parts, introducing an automatic network dependency, or publishing to new storage.
 
@@ -282,7 +284,7 @@ Prerequisite evidence. LAY-12 supplies cross-version bootstrap and tooling entry
 
 ## LAY-15 — Model both native distribution layouts before cutover
 
-Status: open
+Status: verified
 
 Blocked by: LAY-01
 
@@ -296,11 +298,13 @@ Prerequisite evidence. LAY-01 supplies active package identity baseline.
 
 **Verify.** Construct old/new fixture trees and a foreign same-name tree. Accept each legitimate path only for its matching host, official source and revision. Reject aliases, dirty payloads, path escapes and ambiguous matches. Verify all three legacy digests.
 
+**Verification.** On base `865b216`, disposable Git checkouts produced identical content and executable-bit digests for all 18 original and staged package pairs. The three PS 3.8.0 payloads verified at their recorded paths. Tests exercised the v4.1.0 root-based Claude core, the v4.4.7 package layout, and rejected foreign origins, aliases, path escapes, dirty payloads, revision mismatches and ambiguous roots. The isolated suite passed 807 tests, with one platform-specific skip on Linux. Release validation and all six strict Claude package checks passed.
+
 **Excludes.** Changing the default output layout or withdrawing an installed package.
 
 ## LAY-16 — Stage the new active distributions and marketplace entries
 
-Status: open
+Status: verified
 
 Blocked by: LAY-15
 
@@ -314,11 +318,13 @@ Prerequisite evidence. LAY-15 supplies old/new host layout and ownership rules.
 
 **Verify.** Verify 18 candidate package trees, disjoint package membership, host invocation differences, notices and checked-in files/modes in a fresh clone. Strictly validate actual Claude roots and test Codex/Pi discovery. A second generation is byte-stable.
 
+**Verification.** The candidate checkout staged all 18 packages and both marketplace manifests. Its fresh clone matched all 3,360 active file blobs and Git modes at base `0ae51ef` by package-relative path and preserved all three retained PS trees. Two independent generations matched. Strict Claude validation passed at the root and all six package roots. Native Codex and Pi each discovered all 39 public skills in isolated homes. The original-layout release validator passed in the code checkout, and its full suite passed 808 tests with one platform-specific Linux skip.
+
 **Excludes.** Making dist the default for ordinary users or relocating PS 3.8.0.
 
 ## LAY-17 — Qualify Codex upgrades across package layouts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-14, LAY-16
 
@@ -332,11 +338,17 @@ Prerequisite evidence. LAY-14 supplies relocated production installer. LAY-16 su
 
 **Verify.** In isolated default and custom Codex homes, compare old/new marketplace roots and retained PS registration. Interrupt after withdrawal and prove retry and rollback preserve selections, backups and unrelated marketplaces. Reject edited or foreign source before native effects.
 
+**Verification.** Codex fixture `77915ab` used all 1,137 Codex package and marketplace files from the staged LAY-16 tree at `eb51826`, with identical Git blob IDs and modes. Its release validator passed. The production updater used a private pinned tag and isolated homes for core-only setup and an upgrade from the original v4.4.7 marketplace. The custom home retained its optional selection and unrelated marketplace and cache. Edited and foreign prior sources were rejected before withdrawal. An interrupted upgrade retried with its saved selection and original settings backup.
+
+A separate native retained-PS transaction bound its journal to the candidate marketplace and exact source paths. The updater rejected a changed selection on resume, recovered the interrupted withdrawal, and rolled back to the retained PS registration with its backup and unrelated marketplace intact. That rollback exercised the frozen package transaction within the candidate marketplace. The ordinary marketplace upgrade exercised retry.
+
+The audited skill and generator edits also projected successfully into a separate preview. All public references resolved to the expected shared contract, and the installed Codex paths and strict Claude validation passed. The preview remains separate from the layout qualification and the live Claude behavior trial. The isolated regression suite passed 808 tests, with one platform-specific skip.
+
 **Excludes.** Real user profiles, release publication or upgrading historical acceptance decisions.
 
 ## LAY-17B — Qualify Claude Code upgrades across package layouts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-14, LAY-16
 
@@ -346,15 +358,23 @@ Prerequisite evidence. LAY-14 supplies relocated production installer. LAY-16 su
 
 **Outcome and scope.** Exercise the root-based core and package-based Claude bindings through fresh install, upgrade, interruption, retry and rollback. Include selected optional packages, original source verification and preservation of foreign caches.
 
-**Starting points.** `scripts/claude-core-migration.mjs`, `tests/managed-skill-input.test.mjs`, `.claude-plugin/marketplace.json`.
+**Starting points.** `tooling/install/claude-core-migration.mjs`, `tests/qualify-claude-layout-upgrade.mjs`, `.claude-plugin/marketplace.json`.
 
 **Verify.** In isolated default and custom Claude homes, resolve the marketplace using the actual native client. Recover after withdrawal, retaining unrelated enabled plugins and prior selections. Reject replaced caches or edited owned source. Verify the retained PS identity.
+
+**Verification.** Claude fixture `40b985a` matched all 1,138 Claude package and manifest entries from staged commit `eb51826` by Git blob ID and mode. All three retained PS trees also matched. The release validator passed in both layouts, and Claude Code 2.1.322 passed strict validation at the root and all six package roots. Historical acceptance records, criteria and package checks matched `7abf154`.
+
+The native updater passed a fresh core-only setup in a default home and upgrades in custom homes from both v4.4.7 package directories and the v4.0.0 repository-root core. Both upgrades preserved the selected optional package and unrelated marketplace, rejected edited sources and replaced caches before effects, and retried after withdrawal with the original backup intact.
+
+The frozen package journal bound the original caches and staged replacement paths at the candidate marketplace. It rejected a changed resume selection, retried the interrupted withdrawal, and rolled back to the old root core, optional package and PS 3.8.0 registrations. Rollback restored the exact saved selection and preserved the backup, the unrelated marketplace and an unrelated symlink in the old root cache.
+
+The original-layout sync and projection checks passed. The isolated repository suite passed 808 tests, with one non-Linux control skipped.
 
 **Excludes.** Real client rollout, publication or deleting compatibility paths.
 
 ## LAY-17C — Qualify Pi upgrades across package layouts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-14, LAY-16
 
@@ -364,15 +384,23 @@ Prerequisite evidence. LAY-14 supplies relocated production installer. LAY-16 su
 
 **Outcome and scope.** Exercise old pi/packages and new dist/pi through native fresh install, upgrade, interrupted repair and rollback. Cover linked settings, saved selection, alternate homes and immutable direct-checkout identity.
 
-**Starting points.** `scripts/clean-install-skills.mjs`, `tests/pi-package-projection.test.mjs`, `tests/managed-skill-input.test.mjs`.
+**Starting points.** `tooling/install/clean-install-skills.mjs`, `tests/pi-package-projection.test.mjs`, `tests/qualify-pi-layout-upgrade.mjs`.
 
 **Verify.** In isolated Pi homes preserve the settings link and original target, unrelated packages, backup and frozen journal bindings after recovery. Prove a same-name foreign suffix or modified old source cannot authorize removal.
+
+**Verification.** Pi fixture `39975cb` matched all 1,088 active Pi package entries from staged commit `eb51826` by Git blob ID and mode. All three retained PS trees matched the same commit. Release validation passed in both layouts. Historical acceptance records, criteria and package checks matched `a472093`.
+
+Pi 1.5.2 passed a fresh core-only install in a default home and an interrupted v4.4.7 upgrade in a custom home with linked settings. The updater retried using the saved optional selection and preserved the original settings backup, the symlink and its target, and an unrelated package and theme. Both installer paths refused the edited source and the same package path under a foreign origin before any native install or remove command.
+
+The frozen journal bound the old and staged direct paths and the physical settings target. It rejected a changed resume selection, retried after withdrawal, and rolled back to the old core, specialists and PS 3.8.0 registrations. The original backup and saved selection matched byte for byte. Pi can reorder the managed entries when restoring those registrations.
+
+Original-layout projection and strict Claude manifest checks passed. The isolated regression suite passed 808 tests, with one non-Linux control skipped.
 
 **Excludes.** Real client rollout, publication or updating original PS digests.
 
 ## LAY-18 — Switch active distribution and verify the repository layout
 
-Status: open
+Status: verified
 
 Blocked by: LAY-13, LAY-17, LAY-17B, LAY-17C
 
@@ -386,11 +414,19 @@ Prerequisite evidence. LAY-13 supplies relocated authoring/build tooling. LAY-17
 
 **Verify.** From a clean candidate checkout run the integration gates in the spec, including the full host matrix. Compare actual root tree to the documented five active roots plus compatibility exceptions. Exercise prior-tag fallback and rollback. Show that publication/install into real homes did not occur. Interrupt one combined multi-host attempt and prove safe per-host retry.
 
+**Verification.** The integrated checkout `9f13216` matched all 3,360 staged package files and three discovery manifests from `eb51826` by Git blob ID and mode. All three PS 3.8.0 trees matched the staged baseline. The [root inventory](../architecture.md#repository-roots) accounts for the five active roots and four compatibility roots. The old active package paths and nested Codex marketplace were removed.
+
+The standalone v4.4.7 bootstrap installed the integrated checkout from an empty working directory. The current standalone bootstrap installed the original tag in a separate empty home. Each used an isolated local origin with its own pinned tag. In a combined upgrade from v4.4.7, Codex and Claude completed and Pi failed after a native install. Retrying only Pi finished its saved selection and left the other client settings and caches intact.
+
+The package bytes and frozen recovery implementations matched the inputs qualified by LAY-17, LAY-17B and LAY-17C. Their rollback results apply to the same package transactions. The integrated check independently covered the new root registration and combined retry. Release validation, the second generation without a diff, seven strict Claude checks and the public entry-point checks passed.
+
+The integrated suite passed 804 tests and skipped one non-Linux control. Four assertions still used the prior layout. The historical assertion passed against its pinned release, and the three active-layout assertions passed after updating their fixture paths. Only the affected tests were rerun. Native verification used disposable homes and local tag fixtures.
+
 **Excludes.** Removing legacy migration payloads or waiting on optional evidence storage.
 
 ## LAY-19 — Remove only the four verified capture parts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-03
 
@@ -404,11 +440,15 @@ Prerequisite evidence. LAY-03 supplies independent restoration and retention evi
 
 **Verify.** From the resulting tree run offline ordinary tests and an isolated install with archive retrieval disabled. Restore both archives on demand, verify all 3,955 files and their manifest directory entries, and report actual tracked bytes removed. Interrupted retrieval leaves no partial valid archive. If retention is unresolved, keep the parts and mark this ticket blocked.
 
+**Verification.** After the independent restoration in LAY-03, this change removed only the four split parts, totaling 196,849,834 bytes (187.73 MiB) of tracked checkout contents. Git history still retains the original blobs. The manifests, frozen inputs and both original verifiers remained byte-identical.
+
+Checkout `56d9902` passed sync and projection checks without a generated diff. With IPv4 and IPv6 socket creation blocked, the archive-relevant ordinary test selection passed 81 tests with one platform-specific skip. The standalone bootstrap installed and verified Pi core from an isolated filter-capable Git remote. Direct inspection of the installed checkout and its Git object indexes confirmed the four archive blobs were absent. The official remote also advertised blob filtering. The unchanged host and rollback results from LAY-18 still apply.
+
 **Excludes.** History rewriting, moving other fixtures or exporting evidence to a third party.
 
 ## LAY-20 — Verify the combined layout and evidence delivery
 
-Status: open
+Status: verified
 
 Blocked by: LAY-18, LAY-19
 
@@ -421,5 +461,13 @@ Prerequisite evidence. LAY-18 supplies integrated developer/host layout. LAY-19 
 **Starting points.** `docs/contributing.md`, `docs/validation/frontend-adoption.md`, `package.json`, `tests/install-skills.test.mjs`.
 
 **Verify.** Run sync then check then npm test, strict Claude validation, all targeted isolated host/upgrade probes and git diff --check. Compare clean regeneration and current vs historical bindings. Confirm docs walkthrough and both explicit archive restores work. Close the overall graph only with evidence for both tracks.
+
+**Verification.** The release inputs for version `4.4.7` were checked at `6cec3f89f9f4ef22e5ec51c4a24047273541e1d2`. The [root inventory](../architecture.md#repository-roots) matched the combined Git tree, including the PS 3.8.0 trees, the six public scripts and the `AGENTS.md` link. The README walkthrough found 39 canonical commands. A temporary cleanup-skill edit regenerated the Claude, Codex and Pi copies and refreshed live provenance. Reverting the edit and regenerating restored the clean checkout.
+
+On Linux, the standalone bootstrap detected Codex CLI 0.169.1, Claude Code 2.1.322 and Pi 1.5.2 in a disposable home with IPv4 and IPv6 socket creation blocked. It installed and verified only `qs-skills` for each client. The selected checkout had none of the four archive paths or blobs, confirmed directly from its filesystem, pack indexes and loose-object paths.
+
+The active package and installer inputs matched LAY-18, so the isolated upgrade, rollback and bootstrap compatibility results were reused. Historical acceptance criteria, package checks and history matched the earlier records. Both original archive verifiers passed again against the previously retrieved parts and extracted trees, checking all 3,955 files and 887 directory entries. The official `v4.4.7` tag still pointed to the [pinned restoration source](../validation/frontend-adoption.md#restore-the-closed-capture-archives). All seven strict Claude manifest checks passed.
+
+The clean combined checkout ran `npm run sync:codex`, `npm run check:codex` and `npm test` in order. Regeneration left no diff and `git diff --check` passed. The suite finished with 808 passes, zero failures and one skip for an unsupported-platform capture control that runs on non-Linux hosts.
 
 **Excludes.** Publishing, production rollback, benchmarking Git history size or deleting compatibility exceptions.

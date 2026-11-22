@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "qs-skills",
-      "source": "./packages/qs-skills",
+      "source": "./dist/claude/qs-skills",
       "description": "QuickStark's twelve-command core engineering workflow.",
       "category": "engineering",
       "keywords": [
@@ -19,7 +19,7 @@
     },
     {
       "name": "qs-specialists",
-      "source": "./packages/qs-specialists",
+      "source": "./dist/claude/qs-specialists",
       "description": "Optional QuickStark research, prototyping, documentation, testing, teaching, and skill-authoring workflows.",
       "category": "engineering",
       "keywords": [
@@ -30,7 +30,7 @@
     },
     {
       "name": "qs-advanced",
-      "source": "./packages/qs-advanced",
+      "source": "./dist/claude/qs-advanced",
       "description": "Optional focused analysis, verification, evaluation and operations workflows.",
       "category": "engineering",
       "keywords": [
@@ -40,7 +40,7 @@
     },
     {
       "name": "qs-frontend",
-      "source": "./packages/qs-frontend",
+      "source": "./dist/claude/qs-frontend",
       "description": "Optional frontend implementation, reference images and prompt construction.",
       "category": "engineering",
       "keywords": [
@@ -50,7 +50,7 @@
     },
     {
       "name": "qs-video",
-      "source": "./packages/qs-video",
+      "source": "./dist/claude/qs-video",
       "description": "Optional scoped video creation, editing and rendering with private HyperFrames modules.",
       "category": "engineering",
       "keywords": [
@@ -60,7 +60,7 @@
     },
     {
       "name": "qs-execution",
-      "source": "./packages/qs-execution",
+      "source": "./dist/claude/qs-execution",
       "description": "Optional substantial-work acceptance gates and completion discipline.",
       "category": "engineering",
       "keywords": [

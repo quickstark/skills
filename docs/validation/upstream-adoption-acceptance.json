@@ -2549,12 +2549,15 @@
         "qs-internal:delegation"
       ],
       "sourcePaths": [
+        ".agents/plugins/marketplace.json",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         ".github/workflows/validate.yml",
-        "codex/plugins/qs-skills",
+        "dist/claude/qs-skills",
+        "dist/codex/qs-skills",
+        "dist/pi/qs-skills",
         "docs/skill-run-contract.md",
         "install.sh",
-        "packages/qs-skills",
-        "pi/packages/qs-skills",
         "scripts/install-skills.mjs",
         "scripts/managed-skills.mjs",
         "scripts/sync-codex-plugin.mjs",
@@ -2585,6 +2588,7 @@
         "tooling/generation/sync-codex-plugin.mjs",
         "tooling/install/claude-core-migration.mjs",
         "tooling/install/clean-install-skills.mjs",
+        "tooling/install/distribution-layout.mjs",
         "tooling/install/managed-marketplace-bootstrap.mjs",
         "tooling/install/managed-package-repair.mjs",
         "tooling/install/managed-skill-input.mjs",
@@ -3532,12 +3536,15 @@
         "qs:qs-test-verify"
       ],
       "sourcePaths": [
+        ".agents/plugins/marketplace.json",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         ".github/workflows/validate.yml",
-        "codex/plugins/qs-specialists",
+        "dist/claude/qs-specialists",
+        "dist/codex/qs-specialists",
+        "dist/pi/qs-specialists",
         "docs/skill-run-contract.md",
         "install.sh",
-        "packages/qs-specialists",
-        "pi/packages/qs-specialists",
         "scripts/install-skills.mjs",
         "scripts/managed-skills.mjs",
         "scripts/sync-codex-plugin.mjs",
@@ -3564,6 +3571,7 @@
         "tooling/generation/sync-codex-plugin.mjs",
         "tooling/install/claude-core-migration.mjs",
         "tooling/install/clean-install-skills.mjs",
+        "tooling/install/distribution-layout.mjs",
         "tooling/install/managed-marketplace-bootstrap.mjs",
         "tooling/install/managed-package-repair.mjs",
         "tooling/install/managed-skill-input.mjs",
@@ -4540,12 +4548,15 @@
         "ps:ps-worktree-cleanup"
       ],
       "sourcePaths": [
+        ".agents/plugins/marketplace.json",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         ".github/workflows/validate.yml",
-        "codex/plugins/qs-advanced",
+        "dist/claude/qs-advanced",
+        "dist/codex/qs-advanced",
+        "dist/pi/qs-advanced",
         "docs/skill-run-contract.md",
         "install.sh",
-        "packages/qs-advanced",
-        "pi/packages/qs-advanced",
         "scripts/install-skills.mjs",
         "scripts/managed-skills.mjs",
         "scripts/sync-codex-plugin.mjs",
@@ -4576,6 +4587,7 @@
         "tooling/generation/sync-codex-plugin.mjs",
         "tooling/install/claude-core-migration.mjs",
         "tooling/install/clean-install-skills.mjs",
+        "tooling/install/distribution-layout.mjs",
         "tooling/install/managed-marketplace-bootstrap.mjs",
         "tooling/install/managed-package-repair.mjs",
         "tooling/install/managed-skill-input.mjs",
@@ -5536,12 +5548,15 @@
         "qs:qs-design-image-web"
       ],
       "sourcePaths": [
+        ".agents/plugins/marketplace.json",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         ".github/workflows/validate.yml",
-        "codex/plugins/qs-frontend",
+        "dist/claude/qs-frontend",
+        "dist/codex/qs-frontend",
+        "dist/pi/qs-frontend",
         "docs/skill-run-contract.md",
         "install.sh",
-        "packages/qs-frontend",
-        "pi/packages/qs-frontend",
         "scripts/install-skills.mjs",
         "scripts/managed-skills.mjs",
         "scripts/sync-codex-plugin.mjs",
@@ -5564,6 +5579,7 @@
         "tooling/generation/sync-codex-plugin.mjs",
         "tooling/install/claude-core-migration.mjs",
         "tooling/install/clean-install-skills.mjs",
+        "tooling/install/distribution-layout.mjs",
         "tooling/install/managed-marketplace-bootstrap.mjs",
         "tooling/install/managed-package-repair.mjs",
         "tooling/install/managed-skill-input.mjs",
@@ -6550,12 +6566,15 @@
         "video-internal:talking-head-recut"
       ],
       "sourcePaths": [
+        ".agents/plugins/marketplace.json",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         ".github/workflows/validate.yml",
-        "codex/plugins/qs-video",
+        "dist/claude/qs-video",
+        "dist/codex/qs-video",
+        "dist/pi/qs-video",
         "docs/skill-run-contract.md",
         "install.sh",
-        "packages/qs-video",
-        "pi/packages/qs-video",
         "scripts/install-skills.mjs",
         "scripts/managed-skills.mjs",
         "scripts/sync-codex-plugin.mjs",
@@ -6574,6 +6593,7 @@
         "tooling/generation/sync-codex-plugin.mjs",
         "tooling/install/claude-core-migration.mjs",
         "tooling/install/clean-install-skills.mjs",
+        "tooling/install/distribution-layout.mjs",
         "tooling/install/managed-marketplace-bootstrap.mjs",
         "tooling/install/managed-package-repair.mjs",
         "tooling/install/managed-skill-input.mjs",
@@ -7759,12 +7779,15 @@
         "qs:qs-unlazy"
       ],
       "sourcePaths": [
+        ".agents/plugins/marketplace.json",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json",
         ".github/workflows/validate.yml",
-        "codex/plugins/qs-execution",
+        "dist/claude/qs-execution",
+        "dist/codex/qs-execution",
+        "dist/pi/qs-execution",
         "docs/skill-run-contract.md",
         "install.sh",
-        "packages/qs-execution",
-        "pi/packages/qs-execution",
         "scripts/install-skills.mjs",
         "scripts/managed-skills.mjs",
         "scripts/sync-codex-plugin.mjs",
@@ -7783,6 +7806,7 @@
         "tooling/generation/sync-codex-plugin.mjs",
         "tooling/install/claude-core-migration.mjs",
         "tooling/install/clean-install-skills.mjs",
+        "tooling/install/distribution-layout.mjs",
         "tooling/install/managed-marketplace-bootstrap.mjs",
         "tooling/install/managed-package-repair.mjs",
         "tooling/install/managed-skill-input.mjs",
@@ -8954,7 +8978,7 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "00e3a0b770a75e7b4d5f7bdb31c3cbbc0a908fc71dc28703844cd3d1fd80b877"
+      "contentSha256": "bdcda06b1cb8a775dbf5942128c40209bc10b8ca8baff839a214eae410a40809"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
@@ -8998,11 +9022,11 @@
     },
     "tooling/install/managed-skill-input.mjs": {
       "kind": "file",
-      "contentSha256": "3db17e772a9bc796cc584e855239657060da3924558e639586462640940191cb"
+      "contentSha256": "703d959fe9feae1050e1974f5039d8abdc2f57276ca795f5cd2ebc1673a18d74"
     },
     "tooling/install/managed-skill-migration.mjs": {
       "kind": "file",
-      "contentSha256": "d2d6a04277b055cd2d200cb675b616b324d22b81c2650c607332bd2977f715bb"
+      "contentSha256": "3d2315ce885b70beb546197f6ab2c18db7f12acac761977e226d1f550d5f8786"
     },
     "tooling/install/managed-skill-paths.mjs": {
       "kind": "file",
@@ -9010,7 +9034,7 @@
     },
     "tooling/install/managed-skills.mjs": {
       "kind": "file",
-      "contentSha256": "91146de1cba04fee20d6932ddd7b0f3c9895376a7a90bf0b276c4f7e1e86414a"
+      "contentSha256": "d6eea5980206cd29466e7eeaca8a1dc561c8167e30ede4cb0160dc517ef89198"
     },
     "tooling/install/migration-filesystem.mjs": {
       "kind": "file",
@@ -9294,7 +9318,7 @@
     },
     "tooling/install/managed-marketplace-bootstrap.mjs": {
       "kind": "file",
-      "contentSha256": "08a29848c73d0ab6f6dabbd582ced71ce508dec8c3359313773c3e36814e0d76"
+      "contentSha256": "11adb294199be6d28c0652709d001c1ff23ef875d30cf28d87b3edf879c650af"
     },
     "tooling/install/update-skills.mjs": {
       "kind": "file",
@@ -9314,15 +9338,15 @@
     },
     "tooling/install/managed-package-repair.mjs": {
       "kind": "file",
-      "contentSha256": "7c937775b629834f14bceb6b4f39a60faa4ca52e63e0c3da95ed2a41d314c80a"
+      "contentSha256": "11725823fd4f8e85acefe4c10b24ffdb505970656c8ed9e1dfc7d684703e6038"
     },
     "tooling/release/validate-skill-release.mjs": {
       "kind": "file",
-      "contentSha256": "d0cfa38bd32e68dd9d593cd9d8902d4290e8f883dacf94758bfa594c1a6c720c"
+      "contentSha256": "074571e29738b4179bf89075e3feaaaaf034834849ccbf7689d13bce7183137d"
     },
     "tooling/install/clean-install-skills.mjs": {
       "kind": "file",
-      "contentSha256": "d99b4d5ff7427cac75918087c07f365cfaa133635b9a729765133af7778e59df"
+      "contentSha256": "3befb0b6b0a91ab7fb716d08c99a8b4a1fc98d82825e79440887b253a192eebb"
     },
     "tooling/repository-root.mjs": {
       "kind": "file",
@@ -9346,7 +9370,91 @@
     },
     "tooling/generation/sync-codex-plugin.mjs": {
       "kind": "file",
-      "contentSha256": "0d37b6391e2ae66799648a79663ade49f927ea00ac61bb2910e176164eca9397"
+      "contentSha256": "370d91e8e845d9f921971df08f17652c53bf9b0eaf2cb9d559873c43133db653"
+    },
+    "dist/claude/qs-skills": {
+      "kind": "directory",
+      "contentSha256": "83eaae6ad12139843d89b5b4604ebd5dfd5053b9fc15ea0fa1486ac5e6af448c"
+    },
+    "dist/codex/qs-skills": {
+      "kind": "directory",
+      "contentSha256": "1e0a5b864000ff80195e87015501479f7c39e91df52a733711db092c29a2e4d2"
+    },
+    "dist/pi/qs-skills": {
+      "kind": "directory",
+      "contentSha256": "338f8232b1c451331d64cc4d06a2d60c92594e77bc50e3cde59fc7ba7f8142e8"
+    },
+    "dist/claude/qs-specialists": {
+      "kind": "directory",
+      "contentSha256": "6d6af9c53de5ef68668cd60e7d67c9b7a25a5930e4225a747f78a912ca1ae185"
+    },
+    "dist/codex/qs-specialists": {
+      "kind": "directory",
+      "contentSha256": "568f59454badc5b41be660014f355e6b69a18ce6e6861769fb46c68a55c42468"
+    },
+    "dist/pi/qs-specialists": {
+      "kind": "directory",
+      "contentSha256": "003c5c0cde7437d1e00f22ea45722c50173c7102d1ec6bf4d8da7d493ac4e405"
+    },
+    "dist/claude/qs-advanced": {
+      "kind": "directory",
+      "contentSha256": "c8b655b267cb633dba36cba6c17226c40f5030496c065c247942cf8253be297d"
+    },
+    "dist/codex/qs-advanced": {
+      "kind": "directory",
+      "contentSha256": "7e0dd489a599d40e3f84061ac4ac19b60fba7f683b03ec8e168eeba2178cc51d"
+    },
+    "dist/pi/qs-advanced": {
+      "kind": "directory",
+      "contentSha256": "3dfb74520dbfe1c6966a245b338dd346097e0c5bad84eff920d0c84930e73813"
+    },
+    "dist/claude/qs-frontend": {
+      "kind": "directory",
+      "contentSha256": "7188651ae7de7708ad67e78b80121b05c94cd733c57e6eceec4b228714c17d9e"
+    },
+    "dist/codex/qs-frontend": {
+      "kind": "directory",
+      "contentSha256": "d8ae87f575a938688359f6652f5891e17825e74bbdbcdb629eb3be2fed52b67c"
+    },
+    "dist/pi/qs-frontend": {
+      "kind": "directory",
+      "contentSha256": "ed3f097de0edf7b990a75d55d5358851657d6e729fa2e093520c01bad6f4cf9e"
+    },
+    "dist/claude/qs-video": {
+      "kind": "directory",
+      "contentSha256": "f62ddc1ed8f6a353ecd3e3809dcd26d656dc89b0069dcf2782c7b9674c4fdf0b"
+    },
+    "dist/codex/qs-video": {
+      "kind": "directory",
+      "contentSha256": "7a0d374a814bb1b7c37d9a9b4476478800c1b345d2e6134a33ee98d38471f63d"
+    },
+    "dist/pi/qs-video": {
+      "kind": "directory",
+      "contentSha256": "e2b716737b6b5ffcc3394a4da5d7a04ebe37c165a36fe8cd2c334525d744476e"
+    },
+    "dist/claude/qs-execution": {
+      "kind": "directory",
+      "contentSha256": "f0af26dcde6827ecf6f5b2502bf9995e2c1ad5898548cad1a5cad7561a952b15"
+    },
+    "dist/codex/qs-execution": {
+      "kind": "directory",
+      "contentSha256": "a8838268c7c560aca83c95eac91072e7111c2d22f3ceeb924d8c047cd1cb5764"
+    },
+    "dist/pi/qs-execution": {
+      "kind": "directory",
+      "contentSha256": "e4b516372d0c00d24f4861d9cf57f80ed86f26a409ab85145c3866281644557b"
+    },
+    ".agents/plugins/marketplace.json": {
+      "kind": "file",
+      "contentSha256": "2e4e84a070aec7bc410be71d5920432ce9039585da1f749ebb2487f7f22df4df"
+    },
+    ".claude-plugin/marketplace.json": {
+      "kind": "file",
+      "contentSha256": "50d7f966cebbdd18aa57875745ea57b735c913bc627f4b2e66c715eb4ce95068"
+    },
+    "tooling/install/distribution-layout.mjs": {
+      "kind": "file",
+      "contentSha256": "d500d9d0555d831e6fa26cb848eaf5def1a41f2838f1c9028e2f3050d131ab6c"
     }
   },
   "evidence": {
@@ -9532,7 +9640,7 @@
     },
     "tests/upstream-adoption-qs.test.mjs": {
       "path": "tests/upstream-adoption-qs.test.mjs",
-      "sha256": "226ece25d49c39e30723a51d44082acaf4a585c7f550bc2d540150798e07a0e2"
+      "sha256": "3526d37291f5985af036918af0e0d69e56f7c3a3eabec551ac10cd6949b046ac"
     },
     "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json": {
       "path": "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
@@ -9628,7 +9736,7 @@
     },
     "tests/migration-native-packages.test.mjs": {
       "path": "tests/migration-native-packages.test.mjs",
-      "sha256": "63cc00c918f252376e265b59c8611d885e6c144d63f006c75b983db17ea9d46f"
+      "sha256": "747c1d7acda93cd9906dfa81a93eff76167cbb171d551eee3d775c38370f10bc"
     },
     "tests/managed-skill-migration.test.mjs": {
       "path": "tests/managed-skill-migration.test.mjs",
@@ -9664,7 +9772,7 @@
     },
     "README.md": {
       "path": "README.md",
-      "sha256": "cdf1ffbcce72fd72af46f02f199f287971a7ddcd1d01fe10baa0e1736a281b5a"
+      "sha256": "938cfb7d2112f8a754379bbd5b0f4c1d5a32073d698fef3398ecb52b1cb09bce"
     },
     "CONTEXT.md": {
       "path": "CONTEXT.md",
@@ -9672,15 +9780,15 @@
     },
     ".claude/CLAUDE.md": {
       "path": ".claude/CLAUDE.md",
-      "sha256": "fce59bd8aae33ff19c9a394f669db39a2aa9b46721a79ee2ad6883e15e29a482"
+      "sha256": "eafaae5e3cfc1e3e20ed9f8e4f78d91006da85cf0c4a1eae5d1f95753018665a"
     },
     "docs/architecture.md": {
       "path": "docs/architecture.md",
-      "sha256": "df219351035fcfe320a0d30af2b78f26aa14415e77a4f5a175164e7be187de79"
+      "sha256": "b02918973d3058a2cd35bda49e6eb2705d56e441e35070752be01a92fdbe38ca"
     },
     "docs/contributing.md": {
       "path": "docs/contributing.md",
-      "sha256": "104d2c6c97837227ac9ff477abcd1ca46d84dcb4be5d7d8e583886cde871947b"
+      "sha256": "b60f2602ddc0dcbc6e11f69162bab64c7f3abe8b78cadb1816c7fc27466550a7"
     },
     "docs/personal-skills.md": {
       "path": "docs/personal-skills.md",
@@ -9688,7 +9796,7 @@
     },
     "docs/install-and-update-skills.md": {
       "path": "docs/install-and-update-skills.md",
-      "sha256": "6c7b3f80f620d63d55afbb371f79aab8e7b481bb1ee37058d05ff3ca20842b35"
+      "sha256": "884712d2a5f177eae4530a956ad3d6c3bbc0b1b3b33fa2e8a8d2b9ac99fc7461"
     },
     "docs/validation/readme-transition-portability-review.md": {
       "path": "docs/validation/readme-transition-portability-review.md",
@@ -9708,7 +9816,7 @@
     },
     "scripts/managed-skill-input.mjs": {
       "path": "tooling/install/managed-skill-input.mjs",
-      "sha256": "7c1285405002a6a5efb2ac4c5b3e761a896299086ec31828b1bdcdad2ff14538"
+      "sha256": "dd438b38dceda12dfc3ccd703d52686ff140eae00fb8621bc1a0d944745c175b"
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
@@ -9716,7 +9824,7 @@
     },
     "tests/repo-cleanup.test.mjs": {
       "path": "tests/repo-cleanup.test.mjs",
-      "sha256": "5d56b5ac94207346a9c291c65f0e20dbb50605cee11883158a51f2badca4cbf0"
+      "sha256": "d0b5729d6b1300a3d98144574f43674ea81f869bbe83a7ba10b8e091c38317d2"
     },
     "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json": {
       "path": "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
@@ -9824,7 +9932,7 @@
     },
     "tests/multi-agent-delegation.test.mjs": {
       "path": "tests/multi-agent-delegation.test.mjs",
-      "sha256": "3ab60d6d366c36072aaae878b471b833eb2ac352ca292a0b03d9f794bc7541f5"
+      "sha256": "a31d1f37c731c75a720429c3d88d94fa91ac1d65e9f9340ed6b1ec07eb53ac86"
     },
     "tests/fixtures/adoption-release-4.4.0/tests.log": {
       "path": "tests/fixtures/adoption-release-4.4.0/tests.log",
@@ -9844,19 +9952,19 @@
     },
     "scripts/managed-marketplace-bootstrap.mjs": {
       "path": "tooling/install/managed-marketplace-bootstrap.mjs",
-      "sha256": "c6738c7b56f2d4b09149d1af98a47c093d3502a86dc43816633b414af126b543"
+      "sha256": "9c931b8b7a6aa6108bf015ed44d7ac8da5917027aa72e7caa893597c6e9a4f61"
     },
     "scripts/managed-skills.mjs": {
       "path": "tooling/install/managed-skills.mjs",
-      "sha256": "a2c047adf43ffd2f26a4812772026b79fcc127e7c88df989143237c5b6da9dc4"
+      "sha256": "d93eece1b1b8a1520bd096e6f88c871095b5acc054108cfa25bbcf763cb2d626"
     },
     "scripts/qs-test-environment.mjs": {
       "path": "tooling/verification/qs-test-environment.mjs",
-      "sha256": "09035137e38f671001d96f210a3b5daf15b7d65fd9449ff4a44d0410065d0c21"
+      "sha256": "9fc7e94dcd16352f9dacff3cf2d9b1449f9eb4ed2cc639c7f4c6857c6863d446"
     },
     "tests/qs-test-baseline.test.mjs": {
       "path": "tests/qs-test-baseline.test.mjs",
-      "sha256": "70ca7f12a0d49df816863bc84c015e37f4670c6735c9f60ac8acc55596f5a5c2"
+      "sha256": "556a8a7488e5bd263606c602023f207f9b96d5cb81b4360b2058d842aea41a41"
     },
     "install.sh": {
       "path": "install.sh",
@@ -9872,11 +9980,11 @@
     },
     "scripts/managed-package-repair.mjs": {
       "path": "tooling/install/managed-package-repair.mjs",
-      "sha256": "7b1072d8d300ebb20e37e85013b6edb2a656abbce9bd86d262b8855ad41ca08d"
+      "sha256": "92e89b998140b9b8aef6f70bd3a97f0d1134ecd0794acb72ecc8c943da21b398"
     },
     "scripts/validate-skill-release.mjs": {
       "path": "tooling/release/validate-skill-release.mjs",
-      "sha256": "993a18d3828cb37fa4008423451b774c0444aadc2c7d4cc50c5df8c4614bff1b"
+      "sha256": "89d631ee084047c82664396cbfb1ff91f4d5a7846ed4affd956c99af3dccf829"
     },
     "tests/install-skills.test.mjs": {
       "path": "tests/install-skills.test.mjs",
@@ -9884,7 +9992,7 @@
     },
     "scripts/managed-skill-migration.mjs": {
       "path": "tooling/install/managed-skill-migration.mjs",
-      "sha256": "8ace82e5e3df10898bedad0833ceba224feca34291a840aa5dfdc913f5b97222"
+      "sha256": "150fb08c9e6ae1401b8d0f6d28fa0b7b1f80280b8282abd0b19533eef2a5bbd9"
     },
     "tests/personal-skills-v2.test.mjs": {
       "path": "tests/personal-skills-v2.test.mjs",

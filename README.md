@@ -483,8 +483,7 @@ For example, the cleanup command lives in
 [`skills/qs-repo-cleanup/SKILL.md`](./skills/qs-repo-cleanup/SKILL.md).
 
 The [collection catalogs](./tooling/catalog/) control command names and package membership. The [tooling guide](./tooling/README.md) lists the generators, checks and installer entry points.
-The sync command builds `packages/` for Claude Code, `codex/plugins/` for Codex,
-and `pi/packages/` for Pi. See the [contributor guide](./docs/contributing.md)
+The sync command builds `dist/claude/`, `dist/codex/` and `dist/pi/`. See the [contributor guide](./docs/contributing.md)
 for metadata changes and the [architecture guide](./docs/architecture.md) for ownership.
 
 From the repository root, install dependencies with `npm ci` on first setup.

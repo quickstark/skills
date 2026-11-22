@@ -13,26 +13,14 @@ The source supervisor reported66 requested,66 recorded, no interrupted run and n
 
 The tar retains directory/file modes and regular-file contents. Source owner identities, access times and extended attributes are not a portability promise; the manifest’s byte/mode contract is decisive. The original source tree was rehashed after archiving and stayed identical. Source files were never edited.
 
-## Verify or extract
+## Restore and verify
 
-From the repository root, verify the compressed parts and every streamed tar member against the complete manifest:
+Use the [archive restoration procedure](../../../docs/validation/frontend-adoption.md#restore-the-closed-capture-archives) to retrieve the two parts into a private temporary directory. The procedure runs this archive's verifier and extracts the verified tree under `$archive_root/frontend-adoption-v3-results/extracted/qs-frontend-comparison-v3-native-20260926/`.
 
-```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-adoption-v3-results/verify.py
-```
-
-For extraction, choose a destination that does not exist and whose parent exists:
+If the original closed tree remains available, compare it using the restored verifier:
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-adoption-v3-results/verify.py --extract /tmp/qs-native-evidence-new
-```
-
-The result is `/tmp/qs-native-evidence-new/qs-frontend-comparison-v3-native-20260926/`. The command refuses an existing destination, rejects absolute/traversing/link/special tar entries, verifies file bytes while extracting, and rehashes the resulting tree. It never overwrites an existing directory. If verification fails after a fresh directory was created, that partial destination remains for diagnosis; choose another fresh path after resolving the cause. Budget roughly500MiB free temporary/extraction space.
-
-If the original closed tree remains available, additionally compare it:
-
-```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-adoption-v3-results/verify.py --source /tmp/qs-frontend-comparison-v3-native-20260926
+python3 -I -B "$archive_root/frontend-adoption-v3-results/verify.py" --source /tmp/qs-frontend-comparison-v3-native-20260926
 ```
 
 No command above reruns a model, browser or product test. Restoring the evidence does not turn failed outputs into successful outputs.
