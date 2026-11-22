@@ -1,4 +1,4 @@
-import { codexPackagePath, resolveCodexLayout, verifyCodexMarketplace } from './distribution-layout.mjs';
+import { claudePackagePath, resolveClaudeLayout, verifyClaudeMarketplace, codexPackagePath, resolveCodexLayout, verifyCodexMarketplace } from './distribution-layout.mjs';
 import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -32,7 +32,7 @@ const privateCapabilities = { 'qs-skills': V3_INTERNAL_CAPABILITIES, 'qs-special
 const privatePrefixes = { 'qs-skills': 'qs-internal', 'qs-advanced': 'ps-internal', 'qs-frontend': 'frontend-internal', 'qs-video': 'video-internal', 'qs-execution': 'execution-internal' };
 
 /** Pure catalog-derived audit obligations. No criterion is passed here. */
-export function derivePackageAcceptanceObligations(packageId, document, { codexLayout = 'original' } = {}) {
+export function derivePackageAcceptanceObligations(packageId, document, { codexLayout = 'original', claudeLayout = 'original' } = {}) {
   const collection = TARGET_SKILL_COLLECTIONS.find((entry) => entry.id === packageId); check(collection, 'Unknown target package.');
   const commands = TARGET_PUBLIC_COMMANDS.filter((entry) => entry.collectionId === packageId);
   const replacements = document.migrations.flatMap((migration) => migration.legacy.flatMap((entry) => entry.replacements.filter((replacement) => replacement.packageId === packageId)));
@@ -45,7 +45,8 @@ export function derivePackageAcceptanceObligations(packageId, document, { codexL
   if (packageId === 'qs-frontend') sourcePaths.push('skills/_shared/frontend');
   return { packageId, publicSkills: ids(commands), selectionCapabilityIds, capabilityIds: unique([...commands.map(commandId), ...replacementIds, ...privateCapabilities[packageId].map((entry) => `${privatePrefixes[packageId]}:${entry.name}`)]),
     sourcePaths: unique([...sourcePaths, codexPackagePath(packageId, codexLayout), collection.piPackageRoot,
-      ...(codexLayout === 'dist' ? ['.agents/plugins/marketplace.json', 'tooling/install/distribution-layout.mjs'] : []), collection.claudePackageRoot === '.' ? '.claude-plugin/plugin.json' : collection.claudePackageRoot,
+      ...(codexLayout === 'dist' ? ['.agents/plugins/marketplace.json', 'tooling/install/distribution-layout.mjs'] : []), claudePackagePath(packageId, claudeLayout),
+      ...(claudeLayout === 'dist' ? ['.claude-plugin/marketplace.json', '.claude-plugin/plugin.json', 'tooling/install/distribution-layout.mjs'] : []),
       'tooling/install/skill-migrations.json', 'tooling/catalog/skill-provenance.json', 'tooling/install/skill-profiles.json', 'docs/skill-run-contract.md',
       'install.sh', '.github/workflows/validate.yml',
       'tooling/verification/adoption-acceptance.mjs',
@@ -146,11 +147,13 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
   const knownRevisions = [...new Set([revision, ...(/^[a-f0-9]{40}$/.test(saved.record?.templateRevision) ? [saved.record.templateRevision] : []), ...document.migrations.flatMap((migration) => migration.legacy.filter((entry) => entry.kind === 'package').flatMap((entry) => entry.acceptedPrior.map((prior) => prior.revision)))])];
   const codexLayout = await resolveCodexLayout(repositoryRoot);
   if (codexLayout.name === 'dist') await verifyCodexMarketplace(repositoryRoot, revision, codexLayout);
+  const claudeLayout = await resolveClaudeLayout(repositoryRoot);
+  if (claudeLayout.name === 'dist') await verifyClaudeMarketplace(repositoryRoot, revision, claudeLayout);
   const packages = []; const native = {}; const observations = []; const verifiedOwnership = new Map(); const configs = {}; const unrelatedNames = {};
   for (const collection of TARGET_SKILL_COLLECTIONS) {
-    const obligations = derivePackageAcceptanceObligations(collection.id, document, { codexLayout: codexLayout.name }); const artifacts = {};
+    const obligations = derivePackageAcceptanceObligations(collection.id, document, { codexLayout: codexLayout.name, claudeLayout: claudeLayout.name }); const artifacts = {};
     for (const agent of agents) {
-      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot);
+      const source = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : collection.piPackageRoot);
       const payload = await captureManagedSkillPayload(source); const manifest = await jsonFile(path.join(source, agent === 'codex' ? '.codex-plugin/plugin.json' : agent === 'claude-code' ? '.claude-plugin/plugin.json' : 'package.json'));
       check(manifest.value.name === collection.id && manifest.value.version === version, 'Target projection manifest differs from release version/identity.');
       artifacts[agent] = { source, payloadDigest: payload.payloadDigest, contentSha256: payload.snapshot.contentSha256, nativePayloadSha256: nativePayloadSha256(agent,payload.snapshot) };
@@ -205,7 +208,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
       const canonicalPath = agent !== 'pi' ? path.join(agent === 'codex' ? codexHomeDirectory : claudeHomeDirectory, 'plugins/cache/quickstark', name, item.version) : item.source.path;
       const cachedManifest = agent === 'claude-code' && name === 'qs-skills' ? await jsonFile(path.join(canonicalPath,'.claude-plugin/plugin.json')) : null;
       const legacyRootCore = cachedManifest && Array.isArray(cachedManifest.value.skills) && cachedManifest.value.skills.some((skill) => typeof skill === 'string' && /^\.\/skills\/(engineering|productivity)\//.test(skill));
-      const expectedSource = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot);
+      const expectedSource = path.join(repositoryRoot, agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : collection.piPackageRoot);
       check(item.source.path === expectedSource || legacyRootCore && item.source.path === repositoryRoot, 'Native ownership requires enabled exact local package registration.');
       const payload = legacyRootCore ? await captureLegacyClaudeCore(canonicalPath) : await captureManagedSkillPayload(canonicalPath);
       check(!legacyRootCore || payload.version === item.version, 'Legacy Claude core cache version differs from registration.');
@@ -228,14 +231,24 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
         const history = await git(['log','-n','32','--format=%H','HEAD','--','.claude-plugin/plugin.json'],repositoryRoot);
         revisions.push(...history.stdout.trim().split(/\s+/).filter((value) => /^[a-f0-9]{40}$/.test(value)));
       }
-      const relative = legacyRootCore ? '.' : agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? collection.claudePackageRoot : collection.piPackageRoot;
+      const relative = legacyRootCore ? '.' : agent === 'codex' ? codexPackagePath(collection.id, codexLayout.name) : agent === 'claude-code' ? claudePackagePath(collection.id, claudeLayout.name) : collection.piPackageRoot;
       if (!legacy && !legacyRootCore) {
         const history = await git(['log', '-n', '32', '--format=%H', 'HEAD', '--', path.posix.join(relative, agent === 'codex' ? '.codex-plugin/plugin.json' : agent === 'claude-code' ? '.claude-plugin/plugin.json' : 'package.json')], repositoryRoot);
         revisions.push(...history.stdout.trim().split(/\s+/).filter(value => /^[a-f0-9]{40}$/.test(value)));
       }
       let priorRevision;
-      try { priorRevision = await verifyPackageGitTree(payload, relative, unique(revisions), repositoryRoot, git); }
-      catch (error) { error.code = 'QS_MANAGED_PACKAGE_DRIFT'; error.package = { agent, name, path: canonicalPath }; throw error; }
+      try {
+        try { priorRevision = await verifyPackageGitTree(payload, relative, unique(revisions), repositoryRoot, git); }
+        catch (error) {
+          if (agent !== 'claude-code' || claudeLayout.name !== 'dist' || legacy || legacyRootCore || item.version === version) throw error;
+          // An installed older cache can outlive a marketplace manifest at the
+          // same checkout. Match it against the original package path in history.
+          const original = claudePackagePath(name);
+          const history = await git(['log', '-n', '32', '--format=%H', 'HEAD', '--', original], repositoryRoot);
+          const ancestors = history.stdout.trim().split(/\s+/).filter(value => /^[a-f0-9]{40}$/.test(value));
+          priorRevision = await verifyPackageGitTree(payload, original, ancestors, repositoryRoot, git);
+        }
+      } catch (error) { error.code = 'QS_MANAGED_PACKAGE_DRIFT'; error.package = { agent, name, path: canonicalPath }; throw error; }
       // Pi ownership follows its exact maintained local source registration; Codex
       // additionally supplies and verifies the actual marketplace owner above.
       const observed = ownedObservation({ kind: 'package', identity: name, agent, path: canonicalPath, canonicalPath, linkTarget: null, version: item.version, revision: priorRevision, digest: payload.payloadDigest, publicSkills: observedNames, consumers: [], ...(legacyRootCore ? {layout:'claude-root-core'} : {}) }, { packageId: name, marketplace: 'quickstark' });

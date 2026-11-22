@@ -61,3 +61,16 @@ node tests/qualify-codex-layout-upgrade.mjs "$candidate" "$prior" journal
 ```
 
 The fresh and upgrade probes exercise the ordinary updater entry point. The journal probe tests the frozen transaction for the retained PS package under the candidate marketplace. The prior checkout supplies the v4.4.7 release.
+
+## Qualify Claude Code against the staged layout
+
+Use a disposable checkout with the staged root Claude manifests and `dist/claude/` packages checked in. Keep `packages/ps-skills` at its original path and bind the candidate release audit to the staged paths. The checkout must contain the trusted v4.4.7 and v4.0.0 releases. Run with the native `claude` CLI available.
+
+```sh
+node tests/qualify-claude-layout-upgrade.mjs "$candidate" fresh
+node tests/qualify-claude-layout-upgrade.mjs "$candidate" upgrade
+node tests/qualify-claude-layout-upgrade.mjs "$candidate" root-upgrade
+node tests/qualify-claude-layout-upgrade.mjs "$candidate" journal
+```
+
+The upgrade probes exercise the updater from the v4.4.7 package directory and the v4.0.0 repository-root core. The journal probe advances the disposable v4.0.0 checkout to the candidate at the same marketplace path, then tests retry and rollback of the frozen package transaction.

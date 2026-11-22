@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is verified with the staged Codex packages in isolated homes. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is verified with the staged Claude packages in isolated homes. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -346,7 +346,7 @@ The audited skill and generator edits also projected successfully into a separat
 
 ## LAY-17B — Qualify Claude Code upgrades across package layouts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-14, LAY-16
 
@@ -356,9 +356,17 @@ Prerequisite evidence. LAY-14 supplies relocated production installer. LAY-16 su
 
 **Outcome and scope.** Exercise the root-based core and package-based Claude bindings through fresh install, upgrade, interruption, retry and rollback. Include selected optional packages, original source verification and preservation of foreign caches.
 
-**Starting points.** `scripts/claude-core-migration.mjs`, `tests/managed-skill-input.test.mjs`, `.claude-plugin/marketplace.json`.
+**Starting points.** `tooling/install/claude-core-migration.mjs`, `tests/qualify-claude-layout-upgrade.mjs`, `.claude-plugin/marketplace.json`.
 
 **Verify.** In isolated default and custom Claude homes, resolve the marketplace using the actual native client. Recover after withdrawal, retaining unrelated enabled plugins and prior selections. Reject replaced caches or edited owned source. Verify the retained PS identity.
+
+**Verification.** Claude fixture `40b985a` matched all 1,138 Claude package and manifest entries from staged commit `eb51826` by Git blob ID and mode. All three retained PS trees also matched. The release validator passed in both layouts, and Claude Code 2.1.322 passed strict validation at the root and all six package roots. Historical acceptance records, criteria and package checks matched `7abf154`.
+
+The native updater passed a fresh core-only setup in a default home and upgrades in custom homes from both v4.4.7 package directories and the v4.0.0 repository-root core. Both upgrades preserved the selected optional package and unrelated marketplace, rejected edited sources and replaced caches before effects, and retried after withdrawal with the original backup intact.
+
+The frozen package journal bound the original caches and staged replacement paths at the candidate marketplace. It rejected a changed resume selection, retried the interrupted withdrawal, and rolled back to the old root core, optional package and PS 3.8.0 registrations. Rollback restored the exact saved selection and preserved the backup, the unrelated marketplace and an unrelated symlink in the old root cache.
+
+The original-layout sync and projection checks passed. The isolated repository suite passed 808 tests, with one non-Linux control skipped.
 
 **Excludes.** Real client rollout, publication or deleting compatibility paths.
 

@@ -42,7 +42,7 @@ async function checkCheckout(root, revision) {
 }
 
 async function matchesRootMarketplace(root, revision) {
-  const file = '.claude-plugin/marketplace.json';
+  const file = claudeManifest;
   const { stdout } = await git(['show', revision + ':' + file], root);
   const market = JSON.parse(stdout);
   const core = market.plugins.filter(pkg => pkg.name === 'qs-skills');
@@ -98,6 +98,7 @@ export async function recognizeDistributionSource({ repositoryRoot, revision, ho
 
 
 const codexManifest = '.agents/plugins/marketplace.json';
+const claudeManifest = '.claude-plugin/marketplace.json';
 const optional = file => lstat(file).catch(error => {
   if (error.code === 'ENOENT') return null;
   throw error;
@@ -118,25 +119,38 @@ export function codexPackagePath(packageId, layout = 'original') {
 }
 
 export async function verifyCodexMarketplace(repositoryRoot, revision, layout) {
-  await checkCheckout(repositoryRoot, revision);
   const file = path.posix.join(layout.name === 'original' ? 'codex' : '', codexManifest);
-  const snapshot = await captureMigrationPath(path.join(repositoryRoot, file));
-  if (snapshot.kind !== 'file') throw new Error('Expected a regular Codex marketplace manifest.');
-  const committed = (await git(['show', revision + ':' + file], repositoryRoot)).stdout;
-  if (await readFile(snapshot.path, 'utf8') !== committed) throw new Error('Codex marketplace manifest changed from the pinned source.');
-  await git(['diff-index', '--cached', '--quiet', revision, '--', file], repositoryRoot);
-  const market = JSON.parse(committed);
-  const names = market.plugins?.map(p => p.name);
-  const allowed = [...TARGET_SKILL_COLLECTIONS.map(pkg => pkg.id), 'ps-skills'];
-  if (market.name !== 'quickstark' || !names?.length || names.length !== new Set(names).size
-    || names.some(name => !allowed.includes(name)) || layout.name === 'dist' && names.length !== allowed.length) {
-    throw new Error('Codex marketplace has an unexpected package inventory.');
-  }
+  const market = await readPinnedMarketplace(repositoryRoot, revision, file, 'Codex');
+  verifyMarketplaceInventory(market, layout, 'Codex');
   for (const plugin of market.plugins) {
     const packagePath = codexPackagePath(plugin.name, layout.name);
     const expected = './' + (layout.name === 'original' ? packagePath.slice('codex/'.length) : packagePath);
     if (plugin.source?.source !== 'local' || plugin.source.path !== expected) throw new Error('Codex marketplace package mapping differs from the declared layout.');
   }
+}
+
+async function readPinnedMarketplace(repositoryRoot, revision, file, label) {
+  await checkCheckout(repositoryRoot, revision);
+  const snapshot = await captureMigrationPath(path.join(repositoryRoot, file));
+  if (snapshot.kind !== 'file') throw new Error('Expected a regular ' + label + ' marketplace manifest.');
+  const committed = (await git(['show', revision + ':' + file], repositoryRoot)).stdout;
+  if (await readFile(snapshot.path, 'utf8') !== committed) throw new Error(label + ' marketplace manifest changed from the pinned source.');
+  await git(['diff-index', '--cached', '--quiet', revision, '--', file], repositoryRoot);
+  return JSON.parse(committed);
+}
+
+function verifyMarketplaceInventory(market, layout, label) {
+  const names = market.plugins?.map(p => p.name);
+  const allowed = [...TARGET_SKILL_COLLECTIONS.map(pkg => pkg.id), 'ps-skills'];
+  if (market.name !== 'quickstark' || !names?.length || names.length !== new Set(names).size
+    || names.some(name => !allowed.includes(name)) || layout.name === 'dist' && names.length !== allowed.length) {
+    throw new Error(label + ' marketplace has an unexpected package inventory.');
+  }
+}
+
+async function verifyPriorRelease(revision, replacementRoot, label) {
+  try { await git(['merge-base', '--is-ancestor', revision, 'HEAD'], replacementRoot); }
+  catch { throw new Error('Existing ' + label + ' checkout revision is not in the accepted release history.'); }
 }
 
 export async function resolvePriorCodexCheckout(marketplaceRoot, replacementRoot) {
@@ -146,7 +160,41 @@ export async function resolvePriorCodexCheckout(marketplaceRoot, replacementRoot
   const layout = await resolveCodexLayout(repositoryRoot);
   if (marketplaceRoot !== layout.marketplaceRoot) throw new Error('Existing Codex marketplace is not at its declared checkout root.');
   await verifyCodexMarketplace(repositoryRoot, revision, layout);
-  try { await git(['merge-base', '--is-ancestor', revision, 'HEAD'], replacementRoot); }
-  catch { throw new Error('Existing Codex checkout revision is not in the accepted release history.'); }
+  await verifyPriorRelease(revision, replacementRoot, 'Codex');
   return { repositoryRoot, revision, layout };
+}
+
+
+export async function resolveClaudeLayout(repositoryRoot) {
+  const dist = path.join(repositoryRoot, 'dist/claude');
+  const candidate = await optional(dist);
+  if (!candidate) return { name: 'original' };
+  await assertMigrationParents(dist);
+  if (!candidate.isDirectory()) throw new Error('Claude distribution root must be a real directory.');
+  return { name: 'dist' };
+}
+
+export function claudePackagePath(packageId, layout = 'original') {
+  return packageId === 'ps-skills' ? 'packages/ps-skills' : distributionPaths('claude-code', packageId)[layout];
+}
+
+export async function verifyClaudeMarketplace(repositoryRoot, revision, layout) {
+  const market = await readPinnedMarketplace(repositoryRoot, revision, claudeManifest, 'Claude');
+  verifyMarketplaceInventory(market, layout, 'Claude');
+  for (const plugin of market.plugins) {
+    if (layout.name === 'original' && plugin.name === 'qs-skills' && plugin.source === './') continue;
+    if (plugin.source !== './' + claudePackagePath(plugin.name, layout.name)) {
+      throw new Error('Claude marketplace package mapping differs from the declared layout.');
+    }
+  }
+  return market;
+}
+
+export async function resolvePriorClaudeCheckout(repositoryRoot, replacementRoot) {
+  const revision = (await git(['rev-parse', 'HEAD'], repositoryRoot)).stdout.trimEnd();
+  const layout = await resolveClaudeLayout(repositoryRoot);
+  const market = await verifyClaudeMarketplace(repositoryRoot, revision, layout);
+  await verifyPriorRelease(revision, replacementRoot, 'Claude');
+  const rootCore = market.plugins.some(pkg => pkg.name === 'qs-skills' && pkg.source === './');
+  return { repositoryRoot, revision, layout, rootCore };
 }
