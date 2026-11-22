@@ -14,26 +14,14 @@ The supervisor reported six settled captures, no interruption and no capture fai
 
 Directory/file modes and regular-file bytes are preserved. Owner identities, access times and extended attributes are not a portability promise. The full original tree was rehashed after archiving and after extraction; it stayed unchanged.
 
-## Verify or extract
+## Restore and verify
 
-Python3 and the existing `zstd` executable are required. From the repository root, verify without extracting evidence:
+Use the [archive restoration procedure](../../../docs/validation/frontend-adoption.md#restore-the-closed-capture-archives) to retrieve the two parts into a private temporary directory. The procedure runs this archive's verifier and extracts the verified tree under `$archive_root/frontend-mobile-repair-results/extracted/qs-frontend-mobile-native-qualification-20260926/`.
 
-```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-mobile-repair-results/verify.py
-```
-
-To extract, choose a destination that does not exist and whose parent exists:
+If the original closed tree remains available, compare it using the restored verifier:
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-mobile-repair-results/verify.py --extract /tmp/qs-mobile-evidence-new
-```
-
-The restored root will be `/tmp/qs-mobile-evidence-new/qs-frontend-mobile-native-qualification-20260926/`. Verification refuses an existing destination and rejects absolute, traversing, duplicate, link or special tar entries. It verifies bytes while extracting and rehashes the extracted tree. A partial destination remains if verification fails; resolve the cause before choosing another fresh path. Allow roughly300MiB temporary/extraction space.
-
-If the unchanged original remains available, compare it too:
-
-```sh
-PYTHONDONTWRITEBYTECODE=1 python3 tests/fixtures/frontend-mobile-repair-results/verify.py --source /tmp/qs-frontend-mobile-native-qualification-20260926
+python3 -I -B "$archive_root/frontend-mobile-repair-results/verify.py" --source /tmp/qs-frontend-mobile-native-qualification-20260926
 ```
 
 ## Verification scope

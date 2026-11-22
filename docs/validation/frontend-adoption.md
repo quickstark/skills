@@ -161,3 +161,15 @@ remains legacy, and no publication or actual-machine update has occurred.
 ## 2026-09-28 approved font limitation boundary
 
 The user explicitly approved reported image-font limitations. The [acceptance amendment](../specs/quickstark-upstream-adoption-font-amendment.md) permits the candidly reported small-label font mismatch in candidate `review-82f1387ba536341b` while preserving all original strict grades and every other quality, content, opacity, platform and authority requirement. The separate qualification's other two candidate trials passed the strict checks. This supports adopting the patched mobile guidance within that measured native portrait scope; it does not repair the original exact-size failures or establish guaranteed typography. Final package activation, acceptance bindings, publication and machine rollout require their own evidence.
+
+## Restore the closed capture archives
+
+Run from the repository root with Bash, curl, Python 3 and `zstd`. Allow about 1 GiB of free space in `TMPDIR` or `/tmp` for the split parts and extracted files.
+
+```sh
+archive_root=$(bash tooling/verification/restore-frontend-archives.sh)
+```
+
+The command retrieves the four original blobs from the official QuickStark repository at commit `f1324e8b81311f2ee3209ab35808011db29a5d52`, retained by the published `v4.4.7` tag. Keep that tag and its Git objects available while this evidence is supported.
+
+The two retained verifiers check the part and stream hashes, the frozen inputs, and every file and directory against their manifests. The command prints a path only after both groups pass. Each group directory contains the parts and its verified `extracted/` tree. An unsuccessful or interrupted run leaves existing data alone and does not publish a verified directory. Ordinary tests and installation run without archive retrieval.

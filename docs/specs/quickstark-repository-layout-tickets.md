@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is committed at `cbb159c`. LAY-18 is verified with `dist/` active in the working tree. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is committed at `cbb159c`. LAY-18 is committed at `36c2ec9`. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -70,7 +70,7 @@ Acceptance criteria: AC-04
 
 ## LAY-03 — Prove independent archive retrieval
 
-Status: open
+Status: verified
 
 Blocked by: none
 
@@ -81,6 +81,8 @@ Acceptance criteria: AC-08
 **Starting points.** `tests/fixtures/frontend-adoption-v3-results/archive.json`, `tests/fixtures/frontend-mobile-repair-results/archive.json`, `docs/validation/frontend-adoption.md`.
 
 **Verify.** On a clean checkout without the four local parts or object cache, retrieve from the documented source and run both original verifiers. Reject missing, corrupt, swapped and truncated parts. Preserve existing files on failure. Record the restoration transcript and actual byte count.
+
+**Verification.** The official remote advertises the annotated `v4.4.7` tag at `f1324e8b81311f2ee3209ab35808011db29a5d52`. The [restoration procedure](../validation/frontend-adoption.md#restore-the-closed-capture-archives) retrieved all 196,849,834 compressed bytes from that commit in a temporary directory with the original manifests and verifiers and no local archive parts or Git object cache. Both verifiers passed fresh extraction and rehashing for all 3,955 files and 887 manifest directory entries. For each group, missing, corrupt, swapped, truncated and interrupted transfers failed without publishing a result. The verifiers refused to replace existing extraction directories, and the previously verified parts stayed byte-identical.
 
 **Excludes.** Deleting tracked parts, introducing an automatic network dependency, or publishing to new storage.
 
@@ -424,7 +426,7 @@ The integrated suite passed 804 tests and skipped one non-Linux control. Four as
 
 ## LAY-19 — Remove only the four verified capture parts
 
-Status: open
+Status: verified
 
 Blocked by: LAY-03
 
@@ -437,6 +439,10 @@ Prerequisite evidence. LAY-03 supplies independent restoration and retention evi
 **Starting points.** `tests/fixtures/frontend-adoption-v3-results`, `tests/fixtures/frontend-mobile-repair-results`, `docs/validation/frontend-adoption.md`.
 
 **Verify.** From the resulting tree run offline ordinary tests and an isolated install with archive retrieval disabled. Restore both archives on demand, verify all 3,955 files and their manifest directory entries, and report actual tracked bytes removed. Interrupted retrieval leaves no partial valid archive. If retention is unresolved, keep the parts and mark this ticket blocked.
+
+**Verification.** After the independent restoration in LAY-03, this change removed only the four split parts, totaling 196,849,834 bytes (187.73 MiB) of tracked checkout contents. Git history still retains the original blobs. The manifests, frozen inputs and both original verifiers remained byte-identical.
+
+Checkout `56d9902` passed sync and projection checks without a generated diff. With IPv4 and IPv6 socket creation blocked, the archive-relevant ordinary test selection passed 81 tests with one platform-specific skip. The standalone bootstrap installed and verified Pi core from an isolated filter-capable Git remote. Direct inspection of the installed checkout and its Git object indexes confirmed the four archive blobs were absent. The official remote also advertised blob filtering. The unchanged host and rollback results from LAY-18 still apply.
 
 **Excludes.** History rewriting, moving other fixtures or exporting evidence to a third party.
 
