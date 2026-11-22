@@ -172,7 +172,7 @@ test("generated packages are isolated, synchronized, and free of reporting runti
   }
   assert.deepEqual(await directories(join(root, "dist", "codex", "qs-skills", "skills")), [...coreNames].sort());
   assert.deepEqual(await directories(join(root, "dist", "codex", "qs-specialists", "skills")), [...specialistNames].sort());
-  await assert.rejects(stat(join(root, "dist", "codex", "qs-specialists", "capabilities")), /ENOENT/);
+  assert.deepEqual(await readdir(join(root, "dist", "codex", "qs-specialists", "capabilities")), ["runtime"]);
 
   const expectedSupport = ["advanced-skill-catalog.mjs", "execution-skill-catalog.mjs", "frontend-skill-catalog.mjs", "optional-command-definition.mjs", "ps-skill-catalog.mjs", "qs-skill-catalog.mjs", "skill-collection-registry.mjs", "video-skill-catalog.mjs"];
   for (const packageRoot of [
@@ -197,15 +197,16 @@ test("retired commands remain absent and internal capabilities remain non-comman
   );
 });
 
-test("all 33 completion contracts present direct chat results and apply clear writing", () => {
+test("shared runtime policy and all public footers produce one direct chat result", async () => {
+  const policy = await readFile(join(root, "skills/_shared/runtime/run-contract.md"), "utf8");
   for (const skill of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(skill);
     const documentation = renderDocumentationOutputContract(skill);
 
-    assert.match(contract, /Present the result directly in chat/i);
-    assert.match(contract, /internal clear-writing pass/i);
-    assert.match(contract, /lead with the outcome/i);
-    assert.match(contract, /Status: Complete \| Continuation required \| Input required \| Failed/);
+    assert.match(policy, /Present the result directly in the current conversation/i);
+    assert.match(policy, /internal clear-writing pass/i);
+    assert.match(policy, /lead with the outcome/i);
+    assert.match(policy, /Status: Complete \| Continuation required \| Input required \| Failed/);
     assert.match(contract, new RegExp(`Skills used: /${skill.name}\\b`));
     assert.doesNotMatch(contract, /qs-skill-readout|require-hosted|reports\.quickstark\.com|Create a small JSON|Readout:/i);
     assert.match(documentation, /directly in chat/i);
@@ -219,26 +220,27 @@ test("all 33 completion contracts present direct chat results and apply clear wr
       continue;
     }
 
-    assert.match(contract, /Next work prompt:.*fenced `text` block/i);
-    assert.match(contract, /one fenced `text` block/i);
+    assert.match(contract, /`Next work prompt:`/);
+    assert.match(policy, /one copy-ready prompt in a fenced `text` code block/i);
     for (const route of [...skill.continuation.normal, ...skill.continuation.failure]) {
       assert.match(contract, new RegExp(`\\${codexPublicSkillLiteral(route.name)}\\b`));
     }
   }
 });
 
-test("completion contract avoids circular prompts", () => {
+test("completion contract avoids circular prompts", async () => {
+  const policy = await readFile(join(root, "skills/_shared/runtime/run-contract.md"), "utf8");
   for (const command of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(command);
     if (command.name === "qs-deploy-release") continue;
 
     assert.equal(command.continuation.maximumPrompts, 1, command.name);
     assert.equal(command.continuation.defaultPrompts, 0, command.name);
-    assert.match(contract, /at most one copy-ready next-work prompt/i, command.name);
-    assert.match(contract, /current root.*complete.*does not.*project.*complete/i, command.name);
-    assert.match(contract, /always write `Next work prompt:`/i, command.name);
-    assert.match(contract, /do not replace the fenced block with inline prose/i, command.name);
-    assert.match(contract, /do not recommend.*already completed.*without new evidence/i, command.name);
+    assert.match(policy, /at most one copy-ready next-work prompt/i, command.name);
+    assert.match(policy, /completion of the current root does not prove that the larger project is complete/i, command.name);
+    assert.match(policy, /always write the `Next work prompt:`/i, command.name);
+    assert.match(policy, /do not replace the fence with inline prose/i, command.name);
+    assert.match(policy, /must not repeat.*already succeeded without new evidence/i, command.name);
     assert.doesNotMatch(contract, /Alternative next prompt|exactly three|all three prompts/i, command.name);
   }
 
@@ -246,19 +248,15 @@ test("completion contract avoids circular prompts", () => {
     const command = PUBLIC_COMMANDS.find((item) => item.name === name);
     const contract = renderSkillOutputContract(command);
     assert.doesNotMatch(contract, /catalog-approved composite workflow/i, name);
-    assert.match(contract, /exact verified ticket, specification, issue, or grouped work item/i, name);
+    assert.match(policy, /exact verified ticket, specification, issue, or grouped work item/i, name);
   }
 });
 
-test("generic continuation prompts never imply an Add button", () => {
-  for (const command of PUBLIC_COMMANDS) {
-    const contract = renderSkillOutputContract(command);
-    if (command.name === "qs-deploy-release") continue;
-
-    assert.match(contract, /fenced prompt is copy-ready only/i, command.name);
-    assert.match(contract, /plain skill Markdown cannot request or guarantee an Add action/i, command.name);
-    assert.doesNotMatch(contract, /host may (?:offer|expose) an Add action for the fenced prompt/i, command.name);
-  }
+test("generic continuation prompts never imply an Add button", async () => {
+  const policy = await readFile(join(root, "skills/_shared/runtime/run-contract.md"), "utf8");
+  assert.match(policy, /fenced prompt is copy-ready only/i);
+  assert.match(policy, /plain skill Markdown cannot request or guarantee an Add action/i);
+  assert.doesNotMatch(policy, /host may (?:offer|expose) an Add action for the fenced prompt/i);
 });
 
 test("execution skills finish authorized code work", async () => {
@@ -278,7 +276,8 @@ test("execution skills finish authorized code work", async () => {
   }
 });
 
-test("applicable engineering results link governing specs and summarize verified work", () => {
+test("applicable engineering results link governing specs and summarize verified work", async () => {
+  const policy = await readFile(join(root, "skills/_shared/runtime/run-contract.md"), "utf8");
   const expected = [
     "qs-repo-cleanup",
     "qs-plan-clarify", "qs-plan-roadmap", "qs-plan-spec", "qs-code-build",
@@ -306,25 +305,25 @@ test("applicable engineering results link governing specs and summarize verified
     const documentation = renderDocumentationOutputContract(command);
     if (activeExpected.includes(command.name)) {
       assert.equal(command.resultContext.specProgress, true, command.name);
-      assert.match(contract, /^Specs: /m, command.name);
-      assert.match(contract, /^Work summary:/m, command.name);
-      assert.match(contract, /clickable Markdown links/i, command.name);
-      assert.match(contract, /Not located/i, command.name);
-      assert.match(contract, /highest-priority verified/i, command.name);
-      assert.match(contract, /never omit `Specs:` or `Work summary:`/i, command.name);
+      assert.match(contract, /`Specs:`/, command.name);
+      assert.match(contract, /`Work summary:`/, command.name);
+      assert.match(policy, /clickable Markdown links/i, command.name);
+      assert.match(policy, /Not located/i, command.name);
+      assert.match(policy, /highest-priority verified/i, command.name);
+      assert.match(policy, /add two fields to every result/i, command.name);
       assert.match(contract, /Finished —/i, command.name);
       assert.match(contract, /Next —/i, command.name);
-      assert.match(contract, /do not treat completion of the current root as proof/i, command.name);
+      assert.match(policy, /completion of the current root does not prove/i, command.name);
       if (command.name !== "qs-deploy-release" && command.outputKind !== "goal-workflow-prompt") {
-        assert.match(contract, /when `Next` lists.*actionable.*fenced `text` prompt is required/i, command.name);
+        assert.match(policy, /when the `Next —` readout contains a distinct actionable item.*one copy-ready prompt in a fenced `text` code block/i, command.name);
       }
       assert.match(documentation, /governing specification/i, command.name);
       assert.match(documentation, /pending, and blocked work/i, command.name);
       assert.match(documentation, /finished.*next/i, command.name);
     } else {
       assert.equal(command.resultContext.specProgress, false, command.name);
-      assert.doesNotMatch(contract, /^Specs: /m, command.name);
-      assert.doesNotMatch(contract, /^Work summary:/m, command.name);
+      assert.doesNotMatch(contract, /`Specs:`/, command.name);
+      assert.doesNotMatch(contract, /`Work summary:`/, command.name);
     }
   }
 });
@@ -351,7 +350,7 @@ test("completed repair and integration can advance an exact separate build item"
 
 test("Pi continuation literals are included in every non-terminal completion contract", () => {
   for (const command of PUBLIC_COMMANDS.filter((item) => item.name !== "qs-deploy-release")) {
-    assert.match(renderSkillOutputContract(command), /Pi uses `\/skill:/, command.name);
+    assert.match(renderSkillOutputContract(command), /`\/skill:qs-/, command.name);
   }
 });
 

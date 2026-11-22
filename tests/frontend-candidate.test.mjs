@@ -33,7 +33,7 @@ test("four explicit frontend roots have exact package metadata and locally resol
       const path = match[1];
       if (/^https?:/.test(path)) continue;
       const target = resolve(directory, path);
-      assert.ok(target.startsWith(privateRoot + "/"));
+      assert.ok(target === join(root, "skills/_shared/runtime/run-contract.md") || target.startsWith(privateRoot + "/"));
       assert.ok(existsSync(target), target);
     }
   }

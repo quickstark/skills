@@ -1,4 +1,3 @@
-import { currentSourcePath } from "../tooling/catalog/historical-source-path.mjs";
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, mkdtempSync, mkdirSync, cpSync, writeFileSync, unlinkSync, rmSync } from 'node:fs';
@@ -69,7 +68,8 @@ test('a source digest cannot prove an adapted repository file is byte-identical'
 test('baseline derived digest is independently verified against recorded file bytes', () => {
   const document = structuredClone(baseline);
   const entry = record(document, 'qs:qs-help');
-  entry.derivedDigest = { algorithm: 'sha256', kind: 'file', value: createHash('sha256').update(readFileSync(root + currentSourcePath(entry.canonical.path))).digest('hex') };
+  const recorded = JSON.parse(readFileSync(path.join(root, 'tests/fixtures/lean-execution-adoption/candidate-sources.json')));
+  entry.derivedDigest = { algorithm: 'sha256', kind: 'file', value: createHash('sha256').update(recorded[entry.canonical.path]).digest('hex') };
   assert.equal(validateSkillProvenance(document).valid, true);
   entry.derivedDigest.value = 'c'.repeat(64);
   assert.match(validateSkillProvenance(document).errors.join('\n'), /derived digest does not match recorded canonical bytes/);

@@ -39,9 +39,9 @@ const responseText = base => {
 const changed = state => [...new Set([...Object.keys(state.before), ...Object.keys(state.after)])]
   .filter(path => JSON.stringify(state.before[path]) !== JSON.stringify(state.after[path])).sort();
 
-test('fresh model evidence binds the current instructions and actual preserved filesystem state', () => {
+test('historical model evidence binds the recorded instructions and actual preserved filesystem state', () => {
   const review = jsonFile(new URL('review.json', evidenceRoot));
-  const source = readFileSync(new URL('../skills/qs-repo-cleanup/SKILL.md', import.meta.url));
+  const source = execFileSync('git', ['show', 'f1324e8b81311f2ee3209ab35808011db29a5d52:skills/engineering/qs-repo-cleanup/SKILL.md'], { cwd: new URL('../', import.meta.url) });
   assert.equal(review.sourceSHA256, digest(source));
   const cases = jsonFile(new URL('./fixtures/repo-cleanup/scenarios.json', import.meta.url));
   assert.deepEqual(review.cases.map(c => c.id).sort(), cases.map(c => c.id).sort());
@@ -172,15 +172,16 @@ test('influence pins and the rejected initial trial remain distinct from current
 test('cleanup source, metadata and isolated package copies preserve the explicit boundary', () => {
   const source = readFileSync(new URL('../skills/qs-repo-cleanup/SKILL.md', import.meta.url), 'utf8');
   const metadata = readFileSync(new URL('../skills/qs-repo-cleanup/agents/openai.yaml', import.meta.url), 'utf8');
+  const projected = source.replace('../_shared/runtime/', '../../capabilities/runtime/');
   assert.match(source, /^disable-model-invocation: true$/m);
   assert.match(metadata, /allow_implicit_invocation: false/);
   assert.match(metadata, /\$qs-specialists:qs-repo-cleanup/);
   for (const collection of SKILL_COLLECTIONS) {
     if (collection.id !== 'qs-specialists') continue;
     for (const root of [claudePackagePath(collection.id, 'dist'), piPackagePath(collection.id, 'dist')]) {
-      assert.equal(readFileSync(new URL(`../${root}/skills/qs-repo-cleanup/SKILL.md`, import.meta.url), 'utf8'), source);
+      assert.equal(readFileSync(new URL(`../${root}/skills/qs-repo-cleanup/SKILL.md`, import.meta.url), 'utf8'), projected);
     }
     const codex = readFileSync(new URL(`../${codexPackagePath(collection.id, 'dist')}/skills/qs-repo-cleanup/SKILL.md`, import.meta.url), 'utf8');
-    assert.equal(codex, source.replace(/^disable-model-invocation: true\n/m, ''));
+    assert.equal(codex, projected.replace(/^disable-model-invocation: true\n/m, ''));
   }
 });

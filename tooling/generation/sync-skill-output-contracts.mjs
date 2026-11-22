@@ -1,15 +1,14 @@
 import { repositoryRoot } from '../repository-root.mjs';
 import { listPublicSources } from "./sync-v3-docs.mjs";
-import { readFile, writeFile } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { lstat, mkdir, readFile, realpath, writeFile } from "node:fs/promises";
+import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import {
   PUBLIC_COMMANDS,
   PUBLIC_COMMANDS_BY_NAME,
   REGISTRY_STATE,
-  codexPublicSkillLiteral,
-  piPublicSkillLiteral,
+  TARGET_PUBLIC_COMMANDS_BY_NAME,
 } from "../catalog/skill-collection-registry.mjs";
 
 import { PUBLIC_PROGRESS_CONTRACT, syncProgressContracts } from "./progress-reporting-contract.mjs";
@@ -17,7 +16,7 @@ import { PUBLIC_PROGRESS_CONTRACT, syncProgressContracts } from "./progress-repo
 export const SKILL_OUTPUT_HEADING = "## Completion report and next steps";
 export const DOCUMENTATION_OUTPUT_HEADING = "## Output and next steps";
 
-export function renderSkillOutputContract(skill, { commandsByName = PUBLIC_COMMANDS_BY_NAME } = {}) {
+function renderLegacySkillOutputContract(skill, { commandsByName = PUBLIC_COMMANDS_BY_NAME } = {}) {
   const registered = commandsByName.get(skill.name) ?? skill;
   const routes = registered.continuation.normal;
   const failureRoutes = registered.continuation.failure;
@@ -25,12 +24,17 @@ export function renderSkillOutputContract(skill, { commandsByName = PUBLIC_COMMA
   const failureContinuations = failureRoutes.map((item) => item.name);
   const terminal = routes.length === 0 && failureRoutes.length === 0;
   const allRoutes = [...new Map([...routes, ...failureRoutes].map((item) => [item.name, item])).values()];
-  const codexLiterals = allRoutes.map((item) => {
+  const destinations = allRoutes.map((item) => {
     const command = commandsByName.get(item.name);
     if (!command) throw new Error(`Unknown continuation: ${item.name}.`);
-    return command.codexLiteral;
+    return command;
   });
-  const piLiterals = allRoutes.map((item) => `/skill:${item.name}`);
+  const formatLiterals = (literals) => literals.map((literal) => `\`${literal}\``).join(", ");
+  const hostLiterals = [
+    `Bare slash commands use ${formatLiterals(destinations.map((command) => command.claudeLiteral))}.`,
+    `Codex uses ${formatLiterals(destinations.map((command) => command.codexLiteral))}.`,
+    `Pi uses ${formatLiterals(destinations.map((command) => `/skill:${command.name}`))}.`,
+  ].join(" ");
   const reportsSpecProgress = registered.resultContext?.specProgress === true;
   const goalPrompt = registered.outputKind === "goal-workflow-prompt";
   const primaryHelp = registered.primaryRouting?.kind === "available-public-command";
@@ -56,7 +60,7 @@ export function renderSkillOutputContract(skill, { commandsByName = PUBLIC_COMMA
     terminal
       ? "Do not invent a follow-on workflow after release. State any release failure in this result."
       : primaryHelp
-        ? `Primary Help routing may select any actually available registered public root. Read [${registered.primaryRouting.referenceFile}](${registered.primaryRouting.referenceFile}) for registry-generated descriptions and exact Codex/Claude/Pi literals; verify the selected literal in the active host before emitting it. This primary recommendation is separate from ordinary continuation eligibility. Ordinary continuation routes: ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Emit at most one prompt overall and never execute the selected root or install a missing package. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`
+        ? `Primary Help routing may select any actually available registered public root. Read [${registered.primaryRouting.referenceFile}](${registered.primaryRouting.referenceFile}) for registry-generated descriptions and exact command spellings for each host; verify the selected literal in the active host before emitting it. This primary recommendation is separate from ordinary continuation eligibility. Ordinary continuation routes: ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Emit at most one prompt overall and never execute the selected root or install a missing package. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`
       : `Eligible next routes: ${continuations.map((name) => `\`/${name}\``).join(", ") || "None — primary deliverable is the goal prompt"}. Failure routes: ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select one route only when it owns unfinished work. Do not recommend a review, verification, planning, diagnosis, or implementation step already completed without new evidence that it must be repeated.`,
     "",
     "Before responding, apply the internal clear-writing pass: lead with the outcome, use concrete nouns and verbs, preserve necessary qualifications and technical terms, and remove repetition. It never appears as another skill, status, or continuation.",
@@ -81,12 +85,90 @@ export function renderSkillOutputContract(skill, { commandsByName = PUBLIC_COMMA
       : "Next work prompt: None | one copy-ready prompt in a fenced `text` block",
     "",
     goalPrompt
-      ? `Always write \`Next work prompt:\`. On success, write exactly one fenced \`text\` block containing the execution prompt under Next work prompt: beginning with the instruction to establish or resume the scoped goal before mutations. Include exact selected skill literals, scope, evidence, authorization, stage checks and deployment evidence. This is the primary deliverable, not an ordinary continuation; emit no second prompt. State: Prompt generated; execution has not started. On missing material inputs, use Input required and do not emit an executable deployment prompt; at most one eligible recovery prompt is allowed (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Do not replace the fenced block with inline prose. Name the exact verified ticket, specification, issue, or grouped work item.`
+      ? `Always write \`Next work prompt:\`. On success, write exactly one fenced \`text\` block containing the execution prompt under Next work prompt: beginning with the instruction to establish or resume the scoped goal before mutations. Include exact selected skill literals, scope, evidence, authorization, stage checks and deployment evidence. This is the primary deliverable, not an ordinary continuation; emit no second prompt. State: Prompt generated; execution has not started. On missing material inputs, use Input required and do not emit an executable deployment prompt; at most one eligible recovery prompt is allowed. Use the spelling verified in the active host. ${hostLiterals} The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Do not replace the fenced block with inline prose. Name the exact verified ticket, specification, issue, or grouped work item.`
       : terminal
       ? "Never add a speculative prompt merely to keep the workflow moving."
       : primaryHelp
-        ? `Always write \`Next work prompt:\`. For one verified actionable request and an available primary destination, put exactly one fenced \`text\` block beneath it beginning with the destination's exact installed literal from [${registered.primaryRouting.referenceFile}](${registered.primaryRouting.referenceFile}). Name the requested work and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. A missing or unverified destination produces Input required with its precise package/discovery prerequisite and no executable prompt for that destination; do not claim no follow-on is needed. When there is no verified remaining actionable work, write \`Next work prompt: None — no follow-on needed.\` Ordinary continuation literals also require verified availability: Codex ${codexLiterals.join(", ")}; Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`
-      : `Always write \`Next work prompt:\`. When a distinct verified actionable item exists, put one fenced \`text\` block beneath it beginning with its exact Codex literal (${codexLiterals.join(", ")}); Claude uses ${allRoutes.map((item) => `\`/${item.name}\``).join(", ")}; Pi uses ${piLiterals.map((item) => `\`${item}\``).join(", ")}. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. ${reportsSpecProgress ? "When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. " : ""}Only when no eligible actionable item remains, write \`Next work prompt: None — no follow-on needed.\` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
+        ? `Always write \`Next work prompt:\`. For one verified actionable request and an available primary destination, put exactly one fenced \`text\` block beneath it beginning with the destination's exact installed literal from [${registered.primaryRouting.referenceFile}](${registered.primaryRouting.referenceFile}). Name the requested work and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. A missing or unverified destination produces Input required with its precise package/discovery prerequisite and no executable prompt for that destination; do not claim no follow-on is needed. When there is no verified remaining actionable work, write \`Next work prompt: None — no follow-on needed.\` Ordinary continuation literals also require verified availability. ${hostLiterals} The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`
+      : `Always write \`Next work prompt:\`. When a distinct verified actionable item exists, put one fenced \`text\` block beneath it beginning with the route's exact command as verified in the active host. ${hostLiterals} Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence. Do not replace the fenced block with inline prose, a bare command, or a link. ${reportsSpecProgress ? "When `Next` lists a pending or blocked actionable item and an eligible route owns it, the fenced `text` prompt is required even when the current root is complete. " : ""}Only when no eligible actionable item remains, write \`Next work prompt: None — no follow-on needed.\` The fenced prompt is copy-ready only; plain skill Markdown cannot request or guarantee an Add action. Keep model guidance outside the fence and never change the active model or reasoning setting.`,
+  ].join("\n");
+}
+
+export const RUNTIME_CONTRACT_DIRECTORY = "skills/_shared/runtime";
+export const RUNTIME_CONTRACT_FILE = "run-contract.md";
+export const RUNTIME_CONTRACT_HEADING = "# QuickStark runtime run contract";
+const RUNTIME_CONTRACT_END = "<!-- qs-runtime-run-contract:end -->";
+const STARTUP_START = "<!-- qs-runtime-start -->";
+const STARTUP_END = "<!-- qs-runtime-end -->";
+
+export function renderRuntimeRunContract(policy) {
+  const progressHeading = "\n## Conversation progress\n";
+  const goalHeading = "\n## Explicit goal workflow exception\n";
+  const progressAt = policy.indexOf(progressHeading);
+  const goalAt = policy.indexOf(goalHeading);
+  if (!policy.startsWith("# ") || progressAt < 0 || goalAt < progressAt
+      || policy.split(progressHeading).length !== 2 || policy.split(goalHeading).length !== 2) {
+    throw new Error("Could not locate the runtime contract policy sections.");
+  }
+  const intro = policy.slice(policy.indexOf("\n") + 1, progressAt).trim();
+  return [
+    RUNTIME_CONTRACT_HEADING,
+    "<!-- Generated by sync-skill-output-contracts.mjs. Edit docs/skill-run-contract.md and the shared progress contract. -->",
+    intro,
+    progressHeading.trim(),
+    PUBLIC_PROGRESS_CONTRACT,
+    policy.slice(goalAt).trim(),
+    RUNTIME_CONTRACT_END,
+  ].join("\n\n") + "\n";
+}
+
+function renderStartup(skill) {
+  const fallbackFields = skill.resultContext?.specProgress
+    ? " Include `Specs: Not located` and a short `Work summary:` with `Finished —` and `Next —`."
+    : "";
+  const fallbackPrompt = skill.continuation.normal.length || skill.continuation.failure.length
+    ? " Write `Next work prompt: None — shared run contract unavailable.`"
+    : "";
+  return [
+    STARTUP_START,
+    "Before doing any task work, read [the shared run contract](../_shared/runtime/run-contract.md) relative to this invoked `SKILL.md`. Use the actual skill location supplied by the host to resolve it within the same package or canonical tree. Read through the end marker before selecting task tools, delegating, or acting. Then post the contract's initial checklist and progress update in the conversation before starting the task.",
+    `Confirm the file starts with \`${RUNTIME_CONTRACT_HEADING}\` and ends with \`${RUNTIME_CONTRACT_END}\`. If the host lacks usable read access or cannot locate this skill, report \`Input required\`. If the expected file is missing, unreadable, invalid, or resolves outside the owning tree, report \`Failed\`. Give \`Status:\`, \`Skills used: /${skill.name}\` and an \`Outcome:\` naming the owning package (${skill.collectionId}) and prerequisite.${fallbackFields}${fallbackPrompt} Stop before task work. Emit no executable continuation, perform no repair, and use no alternate copy.`,
+    STARTUP_END,
+  ].join("\n");
+}
+
+export function renderSkillOutputContract(skill, {
+  commandsByName = PUBLIC_COMMANDS_BY_NAME,
+  runtime = REGISTRY_STATE === "target" && TARGET_PUBLIC_COMMANDS_BY_NAME.has(skill.name),
+} = {}) {
+  if (!runtime) return renderLegacySkillOutputContract(skill, { commandsByName });
+  const registered = commandsByName.get(skill.name) ?? skill;
+  const { normal, failure } = registered.continuation;
+  const terminal = normal.length === 0 && failure.length === 0;
+  const routes = (items) => items.map(({ name }) => {
+    const command = commandsByName.get(name);
+    if (!command) throw new Error(`Unknown continuation: ${name}.`);
+    return [command.codexLiteral, command.claudeLiteral, `/skill:${name}`].map((literal) => `\`${literal}\``).join(" / ");
+  }).join(", ") || "None";
+  const help = registered.primaryRouting;
+  const goalPrompt = registered.outputKind === "goal-workflow-prompt";
+  return [
+    SKILL_OUTPUT_HEADING,
+    "",
+    `Apply the shared run contract. Report \`Status:\`, \`Skills used: /${skill.name}\`, and \`Outcome:\`.`,
+    ...(registered.resultContext?.specProgress ? [
+      "Include `Specs:` and `Work summary:` with `Finished —` and `Next —`.",
+    ] : []),
+    terminal
+      ? "Release is terminal. Report the release result. Next prompts: None."
+      : "Include `Next work prompt:`. Use the exact available literal for the active host. Route entries list Codex, bare slash, and Pi spellings in that order.",
+    ...(!terminal ? [`Normal routes: ${routes(normal)}.`, `Recovery routes: ${routes(failure)}.`] : []),
+    ...(help ? [
+      `For primary Help routing, read [${help.referenceFile}](${help.referenceFile}). A verified available destination may be outside the ordinary routes. An unavailable destination produces Input required with the exact prerequisite and no executable prompt.`,
+    ] : []),
+    ...(goalPrompt ? [
+      "On success, the sole fenced `text` block contains the self-contained execution prompt, beginning with the instruction to establish or resume the scoped goal before mutations. State: Prompt generated; execution has not started. On missing prerequisites, use Input required and do not emit an executable deployment prompt. Offer only a verified eligible recovery route.",
+    ] : []),
   ].join("\n");
 }
 
@@ -114,7 +196,7 @@ export function renderDocumentationOutputContract(skill) {
       : goalPrompt
         ? `The primary output is one goal execution prompt. Failure routes are ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}; missing prerequisites prevent execution-ready output.`
       : primaryHelp
-        ? `Primary Help routing may select any registered public root whose exact literal is verified in the active host. Generated private routing metadata supplies descriptions and Codex/Claude/Pi literals without importing public skill bodies. Missing availability produces a package/discovery prerequisite, not an executable prompt or automatic installation. Ordinary continuations remain ${continuations.map((name) => `\`/${name}\``).join(", ")}; failure routes remain ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Choose at most one prompt overall and never execute the selected root.`
+        ? `Primary Help routing may select any registered public root whose exact literal is verified in the active host. Generated private routing metadata supplies descriptions and exact command spellings for each host without importing public skill bodies. Missing availability produces a package/discovery prerequisite, not an executable prompt or automatic installation. Ordinary continuations remain ${continuations.map((name) => `\`/${name}\``).join(", ")}; failure routes remain ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Choose at most one prompt overall and never execute the selected root.`
       : `Eligible normal routes are ${continuations.map((name) => `\`/${name}\``).join(", ")}. Failure routes are ${failureContinuations.map((name) => `\`/${name}\``).join(", ")}. Select at most one route that owns verified unfinished work.`,
     "",
     ...(reportsSpecProgress ? [
@@ -137,9 +219,9 @@ export function renderHelpRoutingReference(commands = PUBLIC_COMMANDS) {
     "",
     "Use inside qs-help only when choosing its primary recommendation. Match the requested outcome, then verify the exact destination literal in the active host's available-command catalog. Package configuration alone is insufficient: disabled, stale or undiscoverable commands are unavailable. For an unavailable destination, report its owning package and the missing discovery/installation prerequisite without emitting its executable prompt. Do not install, enable or execute it automatically. Never import another public skill body to route.",
     "",
-    "Select one route and one copy-ready prompt at most. A primary Help recommendation may use any verified available row below; ordinary continuation restrictions for other roots remain unchanged. Codex uses the Codex column, Claude the Claude column, and Pi the Pi column. Unrelated vendor commands and unknown names are outside this registry.",
+    "Select one route and one copy-ready prompt at most. A primary Help recommendation may use any verified available row below; ordinary continuation restrictions for other roots remain unchanged. Choose the column whose command spelling matches the active host. Unrelated vendor commands and unknown names are outside this registry.",
     "",
-    "| Command | Package | Outcome | Codex | Claude | Pi |",
+    "| Command | Package | Outcome | Codex | Bare slash command | Pi |",
     "| --- | --- | --- | --- | --- | --- |",
     ...commands.map((command) => `| ${cell(command.name)} | ${cell(command.collectionId)} | ${cell(command.shortDescription)} | \`${command.codexLiteral}\` | \`${command.claudeLiteral}\` | \`/skill:${command.name}\` |`),
     "",
@@ -152,8 +234,28 @@ function replaceSection(content, heading, replacement) {
   return `${content.slice(0, start).trimEnd()}\n\n${replacement}\n`;
 }
 
-export function withSkillOutputContract(content, skill) {
-  return replaceSection(content, SKILL_OUTPUT_HEADING, renderSkillOutputContract(skill));
+export function withSkillOutputContract(content, skill, options = {}) {
+  const runtime = options.runtime ?? (REGISTRY_STATE === "target" && TARGET_PUBLIC_COMMANDS_BY_NAME.has(skill.name));
+  if (runtime) {
+    const title = /^# [^\n]+\n/m.exec(content);
+    if (!title) throw new Error(`Missing title: ${skill.name}.`);
+    const at = title.index + title[0].length;
+    const startup = renderStartup(skill);
+    const prefix = content.slice(0, at);
+    const body = content.slice(at);
+    const start = body.indexOf(STARTUP_START);
+    const end = body.indexOf(STARTUP_END);
+    if (start < 0 && end < 0) {
+      content = `${prefix}\n${startup}\n${body}`;
+    } else if (start === 1 && end > start
+        && body.split(STARTUP_START).length === 2 && body.split(STARTUP_END).length === 2
+        && body.slice(end + STARTUP_END.length).startsWith("\n")) {
+      content = `${prefix}\n${startup}${body.slice(end + STARTUP_END.length)}`;
+    } else {
+      throw new Error(`Malformed runtime startup block: ${skill.name}.`);
+    }
+  }
+  return replaceSection(content, SKILL_OUTPUT_HEADING, renderSkillOutputContract(skill, { ...options, runtime }));
 }
 
 export function withDocumentationOutputContract(content, skill) {
@@ -164,6 +266,34 @@ export async function syncSkillOutputContracts({ check = false } = {}) {
   if (REGISTRY_STATE === "target") await listPublicSources(repositoryRoot);
   await syncProgressContracts({ check });
   let updated = 0;
+  if (REGISTRY_STATE === "target") {
+    const path = join(repositoryRoot, RUNTIME_CONTRACT_DIRECTORY, RUNTIME_CONTRACT_FILE);
+    const directory = dirname(path);
+    const shared = dirname(directory);
+    const sharedIdentity = join(await realpath(repositoryRoot), "skills", "_shared");
+    if (await realpath(shared) !== sharedIdentity) throw new Error("Shared runtime source directory must stay inside the repository.");
+    const directoryStat = await lstat(directory).catch((error) => {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    });
+    if (directoryStat && !directoryStat.isDirectory()) throw new Error("Shared runtime source directory must be a real directory.");
+    const policy = await readFile(join(repositoryRoot, "docs/skill-run-contract.md"), "utf8");
+    const expected = renderRuntimeRunContract(policy);
+    const contractStat = await lstat(path).catch((error) => {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    });
+    if (contractStat && (!contractStat.isFile() || contractStat.nlink !== 1)) {
+      throw new Error("Shared runtime contract must be a regular file owned by its source tree.");
+    }
+    const current = contractStat ? await readFile(path, "utf8") : null;
+    if (current !== expected) {
+      if (check) throw new Error("Shared runtime run contract is out of date.");
+      if (!directoryStat) await mkdir(directory);
+      await writeFile(path, expected);
+      updated += 1;
+    }
+  }
   for (const skill of PUBLIC_COMMANDS) {
     const skillPath = join(repositoryRoot, skill.sourcePath, "SKILL.md");
     const documentationPath = join(repositoryRoot, skill.documentationPath ?? `docs/${skill.bucket}/${skill.name}.md`);

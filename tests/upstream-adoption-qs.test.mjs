@@ -58,7 +58,8 @@ test('new conditional references resolve inside their owning skill and are not p
   for (const skill of skills) {
     const path = `skills/${skill}/SKILL.md`;
     const text = await body(path);
-    const targets = [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]);
+    const targets = [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1])
+      .filter((target) => target !== '../_shared/runtime/run-contract.md');
     assert.ok(targets.length > 0, `${skill} has no reachable conditional resources`);
     for (const target of targets) {
       const resolved = resolve(root, `skills/${skill}`, target);
@@ -72,11 +73,16 @@ test('new conditional references resolve inside their owning skill and are not p
 test('prototype subject and platform references stay private and reach every owning host package', async () => {
   const source = 'skills/qs-design-prototype';
   const expected = ['LOGIC.md', 'MACOS.md', 'UI.md', 'WEB.md'];
-  const references = (text) => [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]).sort();
+  const references = (text, runtimeLink) => {
+    const links = [...text.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]).sort();
+    assert.deepEqual(links, [runtimeLink, ...expected].sort());
+  };
   const canonical = await body(`${source}/SKILL.md`);
-  assert.deepEqual(references(canonical), expected, 'The root must independently select subject and platform guidance');
+  references(canonical, '../_shared/runtime/run-contract.md');
   for (const directory of [source, ...['dist/claude', 'dist/codex', 'dist/pi'].map((host) => `${host}/qs-specialists/skills/qs-design-prototype`)]) {
-    assert.deepEqual(references(await body(`${directory}/SKILL.md`)), expected, `${directory}: reference closure`);
+    references(await body(`${directory}/SKILL.md`), directory === source
+      ? '../_shared/runtime/run-contract.md'
+      : '../../capabilities/runtime/run-contract.md');
     for (const name of expected) {
       const content = await read(`${directory}/${name}`);
       assert.doesNotMatch(content, /^---\s*\n(?:[^\n]*\n)*?name:/, `${directory}/${name}: no public command metadata`);

@@ -82,6 +82,19 @@ test('isolated projections expose only public roots, preserve private dependenci
         });
         assert.equal(imported.stdout.trim(), '39\n$qs-advanced:qs-visual-parity');
       }
+      if (collection.id === 'qs-skills') {
+        const contract = join(root, 'capabilities/runtime/run-contract.md');
+        const outside = join(dirname(output), `runtime-${format}.md`);
+        const bytes = await readFile(contract);
+        await rm(contract);
+        const options = ['--check', '--package', collection.id, '--format', format, '--root', root];
+        await assert.rejects(invoke(output, options), /invalid internal-capability projection/);
+        await writeFile(outside, bytes);
+        await symlink(outside, contract);
+        await assert.rejects(invoke(output, options), /symlink/i);
+        await rm(contract);
+        await writeFile(contract, bytes);
+      }
       if (collection.id === 'qs-frontend') {
         const body = await readFile(join(root, 'skills/qs-design-image-web/SKILL.md'), 'utf8');
         assert.ok(body.includes('../../capabilities/frontend/internal/'));
@@ -137,6 +150,7 @@ test('a linked private source tree is rejected instead of silently copied', asyn
     await mkdir(dirname(target), { recursive: true }); await cp(source(skill), target, { recursive: true });
   }
   await cp(join(repository, 'skills/_shared/core'), join(fixture, 'skills/_shared/core'), { recursive: true });
+  await cp(join(repository, 'skills/_shared/runtime'), join(fixture, 'skills/_shared/runtime'), { recursive: true });
   const external = join(base, 'external-private');
   await cp(join(repository, 'skills/_shared/advanced'), external, { recursive: true });
   const before = await readFile(join(external, 'THIRD_PARTY_NOTICES.md'));

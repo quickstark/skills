@@ -68,7 +68,8 @@ test('conditional root links resolve within the new independently owned private 
     const links = [...body.matchAll(/\]\((\.\.\/[^)]+)\)/g)].map((match) => match[1]);
     for (const link of links) {
       const target = path.resolve(root, entry.sourcePath, link);
-      assert.ok(target.startsWith(path.join(root, 'skills/_shared/advanced') + path.sep));
+      assert.ok(target === path.join(root, 'skills/_shared/runtime/run-contract.md')
+        || target.startsWith(path.join(root, 'skills/_shared/advanced') + path.sep));
       assert.ok(readFileSync(target).length > 0);
     }
     for (const name of entry.privateCapabilities) assert.ok(links.includes(`../_shared/advanced/internal/${name}.md`));

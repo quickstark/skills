@@ -1,6 +1,6 @@
 import { claudePackagePath, codexPackagePath, piPackagePath } from '../tooling/install/distribution-layout.mjs';
 import assert from "node:assert/strict";
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readFile, readdir, realpath, stat } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -31,6 +31,35 @@ async function filesRecursively(path) {
   return files;
 }
 
+test("active skills load one private runtime contract from their own source or package", async () => {
+  const sourceContract = join(root, "skills/_shared/runtime/run-contract.md");
+  const expected = await readFile(sourceContract, "utf8");
+  assert.match(expected, /^# QuickStark runtime run contract$/m);
+  assert.doesNotMatch(expected, /^---$/m);
+  for (const collection of SKILL_COLLECTIONS.filter(({ id }) => id !== "ps-skills")) {
+    for (const packageRoot of [codexPackagePath(collection.id, 'dist'), claudePackagePath(collection.id, 'dist'), piPackagePath(collection.id, 'dist')]) {
+      const packageContract = join(root, packageRoot, "capabilities/runtime/run-contract.md");
+      assert.equal(await realpath(packageContract), packageContract);
+      assert.equal(await readFile(packageContract, "utf8"), expected);
+      assert.deepEqual(await readdir(dirname(packageContract)), ["run-contract.md"]);
+      for (const command of PUBLIC_COMMANDS.filter(({ collectionId }) => collectionId === collection.id)) {
+        const paths = [
+          [join(root, command.sourcePath, "SKILL.md"), sourceContract],
+          [join(root, packageRoot, "skills", command.name, "SKILL.md"), packageContract],
+        ];
+        for (const [path, contract] of paths) {
+          const body = await readFile(path, "utf8");
+          const link = body.match(/^Before doing any task work, read \[the shared run contract\]\(([^)]+)\)/m);
+          assert.ok(link, path);
+          assert.equal(await realpath(resolve(dirname(path), link[1])), contract);
+          assert.doesNotMatch(body, /Assign meaningful stages approximate effort weights/, path);
+          assert.match(body, /stop before task work/i, path);
+        }
+      }
+    }
+  }
+});
+
 test("every public command has matching source, metadata, documentation, and package projection", async () => {
   assert.equal(PUBLIC_COMMANDS.length, REGISTRY_STATE === "target" ? 39 : 34);
   for (const command of PUBLIC_COMMANDS) {
@@ -41,9 +70,9 @@ test("every public command has matching source, metadata, documentation, and pac
     const docs = await readFile(documentation, "utf8");
 
     assert.match(source, new RegExp(`^name: ${command.name}$`, "m"));
+    if (REGISTRY_STATE === "target") assert.doesNotMatch(source, /claude/i, command.name);
     assert.equal((source.match(/^## Completion report and next steps$/gm) ?? []).length, 1);
-    assert.match(source, /Present the result directly in chat/i);
-    assert.match(source, /internal clear-writing pass/i);
+    assert.match(source, /Apply the shared run contract/);
     assert.match(metadata, new RegExp(`display_name: "${command.displayName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`));
     assert.match(metadata, /effort=quick\|standard\|deep/);
     assert.match(metadata, /report=brief\|full/);
@@ -61,14 +90,14 @@ test("every public command has matching source, metadata, documentation, and pac
   }
 });
 
-test("direct-chat output is self-contained and concise across the complete command surface", () => {
+test("public completion footers contain only the concise result fields and routing rules", () => {
   for (const command of PUBLIC_COMMANDS) {
     const contract = renderSkillOutputContract(command);
     const lines = contract.split("\n").length;
-    assert.ok(lines <= (command.resultContext.specProgress ? 42 : 37), `${command.name} completion contract is ${lines} lines`);
-    assert.match(contract, /Status: Complete \| Continuation required \| Input required \| Failed/);
-    assert.match(contract, /Outcome: Concise verified result/);
-    assert.match(contract, /lead with the outcome/i);
+    assert.ok(lines <= 10, `${command.name} completion contract is ${lines} lines`);
+    assert.match(contract, /`Status:`/);
+    assert.match(contract, /`Outcome:`/);
+    assert.doesNotMatch(contract, /Assign meaningful stages|internal clear-writing pass/i);
     assert.doesNotMatch(contract, /JSON input|report file|qs-skill-readout|require-hosted|reports\.quickstark\.com|Readout:/i);
   }
 });

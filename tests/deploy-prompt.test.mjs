@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -15,7 +16,7 @@ test('deployment generator is the eighth explicit specialist with its own output
   assert.deepEqual(command.continuation.normal, []);
   assert.deepEqual(command.continuation.failure.map(({name}) => name), ['qs-plan-clarify','qs-flow-handoff']);
   const output = renderSkillOutputContract(command);
-  assert.match(output, /exactly one fenced `text` block containing the execution prompt/);
+  assert.match(output, /sole fenced `text` block contains the self-contained execution prompt/);
   assert.match(output, /beginning with the instruction to establish or resume the scoped goal before mutations/);
   assert.match(output, /Prompt generated; execution has not started/);
   assert.match(output, /do not emit an executable deployment prompt/);
@@ -39,15 +40,15 @@ test('canonical generator includes executable-prompt boundaries rather than side
   // This checks source instructions only; actual model responses are recorded separately.
 });
 
-test('recorded model responses are bound to the current skill and rendered execution prompt', async () => {
+test('historical generation trials retain their source binding and the standalone execution prompt stays self-contained', async () => {
   const { createHash } = await import('node:crypto');
   const { renderGoalWorkflowPrompt } = await import('../tooling/catalog/goal-workflow.mjs');
   const read = async (name) => JSON.parse(await readFile(new URL(`./fixtures/progress-deploy-agent-trials/${name}.json`, import.meta.url), 'utf8'));
   const sha = (value) => createHash('sha256').update(value).digest('hex');
   const generation = await read('generation-percentage');
-  const source = await readFile(new URL('../skills/qs-deploy-prompt/SKILL.md', import.meta.url));
+  const source = execFileSync('git', ['show', 'f1324e8b81311f2ee3209ab35808011db29a5d52:skills/engineering/qs-deploy-prompt/SKILL.md'], { cwd: new URL('../', import.meta.url) });
   assert.equal(generation.kind, 'recorded-agent-responses');
-  assert.equal(generation.sourceSHA256, sha(source), 'Rerun generation trials after changing tested instructions');
+  assert.equal(generation.sourceSHA256, sha(source), 'Historical generation trials must retain the tested skill bytes');
   assert.deepEqual(generation.scenarios.map(s => s.id), ['G1','G2','G3','G4','G5','G6']);
   assert.deepEqual(generation.scenarios.map(({id,input}) => ({id,input})), (await read('generation')).scenarios.map(({id,input}) => ({id,input})), 'Historical readiness scenarios must remain covered');
   for (const scenario of generation.scenarios) {

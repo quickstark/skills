@@ -49,7 +49,8 @@ test("Pi manifest projects canonical skill contents and required notices without
         await readFile(join(root, "skills", name, "SKILL.md"), "utf8"),
         (await readFile(join(sourceRoot, "SKILL.md"), "utf8"))
           .replaceAll("../_shared/advanced/", "../../capabilities/advanced/")
-          .replaceAll("../_shared/frontend/", "../../capabilities/frontend/"),
+          .replaceAll("../_shared/frontend/", "../../capabilities/frontend/")
+          .replaceAll("../_shared/runtime/", "../../capabilities/runtime/"),
         name,
       );
     }
@@ -58,11 +59,11 @@ test("Pi manifest projects canonical skill contents and required notices without
       topLevel,
       ({
         "qs-skills": REGISTRY_STATE === "target" ? ["capabilities", "package.json", "skills"] : ["package.json", "skills"],
-        "qs-specialists": ["package.json", "skills"],
+        "qs-specialists": REGISTRY_STATE === "target" ? ["capabilities", "package.json", "skills"] : ["package.json", "skills"],
         "ps-skills": ["THIRD_PARTY_NOTICES.md", "package.json", "skills"],
         "qs-advanced": ["THIRD_PARTY_NOTICES.md", "capabilities", "package.json", "skills"],
         "qs-frontend": ["THIRD_PARTY_NOTICES.md", "capabilities", "package.json", "skills"],
-        "qs-video": ["package.json", "skills"], "qs-execution": ["package.json", "skills"],
+        "qs-video": ["capabilities", "package.json", "skills"], "qs-execution": ["capabilities", "package.json", "skills"],
       })[collection.id],
     );
   }
@@ -107,6 +108,6 @@ test("target private references remain packaged and byte-identical without becom
     assert.equal(sources.filter(file=>file.startsWith("internal/") && file.endsWith(".md")).length,required);
     for(const file of sources) assert.deepEqual(await readFile(join(repositoryRoot,projected,file)),await readFile(join(repositoryRoot,source,file)),file);
   }
-  assert.deepEqual((await readdir(join(repositoryRoot,"dist/pi/qs-skills/capabilities"))).sort(),["delegation.md","domain-modeling.md","module-decomposition.md","tdd-loop.md","ticket-decomposition.md"]);
+  assert.deepEqual((await readdir(join(repositoryRoot,"dist/pi/qs-skills/capabilities"))).sort(),["delegation.md","domain-modeling.md","module-decomposition.md","runtime","tdd-loop.md","ticket-decomposition.md"]);
   assert.deepEqual((await readdir(join(repositoryRoot,"dist/pi/qs-video/skills/qs-video/modules"))).sort(),["embedded-captions","faceless-explainer","figma","general-video","hyperframes","hyperframes-animation","hyperframes-audio","hyperframes-cli","hyperframes-core","hyperframes-creative","hyperframes-keyframes","hyperframes-registry","hyperframes-studio","media-use","motion-graphics","music-to-video","pr-to-video","product-launch-video","remotion-to-hyperframes","slideshow","talking-head-recut"].sort());
 });

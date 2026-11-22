@@ -1,5 +1,11 @@
 # QuickStark Skills changelog
 
+## 4.4.9
+
+### Patch Changes
+
+- Simplify all 39 public skills by moving shared instructions into a run contract bundled with each Codex, Claude Code, and Pi package. Update the plan clarification workflow and its routing description.
+
 ## 4.4.8
 
 ### Patch Changes

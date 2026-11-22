@@ -4,9 +4,9 @@ Generated from the collection registry. This is a private reference, not a comma
 
 Use inside qs-help only when choosing its primary recommendation. Match the requested outcome, then verify the exact destination literal in the active host's available-command catalog. Package configuration alone is insufficient: disabled, stale or undiscoverable commands are unavailable. For an unavailable destination, report its owning package and the missing discovery/installation prerequisite without emitting its executable prompt. Do not install, enable or execute it automatically. Never import another public skill body to route.
 
-Select one route and one copy-ready prompt at most. A primary Help recommendation may use any verified available row below; ordinary continuation restrictions for other roots remain unchanged. Codex uses the Codex column, Claude the Claude column, and Pi the Pi column. Unrelated vendor commands and unknown names are outside this registry.
+Select one route and one copy-ready prompt at most. A primary Help recommendation may use any verified available row below; ordinary continuation restrictions for other roots remain unchanged. Choose the column whose command spelling matches the active host. Unrelated vendor commands and unknown names are outside this registry.
 
-| Command | Package | Outcome | Codex | Claude | Pi |
+| Command | Package | Outcome | Codex | Bare slash command | Pi |
 | --- | --- | --- | --- | --- | --- |
 | qs-help | qs-skills | Find the right QuickStark skill or workflow | `$qs-skills:qs-help` | `/qs-help` | `/skill:qs-help` |
 | qs-setup | qs-skills | Configure project trackers, labels, and docs | `$qs-skills:qs-setup` | `/qs-setup` | `/skill:qs-setup` |

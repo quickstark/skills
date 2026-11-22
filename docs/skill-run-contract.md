@@ -8,7 +8,9 @@ Keep a checklist in the conversation. Report the current stage, estimated stage 
 
 Use pending, active, verified, skipped, blocked, and failed stage states. Only verified stages receive completed checkboxes. Cite evidence for skipped work and reopen stages invalidated by later observations. Running processes and elapsed time alone do not prove progress. Aim for updates within sixty seconds while work is active when the host allows control to return; say when waiting and whether user input is needed. Read-only runs describe findings rather than claiming configuration. This applies independently of effort and report modes.
 
-All canonical skills receive this contract, including non-packaged reference skills. Internal capabilities contribute evidence to the parent's checklist without producing their own reports or status. Bounded managed sections preserve unrelated source content; generated packages remain projections.
+Active public skills read a shared runtime reference before task work. Reference skills keep their existing inline progress instructions. Internal capabilities contribute evidence to the parent's checklist without producing their own reports or status.
+
+The output generator derives `skills/_shared/runtime/run-contract.md` from this policy and the existing progress instructions. Each active package carries an identical copy at `capabilities/runtime/run-contract.md`. The generated startup block resolves the reference relative to the invoked skill. Missing read capability or an unknown skill location requires input. A missing, unreadable, invalid, or escaping reference fails the run before task actions. The generated completion footer retains the skill's applicable result fields and registry-owned routes.
 
 ### Estimated percentages
 
@@ -49,7 +51,7 @@ Estimates never replace statuses or verification gates and do not promise a
 completion time. These are conversation estimates, not measured dashboard telemetry.
 
 The shared estimator text lives in `tooling/generation/progress-reporting-contract.mjs` and
-is embedded in both public instructions and rendered goal prompts. Generated
+supplies the generated runtime reference and is embedded in rendered goal prompts. Generated
 execution prompts must carry all these rules so a fresh task does not need the
 generating conversation. Generation reaching 100% proves only generation finished:
 “Prompt generated; execution has not started.” For a goal that deploys, 100% still
@@ -70,6 +72,8 @@ Persist stage/revision evidence, authorization and remaining work in conversatio
 Packages may contain generated routing metadata but never import another package's skill bodies. Missing required skills are reported without installation. Readiness depends on verified actual availability, not catalog membership alone.
 
 ## Modes
+
+Resolve explicit flags first, then clear natural-language intent, then defaults.
 
 `effort=quick|standard|deep` controls investigation and validation depth. `standard` is the default. Quick uses one focused evidence pass and targeted checks. Standard performs the normal evidence pass and permits one bounded repair/recheck cycle where mutation is authorized. Deep broadens evidence and checks while remaining bounded to the requested outcome and mutation scope.
 
@@ -134,9 +138,9 @@ expand mutation authority, or turn unrelated local notes into backlog scope.
 
 ## Continuation format
 
-Always write the `Next work prompt:` label. When the `Next —` readout contains a distinct actionable item owned by an eligible route, write one copy-ready prompt in a fenced `text` code block even if the current root is complete. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. Do not replace the fence with inline prose, a bare command, or a link. When no eligible continuation is warranted after checking the governing sources, write `Next work prompt: None — no follow-on needed.`
+Always write the `Next work prompt:` label for non-release roots. When the `Next —` readout contains a distinct actionable item owned by an eligible route, write one copy-ready prompt in a fenced `text` code block even if the current root is complete. The fence info string must be exactly `text` so the chat renders it as Plain text; never use `markdown`, `bash`, `json`, or another language. Do not replace the fence with inline prose, a bare command, or a link. When no eligible continuation is warranted after checking the governing sources, write `Next work prompt: None — no follow-on needed.` If an eligible destination is required but unavailable, name the prerequisite without emitting an executable prompt.
 
-In Codex the prompt begins with the exact installed plugin literal—`$qs-skills:<core-command>`, `$qs-specialists:<specialist-command>`, or `$ps-skills:<ps-command>`—in Claude it begins with `/<command>`, and in Pi it begins with `/skill:<command>`. Name the exact verified ticket, specification, issue, or grouped work item it advances. Keep the prompt concise: carry forward the outcome and only decisive evidence needed to resume. Model and thinking guidance remains outside the fence in a separate muted blockquote.
+Use the applicable normal or recovery routes in the invoking skill's footer. Failed results exclude publication-only routes. An ordinary continuation begins with the exact literal verified in the active host, whether it uses a Codex package literal, bare slash command, or Pi literal. Name the exact verified ticket, specification, issue, or grouped work item it advances and carry forward only decisive evidence needed to resume. Keep model guidance outside the fence. Preserve the host's active model and reasoning settings.
 
 The fenced prompt is copy-ready only. Plain skill Markdown cannot request or guarantee an Add action. Line-specific review findings keep the separate host inline-comment contract when the active client supplies it and the finding has a host-renderable file range. Never repurpose that contract for tickets, specifications, continuation prompts, or generic references, and never claim that an inline card rendered without host or user evidence.
 

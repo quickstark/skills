@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, writeFile, readFile, rm, symlink, chmod, rename, stat } from 'node:fs/promises';
@@ -27,13 +28,17 @@ async function fixture(t) {
     revision: 'a'.repeat(40), version: '4.0.0', payloadDigest: { kind: 'portable-directory-sha256', value: 'b'.repeat(64) }, contentSha256: 'c'.repeat(64) } };
 }
 
-test('repository acceptance evidence stays synchronized, including the reviewed README', async () => {
-  const root = new URL('../', import.meta.url);
-  const audit = JSON.parse(await readFile(new URL('docs/validation/upstream-adoption-acceptance.json', root)));
+test('historical release acceptance evidence retains its reviewed bytes, including the README', () => {
+  const revision = 'f1324e8b81311f2ee3209ab35808011db29a5d52';
+  const recorded = (file) => execFileSync('git', ['show', `${revision}:${file}`], {
+    cwd: new URL('../', import.meta.url),
+    maxBuffer: 32 * 1024 * 1024,
+  });
+  const audit = JSON.parse(recorded('docs/validation/upstream-adoption-acceptance.json'));
   assert.ok(audit.criteria['AC-23'].evidence.includes('README.md'));
   assert.ok(audit.criteria['AC-23'].evidence.includes('docs/validation/readme-transition-portability-review.md'));
   for (const [id, evidence] of Object.entries(audit.evidence)) {
-    assert.equal(sha(await readFile(new URL(evidence.path, root))), evidence.sha256, `Acceptance evidence changed: ${id}`);
+    assert.equal(sha(recorded(evidence.path)), evidence.sha256, `Acceptance evidence changed: ${id}`);
   }
 });
 

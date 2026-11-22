@@ -131,10 +131,10 @@ test('only Help selects private primary metadata; ordinary continuations and one
     const contract = renderSkillOutputContract(command);
     const documentation = renderDocumentationOutputContract(command);
     if (command.name === 'qs-help') {
-      assert.match(contract, /Read \[ROUTING\.md\]\(ROUTING\.md\)/);
-      assert.match(contract, /separate from ordinary continuation eligibility/);
+      assert.match(contract, /read \[ROUTING\.md\]\(ROUTING\.md\)/);
+      assert.match(contract, /may be outside the ordinary routes/);
       assert.match(contract, /Input required.*no executable prompt/);
-      assert.match(contract, /exactly one fenced `text` block/);
+      assert.match(contract, /Include `Next work prompt:`/);
       assert.match(documentation, /Primary Help routing may select any registered public root/);
       assert.doesNotMatch(contract, /Eligible next routes:/);
     } else {

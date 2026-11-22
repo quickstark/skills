@@ -35,7 +35,9 @@ test("repository inventory accounts for every canonical skill and internal refer
 
 test("every actual canonical skill and helper receives the correct progress contract", async () => {
   const inventory = await validateProgressInventory();
-  for (const path of [...inventory.publicSkills, ...inventory.inactiveSkills, ...inventory.standaloneSkills]) {
+  const shared = await readFile(new URL("../skills/_shared/runtime/run-contract.md", import.meta.url), "utf8");
+  assert.ok(shared.includes(PUBLIC_PROGRESS_CONTRACT));
+  for (const path of [...inventory.inactiveSkills, ...inventory.standaloneSkills]) {
     const source = await readFile(new URL(`../${path}`, import.meta.url), "utf8");
     assert.ok(source.includes(PUBLIC_PROGRESS_CONTRACT), path);
   }
@@ -45,7 +47,9 @@ test("every actual canonical skill and helper receives the correct progress cont
     assert.ok(!source.includes(ESTIMATED_PROGRESS_CONTRACT), `${path}: helpers must not report independent percentages`);
   }
   for (const command of PUBLIC_COMMANDS) {
-    assert.ok(renderSkillOutputContract(command).includes(ESTIMATED_PROGRESS_CONTRACT), command.name);
+    const body = await readFile(new URL(`../${command.sourcePath}/SKILL.md`, import.meta.url), "utf8");
+    assert.match(body, /read \[the shared run contract\]/, command.name);
+    assert.ok(!renderSkillOutputContract(command).includes(ESTIMATED_PROGRESS_CONTRACT), command.name);
   }
 });
 

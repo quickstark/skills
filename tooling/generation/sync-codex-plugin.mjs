@@ -17,7 +17,7 @@ import { formatMetadataForCodex, formatSkillForCodex } from "./codex-skill-forma
 import { PS_INTERNAL_CAPABILITIES } from "../catalog/ps-skill-catalog.mjs";
 import { assertGeneratedPackageRoot, assertGeneratedPiPackageRoot } from "./skill-package-projection.mjs";
 import { PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS, TARGET_PUBLIC_COMMANDS_BY_NAME, REGISTRY_STATE } from "../catalog/skill-collection-registry.mjs";
-import { renderSkillOutputContract, renderHelpRoutingReference } from "./sync-skill-output-contracts.mjs";
+import { RUNTIME_CONTRACT_DIRECTORY, RUNTIME_CONTRACT_FILE, withSkillOutputContract, renderHelpRoutingReference } from "./sync-skill-output-contracts.mjs";
 import { distributionHosts, distributionPaths } from "../install/distribution-layout.mjs";
 import { copyTransitionPayloads, verifyTransitionPayloads } from "./skill-transition-packages.mjs";
 
@@ -137,9 +137,16 @@ const selectedPackages = targetRegistry ? [
     defaultPrompt:[pkg.description],keywords:["quickstark","optional"],claudeMarketplaceSource:`./packages/${pkg.name}`,
     ...(pkg.noticeSource ? {noticeFiles:["THIRD_PARTY_NOTICES.md"]} : {})})),
 ] : legacyPackages;
-const packages = Object.freeze(selectedPackages.map((pkg) => candidate || layout === "dist" ? {
-  ...pkg, ...projectionRoots(pkg.name),
-} : pkg));
+const packages = Object.freeze(selectedPackages.map((pkg) => ({
+  ...pkg,
+  ...(targetRegistry ? { privateTrees: [
+    ...(pkg.privateTrees ?? []),
+    { source: RUNTIME_CONTRACT_DIRECTORY, target: "runtime", canonical: "../_shared/runtime/", files: [RUNTIME_CONTRACT_FILE] },
+  ] } : {}),
+  ...(candidate || layout === "dist" ? {
+    ...projectionRoots(pkg.name),
+  } : {}),
+})));
 
 if (targetRegistry) await listPublicSources(repositoryRoot);
 if (cliArguments.includes("--check")) await verifyAll(parseCheckSelection(cliArguments));
@@ -310,9 +317,7 @@ async function projectedSkillContent(pkg, skill, file, { codex }) {
   if (file.endsWith(".md")) {
     let text = source.toString("utf8");
     if (renderCandidateContracts && file === "SKILL.md") {
-      const marker = "## Completion report and next steps";
-      if (!text.includes(marker)) throw new Error(`Missing completion contract: ${skill.name}`);
-      text = text.slice(0, text.indexOf(marker)) + renderSkillOutputContract(skill, { commandsByName: TARGET_PUBLIC_COMMANDS_BY_NAME });
+      text = withSkillOutputContract(text, skill, { commandsByName: TARGET_PUBLIC_COMMANDS_BY_NAME, runtime: true });
     }
     if (renderCandidateContracts && skill.name === "qs-help" && file === "ROUTING.md") text = renderHelpRoutingReference(TARGET_PUBLIC_COMMANDS);
     for (const tree of pkg.privateTrees ?? []) text = text.replaceAll(tree.canonical, `../../capabilities/${tree.target}/`);
@@ -331,7 +336,9 @@ async function expectedCapabilities(pkg) {
   for (const tree of pkg.privateTrees ?? []) {
     const source = join(repositoryRoot, tree.source);
     const entries = await fileList(source);
-    if (!entries.length) throw new Error(`Missing required private tree: ${tree.source}`);
+    if (!entries.length || (tree.files && JSON.stringify(entries) !== JSON.stringify(tree.files))) {
+      throw new Error(`Missing or unexpected resources in private tree: ${tree.source}`);
+    }
     for (const file of entries) files.push({ target: `${tree.target}/${file}`, source: join(source, file) });
   }
   return files.sort((left, right) => left.target.localeCompare(right.target));
