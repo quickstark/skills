@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. LAY-12 through LAY-14 are verified in an isolated checkout. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is verified in the working tree. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -282,7 +282,7 @@ Prerequisite evidence. LAY-12 supplies cross-version bootstrap and tooling entry
 
 ## LAY-15 — Model both native distribution layouts before cutover
 
-Status: open
+Status: verified
 
 Blocked by: LAY-01
 
@@ -295,6 +295,8 @@ Prerequisite evidence. LAY-01 supplies active package identity baseline.
 **Starting points.** `scripts/skill-collection-registry.mjs`, `scripts/managed-marketplace-bootstrap.mjs`, `scripts/clean-install-skills.mjs`, `scripts/skill-transition-packages.mjs`, `config/skill-transition-packages.json`.
 
 **Verify.** Construct old/new fixture trees and a foreign same-name tree. Accept each legitimate path only for its matching host, official source and revision. Reject aliases, dirty payloads, path escapes and ambiguous matches. Verify all three legacy digests.
+
+**Verification.** On base `865b216`, disposable Git checkouts produced identical content and executable-bit digests for all 18 original and staged package pairs. The three PS 3.8.0 payloads verified at their recorded paths. Tests exercised the v4.1.0 root-based Claude core, the v4.4.7 package layout, and rejected foreign origins, aliases, path escapes, dirty payloads, revision mismatches and ambiguous roots. The isolated suite passed 807 tests, with one platform-specific skip on Linux. Release validation and all six strict Claude package checks passed.
 
 **Excludes.** Changing the default output layout or withdrawing an installed package.
 

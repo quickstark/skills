@@ -52,6 +52,7 @@ const expectedTestFiles = [
   "tests/managed-skill-input.test.mjs",
   "tests/managed-skill-migration.test.mjs",
   "tests/skill-transition-packages.test.mjs",
+  "tests/distribution-layout.test.mjs",
   "tests/target-index-generation.test.mjs",
   "tests/advanced-candidates.test.mjs",
   "tests/execution-candidate.test.mjs",

@@ -70,7 +70,7 @@ function nativeJson(result) {
   check(typeof result?.stdout === 'string' && Buffer.byteLength(result.stdout) <= 4 * 1024 * 1024, 'Native inventory is unavailable or exceeds its bound.');
   try { return JSON.parse(result.stdout); } catch { throw new Error('Native inventory JSON is invalid; contents withheld.'); }
 }
-async function gitIdentity(payload, relative, revisions, repositoryRoot, git) {
+export async function verifyPackageGitTree(payload, relative, revisions, repositoryRoot, git) {
   const prefix = relative === '.' ? '' : `${relative}/`;
   const files = payload.snapshot.entries.filter((entry) => entry.kind === 'file');
   const actual = new Map();
@@ -230,7 +230,7 @@ export async function buildManagedSkillInput({ repositoryRoot, homeDirectory, co
         revisions.push(...history.stdout.trim().split(/\s+/).filter(value => /^[a-f0-9]{40}$/.test(value)));
       }
       let priorRevision;
-      try { priorRevision = await gitIdentity(payload, relative, unique(revisions), repositoryRoot, git); }
+      try { priorRevision = await verifyPackageGitTree(payload, relative, unique(revisions), repositoryRoot, git); }
       catch (error) { error.code = 'QS_MANAGED_PACKAGE_DRIFT'; error.package = { agent, name, path: canonicalPath }; throw error; }
       // Pi ownership follows its exact maintained local source registration; Codex
       // additionally supplies and verifies the actual marketplace owner above.

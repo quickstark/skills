@@ -26,3 +26,13 @@ The manual validation workflow uses the root npm aliases. Release automation rea
 ## Replaying a historical trial
 
 Match the runner and input hashes recorded with the trial before replaying it. The native frontend orchestrator controls, for example, record their inputs in `tests/fixtures/frontend-adoption-v3-controls/evidence.json`. Use `tooling/trials/` for new runs.
+
+## Stage the distribution layout
+
+Run the following command with the physical path to an official QuickStark checkout containing all six active packages and an independently trusted full release commit. It prints a new temporary directory containing the six active packages under each of `dist/claude/`, `dist/codex/` and `dist/pi/`. The three PS 3.8.0 packages keep their original paths.
+
+```sh
+node tooling/generation/stage-distribution-layout.mjs <physical-checkout> <trusted-commit>
+```
+
+The staging command checks each package’s native manifest, bytes and executable bits at that revision. Ordinary package generation and installation still use the existing layout.

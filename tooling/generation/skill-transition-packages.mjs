@@ -53,12 +53,12 @@ export async function verifyTransitionPayloads(repositoryRoot, outputRoot = repo
   return packages;
 }
 
-export async function copyTransitionPayloads(repositoryRoot, outputRoot) {
-  const packages = await verifyTransitionPayloads(repositoryRoot);
+export async function copyTransitionPayloads(repositoryRoot, outputRoot, recordsRoot = repositoryRoot) {
+  const packages = await verifyTransitionPayloads(recordsRoot, repositoryRoot);
   check(path.resolve(outputRoot) !== path.resolve(repositoryRoot), 'Never overwrite an existing transition source.');
   for (const pkg of packages) for (const payload of Object.values(pkg.payloads)) {
     await cp(path.join(repositoryRoot, payload.path), path.join(outputRoot, payload.path), { recursive: true, force: false, errorOnExist: true, preserveTimestamps: true });
   }
-  await verifyTransitionPayloads(repositoryRoot);
-  await verifyTransitionPayloads(repositoryRoot, outputRoot);
+  await verifyTransitionPayloads(recordsRoot, repositoryRoot);
+  await verifyTransitionPayloads(recordsRoot, outputRoot);
 }
