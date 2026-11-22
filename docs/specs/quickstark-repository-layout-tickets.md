@@ -1,6 +1,6 @@
 # Ticket graph — QuickStark repository layout
 
-**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is committed at `cbb159c`. LAY-18 is committed at `36c2ec9`. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
+**Specification:** [QuickStark repository layout](./quickstark-repository-layout.md). **State:** the developer-authoring milestone is committed at `bb8ecfa`. The verified tooling milestone (LAY-12 through LAY-14) is committed at `865b216`. LAY-15 is committed at `0ae51ef`. LAY-16 tooling is committed at `c65c0c9` and its distributions are staged at `eb51826`. LAY-17 is committed at `7abf154`. LAY-17B is committed at `a472093`. LAY-17C is committed at `cbb159c`. LAY-18 is committed at `36c2ec9`. LAY-19 is committed at `6cec3f8`. LAY-20 verified both tracks together at `6cec3f8`. These are repository-local work IDs. The graph can be consumed directly by `qs-code-build mode=graph`.
 
 ## Worker brief
 
@@ -448,7 +448,7 @@ Checkout `56d9902` passed sync and projection checks without a generated diff. W
 
 ## LAY-20 — Verify the combined layout and evidence delivery
 
-Status: open
+Status: verified
 
 Blocked by: LAY-18, LAY-19
 
@@ -461,5 +461,13 @@ Prerequisite evidence. LAY-18 supplies integrated developer/host layout. LAY-19 
 **Starting points.** `docs/contributing.md`, `docs/validation/frontend-adoption.md`, `package.json`, `tests/install-skills.test.mjs`.
 
 **Verify.** Run sync then check then npm test, strict Claude validation, all targeted isolated host/upgrade probes and git diff --check. Compare clean regeneration and current vs historical bindings. Confirm docs walkthrough and both explicit archive restores work. Close the overall graph only with evidence for both tracks.
+
+**Verification.** The release inputs for version `4.4.7` were checked at `6cec3f89f9f4ef22e5ec51c4a24047273541e1d2`. The [root inventory](../architecture.md#repository-roots) matched the combined Git tree, including the PS 3.8.0 trees, the six public scripts and the `AGENTS.md` link. The README walkthrough found 39 canonical commands. A temporary cleanup-skill edit regenerated the Claude, Codex and Pi copies and refreshed live provenance. Reverting the edit and regenerating restored the clean checkout.
+
+On Linux, the standalone bootstrap detected Codex CLI 0.169.1, Claude Code 2.1.322 and Pi 1.5.2 in a disposable home with IPv4 and IPv6 socket creation blocked. It installed and verified only `qs-skills` for each client. The selected checkout had none of the four archive paths or blobs, confirmed directly from its filesystem, pack indexes and loose-object paths.
+
+The active package and installer inputs matched LAY-18, so the isolated upgrade, rollback and bootstrap compatibility results were reused. Historical acceptance criteria, package checks and history matched the earlier records. Both original archive verifiers passed again against the previously retrieved parts and extracted trees, checking all 3,955 files and 887 directory entries. The official `v4.4.7` tag still pointed to the [pinned restoration source](../validation/frontend-adoption.md#restore-the-closed-capture-archives). All seven strict Claude manifest checks passed.
+
+The clean combined checkout ran `npm run sync:codex`, `npm run check:codex` and `npm test` in order. Regeneration left no diff and `git diff --check` passed. The suite finished with 808 passes, zero failures and one skip for an unsupported-platform capture control that runs on non-Linux hosts.
 
 **Excludes.** Publishing, production rollback, benchmarking Git history size or deleting compatibility exceptions.
