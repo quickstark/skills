@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- Simplify all 39 public skills by moving shared instructions into a run contract bundled with each Codex, Claude Code, and Pi package. Update the plan clarification workflow and its routing description.
+- Simplify all 39 public skills by moving shared instructions into a run contract bundled with each Codex, Claude Code, and Pi package. Update the clarification, specification, and hillclimb workflows and use the commands discovered by the active host when preparing deployment prompts.
 
 ## 4.4.8
 

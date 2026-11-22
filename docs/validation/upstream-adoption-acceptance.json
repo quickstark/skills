@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "sourceBinding": "git-content-and-executable-bits-sha256",
   "kind": "reviewed-adoption-acceptance",
-  "scope": "QuickStark v4.4.7 source/package qualification for six catalog packages and Codex/Claude/Pi projections; unchanged supported workflow scope and all unsupported dimensions retained. User-host rollout is separate and unperformed.",
+  "scope": "QuickStark 4.4.9 release qualification for six packages on Codex, Claude Code and Pi.",
   "criteria": {
     "AC-01": {
       "status": "passed",
@@ -54,7 +54,8 @@
         "tests/fixtures/adoption-release-4.4.0/tests.log",
         "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-        "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+        "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -248,7 +249,8 @@
         "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
         "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-        "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+        "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -442,7 +444,8 @@
         "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
         "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-        "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+        "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -1469,7 +1472,8 @@
         "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
         "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-        "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+        "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -2188,7 +2192,7 @@
     },
     "AC-22": {
       "status": "passed",
-      "note": "Current root/lockfile and all active manifests agree on 4.4.7; canonical/Claude/Pi policy and Codex projector exception remain unchanged. Required sync/check/full regression and six strict Claude validations gate the final tracked candidate. Previous PS3.8.0 payload remains exact.",
+      "note": "Root, lockfile and all 18 active manifests declare 4.4.9. Generated projections and strict Claude validation passed. The native discovery fixture records each installed manifest and public skill digest.",
       "evidence": [
         "tests/fixtures/target-index-generation/evidence/parent-review.json",
         "tests/adoption-projection.test.mjs",
@@ -2232,7 +2236,8 @@
         "tests/fixtures/adoption-release-4.4.0/tests.log",
         "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-        "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+        "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -2354,7 +2359,8 @@
         ".github/workflows/release.yml",
         "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-        "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+        "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -2477,7 +2483,8 @@
         "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
         "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
         "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-        "layout-release-4.4.8/qualification"
+        "layout-release-4.4.8/qualification",
+        "shared-runtime-release-4.4.9/qualification"
       ],
       "previous": {
         "status": "passed",
@@ -2669,7 +2676,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -2843,7 +2851,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -2932,7 +2941,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/codex-native-discovery"
+              "layout-release-4.4.8/codex-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3020,7 +3030,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3194,7 +3205,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3283,7 +3295,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/pi-native-discovery"
+              "layout-release-4.4.8/pi-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3355,7 +3368,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3456,7 +3470,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3502,7 +3517,8 @@
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/assessment.json",
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/claude-native-loader.debug",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/claude-code-native-discovery"
+              "layout-release-4.4.8/claude-code-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3650,7 +3666,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3827,7 +3844,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -3919,7 +3937,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/codex-native-discovery"
+              "layout-release-4.4.8/codex-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4007,7 +4026,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4184,7 +4204,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4276,7 +4297,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/pi-native-discovery"
+              "layout-release-4.4.8/pi-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4348,7 +4370,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4449,7 +4472,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4495,7 +4519,8 @@
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/assessment.json",
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/claude-native-loader.debug",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/claude-code-native-discovery"
+              "layout-release-4.4.8/claude-code-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4667,7 +4692,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4841,7 +4867,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -4930,7 +4957,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/codex-native-discovery"
+              "layout-release-4.4.8/codex-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5018,7 +5046,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5192,7 +5221,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5281,7 +5311,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/pi-native-discovery"
+              "layout-release-4.4.8/pi-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5353,7 +5384,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5454,7 +5486,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5500,7 +5533,8 @@
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/assessment.json",
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/claude-native-loader.debug",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/claude-code-native-discovery"
+              "layout-release-4.4.8/claude-code-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5664,7 +5698,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5858,7 +5893,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -5952,7 +5988,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/codex-native-discovery"
+              "layout-release-4.4.8/codex-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6045,7 +6082,8 @@
               "tests/fixtures/adoption-release-4.4.0/tests.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6239,7 +6277,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6333,7 +6372,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/pi-native-discovery"
+              "layout-release-4.4.8/pi-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6398,7 +6438,8 @@
               "tests/fixtures/managed-claude-update/unrelated-recovery-after.log",
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6471,7 +6512,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6510,7 +6552,8 @@
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/assessment.json",
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/claude-native-loader.debug",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/claude-code-native-discovery"
+              "layout-release-4.4.8/claude-code-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6675,7 +6718,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/projected-closure/result.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6850,7 +6894,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -6939,7 +6984,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/codex-native-discovery"
+              "layout-release-4.4.8/codex-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7122,7 +7168,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/projected-closure/result.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7297,7 +7344,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7386,7 +7434,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/pi-native-discovery"
+              "layout-release-4.4.8/pi-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7553,7 +7602,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/projected-closure/result.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7655,7 +7705,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7701,7 +7752,8 @@
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/assessment.json",
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/claude-native-loader.debug",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/claude-code-native-discovery"
+              "layout-release-4.4.8/claude-code-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -7885,7 +7937,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/projected-closure/result.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8060,7 +8113,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8149,7 +8203,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/codex-native-discovery"
+              "layout-release-4.4.8/codex-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8328,7 +8383,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/projected-closure/result.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8503,7 +8559,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8592,7 +8649,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/assessment.md",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/native-qualification.json",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/pi-native-discovery"
+              "layout-release-4.4.8/pi-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8755,7 +8813,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/source-review/source-review.json",
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/runtime-discovery/projected-closure/result.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8857,7 +8916,8 @@
               "tests/fixtures/lean-execution-adoption/release-447/promotion.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/review.json",
               "tests/fixtures/lean-execution-adoption/release-447/semantic-review/amendment-review.json",
-              "tests/fixtures/lean-execution-adoption/release-447/qualification.json"
+              "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8903,7 +8963,8 @@
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/assessment.json",
               "tests/fixtures/lean-execution-adoption/qualification-native-discovery/claude-native-loader.debug",
               "tests/fixtures/lean-execution-adoption/release-447/qualification.json",
-              "layout-release-4.4.8/claude-code-native-discovery"
+              "layout-release-4.4.8/claude-code-native-discovery",
+              "shared-runtime-release-4.4.9/qualification"
             ],
             "previous": {
               "status": "passed",
@@ -8978,7 +9039,7 @@
   "sources": {
     ".claude-plugin/plugin.json": {
       "kind": "file",
-      "contentSha256": "bdcda06b1cb8a775dbf5942128c40209bc10b8ca8baff839a214eae410a40809"
+      "contentSha256": "c9b72b0c9fb6207ee787bb56a877fda7ca78ac0e8daa04dc13bca3c250f95ab4"
     },
     "codex/plugins/qs-skills": {
       "kind": "directory",
@@ -8994,11 +9055,11 @@
     },
     "tooling/catalog/skill-provenance.json": {
       "kind": "file",
-      "contentSha256": "a39c5bbe0b9fd115f22ea4286e4357d849d7e4b7cf596aee093b53f72bc7ec59"
+      "contentSha256": "af7dec37ccb76bebbb2ca26c4963e40dc98ecc28102cde7d3358930e35ecaf27"
     },
     "docs/skill-run-contract.md": {
       "kind": "file",
-      "contentSha256": "34aee763dd6733051e1fbc2dd15f5ad68dcd11d67686582aafdebaafb707b567"
+      "contentSha256": "758189bea3735aeb96c76963af0fb39df8b05146c65658bf81ea1733c26fbb1c"
     },
     "pi/packages/qs-skills": {
       "kind": "directory",
@@ -9082,47 +9143,47 @@
     },
     "skills/qs-code-build": {
       "kind": "directory",
-      "contentSha256": "29fbe60d42ff7c192783459ebe53b9a81320619b89a5927dc25f76b33fde67a6"
+      "contentSha256": "672d1038a190479ab538f471c0d507f8c40c43fbc674c1b3e3b5000a98503fb7"
     },
     "skills/qs-code-debug": {
       "kind": "directory",
-      "contentSha256": "8a97fcb3d80889d39f912d426f56eaa48258c561bcc596aa0765c30c30d061e0"
+      "contentSha256": "ee28d8bf55d762c2629ef4e5f11b18de6548529f5e4f37ef4561f8b8b1f0b59d"
     },
     "skills/qs-deploy-release": {
       "kind": "directory",
-      "contentSha256": "3bdc7700381cb4632c9dd71c33b6abd4982f95fed163ade2f18ee2f73b5c18e3"
+      "contentSha256": "4cc2fb832916a0c1007c734e55d39d6946cb23b55f5dea65afa0e767fdc510f5"
     },
     "skills/qs-flow-triage": {
       "kind": "directory",
-      "contentSha256": "8ba0ff269922fe016b2ecdf44777b9d0cb2bd46b1e8d548f7a3f4fd8eda3715f"
+      "contentSha256": "2baa1105308a493621b0a471872d1b0c7099b42b03cb6846520fb0e05d787f2a"
     },
     "skills/qs-git-merge": {
       "kind": "directory",
-      "contentSha256": "871c6d9c8de1f125c1b372947284e90a09dfd8e99d35914290b8f1903cdf9edc"
+      "contentSha256": "47f09e4e3852ffbf35489b49bb9ddd46df3a4ece8d051c8c57cb24fb680fa325"
     },
     "skills/qs-help": {
       "kind": "directory",
-      "contentSha256": "72b7f877f48a65bea831ca2b890039d514a63db75560cf9be96ca1f6398bd8cb"
+      "contentSha256": "4f3c8919284f9fbf0433977231e536698174e141281b964a77cd099cfb8bbdca"
     },
     "skills/qs-plan-clarify": {
       "kind": "directory",
-      "contentSha256": "40103180c378037bb858040b654c678618d1b1280d08f67a03be2fc61ecbfdfb"
+      "contentSha256": "dc7218f9ac495b813e61cf00b4f49a00994c350b63ac18cde68f94b51d6505e4"
     },
     "skills/qs-plan-roadmap": {
       "kind": "directory",
-      "contentSha256": "439a79d5e7d1ec46875f20e2b0aa89a5bf6239119dd7edbe147d80c9f511d001"
+      "contentSha256": "3092de056fce6dccd7e3f0fd4b5d0435665e762d70fa4fef3d5bd9faf85da501"
     },
     "skills/qs-plan-spec": {
       "kind": "directory",
-      "contentSha256": "698ef60848b27980c5c898f9ec3a370254fd02e20d8e9f2b45afabaef02993a5"
+      "contentSha256": "388a6415a26b153b9dfa682c3df28fa22a32d96260758f66a1b0f22984fd2134"
     },
     "skills/qs-review-code": {
       "kind": "directory",
-      "contentSha256": "8171ff3f20d20f73aeae126e8a6bf96d19d694d3c11663ef1c4c11ed0b00f0e9"
+      "contentSha256": "ac8572705762d23967c9a2935c1cb5a4862e997264dbde9579f908c701f183fe"
     },
     "skills/qs-setup": {
       "kind": "directory",
-      "contentSha256": "f8a09b9ad142628259b02569d884f2a0425076f24b4babcfaf24078513bcd821"
+      "contentSha256": "bed1c0edf82ae2c0f66a3fe4d69394b605ecefd86631d56bba5d4ce3ce07e475"
     },
     "skills/_shared/core": {
       "kind": "directory",
@@ -9130,7 +9191,7 @@
     },
     "skills/qs-flow-handoff": {
       "kind": "directory",
-      "contentSha256": "3bb1d2003ae110e42a5c1c6225bff868f6a46730f99288f58d15bbb021a20f6b"
+      "contentSha256": "e3b001af6674d029d17f40dcce32e044982310a01e9a5fc5b7c1bf690ff8e242"
     },
     "codex/plugins/qs-specialists": {
       "kind": "directory",
@@ -9146,39 +9207,39 @@
     },
     "skills/qs-code-document": {
       "kind": "directory",
-      "contentSha256": "e9511f3cf2c0323cc97bf19054471eeeeacfdb353f4d34b63e5e036eeda3b911"
+      "contentSha256": "701a89e49c928707326130adb07d005dd20f93204612bd8225a759bccf99e0ea"
     },
     "skills/qs-deploy-prompt": {
       "kind": "directory",
-      "contentSha256": "910ba6da18b8b27890d8bcd755961c85693a5615e1e8ee12cd68a34f8cc244fb"
+      "contentSha256": "cfb09dbfb4c89550d4f347cc442a21108e77dd4892cbb6350e940c5fc7ba104c"
     },
     "skills/qs-design-prototype": {
       "kind": "directory",
-      "contentSha256": "fd48035654aa20977b938309c09368651078b8c307991c25b06676fa16b7264f"
+      "contentSha256": "6a723716f304a3f849349c1c863ba931456d97681f98e2fbf00df4bf4615e077"
     },
     "skills/qs-plan-research": {
       "kind": "directory",
-      "contentSha256": "0dfe71bcf7d20740b1540c70bc133f3fd11050ac16e8908b71df3410be7a0e4c"
+      "contentSha256": "9a3fdd0d556cabc122d4f11493c18ac1a86544ccabdfc88e5c54813926257288"
     },
     "skills/qs-repo-cleanup": {
       "kind": "directory",
-      "contentSha256": "d2f201d66cfbd202d36cb492ce7ce88777b365c7c1146ba360d8670bfaab179d"
+      "contentSha256": "a0284b602d43a1809abc62c1f2a61f4e4acc020c18266d5c782604b0a8c99ef0"
     },
     "skills/qs-test-author": {
       "kind": "directory",
-      "contentSha256": "98cd57e0fc1a0ef5eaca035bbed7c8a930ce544224f1ff9e1a50fa8a3177da1d"
+      "contentSha256": "c6348d8c97f13e76174f9542dfd7f985d93af9619fb1fc587cc3bbb839a94870"
     },
     "skills/qs-test-verify": {
       "kind": "directory",
-      "contentSha256": "9a90e3423c0225fc22bfbbb0edea797d18c7fce06d2c6171c7a01a9f10e6883f"
+      "contentSha256": "6906abee38f589b36fb5a475c4c24e5693141fb806da05d910d7a869afa4b829"
     },
     "skills/qs-learn-teach": {
       "kind": "directory",
-      "contentSha256": "61834e8a1a213372eff948754abf0b697bca5fac3e51a68a2f2eaad56f11e6f5"
+      "contentSha256": "453e33c83e2972e6b6180228f8c8b365557fc9b4b70ca56498d56ed41815e0f0"
     },
     "skills/qs-skill-write": {
       "kind": "directory",
-      "contentSha256": "2137a7f908e3581e45e71d078b3de05cda7792931c63df6c74504c8625d625cb"
+      "contentSha256": "7be975111bd5c96e87f2d6ebe4f4fc420092d2944bb4565429355481c5968706"
     },
     "codex/plugins/qs-advanced": {
       "kind": "directory",
@@ -9198,51 +9259,51 @@
     },
     "skills/qs-blast-radius": {
       "kind": "directory",
-      "contentSha256": "9a737e322fc6372947e3b8d3a2258ed74bc0e0ca1655d30da9a5d8fc9bc0787d"
+      "contentSha256": "df983761014ebbe39c9b88b292d2f960f2d80adb4d81400726a155ed80b1804d"
     },
     "skills/qs-create-verification-skill": {
       "kind": "directory",
-      "contentSha256": "e32c51d3048545888bef6c2cfdddeeb8fcbb34d4639cb7ce7f9b11d365d16cbe"
+      "contentSha256": "860c901bf484c6cc33f8ae82e0c24d95c8ed4e809e06407ee0ca10141e7edba1"
     },
     "skills/qs-hillclimb": {
       "kind": "directory",
-      "contentSha256": "7878549704ccfdfc4736106ab77b97b53767667deb04a2a7efe27ee5cae848cf"
+      "contentSha256": "c43426c5d72c8a57654ab48fc67f940499f82a0963f39b1198506d6924e5d5c0"
     },
     "skills/qs-how": {
       "kind": "directory",
-      "contentSha256": "98443d96893d8917a832175c98be1117495c8517ea5c871945bafa307697da1b"
+      "contentSha256": "17baf053a83f22fdcb62f9f54dcabbf62e40dbafbd4208e13c8305010d68245d"
     },
     "skills/qs-maintain-verification-skill": {
       "kind": "directory",
-      "contentSha256": "57310640115ba0a3e8cd3fb973afa4c28e9e47df601540695d21764d091ca011"
+      "contentSha256": "76d3801de2fbb450ce7790fa142497744a5ea52abe6f527f2556c61d05f93c33"
     },
     "skills/qs-pr-babysit": {
       "kind": "directory",
-      "contentSha256": "cc379005bf8bc1c472935d8f4fa9abb0b98d0adc422f100f4b0f2e9bdfb15340"
+      "contentSha256": "788f231456127760043a80d3775312214f40a772ab9c1199aba2a59e85457df3"
     },
     "skills/qs-runtime-forensics": {
       "kind": "directory",
-      "contentSha256": "25e1e335ce0667e24bc43fc9a40c10c1ca597509acfdec9a5e7bc62d315a3837"
+      "contentSha256": "c406721c917d3f7e69a20d0bb68580fa48e125b97f93bdb37d22e3016b1d8ba0"
     },
     "skills/qs-skill-eval": {
       "kind": "directory",
-      "contentSha256": "167f6cf333e766db68377a294d34874d7dcb772f12d0c3ff97601da303a167aa"
+      "contentSha256": "f86277c82ea55fc8298ad4c271164f4d433d91a2418404008e5c4003abed2eff"
     },
     "skills/qs-trace-forensics": {
       "kind": "directory",
-      "contentSha256": "966d547a0c2ad406e10928b53f95d7b24f40c4054b2b2d23ef3cf7afcbf1c498"
+      "contentSha256": "68157a9a4db439438a4ca97eba315342b9b4c37d285e1600e320b5687f9d76e4"
     },
     "skills/qs-visual-parity": {
       "kind": "directory",
-      "contentSha256": "019ccff1a0ea4e28c6a49588076b9182f30e9ebc0476ff2e4d5415c69b4e7d69"
+      "contentSha256": "e24e48b443a97e1c16fe3b4d7f0d793a7834d1d588bae9727343f832795224e2"
     },
     "skills/qs-why": {
       "kind": "directory",
-      "contentSha256": "5a7775b530ae3aa7821805f02478164010b0fd79ddd287691094d8fd267796f5"
+      "contentSha256": "602df4d85c0dee3d96e1b6cf54573b809c19d87af1a437c3c3b075fe44635cfb"
     },
     "skills/qs-worktree-cleanup": {
       "kind": "directory",
-      "contentSha256": "fc07d484ec8985a04b60f1036a32c6306682408273edf2be7f59b4ee27793210"
+      "contentSha256": "bd2ac1c985deface5ef02d4873286c9c2587453b268da86546a383edaec5cb15"
     },
     "codex/plugins/qs-frontend": {
       "kind": "directory",
@@ -9258,19 +9319,19 @@
     },
     "skills/qs-design-frontend": {
       "kind": "directory",
-      "contentSha256": "9d19e055c2797e3a6b12648f2e7708c87bb270db03919dc2592484e95209383a"
+      "contentSha256": "e4e326a072a11f875db539c0fb696bdd78c62f6840866ebd7fc7e95ad0dc386f"
     },
     "skills/qs-design-image-mobile": {
       "kind": "directory",
-      "contentSha256": "b43841b208893f05deea2feb2be5cb4d006c11221d18afb5347d33c26677dcf7"
+      "contentSha256": "100b3c2de69641a2af7b1ddf5ded83dae06cc58758f3871649b2319d3d663221"
     },
     "skills/qs-design-image-to-code": {
       "kind": "directory",
-      "contentSha256": "71e836c601a1f5aef952ec54cbcaf0748cd44eadfdb4bb67b1f6e5a7254df590"
+      "contentSha256": "0caae757ff5c6556f5837a3d88ecdb94b1c6691c559a920d38329e1e663ef574"
     },
     "skills/qs-design-image-web": {
       "kind": "directory",
-      "contentSha256": "baea592c4b2345bb2c61a44040374ace1e2cc1da4f7965763fe94e1bdc5eb6a3"
+      "contentSha256": "baa3d4c9ea8fc9a5519326e26d45d8107ca770cd72c62843908913daf9af2288"
     },
     "skills/_shared/frontend": {
       "kind": "directory",
@@ -9290,7 +9351,7 @@
     },
     "skills/qs-video": {
       "kind": "directory",
-      "contentSha256": "daf1faf7e079c766b2b361e856fcad24203ec185c5bcbc901f9fbd35dc1b82c5"
+      "contentSha256": "5f68387c3604935e1f18d80aefe80399c2b992e61853f50ac2c4d89075810a15"
     },
     "codex/plugins/qs-execution": {
       "kind": "directory",
@@ -9306,7 +9367,7 @@
     },
     "skills/qs-unlazy": {
       "kind": "directory",
-      "contentSha256": "9dbb8d834eef78719137b2f98341dc5cc812c76cd94ec4a21e1551e8e3fb7d16"
+      "contentSha256": "aabd30523ab8cd9257ce88ca30eaa2091f57e47061c0a780241a331322a5eba5"
     },
     "packages/qs-skills": {
       "kind": "directory",
@@ -9370,79 +9431,79 @@
     },
     "tooling/generation/sync-codex-plugin.mjs": {
       "kind": "file",
-      "contentSha256": "370d91e8e845d9f921971df08f17652c53bf9b0eaf2cb9d559873c43133db653"
+      "contentSha256": "cc172c46b85f07b1a389a9f1e765174d2276e444f3795192fed5d9ed873902ad"
     },
     "dist/claude/qs-skills": {
       "kind": "directory",
-      "contentSha256": "83eaae6ad12139843d89b5b4604ebd5dfd5053b9fc15ea0fa1486ac5e6af448c"
+      "contentSha256": "4db32ae48d7c54754a7e6c0cbf9518e31f1d46371dde8da21b7b0b0f50d36217"
     },
     "dist/codex/qs-skills": {
       "kind": "directory",
-      "contentSha256": "1e0a5b864000ff80195e87015501479f7c39e91df52a733711db092c29a2e4d2"
+      "contentSha256": "d31a32fe5c4cad45ed2acd63e32a3d021a8f052c6e6adf913289fb0968a4093e"
     },
     "dist/pi/qs-skills": {
       "kind": "directory",
-      "contentSha256": "338f8232b1c451331d64cc4d06a2d60c92594e77bc50e3cde59fc7ba7f8142e8"
+      "contentSha256": "9bee6a15568a5da29f0ad6abe672466ff7723c50b0b258bd3bfe6ddbf5bea3f4"
     },
     "dist/claude/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "6d6af9c53de5ef68668cd60e7d67c9b7a25a5930e4225a747f78a912ca1ae185"
+      "contentSha256": "db43aeebc2dfd37eef0ebb3979a24022bcf7130bf67bf238374ea08ae4bd2c11"
     },
     "dist/codex/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "568f59454badc5b41be660014f355e6b69a18ce6e6861769fb46c68a55c42468"
+      "contentSha256": "a19ffa470c1eeaee5c195e2c063dca8b4a585b3abe12143dd8ead9de27e9bda4"
     },
     "dist/pi/qs-specialists": {
       "kind": "directory",
-      "contentSha256": "003c5c0cde7437d1e00f22ea45722c50173c7102d1ec6bf4d8da7d493ac4e405"
+      "contentSha256": "6acda67e2105ccea250b2709af2f00856a34f601716b6ff4df4da8901c54bd97"
     },
     "dist/claude/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "c8b655b267cb633dba36cba6c17226c40f5030496c065c247942cf8253be297d"
+      "contentSha256": "7548f6129ec7171eedbb73c15ea3951850d766082a52bf2940f5e052d54e9ca7"
     },
     "dist/codex/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "7e0dd489a599d40e3f84061ac4ac19b60fba7f683b03ec8e168eeba2178cc51d"
+      "contentSha256": "f9d37b7a0b85fedde9759b6d2efa29296467edc7fd2d728cb6c1889999332436"
     },
     "dist/pi/qs-advanced": {
       "kind": "directory",
-      "contentSha256": "3dfb74520dbfe1c6966a245b338dd346097e0c5bad84eff920d0c84930e73813"
+      "contentSha256": "5a16210665a0efad175ce46ed677da1304a8562f1e8f6776bb8395b70fe5280c"
     },
     "dist/claude/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "7188651ae7de7708ad67e78b80121b05c94cd733c57e6eceec4b228714c17d9e"
+      "contentSha256": "e1cc40ef9c8a47d2e384c89afbb74e3227308d9c1f2db2ac658bd1f3e2449a4c"
     },
     "dist/codex/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "d8ae87f575a938688359f6652f5891e17825e74bbdbcdb629eb3be2fed52b67c"
+      "contentSha256": "170765db2b330af30c9bc46fdc44bb7e53a0a1aa00a70631b6005f7eedc1e3dc"
     },
     "dist/pi/qs-frontend": {
       "kind": "directory",
-      "contentSha256": "ed3f097de0edf7b990a75d55d5358851657d6e729fa2e093520c01bad6f4cf9e"
+      "contentSha256": "51bba8e8118123b5346cc71b82902f46876795b7170f0fcc13130533d87976a8"
     },
     "dist/claude/qs-video": {
       "kind": "directory",
-      "contentSha256": "f62ddc1ed8f6a353ecd3e3809dcd26d656dc89b0069dcf2782c7b9674c4fdf0b"
+      "contentSha256": "fe344de69aae045883e62b256bea7b2aa4ab8b1725a2c997e87890d18ced1c1b"
     },
     "dist/codex/qs-video": {
       "kind": "directory",
-      "contentSha256": "7a0d374a814bb1b7c37d9a9b4476478800c1b345d2e6134a33ee98d38471f63d"
+      "contentSha256": "a9c26ccd086209c87da1259b83f51d501dbf51e034a2ec39c8854a68cbdb4cfc"
     },
     "dist/pi/qs-video": {
       "kind": "directory",
-      "contentSha256": "e2b716737b6b5ffcc3394a4da5d7a04ebe37c165a36fe8cd2c334525d744476e"
+      "contentSha256": "e6cdbeb0ec93c4ac1386e5d4f9637a6f99a9382685d742ab905eabca3a2d2cce"
     },
     "dist/claude/qs-execution": {
       "kind": "directory",
-      "contentSha256": "f0af26dcde6827ecf6f5b2502bf9995e2c1ad5898548cad1a5cad7561a952b15"
+      "contentSha256": "33e481c277158a20f0a7efa7482cc030a5c7a22d4cfde56926ed81bdb9151529"
     },
     "dist/codex/qs-execution": {
       "kind": "directory",
-      "contentSha256": "a8838268c7c560aca83c95eac91072e7111c2d22f3ceeb924d8c047cd1cb5764"
+      "contentSha256": "c5ddc5643069f59b76db0280214a1555c7396c7e968a501c397f3e77a08ec8e6"
     },
     "dist/pi/qs-execution": {
       "kind": "directory",
-      "contentSha256": "e4b516372d0c00d24f4861d9cf57f80ed86f26a409ab85145c3866281644557b"
+      "contentSha256": "7b4258824df82b3280a67f15a9e42b0417315b6f2af1e37d88944b4bcdff7d34"
     },
     ".agents/plugins/marketplace.json": {
       "kind": "file",
@@ -9460,7 +9521,7 @@
   "evidence": {
     "tests/skill-provenance.test.mjs": {
       "path": "tests/skill-provenance.test.mjs",
-      "sha256": "8ffa85962b24d8ac138b4c1eb6124fd40330c46021c862112d0d413373852f6c"
+      "sha256": "cee86ecdb26b8737416bfc59f3fe6bfdb0b3ed1f5d4936934dccb75966206e84"
     },
     "config/skill-migrations.json": {
       "path": "tooling/install/skill-migrations.json",
@@ -9468,7 +9529,7 @@
     },
     "tests/adoption-projection.test.mjs": {
       "path": "tests/adoption-projection.test.mjs",
-      "sha256": "aa49fca1869aa52ffae3e6c48cde194a81a25692e954b4762575f2bd904c0234"
+      "sha256": "d667422a19cdf4c01e71863d3a3031dc41c7323d37b1701906d410a69aaf8092"
     },
     "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json": {
       "path": "tests/fixtures/frontend-mobile-repair-parent/final-required-checks.json",
@@ -9584,7 +9645,7 @@
     },
     "config/skill-provenance.json": {
       "path": "tooling/catalog/skill-provenance.json",
-      "sha256": "a03a9d5ad8341b301e3391a0e3a3e4d801b7c8c6adf6033b3d966157cd7c73ce"
+      "sha256": "253e3cda960cb1a93f1bd4508ac78357415f4399bd378ef1f01edc2d64e592a0"
     },
     "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json": {
       "path": "tests/fixtures/adoption-final-discovery/parent-activation-3.8.0/result.json",
@@ -9616,7 +9677,7 @@
     },
     "tests/upstream-adoption-routing.test.mjs": {
       "path": "tests/upstream-adoption-routing.test.mjs",
-      "sha256": "44b98a586d1a0e3439d108fcbe1a0f9e8ad5600b942563718a46fadf55d2e12e"
+      "sha256": "ddda07035e34b1a9b3c16dc75f40363af39641e4f7a9a3daa13fbba8ef19c1d2"
     },
     "tests/fixtures/adoption-review-eval/parent/review.json": {
       "path": "tests/fixtures/adoption-review-eval/parent/review.json",
@@ -9636,11 +9697,11 @@
     },
     "tests/advanced-candidates.test.mjs": {
       "path": "tests/advanced-candidates.test.mjs",
-      "sha256": "8bcc4efaf66c2d772b45a38d42b4bc0afdda5c342c3a836f0038514cb571e595"
+      "sha256": "5631d5971d78aa23ddb2baab74dc8aa11f1edc9c949782e8d4c053bfed2a8a74"
     },
     "tests/upstream-adoption-qs.test.mjs": {
       "path": "tests/upstream-adoption-qs.test.mjs",
-      "sha256": "3526d37291f5985af036918af0e0d69e56f7c3a3eabec551ac10cd6949b046ac"
+      "sha256": "e4912beba3e5aef22fc88dea4e2c1a6e90d9b05ecb1d32451c01a091c99b59d1"
     },
     "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json": {
       "path": "tests/fixtures/adoption-behavior-review/oracle-parent-01/oracle-summary.json",
@@ -9820,11 +9881,11 @@
     },
     "tests/adoption-acceptance.test.mjs": {
       "path": "tests/adoption-acceptance.test.mjs",
-      "sha256": "30d7ea7f796d5d0c67e70932c1450d74025d3b6d20770a9fa0fee1d4f4f2a767"
+      "sha256": "6dc0214177328af4c3dfc08e5668571dbe6c10aa50cc9c7451a2565ef4324ffa"
     },
     "tests/repo-cleanup.test.mjs": {
       "path": "tests/repo-cleanup.test.mjs",
-      "sha256": "d0b5729d6b1300a3d98144574f43674ea81f869bbe83a7ba10b8e091c38317d2"
+      "sha256": "280155cfe953ab72e48bf52b5a26d8430c11daa801dc2e39dc461e24d8a0a233"
     },
     "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json": {
       "path": "tests/fixtures/repo-cleanup/evidence/integration-after-guidance-repair.json",
@@ -9864,7 +9925,7 @@
     },
     "tests/frontend-candidate.test.mjs": {
       "path": "tests/frontend-candidate.test.mjs",
-      "sha256": "1db0004b47b08547a351f0a35b913d50169a2abb619c6acbceb6e7a2f4e06558"
+      "sha256": "5bb68f35039838d92d9fcc21217988b410674f46a1b54e4346c82b439b005311"
     },
     "tests/fixtures/managed-claude-update/README.md": {
       "path": "tests/fixtures/managed-claude-update/README.md",
@@ -10105,9 +10166,13 @@
     "layout-release-4.4.8/qualification": {
       "path": "tests/fixtures/layout-release-4.4.8/qualification.json",
       "sha256": "cc09dba898db59af67a496bc464388ec6b37565b28f70dd6a2f3101f3bf15fe4"
+    },
+    "shared-runtime-release-4.4.9/qualification": {
+      "path": "tests/fixtures/shared-runtime-release-4.4.9/qualification.json",
+      "sha256": "128bbadcc94cd30f1af018839395ffa8421ab72d3fc1da1a335c5ab9dc9e79cb"
     }
   },
-  "note": "New independent v4.4.7 acceptance decision after scoped source, corrected-response, actual isolated native-discovery and exact-profile local runtime qualification. Historical source snapshots, failed B8/MR observations, previous pending/unknown records and original notices/provenance remain preserved. AC08/09 retain baseline; no savings, universal reliability, unsupported provider or LEX14–16 installed-host acceptance. Full replacement validation and authorized publication remain separately required.",
+  "note": "The shared-runtime qualification records the 4.4.9 source review, regression checks and isolated native discovery. Earlier trials retain their recorded revisions and limits. The installer verifies the committed candidate separately.",
   "history": {
     "revision": "dcbc75b4a69ef2d7dfc39e582afd005dc2264b0c",
     "path": "tests/fixtures/lean-execution-adoption/pre-release-447-acceptance.json",

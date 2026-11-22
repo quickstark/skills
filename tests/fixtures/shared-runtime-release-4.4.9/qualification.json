@@ -1,0 +1,273 @@
+{
+  "version": "4.4.9",
+  "packageCommit": "b0dd32dbeaca999eb14460377e4ed11cc876ffbb",
+  "previousRelease": {
+    "version": "4.4.8",
+    "commit": "9edf771e5a1d1ac251621e99b236ee5cc5b2e002",
+    "acceptanceSha256": "6c81b36805aa11e8295e0c578586096f1e74293354d6409c578a8ee4136f2c06"
+  },
+  "scope": "Public instructions, host-specific projection, package discovery and access to the shared contract.",
+  "sourceReview": "All 39 active instructions load the shared contract. After removal of the generated startup and completion sections, 33 instruction bodies match 4.4.8. Reviewed the six other changes: Deploy Prompt uses discovered command spellings, Image Web and Video report prompt-only completion, Hillclimb scopes an objective, Plan Clarify gathers context before specification, and Plan Spec prepares dependency-aware specifications and tickets.",
+  "checks": {
+    "projection": "npm run check:codex",
+    "claudeStrictValidation": "Marketplace and six package roots passed.",
+    "focusedTests": {
+      "passed": 142,
+      "failed": 0,
+      "skipped": 0,
+      "files": [
+        "tests/qs-skills.test.mjs",
+        "tests/adoption-projection.test.mjs",
+        "tests/skill-provenance.test.mjs",
+        "tests/upstream-adoption-routing.test.mjs",
+        "tests/advanced-candidates.test.mjs",
+        "tests/upstream-adoption-qs.test.mjs",
+        "tests/adoption-acceptance.test.mjs",
+        "tests/repo-cleanup.test.mjs",
+        "tests/frontend-candidate.test.mjs",
+        "tests/progress-reporting.test.mjs",
+        "tests/qs-v3.test.mjs",
+        "tests/deploy-prompt.test.mjs",
+        "tests/pi-package-projection.test.mjs"
+      ]
+    }
+  },
+  "evidenceLimits": "Native discovery used isolated profiles with no model calls. Behavior coverage for this delta comes from source review and the named regression tests. Older recorded model trials and runtime measurements apply to their original inputs.",
+  "nativeDiscovery": {
+    "codex": {
+      "host": "codex",
+      "hostVersion": "codex-cli 0.169.1",
+      "packageVersion": "4.4.9",
+      "publicRoots": 39,
+      "modelRequests": 0,
+      "registrations": {
+        "qs-skills": {
+          "manifestSha256": "0f16fb5f928019e47d798fc86ddee9b3cc1544dbacd5242faf2f54d3149be8ef",
+          "skillSha256": {
+            "qs-code-build": "a7a3021f1205bf359865145daa1651b642434576e229d62fbf25b637e0e19a44",
+            "qs-code-debug": "4f2cfb728c6ce2583d2a3698af90115cb6639279ee93055a6605a3728b88151d",
+            "qs-deploy-release": "1e492bd92eb519fd2e05b57a89b33b81020266c04cdf1797f68cf66e255da4d6",
+            "qs-flow-handoff": "319c38f1cb444b00ddcf1079ca229f1d4fad0b28e9749f747e05a1a568663a4f",
+            "qs-flow-triage": "bdba6e23ca50b75fb070c0f128547ed9f5685119dcea9eddc3c3657e58dbd743",
+            "qs-git-merge": "46b7588fac9e2696a927582a629a046f37c0dd2bbe9bf66d5522b5fba287de34",
+            "qs-help": "e6804d0aa284be25938fe2bf72076bb443b4c78473530946e05e548349f40909",
+            "qs-plan-clarify": "4d998b9f75c89295909b80bbd7ad5cb15bb753658d612ea865cb147e11253947",
+            "qs-plan-roadmap": "3c4b32917111d4ef31f7278caa8bf2c01c9425955a48752df598d4374cde74d6",
+            "qs-plan-spec": "4bba600c3b2bef871c291fac4bec99611d39e6fa600aee2b638b290eb892bf47",
+            "qs-review-code": "323567eb1ec3835fe4ed35323780d095ff5a964e46d276d57cda570c621ee3f0",
+            "qs-setup": "284f9369fef7ba5840f1263eda4dc6a2352fe7730b0647f3cdd652e3c26124de"
+          }
+        },
+        "qs-specialists": {
+          "manifestSha256": "10c4ac77afb45fb8c4b38057bfbd6e2906148665bb73897d46dabe47311b6d88",
+          "skillSha256": {
+            "qs-code-document": "7748febf2068b3a00529dbc988399cf11464bc8990a8b7780e6df7344e35d030",
+            "qs-deploy-prompt": "9e2f1a7f2d040341af6634a1eef2f62cfb2b940ce9f7331ca1b5bf8dab988ff8",
+            "qs-design-prototype": "4a4b34463bda046c696dcecb23791ea4ee32828a89d042929f14f3692daffa98",
+            "qs-learn-teach": "ecce0711bbe1a1e417e615cc91b3ea544e7e6f07333fabadf4fe80725e0db31b",
+            "qs-plan-research": "5decbd164110fc0f9f262f7a3e516545bf1a73c6dbd1fcbf95359878a84b4bb3",
+            "qs-repo-cleanup": "2aab2ec57a4fa249bcaf473d03fd73b0d0d4343539ddc3f23d976c430bb4b277",
+            "qs-skill-write": "b12e1c577c7c168fe968e3b24ecaa04ea4c3a79cedac74e175fa6e440ffe33a5",
+            "qs-test-author": "5d29b2689b5143b635f3c90a1c6a4e988647df9cea3f87deed3fc6d2287e5ab8",
+            "qs-test-verify": "6336697cb89a8b39a879e5de42b5fc79265cfa6598267930c53874ee5ad294da"
+          }
+        },
+        "qs-advanced": {
+          "manifestSha256": "56e4f467f55f2daa5630732e168960177866db5c118fdb460f081932bc419d87",
+          "skillSha256": {
+            "qs-blast-radius": "174373af225436aaed87c191d0c7bbab4201e81d4d940478d739c3b8990afe62",
+            "qs-create-verification-skill": "58a132afe684d9f5f6caeb20657484af7d064f8034feefcaa3baf3dc360ea29f",
+            "qs-hillclimb": "c921ff96d0c6124294c41ece9c4fa92f019ff8fb7d543964acbd0927d862eeee",
+            "qs-how": "d6927e52dbf05a231343fb84970914e48bee209128d95876bfde579ddb7e3d0e",
+            "qs-maintain-verification-skill": "26c9ab449e5cbfcf7dfbf1230b1c37437dcc2b8087fec3fd17d6b9322b201238",
+            "qs-pr-babysit": "4d1be63c9d2875d7029c5534a6beab46a055990f53d405bb190e275aead0ca89",
+            "qs-runtime-forensics": "311942ef4f0a68074f6b3264e0b0f55dbb13ea515f23b8e8c8bf168d0f30e578",
+            "qs-skill-eval": "df8e4a68e40d077bc6071df1fbc6ff8f46d53c768bdc588e56fc68dacad698f9",
+            "qs-trace-forensics": "a113cc77b03ec5ece8b6e118e8c6e122167e9b888cea3516928906c0e0665461",
+            "qs-visual-parity": "d218dc3171a367412cb0e79cd754375ae422fad7f9602752c33341a9bcc66f4b",
+            "qs-why": "8beee74c6a95daaf9173c6441d990f8238e7ce962e5e4f6a67a6929439f85063",
+            "qs-worktree-cleanup": "56331b8792d65a40446d46c7decac5efc0e109ff3436aa0f369735bb75e783cc"
+          }
+        },
+        "qs-frontend": {
+          "manifestSha256": "11dbca13ec9b617711c0c7224f940a6ae9e492f14d124b253b7bf00910d5c49a",
+          "skillSha256": {
+            "qs-design-frontend": "b5463e8c132ad47740b6c88893f1944f5db4e8dd5a6e7716ff790dc6b1edb1cd",
+            "qs-design-image-mobile": "b1a0801f946908caf64d1b3a7ca7ed5db363ec19f87aec9a2ccc80dfece0dba4",
+            "qs-design-image-to-code": "a8336a10b86d4badf076bf3146a0f2c3486a4f93a2231f858b61939430f6f678",
+            "qs-design-image-web": "56093a122ca9a9272ac78e5417629bddaa84e4016350f7aebe0f98e710de8b17"
+          }
+        },
+        "qs-video": {
+          "manifestSha256": "fb4a96d840c05dd9167c98270a5ea20361e60814bf6eee87ff4fe155cb1eedec",
+          "skillSha256": {
+            "qs-video": "c8d7968feecdf626c6e71eba07c0b6ed60ad0ab7a5e5d28408c1bc3af2825947"
+          }
+        },
+        "qs-execution": {
+          "manifestSha256": "a220a0fc62c784fb136e34f1ed3622352ff76c0327d671319752cbf93d7ce6cd",
+          "skillSha256": {
+            "qs-unlazy": "ca29323fdbc02da1bd8aef0298bf072d80f771908f86dbb8e1fabb95d56051e3"
+          }
+        }
+      }
+    },
+    "claude-code": {
+      "host": "claude-code",
+      "hostVersion": "2.1.322 (Claude Code)",
+      "packageVersion": "4.4.9",
+      "publicRoots": 39,
+      "modelRequests": 0,
+      "registrations": {
+        "qs-skills": {
+          "manifestSha256": "b19b11fd974722cc949054f741a072cc96d38cdc6d6c8b0c891d4dbd832b5a03",
+          "skillSha256": {
+            "qs-code-build": "a9a7c9c282d7f081a98609a73b141c0c56aa313e4f8531419492781bf63ccde9",
+            "qs-code-debug": "4f2cfb728c6ce2583d2a3698af90115cb6639279ee93055a6605a3728b88151d",
+            "qs-deploy-release": "2b7bac6c9b8720c6b69548e327df9beb3fdfe170d66710f1e2bbc4ecbed9d5dc",
+            "qs-flow-handoff": "4b4820ff60a1c6777002b460565bd21fc7a9648fd7faa65f6d7a39cf28636824",
+            "qs-flow-triage": "f5918e288ca9db804db152e2e941d69b2a4e7ebf59b033fa07de2f57c3351dfd",
+            "qs-git-merge": "46b7588fac9e2696a927582a629a046f37c0dd2bbe9bf66d5522b5fba287de34",
+            "qs-help": "b5c5de5532929b075c572cafc58a061fadd3e655f409b3b3967f21bc3580f889",
+            "qs-plan-clarify": "ed6fefbac0ae08bb905864836cea107354600e68f050ccd09b02ddbda6caf802",
+            "qs-plan-roadmap": "3db6b2182aeede9f28c1aacb88273132d9deb37031ccc6c2630328e6c7a6acd1",
+            "qs-plan-spec": "da9f8326b5a8abd36af4e155ca558273cc241ae986b936bf3ee4b1a75be331e6",
+            "qs-review-code": "323567eb1ec3835fe4ed35323780d095ff5a964e46d276d57cda570c621ee3f0",
+            "qs-setup": "137ddce945d5a64a3213e350e2c9894f94c8ff7401dc8e1239d3afeb6283d518"
+          }
+        },
+        "qs-specialists": {
+          "manifestSha256": "91d52883c5636240a77c6ea24e1bed13624f747c3aab2eb893299217af448d0e",
+          "skillSha256": {
+            "qs-code-document": "7748febf2068b3a00529dbc988399cf11464bc8990a8b7780e6df7344e35d030",
+            "qs-deploy-prompt": "2fd26c3da17f34d89a5bd54ed6bb7036a705c123c3a2dddced0185496ba9bfce",
+            "qs-design-prototype": "4a4b34463bda046c696dcecb23791ea4ee32828a89d042929f14f3692daffa98",
+            "qs-learn-teach": "150b97f06aa75854774efc70cbe9007e7f1a2a587a02d310bbf336a123880b68",
+            "qs-plan-research": "5decbd164110fc0f9f262f7a3e516545bf1a73c6dbd1fcbf95359878a84b4bb3",
+            "qs-repo-cleanup": "dfddbd9654d2a7d97d8bf98ee83a37b9d4ef6c4640d2ca233212c66d4dd1fc2a",
+            "qs-skill-write": "1358edcba4823661039cfbc30d9665d0d2a24aac0ab362a2f4a0dcfcacc11085",
+            "qs-test-author": "cb7c1f744bf68b11854fff7ca85b786ad22f28dfdf717a7736d4110b998b43e8",
+            "qs-test-verify": "886b7fe9c96beabd93a0185af0299c02e15843a329e3236ef9bb74eeead1fa04"
+          }
+        },
+        "qs-advanced": {
+          "manifestSha256": "0059007fbb6613682302303741b3a112e5a509086bd00b02a8abed3148e95c96",
+          "skillSha256": {
+            "qs-blast-radius": "f14a888c932c8a26982da1241fceff5b96998ddaa54eee674eb5523d164bc254",
+            "qs-create-verification-skill": "f04c9bff68937ec61eabecb5760b5bf9d1ec7f02cd9233488cb46f146d14b5e4",
+            "qs-hillclimb": "ea61dc0f97f55ea3f63b0901ce93980b25b09f9b8852ee19d4a3e284fc61e72b",
+            "qs-how": "b141dc9468cc436c95786427ec01717088c8b322c9b7910e52706caf1dca64d1",
+            "qs-maintain-verification-skill": "70b92334f234099e936f27f06feeb3f0d4e988aef44ff9578d826452e03f4188",
+            "qs-pr-babysit": "9190ceb445d5aee64625dc4e713dba01dcb69b4fa49758cc809cd58aed46508b",
+            "qs-runtime-forensics": "af0b2813a2415e99e372012a4782bcb532c3f5fe769baf54b374eea630986f34",
+            "qs-skill-eval": "6b02238827345c54bdaee995185486ae6d7ba2014115e99d2fc47f520f48949a",
+            "qs-trace-forensics": "0f7b4541319fb8d00f8bf2c9c27eaf8c317529a297a6dbb8adea6ac457749416",
+            "qs-visual-parity": "753e8cc82d179ade50645daf65f685ead9c0fbf9526a39edc2e47c75fbbf0426",
+            "qs-why": "765dd168af8c8e6f906969f77e5c88e1c9555836b286a007ed7b43ff246ae8ba",
+            "qs-worktree-cleanup": "6774d1cd6d2bef9ae6fe112faf99fa69c0d967c89159332f9b027bad680dcfd1"
+          }
+        },
+        "qs-frontend": {
+          "manifestSha256": "8102ca9a483c17013915dd32bbc05bcf69373628b6db1826a4014e0dafbcfa7a",
+          "skillSha256": {
+            "qs-design-frontend": "6b3701ccfeab0e0f271b132e4455e93e9d38a34637af40e4b831a18cce07fc0b",
+            "qs-design-image-mobile": "bb3645bc93f1fb53ca7060f72d4ff639ae8659d8f598612ac39d84077133c674",
+            "qs-design-image-to-code": "a096a58676a85f5607daa5f6d53ba17feaa8ba5aaafe2da2d657b73ffeeea5c6",
+            "qs-design-image-web": "0cef39279f3c2693a061ce2d6cb1640ce82c329d9dddd78b1e5aa674e09c3494"
+          }
+        },
+        "qs-video": {
+          "manifestSha256": "af5b133ae68dfe2049188eda0e07201d7c88e1a80ccda5c433de61c275d2421a",
+          "skillSha256": {
+            "qs-video": "0105e7090f2ef879412a9acf31fa8590edf6b72b8bb13521cad41ed31b923cbd"
+          }
+        },
+        "qs-execution": {
+          "manifestSha256": "02286402bc60f846796798af11af269201e8ca38ae31dc86cb60ec36019c14a4",
+          "skillSha256": {
+            "qs-unlazy": "481797319d5147cbbcbe16f2e20ff132f9949058e91026dedb99baf2d33ca21a"
+          }
+        }
+      }
+    },
+    "pi": {
+      "host": "pi",
+      "hostVersion": "1.5.2",
+      "packageVersion": "4.4.9",
+      "publicRoots": 39,
+      "modelRequests": 0,
+      "registrations": {
+        "qs-skills": {
+          "manifestSha256": "0974979cc997d59af6c8855ae4006422edd327f492b7c42119ba8a8d71543f16",
+          "skillSha256": {
+            "qs-code-build": "a9a7c9c282d7f081a98609a73b141c0c56aa313e4f8531419492781bf63ccde9",
+            "qs-code-debug": "4f2cfb728c6ce2583d2a3698af90115cb6639279ee93055a6605a3728b88151d",
+            "qs-deploy-release": "2b7bac6c9b8720c6b69548e327df9beb3fdfe170d66710f1e2bbc4ecbed9d5dc",
+            "qs-flow-handoff": "4b4820ff60a1c6777002b460565bd21fc7a9648fd7faa65f6d7a39cf28636824",
+            "qs-flow-triage": "f5918e288ca9db804db152e2e941d69b2a4e7ebf59b033fa07de2f57c3351dfd",
+            "qs-git-merge": "46b7588fac9e2696a927582a629a046f37c0dd2bbe9bf66d5522b5fba287de34",
+            "qs-help": "b5c5de5532929b075c572cafc58a061fadd3e655f409b3b3967f21bc3580f889",
+            "qs-plan-clarify": "ed6fefbac0ae08bb905864836cea107354600e68f050ccd09b02ddbda6caf802",
+            "qs-plan-roadmap": "3db6b2182aeede9f28c1aacb88273132d9deb37031ccc6c2630328e6c7a6acd1",
+            "qs-plan-spec": "da9f8326b5a8abd36af4e155ca558273cc241ae986b936bf3ee4b1a75be331e6",
+            "qs-review-code": "323567eb1ec3835fe4ed35323780d095ff5a964e46d276d57cda570c621ee3f0",
+            "qs-setup": "137ddce945d5a64a3213e350e2c9894f94c8ff7401dc8e1239d3afeb6283d518"
+          }
+        },
+        "qs-specialists": {
+          "manifestSha256": "e680ca7c09be845c086155e49ced210c89bafa0ad97d2d6ad7493c6da8be1863",
+          "skillSha256": {
+            "qs-code-document": "7748febf2068b3a00529dbc988399cf11464bc8990a8b7780e6df7344e35d030",
+            "qs-deploy-prompt": "2fd26c3da17f34d89a5bd54ed6bb7036a705c123c3a2dddced0185496ba9bfce",
+            "qs-design-prototype": "4a4b34463bda046c696dcecb23791ea4ee32828a89d042929f14f3692daffa98",
+            "qs-learn-teach": "150b97f06aa75854774efc70cbe9007e7f1a2a587a02d310bbf336a123880b68",
+            "qs-plan-research": "5decbd164110fc0f9f262f7a3e516545bf1a73c6dbd1fcbf95359878a84b4bb3",
+            "qs-repo-cleanup": "dfddbd9654d2a7d97d8bf98ee83a37b9d4ef6c4640d2ca233212c66d4dd1fc2a",
+            "qs-skill-write": "1358edcba4823661039cfbc30d9665d0d2a24aac0ab362a2f4a0dcfcacc11085",
+            "qs-test-author": "cb7c1f744bf68b11854fff7ca85b786ad22f28dfdf717a7736d4110b998b43e8",
+            "qs-test-verify": "886b7fe9c96beabd93a0185af0299c02e15843a329e3236ef9bb74eeead1fa04"
+          }
+        },
+        "qs-advanced": {
+          "manifestSha256": "c0148471f886f66ed6d74ae8a2d56933e9f25e038e0a65990fc63d02ac5a4413",
+          "skillSha256": {
+            "qs-blast-radius": "f14a888c932c8a26982da1241fceff5b96998ddaa54eee674eb5523d164bc254",
+            "qs-create-verification-skill": "f04c9bff68937ec61eabecb5760b5bf9d1ec7f02cd9233488cb46f146d14b5e4",
+            "qs-hillclimb": "ea61dc0f97f55ea3f63b0901ce93980b25b09f9b8852ee19d4a3e284fc61e72b",
+            "qs-how": "b141dc9468cc436c95786427ec01717088c8b322c9b7910e52706caf1dca64d1",
+            "qs-maintain-verification-skill": "70b92334f234099e936f27f06feeb3f0d4e988aef44ff9578d826452e03f4188",
+            "qs-pr-babysit": "9190ceb445d5aee64625dc4e713dba01dcb69b4fa49758cc809cd58aed46508b",
+            "qs-runtime-forensics": "af0b2813a2415e99e372012a4782bcb532c3f5fe769baf54b374eea630986f34",
+            "qs-skill-eval": "6b02238827345c54bdaee995185486ae6d7ba2014115e99d2fc47f520f48949a",
+            "qs-trace-forensics": "0f7b4541319fb8d00f8bf2c9c27eaf8c317529a297a6dbb8adea6ac457749416",
+            "qs-visual-parity": "753e8cc82d179ade50645daf65f685ead9c0fbf9526a39edc2e47c75fbbf0426",
+            "qs-why": "765dd168af8c8e6f906969f77e5c88e1c9555836b286a007ed7b43ff246ae8ba",
+            "qs-worktree-cleanup": "6774d1cd6d2bef9ae6fe112faf99fa69c0d967c89159332f9b027bad680dcfd1"
+          }
+        },
+        "qs-frontend": {
+          "manifestSha256": "2da79d02df1949fd633e38e6cd4b47aba16511b09792080d0adda91fbbfe604e",
+          "skillSha256": {
+            "qs-design-frontend": "6b3701ccfeab0e0f271b132e4455e93e9d38a34637af40e4b831a18cce07fc0b",
+            "qs-design-image-mobile": "bb3645bc93f1fb53ca7060f72d4ff639ae8659d8f598612ac39d84077133c674",
+            "qs-design-image-to-code": "a096a58676a85f5607daa5f6d53ba17feaa8ba5aaafe2da2d657b73ffeeea5c6",
+            "qs-design-image-web": "0cef39279f3c2693a061ce2d6cb1640ce82c329d9dddd78b1e5aa674e09c3494"
+          }
+        },
+        "qs-video": {
+          "manifestSha256": "2f0c4ad742e03df4f96cb0e1934c6af016ef21e612b8b64cb30e60fc53373ef7",
+          "skillSha256": {
+            "qs-video": "0105e7090f2ef879412a9acf31fa8590edf6b72b8bb13521cad41ed31b923cbd"
+          }
+        },
+        "qs-execution": {
+          "manifestSha256": "ca365d22fc04cd49899c97f47f4a3c6c811bdd9b52446df58eb00395d19ddf7b",
+          "skillSha256": {
+            "qs-unlazy": "481797319d5147cbbcbe16f2e20ff132f9949058e91026dedb99baf2d33ca21a"
+          }
+        }
+      }
+    }
+  },
+  "runtimeContractSha256": "493e3c39e9c49132375b77632fba7aa4fe946227fe264934967e62e1adeb9503"
+}
